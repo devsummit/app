@@ -1,4 +1,4 @@
-package com.app;
+package com.devsummit;
 
 import android.app.Application;
 
