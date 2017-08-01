@@ -6,6 +6,6 @@ import {
   View
 } from 'react-native';
 
-import App from './app/containers/Register';
+import App from './app/containers/App';
 
 AppRegistry.registerComponent('DevSummit', () => App);
