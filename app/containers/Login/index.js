@@ -22,7 +22,7 @@ export default class Login extends Component {
         this.state = { 
             username: '',
             password: '',
-            loggedIn: false
+            loggedIn: false 
         };
     }
 
@@ -40,19 +40,21 @@ export default class Login extends Component {
         }).then((response) => response.json())
         .then(async (responseJson) => {
             if (responseJson.message === 'user logged in succesfully') {
-                Alert.alert(
-                    'Success',
-                    'Login Success',
-                )
                 try {
-                    await AsyncStorage.setItem('token', responseJson.result.access_token);
+                    await AsyncStorage.setItem('access_token', responseJson.result.access_token);
+                    await AsyncStorage.setItem('refresh_token', responseJson.result.refresh_token);
                 } catch (error) {
                     Alert.alert(
                         'Failed',
                         'Failed to store token',
                     )
                 }
-                
+
+                this.setState({loggedIn: true})
+                Alert.alert(
+                    'Success',
+                    'Login Success',
+                )
             }
         })
         .catch((error) => {
