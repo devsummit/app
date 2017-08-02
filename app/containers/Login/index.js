@@ -18,8 +18,7 @@ import { StyleSheet } from 'react-native';
 export default class Login extends Component {
     render() {
     return (
-      <Container>
-        <Header />
+      <Container style={styles.container}>
         <Content>
             <Form>
                 <Item floatingLabel>
@@ -41,6 +40,9 @@ export default class Login extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'rgb(255,255,255)'
+  },
   button: {
     margin: 12,
   },
