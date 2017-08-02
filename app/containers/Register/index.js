@@ -47,8 +47,7 @@ export default class Register extends Component {
     }
     render() {
     return (
-      <Container>
-        <Header />
+      <Container style={styles.container}>
         <Content>
             <Form>
                 <ListItem itemDivider>
@@ -99,6 +98,9 @@ export default class Register extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'rgb(255,255,255)'
+  },
   button: {
     margin: 12,
   },
