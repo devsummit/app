@@ -3,7 +3,7 @@ import { Container, Content, Button, Text } from 'native-base';
 import { StyleSheet } from 'react-native';
 
 
-export default class App extends Component {
+export default class Main extends Component {
   render() {
     return (
       <Container style={styles.container}>
