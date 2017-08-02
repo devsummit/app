@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#0D47A1',
-    paddingBottom: 110,
-    paddingTop: 110,
+    paddingBottom: 80,
+    paddingTop: 80,
   },
   buttons: {
-    marginTop: 25
+    marginTop: 25,
   },
   button: {
     width: '90%',

@@ -13,7 +13,7 @@ import {
     Button, 
     Text
 } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 const role = [
         { 
             value: "key0",
@@ -26,23 +26,66 @@ const role = [
         { 
             value: "key2",
             label: "Speaker"
-        },
-        { 
-            value: "key3",
-            label: "Admin"
-        },
+        }
     ]
 
 export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected1: 'key0'
+            role: '',
+            firstName: '',
+            LastName: '',
+            role: '',
+            email: '',
+            password: '',
         }
     }
     onValueChange (value: string) {
         this.setState({
-            selected1 : value
+            role : value
+        });
+    }
+
+    componentWillMount(){
+        this.setState({role: 'Attendee'});
+    }
+
+    submit = () => {
+        this.handleSubmit(this.state);
+    }
+
+    handleSubmit = (data) => {
+        fetch('http://private-31720-devsummit.apiary-mock.com/auth/register', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                first_name: data.firstName,
+                last_name: data.lastName,
+                role: data.role,
+                username: data.username,
+                email: data.email,
+                password: data.password,
+            })
+        }).then((response) => response.json())
+        .then(async (responseJson) => {
+            if (responseJson.message === 'user succesfully registered') {
+
+                this.setState({loggedIn: true})
+                Alert.alert(
+                    'Success',
+                    'Register Success',
+                )
+            }
+        })
+        .catch((error) => {
+            Alert.alert(
+                'Register Failed',
+                'Something is wrong, try again later.',
+            )
         });
     }
     render() {
@@ -57,11 +100,11 @@ export default class Register extends Component {
                     style={styles.picker}
                     placeholder="Role"
                     mode="dropdown"
-                    selectedValue={this.state.selected1}
+                    selectedValue={this.state.role}
                     onValueChange={this.onValueChange.bind(this)}
                     >
                     {role.map((component) => (
-                        <Item label={component.label} value={component.value} />
+                        <Item key={component.value} label={component.label} value={component.label} />
                     ))}
                 </Picker>
                 <ListItem itemDivider>
@@ -69,26 +112,26 @@ export default class Register extends Component {
                 </ListItem>
                 <Item floatingLabel>
                     <Label>First Name</Label>
-                    <Input />
+                    <Input onChangeText={(text) => this.setState({firstName: text})} value={this.state.firstName} />
                 </Item>
                 <Item floatingLabel>
                     <Label>Last Name</Label>
-                    <Input />
+                    <Input onChangeText={(text) => this.setState({lastName: text})} value={this.state.lastName} />
                 </Item>
                 <Item floatingLabel>
                     <Label>Email</Label>
-                    <Input />
+                    <Input onChangeText={(text) => this.setState({email: text})} value={this.state.email} />
                 </Item>
                 <Item floatingLabel>
                     <Label>Username</Label>
-                    <Input />
+                    <Input  onChangeText={(text) => this.setState({username: text})} value={this.state.username} />
                 </Item>
                 <Item floatingLabel last>
                     <Label>Password</Label>
-                    <Input secureTextEntry={true}/>
+                    <Input secureTextEntry={true} onChangeText={(text) => this.setState({password: text})} value={this.state.password} />
                 </Item>
             </Form>
-            <Button primary block style={styles.button}>
+            <Button primary block style={styles.button} onPress={() => this.submit()}>
                 <Text style={styles.buttomText}>Register</Text>
             </Button>
         </Content>
