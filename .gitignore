@@ -22,9 +22,6 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
-# lock file
-*.lock
-
 # Android/IntelliJ
 #
 build/
