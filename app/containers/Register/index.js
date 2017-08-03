@@ -14,31 +14,40 @@ import {
     Text
 } from 'native-base';
 import { StyleSheet, Alert } from 'react-native';
-const role = [
-        { 
-            value: "key0",
-            label: "Attendee"
-        },
-        { 
-            value: "key1",
-            label: "Booth"
-        },
-        { 
-            value: "key2",
-            label: "Speaker"
-        }
-    ]
+import ValidationComponent from 'react-native-form-validator';
 
-export default class Register extends Component {
+const role = [
+    { 
+        value: "key0",
+        label: "Attendee"
+    },
+    { 
+        value: "key1",
+        label: "Booth"
+    },
+    { 
+        value: "key2",
+        label: "Speaker"
+    }
+];
+
+export default class Register extends ValidationComponent {
     constructor(props) {
         super(props);
         this.state = {
-            role: '',
             firstName: '',
             LastName: '',
             role: '',
             email: '',
             password: '',
+            username: '',
+            isError: {
+                "firstName": false,
+                "lastName": false,
+                "email": false,
+                "password": false,
+                "username": false,
+            }
         }
     }
     onValueChange (value: string) {
@@ -51,8 +60,30 @@ export default class Register extends Component {
         this.setState({role: 'Attendee'});
     }
 
+    handleInputChange = (text) => {
+        // 
+    }
+
     submit = () => {
-        this.handleSubmit(this.state);
+        let rules = {
+            firstName: { required: true},
+            email: {email: true},
+        };
+
+        if(this.validate(rules)){
+            this.handleSubmit(this.state);
+        }else{
+            this.setState((state = this.state) => {
+                state.isError.firstName = this.isFieldInError('firstName');
+                state.isError.lastName = this.isFieldInError('lastName');
+                state.isError.email = this.isFieldInError('email');
+                state.isError.username = this.isFieldInError('username');
+                state.isError.username = this.isFieldInError('username');
+                state.isError.password = this.isFieldInError('password');
+                return state;
+            });
+            // Alert.alert('', this.getErrorMessages());
+        }
     }
 
     handleSubmit = (data) => {
@@ -93,9 +124,27 @@ export default class Register extends Component {
       <Container style={styles.container}>
         <Content>
             <Form>
-                <ListItem itemDivider>
-                    <Text style={styles.labelText}>ROLE</Text>
-                </ListItem> 
+                <Item floatingLabel error={this.state.isError.firstName}>
+                    <Label>First Name</Label>
+                    <Input onChangeText={(text) => this.setState({firstName: text})} value={this.state.firstName} />
+                </Item>
+                <Item floatingLabel error={this.state.isError.lastName}>
+                    <Label>Last Name</Label>
+                    <Input onChangeText={(text) => this.setState({lastName: text})} value={this.state.lastName} />
+                </Item>
+                <Item floatingLabel error={this.state.isError.email}>
+                    <Label>Email</Label>
+                    <Input onChangeText={(text) => this.setState({email: text})} value={this.state.email} />
+                </Item>
+                <Item floatingLabel error={this.state.isError.username}>
+                    <Label>Username</Label>
+                    <Input  onChangeText={(text) => this.setState({username: text})} value={this.state.username} />
+                </Item>
+                <Item floatingLabel error={this.state.isError.password}>   
+                    <Label>Password</Label>
+                    <Input secureTextEntry={true} onChangeText={(text) => this.setState({password: text})} value={this.state.password} />
+                </Item>
+                
                 <Picker
                     style={styles.picker}
                     placeholder="Role"
@@ -107,29 +156,7 @@ export default class Register extends Component {
                         <Item key={component.value} label={component.label} value={component.label} />
                     ))}
                 </Picker>
-                <ListItem itemDivider>
-                    <Text style={styles.labelText}>FORM</Text>
-                </ListItem>
-                <Item floatingLabel>
-                    <Label>First Name</Label>
-                    <Input onChangeText={(text) => this.setState({firstName: text})} value={this.state.firstName} />
-                </Item>
-                <Item floatingLabel>
-                    <Label>Last Name</Label>
-                    <Input onChangeText={(text) => this.setState({lastName: text})} value={this.state.lastName} />
-                </Item>
-                <Item floatingLabel>
-                    <Label>Email</Label>
-                    <Input onChangeText={(text) => this.setState({email: text})} value={this.state.email} />
-                </Item>
-                <Item floatingLabel>
-                    <Label>Username</Label>
-                    <Input  onChangeText={(text) => this.setState({username: text})} value={this.state.username} />
-                </Item>
-                <Item floatingLabel last>
-                    <Label>Password</Label>
-                    <Input secureTextEntry={true} onChangeText={(text) => this.setState({password: text})} value={this.state.password} />
-                </Item>
+                
             </Form>
             <Button primary block style={styles.button} onPress={() => this.submit()}>
                 <Text style={styles.buttomText}>Register</Text>
