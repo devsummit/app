@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Container, Content, Text } from 'native-base';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Animated, TouchableWithoutFeedback } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import App from './../../index.js';
-import Fade from './../../components/Fade';
+import { createTransition, Fade } from 'react-native-transition';
+
+const Transition = createTransition(Fade);
 
 export default class Splash extends Component {
   constructor(props) {
@@ -13,20 +15,24 @@ export default class Splash extends Component {
         timeout: false
     }
   };
+  
   componentDidMount() {
-      setTimeout(() => {this.setState({timeout: true})},3000)
+      setTimeout(() => {this.state.timeout ? null : this.setState({timeout: true})},2000)
   }
 
   render() {
     return (
-      this.state.timeout ? <App /> :
-      <Container style={styles.container}>
-        <Content>
-            <Image source={require('../../../assets/images/logo.png')} style={styles.logo} />
-            <Text style={styles.titleText}>DevSummit</Text>
-        </Content>
-      </Container>
-     
+      <Transition>
+        { this.state.timeout ? Transition.show(<App />) :
+        <TouchableWithoutFeedback onPress={()=>{this.setState({timeout: true})}}>
+          <Container style={styles.container}>
+            <Content>
+                <Image source={require('../../../assets/images/logo.png')} style={styles.logo} />
+                <Text style={styles.titleText}>DevSummit</Text>
+            </Content>
+          </Container> 
+        </TouchableWithoutFeedback>}
+      </Transition>
     );
   }
 }
