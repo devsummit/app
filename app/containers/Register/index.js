@@ -50,6 +50,7 @@ export default class Register extends ValidationComponent {
             }
         }
     }
+
     onValueChange (value: string) {
         this.setState({
             role : value
@@ -57,32 +58,56 @@ export default class Register extends ValidationComponent {
     }
 
     componentWillMount(){
+        this.isFieldInError('firstName')
         this.setState({role: 'Attendee'});
     }
 
-    handleInputChange = (text) => {
-        // 
+    handleInputChange = async (field, value) => {
+        await this.setValue(field, value)
+
+        const rules = {
+            firstName: { required: true},
+            lastName: { required: true},
+            email: {email: true},
+            username: {required: true},
+            password: {required: true},
+        };
+
+        if(!this.validate(rules)){
+            this.setState((prevState)=>{
+                var isError = prevState.isError
+                isError[field] = this.isFieldInError(field)
+                return {isError}
+            });
+        }
+
+    }
+
+    // set input state value
+    setValue = (field, value) => {
+        const change = {}
+        change[field] = value
+        this.setState(change)
     }
 
     submit = () => {
-        let rules = {
+        // console.log(this.validate(this.rules));
+        // this.validate(this.rules);
+        const rules = {
             firstName: { required: true},
+            lastName: { required: true},
             email: {email: true},
+            username: {required: true},
+            password: {required: true},
         };
 
         if(this.validate(rules)){
             this.handleSubmit(this.state);
         }else{
-            this.setState((state = this.state) => {
-                state.isError.firstName = this.isFieldInError('firstName');
-                state.isError.lastName = this.isFieldInError('lastName');
-                state.isError.email = this.isFieldInError('email');
-                state.isError.username = this.isFieldInError('username');
-                state.isError.username = this.isFieldInError('username');
-                state.isError.password = this.isFieldInError('password');
-                return state;
-            });
-            // Alert.alert('', this.getErrorMessages());
+            const fields = ['firstName', 'lastName', 'email', 'username', 'password'];
+            fields.forEach((field)=>{
+                this.handleInputChange(field, this.state[field]);
+            })
         }
     }
 
@@ -120,29 +145,31 @@ export default class Register extends ValidationComponent {
         });
     }
     render() {
+        console.log(this.state);
+
     return (
       <Container style={styles.container}>
         <Content>
             <Form>
                 <Item floatingLabel error={this.state.isError.firstName}>
                     <Label>First Name</Label>
-                    <Input onChangeText={(text) => this.setState({firstName: text})} value={this.state.firstName} />
+                    <Input onChangeText={(text) => this.handleInputChange('firstName', text)} value={this.state.firstName} />
                 </Item>
                 <Item floatingLabel error={this.state.isError.lastName}>
                     <Label>Last Name</Label>
-                    <Input onChangeText={(text) => this.setState({lastName: text})} value={this.state.lastName} />
+                    <Input onChangeText={(text) => this.handleInputChange('lastName', text)} value={this.state.lastName} />
                 </Item>
                 <Item floatingLabel error={this.state.isError.email}>
                     <Label>Email</Label>
-                    <Input onChangeText={(text) => this.setState({email: text})} value={this.state.email} />
+                    <Input onChangeText={(text) => this.handleInputChange('email', text)} value={this.state.email} />
                 </Item>
                 <Item floatingLabel error={this.state.isError.username}>
                     <Label>Username</Label>
-                    <Input  onChangeText={(text) => this.setState({username: text})} value={this.state.username} />
+                    <Input onChangeText={(text) => this.handleInputChange('username', text)} value={this.state.username} />
                 </Item>
                 <Item floatingLabel error={this.state.isError.password}>   
                     <Label>Password</Label>
-                    <Input secureTextEntry={true} onChangeText={(text) => this.setState({password: text})} value={this.state.password} />
+                    <Input secureTextEntry={true} onChangeText={(text) => this.handleInputChange('password', text)} value={this.state.password} />
                 </Item>
                 
                 <Picker
