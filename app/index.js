@@ -14,7 +14,6 @@ export default class App extends Component {
       logged: false
     };
   };
-
   render() {
     return (
         <Root>
