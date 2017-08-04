@@ -84,7 +84,7 @@ export default class Main extends Component {
               <Text style={styles.lineTextTwo}> or </Text>
               <View style={styles.lineTextOne}></View>
             </View>
-            <Button primary style={styles.button} onPress={() => Actions.register()}>
+            <Button primary style={styles.button}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
             </Button>
@@ -98,7 +98,7 @@ export default class Main extends Component {
             </Button>
           </View>
           <View style={styles.registerSection}>
-            <Text style={styles.registerText}>Don't have an account? <Text style={styles.registerTextBold}>Register</Text></Text>
+            <Text style={styles.registerText} onPress={() => Actions.register()}>Don't have an account? <Text style={styles.registerTextBold}>Register</Text></Text>
           </View>
         </Content>
       </Container>
