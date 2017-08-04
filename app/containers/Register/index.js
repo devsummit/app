@@ -11,10 +11,15 @@ import {
     Label,
     Input,
     Button, 
-    Text
+    Text,
+    Title
 } from 'native-base';
 import { StyleSheet, Alert } from 'react-native';
 import ValidationComponent from 'react-native-form-validator';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { createTransition, Fade } from 'react-native-transition';
+
+const Transition = createTransition(Fade);
 
 const role = [
     { 
@@ -43,6 +48,7 @@ export default class Register extends ValidationComponent {
     constructor(props) {
         super(props);
         this.state = {
+            useEmail: false,
             firstName: '',
             lastName: '',
             role: '',
@@ -139,47 +145,74 @@ export default class Register extends ValidationComponent {
 
     return (
       <Container style={styles.container}>
-        <Content>
-            <Form>
-                <Item floatingLabel error={this.state.isError.firstName}>
-                    <Label>First Name</Label>
-                    <Input onChangeText={(text) => this.handleInputChange('firstName', text)} value={this.state.firstName} />
-                </Item>
-                <Item floatingLabel error={this.state.isError.lastName}>
-                    <Label>Last Name</Label>
-                    <Input onChangeText={(text) => this.handleInputChange('lastName', text)} value={this.state.lastName} />
-                </Item>
-                <Item floatingLabel error={this.state.isError.email}>
-                    <Label>Email</Label>
-                    <Input onChangeText={(text) => this.handleInputChange('email', text)} value={this.state.email} />
-                </Item>
-                <Item floatingLabel error={this.state.isError.username}>
-                    <Label>Username</Label>
-                    <Input onChangeText={(text) => this.handleInputChange('username', text)} value={this.state.username} />
-                </Item>
-                <Item floatingLabel error={this.state.isError.password}>   
-                    <Label>Password</Label>
-                    <Input secureTextEntry={true} onChangeText={(text) => this.handleInputChange('password', text)} value={this.state.password} />
-                </Item>
-                
-                <Picker
-                    style={styles.picker}
-                    placeholder="Role"
-                    mode="dropdown"
-                    selectedValue={this.state.role}
-                    onValueChange={this.onValueChange.bind(this)}
-                    >
-                    {role.map((component) => (
-                        <Item key={component.value} label={component.label} value={component.label} />
-                    ))}
-                </Picker>
-                
-            </Form>
-            <Button primary block style={styles.button} onPress={() => this.submit()}>
-                <Text style={styles.buttomText}>Register</Text>
-            </Button>
-        </Content>
-      </Container>
+            {! this.state.useEmail && 
+                <Content>
+                    <Text style={styles.title}>Choose register method:</Text>
+                    <Button block style={styles.button} >
+                        <Icon name="facebook" color="white" style={styles.icon} />
+                        <Text style={styles.buttonText} >Facebook</Text>
+                    </Button>
+                    <Button info block style={styles.button} > 
+                        <Icon name="twitter" color="white" style={styles.icon} />
+                        <Text style={styles.buttonText} >Twitter</Text>
+                    </Button>
+                    <Button danger block style={styles.button} > 
+                        <Icon name="google-plus" color="white" style={styles.icon} />
+                        <Text style={styles.buttonText} >Google</Text>
+                    </Button>
+                    <Button warning block style={styles.button} onPress={() => this.setState({useEmail: true})}>
+                        <Icon name="envelope" color="white" style={styles.icon} />
+                        <Text style={styles.buttonText} >Email</Text>
+                    </Button>
+                </Content>
+            }
+
+            {/* if use email  */}
+            { this.state.useEmail && 
+              <Transition>
+                <Content>
+                    <Form>
+                        <Item floatingLabel error={this.state.isError.firstName}>
+                            <Label>First Name</Label>
+                            <Input onChangeText={(text) => this.handleInputChange('firstName', text)} value={this.state.firstName} />
+                        </Item>
+                        <Item floatingLabel error={this.state.isError.lastName}>
+                            <Label>Last Name</Label>
+                            <Input onChangeText={(text) => this.handleInputChange('lastName', text)} value={this.state.lastName} />
+                        </Item>
+                        <Item floatingLabel error={this.state.isError.email}>
+                            <Label>Email</Label>
+                            <Input onChangeText={(text) => this.handleInputChange('email', text)} value={this.state.email} />
+                        </Item>
+                        <Item floatingLabel error={this.state.isError.username}>
+                            <Label>Username</Label>
+                            <Input onChangeText={(text) => this.handleInputChange('username', text)} value={this.state.username} />
+                        </Item>
+                        <Item floatingLabel error={this.state.isError.password}>   
+                            <Label>Password</Label>
+                            <Input secureTextEntry={true} onChangeText={(text) => this.handleInputChange('password', text)} value={this.state.password} />
+                        </Item>
+
+                        <Picker
+                            style={styles.picker}
+                            placeholder="Role"
+                            mode="dropdown"
+                            selectedValue={this.state.role}
+                            onValueChange={this.onValueChange.bind(this)}
+                            >
+                            {role.map((component) => (
+                                <Item key={component.value} label={component.label} value={component.label} />
+                            ))}
+                        </Picker>
+
+                    </Form>
+                    <Button primary block style={styles.button} onPress={() => this.submit()}>
+                        <Text style={styles.buttomText}>Register</Text>
+                    </Button>
+                </Content>
+              </Transition>
+            }
+        </Container>
     );
   }
 }
@@ -188,11 +221,25 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgb(255,255,255)'
   },
+  title: {
+    fontSize: 18,
+    backgroundColor: '#efefef',
+    padding: 8,
+    paddingLeft: 20,
+    marginBottom: 20,
+  },
   button: {
-    margin: 12,
+    marginLeft: 12,
+    marginRight: 12,
+    marginBottom: 10,
+    borderRadius: 5,
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   buttonText: {
     textAlign: 'center',
+    flex: 9,
   },
   picker: {
     margin: 12
@@ -200,5 +247,10 @@ const styles = StyleSheet.create({
   labelText: {
       fontSize: 12,
       opacity: 0.6
+  },
+  icon: {
+    textAlign: 'left',
+    flex: 1,
+    fontSize: 18,
   }
 });
