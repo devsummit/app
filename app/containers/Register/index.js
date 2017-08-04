@@ -31,6 +31,14 @@ const role = [
     }
 ];
 
+const rules = {
+    firstName: { required: true},
+    lastName: { required: true},
+    email: {email: true},
+    username: {required: true},
+    password: {minlength: 3},
+};
+
 export default class Register extends ValidationComponent {
     constructor(props) {
         super(props);
@@ -65,14 +73,6 @@ export default class Register extends ValidationComponent {
     handleInputChange = async (field, value) => {
         await this.setValue(field, value)
 
-        const rules = {
-            firstName: { required: true},
-            lastName: { required: true},
-            email: {email: true},
-            username: {required: true},
-            password: {minlength: 3},
-        };
-
         if(!this.validate(rules)){
             this.setState((prevState)=>{
                 var isError = prevState.isError
@@ -91,14 +91,6 @@ export default class Register extends ValidationComponent {
     }
 
     submit = () => {
-        const rules = {
-            firstName: { required: true},
-            lastName: { required: true},
-            email: {email: true},
-            username: {required: true},
-            password: {minlength: 3},
-        };
-
         if(this.validate(rules)){
             this.handleSubmit(this.state);
         }else{
@@ -126,7 +118,7 @@ export default class Register extends ValidationComponent {
             })
         }).then((response) => response.json())
         .then(async (responseJson) => {
-            if (responseJson.message === 'user succesfully registered') {
+            if (responseJson.success) {
 
                 this.setState({loggedIn: true})
                 Alert.alert(
