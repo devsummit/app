@@ -70,7 +70,7 @@ export default class Register extends ValidationComponent {
             lastName: { required: true},
             email: {email: true},
             username: {required: true},
-            password: {required: true},
+            password: {minlength: 3},
         };
 
         if(!this.validate(rules)){
@@ -98,7 +98,7 @@ export default class Register extends ValidationComponent {
             lastName: { required: true},
             email: {email: true},
             username: {required: true},
-            password: {required: true},
+            password: {minlength: 3},
         };
 
         if(this.validate(rules)){
