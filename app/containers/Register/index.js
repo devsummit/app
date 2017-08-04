@@ -36,7 +36,7 @@ export default class Register extends ValidationComponent {
         super(props);
         this.state = {
             firstName: '',
-            LastName: '',
+            lastName: '',
             role: '',
             email: '',
             password: '',
@@ -91,8 +91,6 @@ export default class Register extends ValidationComponent {
     }
 
     submit = () => {
-        // console.log(this.validate(this.rules));
-        // this.validate(this.rules);
         const rules = {
             firstName: { required: true},
             lastName: { required: true},
