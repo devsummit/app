@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
     paddingTop: 25,
     backgroundColor: '#0D47A1',
-<<<<<<< HEAD
     marginBottom: 5
   },
   logo: {
@@ -141,14 +140,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonSection: {
-    marginTop: 14
-=======
+    marginTop: 14,
     paddingBottom: 80,
     paddingTop: 80,
-  },
-  buttons: {
-    marginTop: 25,
->>>>>>> 4ff3863f6a29a5edb2970fbd3f9ba2eabac9c97e
   },
   button: {
     width: '90%',
