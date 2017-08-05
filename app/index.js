@@ -3,9 +3,27 @@ import { Router, Scene } from 'react-native-router-flux';
 import { Root } from "native-base";
 import { StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+
+// Redux imports
+import { Provider, connect } from 'react-redux';
+import ReduxThunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers';
+
+
+// Containers import
 import Main from "./containers/Main";
 import Register from "./containers/Register";
 import Login from "./containers/Login";
+
+const RouterWithRedux = connect()(Router);
+
+
+/**
+ *  Apply middlewares
+ */
+export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore)
+let store = createStoreWithMiddleware(reducers); 
 
 export default class App extends Component {
   constructor(props) {
@@ -16,8 +34,8 @@ export default class App extends Component {
   };
   render() {
     return (
-        <Root>
-            <Router 
+        <Provider store={store}>
+            <RouterWithRedux
               navigationBarStyle={styles.navBar} 
               titleStyle={styles.navBarTitle} 
               barButtonTextStyle={styles.barButtonTextStyle}
@@ -29,8 +47,8 @@ export default class App extends Component {
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
                 </Scene>
-            </Router>
-        </Root>
+            </RouterWithRedux>
+        </Provider>
     );
   }
 }
