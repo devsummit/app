@@ -11,6 +11,7 @@ import {
 	UPDATE_SINGLE_ERROR_FIELD,
 	UPDATE_REGISTER_METHOD,
 	TOGGLE_IS_REGISTERING,
+	UPDATE_REGISTER_STATUS,
 } from './constants'
 
 
@@ -66,6 +67,13 @@ export function toggleIsRegistering(status) {
 }
 
 
+export function updateRegisterStatus(status) {
+	return {
+		type: UPDATE_REGISTER_STATUS,
+		status
+	}
+}
+
 /*
  * Register user
  */
@@ -87,7 +95,10 @@ export function register() {
 
 				if(response && response.data && response.data.success) {
 					// do something
+					dispatch(updateRegisterStatus(true));
 				}
+			}).catch((error) => {
+				console.log(error, 'error caught');
 			})	
 		}
 		

@@ -43,3 +43,13 @@ export const getRegisterMethod = () => createSelector(
   selectRegisterReducer(),
   (state) => state.get('registerMethod')
 );
+
+/**
+ *  get the register status
+ *  Returns boolean value
+ */
+export const getRegisterStatus = () => createSelector(
+  selectRegisterReducer(),
+  (state) => state.get('isRegistered')
+);
+

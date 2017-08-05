@@ -6,6 +6,7 @@ import {
 	UPDATE_SINGLE_INPUT_FIELD,
 	UPDATE_SINGLE_ERROR_FIELD,
 	UPDATE_REGISTER_METHOD,
+	UPDATE_REGISTER_STATUS,
 } from './constants'
 
 import { fromJS } from 'immutable'
@@ -25,6 +26,7 @@ const initialState = fromJS({
 	},
 	registerMethod: 'undefined',
 	isRegistering: false,
+	isRegistered: false,
 });
 
 function registerReducer(state=initialState, action) {
@@ -39,6 +41,9 @@ function registerReducer(state=initialState, action) {
 		case UPDATE_REGISTER_METHOD:
 			return state.set('registerMethod', action.payload);
 
+		case UPDATE_REGISTER_STATUS:
+			return state.set('isRegistered', action.status);
+
 		default:
 			return state;
 	}
@@ -48,4 +53,4 @@ function registerReducer(state=initialState, action) {
  * export the reducer
  */
 
-export default registerReducer
+export default registerReducer;

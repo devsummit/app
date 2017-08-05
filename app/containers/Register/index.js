@@ -90,6 +90,9 @@ class Register extends Component {
             console.log('isregistering...');
             return;
         }
+        if(this.props.isRegistered) {
+            Alert.alert('Status', 'user registered successfully');
+        }
 
         // destructure state
         const { registerMethod, inputFields, errorFields } = this.props || {};
@@ -177,6 +180,7 @@ const mapStateToProps = createStructuredSelector({
   errorFields: selectors.getErrorFields(),
   registerMethod: selectors.getRegisterMethod(),
   isRegistering: selectors.getIsRegistering(),
+  isRegistered: selectors.getRegisterStatus(),
 })
 
 export default connect(mapStateToProps, actions)(Register);
