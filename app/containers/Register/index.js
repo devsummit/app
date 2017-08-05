@@ -147,7 +147,7 @@ export default class Register extends ValidationComponent {
       <Container style={styles.container}>
             {! this.state.useEmail && 
                 <Content>
-                    <Text style={styles.title}>Choose register method:</Text>
+                    <Text style={styles.title}>Register with: </Text>
                     <Button block style={styles.button} >
                         <Icon name="facebook" color="white" style={styles.icon} />
                         <Text style={styles.buttonText} >Facebook</Text>
