@@ -27,22 +27,10 @@ import { createStructuredSelector } from 'reselect'
 import * as actions from './actions';
 import * as selectors from './selectors'
 
-const Transition = createTransition(Fade);
+// import constants
+import { role_option } from '../../constants';
 
-const role_option = [
-    { 
-        value: "key0",
-        label: "attendee"
-    },
-    { 
-        value: "key1",
-        label: "booth"
-    },
-    { 
-        value: "key2",
-        label: "speaker"
-    }
-];
+const Transition = createTransition(Fade);
 
 class Register extends Component {
 
