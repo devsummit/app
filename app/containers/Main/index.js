@@ -51,6 +51,7 @@ export default class Main extends Component {
         )
     });
   }
+
   render() {
     return (
       <Container style={styles.container}>
@@ -141,8 +142,8 @@ const styles = StyleSheet.create({
   },
   buttonSection: {
     marginTop: 14,
-    paddingBottom: 80,
-    paddingTop: 80,
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   button: {
     width: '90%',
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     opacity:0.3,
   },
   registerSection: {
-    marginTop: 15,
+    marginTop: 0,
   },
   registerText: {
     textDecorationLine: 'underline',
