@@ -39,11 +39,13 @@ class Main extends Component {
           </View>
           <View style={styles.formSection}>
             <Form>
-              <Item>
-                <Input placeholder="Username" onChangeText={username => this.handleInputChange('username', username)} />
+              <Item floatingLabel >
+                <Label>Username</Label>
+                <Input onChangeText={username => this.handleInputChange('username',username)} />
               </Item>
-              <Item>
-                <Input placeholder="Password" secureTextEntry onChangeText={password => this.handleInputChange('password', password)} />
+              <Item floatingLabel >
+                <Label>Password</Label>
+                <Input secureTextEntry={true} onChangeText={password => this.handleInputChange('password', password)} />
               </Item>
             </Form>
           </View>
