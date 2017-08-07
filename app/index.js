@@ -13,6 +13,7 @@ import reducers from './reducers';
 import Main from './containers/Main/MainWrapper';
 import Register from './containers/Register';
 import Login from './containers/Login';
+import ChangePassword from "./containers/ChangePassword";
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -51,21 +52,21 @@ export default class App extends Component {
   }
   render() {
     return (
-      <Provider store={store}>
-        <RouterWithRedux
-          navigationBarStyle={styles.navBar}
-          titleStyle={styles.navBarTitle}
-          barButtonTextStyle={styles.barButtonTextStyle}
-          barButtonIconStyle={styles.barButtonIconStyle}
-          leftButtonIconStyle={styles.leftButtonIconStyle}
-        >
-          <Scene key="root" backButtonImage={BackButtonImg}>
-            <Scene key="main" component={Main} hideNavBar initial={!this.state.logged} />
-            <Scene key="register" component={Register} title="Register" />
-            <Scene key="login" component={Login} title="Login" />
-          </Scene>
-        </RouterWithRedux>
-      </Provider>
+        <Provider store={store}>
+            <RouterWithRedux
+              navigationBarStyle={styles.navBar} 
+              titleStyle={styles.navBarTitle} 
+              barButtonTextStyle={styles.barButtonTextStyle}
+              barButtonIconStyle={styles.barButtonIconStyle}
+              leftButtonIconStyle={styles.leftButtonIconStyle}
+            >
+                <Scene key="root" backButtonImage={require('../assets/images/back.png')}>
+                    <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
+                    <Scene key="register" component={Register} title="Register"/>
+                    <Scene key="change_password" component={ChangePassword} title="Change Password"/>
+                </Scene>
+            </RouterWithRedux>
+        </Provider>
     );
   }
 }
