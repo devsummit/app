@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 /**
  *  Select the main portion of the root reducer
  */
-const selectRegisterReducer = () => (state) => state.get('register');
+const selectRegisterReducer = () => state => state.get('register');
 
 /**
  *  Selects the username field data
@@ -14,7 +14,7 @@ const selectRegisterReducer = () => (state) => state.get('register');
  */
 export const getInputFields = () => createSelector(
   selectRegisterReducer(),
-  (state) => state.get('inputFields').toJS()
+  state => state.get('inputFields').toJS()
 );
 
 /**
@@ -23,7 +23,7 @@ export const getInputFields = () => createSelector(
  */
 export const getErrorFields = () => createSelector(
   selectRegisterReducer(),
-  (state) => state.get('errorFields').toJS()
+  state => state.get('errorFields').toJS()
 );
 
 /**
@@ -32,7 +32,7 @@ export const getErrorFields = () => createSelector(
  */
 export const getIsRegistering = () => createSelector(
   selectRegisterReducer(),
-  (state) => state.get('isRegistering')
+  state => state.get('isRegistering')
 );
 
 /**
@@ -41,7 +41,7 @@ export const getIsRegistering = () => createSelector(
  */
 export const getRegisterMethod = () => createSelector(
   selectRegisterReducer(),
-  (state) => state.get('registerMethod')
+  state => state.get('registerMethod')
 );
 
 /**
@@ -50,6 +50,6 @@ export const getRegisterMethod = () => createSelector(
  */
 export const getRegisterStatus = () => createSelector(
   selectRegisterReducer(),
-  (state) => state.get('isRegistered')
+  state => state.get('isRegistered')
 );
 
