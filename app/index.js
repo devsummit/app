@@ -15,6 +15,7 @@ import reducers from './reducers';
 import Main from "./containers/Main";
 import Register from "./containers/Register";
 import Login from "./containers/Login";
+import SettingUser from "./containers/SettingUser";
 
 const RouterWithRedux = connect()(Router);
 
@@ -46,6 +47,7 @@ export default class App extends Component {
                     <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
+                    <Scene key="settingUser" component={SettingUser} title="Settings"/>
                 </Scene>
             </RouterWithRedux>
         </Provider>
