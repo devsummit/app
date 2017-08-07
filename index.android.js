@@ -6,6 +6,6 @@ import {
   View
 } from 'react-native';
 
-import Splash from './app/containers/Splash';
+import App from './app/index';
 
-AppRegistry.registerComponent('DevSummit', () => Splash);
+AppRegistry.registerComponent('DevSummit', () => App);
