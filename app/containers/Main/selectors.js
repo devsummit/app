@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 /**
  *  Select the main portion of the root reducer
  */
-const selectMainReducer = () => (state) => state.get('main');
+const selectMainReducer = () => state => state.get('main');
 
 /**
  *  Selects the username field data
@@ -14,7 +14,7 @@ const selectMainReducer = () => (state) => state.get('main');
  */
 export const getFields = () => createSelector(
   selectMainReducer(),
-  (state) => state.get('fields').toJS()
+  state => state.get('fields').toJS()
 );
 
 /**
@@ -23,6 +23,6 @@ export const getFields = () => createSelector(
  */
 export const isLoggedIn = () => createSelector(
   selectMainReducer(),
-  (state) => state.get('isLoggedIn')
+  state => state.get('isLoggedIn')
 );
 

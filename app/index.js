@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Router, Scene } from 'react-native-router-flux';
-import { Root } from "native-base";
-import { StyleSheet, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { StyleSheet } from 'react-native';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
-import ReduxThunk from 'redux-thunk'
+import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 
@@ -18,13 +16,32 @@ import Login from "./containers/Login";
 import SettingUser from "./containers/SettingUser";
 
 const RouterWithRedux = connect()(Router);
+const BackButtonImg = require('../assets/images/back.png');
 
 
 /**
  *  Apply middlewares
  */
-export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore)
-let store = createStoreWithMiddleware(reducers); 
+export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
+
+const styles = StyleSheet.create({
+  navBar: {
+    backgroundColor: '#0D47A1'
+  },
+  navBarTitle: {
+    color: '#FFFFFF'
+  },
+  barButtonTextStyle: {
+    color: '#FFFFFF'
+  },
+  barButtonIconStyle: {
+    tintColor: 'rgb(255,255,255)'
+  },
+  leftButtonIconStyle: {
+    tintColor: 'white'
+  }
+});
 
 export default class App extends Component {
   constructor(props) {
@@ -32,7 +49,7 @@ export default class App extends Component {
     this.state = {
       logged: false
     };
-  };
+  }
   render() {
     return (
         <Provider store={store}>
@@ -43,7 +60,7 @@ export default class App extends Component {
               barButtonIconStyle={styles.barButtonIconStyle}
               leftButtonIconStyle={styles.leftButtonIconStyle}
             >
-                <Scene key="root" backButtonImage={require('../assets/images/back.png')}>
+                <Scene key="root" backButtonImage={BackButtonImg}>
                     <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
@@ -54,21 +71,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  navBar: {
-    backgroundColor:'#0D47A1',
-  },
-  navBarTitle:{
-    color:'#FFFFFF'
-  },
-  barButtonTextStyle:{
-    color:'#FFFFFF'
-  },
-  barButtonIconStyle:{
-    tintColor:'rgb(255,255,255)'
-  },
-  leftButtonIconStyle:{
-    tintColor: 'white'
-  }
-});

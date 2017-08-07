@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgb(255,255,255)',
-    flex: 1,
+    flex: 1
   },
   headerSection: {
     justifyContent: 'center',
@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 60,
-    width: 60,
+    width: 60
   },
   titleText: {
     fontSize: 10.5,
     color: 'white',
     fontFamily: 'Montserrat',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   formSection: {
     marginRight: 20,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   icon: {
     textAlign: 'left',
     flex: 1,
-    fontSize: 18,
+    fontSize: 18
   },
   buttonSection: {
     marginTop: 8,
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 6,
     flexDirection: 'row',
-    flex: 1,
+    flex: 1
   },
   buttonText: {
     textAlign: 'center',
     paddingRight: 26,
-    flex: 7,
+    flex: 7
   },
   lineSection: {
     position: 'relative',
@@ -59,19 +59,19 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginLeft: 20,
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 5
   },
   lineTextOne: {
-    flex:4.5,
-    opacity:0.1,
+    flex: 4.5,
+    opacity: 0.1,
     backgroundColor: 'black',
     height: 1.5,
     marginTop: 12
   },
   lineTextTwo: {
     textAlign: 'center',
-    flex:1,
-    opacity:0.3,
+    flex: 1,
+    opacity: 0.3
   },
   registerSection: {
     marginTop: 0,
