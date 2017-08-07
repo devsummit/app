@@ -22,8 +22,9 @@ const initialState = fromJS({
 	errorFields: {
 		error_current_password: false,
 		error_new_password: false,
-		error_confirm_password: false
-	}
+		error_confirm_password: false,
+		error_password_not_the_same: false
+	},
 });
 
 function changePasswordReducer(state=initialState, action) {

@@ -25,9 +25,24 @@ const styles = StyleSheet.create({
     flex: 9,
   },
   labelText: {
-      fontSize: 12,
-      opacity: 0.6
+    fontSize: 12,
+    opacity: 0.6
   },
+  errorLabel: {
+    color: 'red'
+  },
+  normalLabel: {
+    color: 'grey'
+  },
+  normalLabelActive: {
+    color: 'grey'
+  },
+  newPassValidator: {
+    margin: 8,
+    marginLeft: 16,
+    fontSize: 12,
+    color: 'red'
+  } 
 });
 
 export default styles;
