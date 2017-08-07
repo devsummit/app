@@ -14,7 +14,6 @@ import Register from "./containers/Register";
 import Login from "./containers/Login";
 import SettingUser from "./containers/SettingUser";
 import Main from './containers/Main/MainWrapper';
-import Login from './containers/Login';
 import ChangePassword from "./containers/ChangePassword";
 
 const RouterWithRedux = connect()(Router);
