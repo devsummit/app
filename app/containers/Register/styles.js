@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#efefef',
     padding: 8,
     paddingLeft: 20,
-    marginBottom: 20,
+    marginBottom: 20
   },
   button: {
     marginLeft: 12,
@@ -18,23 +18,23 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flex: 1,
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   buttonText: {
     textAlign: 'center',
-    flex: 9,
+    flex: 9
   },
   picker: {
     margin: 12
   },
   labelText: {
-      fontSize: 12,
-      opacity: 0.6
+    fontSize: 12,
+    opacity: 0.6
   },
   icon: {
     textAlign: 'left',
     flex: 1,
-    fontSize: 18,
+    fontSize: 18
   }
 });
 
