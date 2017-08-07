@@ -14,7 +14,10 @@ import { fromJS } from 'immutable'
  * initial state of reducers
  */
 const initialState = fromJS({
-	fields: {},
+	fields: {
+		username: '',
+		password: ''
+	},
 	isLoggedIn: false
 });
 

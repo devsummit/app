@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonSection: {
-    marginTop: 14,
-    paddingBottom: 20,
-    paddingTop: 20,
+    marginTop: 8,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   button: {
     width: '90%',
@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
   },
   registerSection: {
     marginTop: 0,
+    padding: 5,
+    paddingBottom: 25,
   },
   registerText: {
     textDecorationLine: 'underline',
