@@ -10,8 +10,9 @@ import reducers from './reducers';
 
 
 // Containers import
-import Main from "./containers/Main";
-import Register from "./containers/Register";
+import Main from './containers/Main/MainWrapper';
+import Register from './containers/Register';
+import Login from './containers/Login';
 import ChangePassword from "./containers/ChangePassword";
 
 const RouterWithRedux = connect()(Router);

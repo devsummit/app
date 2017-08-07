@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Form, Input, Item } from 'native-base';
+import { Container, Content, Button, Text, Form, Input, Item, Label } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image, View, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -14,6 +14,8 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+const Logo = require('../../../assets/images/logo.png');
+
 class Main extends Component {
   onLogin = () => {
     this.props.login();
@@ -22,7 +24,6 @@ class Main extends Component {
   handleInputChange = (field, value) => {
     this.props.updateFields(field, value);
   }
-
 
   render() {
     const { fields, isLoggedIn } = this.props;
@@ -34,18 +35,23 @@ class Main extends Component {
       <Container style={styles.container}>
         <Content>
           <View style={styles.headerSection}>
-            <Image source={require('../../../assets/images/logo.png')} style={styles.logo} />
+            <Image source={Logo} style={styles.logo} />
             <Text style={styles.titleText}>DevSummit</Text>
           </View>
           <View style={styles.formSection}>
             <Form>
               <Item floatingLabel >
                 <Label>Username</Label>
-                <Input onChangeText={username => this.handleInputChange('username',username)} />
+                <Input
+                  onChangeText={username => this.handleInputChange('username', username)}
+                />
               </Item>
               <Item floatingLabel >
                 <Label>Password</Label>
-                <Input secureTextEntry={true} onChangeText={password => this.handleInputChange('password', password)} />
+                <Input
+                  secureTextEntry
+                  onChangeText={password => this.handleInputChange('password', password)}
+                />
               </Item>
             </Form>
           </View>
@@ -90,7 +96,6 @@ class Main extends Component {
     );
   }
 }
-
 
 /**
  *  Map redux state to component props
