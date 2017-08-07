@@ -10,8 +10,10 @@ import reducers from './reducers';
 
 
 // Containers import
+import Register from "./containers/Register";
+import Login from "./containers/Login";
+import SettingUser from "./containers/SettingUser";
 import Main from './containers/Main/MainWrapper';
-import Register from './containers/Register';
 import Login from './containers/Login';
 import ChangePassword from "./containers/ChangePassword";
 
@@ -60,9 +62,11 @@ export default class App extends Component {
               barButtonIconStyle={styles.barButtonIconStyle}
               leftButtonIconStyle={styles.leftButtonIconStyle}
             >
-                <Scene key="root" backButtonImage={require('../assets/images/back.png')}>
+                <Scene key="root" backButtonImage={BackButtonImg}>
                     <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
                     <Scene key="register" component={Register} title="Register"/>
+                    <Scene key="login" component={Login} title="Login"/>
+                    <Scene key="settingUser" component={SettingUser} title="Settings"/>
                     <Scene key="change_password" component={ChangePassword} title="Change Password"/>
                 </Scene>
             </RouterWithRedux>
