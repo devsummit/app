@@ -29,7 +29,8 @@
         "react/prop-types": 1,
         "semi": [ 1, "always" ],
         "space-before-blocks": [ 1, "always" ],
-        "consistent-return": 2
+        "consistent-return": 0,
+        "arrow-body-style": ["error", "always"]
     },
     "globals": {
       "describe": false,

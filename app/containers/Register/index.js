@@ -36,14 +36,14 @@ class Register extends Component {
     this.props.updateInputFields('role', 'attendee');
   }
 
-    handleInputChange = (field, value) => {
-      this.props.updateInputFields(field, value);
-      this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
-    }
+  handleInputChange = (field, value) => {
+    this.props.updateInputFields(field, value);
+    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
+  }
 
-    handleButtonClick = (value) => {
-      this.props.updateRegisterMethod(value);
-    }
+  handleButtonClick = (value) => {
+    this.props.updateRegisterMethod(value);
+  }
 
     submitRegistration = () => {
       if (this.isFieldError()) {
@@ -165,7 +165,12 @@ class Register extends Component {
                   </Picker>
 
                 </Form>
-                <Button primary block style={styles.button} onPress={() => this.submitRegistration()}>
+                <Button
+                  primary
+                  block
+                  style={styles.button}
+                  onPress={() => this.submitRegistration()}
+                >
                   <Text style={styles.buttomText}>Register</Text>
                 </Button>
               </Content>

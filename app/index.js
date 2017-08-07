@@ -10,10 +10,12 @@ import reducers from './reducers';
 
 
 // Containers import
-import Main from "./containers/Main";
 import Register from "./containers/Register";
 import Login from "./containers/Login";
 import SettingUser from "./containers/SettingUser";
+import Main from './containers/Main/MainWrapper';
+import Login from './containers/Login';
+import ChangePassword from "./containers/ChangePassword";
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -65,6 +67,7 @@ export default class App extends Component {
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
                     <Scene key="settingUser" component={SettingUser} title="Settings"/>
+                    <Scene key="change_password" component={ChangePassword} title="Change Password"/>
                 </Scene>
             </RouterWithRedux>
         </Provider>
