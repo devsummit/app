@@ -80,7 +80,7 @@ class Main extends Component {
             </Button>
           </View>
           <View style={styles.registerSection}>
-            <Text style={styles.registerText} onPress={() => Actions.register()}>Don't have an account? <Text style={styles.registerTextBold}>Register</Text></Text>
+            <Text style={styles.registerText} onPress={() => Actions.change_password()}>Don't have an account? <Text style={styles.registerTextBold}>Register</Text></Text>
           </View>
         </Content>
       </Container>
