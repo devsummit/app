@@ -15,14 +15,15 @@ import Login from "./containers/Login";
 import SettingUser from "./containers/SettingUser";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
+import TicketList from './containers/TicketList';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
 
 
 /**
- *  Apply middlewares
- */
+*  Apply middlewares
+*/
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
@@ -53,23 +54,24 @@ export default class App extends Component {
   }
   render() {
     return (
-        <Provider store={store}>
-            <RouterWithRedux
-              navigationBarStyle={styles.navBar} 
-              titleStyle={styles.navBarTitle} 
-              barButtonTextStyle={styles.barButtonTextStyle}
-              barButtonIconStyle={styles.barButtonIconStyle}
-              leftButtonIconStyle={styles.leftButtonIconStyle}
-            >
-                <Scene key="root" backButtonImage={BackButtonImg}>
-                    <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
-                    <Scene key="register" component={Register} title="Register"/>
-                    <Scene key="login" component={Login} title="Login"/>
-                    <Scene key="settingUser" component={SettingUser} title="Settings"/>
-                    <Scene key="change_password" component={ChangePassword} title="Change Password"/>
-                </Scene>
-            </RouterWithRedux>
-        </Provider>
+      <Provider store={store}>
+        <RouterWithRedux
+          navigationBarStyle={styles.navBar}
+          titleStyle={styles.navBarTitle}
+          barButtonTextStyle={styles.barButtonTextStyle}
+          barButtonIconStyle={styles.barButtonIconStyle}
+          leftButtonIconStyle={styles.leftButtonIconStyle}
+        >
+          <Scene key="root" backButtonImage={BackButtonImg}>
+            <Scene key="main" component={Main} hideNavBar initial={!this.state.logged}/>
+            <Scene key="register" component={Register} title="Register" />
+            <Scene key="login" component={Login} title="Login" />
+            <Scene key="settingUser" component={SettingUser} title="Settings" />
+            <Scene key="change_password" component={ChangePassword} title="Change Password" />
+            <Scene key="ticketList" component={TicketList} title="List Ticket" />
+          </Scene>
+        </RouterWithRedux>
+      </Provider>
     );
   }
 }
