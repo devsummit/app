@@ -9,5 +9,4 @@ const rootReducers = combineReducers({
 	register: RegisterReducer
 })
 
-
 export default rootReducers;
