@@ -12,14 +12,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
 class TicketList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: 'John',
-      lastName: 'Doe'
-    };
-  }
-
   printDummy = () => {
     let rows = [];
     for (let i = 0; i < 20; i++) {
