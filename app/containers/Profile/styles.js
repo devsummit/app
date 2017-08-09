@@ -16,9 +16,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginBottom: 15,
     },
+    section3: {
+        flex: 1,
+        alignItems: 'flex-start',
+        paddingTop: 20,
+        paddingLeft: 16,
+    },
+    username: {
+        fontWeight: 'bold'
+    },
     profileImage: {
-        width: 130,
-        height: 130,
+        width: 110,
+        height: 110,
         borderRadius: 65,
         borderWidth: 1,
     },

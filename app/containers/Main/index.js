@@ -5,7 +5,7 @@ import { Image, View, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 
-// import redux components
+// import redux componens
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -29,7 +29,7 @@ class Main extends Component {
     const { fields, isLoggedIn } = this.props;
     const { username, password } = fields || '';
     if (isLoggedIn) {
-      Alert.alert('success', 'User logged in!');
+      Actions.mainTabs()
     }
     return (
       <Container style={styles.container}>
