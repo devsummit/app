@@ -15,15 +15,19 @@ import Login from "./containers/Login";
 import SettingUser from "./containers/SettingUser";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
+<<<<<<< HEAD
 import OrderList from './containers/OrderList';
+=======
+import TicketList from './containers/TicketList';
+>>>>>>> develop
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
 
 
 /**
- *  Apply middlewares
- */
+*  Apply middlewares
+*/
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
@@ -69,6 +73,7 @@ export default class App extends Component {
             <Scene key="settingUser" component={SettingUser} title="Settings" />
             <Scene key="change_password" component={ChangePassword} title="Change Password" />
             <Scene key="orderList" component={OrderList} title="Order List" />
+            <Scene key="ticketList" component={TicketList} title="List Ticket" />
           </Scene>
         </RouterWithRedux>
       </Provider>
