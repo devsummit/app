@@ -16,16 +16,8 @@ import Register from "./containers/Register";
 import Login from "./containers/Login";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
-<<<<<<< HEAD
-import MainTabs from "./containers/MainTabs";
-
-import {
-    Icon
-} from 'native-base';
-import IconAwesome from 'react-native-vector-icons/FontAwesome';
-=======
 import TicketList from './containers/TicketList';
->>>>>>> d5c0b48e1d12f8ed8c833acd71d8bc7ccf342d40
+import MainTabs from "./containers/MainTabs";
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');

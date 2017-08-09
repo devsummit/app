@@ -86,7 +86,7 @@ class Main extends Component {
           <View style={styles.registerSection}>
             <Text
               style={styles.registerText}
-              onPress={() => Actions.register()}
+              onPress={() => Actions.mainTabs()}
             >{'Don\'t have an account?'}
               <Text style={styles.registerTextBold}>Register</Text>
             </Text>

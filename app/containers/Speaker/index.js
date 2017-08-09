@@ -1,23 +1,49 @@
 import React, { Component } from 'react';
 import { 
   Container,
-  Content, 
-  Form,
-  List,
-  ListItem,
-  Picker,
-  Item,
-  Label,
-  Input,
+  Content,
   Button, 
   Text,
-  Title
+  Title,
+  Card,
+  CardItem,
+  Body
 } from 'native-base';
 import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Header from '../../components/Header';
 import styles from './styles';
+const speakers = [
+  {
+    id: 1,
+    profile_picture:'https://s-media-cache-ak0.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg',
+    full_name:'Elon Musk',
+    job:'CEO of SpaceX, Tesla',
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
+  },
+  {
+    id: 2,
+    profile_picture:'https://s-media-cache-ak0.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg',
+    full_name:'Elon Musk',
+    job:'CEO of SpaceX, Tesla',
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
+  },
+  {
+    id: 3,
+    profile_picture:'https://s-media-cache-ak0.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg',
+    full_name:'Elon Musk',
+    job:'CEO of SpaceX, Tesla',
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
+  },
+  {
+    id: 4,
+    profile_picture:'https://s-media-cache-ak0.pinimg.com/736x/bc/f0/4e/bcf04eafebdf707b8d900f02e6d8bd70--photo-tag-touch-me.jpg',
+    full_name:'Elon Musk',
+    job:'CEO of SpaceX, Tesla',
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum'
+  }
+]
 
 class Speaker extends Component {
   
@@ -34,47 +60,40 @@ class Speaker extends Component {
       <Container>
         <Header
             title="SPEAKER"
+            type='two'
         >
-            <View style={styles.section1}>
-              <Image 
-                source={{ uri: "http://lorempixel.com/450/450/cats/" }} 
-                style={styles.profileImage}
-                resizeMode="cover"
-              />
-            </View>
         </Header>
-        <Content>
-          <View style={styles.section3}>
-            <Text style={styles.username}>Username</Text>
-          </View>
-          <View style={styles.section2}>
-            <Form>
-              <Item floatingLabel error={ this.state.firstName == '' ? true : false} >
-                <Label>First Name</Label>
-                <Input 
-                  value={this.state.firstName}
-                  onChangeText={(text) => {this.setState({firstName: text})}}
-                  onSubmitEditing={()=>{ this.input.focus()} }
-                />
-              </Item>
-              <Item floatingLabel >
-                <Label>Last Name</Label>
-                <Input
-                  value={this.state.lastName}
-                  onChangeText={(text) => {this.setState({lastName: text})}} 
-                  ref={(input)=>this.input = input}
-                />
-              </Item>
-              <Button block light style={styles.button}><Text>Change Password</Text></Button>
-              <Button 
-                block 
-                disabled={ this.state.firstName == '' ? true : false }
-                style={styles.button}
-              >
-                <Text>Save changes</Text>
-              </Button>
-            </Form>
-          </View>
+        <Content style={styles.content}>
+          {speakers.map(data => (
+            <Card>
+                <CardItem>
+                    <Body>
+                        <View style={styles.bodySection}>
+                            <View style={styles.profileSection}>
+                                <Image 
+                                    style={styles.profilePic}
+                                    source={{uri: data.profile_picture}}
+                                />
+                            </View>
+                            <View style={styles.nameSection}>
+                                <Text style={styles.name}>{data.full_name}</Text>
+                                <Text style={styles.job}>{data.job}</Text>
+                                <Text numberOfLines={3}
+                                      style={styles.summary}
+                                >
+                                {data.summary}
+                                </Text>
+                            </View>
+                        </View>
+                    </Body>
+                </CardItem>
+                <CardItem footer style={styles.footerSection}>
+                    <Button bordered style={styles.footerButton}>
+                      <Text style={styles.footerButtonText}>See more</Text>
+                    </Button>
+                </CardItem>
+            </Card>
+          ))}
         </Content>
       </Container>
     )
