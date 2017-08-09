@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
-import { 
-    Container,
-    Header,
-    Content, 
-    Form,
-    List,
-    ListItem,
-    Picker,
-    Item,
-    Label,
-    Input,
-    Button, 
-    Text,
-    Title
+import {
+  Container,
+  Content,
+  Form,
+  Picker,
+  Item,
+  Label,
+  Input,
+  Button,
+  Text
 } from 'native-base';
-import { StyleSheet, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createTransition, Fade } from 'react-native-transition';
-import styles from './styles';
 
 // import redux components
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect'
+import { createStructuredSelector } from 'reselect';
 
+import styles from './styles';
 import * as actions from './actions';
-import * as selectors from './selectors'
+import * as selectors from './selectors';
 
 // import constants
 import { role_option } from '../../constants';
@@ -34,130 +29,156 @@ const Transition = createTransition(Fade);
 
 class Register extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
-    /*
+  /*
      * initialize some state
      */
-    componentWillMount() {
-        this.props.updateInputFields('role', 'attendee');
-    }
+  componentWillMount() {
+    this.props.updateInputFields('role', 'attendee');
+  }
 
-    handleInputChange = (field, value) => {
-        this.props.updateInputFields(field, value);
-        this.props.updateErrorFields('error_' + field, value = value.length > 0 ? false: true);
-    }
+  handleInputChange = (field, value) => {
+    this.props.updateInputFields(field, value);
+    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
+  }
 
-    handleButtonClick = (value) => {
-        this.props.updateRegisterMethod(value);
-    }
+  handleButtonClick = (value) => {
+    this.props.updateRegisterMethod(value);
+  }
 
     submitRegistration = () => {
-        if (this.isFieldError()) {
-            Alert.alert('Warning', 'Field is not complete');
-        } else {
-            this.props.register();
-        }
+      if (this.isFieldError()) {
+        Alert.alert('Warning', 'Field is not complete');
+      } else {
+        this.props.register();
+      }
     }
 
     /*
      * validate all fields before submission
      */
     isFieldError = () => {
-        const { errorFields } = this.props;
-        const { error_first_name, error_last_name, error_username, error_email, error_password } = errorFields;
-        return (
-            error_first_name || error_last_name || error_email || error_username || error_password
-        );
+      const { errorFields } = this.props;
+      const {
+        error_first_name,
+        error_last_name,
+        error_username,
+        error_email,
+        error_password
+      } = errorFields;
+
+      return (
+        error_first_name ||
+        error_last_name ||
+        error_email ||
+        error_username ||
+        error_password
+      );
     }
 
     render() {
-        if(this.props.isRegistering) {
-            console.log('isregistering...');
-            return;
-        }
-        if(this.props.isRegistered) {
-            Alert.alert('Status', 'user registered successfully');
-        }
+      if (this.props.isRegistering) {
+        console.log('isregistering...');
+        return;
+      }
+      if (this.props.isRegistered) {
+        Alert.alert('Status', 'user registered successfully');
+      }
 
-        // destructure state
-        const { registerMethod, inputFields, errorFields } = this.props || {};
-        const { first_name, last_name, username, email, password, role } = inputFields || '';
-        const { error_first_name, error_last_name, error_username, error_email, error_password } = errorFields || false;
+      // destructure state
+      const { registerMethod, inputFields, errorFields } = this.props || {};
+      const {
+        first_name,
+        last_name,
+        username,
+        email,
+        password,
+        role
+      } = inputFields || '';
 
-        return (
-            <Container style={styles.container}>
-                { registerMethod === 'undefined' && 
-                    <Content>
-                        <Text style={styles.title}>Register with: </Text>
-                        <Button block style={styles.button} >
-                            <Icon name="facebook" color="white" style={styles.icon} />
-                            <Text style={styles.buttonText} >Facebook</Text>
-                        </Button>
-                        <Button info block style={styles.button} > 
-                            <Icon name="twitter" color="white" style={styles.icon} />
-                            <Text style={styles.buttonText} >Twitter</Text>
-                        </Button>
-                        <Button danger block style={styles.button} > 
-                            <Icon name="google-plus" color="white" style={styles.icon} />
-                            <Text style={styles.buttonText} >Google</Text>
-                        </Button>
-                        <Button warning block style={styles.button} onPress={() => this.handleButtonClick('email')}>
-                            <Icon name="envelope" color="white" style={styles.icon} />
-                            <Text style={styles.buttonText} >Email</Text>
-                        </Button>
-                    </Content>
-                }
+      const {
+        error_first_name,
+        error_last_name,
+        error_username,
+        error_email,
+        error_password
+      } = errorFields || false;
 
-                { registerMethod === 'email' && 
-                  <Transition>
-                    <Content>
-                        <Form>
-                            <Item floatingLabel error={error_first_name}>
-                                <Label>First Name</Label>
-                                <Input onChangeText={(text) => this.handleInputChange('first_name', text)} value={first_name} />
-                            </Item>
-                            <Item floatingLabel error={error_last_name}>
-                                <Label>Last Name</Label>
-                                <Input onChangeText={(text) => this.handleInputChange('last_name', text)} value={last_name} />
-                            </Item>
-                            <Item floatingLabel error={error_email}>
-                                <Label>Email</Label>
-                                <Input onChangeText={(text) => this.handleInputChange('email', text)} value={email} />
-                            </Item>
-                            <Item floatingLabel error={error_username}>
-                                <Label>Username</Label>
-                                <Input onChangeText={(text) => this.handleInputChange('username', text)} value={username} />
-                            </Item>
-                            <Item floatingLabel error={error_password}>   
-                                <Label>Password</Label>
-                                <Input secureTextEntry={true} onChangeText={(text) => this.handleInputChange('password', text)} value={password} />
-                            </Item>
+      return (
+        <Container style={styles.container}>
+          { registerMethod === 'undefined' &&
+            <Content>
+              <Text style={styles.title}>Register with: </Text>
+              <Button block style={styles.button} >
+                <Icon name="facebook" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Facebook</Text>
+              </Button>
+              <Button info block style={styles.button} >
+                <Icon name="twitter" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Twitter</Text>
+              </Button>
+              <Button danger block style={styles.button} >
+                <Icon name="google-plus" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Google</Text>
+              </Button>
+              <Button warning block style={styles.button} onPress={() => this.handleButtonClick('email')}>
+                <Icon name="envelope" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Email</Text>
+              </Button>
+            </Content>
+          }
 
-                            <Picker
-                                style={styles.picker}
-                                placeholder="Role"
-                                mode="dropdown"
-                                selectedValue={role}
-                                onValueChange={(value) => this.handleInputChange('role', value)}
-                                >
-                                {role_option.map((component) => (
-                                    <Item key={component.value} label={component.label} value={component.label} />
-                                ))}
-                            </Picker>
+          { registerMethod === 'email' &&
+            <Transition>
+              <Content>
+                <Form>
+                  <Item floatingLabel error={error_first_name}>
+                    <Label>First Name</Label>
+                    <Input onChangeText={text => this.handleInputChange('first_name', text)} value={first_name} />
+                  </Item>
+                  <Item floatingLabel error={error_last_name}>
+                    <Label>Last Name</Label>
+                    <Input onChangeText={text => this.handleInputChange('last_name', text)} value={last_name} />
+                  </Item>
+                  <Item floatingLabel error={error_email}>
+                    <Label>Email</Label>
+                    <Input onChangeText={text => this.handleInputChange('email', text)} value={email} />
+                  </Item>
+                  <Item floatingLabel error={error_username}>
+                    <Label>Username</Label>
+                    <Input onChangeText={text => this.handleInputChange('username', text)} value={username} />
+                  </Item>
+                  <Item floatingLabel error={error_password}>
+                    <Label>Password</Label>
+                    <Input secureTextEntry onChangeText={text => this.handleInputChange('password', text)} value={password} />
+                  </Item>
 
-                        </Form>
-                        <Button primary block style={styles.button} onPress={() => this.submitRegistration()}>
-                            <Text style={styles.buttomText}>Register</Text>
-                        </Button>
-                    </Content>
-                  </Transition>
-                }
-            </Container>
-        );
-  }
+                  <Picker
+                    style={styles.picker}
+                    placeholder="Role"
+                    mode="dropdown"
+                    selectedValue={role}
+                    onValueChange={value => this.handleInputChange('role', value)}
+                  >
+                    {role_option.map(component => (
+                      <Item key={component.value} label={component.label} value={component.label} />
+                    ))}
+                  </Picker>
+
+                </Form>
+                <Button
+                  primary
+                  block
+                  style={styles.button}
+                  onPress={() => this.submitRegistration()}
+                >
+                  <Text style={styles.buttomText}>Register</Text>
+                </Button>
+              </Content>
+            </Transition>
+          }
+        </Container>
+      );
+    }
 }
 
 /**
@@ -168,7 +189,7 @@ const mapStateToProps = createStructuredSelector({
   errorFields: selectors.getErrorFields(),
   registerMethod: selectors.getRegisterMethod(),
   isRegistering: selectors.getIsRegistering(),
-  isRegistered: selectors.getRegisterStatus(),
-})
+  isRegistered: selectors.getRegisterStatus()
+});
 
 export default connect(mapStateToProps, actions)(Register);
