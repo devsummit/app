@@ -16,20 +16,24 @@ import Register from "./containers/Register";
 import Login from "./containers/Login";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
+<<<<<<< HEAD
 import MainTabs from "./containers/MainTabs";
 
 import {
     Icon
 } from 'native-base';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+=======
+import TicketList from './containers/TicketList';
+>>>>>>> d5c0b48e1d12f8ed8c833acd71d8bc7ccf342d40
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
 
 
 /**
- *  Apply middlewares
- */
+*  Apply middlewares
+*/
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
@@ -63,6 +67,7 @@ export default class App extends Component {
                     <Scene key="login" component={Login} title="Login"/>
                     <Scene key="mainTabs" component={MainTabs} hideNavBar={true}/>
                     <Scene key="change_password" component={ChangePassword} title="Change Password"/>
+                    <Scene key="ticketList" component={TicketList} title="List Ticket" />
                 </Scene>
             </RouterWithRedux>
         </Provider>
