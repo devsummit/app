@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { 
   Container,
-  Header,
   Content, 
   Form,
   List,
@@ -16,9 +15,12 @@ import {
 } from 'native-base';
 import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Navigation from '../../components/Navigation';
+import Header from '../../components/Header';
 import styles from './styles';
 
-class SettingUser extends Component {
+class Schedule extends Component {
   
   constructor(props){
     super(props);
@@ -30,17 +32,21 @@ class SettingUser extends Component {
 
   render(){
     return (
-      <Container style={styles.container} >
-        <Content>
-        <View style={styles.section1}>
-          <Image 
-            source={{ uri: "http://lorempixel.com/450/450/cats/" }} 
-            style={styles.profileImage}
-            resizeMode="cover"
-          />
-          <Text>Username</Text>
+      <Navigation
+        active="SCHEDULE"
+        headerContent= {
+          <View style={styles.section1}>
+            <Image 
+              source={{ uri: "http://lorempixel.com/450/450/cats/" }} 
+              style={styles.profileImage}
+              resizeMode="cover"
+            />
+          </View>
+        }
+      >
+        <View style={styles.section3}>
+          <Text style={styles.username}>Username</Text>
         </View>
-
         <View style={styles.section2}>
           <Form>
             <Item floatingLabel error={ this.state.firstName == '' ? true : false} >
@@ -69,10 +75,9 @@ class SettingUser extends Component {
             </Button>
           </Form>
         </View>
-        </Content>
-       </Container>
+        </Navigation>
     )
   }
 }
 
-export default SettingUser;
+export default Schedule;
