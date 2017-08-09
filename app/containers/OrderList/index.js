@@ -4,16 +4,14 @@ import {
   Content,
   List,
   ListItem,
-  Button,
   Text,
-  Body,
   Grid,
   Col,
   Right
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View } from 'react-native';
 import styles from './styles';
+import OrderItem from '../../components/OrderItem';
 
 class OrderList extends Component {
   constructor(props) {
@@ -22,55 +20,32 @@ class OrderList extends Component {
   }
 
   render() {
+    const orders = [
+      {
+        id: 645,
+        totalPrice: '5.000.000',
+        status: 'paid',
+        date: '2017-08-09'
+      },
+      {
+        id: 795,
+        totalPrice: '3.200.000',
+        status: 'pending',
+        date: '2017-08-09'
+      },
+      {
+        id: 984,
+        totalPrice: '3.200.000',
+        status: 'canceled',
+        date: '2017-08-09'
+      }
+    ];
+
     return (
       <Container style={styles.container}>
         <Content>
           <List>
-            <ListItem style={styles.item}>
-              <Grid>
-                <Col style={styles.left}>
-                  <Text style={styles.orderId}>Order-001</Text>
-                  <Text note style={styles.orderId}>2017-08-06</Text>
-                </Col>
-                <Col style={styles.center}>
-                  <Text>Rp 1.500.000</Text>
-                  <Text note style={{ color: 'red' }}>Pending</Text>
-                </Col>
-              </Grid>
-              <Right>
-                <Icon name="chevron-right" style={{ fontSize: 22, marginRight: 5 }} onPress={() => { console.log('press'); }} />
-              </Right>
-            </ListItem>
-            <ListItem style={styles.item}>
-              <Grid>
-                <Col style={styles.left}>
-                  <Text style={styles.orderId}>Order-002</Text>
-                  <Text note style={styles.orderId}>2017-08-06</Text>
-                </Col>
-                <Col style={styles.center}>
-                  <Text>Rp 1.500.000</Text>
-                  <Text note style={{ color: 'green' }}>Paid</Text>
-                </Col>
-              </Grid>
-              <Right>
-                <Icon name="chevron-right" style={{ fontSize: 22, marginRight: 5 }} onPress={() => { console.log('press'); }} />
-              </Right>
-            </ListItem>
-            <ListItem style={styles.item} >
-              <Grid>
-                <Col style={styles.left}>
-                  <Text style={styles.orderId}>Order-003</Text>
-                  <Text note style={styles.orderId}>2017-08-06</Text>
-                </Col>
-                <Col style={styles.center}>
-                  <Text>Rp 1.500.000</Text>
-                  <Text note style={{ color: '#777' }}>Canceled</Text>
-                </Col>
-              </Grid>
-              <Right>
-                <Icon name="chevron-right" style={{ fontSize: 22, marginRight: 5 }} onPress={() => { console.log('press'); }} />
-              </Right>
-            </ListItem>
+            { orders.map((order) => { return <OrderItem key={order.id} order={order} /> }) }
           </List>
         </Content>
       </Container>

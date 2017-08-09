@@ -15,11 +15,8 @@ import Login from "./containers/Login";
 import SettingUser from "./containers/SettingUser";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
-<<<<<<< HEAD
 import OrderList from './containers/OrderList';
-=======
 import TicketList from './containers/TicketList';
->>>>>>> develop
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
