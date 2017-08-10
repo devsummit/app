@@ -11,7 +11,7 @@ import { Image, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
-class SpeakerList extends Component {
+class SpeakerDetail extends Component {
     render () {
         return (
             <Container>
@@ -45,4 +45,4 @@ class SpeakerList extends Component {
     }
 }
 
-export default SpeakerList;
+export default SpeakerDetail;
