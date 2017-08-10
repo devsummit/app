@@ -16,8 +16,7 @@ import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import styles from './styles';
 
-class Speaker extends Component {
-
+class SpeakerDetail extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -57,4 +56,4 @@ class Speaker extends Component {
   }
 }
 
-export default Speaker;
+export default SpeakerDetail;

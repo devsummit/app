@@ -18,6 +18,7 @@ import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
 import TicketList from './containers/TicketList';
 import MainTabs from "./containers/MainTabs";
+import SpeakerDetail from "./containers/SpeakerDetail";
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -47,8 +48,8 @@ export default class App extends Component {
     return (
         <Provider store={store}>
             <RouterWithRedux
-              navigationBarStyle={styles.navBar} 
-              titleStyle={styles.navBarTitle} 
+              navigationBarStyle={styles.navBar}
+              titleStyle={styles.navBarTitle}
               barButtonTextStyle={styles.barButtonTextStyle}
               barButtonIconStyle={styles.barButtonIconStyle}
               leftButtonIconStyle={styles.leftButtonIconStyle}
