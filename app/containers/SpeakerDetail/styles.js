@@ -5,32 +5,48 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255,255,255)'
   },
   bodySection: {
-    flex: 1,
-    flexDirection: 'row' 
+     
   },
   profileSection: {
-    flex: 2,
-  },
-  nameSection: {
-    flex: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10
   },
   profilePic: {
-    height: 60,
-    width: 60,
-    borderRadius: 50
+    height: 110,
+    width: 110,
+    borderRadius: 500
+  },
+  nameSection: {
+    alignItems: 'center'
   },
   name: {
-
+    marginBottom: 12,
+    fontSize: 17,
+    fontWeight: 'bold'
+  },
+  jobSection: {
+    margin: 10
+  },
+  jobTitle: {
+    fontSize: 14,
+    opacity: 0.5,
+    marginBottom: 10,
   },
   job: {
-
+    marginRight: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+    textAlign: 'justify'
   },
-  iconSection: {
-    flex: 1,
-    alignItems: 'flex-end'
+  content: {
+    margin: 5
   },
-  icon: {
-      
+  line: {
+    height: 1,
+    backgroundColor: 'black',
+    opacity: 0.1
   }
 });
 
