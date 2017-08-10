@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { 
+import {
   Container,
   Content,
-  Button, 
+  Form,
+  List,
+  ListItem,
+  Picker,
+  Item,
+  Label,
+  Input,
+  Button,
   Text,
   Title,
   Card,
@@ -46,7 +53,7 @@ const speakers = [
 ]
 
 class Speaker extends Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
@@ -60,7 +67,6 @@ class Speaker extends Component {
       <Container>
         <Header
             title="SPEAKER"
-            type='two'
         >
         </Header>
         <Content style={styles.content}>

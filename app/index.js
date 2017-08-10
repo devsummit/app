@@ -14,8 +14,10 @@ import reducers from './reducers';
 // Containers import
 import Register from "./containers/Register";
 import Login from "./containers/Login";
+import Schedule from "./containers/Schedule";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
+import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
 import MainTabs from "./containers/MainTabs";
 
@@ -47,8 +49,8 @@ export default class App extends Component {
     return (
         <Provider store={store}>
             <RouterWithRedux
-              navigationBarStyle={styles.navBar} 
-              titleStyle={styles.navBarTitle} 
+              navigationBarStyle={styles.navBar}
+              titleStyle={styles.navBarTitle}
               barButtonTextStyle={styles.barButtonTextStyle}
               barButtonIconStyle={styles.barButtonIconStyle}
               leftButtonIconStyle={styles.leftButtonIconStyle}
@@ -58,8 +60,9 @@ export default class App extends Component {
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
                     <Scene key="mainTabs" component={MainTabs} hideNavBar={true}/>
-                    <Scene key="change_password" component={ChangePassword} title="Change Password"/>
+                    <Scene key="changePassword" component={ChangePassword} title="Change Password"/>
                     <Scene key="ticketList" component={TicketList} title="List Ticket" />
+                    <Scene key="schedule" component={Schedule} title="Schedule"/>
                 </Scene>
             </RouterWithRedux>
         </Provider>

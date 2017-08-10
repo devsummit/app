@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { 
+import {
   Container,
-  Content, 
+  Content,
   Form,
   List,
   ListItem,
@@ -9,18 +9,19 @@ import {
   Item,
   Label,
   Input,
-  Button, 
+  Button,
   Text,
   Title
 } from 'native-base';
 import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Header from '../../components/Header';
 import styles from './styles';
 
 class Profile extends Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
@@ -37,8 +38,8 @@ class Profile extends Component {
             type='one'
         >
             <View style={styles.section1}>
-              <Image 
-                source={{ uri: "http://lorempixel.com/450/450/cats/" }} 
+              <Image
+                source={{ uri: "http://lorempixel.com/450/450/cats/" }}
                 style={styles.profileImage}
                 resizeMode="cover"
               />
@@ -52,7 +53,7 @@ class Profile extends Component {
             <Form>
               <Item floatingLabel error={ this.state.firstName == '' ? true : false} >
                 <Label>First Name</Label>
-                <Input 
+                <Input
                   value={this.state.firstName}
                   onChangeText={(text) => {this.setState({firstName: text})}}
                   onSubmitEditing={()=>{ this.input.focus()} }
@@ -62,13 +63,15 @@ class Profile extends Component {
                 <Label>Last Name</Label>
                 <Input
                   value={this.state.lastName}
-                  onChangeText={(text) => {this.setState({lastName: text})}} 
+                  onChangeText={(text) => {this.setState({lastName: text})}}
                   ref={(input)=>this.input = input}
                 />
               </Item>
-              <Button block light style={styles.button}><Text>Change Password</Text></Button>
-              <Button 
-                block 
+              <Button block light style={styles.button} onPress={() => { Actions.changePassword(); }}>
+                <Text>Change Password</Text>
+              </Button>
+              <Button
+                block
                 disabled={ this.state.firstName == '' ? true : false }
                 style={styles.button}
               >

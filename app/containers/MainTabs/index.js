@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {PagerTabIndicator, IndicatorViewPager} from 'rn-viewpager';
 import Schedule from "../Schedule";
 import Speaker from "../Speaker";
-import Ticket from "../Ticket";
+import Ticket from "../TicketList";
 import Profile from "../Profile";
 
 export default class MainTabs extends Component{
@@ -23,13 +23,13 @@ export default class MainTabs extends Component{
                 selectedIconSource: require('../../../assets/images/user.png')
             }
         ];
-        return <PagerTabIndicator 
+        return <PagerTabIndicator
                     tabs={tabs}
                     itemStyle={{backgroundColor:'#3F51B5'}}
-                    iconStyle={{height: 20, width: 20, marginTop:11, opacity:0.5}} 
+                    iconStyle={{height: 20, width: 20, marginTop:11, opacity:0.5}}
                     selectedItemStyle={{backgroundColor:'#3F51B5'}}
                     selectedIconStyle={{height: 20, width: 20,marginTop:10}}
-                    style={{backgroundColor:'#3F51B5'}}  
+                    style={{backgroundColor:'#3F51B5'}}
                />;
     }
 
