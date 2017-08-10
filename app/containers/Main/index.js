@@ -96,7 +96,7 @@ class Main extends Component {
           </View>
           
           <View style={styles.buttonSection}>
-            {(username === '' || password === '') ?
+            {(username === '' || password === '') ^ (phone !== '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text style={styles.buttomText}>Log In</Text>
               </Button>
