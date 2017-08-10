@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Content, Button, Text, Form, Input, Item, Label } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image, View, Alert } from 'react-native';
+import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -17,6 +17,17 @@ import * as selectors from './selectors';
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: true,
+      loginMethod: true,
+    };
+
+    this.toggle = this.toggle.bind(this);
+  }
+
   onLogin = () => {
     this.props.login();
   }
@@ -25,9 +36,23 @@ class Main extends Component {
     this.props.updateFields(field, value);
   }
 
+  clearCredential = () => {
+    this.handleInputChange('username', '')
+    this.handleInputChange('password', '')
+  }
+
+  toggle() {
+    this.setState({
+        visible: !this.state.visible,
+        loginMethod: !this.state.loginMethod,
+    });
+    this.state.loginMethod ?  this.clearCredential() : this.handleInputChange('phone', '')
+  }
+
   render() {
     const { fields, isLoggedIn } = this.props;
-    const { username, password } = fields || '';
+    console.log(fields)
+    const { username, password, phone } = fields || '';
     if (isLoggedIn) {
       Alert.alert('success', 'User logged in!');
     }
@@ -39,22 +64,37 @@ class Main extends Component {
             <Text style={styles.titleText}>DevSummit</Text>
           </View>
           <View style={styles.formSection}>
-            <Form>
-              <Item floatingLabel >
-                <Label>Username</Label>
-                <Input
-                  onChangeText={username => this.handleInputChange('username', username)}
-                />
-              </Item>
-              <Item floatingLabel >
-                <Label>Password</Label>
-                <Input
-                  secureTextEntry
-                  onChangeText={password => this.handleInputChange('password', password)}
-                />
-              </Item>
-            </Form>
+            {this.state.visible ?
+              <Form>
+                <Item floatingLabel >
+                  <Label>Username</Label>
+                  <Input
+                    onChangeText={username => this.handleInputChange('username', username)}
+                    value={username}
+                  />
+                </Item>
+                <Item floatingLabel >
+                  <Label>Password</Label>
+                  <Input
+                    secureTextEntry
+                    onChangeText={password => this.handleInputChange('password', password)}
+                    value={password}
+                  />
+                </Item>
+              </Form>
+              :
+              <Form>
+                <Item floatingLabel >
+                  <Label>Phone number</Label>
+                  <Input
+                    onChangeText={phone => this.handleInputChange('phone', phone)}
+                    value={phone}
+                  />
+                </Item>
+              </Form>
+            }
           </View>
+          
           <View style={styles.buttonSection}>
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
@@ -65,6 +105,13 @@ class Main extends Component {
                 <Text style={styles.buttonText}>Log In</Text>
               </Button>
             }
+            <TouchableOpacity onPress={this.toggle}>
+              {this.state.loginMethod ? 
+                <Text style={styles.loginMethod}>{'Log in with phone number'}</Text>
+                :
+                <Text style={styles.loginMethod}>{'Log in with username'}</Text>
+              }  
+            </TouchableOpacity>
             <View style={styles.lineSection}>
               <View style={styles.lineTextOne} />
               <Text style={styles.lineTextTwo}> or </Text>
