@@ -12,6 +12,7 @@ import reducers from './reducers';
 // Containers import
 import Register from "./containers/Register";
 import Login from "./containers/Login";
+import Schedule from "./containers/Schedule";
 import SettingUser from "./containers/SettingUser";
 import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
@@ -69,6 +70,7 @@ export default class App extends Component {
             <Scene key="settingUser" component={SettingUser} title="Settings" />
             <Scene key="change_password" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
+            <Scene key="schedule" component={Schedule} title="Schedule"/>
           </Scene>
         </RouterWithRedux>
       </Provider>
