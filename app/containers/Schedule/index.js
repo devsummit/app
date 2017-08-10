@@ -1,84 +1,109 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { 
-  Container,
-  Content, 
-  Form,
-  List,
-  ListItem,
-  Picker,
-  Item,
-  Label,
-  Input,
-  Button, 
-  Text,
-  Title
+    Container,
+    Header,
+    Content,
+    Item,
+    Input,
+    Icon,
+    Button,
+    Text,
+    Label
 } from 'native-base';
-import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import HeaderPoint from '../../components/Header';
+import IconFA from 'react-native-vector-icons/FontAwesome';
+import { Actions } from 'react-native-router-flux';
 
-import Header from '../../components/Header';
+import ScheduleList from '../../components/ScheduleList';
 import styles from './styles';
 
-class Schedule extends Component {
-  
-  constructor(props){
-    super(props);
-    this.state = {
-      firstName: 'John',
-      lastName: 'Doe',
-    }
-  }
+// import redux components
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect'
 
-  render(){
-    return (
-      <Container>
-        <Header
-            title="PROFILE"
-        >
-            <View style={styles.section1}>
-              <Image 
-                source={{ uri: "http://lorempixel.com/450/450/cats/" }} 
-                style={styles.profileImage}
-                resizeMode="cover"
-              />
+import * as actions from './actions';
+import * as selectors from './selectors'
+
+class Schedule extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const events = [
+            {
+                title: 'Grand Opening Devsummit',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vel dolorum, at, laboriosam repudiandae quod aliquid odit aliquam ab eligendi!',
+                stage: 'Main Stage',
+                time_start: '2017-08-09 10:00:00',
+                time_end: '2017-08-09 13:00:00',
+            },
+            {
+                title: 'Launch and ISOMA',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vel dolorum, at, laboriosam repudiandae quod aliquid odit aliquam ab eligendi!',
+                stage: 'Eduplex lt.1',
+                time_start: '2017-08-09 13:00:00',
+                time_end: '2017-08-09 14:00:00',
+            },
+            {
+                title: 'Talkshow 1',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vel dolorum, at, laboriosam repudiandae quod aliquid odit aliquam ab eligendi!',
+                stage: 'Main Stage',
+                time_start: '2017-08-09 14:00:00',
+                time_end: '2017-08-09 16:00:00',
+            },
+            {
+                title: 'Interactive Game 1',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vel dolorum, at, laboriosam repudiandae quod aliquid odit aliquam ab eligendi!',
+                stage: 'Eduplex lt.3',
+                time_start: '2017-08-09 16:00:00',
+                time_end: '2017-08-09 17:00:00',
+            },
+            {
+                title: 'Interactive Game 1',
+                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vel dolorum, at, laboriosam repudiandae quod aliquid odit aliquam ab eligendi!',
+                stage: 'Eduplex lt.3',
+                time_start: '2017-08-09 16:00:00',
+                time_end: '2017-08-09 17:00:00',
+            }
+        ];
+        return (
+            <View style={styles.container}>
+                <HeaderPoint
+                    title="SCHEDULE"
+                />
+                <Container style={styles.content}>
+                    <Header searchBar style={styles.searchHeader}>
+                        <Item>
+                            <Icon name="ios-search"/>
+                            <Input placeholder="Search event ..."/>
+                            <Icon name="ios-calendar"/>
+                        </Item>
+                        <Button transparent>
+                            <Text>Search</Text>
+                        </Button>
+                    </Header>
+                    <Content>
+                        <View style={styles.cards}>
+                            { true ? (<ScheduleList events={events} />) : (
+                                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                                    <Text style={{color: '#3a3a3a'}}>- No Event -</Text>
+                                </View>
+                            )}
+                        </View>
+                    </Content>
+                </Container>
             </View>
-        </Header>
-        <Content>
-          <View style={styles.section3}>
-            <Text style={styles.username}>Username</Text>
-          </View>
-          <View style={styles.section2}>
-            <Form>
-              <Item floatingLabel error={ this.state.firstName == '' ? true : false} >
-                <Label>First Name</Label>
-                <Input 
-                  value={this.state.firstName}
-                  onChangeText={(text) => {this.setState({firstName: text})}}
-                  onSubmitEditing={()=>{ this.input.focus()} }
-                />
-              </Item>
-              <Item floatingLabel >
-                <Label>Last Name</Label>
-                <Input
-                  value={this.state.lastName}
-                  onChangeText={(text) => {this.setState({lastName: text})}} 
-                  ref={(input)=>this.input = input}
-                />
-              </Item>
-              <Button block light style={styles.button}><Text>Change Password</Text></Button>
-              <Button 
-                block 
-                disabled={ this.state.firstName == '' ? true : false }
-                style={styles.button}
-              >
-                <Text>Save changes</Text>
-              </Button>
-            </Form>
-          </View>
-        </Content>
-      </Container>
-    )
-  }
+        );    
+    }
 }
 
-export default Schedule;
+/**
+ *  Map redux state to component props
+ */
+const mapStateToProps = createStructuredSelector({
+});
+
+export default connect(mapStateToProps, actions)(Schedule);
