@@ -15,8 +15,7 @@ import {
 const initialState = fromJS({
   fields: {
     username: '',
-    password: '',
-    phone: ''
+    password: ''
   },
   isLoggedIn: false
 });

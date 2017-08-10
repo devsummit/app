@@ -18,16 +18,6 @@ const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: true,
-      loginMethod: true,
-    };
-
-    this.toggle = this.toggle.bind(this);
-  }
-
   onLogin = () => {
     this.props.login();
   }
@@ -36,22 +26,9 @@ class Main extends Component {
     this.props.updateFields(field, value);
   }
 
-  clearCredential = () => {
-    this.handleInputChange('username', '')
-    this.handleInputChange('password', '')
-  }
-
-  toggle() {
-    this.setState({
-        visible: !this.state.visible,
-        loginMethod: !this.state.loginMethod,
-    });
-    this.state.loginMethod ?  this.clearCredential() : this.handleInputChange('phone', '')
-  }
-
   render() {
     const { fields, isLoggedIn } = this.props;
-    const { username, password, phone } = fields || '';
+    const { username, password } = fields || '';
     if (isLoggedIn) {
       Alert.alert('success', 'User logged in!');
     }
@@ -63,39 +40,26 @@ class Main extends Component {
             <Text style={styles.titleText}>DevSummit</Text>
           </View>
           <View style={styles.formSection}>
-            {this.state.visible ?
-              <Form>
-                <Item floatingLabel >
-                  <Label>Username</Label>
-                  <Input
-                    onChangeText={username => this.handleInputChange('username', username)}
-                    value={username}
-                  />
-                </Item>
-                <Item floatingLabel >
-                  <Label>Password</Label>
-                  <Input
-                    secureTextEntry
-                    onChangeText={password => this.handleInputChange('password', password)}
-                    value={password}
-                  />
-                </Item>
-              </Form>
-              :
-              <Form>
-                <Item floatingLabel >
-                  <Label>Phone number</Label>
-                  <Input
-                    onChangeText={phone => this.handleInputChange('phone', phone)}
-                    value={phone}
-                  />
-                </Item>
-              </Form>
-            }
+           <Form>
+              <Item floatingLabel >
+                <Label>Username</Label>
+                <Input
+                  onChangeText={username => this.handleInputChange('username', username)}
+                  value={username}
+                />
+              </Item>
+              <Item floatingLabel >
+                <Label>Password</Label>
+                <Input
+                  secureTextEntry
+                  onChangeText={password => this.handleInputChange('password', password)}
+                  value={password}
+                />
+              </Item>
+            </Form>
           </View>
-          
           <View style={styles.buttonSection}>
-            {(username === '' || password === '') ^ (phone !== '') ?
+            {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text style={styles.buttomText}>Log In</Text>
               </Button>
@@ -105,11 +69,7 @@ class Main extends Component {
               </Button>
             }
             <TouchableOpacity onPress={this.toggle}>
-              {this.state.loginMethod ? 
-                <Text style={styles.loginMethod}>{'Log in with phone number'}</Text>
-                :
-                <Text style={styles.loginMethod}>{'Log in with username'}</Text>
-              }  
+              <Text style={styles.loginMethod}>{'Log in with phone number'}</Text>
             </TouchableOpacity>
             <View style={styles.lineSection}>
               <View style={styles.lineTextOne} />
@@ -133,7 +93,7 @@ class Main extends Component {
             <Text
               style={styles.registerText}
               onPress={() => Actions.register()}
-            >{'Don\'t have an account?'}
+            >{'Don\'t have an account? '}
               <Text style={styles.registerTextBold}>Register</Text>
             </Text>
           </View>
