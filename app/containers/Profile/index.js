@@ -35,7 +35,6 @@ class Profile extends Component {
       <Container>
         <Header
             title="PROFILE"
-            type='one'
         >
             <View style={styles.section1}>
               <Image

@@ -59,6 +59,7 @@ export default class App extends Component {
                     <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
+                    <Scene key="speaker_detail" component={SpeakerDetail} title="Speaker Detail"/>
                     <Scene key="mainTabs" component={MainTabs} hideNavBar={true}/>
                     <Scene key="changePassword" component={ChangePassword} title="Change Password"/>
                     <Scene key="ticketList" component={TicketList} title="List Ticket" />
