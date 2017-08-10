@@ -24,7 +24,7 @@ const statusColor = (status) => {
 
 const OrderItem = (props) => {
   return (
-    <ListItem style={styles.item}>
+    <ListItem style={styles.item} button onPress={() => { console.log('press'); }} >
       <Grid style={{ flex: 9 }}>
         <Col style={styles.left}>
           <Text style={styles.orderId}>Order-{props.order.id}</Text>
@@ -41,7 +41,7 @@ const OrderItem = (props) => {
         </Col>
       </Grid>
       <Right style={{ flex: 1 }}>
-        <Icon name="chevron-right" style={styles.icon} onPress={() => { console.log('press'); }} />
+        <Icon name="chevron-right" style={styles.icon} />
       </Right>
     </ListItem>
   );
