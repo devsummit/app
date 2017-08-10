@@ -9,13 +9,14 @@ class ScheduleList extends Component{
     constructor(props) {
         super(props);
     }
-    
+
     render() {
         const { events } = this.props;
         return (
             <ScrollView>
-                { events.length > 0 && events.map((event)=> (
+                { events.length > 0 && events.map((event, index)=> (
                     <ScheduleCard
+                        key={index}
                         title={event.title}
                         description={event.description}
                         stage={event.stage}

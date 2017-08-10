@@ -7,8 +7,8 @@ import {
   Button,
   Text
 } from 'native-base';
-// import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Header from '../../components/Header';
 import styles from './styles';
 
 class TicketList extends Component {
@@ -30,6 +30,7 @@ class TicketList extends Component {
   render() {
     return (
       <Container>
+        <Header title="Ticket List" />
         <Content>
           <List>
             <ListItem style={styles.item}>
