@@ -51,7 +51,6 @@ class Main extends Component {
 
   render() {
     const { fields, isLoggedIn } = this.props;
-    console.log(fields)
     const { username, password, phone } = fields || '';
     if (isLoggedIn) {
       Alert.alert('success', 'User logged in!');
