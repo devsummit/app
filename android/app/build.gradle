@@ -108,7 +108,7 @@ repositories {
 
 import com.android.build.OutputFile
 
-apply from: "../../node_modules/react-native/react.gradle"
+//apply from: "../../node_modules/react-native/react.gradle"
 
 android {
     compileSdkVersion 23
