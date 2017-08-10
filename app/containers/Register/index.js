@@ -105,29 +105,6 @@ class Register extends Component {
 
       return (
         <Container style={styles.container}>
-          { registerMethod === 'undefined' &&
-            <Content>
-              <Text style={styles.title}>Register with: </Text>
-              <Button block style={styles.button} >
-                <Icon name="facebook" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Facebook</Text>
-              </Button>
-              <Button info block style={styles.button} >
-                <Icon name="twitter" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Twitter</Text>
-              </Button>
-              <Button danger block style={styles.button} >
-                <Icon name="google-plus" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Google</Text>
-              </Button>
-              <Button warning block style={styles.button} onPress={() => this.handleButtonClick('email')}>
-                <Icon name="envelope" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Email</Text>
-              </Button>
-            </Content>
-          }
-
-          { registerMethod === 'email' &&
             <Transition>
               <Content>
                 <Form>
@@ -175,7 +152,6 @@ class Register extends Component {
                 </Button>
               </Content>
             </Transition>
-          }
         </Container>
       );
     }
