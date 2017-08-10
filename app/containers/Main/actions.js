@@ -40,7 +40,7 @@ export function login() {
       username,
       password
     }).then((response) => {
-      if (response && response.data && response.data.success) {
+      if (response && response.data && response.data.meta.success) {
         try {
           AsyncStorage.setItem('access_token', responseJson.result.access_token);
           AsyncStorage.setItem('refresh_token', responseJson.result.refresh_token);
