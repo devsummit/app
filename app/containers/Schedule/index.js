@@ -34,7 +34,6 @@ class Schedule extends Component {
       <Container>
         <Header
             title="SCHEDULE"
-            type='one'
         >
             <View style={styles.section1}>
               <Image 

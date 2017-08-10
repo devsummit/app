@@ -34,7 +34,6 @@ class Ticket extends Component {
       <Container>
         <Header
             title="TICKET"
-            type='one'
         >
             <View style={styles.section1}>
               <Image 

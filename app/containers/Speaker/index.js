@@ -11,6 +11,7 @@ import {
 } from 'native-base';
 import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Actions } from 'react-native-router-flux';
 
 import Header from '../../components/Header';
 import styles from './styles';
@@ -60,7 +61,6 @@ class Speaker extends Component {
       <Container>
         <Header
             title="SPEAKER"
-            type='two'
         >
         </Header>
         <Content style={styles.content}>
@@ -88,7 +88,7 @@ class Speaker extends Component {
                     </Body>
                 </CardItem>
                 <CardItem footer style={styles.footerSection}>
-                    <Button bordered style={styles.footerButton}>
+                    <Button bordered style={styles.footerButton} onPress={() => {Actions.speaker_detail()}}>
                       <Text style={styles.footerButtonText}>See more</Text>
                     </Button>
                 </CardItem>
