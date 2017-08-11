@@ -19,6 +19,7 @@ import Main from './containers/Main/MainWrapper';
 import ChangePassword from "./containers/ChangePassword";
 import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
+import OrderDetail from './containers/OrderDetail';
 import MainTabs from "./containers/MainTabs";
 
 const RouterWithRedux = connect()(Router);
@@ -62,6 +63,8 @@ export default class App extends Component {
                     <Scene key="mainTabs" component={MainTabs} hideNavBar={true}/>
                     <Scene key="changePassword" component={ChangePassword} title="Change Password"/>
                     <Scene key="ticketList" component={TicketList} title="List Ticket" />
+                    <Scene key="orderList" component={OrderList} title="Order List" />
+                    <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
                     <Scene key="schedule" component={Schedule} title="Schedule"/>
                 </Scene>
             </RouterWithRedux>

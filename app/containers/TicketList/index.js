@@ -7,6 +7,7 @@ import {
   Button,
   Text
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
@@ -30,7 +31,11 @@ class TicketList extends Component {
   render() {
     return (
       <Container>
-        <Header title="Ticket List" />
+        <Header title="Ticket List">
+          <Button small warning style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
+            <Text>Order</Text>
+          </Button>
+        </Header>
         <Content>
           <List>
             <ListItem style={styles.item}>
