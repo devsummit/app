@@ -22,7 +22,8 @@ const initialState = fromJS({
     error_last_name: true,
     error_username: true,
     error_email: true,
-    error_password: true
+    error_password: true,
+    error_phone: true
   },
   registerMethod: 'undefined',
   isRegistering: false,

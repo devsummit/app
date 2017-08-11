@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Content, Button, Text, Form, Input, Item, Label } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image, View, Alert } from 'react-native';
+import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -17,6 +17,7 @@ import * as selectors from './selectors';
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
+
   onLogin = () => {
     this.props.login();
   }
@@ -39,11 +40,12 @@ class Main extends Component {
             <Text style={styles.titleText}>DevSummit</Text>
           </View>
           <View style={styles.formSection}>
-            <Form>
+           <Form>
               <Item floatingLabel >
                 <Label>Username</Label>
                 <Input
                   onChangeText={username => this.handleInputChange('username', username)}
+                  value={username}
                 />
               </Item>
               <Item floatingLabel >
@@ -51,6 +53,7 @@ class Main extends Component {
                 <Input
                   secureTextEntry
                   onChangeText={password => this.handleInputChange('password', password)}
+                  value={password}
                 />
               </Item>
             </Form>
@@ -58,13 +61,16 @@ class Main extends Component {
           <View style={styles.buttonSection}>
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
-                <Text style={styles.buttomText}>Log In</Text>
+                <Text>Log In</Text>
               </Button>
               :
               <Button primary block style={styles.button} onPress={() => ((username === '' || password === '') ? null : this.onLogin())}>
-                <Text style={styles.buttonText}>Log In</Text>
+                <Text>Log In</Text>
               </Button>
             }
+            <TouchableOpacity onPress={this.toggle}>
+              <Text style={styles.loginMethod}>{'Log in with phone number'}</Text>
+            </TouchableOpacity>
             <View style={styles.lineSection}>
               <View style={styles.lineTextOne} />
               <Text style={styles.lineTextTwo}> or </Text>
@@ -86,9 +92,9 @@ class Main extends Component {
           <View style={styles.registerSection}>
             <Text
               style={styles.registerText}
-              onPress={() => { Actions.register(); }}
-            >{'Don\'t have an account?'}
-              <Text style={styles.registerTextBold}> Register</Text>
+              onPress={() => Actions.register()}
+            >{'Don\'t have an account? '}
+              <Text style={styles.registerTextBold}>Register</Text>
             </Text>
           </View>
         </Content>

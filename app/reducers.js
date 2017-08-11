@@ -11,5 +11,4 @@ const rootReducers = combineReducers({
 	changePassword: ChangePasswordReducer
 })
 
-
 export default rootReducers;

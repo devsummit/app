@@ -73,6 +73,11 @@ const styles = StyleSheet.create({
     flex: 1,
     opacity: 0.3
   },
+  loginMethod: {
+    textAlign: 'center',
+    fontSize: 16,
+    textDecorationLine: 'underline'
+  },
   registerSection: {
     marginTop: 0,
     padding: 5,
