@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import InputItem from '../../components/InputItem';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -25,7 +26,6 @@ import * as selectors from './selectors';
 import { role_option } from '../../constants';
 
 class RegisterPhone extends Component {
-
   /*
      * initialize some state
      */
@@ -107,31 +107,35 @@ class RegisterPhone extends Component {
       return (
         <Container style={styles.container}>
           <Content>
-            <Form>
-              <Item floatingLabel error={error_first_name}>
-                <Label>First Name</Label>
-                <Input onChangeText={text => this.handleInputChange('first_name', text)} value={first_name} />
-              </Item>
-              <Item floatingLabel error={error_last_name}>
-                <Label>Last Name</Label>
-                <Input onChangeText={text => this.handleInputChange('last_name', text)} value={last_name} />
-              </Item>
-              <Item floatingLabel error={error_phone}>
-                <Label>Phone Number</Label>
-                <Input onChangeText={text => this.handleInputChange('phone', text)} value={phone} />
-              </Item>
-              <Picker
-                style={styles.picker}
-                placeholder="Role"
-                mode="dropdown"
-                selectedValue={role}
-                onValueChange={value => this.handleInputChange('role', value)}
-              >
-                {role_option.map(component => (
-                  <Item key={component.value} label={component.label} value={component.label} />
-                ))}
-              </Picker>
-            </Form>
+            <InputItem
+              error={error_first_name}
+              title="First Name"
+              onChangeText={text => this.handleInputChange('first_name', text)}
+              value={first_name}
+            />
+            <InputItem
+              error={error_last_name}
+              title="Last Name"
+              onChangeText={text => this.handleInputChange('last_name', text)}
+              value={last_name}
+            />
+            <InputItem
+              error={error_phone}
+              title="Phone Number"
+              onChangeText={text => this.handleInputChange('phone', text)}
+              value={phone}
+            />
+            <Picker
+              style={styles.picker}
+              placeholder="Role"
+              mode="dropdown"
+              selectedValue={role}
+              onValueChange={value => this.handleInputChange('role', value)}
+            >
+              {role_option.map(component => (
+                <Item key={component.value} label={component.label} value={component.label} />
+              ))}
+            </Picker>
             <Button
               primary
               block
