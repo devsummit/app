@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+
   icon: {
     color: 'white',
     opacity: 0.5,
@@ -8,10 +9,16 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop: 40,
-    marginBottom: 0
+    marginBottom: 0,
+  },
+  content2: {
+    marginTop: -60,
+    marginRight: 5,
+    marginLeft: 5,
+    height: 500
   },
   header: {
-    
+    height: 150
   },
   headerText: {
     alignItems: 'center',

@@ -20,6 +20,7 @@ import ChangePassword from "./containers/ChangePassword";
 import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
 import MainTabs from "./containers/MainTabs";
+import SpeakerDetail from "./containers/SpeakerDetail";
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -59,6 +60,7 @@ export default class App extends Component {
                     <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
                     <Scene key="register" component={Register} title="Register"/>
                     <Scene key="login" component={Login} title="Login"/>
+                    <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail"/>
                     <Scene key="mainTabs" component={MainTabs} hideNavBar={true}/>
                     <Scene key="changePassword" component={ChangePassword} title="Change Password"/>
                     <Scene key="ticketList" component={TicketList} title="List Ticket" />
