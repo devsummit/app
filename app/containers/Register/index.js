@@ -63,7 +63,8 @@ class Register extends Component {
         error_last_name,
         error_username,
         error_email,
-        error_password
+        error_password,
+        error_phone
       } = errorFields;
 
       return (
@@ -71,7 +72,8 @@ class Register extends Component {
         error_last_name ||
         error_email ||
         error_username ||
-        error_password
+        error_password ||
+        error_phone
       );
     }
 
@@ -92,6 +94,7 @@ class Register extends Component {
         username,
         email,
         password,
+        phone,
         role
       } = inputFields || '';
 
@@ -100,56 +103,113 @@ class Register extends Component {
         error_last_name,
         error_username,
         error_email,
-        error_password
+        error_password,
+        error_phone
       } = errorFields || false;
 
       return (
         <Container style={styles.container}>
-          <Content>
-            <Form>
-              <Item floatingLabel error={error_first_name}>
-                <Label>First Name</Label>
-                <Input onChangeText={text => this.handleInputChange('first_name', text)} value={first_name} />
-              </Item>
-              <Item floatingLabel error={error_last_name}>
-                <Label>Last Name</Label>
-                <Input onChangeText={text => this.handleInputChange('last_name', text)} value={last_name} />
-              </Item>
-              <Item floatingLabel error={error_email}>
-                <Label>Email</Label>
-                <Input onChangeText={text => this.handleInputChange('email', text)} value={email} />
-              </Item>
-              <Item floatingLabel error={error_username}>
-                <Label>Username</Label>
-                <Input onChangeText={text => this.handleInputChange('username', text)} value={username} />
-              </Item>
-              <Item floatingLabel error={error_password}>
-                <Label>Password</Label>
-                <Input secureTextEntry onChangeText={text => this.handleInputChange('password', text)} value={password} />
-              </Item>
+          { registerMethod === 'undefined' &&
+            <Content>
+              <Text style={styles.title}>Register with: </Text>
+              <Button block style={styles.button} >
+                <Icon name="facebook" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Facebook</Text>
+              </Button>
+              <Button info block style={styles.button} >
+                <Icon name="twitter" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Twitter</Text>
+              </Button>
+              <Button danger block style={styles.button} >
+                <Icon name="google-plus" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Google</Text>
+              </Button>
+              <Button warning block style={styles.button} onPress={() => this.handleButtonClick('email')}>
+                <Icon name="envelope" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Email</Text>
+              </Button>
+              <Button success block style={styles.button} onPress={() => this.handleButtonClick('phone')}>
+                <Icon name="phone" color="white" style={styles.icon} />
+                <Text style={styles.buttonText} >Phone</Text>
+              </Button>
+            </Content>
+          }
 
-              <Picker
-                style={styles.picker}
-                placeholder="Role"
-                mode="dropdown"
-                selectedValue={role}
-                onValueChange={value => this.handleInputChange('role', value)}
-              >
-                {role_option.map(component => (
-                  <Item key={component.value} label={component.label} value={component.label} />
-                ))}
-              </Picker>
-
-            </Form>
-            <Button
-              primary
-              block
-              style={styles.button}
-              onPress={() => this.submitRegistration()}
-            >
-              <Text style={styles.buttomText}>Register</Text>
-            </Button>
-          </Content>
+          { (registerMethod === 'email' || registerMethod === 'phone') &&
+            <Transition>
+              <Content>
+                {registerMethod === 'email' ?
+                <Form>
+                  <Item floatingLabel error={error_first_name}>
+                    <Label>First Name</Label>
+                    <Input onChangeText={text => this.handleInputChange('first_name', text)} value={first_name} />
+                  </Item>
+                  <Item floatingLabel error={error_last_name}>
+                    <Label>Last Name</Label>
+                    <Input onChangeText={text => this.handleInputChange('last_name', text)} value={last_name} />
+                  </Item>
+                  <Item floatingLabel error={error_email}>
+                    <Label>Email</Label>
+                    <Input onChangeText={text => this.handleInputChange('email', text)} value={email} />
+                  </Item>
+                  <Item floatingLabel error={error_username}>
+                    <Label>Username</Label>
+                    <Input onChangeText={text => this.handleInputChange('username', text)} value={username} />
+                  </Item>
+                  <Item floatingLabel error={error_password}>
+                    <Label>Password</Label>
+                    <Input secureTextEntry onChangeText={text => this.handleInputChange('password', text)} value={password} />
+                  </Item>
+                  <Picker
+                    style={styles.picker}
+                    placeholder="Role"
+                    mode="dropdown"
+                    selectedValue={role}
+                    onValueChange={value => this.handleInputChange('role', value)}
+                  >
+                    {role_option.map(component => (
+                      <Item key={component.value} label={component.label} value={component.label} />
+                    ))}
+                  </Picker>
+                </Form>
+                :
+                <Form>
+                  <Item floatingLabel error={error_first_name}>
+                    <Label>First Name</Label>
+                    <Input onChangeText={text => this.handleInputChange('first_name', text)} value={first_name} />
+                  </Item>
+                  <Item floatingLabel error={error_last_name}>
+                    <Label>Last Name</Label>
+                    <Input onChangeText={text => this.handleInputChange('last_name', text)} value={last_name} />
+                  </Item>
+                  <Item floatingLabel error={error_phone}>
+                    <Label>Phone Number</Label>
+                    <Input onChangeText={text => this.handleInputChange('phone', text)} value={phone} />
+                  </Item>
+                  <Picker
+                    style={styles.picker}
+                    placeholder="Role"
+                    mode="dropdown"
+                    selectedValue={role}
+                    onValueChange={value => this.handleInputChange('role', value)}
+                  >
+                    {role_option.map(component => (
+                      <Item key={component.value} label={component.label} value={component.label} />
+                    ))}
+                  </Picker>
+                </Form>
+                }
+                <Button
+                  primary
+                  block
+                  style={styles.button}
+                  onPress={() => this.submitRegistration()}
+                >
+                  <Text style={styles.buttomText}>Register</Text>
+                </Button>
+              </Content>
+            </Transition>
+          }
         </Container>
       );
     }
