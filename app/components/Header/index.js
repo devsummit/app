@@ -28,9 +28,9 @@ export default class Header extends Component {
                                 <Text style={styles.points}> 1000 pts</Text>
                             </View>
                         </View>
-                        <View style={styles.content}>
-                            {this.props.children}
-                        </View>
+                            <View style={styles.content}>
+                                {this.props.children}
+                            </View>
                     </View>
                  </LinearGradient>
             </View>

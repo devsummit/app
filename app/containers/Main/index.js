@@ -61,11 +61,11 @@ class Main extends Component {
           <View style={styles.buttonSection}>
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
-                <Text style={styles.buttomText}>Log In</Text>
+                <Text>Log In</Text>
               </Button>
               :
               <Button primary block style={styles.button} onPress={() => ((username === '' || password === '') ? null : this.onLogin())}>
-                <Text style={styles.buttonText}>Log In</Text>
+                <Text>Log In</Text>
               </Button>
             }
             <TouchableOpacity onPress={this.toggle}>
@@ -92,9 +92,15 @@ class Main extends Component {
           <View style={styles.registerSection}>
             <Text
               style={styles.registerText}
+<<<<<<< HEAD
               onPress={() => Actions.register()}
             >{'Don\'t have an account? '}
               <Text style={styles.registerTextBold}>Register</Text>
+=======
+              onPress={() => { Actions.registerMenu(); }}
+            >{'Don\'t have an account?'}
+              <Text style={styles.registerTextBold}> Register</Text>
+>>>>>>> develop
             </Text>
           </View>
         </Content>
