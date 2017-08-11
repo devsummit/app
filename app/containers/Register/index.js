@@ -24,6 +24,7 @@ import * as selectors from './selectors';
 
 // import constants
 import { role_option } from '../../constants';
+import RegisterMenu from '../RegisterMenu';
 
 const Transition = createTransition(Fade);
 
@@ -110,29 +111,7 @@ class Register extends Component {
       return (
         <Container style={styles.container}>
           { registerMethod === 'undefined' &&
-            <Content>
-              <Text style={styles.title}>Register with: </Text>
-              <Button block style={styles.button} >
-                <Icon name="facebook" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Facebook</Text>
-              </Button>
-              <Button info block style={styles.button} >
-                <Icon name="twitter" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Twitter</Text>
-              </Button>
-              <Button danger block style={styles.button} >
-                <Icon name="google-plus" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Google</Text>
-              </Button>
-              <Button warning block style={styles.button} onPress={() => this.handleButtonClick('email')}>
-                <Icon name="envelope" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Email</Text>
-              </Button>
-              <Button success block style={styles.button} onPress={() => this.handleButtonClick('phone')}>
-                <Icon name="phone" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Phone</Text>
-              </Button>
-            </Content>
+            <RegisterMenu />
           }
 
           { (registerMethod === 'email' || registerMethod === 'phone') &&

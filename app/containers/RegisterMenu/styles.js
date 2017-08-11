@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    flex: 9
+    flex: 9,
+    paddingRight: 20
   },
   picker: {
     margin: 12
