@@ -12,6 +12,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'flex-end',
+  },
+  btnOrder: {
+    alignSelf: 'flex-end',
+    bottom: 10,
+    right: 25,
+    position: 'absolute',
+    borderRadius: 20
   }
 });
 

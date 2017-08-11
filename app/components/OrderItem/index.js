@@ -6,6 +6,7 @@ import {
   Col,
   Right
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
@@ -24,7 +25,11 @@ const statusColor = (status) => {
 
 const OrderItem = (props) => {
   return (
-    <ListItem style={styles.item} button onPress={() => { console.log('press'); }} >
+    <ListItem
+      style={styles.item}
+      button
+      onPress={() => { Actions.orderDetail({ orderId: props.order.id }); }}
+    >
       <Grid style={{ flex: 9 }}>
         <Col style={styles.left}>
           <Text style={styles.orderId}>Order-{props.order.id}</Text>
