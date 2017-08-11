@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Form, Input, Item, Label } from 'native-base';
+import { Container, Content, Text, Form, Input, Item, Label } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image, View, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Button from '../../components/Button'
 
 
 // import redux componens
@@ -82,14 +83,10 @@ class Main extends Component {
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>
-          </View>
-          <View style={styles.registerSection}>
-            <Text
-              style={styles.registerText}
-              onPress={() => { Actions.registerMenu(); }}
-            >{'Don\'t have an account?'}
+            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu(); }}>
+              <Text style={styles.registerText}>Don't have an account?</Text>
               <Text style={styles.registerTextBold}> Register</Text>
-            </Text>
+            </Button>
           </View>
         </Content>
       </Container>

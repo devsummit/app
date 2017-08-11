@@ -47,6 +47,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1
   },
+  buttonRegister: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 6,
+    marginBottom: 6,
+    justifyContent: 'center',
+  },
   buttonText: {
     textAlign: 'center',
     paddingRight: 26,
@@ -74,9 +82,6 @@ const styles = StyleSheet.create({
     opacity: 0.3
   },
   registerSection: {
-    marginTop: 0,
-    padding: 5,
-    paddingBottom: 25,
   },
   registerText: {
     textDecorationLine: 'underline',
@@ -84,6 +89,7 @@ const styles = StyleSheet.create({
     color: '#3366BB'
   },
   registerTextBold: {
+    textDecorationLine: 'underline',
     fontWeight: 'bold',
     textAlign: 'center',
     margin: 10,

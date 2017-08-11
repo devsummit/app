@@ -8,8 +8,7 @@ import {
     ListItem,
     Picker,
     Label,
-    Input,
-    Button, 
+    Input, 
     Text,
     Title
 } from 'native-base';
@@ -17,6 +16,8 @@ import { StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import InputItem from '../../components/InputItem'
+import Button from '../../components/Button'
+
 // import redux components
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';

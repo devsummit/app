@@ -9,7 +9,6 @@ import {
   Item,
   Label,
   Input,
-  Button,
   Text,
   Title
 } from 'native-base';
@@ -17,6 +16,7 @@ import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-nati
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import Button from '../../components/Button'
 import Header from '../../components/Header';
 import styles from './styles';
 

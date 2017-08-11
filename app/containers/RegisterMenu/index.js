@@ -7,13 +7,13 @@ import {
   Item,
   Label,
   Input,
-  Button,
   Text
 } from 'native-base';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import { Actions } from 'react-native-router-flux';
+import Button from '../../components/Button'
 
 class RegisterMenu extends Component {
     render() {
