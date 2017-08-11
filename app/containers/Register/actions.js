@@ -3,7 +3,7 @@ import {
 } from '../../helpers';
 
 /*
- * import constants 
+ * import constants
  */
 
 import {
