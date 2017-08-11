@@ -12,7 +12,6 @@ import {
 } from 'native-base';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { createTransition, Fade } from 'react-native-transition';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -25,9 +24,7 @@ import * as selectors from './selectors';
 // import constants
 import { role_option } from '../../constants';
 
-const Transition = createTransition(Fade);
-
-class Register extends Component {
+class RegisterEmail extends Component {
 
   /*
      * initialize some state
@@ -63,7 +60,8 @@ class Register extends Component {
         error_last_name,
         error_username,
         error_email,
-        error_password
+        error_password,
+        error_phone
       } = errorFields;
 
       return (
@@ -71,7 +69,8 @@ class Register extends Component {
         error_last_name ||
         error_email ||
         error_username ||
-        error_password
+        error_password ||
+        error_phone
       );
     }
 
@@ -92,6 +91,7 @@ class Register extends Component {
         username,
         email,
         password,
+        phone,
         role
       } = inputFields || '';
 
@@ -100,12 +100,12 @@ class Register extends Component {
         error_last_name,
         error_username,
         error_email,
-        error_password
+        error_password,
+        error_phone
       } = errorFields || false;
 
       return (
         <Container style={styles.container}>
-            <Transition>
               <Content>
                 <Form>
                   <Item floatingLabel error={error_first_name}>
@@ -128,7 +128,6 @@ class Register extends Component {
                     <Label>Password</Label>
                     <Input secureTextEntry onChangeText={text => this.handleInputChange('password', text)} value={password} />
                   </Item>
-
                   <Picker
                     style={styles.picker}
                     placeholder="Role"
@@ -140,7 +139,6 @@ class Register extends Component {
                       <Item key={component.value} label={component.label} value={component.label} />
                     ))}
                   </Picker>
-
                 </Form>
                 <Button
                   primary
@@ -148,10 +146,9 @@ class Register extends Component {
                   style={styles.button}
                   onPress={() => this.submitRegistration()}
                 >
-                  <Text style={styles.buttomText}>Register</Text>
+                  <Text style={styles.buttomText}>Register with Email</Text>
                 </Button>
               </Content>
-            </Transition>
         </Container>
       );
     }
@@ -168,4 +165,4 @@ const mapStateToProps = createStructuredSelector({
   isRegistered: selectors.getRegisterStatus()
 });
 
-export default connect(mapStateToProps, actions)(Register);
+export default connect(mapStateToProps, actions)(RegisterEmail);

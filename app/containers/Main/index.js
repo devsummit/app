@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Content, Text, Form, Input, Item, Label } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image, View, Alert } from 'react-native';
+import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Button from '../../components/Button'
 
@@ -18,6 +18,7 @@ import * as selectors from './selectors';
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
+
   onLogin = () => {
     this.props.login();
   }
@@ -40,11 +41,12 @@ class Main extends Component {
             <Text style={styles.titleText}>DevSummit</Text>
           </View>
           <View style={styles.formSection}>
-            <Form>
+           <Form>
               <Item floatingLabel >
                 <Label>Username</Label>
                 <Input
                   onChangeText={username => this.handleInputChange('username', username)}
+                  value={username}
                 />
               </Item>
               <Item floatingLabel >
@@ -52,6 +54,7 @@ class Main extends Component {
                 <Input
                   secureTextEntry
                   onChangeText={password => this.handleInputChange('password', password)}
+                  value={password}
                 />
               </Item>
             </Form>
@@ -59,11 +62,11 @@ class Main extends Component {
           <View style={styles.buttonSection}>
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
-                <Text style={styles.buttomText}>Log In</Text>
+                <Text>Log In</Text>
               </Button>
               :
               <Button primary block style={styles.button} onPress={() => ((username === '' || password === '') ? null : this.onLogin())}>
-                <Text style={styles.buttonText}>Log In</Text>
+                <Text>Log In</Text>
               </Button>
             }
             <View style={styles.lineSection}>
@@ -71,6 +74,10 @@ class Main extends Component {
               <Text style={styles.lineTextTwo}> or </Text>
               <View style={styles.lineTextOne} />
             </View>
+            <Button primary style={styles.button}>
+              <Icon name="phone" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>Phone</Text>
+            </Button>
             <Button primary style={styles.button}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
@@ -83,7 +90,7 @@ class Main extends Component {
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>
-            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu(); }}>
+            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
               <Text style={styles.registerText}>Don't have an account?</Text>
               <Text style={styles.registerTextBold}> Register</Text>
             </Button>

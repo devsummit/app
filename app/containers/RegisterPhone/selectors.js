@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 /**
  *  Select the main portion of the root reducer
  */
-const selectRegisterReducer = () => state => state.get('register');
+const selectRegisterReducer = () => state => state.get('registerPhone');
 
 /**
  *  Selects the username field data

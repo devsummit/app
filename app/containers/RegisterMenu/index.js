@@ -33,9 +33,13 @@ class RegisterMenu extends Component {
                 <Icon name="google-plus" color="white" style={styles.icon} />
                 <Text style={styles.buttonText} >Google</Text>
               </Button>
-              <Button warning block style={styles.button} onPress={() => Actions.register()}>
+              <Button warning block style={styles.button} onPress={() => {Actions.registerEmail()}}>
                 <Icon name="envelope" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Email</Text>
+                <Text style={styles.buttonText}>Email</Text>
+              </Button>
+              <Button success block style={styles.button} onPress={() => {Actions.registerPhone()}}>
+                <Icon name="phone" color="white" style={styles.icon} />
+                <Text style={styles.buttonText}>Phone</Text>
               </Button>
             </Content>
         </Container>
