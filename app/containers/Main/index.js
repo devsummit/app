@@ -92,15 +92,9 @@ class Main extends Component {
           <View style={styles.registerSection}>
             <Text
               style={styles.registerText}
-<<<<<<< HEAD
               onPress={() => Actions.register()}
             >{'Don\'t have an account? '}
               <Text style={styles.registerTextBold}>Register</Text>
-=======
-              onPress={() => { Actions.registerMenu(); }}
-            >{'Don\'t have an account?'}
-              <Text style={styles.registerTextBold}> Register</Text>
->>>>>>> develop
             </Text>
           </View>
         </Content>
