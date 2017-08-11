@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Form, Input, Item, Label } from 'native-base';
+import { Container, Content, Text, Form, Input, Item, Label } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Button from '../../components/Button'
 
 
 // import redux componens
@@ -68,14 +69,15 @@ class Main extends Component {
                 <Text>Log In</Text>
               </Button>
             }
-            <TouchableOpacity onPress={this.toggle}>
-              <Text style={styles.loginMethod}>{'Log in with phone number'}</Text>
-            </TouchableOpacity>
             <View style={styles.lineSection}>
               <View style={styles.lineTextOne} />
               <Text style={styles.lineTextTwo}> or </Text>
               <View style={styles.lineTextOne} />
             </View>
+            <Button primary style={styles.button}>
+              <Icon name="phone" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>Phone</Text>
+            </Button>
             <Button primary style={styles.button}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
@@ -88,14 +90,10 @@ class Main extends Component {
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>
-          </View>
-          <View style={styles.registerSection}>
-            <Text
-              style={styles.registerText}
-              onPress={() => Actions.register()}
-            >{'Don\'t have an account? '}
-              <Text style={styles.registerTextBold}>Register</Text>
-            </Text>
+            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
+              <Text style={styles.registerText}>Don't have an account?</Text>
+              <Text style={styles.registerTextBold}> Register</Text>
+            </Button>
           </View>
         </Content>
       </Container>

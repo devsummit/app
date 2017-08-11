@@ -18,19 +18,19 @@ import { fromJS } from 'immutable';
 const initialState = fromJS({
   inputFields: {},
   errorFields: {
-    error_first_name: true,
-    error_last_name: true,
-    error_username: true,
-    error_email: true,
-    error_password: true,
-    error_phone: true
+    error_first_name: false,
+    error_last_name: false,
+    error_username: false,
+    error_email: false,
+    error_password: false,
+    error_phone: false
   },
   registerMethod: 'undefined',
   isRegistering: false,
   isRegistered: false
 });
 
-function registerReducer(state = initialState, action) {
+function registerPhoneReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SINGLE_INPUT_FIELD:
       return state.setIn([ 'inputFields', action.field ], action.value);
@@ -53,4 +53,4 @@ function registerReducer(state = initialState, action) {
  * export the reducer
  */
 
-export default registerReducer;
+export default registerPhoneReducer;

@@ -12,7 +12,6 @@ import {
 } from 'native-base';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { createTransition, Fade } from 'react-native-transition';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -25,9 +24,7 @@ import * as selectors from './selectors';
 // import constants
 import { role_option } from '../../constants';
 
-const Transition = createTransition(Fade);
-
-class Register extends Component {
+class RegisterEmail extends Component {
 
   /*
      * initialize some state
@@ -109,36 +106,7 @@ class Register extends Component {
 
       return (
         <Container style={styles.container}>
-          { registerMethod === 'undefined' &&
-            <Content>
-              <Text style={styles.title}>Register with: </Text>
-              <Button block style={styles.button} >
-                <Icon name="facebook" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Facebook</Text>
-              </Button>
-              <Button info block style={styles.button} >
-                <Icon name="twitter" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Twitter</Text>
-              </Button>
-              <Button danger block style={styles.button} >
-                <Icon name="google-plus" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Google</Text>
-              </Button>
-              <Button warning block style={styles.button} onPress={() => this.handleButtonClick('email')}>
-                <Icon name="envelope" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Email</Text>
-              </Button>
-              <Button success block style={styles.button} onPress={() => this.handleButtonClick('phone')}>
-                <Icon name="phone" color="white" style={styles.icon} />
-                <Text style={styles.buttonText} >Phone</Text>
-              </Button>
-            </Content>
-          }
-
-          { (registerMethod === 'email' || registerMethod === 'phone') &&
-            <Transition>
               <Content>
-                {registerMethod === 'email' ?
                 <Form>
                   <Item floatingLabel error={error_first_name}>
                     <Label>First Name</Label>
@@ -172,44 +140,15 @@ class Register extends Component {
                     ))}
                   </Picker>
                 </Form>
-                :
-                <Form>
-                  <Item floatingLabel error={error_first_name}>
-                    <Label>First Name</Label>
-                    <Input onChangeText={text => this.handleInputChange('first_name', text)} value={first_name} />
-                  </Item>
-                  <Item floatingLabel error={error_last_name}>
-                    <Label>Last Name</Label>
-                    <Input onChangeText={text => this.handleInputChange('last_name', text)} value={last_name} />
-                  </Item>
-                  <Item floatingLabel error={error_phone}>
-                    <Label>Phone Number</Label>
-                    <Input onChangeText={text => this.handleInputChange('phone', text)} value={phone} />
-                  </Item>
-                  <Picker
-                    style={styles.picker}
-                    placeholder="Role"
-                    mode="dropdown"
-                    selectedValue={role}
-                    onValueChange={value => this.handleInputChange('role', value)}
-                  >
-                    {role_option.map(component => (
-                      <Item key={component.value} label={component.label} value={component.label} />
-                    ))}
-                  </Picker>
-                </Form>
-                }
                 <Button
                   primary
                   block
                   style={styles.button}
                   onPress={() => this.submitRegistration()}
                 >
-                  <Text style={styles.buttomText}>Register</Text>
+                  <Text style={styles.buttomText}>Register with Email</Text>
                 </Button>
               </Content>
-            </Transition>
-          }
         </Container>
       );
     }
@@ -226,4 +165,4 @@ const mapStateToProps = createStructuredSelector({
   isRegistered: selectors.getRegisterStatus()
 });
 
-export default connect(mapStateToProps, actions)(Register);
+export default connect(mapStateToProps, actions)(RegisterEmail);
