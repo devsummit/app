@@ -11,16 +11,10 @@ import {
 
 import {
   UPDATE_SINGLE_FIELD,
-  UPDATE_IS_LOGGED_IN
+  UPDATE_IS_LOGGED_IN,
+  FB_CLIENT_ID,
+  FB_CLIENT_SECRET
 } from './constants';
-
-const manager = new OAuthManager('devsummit')
-manager.configure({
-  google: {
-    client_id: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
-    client_secret: 'ZdbNXvmMTy9dcAK8oW-3QPOj'
-  }
-});
 
 /*
  * Update the input fields
@@ -64,11 +58,39 @@ export function login() {
   };
 }
 
-export function loginGoogle() {
+export function loginFacebook() {
   return (dispatch) => {
-    manager.authorize('google', {scopes: 'profile email'})
-    .then(resp => {
-      console.log(resp)
-    }).catch(err => console.log('There was an error'));
-  }
+    const manager = new OAuthManager('devsummit')
+    manager.configure({
+      facebook: {
+        client_id: FB_CLIENT_ID,
+        client_secret: FB_CLIENT_SECRET
+      }
+    });
+    manager.authorize('facebook', { scopes: 'public_profile' })
+      .then((resp) => {
+        const data = {
+          provider: 'facebook',
+          token: resp.response.credentials.accessToken
+        };
+        const headers = { 'Content-Type': 'application/json' };
+        DevSummitAxios.post('/auth/login', data, { headers })
+          .then((response) => {
+            console.log('api response', response.data);
+            if (response && response.data && response.data.meta.success) {
+              try {
+                AsyncStorage.setItem('access_token', response.data.data.access_token);
+                AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+              } catch (error) {
+                console.log(error, 'error caught');
+              }
+              dispatch({
+                type: UPDATE_IS_LOGGED_IN,
+                status: true
+              });
+            }
+          })
+          .catch((err) => { console.log(err); });
+      }).catch((err) => { console.log('error login fb', err); });
+  };
 }

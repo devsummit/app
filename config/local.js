@@ -1,3 +1,5 @@
 export default {
-  API_BASE_URL: 'http://private-f30431-devsummit.apiary-mock.com'
+  API_BASE_URL: 'http://10.0.3.2:5000/',
+  FB_CLIENT_ID: '216608565531165',
+  FB_CLIENT_SECRET: '0463ed52bd8a400dd48d8e9cc246acc4'
 }
