@@ -14,13 +14,6 @@ import {
   UPDATE_IS_LOGGED_IN
 } from './constants';
 
-const manager = new OAuthManager('devsummit')
-manager.configure({
-  google: {
-    client_id: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
-    client_secret: 'ZdbNXvmMTy9dcAK8oW-3QPOj'
-  }
-});
 
 /*
  * Update the input fields
@@ -66,9 +59,23 @@ export function login() {
 
 export function loginGoogle() {
   return (dispatch) => {
-    manager.authorize('google', {scopes: 'profile email'})
-    .then(resp => {
-      console.log(resp)
-    }).catch(err => console.log('There was an error'));
+    const manager = new OAuthManager('devsummit')
+      manager.configure({
+        google: {
+          callback_url: 'http://localhost/google',
+          client_id: '460961401101-2l5fl2dk8qpl3aoi04n2t30dps6ahe6c.apps.googleusercontent.com',
+          client_secret: 'OD6hf4RQLyC9ioFepMTI8-L3'
+        }
+      });
+      manager.authorize('google', {scopes: 'profile'})
+      .then(resp => {
+        console.log(resp)
+        if (resp.authorized) {
+          dispatch({
+            type: UPDATE_IS_LOGGED_IN,
+            status: true
+          });
+        }
+      }).catch(err => console.log(err));
   }
 }
