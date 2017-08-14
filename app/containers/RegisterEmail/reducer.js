@@ -1,5 +1,6 @@
+import { fromJS } from 'immutable';
 /*
- * import contants 
+ * import contants
  */
 
 import {
@@ -9,14 +10,19 @@ import {
   UPDATE_REGISTER_STATUS
 } from './constants';
 
-import { fromJS } from 'immutable';
-
-
 /*
  * initial state of reducers
  */
 const initialState = fromJS({
-  inputFields: {},
+  inputFields: {
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    password: '',
+    phone: '',
+    role: ''
+  },
   errorFields: {
     error_first_name: false,
     error_last_name: false,

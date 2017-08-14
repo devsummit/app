@@ -1,18 +1,24 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  errorLabel: {
-    color: 'red'
+  errorOnFocus: {
+    color: 'red',
+    marginTop: 5,
+    fontSize: 14
   },
-  normalLabel: {
+  errorOnBlur: {
+    color: 'red',
+    fontSize: 16
+  },
+  normalOnFocus: {
     color: 'grey',
+    marginTop: 5,
+    fontSize: 14
   },
-  normalOnBlurLabel: {
-    fontSize: 16,
-  },
-  normalOnFocusLabel: {
-    fontSize: 14,
-  },
+  normalOnBlur: {
+    color: 'grey',
+    fontSize: 16
+  }
 });
 
 export default styles;

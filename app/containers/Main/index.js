@@ -3,13 +3,14 @@ import { Container, Content, Text, Form, Input, Item, Label } from 'native-base'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image, View, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Button from '../../components/Button'
-
+import LinearGradient from 'react-native-linear-gradient';
 
 // import redux componens
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import InputItem from '../../components/InputItem';
+import Button from '../../components/Button';
 import styles from './styles';
 
 import * as actions from './actions';
@@ -18,7 +19,6 @@ import * as selectors from './selectors';
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
-
   onLogin = () => {
     this.props.login();
   }
@@ -36,28 +36,24 @@ class Main extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <View style={styles.headerSection}>
-            <Image source={Logo} style={styles.logo} />
-            <Text style={styles.titleText}>DevSummit</Text>
-          </View>
+          <LinearGradient colors={['#3F51B5', '#6200EA']}>
+            <View style={styles.headerSection}>
+              <Image source={Logo} style={styles.logo} />
+              <Text style={styles.titleText}>DevSummit</Text>
+            </View>
+          </LinearGradient>
           <View style={styles.formSection}>
-           <Form>
-              <Item floatingLabel >
-                <Label>Username</Label>
-                <Input
-                  onChangeText={username => this.handleInputChange('username', username)}
-                  value={username}
-                />
-              </Item>
-              <Item floatingLabel >
-                <Label>Password</Label>
-                <Input
-                  secureTextEntry
-                  onChangeText={password => this.handleInputChange('password', password)}
-                  value={password}
-                />
-              </Item>
-            </Form>
+            <InputItem
+              title="Username"
+              onChangeText={usernameText => this.handleInputChange('username', usernameText)}
+              value={username}
+            />
+            <InputItem
+              title="Password"
+              secureTextEntry
+              onChangeText={passwordText => this.handleInputChange('password', passwordText)}
+              value={password}
+            />
           </View>
           <View style={styles.buttonSection}>
             {(username === '' || password === '') ?
@@ -65,7 +61,7 @@ class Main extends Component {
                 <Text>Log In</Text>
               </Button>
               :
-              <Button primary block style={styles.button} onPress={() => ((username === '' || password === '') ? null : this.onLogin())}>
+              <Button primary block style={styles.button} onPress={() => (this.onLogin())}>
                 <Text>Log In</Text>
               </Button>
             }
