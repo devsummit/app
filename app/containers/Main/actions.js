@@ -63,8 +63,8 @@ export function loginGoogle() {
       manager.configure({
         google: {
           callback_url: 'http://localhost/google',
-          client_id: '460961401101-2l5fl2dk8qpl3aoi04n2t30dps6ahe6c.apps.googleusercontent.com',
-          client_secret: 'OD6hf4RQLyC9ioFepMTI8-L3'
+          client_id: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
+          client_secret: 'ZdbNXvmMTy9dcAK8oW-3QPOj'
         }
       });
       manager.authorize('google', {scopes: 'profile'})
