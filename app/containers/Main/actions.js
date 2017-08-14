@@ -71,30 +71,31 @@ export function loginGoogle() {
       }
     });
     manager.authorize('google', {scopes: 'email'})
-    .then(resp => {
-      if (resp.authorized) {
-        DevSummitAxios.post('/auth/login',{
-          provider: resp.provider,
-          token: resp.response.credentials.idToken
-        },{
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((response) => {
-          if (response && response.data && response.data.meta.success) {
-            try {
-              AsyncStorage.setItem('access_token', response.data.data.access_token);
-              AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-            } catch (error) {
-              console.log(error, 'error caught');
+      .then((resp) => {
+        if (resp.authorized) {
+          DevSummitAxios.post('/auth/login',{
+            provider: resp.provider,
+            token: resp.response.credentials.idToken
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
             }
-            dispatch({
-              type: UPDATE_IS_LOGGED_IN,
-              status: true
-            });
-          }
-        }).catch(err => console.log(err));
-      }
-    }).catch(err => console.log(err));
+          }).then((response) => {
+            if (response && response.data && response.data.meta.success) {
+              try {
+                AsyncStorage.setItem('access_token', response.data.data.access_token);
+                AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+              } catch (error) {
+                console.log(error, 'error caught');
+              }
+              dispatch({
+                type: UPDATE_IS_LOGGED_IN,
+                status: true
+              });
+            }
+          }).catch(err => console.log(err));
+        }
+      }).catch(err => console.log(err));
   }
 }
+

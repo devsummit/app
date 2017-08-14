@@ -1,5 +1,5 @@
 export default {
-  API_BASE_URL: 'http://192.168.8.106:5000',
+  API_BASE_URL: 'http://192.168.8.103:5000',
 
   GOOGLE_CALLBACK_URL: 'http://localhost/google',
   GOOGLE_CLIENT_ID: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
