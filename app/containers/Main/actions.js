@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import OAuthManager from 'react-native-oauth';
 
 import {
   DevSummitAxios
@@ -13,6 +14,13 @@ import {
   UPDATE_IS_LOGGED_IN
 } from './constants';
 
+const manager = new OAuthManager('devsummit')
+manager.configure({
+  google: {
+    client_id: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
+    client_secret: 'ZdbNXvmMTy9dcAK8oW-3QPOj'
+  }
+});
 
 /*
  * Update the input fields
@@ -54,4 +62,13 @@ export function login() {
       }
     });
   };
+}
+
+export function loginGoogle() {
+  return (dispatch) => {
+    manager.authorize('google', {scopes: 'profile email'})
+    .then(resp => {
+      console.log(resp)
+    }).catch(err => console.log('There was an error'));
+  }
 }
