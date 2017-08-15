@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import OAuthManager from 'react-native-oauth';
+import { twitter } from 'react-native-simple-auth';
 
 import {
   DevSummitAxios
@@ -137,3 +138,50 @@ export function loginFacebook() {
   };
 }
 
+export function loginTwitter() {
+  return (dispatch) => {
+    twitter({
+      appId: 'iJoptl48l8j5OseOI1lrS3r9N',
+      appSecret: 'eJBRnVvE0YplptEelYJOuHYw2YLdOf9v39YNnfdM6Rkv3kNShC',
+      callback: 'devsummit://authorize',
+    }).then((info) => {
+      console.log(info)
+      // info.user - user details from the provider
+      // info.credentials - tokens from the provider
+    }).catch((error) => {
+      console.log(error)
+    });
+
+    // const manager = new OAuthManager('devsummit')
+    // manager.configure({
+    //   facebook: {
+    //     client_id: FB_CLIENT_ID,
+    //     client_secret: FB_CLIENT_SECRET
+    //   }
+    // });
+    // manager.authorize('facebook', { scopes: 'public_profile' })
+    //   .then((resp) => {
+    //     const data = {
+    //       provider: 'facebook',
+    //       token: resp.response.credentials.accessToken
+    //     };
+    //     const headers = { 'Content-Type': 'application/json' };
+    //     DevSummitAxios.post('/auth/login', data, { headers })
+    //       .then((response) => {
+    //         if (response && response.data && response.data.meta.success) {
+    //           try {
+    //             AsyncStorage.setItem('access_token', response.data.data.access_token);
+    //             AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+    //           } catch (error) {
+    //             console.log(error, 'error caught');
+    //           }
+    //           dispatch({
+    //             type: UPDATE_IS_LOGGED_IN,
+    //             status: true
+    //           });
+    //         }
+    //       })
+    //       .catch((err) => { console.log(err); });
+    //   }).catch((err) => { console.log('error login fb', err); });
+  };
+}
