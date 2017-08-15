@@ -119,7 +119,6 @@ export function loginFacebook() {
         const headers = { 'Content-Type': 'application/json' };
         DevSummitAxios.post('/auth/login', data, { headers })
           .then((response) => {
-            console.log('api response', response.data);
             if (response && response.data && response.data.meta.success) {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
