@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
-  Picker,
-  Item,
-  Label,
-  Input,
   Text
 } from 'native-base';
+import { twitter } from 'react-native-simple-auth';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -21,6 +18,8 @@ import Button from '../../components/Button'
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
+
+
 
 class RegisterMenu extends Component {
   registerFacebook = () => {
