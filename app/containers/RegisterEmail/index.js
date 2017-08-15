@@ -32,6 +32,12 @@ class RegisterEmail extends Component {
      */
   componentWillMount() {
     this.props.updateInputFields('role', 'attendee');
+    if (this.props.prefilledData) {
+      this.props.updateInputFields('first_name', this.props.prefilledData.first_name);
+      this.props.updateInputFields('last_name', this.props.prefilledData.last_name);
+      this.props.updateInputFields('email', this.props.prefilledData.email);
+      this.props.updateInputFields('social_id', this.props.prefilledData.social_id);
+    }
   }
 
   handleInputChange = (field, value) => {
@@ -93,7 +99,8 @@ class RegisterEmail extends Component {
       email,
       password,
       phone,
-      role
+      role,
+      social_id
     } = inputFields || '';
 
     const {
