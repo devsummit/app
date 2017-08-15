@@ -12,6 +12,8 @@ import {
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
+  FB_CLIENT_ID,
+  FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET
@@ -97,5 +99,42 @@ export function loginGoogle() {
         }
       }).catch(err => console.log(err));
   }
+}
+
+export function loginFacebook() {
+  return (dispatch) => {
+    const manager = new OAuthManager('devsummit')
+    manager.configure({
+      facebook: {
+        client_id: FB_CLIENT_ID,
+        client_secret: FB_CLIENT_SECRET
+      }
+    });
+    manager.authorize('facebook', { scopes: 'public_profile' })
+      .then((resp) => {
+        const data = {
+          provider: 'facebook',
+          token: resp.response.credentials.accessToken
+        };
+        const headers = { 'Content-Type': 'application/json' };
+        DevSummitAxios.post('/auth/login', data, { headers })
+          .then((response) => {
+            console.log('api response', response.data);
+            if (response && response.data && response.data.meta.success) {
+              try {
+                AsyncStorage.setItem('access_token', response.data.data.access_token);
+                AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+              } catch (error) {
+                console.log(error, 'error caught');
+              }
+              dispatch({
+                type: UPDATE_IS_LOGGED_IN,
+                status: true
+              });
+            }
+          })
+          .catch((err) => { console.log(err); });
+      }).catch((err) => { console.log('error login fb', err); });
+  };
 }
 

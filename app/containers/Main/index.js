@@ -23,6 +23,10 @@ class Main extends Component {
     this.props.login();
   }
 
+  loginFacebook = () => {
+    this.props.loginFacebook();
+  }
+
   handleInputChange = (field, value) => {
     this.props.updateFields(field, value);
   }
@@ -61,7 +65,7 @@ class Main extends Component {
                 <Text>Log In</Text>
               </Button>
               :
-              <Button primary block style={styles.button} onPress={() => (this.onLogin())}>
+              <Button primary block style={styles.button} onPress={() => { this.onLogin(); }}>
                 <Text>Log In</Text>
               </Button>
             }
@@ -74,7 +78,7 @@ class Main extends Component {
               <Icon name="phone" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Phone</Text>
             </Button>
-            <Button primary style={styles.button}>
+            <Button primary style={styles.button} onPress={() => { this.loginFacebook(); }}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
             </Button>
