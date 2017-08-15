@@ -12,11 +12,27 @@ import {
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+import { twitter } from 'react-native-simple-auth';
+
 
 import Button from '../../components/Button'
 import styles from './styles';
 
+
+
 class RegisterMenu extends Component {
+  onRegisterTwitter = () => {
+      twitter({
+          appId: '',
+          appSecret: '',
+          callback: 'devsummit://authorize',
+      }).then((info) => {
+        console.log(info)
+      }).catch((error) => {
+        console.log(error)
+        // error.description
+      });
+  }
   render() {
     return (
       <Container style={styles.container}>
@@ -28,7 +44,7 @@ class RegisterMenu extends Component {
             </Button>
             <Button info block style={styles.button} >
               <Icon name="twitter" color="white" style={styles.icon} />
-              <Text style={styles.buttonText} >Twitter</Text>
+              <Text style={styles.buttonText} onPress={this.onRegisterTwitter} >Twitter</Text>
             </Button>
             <Button danger block style={styles.button}>
               <Icon name="google-plus" color="white" style={styles.icon} />
