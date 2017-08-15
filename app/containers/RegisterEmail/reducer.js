@@ -22,6 +22,7 @@ const initialState = fromJS({
     password: '',
     phone: '',
     role: '',
+    social_id: ''
   },
   errorFields: {
     error_first_name: false,

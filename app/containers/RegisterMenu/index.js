@@ -13,8 +13,14 @@ import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 
+// import redux componens
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 import Button from '../../components/Button'
 import styles from './styles';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
 class RegisterMenu extends Component {
   render() {
@@ -30,7 +36,7 @@ class RegisterMenu extends Component {
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText} >Twitter</Text>
             </Button>
-            <Button danger block style={styles.button}>
+            <Button danger block style={styles.button} onPress={() => {this.props.registerGoogle()}}>
               <Icon name="google-plus" color="white" style={styles.icon} />
               <Text style={styles.buttonText} >Google</Text>
             </Button>
@@ -48,4 +54,8 @@ class RegisterMenu extends Component {
   }
 }
 
-export default RegisterMenu;
+const mapStateToProps = createStructuredSelector({
+  isRegistered: selectors.isRegistered()
+});
+
+export default connect(mapStateToProps, actions)(RegisterMenu);
