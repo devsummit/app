@@ -78,11 +78,11 @@ class Main extends Component {
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
             </Button>
-            <Button danger style={styles.button}>
+            <Button danger style={styles.button} onPress={() => {this.props.loginGoogle()}}>
               <Icon name="google-plus" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Google</Text>
             </Button>
-            <Button info style={styles.button}>
+            <Button info style={styles.button} onPress={() => {this.props.loginTwitter()}}>
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>

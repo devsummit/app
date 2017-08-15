@@ -21,7 +21,7 @@ const initialState = fromJS({
     email: '',
     password: '',
     phone: '',
-    role: ''
+    role: '',
   },
   errorFields: {
     error_first_name: false,
