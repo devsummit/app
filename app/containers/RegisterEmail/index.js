@@ -93,7 +93,7 @@ class RegisterEmail extends Component {
       email,
       password,
       phone,
-      role
+      role,
     } = inputFields || '';
 
     const {

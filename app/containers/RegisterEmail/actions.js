@@ -79,19 +79,21 @@ export function updateRegisterStatus(status) {
  */
 export function register() {
   return (dispatch, getState) => {
-    const { inputFields } = getState().get('register').toJS();
+    const { inputFields } = getState().get('registerEmail').toJS();
 
     const {
-      first_name, role, email, password, username
+      first_name, role, email, password, username, social_id
     } = inputFields || null;
 
     const { last_name } = inputFields || '';
 
+    const role_id = role === 'attendee' ? 1 : role === 'booth' ? 2 : 3;
+
     if (first_name && role && email && password && username) {
       DevSummitAxios.post('/auth/register', {
-        first_name, last_name, username, email, password, role
+        first_name, last_name, username, email, password, role: role_id, social_id
       }).then((response) => {
-        if (response && response.data && response.data.success) {
+        if (response && response.data && response.data.meta.success) {
           // do something
           dispatch(updateRegisterStatus(true));
         }
