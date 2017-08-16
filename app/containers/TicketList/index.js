@@ -4,13 +4,13 @@ import {
   Content,
   List,
   ListItem,
-  Button,
   Text
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
+import Button from '../../components/Button';
 
 class TicketList extends Component {
   printDummy = () => {

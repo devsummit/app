@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ListItem,
   Text,
   Grid,
   Col,
@@ -9,6 +8,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import ListItem from '../ListItem'
 
 const statusColor = (status) => {
   let color;
@@ -28,7 +28,7 @@ const OrderItem = (props) => {
     <ListItem
       style={styles.item}
       button
-      onPress={() => { Actions.orderDetail({ orderId: props.order.id }); }}
+      onPress={props.onPress}
     >
       <Grid style={{ flex: 9 }}>
         <Col style={styles.left}>
