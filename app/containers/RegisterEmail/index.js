@@ -37,6 +37,7 @@ class RegisterEmail extends Component {
       this.props.updateInputFields('last_name', this.props.prefilledData.last_name);
       this.props.updateInputFields('email', this.props.prefilledData.email);
       this.props.updateInputFields('social_id', this.props.prefilledData.social_id);
+      this.props.updateInputFields('username', this.props.prefilledData.username);
     }
   }
 
