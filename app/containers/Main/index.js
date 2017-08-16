@@ -35,7 +35,7 @@ class Main extends Component {
     const { fields, isLoggedIn } = this.props;
     const { username, password } = fields || '';
     if (isLoggedIn) {
-      Actions.mainTabs()
+      Actions.mainTabs({ profileData: this.props.profileData })
     }
     return (
       <Container style={styles.container}>
@@ -106,7 +106,8 @@ class Main extends Component {
  */
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
-  isLoggedIn: selectors.isLoggedIn()
+  isLoggedIn: selectors.isLoggedIn(),
+  profileData: selectors.getProfileData()
 });
 
 export default connect(mapStateToProps, actions)(Main);

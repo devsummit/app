@@ -26,3 +26,12 @@ export const isLoggedIn = () => createSelector(
   state => state.get('isLoggedIn')
 );
 
+/**
+ *  Get profile data status
+ *  Returns object
+ */
+export const getProfileData = () => createSelector(
+  selectMainReducer(),
+  state => state.get('profileData')
+);
+

@@ -13,6 +13,7 @@ import {
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
+  FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -44,8 +45,8 @@ export function updateFields(field, value) {
 export function login() {
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
-
     const { username, password } = fields;
+
     DevSummitAxios.post('/auth/login', {
       username,
       password
@@ -60,6 +61,10 @@ export function login() {
         dispatch({
           type: UPDATE_IS_LOGGED_IN,
           status: true
+        });
+        dispatch({
+          type: FETCH_PROFILE_DATA,
+          payload: response.data.included
         });
       }
     });
@@ -98,6 +103,10 @@ export function loginGoogle() {
                 type: UPDATE_IS_LOGGED_IN,
                 status: true
               });
+              dispatch({
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
+              });
             }
           }).catch(err => console.log(err));
         }
@@ -134,6 +143,10 @@ export function loginFacebook() {
                 type: UPDATE_IS_LOGGED_IN,
                 status: true
               });
+              dispatch({
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
+              });
             }
           })
           .catch((err) => { console.log(err); });
@@ -168,6 +181,10 @@ export function loginTwitter() {
             dispatch({
               type: UPDATE_IS_LOGGED_IN,
               status: true
+            });
+            dispatch({
+              type: FETCH_PROFILE_DATA,
+              payload: response.data.included
             });
           }
         })

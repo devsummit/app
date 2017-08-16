@@ -17,3 +17,8 @@ export const getFields = () => createSelector(
   state => state.get('fields').toJS()
 );
 
+export const getIsProfileUpdated = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isProfileUpdated')
+);
+
