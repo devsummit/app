@@ -10,8 +10,6 @@ import { Actions } from 'react-native-router-flux';
 import { twitter } from 'react-native-simple-auth';
 
 
-
-
 // import redux componens
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
