@@ -9,6 +9,7 @@ import {
   Col,
   Right
 } from 'native-base';
+import { Actions } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import OrderItem from '../../components/OrderItem';
@@ -45,7 +46,9 @@ class OrderList extends Component {
       <Container style={styles.container}>
         <Content>
           <List>
-            { orders.map((order) => { return <OrderItem key={order.id} order={order} /> }) }
+            { orders.map((order) => {
+              return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }}/>
+            }) }
           </List>
         </Content>
       </Container>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
-import  { Button as ButtonNativeBase } from 'native-base'
-import { Actions } from 'react-native-router-flux'
+import { ListItem as ListItemNativeBase } from 'native-base'
 
 export default class Button extends Component {
   constructor(props) {
@@ -13,17 +11,17 @@ export default class Button extends Component {
   onClickButton = (inputFunction) => {
     this.setState({ onClick: true })
     inputFunction()
-    setTimeout(function() { this.setState({onClick: false}); }.bind(this), 2000);
+    setTimeout(() => { this.setState({onClick: false}) }, 2000);
   }
 
   render() {
     return (
-      <ButtonNativeBase
+      <ListItemNativeBase
         {...this.props}
-        onPress = {() => {!this.state.onClick ? this.onClickButton(this.props.onPress) : null}}
+        onPress={() => { !this.state.onClick ? this.onClickButton(this.props.onPress) : null }}
       >
         {this.props.children}
-      </ButtonNativeBase>
+      </ListItemNativeBase>
     )
   }
 }
