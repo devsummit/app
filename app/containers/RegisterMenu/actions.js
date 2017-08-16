@@ -15,7 +15,11 @@ import {
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   TWITTER_CONSUMER_KEY,
+<<<<<<< HEAD
   TWITTER_CONSUMER_KEY_SECRET,
+=======
+  TWITTER_CONSUMER_SECRET,
+>>>>>>> 99d1180051719f226bef3dc3884e07016f082b48
   TWITTER_CALLBACK_URL,
   IS_REGISTERING
 } from './constants';
@@ -99,7 +103,11 @@ export function registerTwitter() {
   return (dispatch) => {
     twitter({
       appId: TWITTER_CONSUMER_KEY,
+<<<<<<< HEAD
       appSecret: TWITTER_CONSUMER_KEY_SECRET,
+=======
+      appSecret: TWITTER_CONSUMER_SECRET,
+>>>>>>> 99d1180051719f226bef3dc3884e07016f082b48
       callback: TWITTER_CALLBACK_URL
     }).then((response) => {
       const prefilledData = {

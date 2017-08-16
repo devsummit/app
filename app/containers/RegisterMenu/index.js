@@ -7,6 +7,9 @@ import {
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+import { twitter } from 'react-native-simple-auth';
+
+
 
 
 // import redux componens
