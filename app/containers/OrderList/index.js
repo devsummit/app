@@ -3,12 +3,9 @@ import {
   Container,
   Content,
   List,
-  ListItem,
-  Text,
-  Grid,
-  Col,
-  Right
+  Fab
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import OrderItem from '../../components/OrderItem';
@@ -48,6 +45,9 @@ class OrderList extends Component {
             { orders.map((order) => { return <OrderItem key={order.id} order={order} /> }) }
           </List>
         </Content>
+        <Fab position="bottomRight" onPress={() => { Actions.newOrder(); }}>
+          <Icon name="plus" />
+        </Fab>
       </Container>
     );
   }
