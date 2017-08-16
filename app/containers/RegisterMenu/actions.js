@@ -1,11 +1,7 @@
-import { AsyncStorage } from 'react-native';
 import OAuthManager from 'react-native-oauth';
+import { twitter } from 'react-native-simple-auth';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-
-import {
-  DevSummitAxios
-} from '../../helpers';
 
 /*
  * import constants
@@ -17,8 +13,23 @@ import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
   FB_CLIENT_ID,
-  FB_CLIENT_SECRET
+  FB_CLIENT_SECRET,
+  TWITTER_CONSUMER_KEY,
+<<<<<<< HEAD
+  TWITTER_CONSUMER_KEY_SECRET,
+=======
+  TWITTER_CONSUMER_SECRET,
+>>>>>>> 99d1180051719f226bef3dc3884e07016f082b48
+  TWITTER_CALLBACK_URL,
+  IS_REGISTERING
 } from './constants';
+
+export function isRegistering(status) {
+  return {
+    type: IS_REGISTERING,
+    status
+  };
+}
 
 export function registerGoogle() {
   return (dispatch) => {
@@ -86,4 +97,29 @@ export function registerFacebook() {
         }
       }).catch(err => console.log(err));
   }
+}
+
+export function registerTwitter() {
+  return (dispatch) => {
+    twitter({
+      appId: TWITTER_CONSUMER_KEY,
+<<<<<<< HEAD
+      appSecret: TWITTER_CONSUMER_KEY_SECRET,
+=======
+      appSecret: TWITTER_CONSUMER_SECRET,
+>>>>>>> 99d1180051719f226bef3dc3884e07016f082b48
+      callback: TWITTER_CALLBACK_URL
+    }).then((response) => {
+      const prefilledData = {
+        first_name: response.user.name,
+        last_name: '',
+        email: '',
+        social_id: response.user.id_str,
+        username: response.user.screen_name.toLowerCase()
+      }
+      Actions.registerEmail({ prefilledData })
+    }).catch((err) => {
+      console.log(err)
+    });
+  };
 }
