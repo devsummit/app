@@ -7,6 +7,8 @@ import {
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+import { twitter } from 'react-native-simple-auth';
+
 
 
 // import redux componens
@@ -17,6 +19,8 @@ import Button from '../../components/Button'
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
+
+
 
 
 class RegisterMenu extends Component {
