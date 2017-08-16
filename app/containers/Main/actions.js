@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import OAuthManager from 'react-native-oauth';
+import { twitter } from 'react-native-simple-auth';
 
 import {
   DevSummitAxios
@@ -16,7 +17,10 @@ import {
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET
+  GOOGLE_CLIENT_SECRET,
+  TWITTER_CALLBACK,
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_KEY_SECRET
 } from './constants';
 
 
@@ -137,3 +141,71 @@ export function loginFacebook() {
   };
 }
 
+export function loginTwitter() {
+  return (dispatch) => {
+    twitter({
+      appId: TWITTER_CONSUMER_KEY,
+      appSecret: TWITTER_CONSUMER_KEY_SECRET,
+      callback: TWITTER_CALLBACK
+    }).then((info) => {
+      console.log(info)
+      const data = {
+        provider: 'twitter',
+        token: info.credentials.oauth_token,
+        token_secret: info.credentials.oauth_token_secret
+      };
+      const headers = { 'Content-Type': 'application/json' };
+      DevSummitAxios.post('/auth/login', data, { headers })
+        .then((response) => {
+          console.log(response)
+          if (response && response.data && response.data.meta.success) {
+            try {
+              AsyncStorage.setItem('access_token', response.data.data.access_token);
+              AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+            } catch (error) {
+              console.log(error, 'error caught');
+            }
+            dispatch({
+              type: UPDATE_IS_LOGGED_IN,
+              status: true
+            });
+          }
+        })
+        .catch((err) => { console.log(err); });
+    }).catch((error) => {
+      console.log(error)
+    });
+
+    // const manager = new OAuthManager('devsummit')
+    // manager.configure({
+    //   facebook: {
+    //     client_id: FB_CLIENT_ID,
+    //     client_secret: FB_CLIENT_SECRET
+    //   }
+    // });
+    // manager.authorize('facebook', { scopes: 'public_profile' })
+    //   .then((resp) => {
+    //     const data = {
+    //       provider: 'facebook',
+    //       token: resp.response.credentials.accessToken
+    //     };
+    //     const headers = { 'Content-Type': 'application/json' };
+    //     DevSummitAxios.post('/auth/login', data, { headers })
+    //       .then((response) => {
+    //         if (response && response.data && response.data.meta.success) {
+    //           try {
+    //             AsyncStorage.setItem('access_token', response.data.data.access_token);
+    //             AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+    //           } catch (error) {
+    //             console.log(error, 'error caught');
+    //           }
+    //           dispatch({
+    //             type: UPDATE_IS_LOGGED_IN,
+    //             status: true
+    //           });
+    //         }
+    //       })
+    //       .catch((err) => { console.log(err); });
+    //   }).catch((err) => { console.log('error login fb', err); });
+  };
+}
