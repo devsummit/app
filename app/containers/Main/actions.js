@@ -17,7 +17,10 @@ import {
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET
+  GOOGLE_CLIENT_SECRET,
+  TWITTER_CALLBACK,
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_KEY_SECRET
 } from './constants';
 
 
@@ -141,13 +144,34 @@ export function loginFacebook() {
 export function loginTwitter() {
   return (dispatch) => {
     twitter({
-      appId: 'iJoptl48l8j5OseOI1lrS3r9N',
-      appSecret: 'eJBRnVvE0YplptEelYJOuHYw2YLdOf9v39YNnfdM6Rkv3kNShC',
-      callback: 'devsummit://authorize',
+      appId: TWITTER_CONSUMER_KEY,
+      appSecret: TWITTER_CONSUMER_KEY_SECRET,
+      callback: TWITTER_CALLBACK
     }).then((info) => {
       console.log(info)
-      // info.user - user details from the provider
-      // info.credentials - tokens from the provider
+      const data = {
+        provider: 'twitter',
+        token: info.credentials.oauth_token,
+        token_secret: info.credentials.oauth_token_secret
+      };
+      const headers = { 'Content-Type': 'application/json' };
+      DevSummitAxios.post('/auth/login', data, { headers })
+        .then((response) => {
+          console.log(response)
+          if (response && response.data && response.data.meta.success) {
+            try {
+              AsyncStorage.setItem('access_token', response.data.data.access_token);
+              AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+            } catch (error) {
+              console.log(error, 'error caught');
+            }
+            dispatch({
+              type: UPDATE_IS_LOGGED_IN,
+              status: true
+            });
+          }
+        })
+        .catch((err) => { console.log(err); });
     }).catch((error) => {
       console.log(error)
     });
