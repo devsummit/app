@@ -39,6 +39,7 @@ export function registerGoogle() {
     });
     manager.authorize('google', {scopes: 'email'})
       .then((resp) => {
+        console.log(resp)
         if (resp.authorized) {
           axios.get('https://www.googleapis.com/plus/v1/people/me', {
             headers: {
@@ -53,10 +54,6 @@ export function registerGoogle() {
               social_id: response.data.id
             }
             Actions.registerEmail({prefilledData: prefilledData})
-            console.log('first_name',response.data.name.givenName)
-            console.log('last_name',response.data.name.familyName)
-            console.log('social_id',response.data.id)
-            console.log('email',response.data.emails[0].value)
 
           }).catch(err => console.log(err));
         }
