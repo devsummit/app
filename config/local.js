@@ -9,7 +9,5 @@ export default {
 
   GOOGLE_CALLBACK_URL: 'http://localhost/google',
   GOOGLE_CLIENT_ID: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
-  GOOGLE_CLIENT_SECRET: 'ZdbNXvmMTy9dcAK8oW-3QPOj',
-  TWITTER_CONSUMER_KEY: 'iJoptl48l8j5OseOI1lrS3r9N',
-  TWITTER_CONSUMER_SECRET: 'eJBRnVvE0YplptEelYJOuHYw2YLdOf9v39YNnfdM6Rkv3kNShC'
-}
+  GOOGLE_CLIENT_SECRET: 'ZdbNXvmMTy9dcAK8oW-3QPOj'
+};
