@@ -24,6 +24,7 @@ import TicketList from './containers/TicketList';
 import OrderDetail from './containers/OrderDetail';
 import MainTabs from "./containers/MainTabs";
 import SpeakerDetail from "./containers/SpeakerDetail";
+import AttendeesList from "./containers/AttendeesList";
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -71,6 +72,7 @@ export default class App extends Component {
                     <Scene key="orderList" component={OrderList} title="Order List" />
                     <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
                     <Scene key="schedule" component={Schedule} title="Schedule"/>
+                    <Scene key="attendeesList" component={AttendeesList} title="Select Attendee"/>
                 </Scene>
             </RouterWithRedux>
         </Provider>
