@@ -12,6 +12,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'flex-end',
+    borderRadius: 90,
+  },
+  buttonText: {
+    textAlign: 'left',
+    paddingRight: 5,
+    flex: 7,
+    fontSize: 12,
+    alignSelf: 'center',
+    fontWeight: 'bold'
   },
   btnOrder: {
     alignSelf: 'flex-end',
