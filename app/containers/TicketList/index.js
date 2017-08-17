@@ -20,7 +20,6 @@ import { primaryColor } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-
 class TicketList extends Component {
   state = {
     isLoading: true,
