@@ -48,8 +48,8 @@ export function login() {
     }).then((response) => {
       if (response && response.data && response.data.meta.success) {
         try {
-          AsyncStorage.setItem('access_token', responseJson.result.access_token);
-          AsyncStorage.setItem('refresh_token', responseJson.result.refresh_token);
+          AsyncStorage.setItem('access_token', response.data.data.access_token);
+          AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
         } catch (error) {
           console.log(error, 'error caught');
         }
