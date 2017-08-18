@@ -20,7 +20,7 @@ export default class Button extends Component {
     return (
       <ButtonNativeBase
         {...this.props}
-        onPress = {!this.state.onClick ? () => { this.onClickButton(this.props.onPress)} : null}
+        onPress={!this.state.onClick ? () => { this.onClickButton(this.props.onPress)} : null}
       >
         {this.props.children}
       </ButtonNativeBase>

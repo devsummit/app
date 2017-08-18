@@ -53,7 +53,6 @@ export default class App extends Component {
     );
   }
   checkAccessToken = () => {
-    console.log('cek token')
     AsyncStorage.getItem('access_token', (err, result) => {
       if (result) {
         this.setState({

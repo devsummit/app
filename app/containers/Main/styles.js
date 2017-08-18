@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   buttonSection: {
     marginTop: 8,
     paddingBottom: 10,
-    paddingTop: 10,
   },
   button: {
     width: '90%',

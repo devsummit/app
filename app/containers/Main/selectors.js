@@ -21,9 +21,18 @@ export const getFields = () => createSelector(
  *  Get logged in status
  *  Returns boolean
  */
-export const isLoggedIn = () => createSelector(
+export const getIsLoggedIn = () => createSelector(
   selectMainReducer(),
   state => state.get('isLoggedIn')
+);
+
+/**
+ *  Get subscribed status
+ *  Returns boolean
+ */
+export const getIsSubscribed = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isSubscribed')
 );
 
 /**

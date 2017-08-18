@@ -21,32 +21,32 @@ export default class InputItem extends Component {
       onFocus: true
     })
   }
-    handleOnBlur = () => {
-      this.setState({
-        onFocus: false
-      })
-    }
-    render() {
-      return (
-        <View>
-          <Form>
-            <Item floatingLabel error={this.props.error} >
-              <Label style={[this.props.error ? styles.errorLabel :
-                styles.normalLabel, this.state.onFocus || this.props.value.length > 0 ? styles.normalOnFocusLabel :
-                styles.normalOnBlurLabel]}
-              >
-                {this.props.title}
-              </Label>
-              <Input
-                secureTextEntry={this.props.secureTextEntry}
-                onChangeText={this.props.onChangeText}
-                value={this.props.value}
-                onFocus={() => { this.handleOnFocus(); }}
-                onBlur={() => { this.handleOnBlur(); }}
-              />
-            </Item>
-          </Form>
-        </View>
-      );
-    }
+  handleOnBlur = () => {
+    this.setState({
+      onFocus: false
+    })
+  }
+  render() {
+    return (
+      <View>
+        <Form>
+          <Item floatingLabel error={this.props.error} >
+            <Label style={[this.props.error ? styles.errorLabel :
+              styles.normalLabel, this.state.onFocus || this.props.value.length > 0 ? styles.normalOnFocusLabel :
+              styles.normalOnBlurLabel]}
+            >
+              {this.props.title}
+            </Label>
+            <Input
+              secureTextEntry={this.props.secureTextEntry}
+              onChangeText={this.props.onChangeText}
+              value={this.props.value}
+              onFocus={() => { this.handleOnFocus(); }}
+              onBlur={() => { this.handleOnBlur(); }}
+            />
+          </Item>
+        </Form>
+      </View>
+    );
+  }
 }
