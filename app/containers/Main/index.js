@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Content, Text, Form, Input, Item, Label } from 'native-base';
+import { Container, Content, Text } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image, View, Alert, TouchableOpacity } from 'react-native';
+import {
+  Image,
+  View,
+  Alert
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -11,6 +15,7 @@ import { createStructuredSelector } from 'reselect';
 
 import InputItem from '../../components/InputItem';
 import Button from '../../components/Button';
+import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
 
 import * as actions from './actions';
@@ -19,16 +24,27 @@ import * as selectors from './selectors';
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
-  componentWillReceiveProps() {
+  state = {
+    modalVisible: false
+  }
+  componentWillReceiveProps(prevProps) {
     this.props.getAccessToken()
     if (this.props.isLoggedIn) {
       Actions.mainTabs({ profileData: this.props.profileData })
       this.props.updateIsLogIn(false)
     }
+    if (prevProps.isSubscribed !== this.props.isSubscribed) {
+      Alert.alert('Success', 'You have been subscribed, we will send update to your email')
+      this.props.updateIsSubscribed(false)
+    }
   }
 
   onLogin = () => {
     this.props.login();
+  }
+
+  setModalVisible = () => {
+    this.setState({ modalVisible: !this.state.modalVisible })
   }
 
   loginFacebook = () => {
@@ -39,13 +55,26 @@ class Main extends Component {
     this.props.updateFields(field, value);
   }
 
+  subscribeNewsletter = () => {
+    Alert.alert('lala')
+  }
+
   render() {
     const { fields, isLoggedIn } = this.props;
-    const { username, password } = fields || '';
+    const { username, password, email } = fields || '';
 
     return (
       <Container style={styles.container}>
         <Content>
+          <ModalComponent
+            visible={this.state.modalVisible}
+            modalTitle="Subscriber"
+            inputTitle="Email"
+            onChangeText={emailText => this.handleInputChange('email', emailText)}
+            value={email}
+            onSubmit={() => this.props.subscribeNewsletter()}
+            onModalPress={() => this.setModalVisible()}
+          />
           <LinearGradient colors={['#3F51B5', '#6200EA']}>
             <View style={styles.headerSection}>
               <Image source={Logo} style={styles.logo} />
@@ -66,6 +95,10 @@ class Main extends Component {
             />
           </View>
           <View style={styles.buttonSection}>
+            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
+              <Text style={styles.registerText}>Don't have an account?</Text>
+              <Text style={styles.registerTextBold}> Register</Text>
+            </Button>
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text>Log In</Text>
@@ -96,9 +129,8 @@ class Main extends Component {
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>
-            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
-              <Text style={styles.registerText}>Don't have an account?</Text>
-              <Text style={styles.registerTextBold}> Register</Text>
+            <Button transparent style={styles.buttonRegister} onPress={() => { this.setModalVisible(); }}>
+              <Text style={styles.registerText}>Subscribe to Newsletter</Text>
             </Button>
           </View>
         </Content>
@@ -112,7 +144,8 @@ class Main extends Component {
  */
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
-  isLoggedIn: selectors.isLoggedIn(),
+  isSubscribed: selectors.getIsSubscribed(),
+  isLoggedIn: selectors.getIsLoggedIn(),
   profileData: selectors.getProfileData()
 });
 

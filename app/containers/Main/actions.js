@@ -13,6 +13,7 @@ import {
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
+  UPDATE_IS_SUBSCRIBED,
   FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
@@ -41,6 +42,13 @@ export function updateFields(field, value) {
 export function updateIsLogIn(status) {
   return {
     type: UPDATE_IS_LOGGED_IN,
+    status
+  };
+}
+
+export function updateIsSubscribed(status) {
+  return {
+    type: UPDATE_IS_SUBSCRIBED,
     status
   };
 }
@@ -199,5 +207,19 @@ export function getAccessToken() {
         dispatch(updateIsLogIn(true));
       }
     })
+  }
+}
+
+export function subscribeNewsletter() {
+  return (dispatch, getState) => {
+    const { fields } = getState().get('main').toJS();
+    const { email } = fields;
+
+    const headers = { 'Content-Type': 'application/json' };
+    DevSummitAxios.post('/api/v1/newsletters', {email}, {headers}).then((response) => {
+      if (response && response.data && response.data.meta.success) {
+        dispatch(updateIsSubscribed(true));
+      }
+    });
   }
 }
