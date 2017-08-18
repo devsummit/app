@@ -60,8 +60,8 @@ export function login() {
     }).then((response) => {
       if (response && response.data && response.data.meta.success) {
         try {
-          AsyncStorage.setItem('access_token', responseJson.result.access_token);
-          AsyncStorage.setItem('refresh_token', responseJson.result.refresh_token);
+          AsyncStorage.setItem('access_token', response.data.data.access_token);
+          AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
           AsyncStorage.setItem('role_id', response.data.included.role_id);
         } catch (error) {
           console.log(error, 'error caught');
@@ -89,7 +89,7 @@ export function loginGoogle() {
     manager.authorize('google', {scopes: 'email'})
       .then((resp) => {
         if (resp.authorized) {
-          DevSummitAxios.post('/auth/login',{
+          DevSummitAxios.post('/auth/login', {
             provider: resp.provider,
             token: resp.response.credentials.idToken
           }, {

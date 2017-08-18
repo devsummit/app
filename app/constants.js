@@ -19,3 +19,5 @@ export const role_option = [
     label: 'speaker'
   }
 ];
+
+export const primaryColor = '#0D47A1';

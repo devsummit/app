@@ -27,10 +27,11 @@
                           ],
         "react/no-did-mount-set-state": 0,
         "react/prop-types": 1,
+        "react/forbid-prop-types": 0,
         "semi": [ 1, "always" ],
         "space-before-blocks": [ 1, "always" ],
         "consistent-return": 0,
-        "arrow-body-style": ["error", "always"]
+        "arrow-body-style": [0, "never"]
     },
     "globals": {
       "describe": false,
