@@ -22,3 +22,7 @@ export const getIsProfileUpdated = () => createSelector(
   state => state.get('isProfileUpdated')
 );
 
+export const getIsLogOut = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isLogOut')
+);

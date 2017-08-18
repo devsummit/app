@@ -38,6 +38,13 @@ export function updateFields(field, value) {
   };
 }
 
+export function updateIsLogIn(status) {
+  return {
+    type: UPDATE_IS_LOGGED_IN,
+    status
+  };
+}
+
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
@@ -59,10 +66,7 @@ export function login() {
         } catch (error) {
           console.log(error, 'error caught');
         }
-        dispatch({
-          type: UPDATE_IS_LOGGED_IN,
-          status: true
-        });
+        dispatch(updateIsLogIn(true));
         dispatch({
           type: FETCH_PROFILE_DATA,
           payload: response.data.included
@@ -101,10 +105,7 @@ export function loginGoogle() {
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch({
-                type: UPDATE_IS_LOGGED_IN,
-                status: true
-              });
+              dispatch(updateIsLogIn(true));
               dispatch({
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
@@ -142,10 +143,7 @@ export function loginFacebook() {
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch({
-                type: UPDATE_IS_LOGGED_IN,
-                status: true
-              });
+              dispatch(updateIsLogIn(true));
               dispatch({
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
@@ -164,7 +162,6 @@ export function loginTwitter() {
       appSecret: TWITTER_CONSUMER_KEY_SECRET,
       callback: TWITTER_CALLBACK
     }).then((info) => {
-      console.log(info)
       const data = {
         provider: 'twitter',
         token: info.credentials.oauth_token,
@@ -173,7 +170,6 @@ export function loginTwitter() {
       const headers = { 'Content-Type': 'application/json' };
       DevSummitAxios.post('/auth/login', data, { headers })
         .then((response) => {
-          console.log(response)
           if (response && response.data && response.data.meta.success) {
             try {
               AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -182,10 +178,7 @@ export function loginTwitter() {
             } catch (error) {
               console.log(error, 'error caught');
             }
-            dispatch({
-              type: UPDATE_IS_LOGGED_IN,
-              status: true
-            });
+            dispatch(updateIsLogIn(true));
             dispatch({
               type: FETCH_PROFILE_DATA,
               payload: response.data.included
@@ -197,4 +190,14 @@ export function loginTwitter() {
       console.log(error)
     });
   };
+}
+
+export function getAccessToken() {
+  return (dispatch) => {
+    AsyncStorage.getItem('access_token', (err, result) => {
+      if (result) {
+        dispatch(updateIsLogIn(true));
+      }
+    })
+  }
 }

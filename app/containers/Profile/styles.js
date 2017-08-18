@@ -34,8 +34,22 @@ const styles = StyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: 15,
-  }
+    marginTop: 6,
+    marginBottom: 6,
+  },
+  buttonChangePass: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 6,
+    marginBottom: 6,
+    justifyContent: 'center'
+  },
+  changePassText: {
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    color: '#3366BB'
+  },
 })
 
 export default styles;

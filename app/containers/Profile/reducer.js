@@ -6,7 +6,8 @@ import { fromJS } from 'immutable';
 
 import {
   UPDATE_SINGLE_FIELD,
-  UPDATE_IS_PROFILE_UPDATED
+  UPDATE_IS_PROFILE_UPDATED,
+  UPDATE_IS_LOG_OUT
 } from './constants';
 
 /*
@@ -19,7 +20,8 @@ const initialState = fromJS({
     lastName: '',
     profilePic: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg'
   },
-  isProfileUpdated: false
+  isProfileUpdated: false,
+  isLogOut: false
 });
 
 function profileReducer(state = initialState, action) {
@@ -28,6 +30,8 @@ function profileReducer(state = initialState, action) {
       return state.setIn([ 'fields', action.field ], action.value);
     case UPDATE_IS_PROFILE_UPDATED:
       return state.set('isProfileUpdated', action.status);
+    case UPDATE_IS_LOG_OUT:
+      return state.set('isLogOut', action.status);
     default:
       return state;
   }
