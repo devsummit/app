@@ -21,30 +21,28 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 class NewOrder extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      order: {}
-    };
-  }
-
   componentWillMount() {
     this.props.getTicketType();
   }
 
   increase = (typeId) => {
-    //
+    this.props.updateOrder('increase', typeId);
   };
   decrease = (typeId) => {
-    //
+    this.props.updateOrder('decrease', typeId);
   };
 
   render() {
-    console.log('ticket ==>', this.props.ticketTypes);
+    const order = this.props.order;
+    const arraySub = Object.keys(order).map((key) => {
+      return order[key].count * order[key].price;
+    });
+    const total = arraySub.reduce((a, b) => { return a + b; }, 0);
+
     return (
       <Container style={styles.container}>
         <Content>
-          { this.props.ticketTypes.map((ticket) => {
+          { this.props.ticketTypes.map((ticket, index) => {
             return (
               <Card key={ticket.id}>
                 <CardItem>
@@ -59,7 +57,9 @@ class NewOrder extends Component {
                     <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
                       <Icon name="minus" />
                     </Text>
-                    <Text style={styles.ticketCount}>0</Text>
+                    <Text style={styles.ticketCount}>
+                      { order[ticket.id] ? order[ticket.id].count : 0 }
+                    </Text>
                     <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
                       <Icon name="plus" />
                     </Text>
@@ -69,6 +69,14 @@ class NewOrder extends Component {
             );
           })}
 
+          <Card>
+            <CardItem style={{ flex: 1 }}>
+              <Text style={{ flex: 1 }}>Total price: </Text>
+              <Text style={{ textAlign: 'right', flex: 1 }}>
+                Rp {Intl.NumberFormat('id').format(total)}
+              </Text>
+            </CardItem>
+          </Card>
           <Button
             style={styles.orderBtn}
             onPress={() => {}}
@@ -82,7 +90,8 @@ class NewOrder extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  ticketTypes: selectors.getTicketTypes()
+  ticketTypes: selectors.getTicketTypes(),
+  order: selectors.getOrder()
 });
 
 export default connect(mapStateToProps, actions)(NewOrder);

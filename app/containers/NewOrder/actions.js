@@ -8,10 +8,11 @@ import {
  * import constants
  */
 import {
-  SET_TICKET_TYPE
+  SET_TICKET_TYPE,
+  UPDATE_ORDER
 } from './constants';
 
-export function getTicketType(res) {
+export function getTicketType() {
   return (dispatch) => {
     getAccessToken().then((accessToken) => {
       DevSummitAxios.get('/api/v1/tickets', {
@@ -26,6 +27,32 @@ export function getTicketType(res) {
       })
         .catch((err) => { console.log('error', err); });
     });
+  };
+}
+
+export function updateOrder(action, typeId) {
+  return (dispatch, getState) => {
+    const { ticketTypes, order } = getState().get('newOrder').toJS();
+    const ticket = ticketTypes.filter((obj) => {
+      return obj.id === typeId;
+    })[0];
+
+    if (action === 'increase') {
+      if (order[typeId]) {
+        order[typeId].count += 1;
+        dispatch({ type: UPDATE_ORDER, id: typeId, payload: order[typeId] });
+      } else {
+        const payload = { ticket_id: typeId, count: 1, price: ticket.price };
+        dispatch({ type: UPDATE_ORDER, id: typeId, payload });
+      }
+    }
+
+    if (action === 'decrease') {
+      if (order[typeId] && order[typeId].count > 0) {
+        order[typeId].count -= 1;
+        dispatch({ type: UPDATE_ORDER, id: typeId, payload: order[typeId] });
+      }
+    }
   };
 }
 

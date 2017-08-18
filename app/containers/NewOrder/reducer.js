@@ -1,25 +1,27 @@
+import { fromJS } from 'immutable';
+
 /*
  * import contants
  */
-
-import { fromJS } from 'immutable';
-
 import {
-  SET_TICKET_TYPE
+  SET_TICKET_TYPE,
+  UPDATE_ORDER
 } from './constants';
 
 /*
  * initial state of reducers
  */
 const initialState = fromJS({
-  ticketTypes: []
+  ticketTypes: [],
+  order: {}
 });
 
 function newOrderReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TICKET_TYPE:
-      console.log('reducer', action.data);
       return state.set('ticketTypes', action.data);
+    case UPDATE_ORDER:
+      return state.setIn([ 'order', action.id ], fromJS(action.payload));
     default:
       return state;
   }
@@ -28,5 +30,4 @@ function newOrderReducer(state = initialState, action) {
 /*
  * export the reducer
  */
-
 export default newOrderReducer;

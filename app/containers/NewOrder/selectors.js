@@ -13,3 +13,8 @@ export const getTicketTypes = () => createSelector(
   selectMainReducer(),
   state => state.get('ticketTypes')
 );
+
+export const getOrder = () => createSelector(
+  selectMainReducer(),
+  state => state.get('order').toJS()
+);
