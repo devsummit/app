@@ -1,8 +1,5 @@
-// import { AsyncStorage } from 'react-native';
-import {
-  DevSummitAxios,
-  getAccessToken
-} from '../../helpers';
+import { Actions } from 'react-native-router-flux';
+import { DevSummitAxios, getAccessToken } from '../../helpers';
 
 /*
  * import constants
@@ -57,5 +54,24 @@ export function updateOrder(action, typeId) {
 }
 
 export function placeOrder() {
-  //
+  return (dispatch, getState) => {
+    const { order } = getState().get('newOrder').toJS();
+    const data = Object.keys(order).map((key) => { return order[key]; });
+    console.log(data);
+
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.post('api/v1/orders', data, {
+        headers: {
+          Authorization: accessToken,
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        console.log(response);
+        if (response.data && response.data.meta) {
+          Actions.orderDetail({ orderId: response.data.data.id });
+        }
+      })
+        .catch((err) => {});
+    });
+  }
 }
