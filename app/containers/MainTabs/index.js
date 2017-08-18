@@ -52,7 +52,9 @@ export default class MainTabs extends Component {
             <Ticket/>
           </View>
           <View>
-            <Profile/>
+            <Profile
+              profileData={this.props.profileData}
+            />
           </View>
         </IndicatorViewPager>
       </View>

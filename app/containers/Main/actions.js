@@ -13,6 +13,7 @@ import {
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
+  FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -44,8 +45,8 @@ export function updateFields(field, value) {
 export function login() {
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
-
     const { username, password } = fields;
+
     DevSummitAxios.post('/auth/login', {
       username,
       password
@@ -60,6 +61,10 @@ export function login() {
         dispatch({
           type: UPDATE_IS_LOGGED_IN,
           status: true
+        });
+        dispatch({
+          type: FETCH_PROFILE_DATA,
+          payload: response.data.included
         });
       }
     });
@@ -98,6 +103,10 @@ export function loginGoogle() {
                 type: UPDATE_IS_LOGGED_IN,
                 status: true
               });
+              dispatch({
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
+              });
             }
           }).catch(err => console.log(err));
         }
@@ -134,6 +143,10 @@ export function loginFacebook() {
                 type: UPDATE_IS_LOGGED_IN,
                 status: true
               });
+              dispatch({
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
+              });
             }
           })
           .catch((err) => { console.log(err); });
@@ -169,43 +182,15 @@ export function loginTwitter() {
               type: UPDATE_IS_LOGGED_IN,
               status: true
             });
+            dispatch({
+              type: FETCH_PROFILE_DATA,
+              payload: response.data.included
+            });
           }
         })
         .catch((err) => { console.log(err); });
     }).catch((error) => {
       console.log(error)
     });
-
-    // const manager = new OAuthManager('devsummit')
-    // manager.configure({
-    //   facebook: {
-    //     client_id: FB_CLIENT_ID,
-    //     client_secret: FB_CLIENT_SECRET
-    //   }
-    // });
-    // manager.authorize('facebook', { scopes: 'public_profile' })
-    //   .then((resp) => {
-    //     const data = {
-    //       provider: 'facebook',
-    //       token: resp.response.credentials.accessToken
-    //     };
-    //     const headers = { 'Content-Type': 'application/json' };
-    //     DevSummitAxios.post('/auth/login', data, { headers })
-    //       .then((response) => {
-    //         if (response && response.data && response.data.meta.success) {
-    //           try {
-    //             AsyncStorage.setItem('access_token', response.data.data.access_token);
-    //             AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-    //           } catch (error) {
-    //             console.log(error, 'error caught');
-    //           }
-    //           dispatch({
-    //             type: UPDATE_IS_LOGGED_IN,
-    //             status: true
-    //           });
-    //         }
-    //       })
-    //       .catch((err) => { console.log(err); });
-    //   }).catch((err) => { console.log('error login fb', err); });
   };
 }
