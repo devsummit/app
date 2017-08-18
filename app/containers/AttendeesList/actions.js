@@ -6,6 +6,8 @@ import {
 
 import {
   FETCH_ATTENDEES,
+  IS_FETCHING_ATTENDEES,
+  FETCHING_ATTENDEES_STATUS,
   IS_TRANSFERRING_TICKET
 } from './constants';
 
@@ -14,23 +16,47 @@ import {
  * Get attendees data
  */
 
+export function isFetchingAttendees(status) {
+  return {
+    type: IS_FETCHING_ATTENDEES,
+    status
+  };
+}
+
+export function fetchingAttendeesStatus(status) {
+  return {
+    type: FETCHING_ATTENDEES_STATUS,
+    status
+  };
+}
+
 export function fetchAttendees() {
   return (dispatch) => {
+    dispatch(isFetchingAttendees(true));
     AsyncStorage.getItem('access_token')
       .then((token) => {
         const headers = { Authorization: token };
         DevSummitAxios.get('api/v1/attendees', { headers })
           .then((response) => {
+            dispatch(isFetchingAttendees(false));
+            if (response.data.data.length === 0) {
+              dispatch(fetchingAttendeesStatus(false));
+            } else {
+              dispatch(fetchingAttendeesStatus(response.data.meta.success));
+            }
             dispatch({
               type: FETCH_ATTENDEES,
               payloads: response.data.data
             });
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
   };
 }
 
-export function isFetchingUserTicket(status) {
+export function isTransferringTicket(status) {
   return {
     type: IS_TRANSFERRING_TICKET,
     status
@@ -39,7 +65,7 @@ export function isFetchingUserTicket(status) {
 
 export function transferTicket(ticketId, receiverId) {
   return (dispatch) => {
-    dispatch(isFetchingUserTicket(true));
+    dispatch(isTransferringTicket(true));
     AsyncStorage.getItem('access_token')
       .then((token) => {
         const headers = {
@@ -54,7 +80,7 @@ export function transferTicket(ticketId, receiverId) {
           { headers })
           .then((response) => {
             dispatch(actions.fetchUserTicket());
-            dispatch(isFetchingUserTicket(false));
+            dispatch(isTransferringTicket(false));
             dispatch({
               type: FETCH_ATTENDEES,
               payloads: response.data.data

@@ -30,16 +30,52 @@ class TicketList extends Component {
     this.props.fetchUserTicket();
   }
 
-  componentDidMount() {
-
-  }
-
   componentWillReceiveProps(prevState) {
-    if (prevState.listTicket !== this.props.listTicket) {
+    if ((prevState.listTicket !== this.props.listTicket)
+      || !this.props.fetchTicketStatus) {
       this.setState({
         isLoading: false
       });
     }
+  }
+
+  renderTicketList() {
+    return (<List
+      dataArray={this.props.listTicket}
+      renderRow={(item) => {
+        return (<ListItem>
+          <Text style={styles.text}>Ticket No. {item.id}</Text>
+          <Button
+            small
+            style={styles.button}
+            onPress={() => {
+              Actions.attendeesList({ ticketId: item.id });
+            }}
+          >
+            <Text style={styles.buttonText}>Transfer</Text>
+            <Icon
+              name="exchange"
+              color="white"
+            />
+          </Button>
+        </ListItem>);
+      }
+      }
+    />);
+  }
+
+  renderError() {
+    return (
+      <Content style={styles.errorContent}>
+        <Text style={styles.buttonText}>You have no tickets, please order or try to refresh</Text>
+        <Button
+          small
+          style={styles.refreshButton}
+          onPress={() => { this.props.fetchUserTicket(); }}
+        >
+          <Text>refresh</Text>
+        </Button>
+      </Content>);
   }
 
   render() {
@@ -52,42 +88,29 @@ class TicketList extends Component {
         </Container>
       );
     }
+
     return (
-      <Container>
+      <Container
+        style={styles.container}
+      >
         <Header title="Ticket List">
           <Button small warning style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
             <Text>Order</Text>
           </Button>
         </Header>
-        <Content refreshControl={
-          <RefreshControl
-            refreshing={this.props.isGettingUserTicket}
-            onRefresh={() => { this.props.fetchUserTicket(); }}
-          />
-        }
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isGettingUserTicket}
+              onRefresh={() => { this.props.fetchUserTicket(); }}
+            />
+          }
         >
-          <List
-            dataArray={this.props.listTicket}
-            renderRow={(item) => {
-              return (<ListItem>
-                <Text style={styles.text}>Ticket No. {item.id}</Text>
-                <Button
-                  small
-                  style={styles.button}
-                  onPress={() => {
-                    Actions.attendeesList({ ticketId: item.id });
-                  }}
-                >
-                  <Text style={styles.buttonText}>Transfer</Text>
-                  <Icon
-                    name="exchange"
-                    color="white"
-                  />
-                </Button>
-              </ListItem>);
-            }
-            }
-          />
+          {
+            this.props.fetchTicketStatus ?
+              this.renderTicketList() :
+              this.renderError()
+          }
         </Content>
       </Container>
     );
@@ -97,12 +120,14 @@ class TicketList extends Component {
 TicketList.propTypes = {
   listTicket: PropTypes.array.isRequired,
   isGettingUserTicket: PropTypes.bool.isRequired,
-  fetchUserTicket: PropTypes.func.isRequired
+  fetchUserTicket: PropTypes.func.isRequired,
+  fetchTicketStatus: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
   listTicket: selectors.getListTicket(),
-  isGettingUserTicket: selectors.getIsFetchingTicket()
+  isGettingUserTicket: selectors.getIsFetchingTicket(),
+  fetchTicketStatus: selectors.getFetchingUserTicketStatus()
 });
 
 export default connect(mapStateToProps, actions)(TicketList);

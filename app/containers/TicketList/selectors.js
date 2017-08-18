@@ -13,3 +13,8 @@ export const getIsFetchingTicket = () => createSelector(
   selectListTicketReducer(),
   state => state.get('isFetchingUserTicket')
 );
+
+export const getFetchingUserTicketStatus = () => createSelector(
+  selectListTicketReducer(),
+  state => state.get('fetchingTicketStatus')
+);

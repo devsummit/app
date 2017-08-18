@@ -13,3 +13,13 @@ export const getIsTransferring = () => createSelector(
   selectAttendeesReducer(),
   state => state.get('isTransferringTicket')
 );
+
+export const getIsFetchingAttendees = () => createSelector(
+  selectAttendeesReducer(),
+  state => state.get('isFetchingAttendees')
+);
+
+export const getFetchingAttendeesStatus = () => createSelector(
+  selectAttendeesReducer(),
+  state => state.get('fetchingAttendeeStatus')
+);

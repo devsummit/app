@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import * as actions from '../AttendeesList/actions';
 
 import {
   DevSummitAxios
@@ -6,7 +7,8 @@ import {
 
 import {
   FETCH_USER_TICKET,
-  IS_FETCHING_USER_TICKET
+  IS_FETCHING_USER_TICKET,
+  FETCHING_USER_TICKET_STATUS
 } from './constants';
 
 
@@ -20,6 +22,13 @@ export function isFetchingUserTicket(status) {
   };
 }
 
+export function fetchingUserTicketStatus(status) {
+  return {
+    type: FETCHING_USER_TICKET_STATUS,
+    status
+  };
+}
+
 export function fetchUserTicket() {
   return (dispatch) => {
     dispatch(isFetchingUserTicket(true));
@@ -28,12 +37,20 @@ export function fetchUserTicket() {
         const headers = { Authorization: token };
         DevSummitAxios.get('api/v1/user/tickets', { headers })
           .then((response) => {
+            if (response.data.data.length === 0) {
+              dispatch(fetchingUserTicketStatus(false));
+            } else {
+              dispatch(fetchingUserTicketStatus(response.data.meta.success));
+            }
             dispatch(isFetchingUserTicket(false));
+            dispatch(actions.isTransferringTicket(false));
             dispatch({
               type: FETCH_USER_TICKET,
               payloads: response.data.data
             });
           });
+      }).catch((err) => {
+        console.log(err);
       });
   };
 }
