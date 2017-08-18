@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import OAuthManager from 'react-native-oauth';
+import { twitter } from 'react-native-simple-auth';
 
 import {
   DevSummitAxios
@@ -12,11 +13,15 @@ import {
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
+  FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET
+  GOOGLE_CLIENT_SECRET,
+  TWITTER_CALLBACK,
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_KEY_SECRET
 } from './constants';
 
 
@@ -33,6 +38,13 @@ export function updateFields(field, value) {
   };
 }
 
+export function updateIsLogIn(status) {
+  return {
+    type: UPDATE_IS_LOGGED_IN,
+    status
+  };
+}
+
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
@@ -40,22 +52,24 @@ export function updateFields(field, value) {
 export function login() {
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
-
     const { username, password } = fields;
+
     DevSummitAxios.post('/auth/login', {
       username,
       password
     }).then((response) => {
       if (response && response.data && response.data.meta.success) {
         try {
-          AsyncStorage.setItem('access_token', responseJson.result.access_token);
-          AsyncStorage.setItem('refresh_token', responseJson.result.refresh_token);
+          AsyncStorage.setItem('access_token', response.data.data.access_token);
+          AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+          AsyncStorage.setItem('role_id', response.data.included.role_id);
         } catch (error) {
           console.log(error, 'error caught');
         }
+        dispatch(updateIsLogIn(true));
         dispatch({
-          type: UPDATE_IS_LOGGED_IN,
-          status: true
+          type: FETCH_PROFILE_DATA,
+          payload: response.data.included
         });
       }
     });
@@ -75,7 +89,7 @@ export function loginGoogle() {
     manager.authorize('google', {scopes: 'email'})
       .then((resp) => {
         if (resp.authorized) {
-          DevSummitAxios.post('/auth/login',{
+          DevSummitAxios.post('/auth/login', {
             provider: resp.provider,
             token: resp.response.credentials.idToken
           }, {
@@ -87,12 +101,14 @@ export function loginGoogle() {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
                 AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+                AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
+              dispatch(updateIsLogIn(true));
               dispatch({
-                type: UPDATE_IS_LOGGED_IN,
-                status: true
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
               });
             }
           }).catch(err => console.log(err));
@@ -123,12 +139,14 @@ export function loginFacebook() {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
                 AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+                AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
+              dispatch(updateIsLogIn(true));
               dispatch({
-                type: UPDATE_IS_LOGGED_IN,
-                status: true
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
               });
             }
           })
@@ -137,3 +155,49 @@ export function loginFacebook() {
   };
 }
 
+export function loginTwitter() {
+  return (dispatch) => {
+    twitter({
+      appId: TWITTER_CONSUMER_KEY,
+      appSecret: TWITTER_CONSUMER_KEY_SECRET,
+      callback: TWITTER_CALLBACK
+    }).then((info) => {
+      const data = {
+        provider: 'twitter',
+        token: info.credentials.oauth_token,
+        token_secret: info.credentials.oauth_token_secret
+      };
+      const headers = { 'Content-Type': 'application/json' };
+      DevSummitAxios.post('/auth/login', data, { headers })
+        .then((response) => {
+          if (response && response.data && response.data.meta.success) {
+            try {
+              AsyncStorage.setItem('access_token', response.data.data.access_token);
+              AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+              AsyncStorage.setItem('role_id', response.data.included.role_id);
+            } catch (error) {
+              console.log(error, 'error caught');
+            }
+            dispatch(updateIsLogIn(true));
+            dispatch({
+              type: FETCH_PROFILE_DATA,
+              payload: response.data.included
+            });
+          }
+        })
+        .catch((err) => { console.log(err); });
+    }).catch((error) => {
+      console.log(error)
+    });
+  };
+}
+
+export function getAccessToken() {
+  return (dispatch) => {
+    AsyncStorage.getItem('access_token', (err, result) => {
+      if (result) {
+        dispatch(updateIsLogIn(true));
+      }
+    })
+  }
+}

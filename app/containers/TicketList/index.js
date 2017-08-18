@@ -5,51 +5,131 @@ import {
   List,
   ListItem,
   Button,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
+import PropTypes from 'prop-types';
+import { RefreshControl } from 'react-native';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
+import { primaryColor } from '../../constants';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
 class TicketList extends Component {
-  printDummy = () => {
-    let rows = [];
-    for (let i = 0; i < 20; i++) {
-      rows.push(
-        <ListItem key={i} style={styles.item}>
-          <Text style={styles.text}>Gold</Text>
-          <Button small style={styles.button}>
-            <Text style={styles.buttonText}>Transfer</Text>
-          </Button>
-        </ListItem>
-      );
+  state = {
+    isLoading: true
+  }
+
+  componentWillMount() {
+    this.props.fetchUserTicket();
+  }
+
+  componentWillReceiveProps(prevState) {
+    if ((prevState.listTicket !== this.props.listTicket)) {
+      this.setState({
+        isLoading: false
+      });
     }
-    return rows;
+  }
+
+  renderTicketList() {
+    return (<List
+      dataArray={this.props.listTicket}
+      renderRow={(item) => {
+        return (<ListItem>
+          <Text style={styles.text}>Ticket No. {item.id}</Text>
+          <Button
+            small
+            style={styles.button}
+            onPress={() => {
+              Actions.attendeesList({ ticketId: item.id });
+            }}
+          >
+            <Text style={styles.buttonText}>Transfer</Text>
+            <Icon
+              name="exchange"
+              color="white"
+            />
+          </Button>
+        </ListItem>);
+      }
+      }
+    />);
+  }
+
+  renderError() {
+    return (
+      <Content style={styles.errorContent}>
+        <Text style={styles.buttonText}>You have no tickets, please order or try to refresh</Text>
+        <Button
+          small
+          style={styles.refreshButton}
+          onPress={() => { this.props.fetchUserTicket(); }}
+        >
+          <Text>refresh</Text>
+        </Button>
+      </Content>);
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <Container>
+          <Content>
+            <Spinner color={primaryColor} />
+          </Content>
+        </Container>
+      );
+    }
+
     return (
-      <Container>
+      <Container
+        style={styles.container}
+      >
         <Header title="Ticket List">
           <Button small warning style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
             <Text>Order</Text>
           </Button>
         </Header>
-        <Content>
-          <List>
-            <ListItem style={styles.item}>
-              <Text style={styles.text}>Gold</Text>
-              <Button small style={styles.button}>
-                <Text style={styles.buttonText}>Transfer</Text>
-              </Button>
-            </ListItem>
-            { this.printDummy() }
-          </List>
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isGettingUserTicket}
+              onRefresh={() => { this.props.fetchUserTicket(); }}
+            />
+          }
+        >
+          {
+            this.props.fetchTicketStatus ?
+              this.renderTicketList() :
+              this.renderError()
+          }
         </Content>
       </Container>
     );
   }
 }
 
-export default TicketList;
+TicketList.propTypes = {
+  listTicket: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]
+  ).isRequired,
+  isGettingUserTicket: PropTypes.bool.isRequired,
+  fetchUserTicket: PropTypes.func.isRequired,
+  fetchTicketStatus: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = createStructuredSelector({
+  listTicket: selectors.getListTicket(),
+  isGettingUserTicket: selectors.getIsFetchingTicket(),
+  fetchTicketStatus: selectors.getFetchingUserTicketStatus()
+});
+
+export default connect(mapStateToProps, actions)(TicketList);

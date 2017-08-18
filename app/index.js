@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Scene } from 'react-native-router-flux';
-import { View } from 'react-native'
+import { View, AsyncStorage } from 'react-native';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
@@ -25,6 +25,7 @@ import OrderDetail from './containers/OrderDetail';
 import MainTabs from './containers/MainTabs';
 import SpeakerDetail from './containers/SpeakerDetail';
 import NewOrder from './containers/NewOrder';
+import AttendeesList from './containers/AttendeesList';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -41,6 +42,20 @@ export default class App extends Component {
     this.state = {
       logged: false
     };
+  }
+
+  componentWillMount() {
+    this.checkAccessToken()
+  }
+
+  checkAccessToken = () => {
+    AsyncStorage.getItem('access_token', (err, result) => {
+      if (result) {
+        this.setState({
+          logged: true
+        })
+      }
+    })
   }
 
   render() {
@@ -67,6 +82,7 @@ export default class App extends Component {
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} title="Schedule" />
             <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
+            <Scene key="attendeesList" component={AttendeesList} title="Select Attendee"/>
           </Scene>
         </RouterWithRedux>
       </Provider>

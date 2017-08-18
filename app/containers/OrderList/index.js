@@ -42,7 +42,9 @@ class OrderList extends Component {
       <Container style={styles.container}>
         <Content>
           <List>
-            { orders.map((order) => { return <OrderItem key={order.id} order={order} /> }) }
+            { orders.map((order) => {
+              return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }}/>
+            }) }
           </List>
         </Content>
         <Fab position="bottomRight" onPress={() => { Actions.newOrder(); }}>
