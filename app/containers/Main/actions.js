@@ -55,6 +55,7 @@ export function login() {
         try {
           AsyncStorage.setItem('access_token', responseJson.result.access_token);
           AsyncStorage.setItem('refresh_token', responseJson.result.refresh_token);
+          AsyncStorage.setItem('role_id', response.data.included.role_id);
         } catch (error) {
           console.log(error, 'error caught');
         }
@@ -96,6 +97,7 @@ export function loginGoogle() {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
                 AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+                AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -136,6 +138,7 @@ export function loginFacebook() {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
                 AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+                AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -175,6 +178,7 @@ export function loginTwitter() {
             try {
               AsyncStorage.setItem('access_token', response.data.data.access_token);
               AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+              AsyncStorage.setItem('role_id', response.data.included.role_id);
             } catch (error) {
               console.log(error, 'error caught');
             }
