@@ -42,10 +42,7 @@ class Main extends Component {
   render() {
     const { fields, isLoggedIn } = this.props;
     const { username, password } = fields || '';
-    // if (isLoggedIn) {
-    //   Actions.mainTabs({ profileData: this.props.profileData })
-    //   this.props.updateIsLogIn(false)
-    // }
+
     return (
       <Container style={styles.container}>
         <Content>

@@ -49,8 +49,7 @@ class Profile extends Component {
     }
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main()
-      console.log('propss', this.props.isLogOut)
-      // this.props.updateIsLogOut(false)
+      this.props.updateIsLogOut(false)
     }
   }
 
