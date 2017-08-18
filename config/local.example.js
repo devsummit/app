@@ -1,5 +1,5 @@
 export default {
-  API_BASE_URL: 'http://192.168.40.82:5000',
+  API_BASE_URL: '',
   FB_CLIENT_ID: '216608565531165',
   FB_CLIENT_SECRET: '0463ed52bd8a400dd48d8e9cc246acc4',
 
