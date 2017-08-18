@@ -38,16 +38,20 @@ export function fetchAttendees() {
         const headers = { Authorization: token };
         DevSummitAxios.get('api/v1/attendees', { headers })
           .then((response) => {
-            dispatch(isFetchingAttendees(false));
-            if (response.data.data.length === 0) {
-              dispatch(fetchingAttendeesStatus(false));
-            } else {
-              dispatch(fetchingAttendeesStatus(response.data.meta.success));
+            if ('data' in response.data) {
+              if (!('message' in response.data.data)) {
+                dispatch(isFetchingAttendees(false));
+                if (response.data.data.length === 0) {
+                  dispatch(fetchingAttendeesStatus(false));
+                } else {
+                  dispatch(fetchingAttendeesStatus(response.data.meta.success));
+                }
+              }
+              dispatch({
+                type: FETCH_ATTENDEES,
+                payloads: response.data.data
+              });
             }
-            dispatch({
-              type: FETCH_ATTENDEES,
-              payloads: response.data.data
-            });
           })
           .catch((err) => {
             console.log(err);

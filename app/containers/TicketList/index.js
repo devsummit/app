@@ -22,8 +22,7 @@ import * as selectors from './selectors';
 
 class TicketList extends Component {
   state = {
-    isLoading: true,
-    refreshing: false
+    isLoading: true
   }
 
   componentWillMount() {
@@ -31,8 +30,7 @@ class TicketList extends Component {
   }
 
   componentWillReceiveProps(prevState) {
-    if ((prevState.listTicket !== this.props.listTicket)
-      || !this.props.fetchTicketStatus) {
+    if ((prevState.listTicket !== this.props.listTicket)) {
       this.setState({
         isLoading: false
       });
@@ -118,7 +116,11 @@ class TicketList extends Component {
 }
 
 TicketList.propTypes = {
-  listTicket: PropTypes.array.isRequired,
+  listTicket: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]
+  ).isRequired,
   isGettingUserTicket: PropTypes.bool.isRequired,
   fetchUserTicket: PropTypes.func.isRequired,
   fetchTicketStatus: PropTypes.bool.isRequired

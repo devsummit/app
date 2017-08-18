@@ -22,7 +22,7 @@ export function isFetchingUserTicket(status) {
   };
 }
 
-export function fetchingUserTicketStatus(status) {
+export function fetchUserTicketStatus(status) {
   return {
     type: FETCHING_USER_TICKET_STATUS,
     status
@@ -37,17 +37,21 @@ export function fetchUserTicket() {
         const headers = { Authorization: token };
         DevSummitAxios.get('api/v1/user/tickets', { headers })
           .then((response) => {
-            if (response.data.data.length === 0) {
-              dispatch(fetchingUserTicketStatus(false));
-            } else {
-              dispatch(fetchingUserTicketStatus(response.data.meta.success));
+            if ('data' in response.data) {
+              if (!('message' in response.data.data)) {
+                if (response.data.data.length === 0) {
+                  dispatch(fetchUserTicketStatus(false));
+                } else {
+                  dispatch(fetchUserTicketStatus(response.data.meta.success));
+                }
+              }
+              dispatch(isFetchingUserTicket(false));
+              dispatch(actions.isTransferringTicket(false));
+              dispatch({
+                type: FETCH_USER_TICKET,
+                payloads: response.data.data
+              });
             }
-            dispatch(isFetchingUserTicket(false));
-            dispatch(actions.isTransferringTicket(false));
-            dispatch({
-              type: FETCH_USER_TICKET,
-              payloads: response.data.data
-            });
           });
       }).catch((err) => {
         console.log(err);

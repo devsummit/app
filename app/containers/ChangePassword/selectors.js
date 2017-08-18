@@ -6,14 +6,14 @@ import { createSelector } from 'reselect';
 /**
  *  Select the main portion of the root reducer
  */
-const selectRegisterReducer = () => (state) => state.get('changePassword');
+const selectChangePasswordReducer = () => (state) => state.get('changePassword');
 
 /**
  *  Selects the username field data
  *  Returns object
  */
 export const getInputFields = () => createSelector(
-  selectRegisterReducer(),
+  selectChangePasswordReducer(),
   (state) => state.get('inputFields').toJS()
 );
 
@@ -22,8 +22,16 @@ export const getInputFields = () => createSelector(
  *  Returns object
  */
 export const getErrorFields = () => createSelector(
-  selectRegisterReducer(),
+  selectChangePasswordReducer(),
   (state) => state.get('errorFields').toJS()
 );
 
+export const getIsPasswordUpdated = () => createSelector(
+  selectChangePasswordReducer(),
+  (state) =>  state.get('isPasswordUpdated')
+);
 
+export const getIsPasswordWrong = () => createSelector(
+  selectChangePasswordReducer(),
+  (state) => state.get('isPasswordWrong')
+);

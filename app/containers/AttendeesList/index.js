@@ -134,7 +134,11 @@ class AttendeesList extends Component {
 }
 
 AttendeesList.propTypes = {
-  listAttendees: PropTypes.array.isRequired,
+  listAttendees: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]
+  ).isRequired,
   isTransferring: PropTypes.bool.isRequired,
   isGettingTicket: PropTypes.bool.isRequired,
   fetchAttendees: PropTypes.func.isRequired,

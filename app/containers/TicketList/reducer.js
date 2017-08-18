@@ -9,7 +9,7 @@ import {
 const initialState = fromJS({
   userTicket: [],
   isFetchingUserTicket: false,
-  fetchingTicketStatus: true
+  fetchingTicketStatus: false
 });
 
 function ticketListReducer(state = initialState, action) {

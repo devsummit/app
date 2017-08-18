@@ -6,7 +6,8 @@ import { fromJS } from 'immutable';
 
 import {
   UPDATE_SINGLE_FIELD,
-  UPDATE_IS_LOGGED_IN
+  UPDATE_IS_LOGGED_IN,
+  FETCH_PROFILE_DATA
 } from './constants';
 
 /*
@@ -17,7 +18,8 @@ const initialState = fromJS({
     username: '',
     password: ''
   },
-  isLoggedIn: false
+  isLoggedIn: false,
+  profiledata: {}
 });
 
 function mainReducer(state = initialState, action) {
@@ -26,6 +28,8 @@ function mainReducer(state = initialState, action) {
       return state.set('isLoggedIn', action.status);
     case UPDATE_SINGLE_FIELD:
       return state.setIn([ 'fields', action.field ], action.value);
+    case FETCH_PROFILE_DATA:
+      return state.set('profileData', action.payload);
     default:
       return state;
   }

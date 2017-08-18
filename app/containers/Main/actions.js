@@ -13,6 +13,7 @@ import {
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
+  FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -37,6 +38,13 @@ export function updateFields(field, value) {
   };
 }
 
+export function updateIsLogIn(status) {
+  return {
+    type: UPDATE_IS_LOGGED_IN,
+    status
+  };
+}
+
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
@@ -44,8 +52,8 @@ export function updateFields(field, value) {
 export function login() {
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
-
     const { username, password } = fields;
+
     DevSummitAxios.post('/auth/login', {
       username,
       password
@@ -54,12 +62,14 @@ export function login() {
         try {
           AsyncStorage.setItem('access_token', response.data.data.access_token);
           AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+          AsyncStorage.setItem('role_id', response.data.included.role_id);
         } catch (error) {
           console.log(error, 'error caught');
         }
+        dispatch(updateIsLogIn(true));
         dispatch({
-          type: UPDATE_IS_LOGGED_IN,
-          status: true
+          type: FETCH_PROFILE_DATA,
+          payload: response.data.included
         });
       }
     });
@@ -79,7 +89,7 @@ export function loginGoogle() {
     manager.authorize('google', {scopes: 'email'})
       .then((resp) => {
         if (resp.authorized) {
-          DevSummitAxios.post('/auth/login',{
+          DevSummitAxios.post('/auth/login', {
             provider: resp.provider,
             token: resp.response.credentials.idToken
           }, {
@@ -91,12 +101,14 @@ export function loginGoogle() {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
                 AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+                AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
+              dispatch(updateIsLogIn(true));
               dispatch({
-                type: UPDATE_IS_LOGGED_IN,
-                status: true
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
               });
             }
           }).catch(err => console.log(err));
@@ -127,12 +139,14 @@ export function loginFacebook() {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
                 AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+                AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
+              dispatch(updateIsLogIn(true));
               dispatch({
-                type: UPDATE_IS_LOGGED_IN,
-                status: true
+                type: FETCH_PROFILE_DATA,
+                payload: response.data.included
               });
             }
           })
@@ -148,7 +162,6 @@ export function loginTwitter() {
       appSecret: TWITTER_CONSUMER_KEY_SECRET,
       callback: TWITTER_CALLBACK
     }).then((info) => {
-      console.log(info)
       const data = {
         provider: 'twitter',
         token: info.credentials.oauth_token,
@@ -157,17 +170,18 @@ export function loginTwitter() {
       const headers = { 'Content-Type': 'application/json' };
       DevSummitAxios.post('/auth/login', data, { headers })
         .then((response) => {
-          console.log(response)
           if (response && response.data && response.data.meta.success) {
             try {
               AsyncStorage.setItem('access_token', response.data.data.access_token);
               AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+              AsyncStorage.setItem('role_id', response.data.included.role_id);
             } catch (error) {
               console.log(error, 'error caught');
             }
+            dispatch(updateIsLogIn(true));
             dispatch({
-              type: UPDATE_IS_LOGGED_IN,
-              status: true
+              type: FETCH_PROFILE_DATA,
+              payload: response.data.included
             });
           }
         })
@@ -175,37 +189,15 @@ export function loginTwitter() {
     }).catch((error) => {
       console.log(error)
     });
-
-    // const manager = new OAuthManager('devsummit')
-    // manager.configure({
-    //   facebook: {
-    //     client_id: FB_CLIENT_ID,
-    //     client_secret: FB_CLIENT_SECRET
-    //   }
-    // });
-    // manager.authorize('facebook', { scopes: 'public_profile' })
-    //   .then((resp) => {
-    //     const data = {
-    //       provider: 'facebook',
-    //       token: resp.response.credentials.accessToken
-    //     };
-    //     const headers = { 'Content-Type': 'application/json' };
-    //     DevSummitAxios.post('/auth/login', data, { headers })
-    //       .then((response) => {
-    //         if (response && response.data && response.data.meta.success) {
-    //           try {
-    //             AsyncStorage.setItem('access_token', response.data.data.access_token);
-    //             AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-    //           } catch (error) {
-    //             console.log(error, 'error caught');
-    //           }
-    //           dispatch({
-    //             type: UPDATE_IS_LOGGED_IN,
-    //             status: true
-    //           });
-    //         }
-    //       })
-    //       .catch((err) => { console.log(err); });
-    //   }).catch((err) => { console.log('error login fb', err); });
   };
+}
+
+export function getAccessToken() {
+  return (dispatch) => {
+    AsyncStorage.getItem('access_token', (err, result) => {
+      if (result) {
+        dispatch(updateIsLogIn(true));
+      }
+    })
+  }
 }

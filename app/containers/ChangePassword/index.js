@@ -60,15 +60,25 @@ class ChangePassword extends Component {
         this.props.updateErrorFields('error_confirm_password', true);
         this.props.updateErrorFields('error_password_not_the_same', true);
       } else {
-        // submit action
+        this.props.changePassword()
       }
     }
 
     render() {
       // destructure state
-      const { inputFields, errorFields } = this.props || {};
+      const { inputFields, errorFields, isPasswordUpdated, isPasswordWrong } = this.props || {};
       const { current_password, new_password, confirm_password } = inputFields || '';
       const { error_current_password, error_new_password, error_confirm_password, error_password_not_the_same } = errorFields || false;
+
+      if (isPasswordUpdated) {
+        Alert.alert('Success', 'Password changed');
+        this.props.updateIsPasswordUpdated(false)
+      }
+
+      if (isPasswordWrong) {
+        Alert.alert('Fail', 'Please make sure you input the right password');
+        this.props.updateIsPasswordWrong(false)
+      }
 
       return (
         <Container style={styles.container}>
@@ -119,7 +129,9 @@ class ChangePassword extends Component {
  */
 const mapStateToProps = createStructuredSelector({
   inputFields: selectors.getInputFields(),
-  errorFields: selectors.getErrorFields()
+  errorFields: selectors.getErrorFields(),
+  isPasswordUpdated: selectors.getIsPasswordUpdated(),
+  isPasswordWrong: selectors.getIsPasswordWrong()
 });
 
 export default connect(mapStateToProps, actions)(ChangePassword);
