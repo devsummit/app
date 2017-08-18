@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Scene } from 'react-native-router-flux';
-import { View } from 'react-native'
-
+import { View, AsyncStorage } from 'react-native'
 // Style imports
 import styles from './styles';
 
@@ -41,6 +40,11 @@ export default class App extends Component {
       logged: false
     };
   }
+
+  componentWillMount() {
+    this.checkAccessToken()
+  }
+
   CustomIcon = () => {
     return (
       <View>
@@ -48,32 +52,42 @@ export default class App extends Component {
       </View>
     );
   }
+  checkAccessToken = () => {
+    console.log('cek token')
+    AsyncStorage.getItem('access_token', (err, result) => {
+      if (result) {
+        this.setState({
+          logged: true
+        })
+      }
+    })
+  }
+
   render() {
     return (
-        <Provider store={store}>
-            <RouterWithRedux
-              navigationBarStyle={styles.navBar}
-              titleStyle={styles.navBarTitle}
-              barButtonTextStyle={styles.barButtonTextStyle}
-              barButtonIconStyle={styles.barButtonIconStyle}
-              leftButtonIconStyle={styles.leftButtonIconStyle}
-            >
-                <Scene key="root" backButtonImage={BackButtonImg}>
-                    <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
-                    <Scene key="registerMenu" component={RegisterMenu} title="Register"/>
-                    <Scene key="registerEmail" component={RegisterEmail} title="Register Email"/>
-                    <Scene key="registerPhone" component={RegisterPhone} title="Register Phone"/>
-                    <Scene key="login" component={Login} title="Login"/>
-                    <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail"/>
-                    <Scene key="mainTabs" component={MainTabs} hideNavBar={true}/>
-                    <Scene key="changePassword" component={ChangePassword} title="Change Password"/>
-                    <Scene key="ticketList" component={TicketList} title="List Ticket" />
-                    <Scene key="orderList" component={OrderList} title="Order List" />
-                    <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
-                    <Scene key="schedule" component={Schedule} title="Schedule"/>
-                </Scene>
-            </RouterWithRedux>
-        </Provider>
+      <Provider store={store}>
+        <RouterWithRedux
+          navigationBarStyle={styles.navBar}
+          titleStyle={styles.navBarTitle}
+          barButtonTextStyle={styles.barButtonTextStyle}
+          barButtonIconStyle={styles.barButtonIconStyle}
+          leftButtonIconStyle={styles.leftButtonIconStyle}
+        >
+          <Scene key="root" backButtonImage={BackButtonImg}>
+            <Scene key="main" component={Main} hideNavBar={true} initial={!this.state.logged}/>
+            <Scene key="mainTabs" component={MainTabs} hideNavBar={true} initial={this.state.logged}/>
+            <Scene key="registerMenu" component={RegisterMenu} title="Register"/>
+            <Scene key="registerEmail" component={RegisterEmail} title="Register Email"/>
+            <Scene key="registerPhone" component={RegisterPhone} title="Register Phone"/>
+            <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail"/>
+            <Scene key="changePassword" component={ChangePassword} title="Change Password"/>
+            <Scene key="ticketList" component={TicketList} title="List Ticket" />
+            <Scene key="orderList" component={OrderList} title="Order List" />
+            <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
+            <Scene key="schedule" component={Schedule} title="Schedule"/>
+          </Scene>
+        </RouterWithRedux>
+      </Provider>
     );
   }
 }

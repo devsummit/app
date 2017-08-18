@@ -13,7 +13,7 @@ export default class Button extends Component {
   onClickButton = (inputFunction) => {
     this.setState({ onClick: true })
     inputFunction()
-    setTimeout(() => { this.setState({onClick: false}); }, 2000);
+    // setTimeout(() => { this.setState({onClick: false}); }, 2000);
   }
 
   render() {

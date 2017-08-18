@@ -42,25 +42,32 @@ class Profile extends Component {
     }
   }
 
+  componentWillReceiveProps(prevProps) {
+    if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
+      Alert.alert('Success', 'Profile changed');
+      this.props.updateIsProfileUpdated(false)
+    }
+    if (prevProps.isLogOut !== this.props.isLogOut) {
+      Actions.main()
+      console.log('propss', this.props.isLogOut)
+      // this.props.updateIsLogOut(false)
+    }
+  }
+
   handleInputChange = (field, value) => {
     this.props.updateFields(field, value);
   }
 
   render() {
     // destructure state
-    const { fields, isProfileUpdated } = this.props || {};
+    const { fields } = this.props || {};
     const {
       firstName,
       lastName,
       username,
       profilePic
     } = fields || '';
-
-    if (isProfileUpdated) {
-      Alert.alert('Success', 'Profile changed');
-      this.props.updateIsProfileUpdated(false)
-    }
-
+    console.log('props in render', this.props.isLogOut)
     return (
       <Container>
         <Header
@@ -89,8 +96,8 @@ class Profile extends Component {
               onChangeText={(text) => {this.handleInputChange('lastName', text)}}
               value={lastName}
             />
-            <Button block light style={styles.button} onPress={() => { Actions.changePassword(); }}>
-              <Text>Change Password</Text>
+            <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
+              <Text style={styles.changePassText}>Change Password</Text>
             </Button>
             <Button
               block
@@ -99,6 +106,9 @@ class Profile extends Component {
               onPress={() => this.props.changeProfile()}
             >
               <Text>Save changes</Text>
+            </Button>
+            <Button block light style={styles.button} onPress={() => { this.props.logOut() }}>
+              <Text>Log Out</Text>
             </Button>
           </View>
         </Content>
@@ -112,7 +122,8 @@ class Profile extends Component {
  */
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
-  isProfileUpdated: selectors.getIsProfileUpdated()
+  isProfileUpdated: selectors.getIsProfileUpdated(),
+  isLogOut: selectors.getIsLogOut()
 });
 
 export default connect(mapStateToProps, actions)(Profile);

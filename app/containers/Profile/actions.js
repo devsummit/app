@@ -3,7 +3,8 @@ import { AsyncStorage } from 'react-native';
 import { DevSummitAxios } from '../../helpers';
 import {
   UPDATE_SINGLE_FIELD,
-  UPDATE_IS_PROFILE_UPDATED
+  UPDATE_IS_PROFILE_UPDATED,
+  UPDATE_IS_LOG_OUT
 } from './constants';
 
 
@@ -27,6 +28,13 @@ export function updateIsProfileUpdated(status) {
   };
 }
 
+export function updateIsLogOut(status) {
+  return {
+    type: UPDATE_IS_LOG_OUT,
+    status
+  };
+}
+
 export function changeProfile() {
   return (dispatch, getState) => {
     const { fields } = getState().get('profile').toJS();
@@ -46,5 +54,13 @@ export function changeProfile() {
         }
       });
     });
+  }
+}
+
+export function logOut() {
+  return (dispatch, getState) => {
+    const keys = ['access_token', 'refresh_token', 'role_id'];
+    AsyncStorage.multiRemove(keys);
+    dispatch(updateIsLogOut(true));
   }
 }

@@ -19,6 +19,14 @@ import * as selectors from './selectors';
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
+  componentWillReceiveProps() {
+    this.props.getAccessToken()
+    if (this.props.isLoggedIn) {
+      Actions.mainTabs({ profileData: this.props.profileData })
+      this.props.updateIsLogIn(false)
+    }
+  }
+
   onLogin = () => {
     this.props.login();
   }
@@ -34,9 +42,10 @@ class Main extends Component {
   render() {
     const { fields, isLoggedIn } = this.props;
     const { username, password } = fields || '';
-    if (isLoggedIn) {
-      Actions.mainTabs({ profileData: this.props.profileData })
-    }
+    // if (isLoggedIn) {
+    //   Actions.mainTabs({ profileData: this.props.profileData })
+    //   this.props.updateIsLogIn(false)
+    // }
     return (
       <Container style={styles.container}>
         <Content>
