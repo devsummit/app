@@ -45,6 +45,15 @@ export const getIsNotRegistered = () => createSelector(
 );
 
 /**
+ *  Get is fetching status
+ *  Returns boolean
+ */
+export const getIsFetching = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isFetching')
+);
+
+/**
  *  Get profile data status
  *  Returns object
  */

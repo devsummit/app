@@ -15,6 +15,7 @@ import {
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
   UPDATE_IS_NOT_REGISTERED,
+  UPDATE_IS_FETCHING,
   FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
@@ -40,12 +41,22 @@ export function updateFields(field, value) {
   };
 }
 
+/*
+ * Update the isLogIn
+ * @param {status: status to be set}
+ */
+
 export function updateIsLogIn(status) {
   return {
     type: UPDATE_IS_LOGGED_IN,
     status
   };
 }
+
+/*
+ * Update the isSubscribed
+ * @param {status: status to be set}
+ */
 
 export function updateIsSubscribed(status) {
   return {
@@ -54,9 +65,26 @@ export function updateIsSubscribed(status) {
   };
 }
 
+/*
+ * Update the isNotRegistered
+ * @param {status: status to be set}
+ */
+
 export function updateIsNotRegistered(status) {
   return {
     type: UPDATE_IS_NOT_REGISTERED,
+    status
+  };
+}
+
+/*
+ * Update the isNotRegistered
+ * @param {status: status to be set}
+ */
+
+export function updateIsFetching(status) {
+  return {
+    type: UPDATE_IS_FETCHING,
     status
   };
 }
@@ -69,6 +97,8 @@ export function login() {
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
     const { username, password } = fields;
+
+    dispatch(updateIsFetching(true));
 
     DevSummitAxios.post('/auth/login', {
       username,
@@ -87,6 +117,7 @@ export function login() {
           type: FETCH_PROFILE_DATA,
           payload: response.data.included
         });
+        dispatch(updateIsFetching(false));
       }
     }).catch((err) => {
       dispatch(updateIsNotRegistered(true))
@@ -107,6 +138,7 @@ export function loginGoogle() {
     manager.authorize('google', {scopes: 'email'})
       .then((resp) => {
         if (resp.authorized) {
+          dispatch(updateIsFetching(true));
           DevSummitAxios.post('/auth/login', {
             provider: resp.provider,
             token: resp.response.credentials.idToken
@@ -128,6 +160,7 @@ export function loginGoogle() {
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
+              dispatch(updateIsFetching(false));
             }
           }).catch((err) => {
             dispatch(updateIsNotRegistered(true))
@@ -153,6 +186,7 @@ export function loginFacebook() {
           token: resp.response.credentials.accessToken
         };
         const headers = { 'Content-Type': 'application/json' };
+        dispatch(updateIsFetching(true));
         DevSummitAxios.post('/auth/login', data, { headers })
           .then((response) => {
             if (response && response.data && response.data.meta.success) {
@@ -168,6 +202,7 @@ export function loginFacebook() {
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
+              dispatch(updateIsFetching(false));
             }
           }).catch((err) => {
             dispatch(updateIsNotRegistered(true))
@@ -189,8 +224,10 @@ export function loginTwitter() {
         token_secret: info.credentials.oauth_token_secret
       };
       const headers = { 'Content-Type': 'application/json' };
+      dispatch(updateIsFetching(true));
       DevSummitAxios.post('/auth/login', data, { headers })
         .then((response) => {
+          console.log('login twitter',response)
           if (response && response.data && response.data.meta.success) {
             try {
               AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -204,6 +241,7 @@ export function loginTwitter() {
               type: FETCH_PROFILE_DATA,
               payload: response.data.included
             });
+            dispatch(updateIsFetching(false));
           }
         }).catch((err) => {
           dispatch(updateIsNotRegistered(true))
