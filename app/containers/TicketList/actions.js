@@ -1,8 +1,8 @@
-import { AsyncStorage } from 'react-native';
 import * as actions from '../AttendeesList/actions';
 
 import {
-  DevSummitAxios
+  DevSummitAxios,
+  getAccessToken
 } from '../../helpers';
 
 import {
@@ -32,7 +32,7 @@ export function fetchUserTicketStatus(status) {
 export function fetchUserTicket() {
   return (dispatch) => {
     dispatch(isFetchingUserTicket(true));
-    AsyncStorage.getItem('access_token')
+    getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
         DevSummitAxios.get('api/v1/user/tickets', { headers })
@@ -52,7 +52,8 @@ export function fetchUserTicket() {
                 payloads: response.data.data
               });
             }
-          });
+          })
+          .catch((error) => { return console.log(error.response); });
       }).catch((err) => {
         console.log(err);
       });

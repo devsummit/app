@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 import { View, AsyncStorage } from 'react-native';
 
 // Redux imports
@@ -45,17 +45,18 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    this.checkAccessToken()
+    this.checkAccessToken();
   }
 
   checkAccessToken = () => {
     AsyncStorage.getItem('access_token', (err, result) => {
       if (result) {
-        this.setState({
-          logged: true
-        })
+        // this.setState({
+        //   logged: true
+        // });
+        Actions.mainTabs()
       }
-    })
+    }).catch((error) => { console.log(error); });
   }
 
   render() {

@@ -27,6 +27,7 @@ class Main extends Component {
   state = {
     modalVisible: false
   }
+
   componentWillReceiveProps(prevProps) {
     this.props.getAccessToken()
     if (this.props.isLoggedIn) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { 
+import {
     Container,
     Header,
     Content,
@@ -96,7 +96,7 @@ class Schedule extends Component {
                     </Content>
                 </Container>
             </View>
-        );    
+        );
     }
 }
 

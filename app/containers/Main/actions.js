@@ -158,7 +158,7 @@ export function loginFacebook() {
               });
             }
           })
-          .catch((err) => { console.log(err); });
+          .catch((err) => { console.log(err.response); });
       }).catch((err) => { console.log('error login fb', err); });
   };
 }

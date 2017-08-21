@@ -52,9 +52,9 @@ export function changeProfile() {
         if (response && response.data && response.data.meta.success) {
           dispatch(updateIsProfileUpdated(true));
         }
-      });
+      }).catch((error) => { console.log(error); });
     });
-  }
+  };
 }
 
 export function logOut() {
