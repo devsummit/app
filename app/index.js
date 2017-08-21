@@ -48,6 +48,7 @@ export default class App extends Component {
   }
 
   componentWillMount() {
+
     this.setState({inprogress: true})
     this.checkAccessToken()
   }

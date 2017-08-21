@@ -1,63 +1,38 @@
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, StatusBar} from 'react-native';
 import React, {Component} from 'react';
-import {PagerTabIndicator, IndicatorViewPager} from 'rn-viewpager';
+import {Tabs, Tab, TabHeading, Container} from 'native-base';
+import IconIon from 'react-native-vector-icons/Ionicons';
+import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
 import Schedule from "../Schedule";
 import Speaker from "../Speaker";
 import Ticket from "../TicketList";
 import Profile from "../Profile";
 
-export default class MainTabs extends Component {
-  _renderTabIndicator() {
-    let tabs = [
-      {
-        iconSource: require('../../../assets/images/calendar.png'),
-        selectedIconSource: require('../../../assets/images/calendar.png')
-      },{
-        iconSource: require('../../../assets/images/group.png'),
-        selectedIconSource: require('../../../assets/images/group.png')
-      },{
-        iconSource: require('../../../assets/images/ticket.png'),
-        selectedIconSource: require('../../../assets/images/ticket.png')
-      },{
-        iconSource: require('../../../assets/images/user.png'),
-        selectedIconSource: require('../../../assets/images/user.png')
-      }
-    ];
-    return (
-      <PagerTabIndicator
-        tabs={tabs}
-        itemStyle={{backgroundColor:'#3F51B5'}}
-        iconStyle={{height: 20, width: 20, marginTop:11, opacity:0.5}}
-        selectedItemStyle={{backgroundColor:'#3F51B5'}}
-        selectedIconStyle={{height: 20, width: 20,marginTop:10}}
-        style={{backgroundColor:'#3F51B5'}}
-      />
-    )
-  }
+const StatusBarAndroid = require('react-native-android-statusbar');
 
+export default class MainTabs extends Component {
   render() {
     return (
-      <View style={{flex:1}}>
-        <IndicatorViewPager
-          style={{ flex:1, backgroundColor: 'white' }}
-          indicator={ this._renderTabIndicator() }
-        >
-          <View>
-            <Schedule />
-          </View>
-          <View>
-            <Speaker />
-          </View>
-          <View>
-            <Ticket/>
-          </View>
-          <View>
-            <Profile
-              profileData={this.props.profileData}
-            />
-          </View>
-        </IndicatorViewPager>
-      </View>
+      <Container>
+        <View style={{flex:1}}>
+          <Tabs tabBarPosition='bottom'>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="calendar" style={{fontSize: 18, color:'#ffa62a'}} /></TabHeading>}>
+              <Schedule />
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="people" style={{fontSize: 18}}/></TabHeading>}>
+              <Speaker />
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="wallet" style={{fontSize: 18}}/></TabHeading>}>
+              <Ticket/>
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="user" style={{fontSize: 18}}/></TabHeading>}>
+              <Profile
+                profileData={this.props.profileData}
+              />
+            </Tab>
+          </Tabs>
+        </View>
+      </Container>
     )
   }
 }

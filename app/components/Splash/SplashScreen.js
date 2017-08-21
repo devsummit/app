@@ -1,46 +1,35 @@
 import React, { Component } from 'react';
 import { Container, Content, Text } from 'native-base';
-import { StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Image, View, StatusBar } from 'react-native';
 import { createTransition, Fade } from 'react-native-transition';
 import App from './../../index';
 
 const Transition = createTransition(Fade);
 
-const Logo = require('../../../assets/images/logo.png');
+const Logo = require('../../../assets/images/devsummit.png');
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0D47A1',
+    backgroundColor: 'white',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  titleText: {
-    textAlign: 'center',
-    fontSize: 24,
-    color: 'white',
-    fontFamily: 'Montserrat'
-  },
   logo: {
-    height: 120,
-    width: 120,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    flex: 1
+    height: 73.1,
+    width: 201.2
   }
 });
 
 const SplashScreen = () => {
   return (
-    <TouchableWithoutFeedback>
-      <Container style={styles.container}>
-        <Content>
-          <Image source={Logo} style={styles.logo} />
-          <Text style={styles.titleText}>DevSummit</Text>
-        </Content>
-      </Container>
-    </TouchableWithoutFeedback>
+    <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor='white'/>
+      <View>
+        <Image source={Logo} style={styles.logo} />
+      </View>
+    </View>
   );
 };
 

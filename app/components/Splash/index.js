@@ -14,7 +14,7 @@ export default class Splash extends Component {
   }
 
   componentWillMount() {
-    setTimeout(() => this.toggleSplashScreen(this.state.isActive), 2000);
+    setTimeout(() => this.toggleSplashScreen(this.state.isActive), 3000);
   }
 
   toggleSplashScreen(state) {
