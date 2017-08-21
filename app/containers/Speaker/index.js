@@ -72,12 +72,12 @@ class Speaker extends Component {
         </Header>
         <Content style={styles.content}>
           {speakers.map(data => (
-            <Card>
+            <Card key={data.id}>
                 <CardItem>
                     <Body>
                         <View style={styles.bodySection}>
                             <View style={styles.profileSection}>
-                                <Image 
+                                <Image
                                     style={styles.profilePic}
                                     source={{uri: data.profile_picture}}
                                 />
