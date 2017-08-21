@@ -99,7 +99,6 @@ export function login() {
     const { username, password } = fields;
 
     dispatch(updateIsFetching(true));
-
     DevSummitAxios.post('/auth/login', {
       username,
       password
@@ -120,6 +119,7 @@ export function login() {
         dispatch(updateIsFetching(false));
       }
     }).catch((err) => {
+      dispatch(updateIsFetching(false));
       dispatch(updateIsNotRegistered(true))
     })
   };
@@ -163,6 +163,7 @@ export function loginGoogle() {
               dispatch(updateIsFetching(false));
             }
           }).catch((err) => {
+            dispatch(updateIsFetching(false));
             dispatch(updateIsNotRegistered(true))
           });
         }
@@ -186,7 +187,7 @@ export function loginFacebook() {
           token: resp.response.credentials.accessToken
         };
         const headers = { 'Content-Type': 'application/json' };
-        dispatch(updateIsFetching(true));
+        dispatch(updateIsFetching(true))
         DevSummitAxios.post('/auth/login', data, { headers })
           .then((response) => {
             if (response && response.data && response.data.meta.success) {
@@ -205,6 +206,7 @@ export function loginFacebook() {
               dispatch(updateIsFetching(false));
             }
           }).catch((err) => {
+            dispatch(updateIsFetching(false));
             dispatch(updateIsNotRegistered(true))
           });
       }).catch((err) => { console.log('error login fb', err); });
@@ -244,6 +246,7 @@ export function loginTwitter() {
             dispatch(updateIsFetching(false));
           }
         }).catch((err) => {
+          dispatch(updateIsFetching(false));
           dispatch(updateIsNotRegistered(true))
         });
     }).catch((error) => {
