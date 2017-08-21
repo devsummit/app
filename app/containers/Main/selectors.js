@@ -36,6 +36,15 @@ export const getIsSubscribed = () => createSelector(
 );
 
 /**
+ *  Get not registered status
+ *  Returns boolean
+ */
+export const getIsNotRegistered = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isNotRegistered')
+);
+
+/**
  *  Get profile data status
  *  Returns object
  */

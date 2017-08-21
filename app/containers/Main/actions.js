@@ -14,6 +14,7 @@ import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
+  UPDATE_IS_NOT_REGISTERED,
   FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
@@ -53,6 +54,13 @@ export function updateIsSubscribed(status) {
   };
 }
 
+export function updateIsNotRegistered(status) {
+  return {
+    type: UPDATE_IS_NOT_REGISTERED,
+    status
+  };
+}
+
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
@@ -80,7 +88,9 @@ export function login() {
           payload: response.data.included
         });
       }
-    });
+    }).catch((err) => {
+      dispatch(updateIsNotRegistered(true))
+    })
   };
 }
 
@@ -119,9 +129,11 @@ export function loginGoogle() {
                 payload: response.data.included
               });
             }
-          }).catch(err => console.log(err));
+          }).catch((err) => {
+            dispatch(updateIsNotRegistered(true))
+          });
         }
-      }).catch(err => console.log(err));
+      }).catch((err) => { console.log(err); });
   }
 }
 
@@ -157,8 +169,9 @@ export function loginFacebook() {
                 payload: response.data.included
               });
             }
-          })
-          .catch((err) => { console.log(err); });
+          }).catch((err) => {
+            dispatch(updateIsNotRegistered(true))
+          });
       }).catch((err) => { console.log('error login fb', err); });
   };
 }
@@ -192,22 +205,13 @@ export function loginTwitter() {
               payload: response.data.included
             });
           }
-        })
-        .catch((err) => { console.log(err); });
+        }).catch((err) => {
+          dispatch(updateIsNotRegistered(true))
+        });
     }).catch((error) => {
       console.log(error)
     });
   };
-}
-
-export function getAccessToken() {
-  return (dispatch) => {
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        dispatch(updateIsLogIn(true));
-      }
-    })
-  }
 }
 
 export function subscribeNewsletter() {
