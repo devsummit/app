@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container, Content, Text, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
+import { createTransition, Fade } from 'react-native-transition';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -21,21 +22,26 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+const Transition = createTransition(Fade);
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
   state = {
     modalVisible: false
   }
+
   componentWillReceiveProps(prevProps) {
-    this.props.getAccessToken()
-    if (this.props.isLoggedIn) {
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
       Actions.mainTabs({ profileData: this.props.profileData })
       this.props.updateIsLogIn(false)
     }
     if (prevProps.isSubscribed !== this.props.isSubscribed) {
       Alert.alert('Success', 'You have been subscribed, we will send update to your email')
       this.props.updateIsSubscribed(false)
+    }
+    if (prevProps.isNotRegistered !== this.props.isNotRegistered) {
+      Alert.alert('Not Registered', 'Please register your account first')
+      this.props.updateIsNotRegistered(false)
     }
   }
 
@@ -60,9 +66,19 @@ class Main extends Component {
   }
 
   render() {
-    const { fields, isLoggedIn } = this.props;
+    const { fields, isFetching } = this.props;
     const { username, password, email } = fields || '';
-
+    if (isFetching) {
+      return (
+        <Transition>
+          <Container>
+            <View style={styles.spinner}>
+              <Spinner color='white'/>
+            </View>
+          </Container>
+        </Transition>
+      )
+    }
     return (
       <Container style={styles.container}>
         <Content>
@@ -146,6 +162,8 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
+  isNotRegistered: selectors.getIsNotRegistered(),
+  isFetching: selectors.getIsFetching(),
   profileData: selectors.getProfileData()
 });
 
