@@ -66,7 +66,6 @@ class Profile extends Component {
       username,
       profilePic
     } = fields || '';
-    console.log('props in render', this.props.isLogOut)
     return (
       <Container>
         <Header

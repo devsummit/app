@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 import { View, AsyncStorage } from 'react-native';
+import { Container, Content, Spinner } from 'native-base';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
@@ -17,7 +18,7 @@ import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
 import Login from './containers/Login';
 import Schedule from './containers/Schedule';
-import Main from './containers/Main/MainWrapper';
+import Main from './containers/Main';
 import ChangePassword from './containers/ChangePassword';
 import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
@@ -26,6 +27,7 @@ import MainTabs from './containers/MainTabs';
 import SpeakerDetail from './containers/SpeakerDetail';
 import NewOrder from './containers/NewOrder';
 import AttendeesList from './containers/AttendeesList';
+import Splash from './components/Splash';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -39,24 +41,7 @@ const store = createStoreWithMiddleware(reducers);
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      logged: false
-    };
-  }
-
-  componentWillMount() {
-    this.checkAccessToken();
-  }
-
-  checkAccessToken = () => {
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        // this.setState({
-        //   logged: true
-        // });
-        Actions.mainTabs()
-      }
-    }).catch((error) => { console.log(error); });
+    this.state = {};
   }
 
   render() {
@@ -70,13 +55,14 @@ export default class App extends Component {
           leftButtonIconStyle={styles.leftButtonIconStyle}
         >
           <Scene key="root" backButtonImage={BackButtonImg}>
-            <Scene key="main" component={Main} hideNavBar initial={!this.state.logged} />
+            <Scene key="splash" component={Splash} hideNavBar initial />
+            <Scene key="main" component={Main} hideNavBar type="replace" />
+            <Scene key="mainTabs" component={MainTabs} hideNavBar />
             <Scene key="registerMenu" component={RegisterMenu} title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} title="Register Email" />
             <Scene key="registerPhone" component={RegisterPhone} title="Register Phone" />
-            <Scene key="login" component={Login} title="Login"/>
+            <Scene key="login" component={Login} title="Login" />
             <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
-            <Scene key="mainTabs" component={MainTabs} hideNavBar />
             <Scene key="changePassword" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
             <Scene key="orderList" component={OrderList} title="Order List" />

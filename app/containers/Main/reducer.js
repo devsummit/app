@@ -8,6 +8,8 @@ import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
+  UPDATE_IS_NOT_REGISTERED,
+  UPDATE_IS_FETCHING,
   FETCH_PROFILE_DATA
 } from './constants';
 
@@ -22,6 +24,7 @@ const initialState = fromJS({
   },
   isLoggedIn: false,
   isSubscribed: false,
+  isFetching: false,
   profiledata: {}
 });
 
@@ -31,6 +34,8 @@ function mainReducer(state = initialState, action) {
       return state.set('isLoggedIn', action.status);
     case UPDATE_IS_SUBSCRIBED:
       return state.set('isSubscribed', action.status);
+    case UPDATE_IS_FETCHING:
+      return state.set('isFetching', action.status);
     case UPDATE_SINGLE_FIELD:
       return state.setIn([ 'fields', action.field ], action.value);
     case FETCH_PROFILE_DATA:

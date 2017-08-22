@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Actions} from 'react-native-router-flux';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -82,6 +83,10 @@ class RegisterEmail extends Component {
     );
   }
 
+  onAlertOk = () => {
+    Actions.main();
+  }
+
   render() {
     if (this.props.isRegistering) {
       console.log('isregistering...');
@@ -89,6 +94,14 @@ class RegisterEmail extends Component {
     }
     if (this.props.isRegistered) {
       Alert.alert('Status', 'user registered successfully');
+      Alert.alert(
+        'Status',
+        'user registered successfully',
+        [
+          { text: 'OK', onPress: this.onAlertOk }
+        ],
+        { cancelable: false }
+      );
     }
 
     // destructure state

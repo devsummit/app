@@ -97,6 +97,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     color: '#3366BB'
+  },
+  spinner: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: '#3F51B5'
   }
 });
 
