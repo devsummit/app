@@ -9,6 +9,10 @@ import {
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import { createTransition, Fade } from 'react-native-transition';
+import AccountKit, {
+  LoginButton
+} from 'react-native-facebook-account-kit'
+
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -30,6 +34,10 @@ class Main extends Component {
     modalVisible: false
   }
 
+  componentWillMount() {
+    this.configureAccountKit();
+  }
+
   componentWillReceiveProps(prevProps) {
     if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
       Actions.mainTabs({ profileData: this.props.profileData })
@@ -41,12 +49,34 @@ class Main extends Component {
     }
   }
 
+
+  onLoginMobile(token) {
+    if (!token) {
+      console.warn('User canceled login')
+      this.setState({})
+    } else {
+      AccountKit.getCurrentAccessToken().then((_token) => {
+        this.props.loginMobile(_token.token);
+      });
+    }
+  }
+
+
   onLogin = () => {
     this.props.login();
   }
 
   setModalVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible })
+  }
+
+  configureAccountKit = () => {
+    AccountKit.configure({
+      countryWhitelist: ["ID"],
+      defaultCountry: "ID",
+      initialPhoneCountryPrefix: '+62',
+      initialPhoneNumber: '87809000750',
+    })
   }
 
   loginFacebook = () => {
@@ -107,12 +137,15 @@ class Main extends Component {
             />
           </View>
           <View style={styles.buttonSection}>
-            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
+            <Button
+              transparent
+              style={styles.buttonRegister}
+              onPress={() => { Actions.registerMenu() }}>
               <Text style={styles.registerText}>Don't have an account?</Text>
               <Text style={styles.registerTextBold}> Register</Text>
             </Button>
             {(username === '' || password === '') ?
-              <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
+              <Button disabled block style={[styles.button, { elevation: 0 }]}>
                 <Text>Log In</Text>
               </Button>
               :
@@ -125,19 +158,28 @@ class Main extends Component {
               <Text style={styles.lineTextTwo}> or </Text>
               <View style={styles.lineTextOne} />
             </View>
-            <Button primary style={styles.button}>
-              <Icon name="phone" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Phone</Text>
+            <Button style={styles.button}>
+              <LoginButton
+                style={styles.buttonLoggin}
+                type="phone"
+                onLogin={token => this.onLoginMobile(token)}
+                onError={e => this.onLoginMobile(e)}
+                primary
+                block
+              >
+                <Icon name="phone" color="white" style={styles.icon} />
+                <Text style={styles.buttonText}>PHONE</Text>
+              </LoginButton>
             </Button>
             <Button primary style={styles.button} onPress={() => { this.loginFacebook(); }}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
             </Button>
-            <Button danger style={styles.button} onPress={() => {this.props.loginGoogle()}}>
+            <Button danger style={styles.button} onPress={() => { this.props.loginGoogle() }}>
               <Icon name="google-plus" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Google</Text>
             </Button>
-            <Button info style={styles.button} onPress={() => {this.props.loginTwitter()}}>
+            <Button info style={styles.button} onPress={() => { this.props.loginTwitter() }}>
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>
