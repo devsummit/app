@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container, Content, Text, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
+import { createTransition, Fade } from 'react-native-transition';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -21,6 +22,7 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+const Transition = createTransition(Fade);
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
@@ -29,8 +31,7 @@ class Main extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if (this.props.isLoggedIn) {
-      console.log(this.props)
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
       Actions.mainTabs({ profileData: this.props.profileData })
       this.props.updateIsLogIn(false)
     }
@@ -61,9 +62,19 @@ class Main extends Component {
   }
 
   render() {
-    const { fields, isLoggedIn } = this.props;
+    const { fields, isFetching } = this.props;
     const { username, password, email } = fields || '';
-
+    if (isFetching) {
+      return (
+        <Transition>
+          <Container>
+            <View style={styles.spinner}>
+              <Spinner color='white'/>
+            </View>
+          </Container>
+        </Transition>
+      )
+    }
     return (
       <Container style={styles.container}>
         <Content>
@@ -147,6 +158,7 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
+  isFetching: selectors.getIsFetching(),
   profileData: selectors.getProfileData()
 });
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Scene } from 'react-native-router-flux';
 import { View, AsyncStorage } from 'react-native';
+import { Container, Content, Spinner } from 'native-base';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
@@ -17,7 +18,7 @@ import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
 import Login from './containers/Login';
 import Schedule from './containers/Schedule';
-import Main from './containers/Main/MainWrapper';
+import Main from './containers/Main';
 import ChangePassword from './containers/ChangePassword';
 import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
@@ -26,6 +27,7 @@ import MainTabs from './containers/MainTabs';
 import SpeakerDetail from './containers/SpeakerDetail';
 import NewOrder from './containers/NewOrder';
 import AttendeesList from './containers/AttendeesList';
+import Splash from './components/Splash';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -48,25 +50,30 @@ export default class App extends Component {
   componentWillMount() {
     this.setState({inprogress: true})
     this.checkAccessToken()
-      .then((token) => {
-        this.setState({inprogress: false})
-      })
   }
 
   checkAccessToken = () => {
-    return new Promise((resolve, reject) => {
-      AsyncStorage.getItem('access_token', (err, result) => {
-        if (result) {
-          resolve(result)
-          this.setState({
-            logged: true
-          })
-        }
-      })
+    AsyncStorage.getItem('access_token', (err, result) => {
+      if (result) {
+        this.setState({
+          logged: true,
+          inprogress: false
+        })
+      } else {
+        this.setState({
+          inprogress: false
+        })
+      }
     })
   }
 
   render() {
+    if (this.state.inprogress) {
+      return (
+        <Splash />
+      )
+    }
+
     return (
       <Provider store={store}>
         <RouterWithRedux
@@ -84,7 +91,6 @@ export default class App extends Component {
             <Scene key="registerPhone" component={RegisterPhone} title="Register Phone" />
             <Scene key="login" component={Login} title="Login"/>
             <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
-
             <Scene key="changePassword" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
             <Scene key="orderList" component={OrderList} title="Order List" />
@@ -95,7 +101,6 @@ export default class App extends Component {
           </Scene>
         </RouterWithRedux>
       </Provider>
-
     );
   }
 }
