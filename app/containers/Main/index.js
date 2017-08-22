@@ -38,10 +38,6 @@ class Main extends Component {
       Alert.alert('Success', 'You have been subscribed, we will send update to your email')
       this.props.updateIsSubscribed(false)
     }
-    if (prevProps.isNotRegistered !== this.props.isNotRegistered) {
-      Alert.alert('Not Registered', 'Please register your account first')
-      this.props.updateIsNotRegistered(false)
-    }
   }
 
   onLogin = () => {
@@ -151,7 +147,6 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isNotRegistered: selectors.getIsNotRegistered(),
   profileData: selectors.getProfileData()
 });
 
