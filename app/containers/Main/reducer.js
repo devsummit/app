@@ -24,7 +24,6 @@ const initialState = fromJS({
   },
   isLoggedIn: false,
   isSubscribed: false,
-  isNotRegistered: false,
   isFetching: false,
   profiledata: {}
 });
@@ -35,8 +34,6 @@ function mainReducer(state = initialState, action) {
       return state.set('isLoggedIn', action.status);
     case UPDATE_IS_SUBSCRIBED:
       return state.set('isSubscribed', action.status);
-    case UPDATE_IS_NOT_REGISTERED:
-      return state.set('isNotRegistered', action.status);
     case UPDATE_IS_FETCHING:
       return state.set('isFetching', action.status);
     case UPDATE_SINGLE_FIELD:
