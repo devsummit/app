@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
-  List,
-  ListItem,
-  Picker,
-  Label,
-  Input,
-  Text,
-  Title
+  Text
 } from 'native-base';
-import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, Alert, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -48,9 +41,9 @@ class Profile extends Component {
       Alert.alert('Success', 'Profile changed');
       this.props.updateIsProfileUpdated(false)
     }
+
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main()
-      this.props.updateIsLogOut(false)
     }
   }
 
@@ -60,7 +53,7 @@ class Profile extends Component {
 
   render() {
     // destructure state
-    const { fields } = this.props || {};
+    const { fields, isDisabled } = this.props || {};
     const {
       firstName,
       lastName,
@@ -83,15 +76,22 @@ class Profile extends Component {
         <Content>
           <View style={styles.section3}>
             <Text style={styles.username}>{username}</Text>
+            <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
+              <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
+            </TouchableOpacity>
           </View>
           <View style={styles.section2}>
             <InputItem
+              style={styles.input}
               title="First Name"
+              disabled={isDisabled ? true : false}
               onChangeText={(text) => { this.handleInputChange('firstName', text) }}
               value={firstName}
             />
             <InputItem
+              style={styles.input}
               title="Last Name"
+              disabled={isDisabled ? true : false}
               onChangeText={(text) => {this.handleInputChange('lastName', text)}}
               value={lastName}
             />
@@ -122,7 +122,8 @@ class Profile extends Component {
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isProfileUpdated: selectors.getIsProfileUpdated(),
-  isLogOut: selectors.getIsLogOut()
+  isDisabled: selectors.getIsDisabled(),
+  isLogOut: selectors.getIsLogOut(),
 });
 
 export default connect(mapStateToProps, actions)(Profile);

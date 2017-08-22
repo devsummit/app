@@ -4,7 +4,8 @@ import { DevSummitAxios } from '../../helpers';
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_PROFILE_UPDATED,
-  UPDATE_IS_LOG_OUT
+  UPDATE_IS_LOG_OUT,
+  UPDATE_IS_DISABLED
 } from './constants';
 
 
@@ -35,6 +36,13 @@ export function updateIsLogOut(status) {
   };
 }
 
+export function updateIsDisabled(status) {
+  return {
+    type: UPDATE_IS_DISABLED,
+    status
+  };
+}
+
 export function changeProfile() {
   return (dispatch, getState) => {
     const { fields } = getState().get('profile').toJS();
@@ -52,15 +60,27 @@ export function changeProfile() {
         if (response && response.data && response.data.meta.success) {
           dispatch(updateIsProfileUpdated(true));
         }
-      });
+      }).catch((error) => { console.log(error); });
     });
+  };
+}
+
+export function disabled() {
+  console.log("ACTIONS");
+  return (dispatch, getState) => {
+    const status = getState().get('profile').toJS().isDisabled;
+    if (status === true) {
+      dispatch(updateIsDisabled(false));
+    } else {
+      dispatch(updateIsDisabled(true));
+    }
   }
 }
 
 export function logOut() {
-  return (dispatch, getState) => {
-    const keys = ['access_token', 'refresh_token', 'role_id'];
-    AsyncStorage.multiRemove(keys);
+  return async (dispatch, getState) => {
+    const keys = [ 'access_token', 'refresh_token', 'role_id' ];
+    await AsyncStorage.multiRemove(keys);
     dispatch(updateIsLogOut(true));
-  }
+  };
 }

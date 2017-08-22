@@ -31,13 +31,12 @@ export default class InputItem extends Component {
       <View>
         <Form>
           <Item floatingLabel error={this.props.error} >
-            <Label style={[this.props.error ? styles.errorLabel :
-              styles.normalLabel, this.state.onFocus || this.props.value.length > 0 ? styles.normalOnFocusLabel :
-              styles.normalOnBlurLabel]}
-            >
+            <Label>
               {this.props.title}
             </Label>
             <Input
+              style={this.props.style}
+              disabled={this.props.disabled}
               secureTextEntry={this.props.secureTextEntry}
               onChangeText={this.props.onChangeText}
               value={this.props.value}
