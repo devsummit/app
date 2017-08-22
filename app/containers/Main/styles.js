@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
   icon: {
     textAlign: 'left',
     flex: 1,
-    fontSize: 18
+    fontSize: 18,
+    alignSelf: 'center'
   },
   buttonSection: {
     marginTop: 8,
@@ -45,6 +46,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1
   },
+  buttonLoggin: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 6,
+    marginBottom: 6,
+    flexDirection: 'row',
+    flex: 1,
+    height: 50
+  },
   buttonRegister: {
     width: '90%',
     marginLeft: 'auto',
@@ -55,6 +66,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
+    alignSelf: 'center',
     paddingRight: 26,
     flex: 7
   },
