@@ -31,9 +31,14 @@ export default class InputItem extends Component {
       <View>
         <Form>
           <Item floatingLabel error={this.props.error} >
-            <Label style={[this.props.error ? styles.errorLabel :
-              styles.normalLabel, this.state.onFocus || this.props.value.length > 0 ? styles.normalOnFocusLabel :
-              styles.normalOnBlurLabel]}
+            <Label style={[
+              this.props.error ?
+                styles.errorLabel :
+                styles.normalLabel, this.state.onFocus ||
+                  this.props.value.length > 0 ?
+                styles.normalOnFocusLabel :
+                styles.normalOnBlurLabel
+            ]}
             >
               {this.props.title}
             </Label>
@@ -42,7 +47,7 @@ export default class InputItem extends Component {
               onChangeText={this.props.onChangeText}
               value={this.props.value}
               onFocus={() => { this.handleOnFocus(); }}
-              onBlur={() => { this.handleOnBlur(); }}
+              onBlur={this.props.onBlur}
             />
           </Item>
         </Form>
