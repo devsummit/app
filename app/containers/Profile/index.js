@@ -29,6 +29,7 @@ import * as selectors from './selectors';
 
 class Profile extends Component {
   componentWillMount() {
+    console.log('dari profile',this.props.profileData)
     if (this.props.profileData) {
       this.handleInputChange('username', this.props.profileData.username)
       this.handleInputChange('firstName', this.props.profileData.first_name)

@@ -155,11 +155,11 @@ export function loginGoogle() {
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch(updateIsLogIn(true));
               dispatch({
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
+              dispatch(updateIsLogIn(true));
               dispatch(updateIsFetching(false));
             }
           }).catch((err) => {
@@ -198,11 +198,11 @@ export function loginFacebook() {
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch(updateIsLogIn(true));
               dispatch({
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
+              dispatch(updateIsLogIn(true));
               dispatch(updateIsFetching(false));
             }
           }).catch((err) => {
@@ -229,7 +229,6 @@ export function loginTwitter() {
       dispatch(updateIsFetching(true));
       DevSummitAxios.post('/auth/login', data, { headers })
         .then((response) => {
-          console.log('login twitter',response)
           if (response && response.data && response.data.meta.success) {
             try {
               AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -238,11 +237,11 @@ export function loginTwitter() {
             } catch (error) {
               console.log(error, 'error caught');
             }
-            dispatch(updateIsLogIn(true));
             dispatch({
               type: FETCH_PROFILE_DATA,
               payload: response.data.included
             });
+            dispatch(updateIsLogIn(true));
             dispatch(updateIsFetching(false));
           }
         }).catch((err) => {

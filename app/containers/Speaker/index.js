@@ -54,8 +54,7 @@ const speakers = [
 ]
 
 class Speaker extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       firstName: 'John',
@@ -63,42 +62,41 @@ class Speaker extends Component {
     }
   }
 
-  render(){
+  render() {
     return (
       <Container>
         <Header
-            title="SPEAKER"
-        >
-        </Header>
+          title="SPEAKER"
+        />
         <Content style={styles.content}>
           {speakers.map(data => (
             <Card>
-                <CardItem>
-                    <Body>
-                        <View style={styles.bodySection}>
-                            <View style={styles.profileSection}>
-                                <Image 
-                                    style={styles.profilePic}
-                                    source={{uri: data.profile_picture}}
-                                />
-                            </View>
-                            <View style={styles.nameSection}>
-                                <Text style={styles.name}>{data.full_name}</Text>
-                                <Text style={styles.job}>{data.job}</Text>
-                                <Text numberOfLines={3}
-                                      style={styles.summary}
-                                >
-                                {data.summary}
-                                </Text>
-                            </View>
-                        </View>
-                    </Body>
-                </CardItem>
-                <CardItem footer style={styles.footerSection}>
-                    <Button bordered style={styles.footerButton} onPress={() => {Actions.speakerDetail({profilePicture: data.profile_picture, nameTitle: data.full_name, job: data.job,summary: data.summary})}}>
-                      <Text style={styles.footerButtonText}>See more</Text>
-                    </Button>
-                </CardItem>
+              <CardItem>
+                <Body>
+                  <View style={styles.bodySection}>
+                    <View style={styles.profileSection}>
+                      <Image
+                        style={styles.profilePic}
+                        source={{uri: data.profile_picture}}
+                      />
+                    </View>
+                    <View style={styles.nameSection}>
+                      <Text style={styles.name}>{data.full_name}</Text>
+                      <Text style={styles.job}>{data.job}</Text>
+                      <Text numberOfLines={3}
+                        style={styles.summary}
+                      >
+                        {data.summary}
+                      </Text>
+                    </View>
+                  </View>
+                </Body>
+              </CardItem>
+              <CardItem footer style={styles.footerSection}>
+                <Button bordered style={styles.footerButton} onPress={() => {Actions.speakerDetail({profilePicture: data.profile_picture, nameTitle: data.full_name, job: data.job,summary: data.summary})}}>
+                  <Text style={styles.footerButtonText}>See more</Text>
+                </Button>
+              </CardItem>
             </Card>
           ))}
         </Content>

@@ -53,19 +53,23 @@ export default class App extends Component {
     this.checkAccessToken()
   }
 
-  checkAccessToken = () => {
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        this.setState({
-          logged: true,
-          inprogress: false
-        })
-      } else {
-        this.setState({
-          inprogress: false
-        })
-      }
-    })
+  checkAccessToken = async () => {
+    try {
+      await AsyncStorage.getItem('access_token', (err, result) => {
+        if (result) {
+          this.setState({
+            logged: true,
+            inprogress: false
+          })
+        } else {
+          this.setState({
+            inprogress: false
+          })
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {

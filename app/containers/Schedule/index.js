@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import {
   Container,
   Header,
@@ -12,16 +12,15 @@ import {
   Label
 } from 'native-base';
 import IconFA from 'react-native-vector-icons/FontAwesome';
-import { Actions } from 'react-native-router-flux';
-import HeaderPoint from '../../components/Header';
-
-import ScheduleList from '../../components/ScheduleList';
-import styles from './styles';
 
 // import redux components
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
+
+import HeaderPoint from '../../components/Header';
+import ScheduleList from '../../components/ScheduleList';
+import styles from './styles';
 
 import * as actions from './actions';
 import * as selectors from './selectors'
@@ -71,12 +70,11 @@ class Schedule extends Component {
     ];
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor='#f39e21'/>
         <HeaderPoint
             title="SCHEDULE"
         />
         <Container style={styles.content}>
-          <Header searchBar style={styles.searchHeader}>
+          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
             <Item>
               <Icon name="ios-search"/>
               <Input placeholder="Search event ..."/>

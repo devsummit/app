@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3F51B5'
   },
   navBar: {
-    backgroundColor: '#0D47A1'
+    backgroundColor: '#f39e21'
   },
   navBarTitle: {
     color: '#FFFFFF'

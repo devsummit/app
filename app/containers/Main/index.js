@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Text, Spinner, Item, Input } from 'native-base';
+import { Container, Content, Text, Spinner, Item, Input, Header } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
@@ -72,6 +72,7 @@ class Main extends Component {
       return (
         <Transition>
           <Container>
+            <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
             <View style={styles.spinner}>
               <Spinner color='white'/>
             </View>
@@ -81,6 +82,7 @@ class Main extends Component {
     }
     return (
       <Container style={styles.container}>
+        <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
         <Content>
           <ModalComponent
             visible={this.state.modalVisible}
