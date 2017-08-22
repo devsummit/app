@@ -20,9 +20,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row'
   },
+  buttonLoggin: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 6,
+    marginBottom: 6,
+    flexDirection: 'row',
+    flex: 1,
+    height: 50
+  },
   buttonText: {
     textAlign: 'center',
-    flex: 9
+    flex: 9,
+    alignSelf: 'center'
   },
   picker: {
     margin: 12
