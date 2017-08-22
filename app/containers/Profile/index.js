@@ -11,7 +11,7 @@ import {
   Text,
   Title
 } from 'native-base';
-import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet, Alert, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -47,6 +47,7 @@ class Profile extends Component {
       Alert.alert('Success', 'Profile changed');
       this.props.updateIsProfileUpdated(false)
     }
+
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main()
       this.props.updateIsLogOut(false)
@@ -59,14 +60,13 @@ class Profile extends Component {
 
   render() {
     // destructure state
-    const { fields } = this.props || {};
+    const { fields, isDisabled } = this.props || {};
     const {
       firstName,
       lastName,
       username,
       profilePic
     } = fields || '';
-    console.log('props in render', this.props.isLogOut)
     return (
       <Container>
         <Header
@@ -83,34 +83,25 @@ class Profile extends Component {
         <Content>
           <View style={styles.section3}>
             <Text style={styles.username}>{username}</Text>
+            <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
+              <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
+            </TouchableOpacity>
           </View>
           <View style={styles.section2}>
-            <View style={styles.fieldWrapper}>
-              <View style={{ flex: 1 }}>
-                <InputItem
-                  style={{ flex: 1 }}
-                  title="First Name"
-                  onChangeText={(text) => { this.handleInputChange('firstName', text) }}
-                  value={firstName}
-                />
-              </View>
-              <View style={styles.iconWrapper}>
-                <Icon name={'edit'} size={24} color={'#BDBDBD'}/>
-              </View>
-            </View>
-            <View style={styles.fieldWrapper}>
-              <View style={{ flex: 1 }}>
-                <InputItem
-                  style={{ flex: 1 }}
-                  title="Last Name"
-                  onChangeText={(text) => {this.handleInputChange('lastName', text)}}
-                  value={lastName}
-                />
-              </View>
-              <View style={styles.iconWrapper}>
-                <Icon name={'edit'} size={24} color={'#BDBDBD'}/>
-              </View>
-            </View>
+            <InputItem
+              style={styles.input}
+              title="First Name"
+              disabled={isDisabled ? true : false}
+              onChangeText={(text) => { this.handleInputChange('firstName', text) }}
+              value={firstName}
+            />
+            <InputItem
+              style={styles.input}
+              title="Last Name"
+              disabled={isDisabled ? true : false}
+              onChangeText={(text) => {this.handleInputChange('lastName', text)}}
+              value={lastName}
+            />
             <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
               <Text style={styles.changePassText}>Change Password</Text>
             </Button>
@@ -138,7 +129,8 @@ class Profile extends Component {
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isProfileUpdated: selectors.getIsProfileUpdated(),
-  isLogOut: selectors.getIsLogOut()
+  isDisabled: selectors.getIsDisabled(),
+  isLogOut: selectors.getIsLogOut(),
 });
 
 export default connect(mapStateToProps, actions)(Profile);
