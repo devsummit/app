@@ -135,6 +135,7 @@ export function loginGoogle() {
               'Content-Type': 'application/json'
             }
           }).then((response) => {
+            console.log('huahahha')
             dispatch(updateIsFetching(false));
             if (response && response.data && response.data.meta.success) {
               try {
