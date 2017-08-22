@@ -84,12 +84,12 @@ export default class App extends Component {
           leftButtonIconStyle={styles.leftButtonIconStyle}
         >
           <Scene key="root" backButtonImage={BackButtonImg}>
+            <Scene key="main" component={Main} hideNavBar initial={!this.state.logged} type="replace" />
             <Scene key="mainTabs" component={MainTabs} hideNavBar initial={this.state.logged} />
-            <Scene key="main" component={Main} hideNavBar initial={!this.state.logged} />
             <Scene key="registerMenu" component={RegisterMenu} title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} title="Register Email" />
             <Scene key="registerPhone" component={RegisterPhone} title="Register Phone" />
-            <Scene key="login" component={Login} title="Login"/>
+            <Scene key="login" component={Login} title="Login" />
             <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
             <Scene key="changePassword" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
