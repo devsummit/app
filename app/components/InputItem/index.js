@@ -38,6 +38,7 @@ export default class InputItem extends Component {
               {this.props.title}
             </Label>
             <Input
+              style={this.props.style}
               secureTextEntry={this.props.secureTextEntry}
               onChangeText={this.props.onChangeText}
               value={this.props.value}

@@ -50,6 +50,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#3366BB'
   },
+  fieldWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  iconWrapper: {
+    justifyContent: 'flex-end',
+    margin: 8,
+  },
 })
 
 export default styles;

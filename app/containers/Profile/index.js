@@ -85,16 +85,32 @@ class Profile extends Component {
             <Text style={styles.username}>{username}</Text>
           </View>
           <View style={styles.section2}>
-            <InputItem
-              title="First Name"
-              onChangeText={(text) => { this.handleInputChange('firstName', text) }}
-              value={firstName}
-            />
-            <InputItem
-              title="Last Name"
-              onChangeText={(text) => {this.handleInputChange('lastName', text)}}
-              value={lastName}
-            />
+            <View style={styles.fieldWrapper}>
+              <View style={{ flex: 1 }}>
+                <InputItem
+                  style={{ flex: 1 }}
+                  title="First Name"
+                  onChangeText={(text) => { this.handleInputChange('firstName', text) }}
+                  value={firstName}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <Icon name={'edit'} size={24} color={'#BDBDBD'}/>
+              </View>
+            </View>
+            <View style={styles.fieldWrapper}>
+              <View style={{ flex: 1 }}>
+                <InputItem
+                  style={{ flex: 1 }}
+                  title="Last Name"
+                  onChangeText={(text) => {this.handleInputChange('lastName', text)}}
+                  value={lastName}
+                />
+              </View>
+              <View style={styles.iconWrapper}>
+                <Icon name={'edit'} size={24} color={'#BDBDBD'}/>
+              </View>
+            </View>
             <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
               <Text style={styles.changePassText}>Change Password</Text>
             </Button>
