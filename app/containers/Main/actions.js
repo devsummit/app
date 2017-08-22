@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import OAuthManager from 'react-native-oauth';
 import { twitter } from 'react-native-simple-auth';
+import { Actions } from 'react-native-router-flux';
+import axios from 'axios';
 
 import {
   DevSummitAxios
@@ -14,7 +16,6 @@ import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
-  UPDATE_IS_NOT_REGISTERED,
   UPDATE_IS_FETCHING,
   FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
@@ -70,18 +71,6 @@ export function updateIsSubscribed(status) {
  * @param {status: status to be set}
  */
 
-export function updateIsNotRegistered(status) {
-  return {
-    type: UPDATE_IS_NOT_REGISTERED,
-    status
-  };
-}
-
-/*
- * Update the isNotRegistered
- * @param {status: status to be set}
- */
-
 export function updateIsFetching(status) {
   return {
     type: UPDATE_IS_FETCHING,
@@ -103,6 +92,7 @@ export function login() {
       username,
       password
     }).then((response) => {
+      dispatch(updateIsFetching(false));
       if (response && response.data && response.data.meta.success) {
         try {
           AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -111,17 +101,15 @@ export function login() {
         } catch (error) {
           console.log(error, 'error caught');
         }
-        dispatch(updateIsLogIn(true));
         dispatch({
           type: FETCH_PROFILE_DATA,
           payload: response.data.included
         });
-        dispatch(updateIsFetching(false));
+        dispatch(updateIsLogIn(true));
+      } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+        Actions.registerEmail()
       }
-    }).catch((err) => {
-      dispatch(updateIsFetching(false));
-      dispatch(updateIsNotRegistered(true))
-    })
+    }).catch((err) => { console.log(err) })
   };
 }
 
@@ -147,6 +135,7 @@ export function loginGoogle() {
               'Content-Type': 'application/json'
             }
           }).then((response) => {
+            dispatch(updateIsFetching(false));
             if (response && response.data && response.data.meta.success) {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -160,12 +149,26 @@ export function loginGoogle() {
                 payload: response.data.included
               });
               dispatch(updateIsLogIn(true));
-              dispatch(updateIsFetching(false));
+            } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+              axios.get('https://www.googleapis.com/plus/v1/people/me', {
+                headers: {
+                  Accept: 'application/json',
+                  Authorization: resp.response.credentials.authorizationHeader
+                }
+              }).then((rsp) => {
+                const prefilledData = {
+                  first_name: rsp.data.name.givenName,
+                  last_name: rsp.data.name.familyName,
+                  email: rsp.data.emails[0].value,
+                  social_id: rsp.data.id
+                }
+                Actions.registerEmail({prefilledData: prefilledData})
+              }).catch(err => console.log(err));
             }
           }).catch((err) => {
+            console.log(err)
             dispatch(updateIsFetching(false));
-            dispatch(updateIsNotRegistered(true))
-          });
+          })
         }
       }).catch((err) => { console.log(err); });
   }
@@ -190,6 +193,7 @@ export function loginFacebook() {
         dispatch(updateIsFetching(true))
         DevSummitAxios.post('/auth/login', data, { headers })
           .then((response) => {
+            dispatch(updateIsFetching(false));
             if (response && response.data && response.data.meta.success) {
               try {
                 AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -203,12 +207,26 @@ export function loginFacebook() {
                 payload: response.data.included
               });
               dispatch(updateIsLogIn(true));
-              dispatch(updateIsFetching(false));
+            } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+              axios.get('https://graph.facebook.com/me?fields=id,first_name,last_name,email', {
+                headers: {
+                  Accept: 'application/json',
+                  Authorization: `Bearer ${resp.response.credentials.accessToken}`
+                }
+              }).then((rsp) => {
+                const prefilledData = {
+                  first_name: rsp.data.first_name,
+                  last_name: rsp.data.last_name,
+                  email: rsp.data.email,
+                  social_id: rsp.data.id
+                }
+                Actions.registerEmail({ prefilledData })
+              }).catch(err => console.log(err));
             }
           }).catch((err) => {
+            console.log(err)
             dispatch(updateIsFetching(false));
-            dispatch(updateIsNotRegistered(true))
-          });
+          })
       }).catch((err) => { console.log('error login fb', err); });
   };
 }
@@ -229,6 +247,7 @@ export function loginTwitter() {
       dispatch(updateIsFetching(true));
       DevSummitAxios.post('/auth/login', data, { headers })
         .then((response) => {
+          dispatch(updateIsFetching(false));
           if (response && response.data && response.data.meta.success) {
             try {
               AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -242,15 +261,21 @@ export function loginTwitter() {
               payload: response.data.included
             });
             dispatch(updateIsLogIn(true));
-            dispatch(updateIsFetching(false));
+          } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+            const prefilledData = {
+              first_name: info.user.name,
+              last_name: '',
+              email: '',
+              social_id: info.user.id_str,
+              username: info.user.screen_name.toLowerCase()
+            }
+            Actions.registerEmail({ prefilledData })
           }
         }).catch((err) => {
+          console.log(err)
           dispatch(updateIsFetching(false));
-          dispatch(updateIsNotRegistered(true))
-        });
-    }).catch((error) => {
-      console.log(error)
-    });
+        })
+    }).catch((error) => { console.log(error) });
   };
 }
 
