@@ -58,9 +58,9 @@ export function changeProfile() {
 }
 
 export function logOut() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const keys = ['access_token', 'refresh_token', 'role_id'];
-    AsyncStorage.multiRemove(keys);
+    await AsyncStorage.multiRemove(keys);
     dispatch(updateIsLogOut(true));
   }
 }
