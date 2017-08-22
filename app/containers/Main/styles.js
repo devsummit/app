@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   buttonSection: {
     marginTop: 8,
-    paddingBottom: 10,
+    paddingBottom: 10
   },
   button: {
     width: '90%',
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginTop: 6,
     marginBottom: 6,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonText: {
     textAlign: 'center',
