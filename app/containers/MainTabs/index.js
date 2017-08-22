@@ -40,7 +40,7 @@ export default class MainTabs extends Component {
       <View style={{flex:1}}>
         <IndicatorViewPager
           style={{ flex:1, backgroundColor: 'white' }}
-          indicator={ this._renderTabIndicator() }
+          indicator={this._renderTabIndicator()}
         >
           <View>
             <Schedule />
@@ -49,7 +49,7 @@ export default class MainTabs extends Component {
             <Speaker />
           </View>
           <View>
-            <Ticket/>
+            <Ticket />
           </View>
           <View>
             <Profile

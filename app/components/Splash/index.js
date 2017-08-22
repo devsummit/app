@@ -1,32 +1,31 @@
 import React, { Component } from 'react';
 
 import { createTransition, Fade } from 'react-native-transition';
+import { Actions } from 'react-native-router-flux';
+import { getAccessToken } from '../../helpers';
 import SplashScreen from './SplashScreen';
 
 const Transition = createTransition(Fade);
 
 export default class Splash extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       isActive: true
     }
   }
 
-  componentWillMount() {
-    setTimeout(() => this.toggleSplashScreen(this.state.isActive), 2000);
-  }
-
-  toggleSplashScreen(state) {
-    this.setState({ isActive: !state });
+  componentDidMount() {
+    getAccessToken().then((accessToken) => {
+      if (accessToken) {
+        Actions.mainTabs();
+      } else {
+        Actions.main();
+      }
+    });
   }
 
   render() {
-    const Children = () => this.props.children;
-    return this.state.isActive ? <SplashScreen /> : (
-      <Transition>
-        <Children />
-      </Transition>
-    )
+    return <SplashScreen />;
   }
 }

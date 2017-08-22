@@ -52,15 +52,15 @@ export function changeProfile() {
         if (response && response.data && response.data.meta.success) {
           dispatch(updateIsProfileUpdated(true));
         }
-      });
+      }).catch((error) => { console.log(error); });
     });
-  }
+  };
 }
 
 export function logOut() {
-  return (dispatch, getState) => {
-    const keys = ['access_token', 'refresh_token', 'role_id'];
-    AsyncStorage.multiRemove(keys);
+  return async (dispatch, getState) => {
+    const keys = [ 'access_token', 'refresh_token', 'role_id' ];
+    await AsyncStorage.multiRemove(keys);
     dispatch(updateIsLogOut(true));
-  }
+  };
 }

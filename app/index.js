@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 import { View, AsyncStorage } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 
@@ -41,39 +41,10 @@ const store = createStoreWithMiddleware(reducers);
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      logged: false,
-      inprogress: false
-    };
-  }
-
-  componentWillMount() {
-    this.setState({inprogress: true})
-    this.checkAccessToken()
-  }
-
-  checkAccessToken = () => {
-    AsyncStorage.getItem('access_token', (err, result) => {
-      if (result) {
-        this.setState({
-          logged: true,
-          inprogress: false
-        })
-      } else {
-        this.setState({
-          inprogress: false
-        })
-      }
-    })
+    this.state = {};
   }
 
   render() {
-    if (this.state.inprogress) {
-      return (
-        <Splash />
-      )
-    }
-
     return (
       <Provider store={store}>
         <RouterWithRedux
@@ -84,8 +55,9 @@ export default class App extends Component {
           leftButtonIconStyle={styles.leftButtonIconStyle}
         >
           <Scene key="root" backButtonImage={BackButtonImg}>
-            <Scene key="main" component={Main} hideNavBar initial={!this.state.logged} type="replace" />
-            <Scene key="mainTabs" component={MainTabs} hideNavBar initial={this.state.logged} />
+            <Scene key="splash" component={Splash} hideNavBar initial />
+            <Scene key="main" component={Main} hideNavBar type="replace" />
+            <Scene key="mainTabs" component={MainTabs} hideNavBar />
             <Scene key="registerMenu" component={RegisterMenu} title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} title="Register Email" />
             <Scene key="registerPhone" component={RegisterPhone} title="Register Phone" />

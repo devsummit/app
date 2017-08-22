@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
-  List,
-  ListItem,
-  Picker,
-  Label,
-  Input,
-  Text,
-  Title
+  Text
 } from 'native-base';
 import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -49,7 +42,6 @@ class Profile extends Component {
     }
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main()
-      this.props.updateIsLogOut(false)
     }
   }
 

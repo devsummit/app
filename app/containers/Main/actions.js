@@ -203,15 +203,15 @@ export function loginFacebook() {
           token: resp.response.credentials.accessToken
         };
         const headers = { 'Content-Type': 'application/json' };
-        dispatch(updateIsFetching(true))
+        dispatch(updateIsFetching(true));
         DevSummitAxios.post('/auth/login', data, { headers })
-          .then((response) => {
-            dispatch(updateIsFetching(false));
+          .then(async (response) => {
             if (response && response.data && response.data.meta.success) {
+              const resData = response.data.data;
               try {
-                AsyncStorage.setItem('access_token', response.data.data.access_token);
-                AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-                AsyncStorage.setItem('role_id', response.data.included.role_id);
+                await AsyncStorage.setItem('access_token', resData.access_token);
+                await AsyncStorage.setItem('refresh_token', resData.refresh_token);
+                await AsyncStorage.setItem('role_id', response.data.included.role_id);
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -220,6 +220,7 @@ export function loginFacebook() {
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
+              dispatch(updateIsFetching(false));
             } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
               axios.get('https://graph.facebook.com/me?fields=id,first_name,last_name,email', {
                 headers: {
@@ -240,6 +241,7 @@ export function loginFacebook() {
             console.log(err)
             dispatch(updateIsFetching(false));
           })
+          .catch((err) => { console.log(err.response); });
       }).catch((err) => { console.log('error login fb', err); });
   };
 }
