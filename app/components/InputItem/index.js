@@ -3,8 +3,7 @@ import {
   Form,
   Item,
   Label,
-  Input,
-  Text
+  Input
 } from 'native-base';
 import { View } from 'react-native';
 import styles from './styles';
@@ -14,17 +13,17 @@ export default class InputItem extends Component {
     super(props);
     this.state = {
       onFocus: false
-    }
+    };
   }
   handleOnFocus = () => {
     this.setState({
       onFocus: true
-    })
+    });
   }
   handleOnBlur = () => {
     this.setState({
       onFocus: false
-    })
+    });
   }
   render() {
     return (

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container, Content, Text, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
@@ -9,15 +9,15 @@ import {
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
 import AccountKit, {
-  LoginButton,
-  Color,
-  StatusBarStyle,
-} from 'react-native-facebook-account-kit'
+  LoginButton
+} from 'react-native-facebook-account-kit';
 
+import { createTransition, Fade } from 'react-native-transition';
 
 // import redux componens
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import PropTypes from 'prop-types';
 
 import InputItem from '../../components/InputItem';
 import Button from '../../components/Button';
@@ -27,6 +27,7 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+const Transition = createTransition(Fade);
 const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
@@ -39,22 +40,24 @@ class Main extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    this.props.getAccessToken()
-    if (this.props.isLoggedIn) {
-      Actions.mainTabs({ profileData: this.props.profileData })
-      this.props.updateIsLogIn(false)
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+      Actions.mainTabs({ profileData: this.props.profileData });
+      this.props.updateIsLogIn(false);
     }
     if (prevProps.isSubscribed !== this.props.isSubscribed) {
-      Alert.alert('Success', 'You have been subscribed, we will send update to your email')
-      this.props.updateIsSubscribed(false)
+      Alert.alert('Success', 'You have been subscribed, we will send update to your email');
+      this.props.updateIsSubscribed(false);
+    }
+    if (prevProps.isNotRegistered !== this.props.isNotRegistered) {
+      Alert.alert('Not Registered', 'Please register your account first');
+      this.props.updateIsNotRegistered(false);
     }
   }
 
 
   onLoginMobile(token) {
     if (!token) {
-      console.warn('User canceled login')
-      this.setState({})
+      this.setState({});
     } else {
       AccountKit.getCurrentAccessToken().then((_token) => {
         this.props.loginMobile(_token.token);
@@ -68,16 +71,16 @@ class Main extends Component {
   }
 
   setModalVisible = () => {
-    this.setState({ modalVisible: !this.state.modalVisible })
+    this.setState({ modalVisible: !this.state.modalVisible });
   }
 
   configureAccountKit = () => {
     AccountKit.configure({
-      countryWhitelist: ["ID"],
-      defaultCountry: "ID",
+      countryWhitelist: [ 'ID' ],
+      defaultCountry: 'ID',
       initialPhoneCountryPrefix: '+62',
-      initialPhoneNumber: '87809000750',
-    })
+      initialPhoneNumber: '87809000750'
+    });
   }
 
   loginFacebook = () => {
@@ -89,13 +92,23 @@ class Main extends Component {
   }
 
   subscribeNewsletter = () => {
-    Alert.alert('lala')
+    Alert.alert('lala');
   }
 
   render() {
-    const { fields, isLoggedIn } = this.props;
+    const { fields, isFetching } = this.props;
     const { username, password, email } = fields || '';
-
+    if (isFetching) {
+      return (
+        <Transition>
+          <Container>
+            <View style={styles.spinner}>
+              <Spinner color="white" />
+            </View>
+          </Container>
+        </Transition>
+      );
+    }
     return (
       <Container style={styles.container}>
         <Content>
@@ -108,7 +121,7 @@ class Main extends Component {
             onSubmit={() => this.props.subscribeNewsletter()}
             onModalPress={() => this.setModalVisible()}
           />
-          <LinearGradient colors={['#3F51B5', '#6200EA']}>
+          <LinearGradient colors={[ '#3F51B5', '#6200EA' ]}>
             <View style={styles.headerSection}>
               <Image source={Logo} style={styles.logo} />
               <Text style={styles.titleText}>DevSummit</Text>
@@ -131,12 +144,13 @@ class Main extends Component {
             <Button
               transparent
               style={styles.buttonRegister}
-              onPress={() => { Actions.registerMenu() }}>
-              <Text style={styles.registerText}>Don't have an account?</Text>
+              onPress={() => { Actions.registerMenu(); }}
+            >
+              <Text style={styles.registerText}>{"Don't have an account?"}</Text>
               <Text style={styles.registerTextBold}> Register</Text>
             </Button>
             {(username === '' || password === '') ?
-              <Button disabled block style={[styles.button, { elevation: 0 }]}>
+              <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text>Log In</Text>
               </Button>
               :
@@ -166,15 +180,19 @@ class Main extends Component {
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
             </Button>
-            <Button danger style={styles.button} onPress={() => { this.props.loginGoogle() }}>
+            <Button danger style={styles.button} onPress={() => { this.props.loginGoogle(); }}>
               <Icon name="google-plus" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Google</Text>
             </Button>
-            <Button info style={styles.button} onPress={() => { this.props.loginTwitter() }}>
+            <Button info style={styles.button} onPress={() => { this.props.loginTwitter(); }}>
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
             </Button>
-            <Button transparent style={styles.buttonRegister} onPress={() => { this.setModalVisible(); }}>
+            <Button
+              transparent
+              style={styles.buttonRegister}
+              onPress={() => { this.setModalVisible(); }}
+            >
               <Text style={styles.registerText}>Subscribe to Newsletter</Text>
             </Button>
           </View>
@@ -184,6 +202,26 @@ class Main extends Component {
   }
 }
 
+Main.propTypes = {
+
+  isLoggedIn: PropTypes.bool.isRequired,
+  profileData: PropTypes.object.isRequired,
+  updateIsLogIn: PropTypes.func.isRequired,
+  isSubscribed: PropTypes.bool.isRequired,
+  updateIsSubscribed: PropTypes.func.isRequired,
+  isNotRegistered: PropTypes.bool.isRequired,
+  updateIsNotRegistered: PropTypes.func.isRequired,
+  loginMobile: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  loginFacebook: PropTypes.func.isRequired,
+  updateFields: PropTypes.func.isRequired,
+  fields: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  subscribeNewsletter: PropTypes.func.isRequired,
+  loginGoogle: PropTypes.func.isRequired,
+  loginTwitter: PropTypes.func.isRequired
+};
+
 /**
  *  Map redux state to component props
  */
@@ -191,6 +229,8 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
+  isNotRegistered: selectors.getIsNotRegistered(),
+  isFetching: selectors.getIsFetching(),
   profileData: selectors.getProfileData()
 });
 
