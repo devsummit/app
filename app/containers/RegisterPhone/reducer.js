@@ -22,8 +22,8 @@ const initialState = fromJS({
     username: '',
     email: '',
     password: '',
-    phone: '',
-    role: ''
+    role: '',
+    social_id: ''
   },
   errorFields: {
     error_first_name: false,
@@ -31,7 +31,8 @@ const initialState = fromJS({
     error_username: false,
     error_email: false,
     error_password: false,
-    error_phone: false
+    error_phone: false,
+
   },
   registerMethod: 'undefined',
   isRegistering: false,
