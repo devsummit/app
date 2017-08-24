@@ -2,18 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)',
     flex: 1
   },
   headerSection: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    paddingBottom: 5
-  },
-  logo: {
-    height: 100,
-    width: '100%'
   },
   titleText: {
     fontSize: 10.5,
@@ -27,7 +21,8 @@ const styles = StyleSheet.create({
     marginLeft: 16
   },
   formInput: {
-    paddingLeft: 20
+    paddingLeft: 20,
+    color: '#FFFFFF'
   },
   icon: {
     textAlign: 'center',
@@ -46,8 +41,12 @@ const styles = StyleSheet.create({
   buttonSocial: {
     justifyContent: 'center',
     marginLeft: 5,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: 30,
     marginRight: 5,
     flexDirection: 'row',
+    elevation: 0,
     flex: 0.3
   },
   buttonSection: {
@@ -60,7 +59,12 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginTop: 6,
     marginBottom: 6,
+    borderWidth: 1,
+    borderRadius: 30,
+    backgroundColor: '#FFA726',
+    borderColor: 'transparent',
     flexDirection: 'row',
+    elevation: 0,
     flex: 1
   },
   buttonLoggin: {
@@ -91,7 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginRight: 18,
     marginLeft: 18,
-    marginTop: 5,
     marginBottom: 5
   },
   lineTextOne: {
@@ -108,15 +111,14 @@ const styles = StyleSheet.create({
   },
   lineTextThree: {
     flex: 2,
-    opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     height: 1.5,
     marginTop: 12
   },
   lineTextFour: {
     textAlign: 'center',
     flex: 6,
-    opacity: 0.3
+    color: '#FFFFFF'
   },
   loginMethod: {
     textAlign: 'center',
@@ -126,16 +128,14 @@ const styles = StyleSheet.create({
   registerSection: {
   },
   registerText: {
-    textDecorationLine: 'underline',
     textAlign: 'center',
-    color: '#3366BB'
+    color: '#FFFFFF'
   },
   registerTextBold: {
-    textDecorationLine: 'underline',
     fontWeight: 'bold',
     textAlign: 'center',
-    margin: 10,
-    color: '#3366BB'
+    marginLeft: 8,
+    color: '#FFD740'
   },
   spinner: {
     flex: 1,
