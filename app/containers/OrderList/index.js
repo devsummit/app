@@ -7,14 +7,17 @@ import {
 } from 'native-base';
 import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import OrderItem from '../../components/OrderItem';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
 class OrderList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentWillMount() {
+    this.props.getOrderList();
   }
 
   render() {
@@ -39,12 +42,20 @@ class OrderList extends Component {
       }
     ];
 
+    console.log('orders', this.props.orders);
+
     return (
       <Container style={styles.container}>
         <Content>
           <List style={{ paddingRight: 10 }}>
-            { orders.map((order) => {
-              return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }}/>
+            { this.props.orders.length > 0 && this.props.orders.map((order) => {
+              return (
+                <OrderItem
+                  key={order.id}
+                  order={order}
+                  onPress={() => { Actions.orderDetail({ orderId: order.id }); }}
+                />
+              );
             }) }
           </List>
         </Content>
@@ -56,4 +67,8 @@ class OrderList extends Component {
   }
 }
 
-export default OrderList;
+const mapStateToProps = createStructuredSelector({
+  orders: selectors.getOrders()
+});
+
+export default connect(mapStateToProps, actions)(OrderList);
