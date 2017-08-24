@@ -25,7 +25,6 @@ class Profile extends Component {
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
-        console.log('profile', profileData)
         this.handleInputChange('username', profileData.username)
         this.handleInputChange('firstName', profileData.first_name)
         this.handleInputChange('lastName', profileData.last_name)
@@ -47,6 +46,7 @@ class Profile extends Component {
 
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main()
+      this.props.updateIsLogOut(false)
     }
   }
 

@@ -66,7 +66,6 @@ export function changeProfile() {
 }
 
 export function disabled() {
-  console.log("ACTIONS");
   return (dispatch, getState) => {
     const status = getState().get('profile').toJS().isDisabled;
     if (status === true) {
@@ -79,7 +78,8 @@ export function disabled() {
 
 export function logOut() {
   return async (dispatch, getState) => {
-    const keys = [ 'access_token', 'refresh_token', 'role_id' ];
+    console.log('actionsss')
+    const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
     await AsyncStorage.multiRemove(keys);
     dispatch(updateIsLogOut(true));
   };
