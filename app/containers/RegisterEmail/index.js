@@ -183,7 +183,7 @@ class RegisterEmail extends Component {
             style={styles.button}
             onPress={() => this.submitRegistration()}
           >
-            <Text style={styles.buttomText}>Register with Email</Text>
+            <Text style={styles.buttomText}>Register</Text>
           </Button>
         </Content>
       </Container>
