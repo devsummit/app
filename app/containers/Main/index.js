@@ -165,8 +165,6 @@ class Main extends Component {
             </Item>
           </View>
           <View style={styles.buttonSection}>
-<<<<<<< HEAD
-=======
             <Button
               transparent
               style={styles.buttonRegister}
@@ -175,7 +173,6 @@ class Main extends Component {
               <Text style={styles.registerText}>{"Don't have an account?"}</Text>
               <Text style={styles.registerTextBold}> Register</Text>
             </Button>
->>>>>>> 4fe69e596e1207f0afba47789f99d84ef92d7f7b
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text>Log In</Text>
@@ -203,11 +200,6 @@ class Main extends Component {
                 <Text style={styles.buttonText}>PHONE</Text>
               </LoginButton>
             </Button>
-<<<<<<< HEAD
-            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
-              <Text style={styles.registerText}>Don't have an account?</Text>
-              <Text style={styles.registerTextBold}> Register</Text>
-=======
             <Button primary style={styles.button} onPress={() => { this.loginFacebook(); }}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
@@ -219,7 +211,6 @@ class Main extends Component {
             <Button info style={styles.button} onPress={() => { this.props.loginTwitter(); }}>
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
->>>>>>> 4fe69e596e1207f0afba47789f99d84ef92d7f7b
             </Button>
             <Button
               transparent
