@@ -44,12 +44,3 @@ export const getIsFetching = () => createSelector(
   state => state.get('isFetching')
 );
 
-/**
- *  Get profile data status
- *  Returns object
- */
-export const getProfileData = () => createSelector(
-  selectMainReducer(),
-  state => state.get('profileData')
-);
-

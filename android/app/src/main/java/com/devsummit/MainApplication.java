@@ -10,7 +10,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.BV.LinearGradient.LinearGradientPackage;
-import me.neo.react.StatusBarPackage;
 
 import java.util.Arrays;
 import java.util.List;

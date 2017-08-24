@@ -41,16 +41,12 @@ class Main extends Component {
 
   componentWillReceiveProps(prevProps) {
     if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
-      Actions.mainTabs({ profileData: this.props.profileData });
+      Actions.mainTabs();
       this.props.updateIsLogIn(false);
     }
     if (prevProps.isSubscribed !== this.props.isSubscribed) {
       Alert.alert('Success', 'You have been subscribed, we will send update to your email');
       this.props.updateIsSubscribed(false);
-    }
-    if (prevProps.isNotRegistered !== this.props.isNotRegistered) {
-      Alert.alert('Not Registered', 'Please register your account first');
-      this.props.updateIsNotRegistered(false);
     }
   }
 
@@ -165,17 +161,6 @@ class Main extends Component {
             </Item>
           </View>
           <View style={styles.buttonSection}>
-<<<<<<< HEAD
-=======
-            <Button
-              transparent
-              style={styles.buttonRegister}
-              onPress={() => { Actions.registerMenu(); }}
-            >
-              <Text style={styles.registerText}>{"Don't have an account?"}</Text>
-              <Text style={styles.registerTextBold}> Register</Text>
-            </Button>
->>>>>>> 4fe69e596e1207f0afba47789f99d84ef92d7f7b
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text>Log In</Text>
@@ -203,23 +188,9 @@ class Main extends Component {
                 <Text style={styles.buttonText}>PHONE</Text>
               </LoginButton>
             </Button>
-<<<<<<< HEAD
             <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
               <Text style={styles.registerText}>Don't have an account?</Text>
               <Text style={styles.registerTextBold}> Register</Text>
-=======
-            <Button primary style={styles.button} onPress={() => { this.loginFacebook(); }}>
-              <Icon name="facebook" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Facebook</Text>
-            </Button>
-            <Button danger style={styles.button} onPress={() => { this.props.loginGoogle(); }}>
-              <Icon name="google-plus" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Google</Text>
-            </Button>
-            <Button info style={styles.button} onPress={() => { this.props.loginTwitter(); }}>
-              <Icon name="twitter" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Twitter</Text>
->>>>>>> 4fe69e596e1207f0afba47789f99d84ef92d7f7b
             </Button>
             <Button
               transparent
@@ -238,12 +209,9 @@ class Main extends Component {
 Main.propTypes = {
 
   isLoggedIn: PropTypes.bool.isRequired,
-  profileData: PropTypes.object.isRequired,
   updateIsLogIn: PropTypes.func.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
   updateIsSubscribed: PropTypes.func.isRequired,
-  isNotRegistered: PropTypes.bool.isRequired,
-  updateIsNotRegistered: PropTypes.func.isRequired,
   loginMobile: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   loginFacebook: PropTypes.func.isRequired,
@@ -262,8 +230,7 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isFetching: selectors.getIsFetching(),
-  profileData: selectors.getProfileData()
+  isFetching: selectors.getIsFetching()
 });
 
 export default connect(mapStateToProps, actions)(Main);

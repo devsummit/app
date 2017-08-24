@@ -28,12 +28,10 @@ export default class MainTabs extends Component {
               <Speaker />
             </Tab>
             <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="wallet" style={[this.state.currentTab === 2 ? {color: '#f39e21'} : null, {fontSize: 18}]}/></TabHeading>}>
-              <Ticket/>
+              <Ticket />
             </Tab>
             <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="user" style={[this.state.currentTab === 3 ? {color: '#f39e21'} : null, {fontSize: 18}]}/></TabHeading>}>
-              <Profile
-                profileData={this.props.profileData}
-              />
+              <Profile />
             </Tab>
           </Tabs>
         </View>

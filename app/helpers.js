@@ -11,3 +11,8 @@ export const getAccessToken = async () => {
   const token = await AsyncStorage.getItem('access_token');
   return token;
 };
+
+export const getProfileData = async () => {
+  const profileData = await AsyncStorage.getItem('profile_data');
+  return profileData;
+};
