@@ -34,7 +34,6 @@ import { role_option, primaryColor } from '../../constants';
 
 
 class RegisterPhone extends Component {
-
   state = {
     isEmailValid: false
   };
@@ -42,8 +41,6 @@ class RegisterPhone extends Component {
      * initialize some state
      */
   componentWillMount() {
-    console.log(this.props)
-
     this.props.updateInputFields('role', 'attendee');
     this.configureAccountKit();
   }
@@ -51,7 +48,6 @@ class RegisterPhone extends Component {
 
   onLogin(token) {
     if (!token) {
-      console.warn('User canceled login')
       this.setState({})
     } else {
       AccountKit.getCurrentAccessToken().then((_token) => {
@@ -95,7 +91,6 @@ class RegisterPhone extends Component {
       this.props.inputFields.email = '';
       this.props.inputFields.first_name = '';
       this.props.inputFields.last_name = '';
-      Actions.pop();
     }
   }
 
@@ -176,11 +171,11 @@ class RegisterPhone extends Component {
 
   render() {
     if (this.props.isRegistering) {
-      console.log('isregistering...');
       return;
     }
     if (this.props.isRegistered) {
       Alert.alert('Status', 'user registered successfully');
+      Actions.pop();
     }
 
     // destructure state

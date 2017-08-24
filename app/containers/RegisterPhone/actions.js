@@ -15,11 +15,7 @@ import {
   UPDATE_REGISTER_STATUS
 } from './constants';
 
-const ROLES = {
-  2: 'attendee',
-  3: 'booth',
-  4: 'speaker'
-}
+import { ROLES } from '../../constants';
 
 /*
  * Update the input fields
@@ -100,10 +96,8 @@ export function register() {
         if (response && response.data && response.data.meta && response.data.meta.success) {
           // do something
           dispatch(updateRegisterStatus(true));
-          Alert.alert('Congratulation ' + first_name + ' Registration success (-_-)/ ');
         }
       }).catch((error) => {
-        Alert.alert('Registration failed (T_T)');
         console.log(error, 'error caught');
       });
     }

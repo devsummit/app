@@ -20,4 +20,10 @@ export const role_option = [
   }
 ];
 
+export const ROLES = {
+  2: 'attendee',
+  3: 'booth',
+  4: 'speaker'
+};
+
 export const primaryColor = '#0D47A1';
