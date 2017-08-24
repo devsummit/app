@@ -148,16 +148,20 @@ class Main extends Component {
             <View style={styles.lineTextOne} />
           </View>
           <View style={styles.formSection}>
-            <Item regular style={styles.item}>
+            <Item rounded style={styles.item}>
               <Input
+                style={styles.formInput}
                 placeholder="Username"
+                placeholderTextColor={'#BDBDBD'}
                 onChangeText={usernameText => this.handleInputChange('username', usernameText)}
                 value={username}
               />
             </Item>
-            <Item regular>
+            <Item rounded style={styles.item}>
               <Input
+                style={styles.formInput}
                 placeholder="Password"
+                placeholderTextColor={'#BDBDBD'}
                 secureTextEntry
                 onChangeText={passwordText => this.handleInputChange('password', passwordText)}
                 value={password}
@@ -199,18 +203,6 @@ class Main extends Component {
                 <Icon name="phone" color="white" style={styles.icon} />
                 <Text style={styles.buttonText}>PHONE</Text>
               </LoginButton>
-            </Button>
-            <Button primary style={styles.button} onPress={() => { this.loginFacebook(); }}>
-              <Icon name="facebook" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Facebook</Text>
-            </Button>
-            <Button danger style={styles.button} onPress={() => { this.props.loginGoogle(); }}>
-              <Icon name="google-plus" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Google</Text>
-            </Button>
-            <Button info style={styles.button} onPress={() => { this.props.loginTwitter(); }}>
-              <Icon name="twitter" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Twitter</Text>
             </Button>
             <Button
               transparent
