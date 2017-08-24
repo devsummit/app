@@ -30,14 +30,11 @@ export default class InputItem extends Component {
       <View>
         <Form>
           <Item floatingLabel error={this.props.error} >
-            <Label style={[
-              this.props.error ?
-                styles.errorLabel :
-                styles.normalLabel, this.state.onFocus ||
-                  this.props.value.length > 0 ?
-                styles.normalOnFocusLabel :
-                styles.normalOnBlurLabel
-            ]}
+            <Label style={this.state.onFocus ||
+              this.props.value.length > 0 ?
+              styles.normalOnFocusLabel :
+              styles.normalOnBlurLabel
+            }
             >
               {this.props.title}
             </Label>

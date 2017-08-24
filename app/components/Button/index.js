@@ -6,13 +6,23 @@ export default class Button extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      onClick: false
+      onClick: false,
+      timeout: null
     };
   }
+
+  componentWillUnmount() {
+    if (this.state.timeout !== null) {
+      clearTimeout(this.state.timeout)
+    }
+  }
+
   onClickButton = (inputFunction) => {
     this.setState({ onClick: true });
     inputFunction();
-    setTimeout(() => { this.setState({ onClick: false }); }, 2000);
+
+    const to = setTimeout(() => { this.setState({ onClick: false }); }, 2000)
+    this.setState({timeout: to})
   }
 
   render() {
