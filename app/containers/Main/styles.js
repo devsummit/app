@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   },
   formInput: {
     paddingLeft: 20,
+    height: 45,
     color: '#FFFFFF'
   },
   icon: {
@@ -49,10 +50,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     flex: 0.3
   },
-  buttonSection: {
-    marginTop: 8,
-    paddingBottom: 10
-  },
   button: {
     width: '90%',
     marginLeft: 'auto',
@@ -78,10 +75,8 @@ const styles = StyleSheet.create({
     height: 50
   },
   buttonRegister: {
-    width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    justifyContent: 'center'
   },
   buttonText: {
     textAlign: 'center',
@@ -99,15 +94,15 @@ const styles = StyleSheet.create({
   },
   lineTextOne: {
     flex: 4.5,
-    opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     height: 1.5,
     marginTop: 12
   },
   lineTextTwo: {
     textAlign: 'center',
     flex: 1,
-    opacity: 0.3
+    fontSize: 16,
+    color: '#FFFFFF'
   },
   lineTextThree: {
     flex: 2,
