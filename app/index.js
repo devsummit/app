@@ -57,7 +57,7 @@ export default class App extends Component {
           <Scene key="root" backButtonImage={BackButtonImg}>
             <Scene key="splash" component={Splash} hideNavBar initial />
             <Scene key="main" component={Main} hideNavBar type="replace" />
-            <Scene key="mainTabs" component={MainTabs} hideNavBar />
+            <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace"/>
             <Scene key="registerMenu" component={RegisterMenu} title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} title="Register Email" />
             <Scene key="registerPhone" component={RegisterPhone} title="Register Phone" />

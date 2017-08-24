@@ -12,8 +12,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { getProfileData } from '../../helpers';
 import InputItem from '../../components/InputItem';
-import Button from '../../components/Button'
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import styles from './styles';
 
@@ -22,18 +23,19 @@ import * as selectors from './selectors';
 
 class Profile extends Component {
   componentWillMount() {
-    console.log('dari profile',this.props.profileData)
-    if (this.props.profileData) {
-      this.handleInputChange('username', this.props.profileData.username)
-      this.handleInputChange('firstName', this.props.profileData.first_name)
-      this.handleInputChange('lastName', this.props.profileData.last_name)
+    getProfileData().then((profileData) => {
+      if (profileData) {
+        this.handleInputChange('username', profileData.username)
+        this.handleInputChange('firstName', profileData.first_name)
+        this.handleInputChange('lastName', profileData.last_name)
 
-      if (this.props.profileData.url || this.props.profileData.url === '') {
-        this.handleInputChange('profilePic', 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg')
-      } else {
-        this.handleInputChange('profilePic', this.props.profileData.url)
+        if (profileData.url || profileData.url === '') {
+          this.handleInputChange('profilePic', 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg')
+        } else {
+          this.handleInputChange('profilePic', profileData.url)
+        }
       }
-    }
+    })
   }
 
   componentWillReceiveProps(prevProps) {
@@ -44,6 +46,7 @@ class Profile extends Component {
 
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main()
+      this.props.updateIsLogOut(false)
     }
   }
 

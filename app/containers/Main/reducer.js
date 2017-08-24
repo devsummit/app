@@ -24,8 +24,7 @@ const initialState = fromJS({
   },
   isLoggedIn: false,
   isSubscribed: false,
-  isFetching: false,
-  profiledata: {}
+  isFetching: false
 });
 
 function mainReducer(state = initialState, action) {
@@ -38,8 +37,6 @@ function mainReducer(state = initialState, action) {
       return state.set('isFetching', action.status);
     case UPDATE_SINGLE_FIELD:
       return state.setIn([ 'fields', action.field ], action.value);
-    case FETCH_PROFILE_DATA:
-      return state.set('profileData', action.payload);
     default:
       return state;
   }

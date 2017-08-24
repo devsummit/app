@@ -17,7 +17,6 @@ import {
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
   UPDATE_IS_FETCHING,
-  FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -91,24 +90,26 @@ export function login() {
     DevSummitAxios.post('/auth/login', {
       username,
       password
-    }).then((response) => {
-      dispatch(updateIsFetching(false));
+    }).then(async (response) => {
       if (response && response.data && response.data.meta.success) {
+        const resData = response.data.data;
+        const roleId = JSON.stringify(response.data.included.role_id);
+        const profileData = JSON.stringify(response.data.included);
         try {
-          AsyncStorage.setItem('access_token', response.data.data.access_token);
-          AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-          AsyncStorage.setItem('role_id', response.data.included.role_id);
+          await AsyncStorage.multiSet([
+            ['access_token', resData.access_token],
+            ['refresh_token', resData.refresh_token],
+            ['role_id', roleId],
+            ['profile_data', profileData]
+          ])
         } catch (error) {
           console.log(error, 'error caught');
         }
-        dispatch({
-          type: FETCH_PROFILE_DATA,
-          payload: response.data.included
-        });
         dispatch(updateIsLogIn(true));
       } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
         Actions.registerEmail()
       }
+      dispatch(updateIsFetching(false));
     }).catch((err) => { console.log(err) })
   };
 }
@@ -122,21 +123,22 @@ export function loginMobile(mobileToken) {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((response) => {
-      console.log(response)
+    }).then(async (response) => {
       if (response && response.data && response.data.meta.success) {
+        const resData = response.data.data;
+        const roleId = JSON.stringify(response.data.included.role_id);
+        const profileData = JSON.stringify(response.data.included);
         try {
-          AsyncStorage.setItem('access_token', response.data.data.access_token);
-          AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-          AsyncStorage.setItem('role_id', response.data.included.role_id);
+          await AsyncStorage.multiSet([
+            ['access_token', resData.access_token],
+            ['refresh_token', resData.refresh_token],
+            ['role_id', roleId],
+            ['profile_data', profileData]
+          ])
         } catch (error) {
           console.log(error, 'error caught');
         }
         dispatch(updateIsLogIn(true));
-        dispatch({
-          type: FETCH_PROFILE_DATA,
-          payload: response.data.included
-        });
       }
     }).catch(err => console.log(err));
   }
@@ -163,21 +165,21 @@ export function loginGoogle() {
             headers: {
               'Content-Type': 'application/json'
             }
-          }).then((response) => {
-            console.log('huahahha')
-            dispatch(updateIsFetching(false));
+          }).then(async (response) => {
             if (response && response.data && response.data.meta.success) {
+              const resData = response.data.data;
+              const roleId = JSON.stringify(response.data.included.role_id);
+              const profileData = JSON.stringify(response.data.included);
               try {
-                AsyncStorage.setItem('access_token', response.data.data.access_token);
-                AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-                AsyncStorage.setItem('role_id', response.data.included.role_id);
+                await AsyncStorage.multiSet([
+                  ['access_token', resData.access_token],
+                  ['refresh_token', resData.refresh_token],
+                  ['role_id', roleId],
+                  ['profile_data', profileData]
+                ])
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch({
-                type: FETCH_PROFILE_DATA,
-                payload: response.data.included
-              });
               dispatch(updateIsLogIn(true));
             } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
               axios.get('https://www.googleapis.com/plus/v1/people/me', {
@@ -195,6 +197,7 @@ export function loginGoogle() {
                 Actions.registerEmail({prefilledData: prefilledData})
               }).catch(err => console.log(err));
             }
+            dispatch(updateIsFetching(false));
           }).catch((err) => {
             console.log(err)
             dispatch(updateIsFetching(false));
@@ -223,20 +226,20 @@ export function loginFacebook() {
         dispatch(updateIsFetching(true));
         DevSummitAxios.post('/auth/login', data, { headers })
           .then(async (response) => {
-            dispatch(updateIsFetching(false));
             if (response && response.data && response.data.meta.success) {
               const resData = response.data.data;
+              const roleId = JSON.stringify(response.data.included.role_id);
+              const profileData = JSON.stringify(response.data.included);
               try {
-                await AsyncStorage.setItem('access_token', resData.access_token);
-                await AsyncStorage.setItem('refresh_token', resData.refresh_token);
-                await AsyncStorage.setItem('role_id', response.data.included.role_id);
+                await AsyncStorage.multiSet([
+                  ['access_token', resData.access_token],
+                  ['refresh_token', resData.refresh_token],
+                  ['role_id', roleId],
+                  ['profile_data', profileData]
+                ])
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch({
-                type: FETCH_PROFILE_DATA,
-                payload: response.data.included
-              });
               dispatch(updateIsLogIn(true));
             } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
               axios.get('https://graph.facebook.com/me?fields=id,first_name,last_name,email', {
@@ -254,6 +257,7 @@ export function loginFacebook() {
                 Actions.registerEmail({ prefilledData })
               }).catch(err => console.log(err));
             }
+            dispatch(updateIsFetching(false));
           }).catch((err) => {
             console.log(err)
             dispatch(updateIsFetching(false));
@@ -278,20 +282,21 @@ export function loginTwitter() {
       const headers = { 'Content-Type': 'application/json' };
       dispatch(updateIsFetching(true));
       DevSummitAxios.post('/auth/login', data, { headers })
-        .then((response) => {
-          dispatch(updateIsFetching(false));
+        .then(async (response) => {
           if (response && response.data && response.data.meta.success) {
+            const resData = response.data.data;
+            const roleId = JSON.stringify(response.data.included.role_id);
+            const profileData = JSON.stringify(response.data.included);
             try {
-              AsyncStorage.setItem('access_token', response.data.data.access_token);
-              AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
-              AsyncStorage.setItem('role_id', response.data.included.role_id);
+              await AsyncStorage.multiSet([
+                ['access_token', resData.access_token],
+                ['refresh_token', resData.refresh_token],
+                ['role_id', roleId],
+                ['profile_data', profileData]
+              ])
             } catch (error) {
               console.log(error, 'error caught');
             }
-            dispatch({
-              type: FETCH_PROFILE_DATA,
-              payload: response.data.included
-            });
             dispatch(updateIsLogIn(true));
           } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
             const prefilledData = {
@@ -303,6 +308,7 @@ export function loginTwitter() {
             }
             Actions.registerEmail({ prefilledData })
           }
+          dispatch(updateIsFetching(false));
         }).catch((err) => {
           console.log(err)
           dispatch(updateIsFetching(false));
