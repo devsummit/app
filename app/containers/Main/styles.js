@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     marginRight: 18,
     marginLeft: 16
   },
+  formInput: {
+    paddingLeft: 20
+  },
   icon: {
     textAlign: 'center',
     flex: 1,
@@ -141,8 +144,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f39e21'
   },
   item: {
-    marginBottom: 10
-  }
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1
+  },
 });
 
 export default styles;
