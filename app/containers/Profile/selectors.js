@@ -26,3 +26,8 @@ export const getIsLogOut = () => createSelector(
   selectMainReducer(),
   state => state.get('isLogOut')
 );
+
+export const getIsDisabled = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isDisabled')
+);
