@@ -165,6 +165,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-facebook-account-kit')
     compile project(':react-native-oauth')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-vector-icons')
