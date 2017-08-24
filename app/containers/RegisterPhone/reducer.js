@@ -6,7 +6,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_REGISTER_METHOD,
-  UPDATE_REGISTER_STATUS
+  UPDATE_REGISTER_STATUS,
+  RESET_STATE
 } from './constants';
 
 import { fromJS } from 'immutable';
@@ -52,6 +53,9 @@ function registerPhoneReducer(state = initialState, action) {
 
     case UPDATE_REGISTER_STATUS:
       return state.set('isRegistered', action.status);
+
+    case RESET_STATE:
+      return initialState;
 
     default:
       return state;

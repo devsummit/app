@@ -11,7 +11,8 @@ import {
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_REGISTER_METHOD,
   TOGGLE_IS_REGISTERING,
-  UPDATE_REGISTER_STATUS
+  UPDATE_REGISTER_STATUS,
+  RESET_STATE
 } from './constants';
 
 
@@ -71,6 +72,12 @@ export function updateRegisterStatus(status) {
   return {
     type: UPDATE_REGISTER_STATUS,
     status
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE
   };
 }
 

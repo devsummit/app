@@ -41,24 +41,13 @@ class RegisterEmail extends Component {
       this.props.updateInputFields('username', this.props.prefilledData.username);
     }
   }
-
-  handleInputChange = (field, value) => {
-    this.props.updateInputFields(field, value);
-    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
+  componentWillUnmount() {
+    this.props.resetState()
   }
 
-  handleButtonClick = (value) => {
-    this.props.updateRegisterMethod(value);
+  onAlertOk = () => {
+    Actions.main();
   }
-
-  submitRegistration = () => {
-    if (this.isFieldError()) {
-      Alert.alert('Warning', 'Field is not complete');
-    } else {
-      this.props.register();
-    }
-  }
-
   /*
     * validate all fields before submission
     */
@@ -83,14 +72,27 @@ class RegisterEmail extends Component {
     );
   }
 
-  onAlertOk = () => {
-    Actions.main();
+  submitRegistration = () => {
+    if (this.isFieldError()) {
+      Alert.alert('Warning', 'Field is not complete');
+    } else {
+      this.props.register();
+    }
+  }
+
+  handleButtonClick = (value) => {
+    this.props.updateRegisterMethod(value);
+  }
+
+  handleInputChange = (field, value) => {
+    this.props.updateInputFields(field, value);
+    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
 
   render() {
     if (this.props.isRegistering) {
       console.log('isregistering...');
-      return;
+      return null;
     }
     if (this.props.isRegistered) {
       Alert.alert('Status', 'user registered successfully');
