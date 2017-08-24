@@ -1,63 +1,43 @@
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, StatusBar, TouchableWithoutFeedback} from 'react-native';
 import React, {Component} from 'react';
-import {PagerTabIndicator, IndicatorViewPager} from 'rn-viewpager';
+import {Tabs, Tab, TabHeading, Container, Icon} from 'native-base';
+import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
 import Schedule from "../Schedule";
 import Speaker from "../Speaker";
 import Ticket from "../TicketList";
 import Profile from "../Profile";
 
 export default class MainTabs extends Component {
-  _renderTabIndicator() {
-    let tabs = [
-      {
-        iconSource: require('../../../assets/images/calendar.png'),
-        selectedIconSource: require('../../../assets/images/calendar.png')
-      },{
-        iconSource: require('../../../assets/images/group.png'),
-        selectedIconSource: require('../../../assets/images/group.png')
-      },{
-        iconSource: require('../../../assets/images/ticket.png'),
-        selectedIconSource: require('../../../assets/images/ticket.png')
-      },{
-        iconSource: require('../../../assets/images/user.png'),
-        selectedIconSource: require('../../../assets/images/user.png')
-      }
-    ];
-    return (
-      <PagerTabIndicator
-        tabs={tabs}
-        itemStyle={{backgroundColor:'#3F51B5'}}
-        iconStyle={{height: 20, width: 20, marginTop:11, opacity:0.5}}
-        selectedItemStyle={{backgroundColor:'#3F51B5'}}
-        selectedIconStyle={{height: 20, width: 20,marginTop:10}}
-        style={{backgroundColor:'#3F51B5'}}
-      />
-    )
+  state={
+    currentTab: 0
+  }
+
+  handleCurrentTab = (number) => {
+    this.setState({currentTab: number})
   }
 
   render() {
     return (
-      <View style={{flex:1}}>
-        <IndicatorViewPager
-          style={{ flex:1, backgroundColor: 'white' }}
-          indicator={this._renderTabIndicator()}
-        >
-          <View>
-            <Schedule />
-          </View>
-          <View>
-            <Speaker />
-          </View>
-          <View>
-            <Ticket />
-          </View>
-          <View>
-            <Profile
-              profileData={this.props.profileData}
-            />
-          </View>
-        </IndicatorViewPager>
-      </View>
+      <Container>
+        <View style={{flex:1}}>
+          <Tabs onChangeTab={(i,ref) => this.handleCurrentTab(i.i)} tabBarPosition='bottom' initialPage={0}>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="calendar" style={[this.state.currentTab === 0 ? {color: '#f39e21'} : null, {fontSize: 18}]} /></TabHeading>}>
+              <Schedule />
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="people" style={[this.state.currentTab === 1 ? {color: '#f39e21'} : null, {fontSize: 18}]}/></TabHeading>}>
+              <Speaker />
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="wallet" style={[this.state.currentTab === 2 ? {color: '#f39e21'} : null, {fontSize: 18}]}/></TabHeading>}>
+              <Ticket/>
+            </Tab>
+            <Tab heading={ <TabHeading style={{backgroundColor: 'white'}}><IconSimpleLine name="user" style={[this.state.currentTab === 3 ? {color: '#f39e21'} : null, {fontSize: 18}]}/></TabHeading>}>
+              <Profile
+                profileData={this.props.profileData}
+              />
+            </Tab>
+          </Tabs>
+        </View>
+      </Container>
     )
   }
 }

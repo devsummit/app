@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     height: 500
   },
   header: {
-    height: 150
+    height: 130
   },
   headerText: {
     alignItems: 'center',
@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     fontWeight: 'bold',
     fontSize: 22,
-    color: 'yellow',
+    color: 'white',
     marginBottom: 10
   },
   coin: {
-    color: 'yellow',
+    color: 'white',
     fontSize: 22
   }
 });

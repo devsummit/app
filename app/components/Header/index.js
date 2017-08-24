@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-  Text,
-  Button,
-  FooterTab,
-  Footer,
-  Content,
-  Container
+  Text
 } from 'native-base';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +11,9 @@ import styles from './styles';
 const Header = (props) => {
   return (
     <View style={styles.headerBase}>
-      <LinearGradient colors={['#3F51B5', '#6200EA']}>
+      <LinearGradient
+        colors={['#f39e21', '#f72d48']}
+      >
         <View style={styles.header}>
           <View style={styles.headerText}>
             <Text style={styles.pageTitle}>{props.title}</Text>

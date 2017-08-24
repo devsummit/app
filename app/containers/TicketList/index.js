@@ -9,7 +9,7 @@ import {
   Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, View } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -60,23 +60,23 @@ class TicketList extends Component {
             />
           </Button>
         </ListItem>);
-      }
-      }
+      }}
     />);
   }
 
   renderError() {
     return (
-      <Content style={styles.errorContent}>
-        <Text style={styles.buttonText}>You have no tickets, please order or try to refresh</Text>
+      <View style={styles.errorContent}>
+        <Text style={styles.errorText}>You have no tickets, please order or try to refresh</Text>
         <Button
           small
+          bordered
           style={styles.refreshButton}
           onPress={() => { this.props.fetchUserTicket(); }}
         >
           <Text>refresh</Text>
         </Button>
-      </Content>);
+      </View>);
   }
 
   render() {
@@ -84,7 +84,7 @@ class TicketList extends Component {
       return (
         <Container>
           <Content>
-            <Spinner color={primaryColor} />
+            <Spinner color="#f39e21" />
           </Content>
         </Container>
       );
@@ -94,11 +94,10 @@ class TicketList extends Component {
       <Container
         style={styles.container}
       >
-        <Header title="Ticket List">
-          <Button small warning style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
-            <Text>Order</Text>
-          </Button>
-        </Header>
+        <Header title="Ticket List" />
+        <Button primary style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
+          <Text style={{textAlign: 'center', flex: 1}}>Order</Text>
+        </Button>
         <Content
           refreshControl={
             <RefreshControl

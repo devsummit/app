@@ -36,14 +36,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   btnOrder: {
-    alignSelf: 'flex-end',
-    bottom: 10,
-    right: 25,
-    position: 'absolute',
-    borderRadius: 20
+    alignSelf: 'center',
+    borderRadius: 20,
+    marginTop: -25,
+    elevation: 5,
+    width: '70%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   errorContent: {
-    alignSelf: 'center'
+    alignItems: 'center'
+  },
+  errorText: {
+    fontSize: 14,
+    marginTop: 12
   }
 });
 

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Container, Content, Text, Spinner } from 'native-base';
+import { Container, Content, Text, Spinner, Item, Input, Header } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
   View,
-  Alert
+  Alert,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -28,7 +28,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 const Transition = createTransition(Fade);
-const Logo = require('../../../assets/images/logo.png');
+const Logo = require('../../../assets/images/wallpaper.jpg');
 
 class Main extends Component {
   state = {
@@ -102,6 +102,7 @@ class Main extends Component {
       return (
         <Transition>
           <Container>
+            <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
             <View style={styles.spinner}>
               <Spinner color="white" />
             </View>
@@ -111,6 +112,7 @@ class Main extends Component {
     }
     return (
       <Container style={styles.container}>
+        <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
         <Content>
           <ModalComponent
             visible={this.state.modalVisible}
@@ -121,26 +123,50 @@ class Main extends Component {
             onSubmit={() => this.props.subscribeNewsletter()}
             onModalPress={() => this.setModalVisible()}
           />
-          <LinearGradient colors={[ '#3F51B5', '#6200EA' ]}>
-            <View style={styles.headerSection}>
-              <Image source={Logo} style={styles.logo} />
-              <Text style={styles.titleText}>DevSummit</Text>
-            </View>
-          </LinearGradient>
+          <View style={styles.headerSection}>
+            <Image source={Logo} style={styles.logo} />
+          </View>
+          <View style={styles.lineSection}>
+            <View style={styles.lineTextThree} />
+            <Text style={styles.lineTextFour}> log in with social media </Text>
+            <View style={styles.lineTextThree} />
+          </View>
+          <View style={styles.buttonSocialSection}>
+            <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
+              <Icon name="facebook" color="white" style={styles.icon} />
+            </Button>
+            <Button danger style={styles.buttonSocial} onPress={() => {this.props.loginGoogle()}}>
+              <Icon name="google-plus" color="white" style={styles.icon} />
+            </Button>
+            <Button info style={styles.buttonSocial} onPress={() => {this.props.loginTwitter()}}>
+              <Icon name="twitter" color="white" style={styles.icon} />
+            </Button>
+          </View>
+          <View style={styles.lineSection}>
+            <View style={styles.lineTextOne} />
+            <Text style={styles.lineTextTwo}> or </Text>
+            <View style={styles.lineTextOne} />
+          </View>
           <View style={styles.formSection}>
-            <InputItem
-              title="Username"
-              onChangeText={usernameText => this.handleInputChange('username', usernameText)}
-              value={username}
-            />
-            <InputItem
-              title="Password"
-              secureTextEntry
-              onChangeText={passwordText => this.handleInputChange('password', passwordText)}
-              value={password}
-            />
+            <Item regular style={styles.item}>
+              <Input
+                placeholder="Username"
+                onChangeText={usernameText => this.handleInputChange('username', usernameText)}
+                value={username}
+              />
+            </Item>
+            <Item regular>
+              <Input
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={passwordText => this.handleInputChange('password', passwordText)}
+                value={password}
+              />
+            </Item>
           </View>
           <View style={styles.buttonSection}>
+<<<<<<< HEAD
+=======
             <Button
               transparent
               style={styles.buttonRegister}
@@ -149,6 +175,7 @@ class Main extends Component {
               <Text style={styles.registerText}>{"Don't have an account?"}</Text>
               <Text style={styles.registerTextBold}> Register</Text>
             </Button>
+>>>>>>> 4fe69e596e1207f0afba47789f99d84ef92d7f7b
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                 <Text>Log In</Text>
@@ -176,6 +203,11 @@ class Main extends Component {
                 <Text style={styles.buttonText}>PHONE</Text>
               </LoginButton>
             </Button>
+<<<<<<< HEAD
+            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
+              <Text style={styles.registerText}>Don't have an account?</Text>
+              <Text style={styles.registerTextBold}> Register</Text>
+=======
             <Button primary style={styles.button} onPress={() => { this.loginFacebook(); }}>
               <Icon name="facebook" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Facebook</Text>
@@ -187,6 +219,7 @@ class Main extends Component {
             <Button info style={styles.button} onPress={() => { this.props.loginTwitter(); }}>
               <Icon name="twitter" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Twitter</Text>
+>>>>>>> 4fe69e596e1207f0afba47789f99d84ef92d7f7b
             </Button>
             <Button
               transparent

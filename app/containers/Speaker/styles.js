@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255,255,255)'
   },
   content: {
-    marginTop: -60,
+    marginTop: -40,
     paddingLeft: 5,
     paddingRight: 5,
   },

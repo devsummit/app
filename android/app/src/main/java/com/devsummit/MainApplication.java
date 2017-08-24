@@ -10,6 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.BV.LinearGradient.LinearGradientPackage;
+import me.neo.react.StatusBarPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNAccountKitPackage(),
-            new OAuthManagerPackage(),
+          new OAuthManagerPackage(),
+          new RNAccountKitPackage(),
           new LinearGradientPackage()
       );
     }

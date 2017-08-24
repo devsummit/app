@@ -16,7 +16,6 @@ import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
-  UPDATE_IS_NOT_REGISTERED,
   UPDATE_IS_FETCHING,
   FETCH_PROFILE_DATA,
   FB_CLIENT_ID,
@@ -72,18 +71,6 @@ export function updateIsSubscribed(status) {
  * @param {status: status to be set}
  */
 
-export function updateIsNotRegistered(status) {
-  return {
-    type: UPDATE_IS_NOT_REGISTERED,
-    status
-  };
-}
-
-/*
- * Update the isNotRegistered
- * @param {status: status to be set}
- */
-
 export function updateIsFetching(status) {
   return {
     type: UPDATE_IS_FETCHING,
@@ -105,6 +92,7 @@ export function login() {
       username,
       password
     }).then((response) => {
+      dispatch(updateIsFetching(false));
       if (response && response.data && response.data.meta.success) {
         try {
           AsyncStorage.setItem('access_token', response.data.data.access_token);
@@ -113,14 +101,13 @@ export function login() {
         } catch (error) {
           console.log(error, 'error caught');
         }
-        dispatch(updateIsLogIn(true));
         dispatch({
           type: FETCH_PROFILE_DATA,
           payload: response.data.included
         });
+        dispatch(updateIsLogIn(true));
       } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
-        dispatch(updateIsFetching(false));
-        dispatch(updateIsNotRegistered(true))
+        Actions.registerEmail()
       }
     }).catch((err) => { console.log(err) })
   };
@@ -177,6 +164,7 @@ export function loginGoogle() {
               'Content-Type': 'application/json'
             }
           }).then((response) => {
+            console.log('huahahha')
             dispatch(updateIsFetching(false));
             if (response && response.data && response.data.meta.success) {
               try {
@@ -186,11 +174,11 @@ export function loginGoogle() {
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch(updateIsLogIn(true));
               dispatch({
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
+              dispatch(updateIsLogIn(true));
             } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
               axios.get('https://www.googleapis.com/plus/v1/people/me', {
                 headers: {
@@ -235,6 +223,7 @@ export function loginFacebook() {
         dispatch(updateIsFetching(true));
         DevSummitAxios.post('/auth/login', data, { headers })
           .then(async (response) => {
+            dispatch(updateIsFetching(false));
             if (response && response.data && response.data.meta.success) {
               const resData = response.data.data;
               try {
@@ -244,12 +233,11 @@ export function loginFacebook() {
               } catch (error) {
                 console.log(error, 'error caught');
               }
-              dispatch(updateIsLogIn(true));
               dispatch({
                 type: FETCH_PROFILE_DATA,
                 payload: response.data.included
               });
-              dispatch(updateIsFetching(false));
+              dispatch(updateIsLogIn(true));
             } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
               axios.get('https://graph.facebook.com/me?fields=id,first_name,last_name,email', {
                 headers: {
@@ -300,11 +288,11 @@ export function loginTwitter() {
             } catch (error) {
               console.log(error, 'error caught');
             }
-            dispatch(updateIsLogIn(true));
             dispatch({
               type: FETCH_PROFILE_DATA,
               payload: response.data.included
             });
+            dispatch(updateIsLogIn(true));
           } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
             const prefilledData = {
               first_name: info.user.name,

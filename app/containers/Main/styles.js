@@ -9,13 +9,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    paddingBottom: 25,
-    paddingTop: 25,
-    marginBottom: 5
+    paddingBottom: 5
   },
   logo: {
-    height: 60,
-    width: 60
+    height: 100,
+    width: '100%'
   },
   titleText: {
     fontSize: 10.5,
@@ -24,14 +22,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   formSection: {
-    marginRight: 20,
-    marginLeft: 3
+    marginTop: 8,
+    marginRight: 18,
+    marginLeft: 16
   },
   icon: {
-    textAlign: 'left',
+    textAlign: 'center',
     flex: 1,
     fontSize: 18,
     alignSelf: 'center'
+  },
+  buttonSocialSection: {
+    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 12,
+    marginRight: 12,
+    marginTop: 5,
+    marginBottom: 5
+  },
+  buttonSocial: {
+    justifyContent: 'center',
+    marginLeft: 5,
+    marginRight: 5,
+    flexDirection: 'row',
+    flex: 0.3
   },
   buttonSection: {
     marginTop: 8,
@@ -60,8 +74,6 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 6,
-    marginBottom: 6,
     justifyContent: 'center'
   },
   buttonText: {
@@ -74,8 +86,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
     flexDirection: 'row',
-    marginRight: 20,
-    marginLeft: 20,
+    marginRight: 18,
+    marginLeft: 18,
     marginTop: 5,
     marginBottom: 5
   },
@@ -89,6 +101,18 @@ const styles = StyleSheet.create({
   lineTextTwo: {
     textAlign: 'center',
     flex: 1,
+    opacity: 0.3
+  },
+  lineTextThree: {
+    flex: 2,
+    opacity: 0.1,
+    backgroundColor: 'black',
+    height: 1.5,
+    marginTop: 12
+  },
+  lineTextFour: {
+    textAlign: 'center',
+    flex: 6,
     opacity: 0.3
   },
   loginMethod: {
@@ -114,7 +138,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#3F51B5'
+    backgroundColor: '#f39e21'
+  },
+  item: {
+    marginBottom: 10
   }
 });
 
