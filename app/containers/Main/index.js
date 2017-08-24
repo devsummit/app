@@ -5,6 +5,7 @@ import {
   Image,
   View,
   Alert,
+  StatusBar
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -28,7 +29,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 const Transition = createTransition(Fade);
-const Logo = require('../../../assets/images/wallpaper.jpg');
+const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
   state = {
@@ -102,7 +103,7 @@ class Main extends Component {
       return (
         <Transition>
           <Container>
-            <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
+            <Header style={{display:'none'}}/>
             <View style={styles.spinner}>
               <Spinner color="white" />
             </View>
@@ -111,7 +112,9 @@ class Main extends Component {
       );
     }
     return (
+      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
       <Container style={styles.container}>
+        <StatusBar hidden />
         <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
         <Content>
           <ModalComponent
@@ -124,11 +127,11 @@ class Main extends Component {
             onModalPress={() => this.setModalVisible()}
           />
           <View style={styles.headerSection}>
-            <Image source={Logo} style={styles.logo} />
+            <Image source={Logo} resizeMode="center" />
           </View>
           <View style={styles.lineSection}>
             <View style={styles.lineTextThree} />
-            <Text style={styles.lineTextFour}> log in with social media </Text>
+            <Text style={styles.lineTextFour}> Log in with social media </Text>
             <View style={styles.lineTextThree} />
           </View>
           <View style={styles.buttonSocialSection}>
@@ -169,16 +172,8 @@ class Main extends Component {
             </Item>
           </View>
           <View style={styles.buttonSection}>
-            <Button
-              transparent
-              style={styles.buttonRegister}
-              onPress={() => { Actions.registerMenu(); }}
-            >
-              <Text style={styles.registerText}>{"Don't have an account?"}</Text>
-              <Text style={styles.registerTextBold}> Register</Text>
-            </Button>
             {(username === '' || password === '') ?
-              <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
+              <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
                 <Text>Log In</Text>
               </Button>
               :
@@ -186,6 +181,14 @@ class Main extends Component {
                 <Text>Log In</Text>
               </Button>
             }
+            <Button
+              transparent
+              style={styles.buttonRegister}
+              onPress={() => { Actions.registerMenu(); }}
+            >
+              <Text style={styles.registerText}>{"Don't have an account?"}</Text>
+              <Text style={styles.registerTextBold}>Register</Text>
+            </Button>
             <View style={styles.lineSection}>
               <View style={styles.lineTextOne} />
               <Text style={styles.lineTextTwo}> or </Text>
@@ -214,6 +217,7 @@ class Main extends Component {
           </View>
         </Content>
       </Container>
+    </Image>
     );
   }
 }
