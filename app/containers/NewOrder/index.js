@@ -81,6 +81,7 @@ class NewOrder extends Component {
             </CardItem>
           </Card>
           <Button
+            block
             style={styles.orderBtn}
             onPress={() => { this.placeOrder(); }}
           >

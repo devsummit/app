@@ -42,7 +42,7 @@ class OrderList extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <List>
+          <List style={{ paddingRight: 10 }}>
             { orders.map((order) => {
               return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }}/>
             }) }
