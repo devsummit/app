@@ -146,10 +146,12 @@ class Main extends Component {
             </Button>
           </View>
           <View style={styles.lineSection}>
-            <View style={styles.lineTextOne} />
             <Text style={styles.lineTextTwo}> or </Text>
-            <View style={styles.lineTextOne} />
           </View>
+            <Button style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]} onPress={() => {this.props.loginTwitter()}}>
+              <Icon name="phone" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>Login with phone number</Text>
+            </Button>
           <View style={styles.formSection}>
             <Item rounded style={styles.item}>
               <Input
@@ -171,7 +173,7 @@ class Main extends Component {
               />
             </Item>
           </View>
-          <View style={styles.buttonSection}>
+          <View>
             {(username === '' || password === '') ?
               <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
                 <Text>Log In</Text>
@@ -188,24 +190,6 @@ class Main extends Component {
             >
               <Text style={styles.registerText}>{"Don't have an account?"}</Text>
               <Text style={styles.registerTextBold}>Register</Text>
-            </Button>
-            <View style={styles.lineSection}>
-              <View style={styles.lineTextOne} />
-              <Text style={styles.lineTextTwo}> or </Text>
-              <View style={styles.lineTextOne} />
-            </View>
-            <Button style={styles.button}>
-              <LoginButton
-                style={styles.buttonLoggin}
-                type="phone"
-                onLogin={token => this.onLoginMobile(token)}
-                onError={e => this.onLoginMobile(e)}
-                primary
-                block
-              >
-                <Icon name="phone" color="white" style={styles.icon} />
-                <Text style={styles.buttonText}>PHONE</Text>
-              </LoginButton>
             </Button>
             <Button
               transparent
