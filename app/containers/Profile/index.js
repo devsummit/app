@@ -23,20 +23,20 @@ import * as selectors from './selectors';
 
 class Profile extends Component {
   componentWillMount() {
-    getAccessToken().then((profileData) => {
+    getProfileData().then((profileData) => {
       if (profileData) {
-        console.log(profileData)
-      }
-    });
-      // this.handleInputChange('username', this.props.profileData.username)
-      // this.handleInputChange('firstName', this.props.profileData.first_name)
-      // this.handleInputChange('lastName', this.props.profileData.last_name)
+        console.log('profile', profileData)
+        this.handleInputChange('username', profileData.username)
+        this.handleInputChange('firstName', profileData.first_name)
+        this.handleInputChange('lastName', profileData.last_name)
 
-      // if (this.props.profileData.url || this.props.profileData.url === '') {
-      //   this.handleInputChange('profilePic', 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg')
-      // } else {
-      //   this.handleInputChange('profilePic', this.props.profileData.url)
-      // }
+        if (profileData.url || profileData.url === '') {
+          this.handleInputChange('profilePic', 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg')
+        } else {
+          this.handleInputChange('profilePic', profileData.url)
+        }
+      }
+    })
   }
 
   componentWillReceiveProps(prevProps) {

@@ -93,13 +93,15 @@ export function login() {
     }).then(async (response) => {
       if (response && response.data && response.data.meta.success) {
         const resData = response.data.data;
+        const roleId = JSON.stringify(response.data.included.role_id);
+        const profileData = JSON.stringify(response.data.included);
         try {
           await AsyncStorage.multiSet([
             ['access_token', resData.access_token],
             ['refresh_token', resData.refresh_token],
-            ['role_id', response.data.included.role_id],
-            ['profile_data', response.data.included]
-          ]);
+            ['role_id', roleId],
+            ['profile_data', profileData]
+          ])
         } catch (error) {
           console.log(error, 'error caught');
         }
@@ -124,13 +126,15 @@ export function loginMobile(mobileToken) {
     }).then(async (response) => {
       if (response && response.data && response.data.meta.success) {
         const resData = response.data.data;
+        const roleId = JSON.stringify(response.data.included.role_id);
+        const profileData = JSON.stringify(response.data.included);
         try {
           await AsyncStorage.multiSet([
             ['access_token', resData.access_token],
             ['refresh_token', resData.refresh_token],
-            ['role_id', response.data.included.role_id],
-            ['profile_data', response.data.included]
-          ]);
+            ['role_id', roleId],
+            ['profile_data', profileData]
+          ])
         } catch (error) {
           console.log(error, 'error caught');
         }
@@ -164,13 +168,15 @@ export function loginGoogle() {
           }).then(async (response) => {
             if (response && response.data && response.data.meta.success) {
               const resData = response.data.data;
+              const roleId = JSON.stringify(response.data.included.role_id);
+              const profileData = JSON.stringify(response.data.included);
               try {
                 await AsyncStorage.multiSet([
                   ['access_token', resData.access_token],
                   ['refresh_token', resData.refresh_token],
-                  ['role_id', response.data.included.role_id],
-                  ['profile_data', response.data.included]
-                ]);
+                  ['role_id', roleId],
+                  ['profile_data', profileData]
+                ])
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -222,13 +228,15 @@ export function loginFacebook() {
           .then(async (response) => {
             if (response && response.data && response.data.meta.success) {
               const resData = response.data.data;
+              const roleId = JSON.stringify(response.data.included.role_id);
+              const profileData = JSON.stringify(response.data.included);
               try {
                 await AsyncStorage.multiSet([
                   ['access_token', resData.access_token],
                   ['refresh_token', resData.refresh_token],
-                  ['role_id', response.data.included.role_id],
-                  ['profile_data', response.data.included]
-                ]);
+                  ['role_id', roleId],
+                  ['profile_data', profileData]
+                ])
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -277,13 +285,15 @@ export function loginTwitter() {
         .then(async (response) => {
           if (response && response.data && response.data.meta.success) {
             const resData = response.data.data;
+            const roleId = JSON.stringify(response.data.included.role_id);
+            const profileData = JSON.stringify(response.data.included);
             try {
               await AsyncStorage.multiSet([
                 ['access_token', resData.access_token],
                 ['refresh_token', resData.refresh_token],
-                ['role_id', response.data.included.role_id],
-                ['profile_data', response.data.included]
-              ]);
+                ['role_id', roleId],
+                ['profile_data', profileData]
+              ])
             } catch (error) {
               console.log(error, 'error caught');
             }

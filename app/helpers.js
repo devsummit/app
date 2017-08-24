@@ -12,7 +12,12 @@ export const getAccessToken = async () => {
   return token;
 };
 
+export const getRoleId = async () => {
+  const roleId = await AsyncStorage.getItem('role_id');
+  return JSON.parse(roleId);
+};
+
 export const getProfileData = async () => {
   const profileData = await AsyncStorage.getItem('profile_data');
-  return profileData;
+  return JSON.parse(profileData);
 };
