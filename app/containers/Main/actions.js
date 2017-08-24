@@ -113,6 +113,35 @@ export function login() {
   };
 }
 
+export function loginMobile(mobileToken) {
+  return (dispatch) => {
+    DevSummitAxios.post('/auth/login', {
+      provider: 'mobile',
+      token: mobileToken
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      console.log(response)
+      if (response && response.data && response.data.meta.success) {
+        try {
+          AsyncStorage.setItem('access_token', response.data.data.access_token);
+          AsyncStorage.setItem('refresh_token', response.data.data.refresh_token);
+          AsyncStorage.setItem('role_id', response.data.included.role_id);
+        } catch (error) {
+          console.log(error, 'error caught');
+        }
+        dispatch(updateIsLogIn(true));
+        dispatch({
+          type: FETCH_PROFILE_DATA,
+          payload: response.data.included
+        });
+      }
+    }).catch(err => console.log(err));
+  }
+}
+
 export function loginGoogle() {
   return (dispatch) => {
     const manager = new OAuthManager('devsummit')

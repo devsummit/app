@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import {
   DevSummitAxios
 } from '../../helpers';
@@ -14,6 +15,7 @@ import {
   UPDATE_REGISTER_STATUS
 } from './constants';
 
+import { ROLES } from '../../constants';
 
 /*
  * Update the input fields
@@ -79,19 +81,19 @@ export function updateRegisterStatus(status) {
  */
 export function register() {
   return (dispatch, getState) => {
-    const { inputFields } = getState().get('register').toJS();
-
+    const { inputFields } = getState().get('registerPhone').toJS();
     const {
-      first_name, role, email, password, username
+      first_name, email, password, username, social_id, provider, token
     } = inputFields || null;
-
+    let { role } = inputFields || null;
     const { last_name } = inputFields || '';
 
-    if (first_name && role && email && password && username) {
+    if (first_name && role && email && social_id && provider && username && token) {
+      role = Object.keys(ROLES).find(key => ROLES[key] === role)
       DevSummitAxios.post('/auth/register', {
-        first_name, last_name, username, email, password, role
+        first_name, last_name, username, email, password, role, social_id, provider, token
       }).then((response) => {
-        if (response && response.data && response.data.success) {
+        if (response && response.data && response.data.meta && response.data.meta.success) {
           // do something
           dispatch(updateRegisterStatus(true));
         }

@@ -3,6 +3,7 @@ package com.devsummit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import io.fullstack.oauth.OAuthManagerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new OAuthManagerPackage(),
+          new RNAccountKitPackage(),
           new LinearGradientPackage()
       );
     }
