@@ -11,15 +11,50 @@ import {
   Row,
   Col
 } from 'native-base';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import * as actions from './actions';
+import * as selectors from './selectors';
 import styles from './styles';
+import TicketType from '../../components/TicketType';
 
-class OrderList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+class OrderDetail extends Component {
+  componentWillMount() {
+    this.props.getTicketType();
+    this.props.getOrderDetail(this.props.orderId);
+  }
+
+  getType = (typeId) => {
+    return this.props.ticketTypes.filter((type) => { return type.id === typeId; })[0];
+  }
+
+  increase = (typeId) => {
+    this.props.updateOrder('increase', typeId);
+  };
+
+  decrease = (typeId) => {
+    this.props.updateOrder('decrease', typeId);
+  };
+
+  renderItem = (item) => {
+    const type = this.getType(item.ticket_id);
+    return (
+      <TicketType
+        key={item.id}
+        count={item.count}
+        ticket={type}
+        onAdd={() => this.increase(item.ticket_id)}
+        onReduce={() => this.decrease(item.ticket_id)}
+      />
+    );
   }
 
   render() {
+    const order = this.props.order;
+    const arraySub = Object.keys(order).map((key) => {
+      return order[key].count * order[key].price;
+    });
+    const total = arraySub.reduce((a, b) => { return a + b; }, 0);
     return (
       <Container style={styles.container}>
         <Content>
@@ -37,47 +72,21 @@ class OrderList extends Component {
               </Grid>
             </CardItem>
           </Card>
-          <Card>
-            <CardItem header>
-              <Text>Order Items</Text>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>Gold ticket</Text>
-                <Text note style={{color: '#285ced'}}>Rp 500.000</Text>
-              </Body>
-              <Right>
-                <Text note>Qty:</Text>
-                <Text>4</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>Silver ticket</Text>
-                <Text note style={{color: '#285ced'}}>Rp 300.000</Text>
-              </Body>
-              <Right>
-                <Text note>Qty:</Text>
-                <Text>2</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>VIP ticket</Text>
-                <Text note style={{color: '#285ced'}}>Rp 1.000.000</Text>
-              </Body>
-              <Right>
-                <Text note>Qty:</Text>
-                <Text>1</Text>
-              </Right>
-            </CardItem>
-          </Card>
+
+          {/* { this.props.ticketTypes.map((ticket, index) => {
+            return <TicketType count={index} ticket={ticket} />;
+          })} */}
+
+          { Object.keys(this.props.order).map((key) => {
+            return this.renderItem(this.props.order[key]);
+          })}
+
           <Card>
             <CardItem>
               <Body>
                 <Text>Total</Text>
               </Body>
-              <Right><Text>Rp 3.600.000</Text></Right>
+              <Right><Text>Rp {Intl.NumberFormat('id').format(total)}</Text></Right>
             </CardItem>
           </Card>
         </Content>
@@ -86,4 +95,9 @@ class OrderList extends Component {
   }
 }
 
-export default OrderList;
+const mapStateToProps = createStructuredSelector({
+  ticketTypes: selectors.getTicketTypes(),
+  order: selectors.getOrder()
+});
+
+export default connect(mapStateToProps, actions)(OrderDetail);
