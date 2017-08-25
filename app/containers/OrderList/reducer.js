@@ -11,7 +11,7 @@ import {
  * initial state of reducers
  */
 const initialState = fromJS({
-  orders: {}
+  orders: []
 });
 
 function orderListReducer(state = initialState, action) {

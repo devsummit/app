@@ -25,7 +25,7 @@ class OrderList extends Component {
       <Container style={styles.container}>
         <Content>
           <List style={{ paddingRight: 10 }}>
-            { this.props.orders.length > 0 && this.props.orders.map((order) => {
+            { this.props.orders.map((order) => {
               return (
                 <OrderItem
                   key={order.id}
