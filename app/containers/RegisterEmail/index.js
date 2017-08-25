@@ -41,6 +41,25 @@ class RegisterEmail extends Component {
       this.props.updateInputFields('username', this.props.prefilledData.username);
     }
   }
+
+  componentWillReceiveProps(prevProps) {
+    if (prevProps.isRegistering !== this.props.isRegistering) {
+      console.log('isregistering...');
+      return;
+    }
+    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+      Alert.alert(
+        this.props.isRegistered.title,
+        this.props.isRegistered.message,
+        [
+          { text: 'OK', onPress: this.props.isRegistered.title === 'Failed' ? () => {} : this.onAlertOk }
+        ],
+        { cancelable: false }
+      );
+      this.props.updateRegisterStatus(false, '', '');
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetState()
   }
@@ -90,22 +109,6 @@ class RegisterEmail extends Component {
   }
 
   render() {
-    if (this.props.isRegistering) {
-      console.log('isregistering...');
-      return null;
-    }
-    if (this.props.isRegistered) {
-      Alert.alert('Status', 'user registered successfully');
-      Alert.alert(
-        'Status',
-        'user registered successfully',
-        [
-          { text: 'OK', onPress: this.onAlertOk }
-        ],
-        { cancelable: false }
-      );
-    }
-
     // destructure state
     const { registerMethod, inputFields, errorFields } = this.props || {};
     const {

@@ -35,7 +35,11 @@ const initialState = fromJS({
   },
   registerMethod: 'undefined',
   isRegistering: false,
-  isRegistered: false
+  isRegistered: {
+    status: false,
+    title: '',
+    message: ''
+  }
 });
 
 function registerEmailReducer(state = initialState, action) {
@@ -50,7 +54,9 @@ function registerEmailReducer(state = initialState, action) {
       return state.set('registerMethod', action.payload);
 
     case UPDATE_REGISTER_STATUS:
-      return state.set('isRegistered', action.status);
+      return (state.setIn([ 'isRegistered', 'status' ], action.status)
+        .setIn([ 'isRegistered', 'title' ], action.title)
+        .setIn([ 'isRegistered', 'message' ], action.message));
 
     case RESET_STATE:
       return initialState;
