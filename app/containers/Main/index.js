@@ -156,7 +156,6 @@ class Main extends Component {
                 <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
               </LoginButton>
             </Button>
-<<<<<<< HEAD
             <View style={styles.formSection}>
               <Item rounded style={styles.item}>
                 <Input
@@ -207,28 +206,10 @@ class Main extends Component {
           </Content>
         </Container>
       </Image>
-=======
-            <Button transparent style={styles.buttonRegister} onPress={() => { Actions.registerMenu() }}>
-              <Text style={styles.registerText}>Don't have an account?</Text>
-              <Text style={styles.registerTextBold}> Register</Text>
-            </Button>
-            <Button
-              transparent
-              style={styles.buttonRegister}
-              onPress={() => { this.setModalVisible(); }}
-            >
-              <Text style={styles.registerText}>Subscribe to Newsletter</Text>
-            </Button>
-          </View>
-        </Content>
-      </Container>
->>>>>>> add payment
     );
   }
 }
-
 Main.propTypes = {
-
   isLoggedIn: PropTypes.bool.isRequired,
   updateIsLogIn: PropTypes.func.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
@@ -243,7 +224,6 @@ Main.propTypes = {
   loginGoogle: PropTypes.func.isRequired,
   loginTwitter: PropTypes.func.isRequired
 };
-
 /**
  *  Map redux state to component props
  */
@@ -252,11 +232,8 @@ const mapStateToProps = createStructuredSelector({
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
   isFetching: selectors.getIsFetching()
-<<<<<<< HEAD
   // @TODO please create the selectors function
   // profileData: selectors.getProfileData()
-=======
->>>>>>> add payment
 });
 
 export default connect(mapStateToProps, actions)(Main);
