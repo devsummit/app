@@ -102,15 +102,11 @@ export function register() {
       DevSummitAxios.post('/auth/register', {
         first_name, last_name, username, email, password, role: role_id, social_id
       }).then((response) => {
-        console.log('response data', response.data)
         if (response && response.data.data && response.data.meta.success) {
-          console.log('success')
           dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
         } else if (response.data.data !== null && !response.data.meta.success) {
-          console.log('registered')
           dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'))
         } else if (response.data.data === null && !response.data.meta.success) {
-          console.log('failed')
           dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]))
         }
       }).catch((error) => {
