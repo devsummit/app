@@ -21,29 +21,6 @@ class OrderList extends Component {
   }
 
   render() {
-    const orders = [
-      {
-        id: 645,
-        totalPrice: '5.000.000',
-        status: 'paid',
-        date: '2017-08-09'
-      },
-      {
-        id: 795,
-        totalPrice: '3.200.000',
-        status: 'pending',
-        date: '2017-08-09'
-      },
-      {
-        id: 984,
-        totalPrice: '3.200.000',
-        status: 'canceled',
-        date: '2017-08-09'
-      }
-    ];
-
-    console.log('orders', this.props.orders);
-
     return (
       <Container style={styles.container}>
         <Content>
