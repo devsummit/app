@@ -28,6 +28,8 @@ import SpeakerDetail from './containers/SpeakerDetail';
 import NewOrder from './containers/NewOrder';
 import AttendeesList from './containers/AttendeesList';
 import Splash from './components/Splash';
+import Payment from './containers/Payment';
+import PaymentDetail from './containers/PaymentDetail';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -70,6 +72,8 @@ export default class App extends Component {
             <Scene key="schedule" component={Schedule} title="Schedule" />
             <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="attendeesList" component={AttendeesList} title="Select Attendee"/>
+            <Scene key="payment" component={Payment} title="Choose Payment Method"/>
+            <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail"/>
           </Scene>
         </RouterWithRedux>
       </Provider>

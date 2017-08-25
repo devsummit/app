@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  monthPicker: {
+    width: 50
+  },
+  yearPicker: {
+    width: 100
+  },
   container: {
     backgroundColor: '#fff'
   },
@@ -9,8 +15,8 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   },
   roundButton: {
     borderRadius: 90,
@@ -27,6 +33,10 @@ const styles = StyleSheet.create({
   right: {
     flex: 1,
     alignSelf: 'flex-end',
+  },
+  datePicker: {
+    flex: 1,
+    flexDirection: 'row'
   }
 });
 

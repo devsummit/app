@@ -5,17 +5,19 @@ import {
   List,
   Fab
 } from 'native-base';
-import { View } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import OrderItem from '../../components/OrderItem';
+
 
 class OrderList extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
 
   render() {
     const orders = [
@@ -43,9 +45,9 @@ class OrderList extends Component {
       <Container style={styles.container}>
         <Content>
           <List>
-            { orders.map((order) => {
-              return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }}/>
-            }) }
+            {orders.map((order) => {
+              return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }} />
+            })}
           </List>
         </Content>
         <Fab position="bottomRight" onPress={() => { Actions.newOrder(); }}>

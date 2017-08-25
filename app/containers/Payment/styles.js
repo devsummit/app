@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   },
   roundButton: {
     borderRadius: 90,

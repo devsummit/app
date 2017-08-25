@@ -7,17 +7,43 @@ import {
   CardItem,
   Body,
   Right,
+  Button,
   Grid,
   Row,
   Col
 } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Actions } from 'react-native-router-flux';
 import styles from './styles';
+import { PRIMARYCOLOR } from '../../constants';
+
 
 class OrderList extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      headerRight: <Button style={styles.roundButton} onPress={() => params.handleCheckOut()} >
+        <Icon name='check' color={PRIMARYCOLOR} />
+        <Text style={styles.textButton}>Check Out</Text>
+      </Button>
+    };
+  };
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  componentWillMount() {
+    this.props.navigation.setParams({
+      handleCheckOut:
+      this.handleCheckOut
+    });
+  }
+
+  handleCheckOut = () => {
+    Actions.payment();
+  }
+
 
   render() {
     return (

@@ -4,6 +4,7 @@
 const config = require('../config/local').default;
 
 export const API_BASE_URL = config.API_BASE_URL;
+export const MIDTRANS_CLIENT_KEY = 'VT-client-g8cB-IVLwe64YIdv';
 
 export const CLIENT_SECRET = config.CLIENT_SECRET;
 
@@ -28,4 +29,5 @@ export const ROLES = {
   4: 'speaker'
 };
 
-export const primaryColor = '#0D47A1';
+
+export const PRIMARYCOLOR = '#f39e21';
