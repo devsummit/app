@@ -2,29 +2,21 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
   Picker,
   Item,
-  Label,
-  Input,
   Button,
   Text
 } from 'native-base';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import AccountKit, {
-  LoginButton,
-  Color,
-  StatusBarStyle
-} from 'react-native-facebook-account-kit';
 import Toast from 'react-native-simple-toast';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import PropTypes from 'prop-types';
 
 // import redux components
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import InputItem from '../../components/InputItem';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -51,7 +43,6 @@ class Payment extends Component {
   }
 
   handleInputChange = (field, value) => {
-    console.log(field, value)
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
     if (field === 'paymentType' && value === 'credit_card') {
@@ -60,7 +51,7 @@ class Payment extends Component {
   }
 
   render() {
-    const { inputFields, errorFields } = this.props;
+    const { inputFields } = this.props;
     const {
       paymentType,
       bankDestination
@@ -127,6 +118,14 @@ class Payment extends Component {
     );
   }
 }
+
+// props validation
+Payment.propTypes = {
+  updateErrorFields: PropTypes.func.isRequired,
+  updateInputFields: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired,
+  inputFields: PropTypes.object.isRequired
+};
 
 /**
  *  Map redux state to component props

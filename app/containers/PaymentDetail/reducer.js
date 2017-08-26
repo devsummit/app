@@ -16,6 +16,8 @@ import {
 * initial state of reducers
 */
 const initialState = fromJS({
+  transactionResponse: {},
+  isFetchingTransaction: false,
   inputFields: {
     emailDetail: '',
     firstName: '',
@@ -23,8 +25,6 @@ const initialState = fromJS({
     phoneNumber: '',
     vaNumber: '',
     cardNumber: '',
-    transactionResponse: '',
-    isFetchingTransaction: false
   },
   errorFields: {
     errorEmailDetail: false,
@@ -33,7 +33,7 @@ const initialState = fromJS({
     errorPhoneNumber: false,
     errorVaNumber: false
   }
-})
+});
 
 function paymentDetailReducer(state = initialState, action) {
   switch (action.type) {

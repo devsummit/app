@@ -15,7 +15,7 @@ import {
 
 import {
   MIDTRANS_CLIENT_KEY
-} from '../../constants'
+} from '../../constants';
 /*
  * Update the input fields
  * @param {field: name of the field}
@@ -55,7 +55,7 @@ export function updateGetTransactionResponse(payload) {
   return {
     type: GET_TRANSACTION_RESPONSE,
     payload
-  }
+  };
 }
 
 // Send parameter to API
@@ -90,6 +90,8 @@ export function submitPayment() {
     }).then((response) => {
       dispatch(updateGetTransactionResponse(response.data));
       dispatch(updateIsFetchingTransaction(false));
+    }).catch((err) => {
+      console.log(err);
     });
   };
 }

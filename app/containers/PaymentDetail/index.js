@@ -2,23 +2,17 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
   Item,
-  Label,
-  Input,
   Picker,
   Button,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
 import { Alert, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import AccountKit, {
-  LoginButton,
-  Color,
-  StatusBarStyle
-} from 'react-native-facebook-account-kit';
 import Toast from 'react-native-simple-toast';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import PropTypes from 'prop-types';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -36,6 +30,28 @@ import { PRIMARYCOLOR } from '../../constants';
 
 class PaymentDetail extends Component {
   componentWillMount() {
+
+  }
+
+  componentWillReceiveProps() {
+    const { getTransactionResponse } = this.props;
+    if (Object.keys(getTransactionResponse).length > 0) {
+      if (getTransactionResponse.data) {
+        Alert.alert(getTransactionResponse.meta.message.status_message);
+        this.props.updateGetTransactionResponse({});
+        Actions.pop();
+      } else if (
+        getTransactionResponse.meta &&
+        getTransactionResponse.meta.message &&
+        getTransactionResponse.meta.message.status_message) {
+        Alert.alert(getTransactionResponse.meta.message.status_message);
+        this.props.updateGetTransactionResponse({});
+        Actions.pop();
+      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {
+        Alert.alert(getTransactionResponse.meta.message);
+        this.props.updateGetTransactionResponse({});
+      }
+    }
   }
 
   handleInputChange = (field, value) => {
@@ -44,11 +60,6 @@ class PaymentDetail extends Component {
   }
 
   render() {
-    // if (this.props.getIsFetchingTransaction) {
-    //   Alert.alert(this.props.getTransactionResponse.data.status_message);
-    //   Actions.pop();
-    //   Actions.pop();
-    // }
     const monthList = [];
     const yearList = [];
 
@@ -76,7 +87,7 @@ class PaymentDetail extends Component {
       }
     }
 
-    const { inputFields, errorFields } = this.props;
+    const { inputFields, errorFields, getIsFetchingTransaction } = this.props;
     const {
       emailDetail,
       firstName,
@@ -87,17 +98,24 @@ class PaymentDetail extends Component {
       cardExpiryYear,
       cardNumber
     } = inputFields || '';
-    console.log(this.props)
     const {
       errorEmailDetail,
       errorFirstName,
       errorLastName,
       errorPhoneNumber,
       errorVaNumber,
-      errorCardExpiryMonth,
-      errorCardExpiryYear,
-      errorCardNumber,
+      errorCardNumber
     } = errorFields || false;
+
+    if (getIsFetchingTransaction) {
+      return (
+        <Container>
+          <Content>
+            <Spinner color={PRIMARYCOLOR} />
+          </Content>
+        </Container>
+      );
+    }
 
     return (
       <Container style={styles.container}>
@@ -182,7 +200,7 @@ class PaymentDetail extends Component {
             }}
           >
             <Text>
-                  SUBMIT PAYMENT
+              SUBMIT PAYMENT
             </Text>
           </Button>
           {/* {
@@ -196,6 +214,18 @@ class PaymentDetail extends Component {
     );
   }
 }
+
+//  props validation
+PaymentDetail.propTypes = {
+  getTransactionResponse: PropTypes.object.isRequired,
+  updateErrorFields: PropTypes.func.isRequired,
+  updateGetTransactionResponse: PropTypes.func.isRequired,
+  updateInputFields: PropTypes.func.isRequired,
+  inputFields: PropTypes.object.isRequired,
+  errorFields: PropTypes.object.isRequired,
+  submitPayment: PropTypes.func.isRequired,
+  getIsFetchingTransaction: PropTypes.bool.isRequired
+};
 
 /**
  *  Map redux state to component props
