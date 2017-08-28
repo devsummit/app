@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
   Picker,
   Item,
-  Label,
-  Input,
   Button,
   Text
 } from 'native-base';
 import { Alert, Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -135,50 +132,46 @@ class RegisterEmail extends Component {
 
     return (
       <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
-      <Container style={styles.container}>
-        <Content>
-          <View style={styles.headerSection}>
-            <Image source={Logo} resizeMode="center" />
-          </View>
-          <View style={styles.formSection}>
-            <Item rounded style={styles.item}>
-              <Input
+        <Container style={styles.container}>
+          <Content>
+            <View style={styles.headerSection}>
+              <Image source={Logo} resizeMode="center" />
+            </View>
+            <View style={styles.formSection}>
+              <InputItem
+                error={error_first_name}
                 style={styles.formInput}
                 placeholder="First name"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('first_name', text)}
                 value={first_name}
               />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input
+              <InputItem
+                error={error_last_name}
                 style={styles.formInput}
                 placeholder="Last name"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('last_name', text)}
                 value={last_name}
               />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input
+              <InputItem
+                error={error_email}
                 style={styles.formInput}
                 placeholder="Email"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input
+              <InputItem
+                error={error_username}
                 style={styles.formInput}
                 placeholder="Username"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input
+              <InputItem
+                error={error_password}
                 style={styles.formInput}
                 placeholder="Password"
                 placeholderTextColor={'#BDBDBD'}
@@ -186,15 +179,14 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
-            </Item>
-          </View>
-          <View style={{ borderWidth: 1, borderColor: '#FFD740', borderRadius: 50, margin: 20 }}>
-            <Picker
-              style={styles.picker}
-              placeholder="Role"
-              mode="dropdown"
-              selectedValue={role}
-              onValueChange={value => this.handleInputChange('role', value)}
+            </View>
+            <View style={{ borderWidth: 1, borderColor: '#FFD740', borderRadius: 50, margin: 20 }}>
+              <Picker
+                style={styles.picker}
+                placeholder="Role"
+                mode="dropdown"
+                selectedValue={role}
+                onValueChange={value => this.handleInputChange('role', value)}
               >
                 {role_option.map(component => (
                   <Item
@@ -204,18 +196,22 @@ class RegisterEmail extends Component {
                   />
                 ))}
               </Picker>
-          </View>
-          <Button
-            primary
-            block
-            style={styles.button}
-            onPress={() => this.submitRegistration()}
-          >
-            <Text style={styles.buttomText}>Register</Text>
-          </Button>
-        </Content>
-      </Container>
-    </Image>
+            </View>
+            <Button
+              primary
+              block
+              style={styles.button}
+              onPress={() => this.submitRegistration()}
+            >
+              <Text style={styles.buttomText}>Register</Text>
+            </Button>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 16 }} onPress={() => Actions.pop()}>
+              <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 25 }} />
+              <Text style={{ fontSize: 20, color: '#FFFFFF', marginLeft: 10 }}>Back</Text>
+            </TouchableOpacity>
+          </Content>
+        </Container>
+      </Image>
     );
   }
 }
