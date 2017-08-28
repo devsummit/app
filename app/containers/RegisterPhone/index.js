@@ -45,6 +45,9 @@ class RegisterPhone extends Component {
     this.configureAccountKit();
   }
 
+  componentWillUnmount() {
+    this.props.resetState()
+  }
 
   onLogin(token) {
     if (!token) {
