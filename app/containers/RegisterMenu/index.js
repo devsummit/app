@@ -15,7 +15,7 @@ import { twitter } from 'react-native-simple-auth';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import Button from '../../components/Button'
+import Button from '../../components/Button';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -75,8 +75,9 @@ class RegisterMenu extends Component {
             </Button>
           </Content>
         </Container>
-        <TouchableOpacity style={{ justifyContent: 'flex-end', margin: 16 }} onPress={() => Actions.pop()}>
-          <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 30 }} />
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 16 }} onPress={() => Actions.pop()}>
+          <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 25 }} />
+          <Text style={{ fontSize: 20, color: '#FFFFFF', marginLeft: 10 }}>Back</Text>
         </TouchableOpacity>
       </Image>
     );
