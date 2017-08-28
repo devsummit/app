@@ -7,7 +7,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_REGISTER_METHOD,
-  UPDATE_REGISTER_STATUS
+  UPDATE_REGISTER_STATUS,
+  RESET_STATE
 } from './constants';
 
 /*
@@ -34,7 +35,11 @@ const initialState = fromJS({
   },
   registerMethod: 'undefined',
   isRegistering: false,
-  isRegistered: false
+  isRegistered: {
+    status: false,
+    title: '',
+    message: ''
+  }
 });
 
 function registerEmailReducer(state = initialState, action) {
@@ -49,7 +54,12 @@ function registerEmailReducer(state = initialState, action) {
       return state.set('registerMethod', action.payload);
 
     case UPDATE_REGISTER_STATUS:
-      return state.set('isRegistered', action.status);
+      return (state.setIn([ 'isRegistered', 'status' ], action.status)
+        .setIn([ 'isRegistered', 'title' ], action.title)
+        .setIn([ 'isRegistered', 'message' ], action.message));
+
+    case RESET_STATE:
+      return initialState;
 
     default:
       return state;

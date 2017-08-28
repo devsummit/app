@@ -3,3 +3,4 @@ export const UPDATE_SINGLE_ERROR_FIELD = 'app/containers/RegisterPhone/UPDATE_SI
 export const UPDATE_REGISTER_METHOD = 'app/containers/RegisterPhone/UPDATE_REGISTER_METHOD';
 export const TOGGLE_IS_REGISTERING = 'app/containers/RegisterPhone/TOGGLE_IS_REGISTERING';
 export const UPDATE_REGISTER_STATUS = 'app/containers/RegisterPhone/UPDATE_REGISTER_STATUS';
+export const RESET_STATE = 'app/containers/RegisterPhone/RESET_STATE';

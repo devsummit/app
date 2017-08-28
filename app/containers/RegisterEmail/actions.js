@@ -11,7 +11,8 @@ import {
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_REGISTER_METHOD,
   TOGGLE_IS_REGISTERING,
-  UPDATE_REGISTER_STATUS
+  UPDATE_REGISTER_STATUS,
+  RESET_STATE
 } from './constants';
 
 
@@ -67,10 +68,18 @@ export function toggleIsRegistering(status) {
 }
 
 
-export function updateRegisterStatus(status) {
+export function updateRegisterStatus(status, title, message) {
   return {
     type: UPDATE_REGISTER_STATUS,
-    status
+    status,
+    title,
+    message
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE
   };
 }
 
@@ -93,9 +102,12 @@ export function register() {
       DevSummitAxios.post('/auth/register', {
         first_name, last_name, username, email, password, role: role_id, social_id
       }).then((response) => {
-        if (response && response.data && response.data.meta.success) {
-          // do something
-          dispatch(updateRegisterStatus(true));
+        if (response && response.data.data && response.data.meta.success) {
+          dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+        } else if (response.data.data !== null && !response.data.meta.success) {
+          dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'))
+        } else if (response.data.data === null && !response.data.meta.success) {
+          dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]))
         }
       }).catch((error) => {
         console.log(error, 'error caught');

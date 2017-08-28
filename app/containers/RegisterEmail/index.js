@@ -42,23 +42,31 @@ class RegisterEmail extends Component {
     }
   }
 
-  handleInputChange = (field, value) => {
-    this.props.updateInputFields(field, value);
-    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
-  }
-
-  handleButtonClick = (value) => {
-    this.props.updateRegisterMethod(value);
-  }
-
-  submitRegistration = () => {
-    if (this.isFieldError()) {
-      Alert.alert('Warning', 'Field is not complete');
-    } else {
-      this.props.register();
+  componentWillReceiveProps(prevProps) {
+    if (prevProps.isRegistering !== this.props.isRegistering) {
+      console.log('isregistering...');
+      return;
+    }
+    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+      Alert.alert(
+        this.props.isRegistered.title,
+        this.props.isRegistered.message,
+        [
+          { text: 'OK', onPress: this.props.isRegistered.title === 'Failed' ? () => {} : this.onAlertOk }
+        ],
+        { cancelable: false }
+      );
+      this.props.updateRegisterStatus(false, '', '');
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetState()
+  }
+
+  onAlertOk = () => {
+    Actions.main();
+  }
   /*
     * validate all fields before submission
     */
@@ -83,27 +91,24 @@ class RegisterEmail extends Component {
     );
   }
 
-  onAlertOk = () => {
-    Actions.main();
+  submitRegistration = () => {
+    if (this.isFieldError()) {
+      Alert.alert('Warning', 'Field is not complete');
+    } else {
+      this.props.register();
+    }
+  }
+
+  handleButtonClick = (value) => {
+    this.props.updateRegisterMethod(value);
+  }
+
+  handleInputChange = (field, value) => {
+    this.props.updateInputFields(field, value);
+    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
 
   render() {
-    if (this.props.isRegistering) {
-      console.log('isregistering...');
-      return;
-    }
-    if (this.props.isRegistered) {
-      Alert.alert('Status', 'user registered successfully');
-      Alert.alert(
-        'Status',
-        'user registered successfully',
-        [
-          { text: 'OK', onPress: this.onAlertOk }
-        ],
-        { cancelable: false }
-      );
-    }
-
     // destructure state
     const { registerMethod, inputFields, errorFields } = this.props || {};
     const {
@@ -181,7 +186,7 @@ class RegisterEmail extends Component {
             style={styles.button}
             onPress={() => this.submitRegistration()}
           >
-            <Text style={styles.buttomText}>Register with Email</Text>
+            <Text style={styles.buttomText}>Register</Text>
           </Button>
         </Content>
       </Container>
