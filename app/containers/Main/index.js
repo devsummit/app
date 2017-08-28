@@ -166,7 +166,7 @@ class Main extends Component {
                 <Text>Log In</Text>
               </Button>
               :
-              <Button primary block style={styles.button} onPress={() => { this.onLogin(); }}>
+              <Button primary block style={styles.button} onPress={() => this.onLogin()}>
                 <Text>Log In</Text>
               </Button>
             }
