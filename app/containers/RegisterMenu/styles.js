@@ -2,10 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)'
-  },
-  content: {
-    marginTop: 10
+    flex: 1
   },
   title: {
     fontSize: 18,
@@ -20,6 +17,9 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginBottom: 10,
     flex: 1,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: 'transparent',
     justifyContent: 'center',
     flexDirection: 'row'
   },
@@ -39,10 +39,18 @@ const styles = StyleSheet.create({
   buttonSocial: {
     height: '100%',
     justifyContent: 'center',
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: 'transparent',
     marginLeft: 5,
     marginRight: 5,
     flexDirection: 'column',
     flex: 0.3
+  },
+  headerSection: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
   buttonSocialText: {
     textAlign: 'center',
@@ -51,7 +59,8 @@ const styles = StyleSheet.create({
   iconSocial: {
     textAlign: 'center',
     flex: 1,
-    fontSize: 18
+    fontSize: 20,
+    padding: 8
   },
   picker: {
     margin: 12
@@ -76,27 +85,25 @@ const styles = StyleSheet.create({
   },
   lineTextOne: {
     flex: 4.5,
-    opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     height: 1.5,
     marginTop: 12
   },
   lineTextTwo: {
     textAlign: 'center',
     flex: 1,
-    opacity: 0.3
+    color: '#FFFFFF'
   },
   lineTextThree: {
     flex: 2,
-    opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     height: 1.5,
     marginTop: 12
   },
   lineTextFour: {
     textAlign: 'center',
     flex: 6,
-    opacity: 0.3
+    color: '#FFFFFF'
   }
 });
 
