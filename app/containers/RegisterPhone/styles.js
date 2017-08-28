@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   headerSection: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   formSection: {
     marginTop: 8,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     margin: 12,
-    color: '#FFFFFF',
+    color: '#FFFFFF'
   },
   button: {
     width: '90%',

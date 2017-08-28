@@ -2,21 +2,16 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Form,
   Picker,
   Item,
-  Label,
-  Input,
   Button,
   Text
 } from 'native-base';
 import { Alert, Image, View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, {
-  LoginButton,
-  Color,
-  StatusBarStyle,
-} from 'react-native-facebook-account-kit'
+  LoginButton
+} from 'react-native-facebook-account-kit';
 import Toast from 'react-native-simple-toast';
 import Icon from 'react-native-vector-icons/FontAwesome';
 

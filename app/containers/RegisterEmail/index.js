@@ -198,7 +198,6 @@ class RegisterEmail extends Component {
               </Picker>
             </View>
             <Button
-              primary
               block
               style={styles.button}
               onPress={() => this.submitRegistration()}

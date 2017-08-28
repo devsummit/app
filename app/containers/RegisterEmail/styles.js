@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   headerSection: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     fontSize: 18,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     margin: 12,
-    color: '#FFFFFF',
+    color: '#FFFFFF'
   },
   formSection: {
     marginTop: 8,
