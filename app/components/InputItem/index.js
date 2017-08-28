@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Form,
   Item,
-  Label,
   Input
 } from 'native-base';
 import { View } from 'react-native';
@@ -29,20 +28,14 @@ export default class InputItem extends Component {
     return (
       <View>
         <Form>
-          <Item floatingLabel error={this.props.error} >
-            <Label style={this.state.onFocus ||
-              this.props.value.length > 0 ?
-              styles.normalOnFocusLabel :
-              styles.normalOnBlurLabel
-            }
-            >
-              {this.props.title}
-            </Label>
+          <Item style={styles.item} rounded error={this.props.error} >
             <Input
               style={this.props.style}
               disabled={this.props.disabled}
               secureTextEntry={this.props.secureTextEntry}
               onChangeText={this.props.onChangeText}
+              placeholder={this.props.placeholder}
+              placeholderTextColor={this.props.placeholderTextColor}
               value={this.props.value}
               onFocus={() => { this.handleOnFocus(); }}
               onBlur={this.props.onBlur}
