@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   },
   formInput: {
     paddingLeft: 20,
-    height: 45,
     color: '#FFFFFF'
   },
   item: {
