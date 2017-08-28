@@ -116,7 +116,7 @@ class Main extends Component {
       <Container style={styles.container}>
         <StatusBar hidden />
         <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
-        <Content scrollEnabled={false}>
+        <Content>
           <ModalComponent
             visible={this.state.modalVisible}
             modalTitle="Subscriber"
