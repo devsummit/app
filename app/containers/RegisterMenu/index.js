@@ -41,7 +41,7 @@ class RegisterMenu extends Component {
             </View>
             <View style={styles.lineSection}>
               <View style={styles.lineTextThree} />
-              <Text style={styles.lineTextFour}> register with social media </Text>
+              <Text style={styles.lineTextFour}> Register with social media </Text>
               <View style={styles.lineTextThree} />
             </View>
             <View style={styles.buttonSocialSection}>
@@ -62,16 +62,11 @@ class RegisterMenu extends Component {
             </View>
             <Button warning block style={styles.button} onPress={() => { Actions.registerEmail(); }}>
               <Icon name="envelope" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Email</Text>
+              <Text style={styles.buttonText}>Register with Email</Text>
             </Button>
-            <View style={styles.lineSection}>
-              <View style={styles.lineTextOne} />
-              <Text style={styles.lineTextTwo}> or </Text>
-              <View style={styles.lineTextOne} />
-            </View>
             <Button style={[ styles.button, { backgroundColor: '#FFD740' } ]} onPress={() => { Actions.registerPhone(); }}>
               <Icon name="phone" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Phone</Text>
+              <Text style={styles.buttonText}>Register with Phone</Text>
             </Button>
           </Content>
         </Container>
