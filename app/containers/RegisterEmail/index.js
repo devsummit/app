@@ -10,7 +10,7 @@ import {
   Button,
   Text
 } from 'native-base';
-import { Alert } from 'react-native';
+import { Alert, Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 
@@ -25,6 +25,8 @@ import * as selectors from './selectors';
 
 // import constants
 import { role_option } from '../../constants';
+
+const Logo = require('../../../assets/images/logo.png');
 
 class RegisterEmail extends Component {
 
@@ -132,54 +134,77 @@ class RegisterEmail extends Component {
     } = errorFields || false;
 
     return (
+      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
       <Container style={styles.container}>
         <Content>
-          <InputItem
-            error={error_first_name}
-            title="First Name"
-            onChangeText={text => this.handleInputChange('first_name', text)}
-            value={first_name}
-          />
-          <InputItem
-            error={error_last_name}
-            title="Last Name"
-            onChangeText={text => this.handleInputChange('last_name', text)}
-            value={last_name}
-          />
-          <InputItem
-            error={error_email}
-            title="Email"
-            onChangeText={text => this.handleInputChange('email', text)}
-            value={email}
-          />
-          <InputItem
-            error={error_username}
-            title="Username"
-            onChangeText={text => this.handleInputChange('username', text)}
-            value={username}
-          />
-          <InputItem
-            error={error_password}
-            title="Password"
-            onChangeText={text => this.handleInputChange('password', text)}
-            value={password}
-            secureTextEntry
-          />
-          <Picker
-            style={styles.picker}
-            placeholder="Role"
-            mode="dropdown"
-            selectedValue={role}
-            onValueChange={value => this.handleInputChange('role', value)}
-          >
-            {role_option.map(component => (
-              <Item
-                key={component.value}
-                label={component.label}
-                value={component.label}
+          <View style={styles.headerSection}>
+            <Image source={Logo} resizeMode="center" />
+          </View>
+          <View style={styles.formSection}>
+            <Item rounded style={styles.item}>
+              <Input
+                style={styles.formInput}
+                placeholder="First name"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('first_name', text)}
+                value={first_name}
               />
-            ))}
-          </Picker>
+            </Item>
+            <Item rounded style={styles.item}>
+              <Input
+                style={styles.formInput}
+                placeholder="Last name"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('last_name', text)}
+                value={last_name}
+              />
+            </Item>
+            <Item rounded style={styles.item}>
+              <Input
+                style={styles.formInput}
+                placeholder="Email"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('email', text)}
+                value={email}
+              />
+            </Item>
+            <Item rounded style={styles.item}>
+              <Input
+                style={styles.formInput}
+                placeholder="Username"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('username', text)}
+                value={username}
+              />
+            </Item>
+            <Item rounded style={styles.item}>
+              <Input
+                style={styles.formInput}
+                placeholder="Password"
+                placeholderTextColor={'#BDBDBD'}
+                secureTextEntry
+                onChangeText={text => this.handleInputChange('password', text)}
+                value={password}
+              />
+            </Item>
+          </View>
+          <View style={{ borderWidth: 1, borderColor: '#FFD740', borderRadius: 50, margin: 20 }}>
+            <Picker
+              style={styles.picker}
+              placeholder="Role"
+              mode="dropdown"
+              selectedValue={role}
+              onValueChange={value => this.handleInputChange('role', value)}
+              >
+                {role_option.map(component => (
+                  <Item
+                    key={component.value}
+                    label={component.label}
+                    value={component.label}
+                  />
+                ))}
+              </Picker>
+          </View>
           <Button
             primary
             block
@@ -190,6 +215,7 @@ class RegisterEmail extends Component {
           </Button>
         </Content>
       </Container>
+    </Image>
     );
   }
 }
