@@ -59,7 +59,7 @@ export default class App extends Component {
             <Scene key="main" component={Main} hideNavBar type="replace" />
             <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace"/>
             <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
-            <Scene key="registerEmail" component={RegisterEmail} title="Register" />
+            <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" />
             <Scene key="registerPhone" component={RegisterPhone} title="Register Phone" />
             <Scene key="login" component={Login} title="Login" />
             <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
