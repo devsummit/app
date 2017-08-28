@@ -10,7 +10,7 @@ import {
   Button,
   Text
 } from 'native-base';
-import { Alert } from 'react-native';
+import { Alert, Image, View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, {
   LoginButton,
@@ -32,6 +32,7 @@ import * as selectors from './selectors';
 // import constants
 import { role_option, primaryColor } from '../../constants';
 
+const Logo = require('../../../assets/images/logo.png');
 
 class RegisterPhone extends Component {
   state = {
@@ -164,7 +165,7 @@ class RegisterPhone extends Component {
 
   renderErrorButton = () => {
     return (
-      <Button style={styles.button}>
+      <Button style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
         <Text style={styles.buttonText}>
           FIELDS ARE NOT COMPLETE
         </Text>
@@ -204,47 +205,64 @@ class RegisterPhone extends Component {
     } = errorFields || false;
 
     return (
-      <Container style={styles.container}>
-        <Content>
-          <InputItem
-            error={error_first_name}
-            title="First Name"
-            onChangeText={text => this.handleInputChange('first_name', text)}
-            value={first_name}
-          />
-          <InputItem
-            error={error_last_name}
-            title="Last Name"
-            onChangeText={text => this.handleInputChange('last_name', text)}
-            value={last_name}
-          />
-          <InputItem
-            error={error_email}
-            title="Email"
-            value={email}
-            onChangeText={text => this.handleInputChange('email', text)}
-            onBlur={text => this.validateEmailOnBlur()}
-          />
-          <Picker
-            style={styles.picker}
-            placeholder="Role"
-            mode="dropdown"
-            selectedValue={role}
-            onValueChange={value => this.handleInputChange('role', value)}
-          >
-            {role_option.map(component => (
-              <Item key={component.value} label={component.label} value={component.label} />
-            ))}
-          </Picker>
-          {
-            (this.props.inputFields.first_name.length !== 0 &&
-              this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?
-              this.renderLoginButton() :
-              this.renderErrorButton()
-          }
-
-        </Content>
-      </Container>
+      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
+        <Container style={styles.container}>
+          <Content>
+            <View style={styles.headerSection}>
+              <Image source={Logo} resizeMode="center" />
+            </View>
+            <View style={styles.formSection}>
+              <InputItem
+                error={error_first_name}
+                style={styles.formInput}
+                placeholder="First name"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('first_name', text)}
+                value={first_name}
+              />
+              <InputItem
+                error={error_last_name}
+                style={styles.formInput}
+                placeholder="Last name"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('last_name', text)}
+                value={last_name}
+              />
+              <InputItem
+                error={error_email}
+                style={styles.formInput}
+                placeholder="Email"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('email', text)}
+                value={email}
+              />
+            </View>
+            <View style={{ borderWidth: 1, borderColor: '#FFD740', borderRadius: 50, margin: 20 }}>
+              <Picker
+                style={styles.picker}
+                placeholder="Role"
+                mode="dropdown"
+                selectedValue={role}
+                onValueChange={value => this.handleInputChange('role', value)}
+              >
+                {role_option.map(component => (
+                  <Item key={component.value} label={component.label} value={component.label} />
+                ))}
+              </Picker>
+            </View>
+            {
+              (this.props.inputFields.first_name.length !== 0 &&
+                this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?
+                this.renderLoginButton() :
+                this.renderErrorButton()
+            }
+          </Content>
+        </Container>
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 16 }} onPress={() => Actions.pop()}>
+          <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 25 }} />
+          <Text style={{ fontSize: 20, color: '#FFFFFF', marginLeft: 10 }}>Back</Text>
+        </TouchableOpacity>
+      </Image>
     );
   }
 }
