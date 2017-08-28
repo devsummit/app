@@ -110,15 +110,6 @@ class Main extends Component {
       <Container style={styles.container}>
         <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
         <Content>
-          <ModalComponent
-            visible={this.state.modalVisible}
-            modalTitle="Subscriber"
-            inputTitle="Email"
-            onChangeText={emailText => this.handleInputChange('email', emailText)}
-            value={email}
-            onSubmit={() => this.props.subscribeNewsletter()}
-            onModalPress={() => this.setModalVisible()}
-          />
           <View style={styles.headerSection}>
             <Image source={Logo} style={styles.logo} />
           </View>
