@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)'
+    flex: 1
   },
   title: {
     fontSize: 18,
@@ -11,14 +11,42 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 20
   },
-  button: {
-    marginLeft: 12,
-    marginRight: 12,
-    marginBottom: 10,
-    borderRadius: 5,
-    flex: 1,
+  headerSection: {
     justifyContent: 'center',
-    flexDirection: 'row'
+    alignItems: 'center',
+    flex: 1,
+  },
+  formSection: {
+    marginTop: 8,
+    marginRight: 18,
+    marginLeft: 16
+  },
+  formInput: {
+    paddingLeft: 20,
+    color: '#FFFFFF'
+  },
+  item: {
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1
+  },
+  picker: {
+    margin: 12,
+    color: '#FFFFFF',
+  },
+  button: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 6,
+    marginBottom: 6,
+    borderWidth: 1,
+    borderRadius: 30,
+    backgroundColor: '#FFA726',
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    elevation: 0,
+    flex: 1
   },
   buttonLoggin: {
     width: '90%',
@@ -34,9 +62,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 9,
     alignSelf: 'center'
-  },
-  picker: {
-    margin: 12
   },
   labelText: {
     fontSize: 12,
