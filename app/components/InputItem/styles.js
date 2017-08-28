@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 14
   },
+  item: {
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1,
+    alignItems: 'center'
+  },
   normalOnBlur: {
     color: 'grey',
     fontSize: 16
