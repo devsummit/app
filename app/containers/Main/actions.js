@@ -101,7 +101,7 @@ export function login() {
             ['refresh_token', resData.refresh_token],
             ['role_id', roleId],
             ['profile_data', profileData]
-          ])
+          ]);
         } catch (error) {
           console.log(error, 'error caught');
         }
@@ -110,7 +110,7 @@ export function login() {
         Actions.registerEmail()
       }
       dispatch(updateIsFetching(false));
-    }).catch((err) => { console.log(err) })
+    }).catch((err) => console.log(err))
   };
 }
 

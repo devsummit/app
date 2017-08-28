@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native';
 
 import {
-	DevSummitAxios
+  DevSummitAxios,
+  getAccessToken
 } from '../../helpers'
 
 /*
@@ -62,21 +63,22 @@ export function changePassword() {
     const { inputFields } = getState().get('changePassword').toJS();
     const { current_password, new_password, confirm_password } = inputFields;
 
-    AsyncStorage.getItem('access_token', (err, result) => {
-      DevSummitAxios.patch('/auth/me/changepassword', {
-        old_password: current_password,
-        new_password
-      }, {
-        headers: {
-          Authorization: result
-        }
-      }).then((response) => {
-        if (response && response.data && response.data.meta.success) {
-          dispatch(updateIsPasswordUpdate(true));
-        } else {
-          dispatch(updateIsPasswordWrong(true));
-        }
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.patch('/auth/me/changepassword', {
+          old_password: current_password,
+          new_password
+        }, {
+          headers: {
+            Authorization: token
+          }
+        }).then((response) => {
+          if (response && response.data && response.data.meta.success) {
+            dispatch(updateIsPasswordUpdate(true));
+          } else {
+            dispatch(updateIsPasswordWrong(true));
+          }
+        });
       });
-    });
-  }
+  };
 }
