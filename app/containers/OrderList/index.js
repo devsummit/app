@@ -7,46 +7,39 @@ import {
 } from 'native-base';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import OrderItem from '../../components/OrderItem';
+import * as actions from './actions';
+import * as selectors from './selectors';
 
 
 class OrderList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentWillMount() {
+    this.props.getOrderList();
   }
 
 
   render() {
-    const orders = [
-      {
-        id: 645,
-        totalPrice: '5.000.000',
-        status: 'paid',
-        date: '2017-08-09'
-      },
-      {
-        id: 795,
-        totalPrice: '3.200.000',
-        status: 'pending',
-        date: '2017-08-09'
-      },
-      {
-        id: 984,
-        totalPrice: '3.200.000',
-        status: 'canceled',
-        date: '2017-08-09'
-      }
-    ];
-
+    console.log("LISSTTTT", this.props)
     return (
       <Container style={styles.container}>
         <Content>
-          <List>
-            {orders.map((order) => {
-              return <OrderItem key={order.id} order={order} onPress={() => { Actions.orderDetail({ orderId: order.id }); }} />
+          <List style={{ paddingRight: 10 }}>
+            {this.props.orders.map((order) => {
+              return (
+                <OrderItem
+                  key={order.id}
+                  order={order}
+                  onPress={() => {
+                    Actions.orderDetail({
+                      orderId: order.id
+                    });
+                  }}
+                />
+              );
             })}
           </List>
         </Content>
@@ -58,4 +51,8 @@ class OrderList extends Component {
   }
 }
 
-export default OrderList;
+const mapStateToProps = createStructuredSelector({
+  orders: selectors.getOrders()
+});
+
+export default connect(mapStateToProps, actions)(OrderList);

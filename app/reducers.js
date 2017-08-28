@@ -12,6 +12,8 @@ import changePasswordReducer from './containers/ChangePassword/reducer';
 import ProfileReducer from './containers/Profile/reducer';
 import paymentMethodReducer from './containers/Payment/reducer';
 import paymentDetailReducer from './containers/PaymentDetail/reducer';
+import OrderListReducer from './containers/OrderList/reducer';
+import OrderDetailReducer from './containers/OrderDetail/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -24,7 +26,9 @@ const rootReducers = combineReducers({
   profile: ProfileReducer,
   newOrder: NewOrderReducer,
   methodPayment: paymentMethodReducer,
-  detailPayment: paymentDetailReducer
+  detailPayment: paymentDetailReducer,
+  orderList: OrderListReducer,
+  orderDetail: OrderDetailReducer
 });
 
 export default rootReducers;

@@ -28,9 +28,11 @@ class NewOrder extends Component {
   increase = (typeId) => {
     this.props.updateOrder('increase', typeId);
   };
+
   decrease = (typeId) => {
     this.props.updateOrder('decrease', typeId);
   };
+
   placeOrder = () => {
     this.props.placeOrder();
   }
@@ -81,6 +83,7 @@ class NewOrder extends Component {
             </CardItem>
           </Card>
           <Button
+            block
             style={styles.orderBtn}
             onPress={() => { this.placeOrder(); }}
           >

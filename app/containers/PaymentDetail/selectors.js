@@ -9,7 +9,7 @@ import { createSelector } from 'reselect';
 const selectPaymentDetailReducer = () => state => state.get('detailPayment');
 
 /**
- *  Selects the username field data
+ *  Selects the field data
  *  Returns object
  */
 export const getInputFields = () => createSelector(

@@ -10,42 +10,65 @@ import {
   Button,
   Grid,
   Row,
-  Col
+  Col,
+  List,
+  ListItem
 } from 'native-base';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import { PRIMARYCOLOR } from '../../constants';
+import * as actions from './actions';
+import * as selectors from './selectors';
+import TicketType from '../../components/TicketType';
 
-
-class OrderList extends Component {
+let total = 0;
+class OrderDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
       headerRight: <Button style={styles.roundButton} onPress={() => params.handleCheckOut()} >
-        <Icon name='check' color={PRIMARYCOLOR} />
+        <Icon name="check" color={PRIMARYCOLOR} />
         <Text style={styles.textButton}>Check Out</Text>
       </Button>
     };
   };
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
 
   componentWillMount() {
+    // this.props.getTicketType();
+    this.props.getOrderDetail(this.props.orderId);
     this.props.navigation.setParams({
       handleCheckOut:
       this.handleCheckOut
     });
   }
 
+  getTotal = () => {
+    const order = this.props.order;
+    const arraySub = order.map((item) => {
+      return item.count * item.ticket.price;
+    });
+    total = arraySub.reduce((a, b) => { return a + b; }, 0);
+    return total;
+  }
+
+  increase = (typeId) => {
+    this.props.updateOrder('increase', typeId);
+  };
+
+  decrease = (typeId) => {
+    this.props.updateOrder('decrease', typeId);
+  };
+
   handleCheckOut = () => {
     Actions.payment();
   }
 
-
   render() {
+    console.log('ORDER DETAIL', this.props.order);
+
     return (
       <Container style={styles.container}>
         <Content>
@@ -54,7 +77,7 @@ class OrderList extends Component {
               <Grid>
                 <Row>
                   <Col><Text>Order number:</Text></Col>
-                  <Col><Text>{ this.props.orderId }</Text></Col>
+                  <Col><Text>{this.props.orderId}</Text></Col>
                 </Row>
                 <Row>
                   <Col><Text>Order date:</Text></Col>
@@ -63,47 +86,30 @@ class OrderList extends Component {
               </Grid>
             </CardItem>
           </Card>
-          <Card>
-            <CardItem header>
-              <Text>Order Items</Text>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>Gold ticket</Text>
-                <Text note style={{color: '#285ced'}}>Rp 500.000</Text>
-              </Body>
-              <Right>
-                <Text note>Qty:</Text>
-                <Text>4</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>Silver ticket</Text>
-                <Text note style={{color: '#285ced'}}>Rp 300.000</Text>
-              </Body>
-              <Right>
-                <Text note>Qty:</Text>
-                <Text>2</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Text>VIP ticket</Text>
-                <Text note style={{color: '#285ced'}}>Rp 1.000.000</Text>
-              </Body>
-              <Right>
-                <Text note>Qty:</Text>
-                <Text>1</Text>
-              </Right>
-            </CardItem>
-          </Card>
+          {
+            <Content>
+              <List
+                dataArray={this.props.order}
+                renderRow={item =>
+                  (<ListItem>
+                    <TicketType
+                      key={item.id}
+                      count={item.count}
+                      ticket={item.ticket}
+                      onAdd={() => this.increase(item.id)}
+                      onReduce={() => this.decrease(item.id)}
+                    />
+                  </ListItem>)
+                }
+              />
+            </Content>
+          }
           <Card>
             <CardItem>
               <Body>
                 <Text>Total</Text>
               </Body>
-              <Right><Text>Rp 3.600.000</Text></Right>
+              <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
           </Card>
         </Content>
@@ -112,4 +118,9 @@ class OrderList extends Component {
   }
 }
 
-export default OrderList;
+const mapStateToProps = createStructuredSelector({
+  ticketTypes: selectors.getTicketTypes(),
+  order: selectors.getOrder()
+});
+
+export default connect(mapStateToProps, actions)(OrderDetail);

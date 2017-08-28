@@ -56,7 +56,8 @@ export function updateOrder(action, typeId) {
 export function placeOrder() {
   return (dispatch, getState) => {
     const { order } = getState().get('newOrder').toJS();
-    const data = Object.keys(order).map((key) => { return order[key]; });
+    const orderItems = Object.keys(order).map((key) => { return order[key]; });
+    const data = { order_details: orderItems };
 
     getAccessToken().then((accessToken) => {
       DevSummitAxios.post('api/v1/orders', data, {
