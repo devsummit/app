@@ -5,7 +5,7 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { twitter } from 'react-native-simple-auth';
@@ -20,6 +20,7 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+const Logo = require('../../../assets/images/logo.png');
 
 class RegisterMenu extends Component {
   registerFacebook = () => {
@@ -32,47 +33,52 @@ class RegisterMenu extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <Content style={styles.content}>
-          <View style={styles.lineSection}>
-            <View style={styles.lineTextThree} />
-            <Text style={styles.lineTextFour}> register with social media </Text>
-            <View style={styles.lineTextThree} />
-          </View>
-          <View style={styles.buttonSocialSection}>
-            <Button block style={styles.buttonSocial} onPress={() => { this.registerFacebook(); }} >
-              <Icon name="facebook" color="white" style={styles.iconSocial} />
-              <Text style={styles.buttonSocialText} >Facebook</Text>
+      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
+        <Container style={styles.container}>
+          <Content>
+            <View style={styles.headerSection}>
+              <Image source={Logo} resizeMode="center" />
+            </View>
+            <View style={styles.lineSection}>
+              <View style={styles.lineTextThree} />
+              <Text style={styles.lineTextFour}> register with social media </Text>
+              <View style={styles.lineTextThree} />
+            </View>
+            <View style={styles.buttonSocialSection}>
+              <Button block style={styles.buttonSocial} onPress={() => { this.registerFacebook(); }} >
+                <Icon name="facebook" color="white" style={styles.iconSocial} />
+              </Button>
+              <Button info block style={styles.buttonSocial} onPress={this.registerTwitter} >
+                <Icon name="twitter" color="white" style={styles.iconSocial} />
+              </Button>
+              <Button danger block style={styles.buttonSocial} onPress={() => { this.props.registerGoogle(); }}>
+                <Icon name="google-plus" color="white" style={styles.iconSocial} />
+              </Button>
+            </View>
+            <View style={styles.lineSection}>
+              <View style={styles.lineTextOne} />
+              <Text style={styles.lineTextTwo}> or </Text>
+              <View style={styles.lineTextOne} />
+            </View>
+            <Button warning block style={styles.button} onPress={() => { Actions.registerEmail(); }}>
+              <Icon name="envelope" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>Email</Text>
             </Button>
-            <Button info block style={styles.buttonSocial} onPress={this.registerTwitter} >
-              <Icon name="twitter" color="white" style={styles.iconSocial} />
-              <Text style={styles.buttonSocialText} >Twitter</Text>
+            <View style={styles.lineSection}>
+              <View style={styles.lineTextOne} />
+              <Text style={styles.lineTextTwo}> or </Text>
+              <View style={styles.lineTextOne} />
+            </View>
+            <Button style={[ styles.button, { backgroundColor: '#FFD740' } ]} onPress={() => { Actions.registerPhone(); }}>
+              <Icon name="phone" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>Phone</Text>
             </Button>
-            <Button danger block style={styles.buttonSocial} onPress={() => { this.props.registerGoogle(); }}>
-              <Icon name="google-plus" color="white" style={styles.iconSocial} />
-              <Text style={styles.buttonSocialText} >Google</Text>
-            </Button>
-          </View>
-          <View style={styles.lineSection}>
-            <View style={styles.lineTextOne} />
-            <Text style={styles.lineTextTwo}> or </Text>
-            <View style={styles.lineTextOne} />
-          </View>
-          <Button warning block style={styles.button} onPress={() => { Actions.registerEmail(); }}>
-            <Icon name="envelope" color="white" style={styles.icon} />
-            <Text style={styles.buttonText}>Email</Text>
-          </Button>
-          <View style={styles.lineSection}>
-            <View style={styles.lineTextOne} />
-            <Text style={styles.lineTextTwo}> or </Text>
-            <View style={styles.lineTextOne} />
-          </View>
-          <Button success block style={styles.button} onPress={() => { Actions.registerPhone(); }}>
-            <Icon name="phone" color="white" style={styles.icon} />
-            <Text style={styles.buttonText}>Phone</Text>
-          </Button>
-        </Content>
-      </Container>
+          </Content>
+        </Container>
+        <TouchableOpacity style={{ justifyContent: 'flex-end', margin: 16 }} onPress={() => Actions.pop()}>
+          <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 30 }} />
+        </TouchableOpacity>
+      </Image>
     );
   }
 }
