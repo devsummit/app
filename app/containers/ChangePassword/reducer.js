@@ -2,15 +2,14 @@
  * import contants
  */
 
+import { fromJS } from 'immutable';
+
 import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_IS_PASSWORD_UPDATED,
   UPDATE_IS_PASSWORD_WRONG
-} from './constants'
-
-import { fromJS } from 'immutable'
-
+} from './constants';
 
 /*
  * initial state of reducers
