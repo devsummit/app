@@ -15,8 +15,8 @@ import {
 */
 const initialState = fromJS({
   inputFields: {
-    paymentType: '',
-    bankDestination: ''
+    paymentType: 'credit_card',
+    bankDestination: 'mandiri'
   },
   errorFields: {
 

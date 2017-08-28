@@ -14,32 +14,47 @@ export const PAYMENT_METHODS = [
   {
     value: 'key2',
     label: 'BCA Klikpay',
-    payment_type: 'bca_klikpay'
+    payment_type: 'bca_klikpay',
+    bankDestination: 'bca',
+    basicDetail: true
   },
   {
     value: 'key3',
     label: 'Klikbca',
-    payment_type: 'bca_klikbca'
+    payment_type: 'bca_klikbca',
+    bankDestination: 'bca',
+    basicDetail: true,
+    descriptionDetail: true
   },
   {
     value: 'key4',
     label: 'Mandiri Clickpay',
-    payment_type: 'mandiri_clickpay'
+    payment_type: 'mandiri_clickpay',
+    bankDestination: 'mandiri',
+    basicDetail: true,
+    extraInput: true
   },
   {
     value: 'key5',
     label: 'Epay BRI',
-    payment_type: 'bri_epay'
+    payment_type: 'bri_epay',
+    bankDestination: 'bri',
+    basicDetail: true
   },
   {
     value: 'key6',
     label: 'CIMB Clicks',
-    payment_type: 'cimb_clicks'
+    payment_type: 'cimb_clicks',
+    bankDestination: 'cimb',
+    basicDetail: true,
+    descriptionDetail: true
   },
   {
     value: 'key7',
     label: 'Danamon Online Banking',
-    payment_type: 'danamon_online'
+    payment_type: 'danamon_online',
+    bankDestination: 'danamon',
+    basicDetail: true
   }
 ];
 

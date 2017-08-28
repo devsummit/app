@@ -23,7 +23,7 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import * as paymentSelectors from '../Payment/selectors';
-import { BANK_TRANSFERS, CREDIT_CARD } from '../Payment/constants';
+import { BANK_TRANSFERS, CREDIT_CARD, PAYMENT_METHODS } from '../Payment/constants';
 
 // import constants
 import { PRIMARYCOLOR } from '../../constants';
@@ -36,17 +36,26 @@ class PaymentDetail extends Component {
   componentWillReceiveProps() {
     const { getTransactionResponse } = this.props;
     if (Object.keys(getTransactionResponse).length > 0) {
-      if (getTransactionResponse.data) {
-        Alert.alert(getTransactionResponse.meta.message.status_message);
+      if (getTransactionResponse.data && getTransactionResponse.data.status_message) {
+        Alert.alert(getTransactionResponse.data.status_message);
         this.props.updateGetTransactionResponse({});
         Actions.pop();
       } else if (
         getTransactionResponse.meta &&
         getTransactionResponse.meta.message &&
         getTransactionResponse.meta.message.status_message) {
-        Alert.alert(getTransactionResponse.meta.message.status_message);
-        this.props.updateGetTransactionResponse({});
-        Actions.pop();
+        if (getTransactionResponse.meta.message.validation_messages) {
+          const messages = getTransactionResponse.meta.message.validation_messages;
+          let message = ''
+          for (let i = 0; i < messages.length; i++) {
+            message += messages[i];
+          }
+          Alert.alert(message);
+        } else {
+          Alert.alert(getTransactionResponse.meta.message.status_message);
+          this.props.updateGetTransactionResponse({});
+          Actions.pop();
+        }
       } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {
         Alert.alert(getTransactionResponse.meta.message);
         this.props.updateGetTransactionResponse({});
@@ -60,6 +69,7 @@ class PaymentDetail extends Component {
   }
 
   render() {
+    console.log(this.props)
     const monthList = [];
     const yearList = [];
 
@@ -73,18 +83,26 @@ class PaymentDetail extends Component {
       detail = CREDIT_CARD;
 
       for (let i = 0; i < 12; i++) {
+        let mo = i + 1
+        if (i < 9) {
+          mo = '0'.concat(mo)
+        }
         monthList.push({
           value: 'key'.concat(i),
-          label: (i + 1).toString()
+          label: mo.toString()
         });
       }
-
       for (let i = 0; i < 20; i++) {
         yearList.push({
           value: 'key'.concat(i),
           label: (i + 2017).toString()
         });
       }
+    } else {
+      detail = PAYMENT_METHODS.filter((data) => {
+        return data.payment_type === paymentType;
+      })[0];
+      console.log(detail)
     }
 
     const { inputFields, errorFields, getIsFetchingTransaction } = this.props;
@@ -96,7 +114,14 @@ class PaymentDetail extends Component {
       vaNumber,
       cardExpiryMonth,
       cardExpiryYear,
-      cardNumber
+      cardCvv,
+      cardNumber,
+      grossAmount,
+      orderId,
+      descriptionDetail,
+      lastDigitNumber,
+      randomNumber,
+      mandiriToken
     } = inputFields || '';
     const {
       errorEmailDetail,
@@ -104,7 +129,12 @@ class PaymentDetail extends Component {
       errorLastName,
       errorPhoneNumber,
       errorVaNumber,
-      errorCardNumber
+      errorCardNumber,
+      errorCardCvv,
+      errorDescriptionDetail,
+      errorLastDigitNumber,
+      errorRandomNumber,
+      errorMandiriToken
     } = errorFields || false;
 
     if (getIsFetchingTransaction) {
@@ -116,7 +146,6 @@ class PaymentDetail extends Component {
         </Container>
       );
     }
-
     return (
       <Container style={styles.container}>
         <Content>
@@ -165,6 +194,12 @@ class PaymentDetail extends Component {
                 onChangeText={text => this.handleInputChange('cardNumber', text)}
                 value={cardNumber}
               />
+              <InputItem
+                title="cvv"
+                error={errorCardCvv}
+                onChangeText={text => this.handleInputChange('cardCvv', text)}
+                value={cardCvv}
+              />
               <Text>expiry</Text>
               <View style={styles.datePicker}>
                 <Picker
@@ -192,6 +227,57 @@ class PaymentDetail extends Component {
               </View>
             </Content> : <Content />
           }
+          {detail && detail.descriptionDetail ?
+            <Content>
+              <InputItem
+                error={errorDescriptionDetail}
+                title="Description"
+                onChangeText={text => this.handleInputChange('descriptionDetail', text)}
+                value={descriptionDetail}
+              />
+            </Content> : <Content />
+          }
+          {detail && detail.extraInput ?
+            <Content>
+              <InputItem
+                error={errorCardNumber}
+                title="16 digits card number"
+                onChangeText={text => this.handleInputChange('cardNumber', text)}
+                value={cardNumber}
+              />
+              <Text style={styles.text}>
+                Last 10 digits
+              </Text>
+              <Text
+                style={styles.text}
+                onChangeText={text => this.handleInputChange('lastDigitNumber', text)}
+              >
+                {cardNumber.slice(6, 16)}
+              </Text>
+              <InputItem
+                error={errorRandomNumber}
+                title="5 digit random number given"
+                onChangeText={text => this.handleInputChange('randomNumber', text)}
+                value={randomNumber}
+              />
+              <InputItem
+                error={errorMandiriToken}
+                title="mandiri token"
+                onChangeText={text => this.handleInputChange('mandiriToken', text)}
+                value={mandiriToken}
+              />
+            </Content> : <Content />
+          }
+          <InputItem
+            title="Order ID"
+            onChangeText={text => this.handleInputChange('orderId', text)}
+            value={orderId}
+          />
+          <InputItem
+            title="Gross Amount"
+            onChangeText={text => this.handleInputChange('grossAmount', text)}
+            value={grossAmount}
+          />
 
           <Button
             style={styles.button}

@@ -27,6 +27,7 @@ import { PRIMARYCOLOR } from '../../constants';
 
 let bankList = [];
 
+
 class Payment extends Component {
   constructor(props) {
     super(props);
@@ -34,8 +35,6 @@ class Payment extends Component {
   }
 
   componentWillMount() {
-    this.props.updateInputFields('paymentType', 'credit_card');
-    this.props.updateInputFields('bankDestination', 'mandiri');
     this.props.navigation.setParams({
       handleIconTouch:
       this.handleIconTouch
@@ -43,11 +42,16 @@ class Payment extends Component {
   }
 
   handleInputChange = (field, value) => {
+    console.log(field, value)
     this.props.updateInputFields(field, value);
-    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
-    if (field === 'paymentType' && value === 'credit_card') {
-      this.props.updateInputFields('bankDestination', '');
+    if (field === 'paymentType' && value !== 'credit_card' && value !== 'bank_transfer') {
+      const selectedMethod = PAYMENT_METHODS.filter((data)=> {
+        return data.payment_type === value;
+      })
+      this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
+      console.log(selectedMethod)
     }
+    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
 
   render() {

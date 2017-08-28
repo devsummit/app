@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   monthPicker: {
-    width: 50
+    width: 100
   },
   yearPicker: {
     width: 100

@@ -67,27 +67,35 @@ export function submitPayment() {
     const paymentDetail = getState().getIn([ 'detailPayment', 'inputFields' ]).toJS();
 
     const {
-      emailDetail, firstName, LastName, phoneNumber, vaNumber, cardExpiryMonth,
-      cardExpiryYear
+      emailDetail, firstName, lastName, phoneNumber, vaNumber, cardExpiryMonth,
+      cardExpiryYear, grossAmount, orderId, cardNumber, cardCvv, descriptionDetail, lastDigitNumber,
+      randomNumber, mandiriToken
     } = paymentDetail || '';
     const {
       bankDestination, paymentType
     } = paymentMethod || '';
-
+    console.log(paymentMethod, paymentDetail);
     DevSummitAxios.post('api/v1/payments', {
       bank: bankDestination,
       payment_type: paymentType,
       gross_amount: 100000,
-      order_id: '13',
+      order_id: orderId,
       email: emailDetail,
       first_name: firstName,
-      last_name: LastName,
+      last_name: lastName,
       phone: phoneNumber,
       va_number: vaNumber,
       card_exp_month: cardExpiryMonth,
       card_exp_year: cardExpiryYear,
+      card_cvv: cardCvv,
+      card_number: cardNumber,
+      description: descriptionDetail,
+      input1: lastDigitNumber,
+      input3: randomNumber,
+      token: mandiriToken,
       client_key: MIDTRANS_CLIENT_KEY
     }).then((response) => {
+      console.log(response)
       dispatch(updateGetTransactionResponse(response.data));
       dispatch(updateIsFetchingTransaction(false));
     }).catch((err) => {
