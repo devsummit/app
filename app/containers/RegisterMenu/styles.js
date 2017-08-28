@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: 10,
+    marginBottom: 20,
     flex: 1,
     borderRadius: 50,
     borderWidth: 1,
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginRight: 18,
     marginLeft: 18,
-    marginTop: 5,
-    marginBottom: 5
+    marginTop: 20,
+    marginBottom: 20
   },
   lineTextOne: {
     flex: 4.5,
