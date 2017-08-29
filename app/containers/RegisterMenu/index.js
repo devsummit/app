@@ -70,10 +70,14 @@ class RegisterMenu extends Component {
             </Button>
           </Content>
         </Container>
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 16 }} onPress={() => Actions.pop()}>
-          <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 25 }} />
-          <Text style={{ fontSize: 20, color: '#FFFFFF', marginLeft: 10 }}>Back</Text>
-        </TouchableOpacity>
+        <Button
+          transparent
+          style={styles.buttonRegister}
+          onPress={() => { Actions.main(); }}
+        >
+          <Text style={styles.registerText}>{"Already have account?"}</Text>
+          <Text style={styles.registerTextBold}>Sign In</Text>
+        </Button>
       </Image>
     );
   }
