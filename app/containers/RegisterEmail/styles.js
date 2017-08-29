@@ -2,7 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)'
+    flex: 1
+  },
+  background: {
+    flex: 1,
+    width: undefined,
+    height: undefined
   },
   title: {
     fontSize: 18,
@@ -11,11 +16,18 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 20
   },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: '#FFD740',
+    borderRadius: 50,
+    margin: 20
+  },
   button: {
     marginLeft: 12,
     marginRight: 12,
     marginBottom: 10,
-    borderRadius: 5,
+    backgroundColor: '#FFA726',
+    borderRadius: 50,
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row'
@@ -25,7 +37,36 @@ const styles = StyleSheet.create({
     flex: 9
   },
   picker: {
-    margin: 12
+    margin: 12,
+    color: '#FFFFFF'
+  },
+  formSection: {
+    marginTop: 8,
+    marginRight: 18,
+    marginLeft: 16
+  },
+  formInput: {
+    paddingLeft: 20,
+    color: '#FFFFFF'
+  },
+  item: {
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1
+  },
+  buttonRegister: {
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  registerText: {
+    textAlign: 'center',
+    color: '#FFFFFF'
+  },
+  registerTextBold: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 8,
+    color: '#FFD740'
   },
   labelText: {
     fontSize: 12,

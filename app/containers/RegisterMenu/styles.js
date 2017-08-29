@@ -2,10 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)'
+    flex: 1
   },
-  content: {
-    marginTop: 10
+  background: {
+    flex: 1,
+    width: undefined,
+    height: undefined
   },
   title: {
     fontSize: 18,
@@ -18,8 +20,11 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginBottom: 10,
+    marginBottom: 20,
     flex: 1,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: 'transparent',
     justifyContent: 'center',
     flexDirection: 'row'
   },
@@ -39,10 +44,27 @@ const styles = StyleSheet.create({
   buttonSocial: {
     height: '100%',
     justifyContent: 'center',
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: 'transparent',
     marginLeft: 5,
     marginRight: 5,
     flexDirection: 'column',
     flex: 0.3
+  },
+  buttonRegister: {
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  registerText: {
+    textAlign: 'center',
+    color: '#FFFFFF'
+  },
+  registerTextBold: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 8,
+    color: '#FFD740'
   },
   buttonSocialText: {
     textAlign: 'center',
@@ -51,7 +73,8 @@ const styles = StyleSheet.create({
   iconSocial: {
     textAlign: 'center',
     flex: 1,
-    fontSize: 18
+    fontSize: 20,
+    padding: 8
   },
   picker: {
     margin: 12
@@ -71,32 +94,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginRight: 18,
     marginLeft: 18,
-    marginTop: 5,
-    marginBottom: 5
+    marginTop: 20,
+    marginBottom: 20
   },
   lineTextOne: {
     flex: 4.5,
-    opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     height: 1.5,
     marginTop: 12
   },
   lineTextTwo: {
     textAlign: 'center',
     flex: 1,
-    opacity: 0.3
+    color: '#FFFFFF'
   },
   lineTextThree: {
     flex: 2,
-    opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: '#FFFFFF',
     height: 1.5,
     marginTop: 12
   },
   lineTextFour: {
     textAlign: 'center',
     flex: 6,
-    opacity: 0.3
+    color: '#FFFFFF'
   }
 });
 
