@@ -25,6 +25,20 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     color: '#FFFFFF'
   },
+  buttonRegister: {
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  registerText: {
+    textAlign: 'center',
+    color: '#FFFFFF'
+  },
+  registerTextBold: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 8,
+    color: '#FFD740'
+  },
   item: {
     marginBottom: 10,
     borderColor: '#FFD740',
