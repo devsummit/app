@@ -28,12 +28,12 @@ export function updateOrder(action, detaild) {
     const { order } = getState().get('orderDetail').toJS();
     const ord = order.filter((item) => {
       return item.id === detaild;
-    })[0]
+    })
+    const firstOrder = ord[0]
     if (action === 'increase') {
-      if (ord) {
-        ord.count += 1;
-        console.log(ord, detaild)
-        dispatch({ type: UPDATE_ORDER, id: order.indexOf(ord), payload: ord });
+      if (firstOrder) {
+        firstOrder.count += 1;
+        dispatch({ type: UPDATE_ORDER, id: order.indexOf(firstOrder), payload: firstOrder });
       } else {
         const payload = { ticket_id: order.indexOf(ord), count: 1 };
         dispatch({ type: UPDATE_ORDER, id: order.indexOf(ord), payload });
@@ -41,9 +41,9 @@ export function updateOrder(action, detaild) {
     }
 
     if (action === 'decrease') {
-      if (ord && ord.count > 0) {
-        ord.count -= 1;
-        dispatch({ type: UPDATE_ORDER, id: order.indexOf(ord), payload: ord });
+      if (firstOrder && firstOrder.count > 0) {
+        firstOrder.count -= 1;
+        dispatch({ type: UPDATE_ORDER, id: order.indexOf(firstOrder), payload: firstOrder });
       }
     }
   };

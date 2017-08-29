@@ -24,7 +24,6 @@ function orderDetailReducer(state = initialState, action) {
     case SET_ORDER:
       return state.set('order', fromJS(action.data));
     case UPDATE_ORDER:
-      console.log("STATTTEE", state.toJS())
       return state.setIn(['order', action.id ], fromJS(action.payload));
     default:
       return state;

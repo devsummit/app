@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
 export default (props) => {
-  console.log("TICKET", props.ticket)
   const ticket = props.ticket;
   return (
     <Card key={ticket.id}>

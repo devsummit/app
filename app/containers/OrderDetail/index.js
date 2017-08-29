@@ -36,8 +36,7 @@ class OrderDetail extends Component {
     };
   };
 
-  componentWillMount() {
-    // this.props.getTicketType();
+  componentWillMount = () => {
     this.props.getOrderDetail(this.props.orderId);
     this.props.navigation.setParams({
       handleCheckOut:
@@ -67,7 +66,6 @@ class OrderDetail extends Component {
   }
 
   render() {
-    console.log('ORDER DETAIL', this.props.order);
 
     return (
       <Container style={styles.container}>

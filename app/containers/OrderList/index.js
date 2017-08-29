@@ -21,9 +21,7 @@ class OrderList extends Component {
     this.props.getOrderList();
   }
 
-
   render() {
-    console.log("LISSTTTT", this.props)
     return (
       <Container style={styles.container}>
         <Content>

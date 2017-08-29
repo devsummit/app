@@ -68,9 +68,9 @@ export default class App extends Component {
             <Scene key="changePassword" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
             <Scene key="orderList" component={OrderList} title="Order List" />
+            <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} title="Schedule" />
-            <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="attendeesList" component={AttendeesList} title="Select Attendee"/>
             <Scene key="payment" component={Payment} title="Choose Payment Method"/>
             <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail"/>

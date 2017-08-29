@@ -17,7 +17,6 @@ export function updateIsFetchingOrders(status) {
 }
 
 export function getOrderList() {
-  console.log("aaaaaaaaaaaaa")
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
     getAccessToken().then((accessToken) => {
