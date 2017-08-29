@@ -4,11 +4,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  headerSection: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
   titleText: {
     fontSize: 10.5,
     color: 'white',

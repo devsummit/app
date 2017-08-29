@@ -61,11 +61,6 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     color: '#FFD740'
   },
-  headerSection: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
   buttonSocialText: {
     textAlign: 'center',
     fontSize: 12

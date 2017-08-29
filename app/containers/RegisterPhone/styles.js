@@ -11,11 +11,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 20
   },
-  headerSection: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   formSection: {
     marginTop: 8,
     marginRight: 18,

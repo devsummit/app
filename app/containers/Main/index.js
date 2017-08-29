@@ -21,6 +21,7 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
 import InputItem from '../../components/InputItem';
+import AuthLogo from '../../components/AuthLogo';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
@@ -29,7 +30,6 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 const Transition = createTransition(Fade);
-const Logo = require('../../../assets/images/logo.png');
 
 class Main extends Component {
   state = {
@@ -113,86 +113,87 @@ class Main extends Component {
     }
     return (
       <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
-      <Container style={styles.container}>
-        <StatusBar hidden />
-        <Header androidStatusBarColor="#f39e21" style={{display:'none'}}/>
-        <Content>
-          <View style={styles.headerSection}>
-            <Image source={Logo} resizeMode="center" />
-          </View>
-          <View style={styles.lineSection}>
-            <View style={styles.lineTextThree} />
-            <Text style={styles.lineTextFour}> Log in with social media </Text>
-            <View style={styles.lineTextThree} />
-          </View>
-          <View style={styles.buttonSocialSection}>
-            <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
-              <Icon name="facebook" color="white" style={styles.icon} />
-            </Button>
-            <Button danger style={styles.buttonSocial} onPress={() => {this.props.loginGoogle()}}>
-              <Icon name="google-plus" color="white" style={styles.icon} />
-            </Button>
-            <Button info style={styles.buttonSocial} onPress={() => {this.props.loginTwitter()}}>
-              <Icon name="twitter" color="white" style={styles.icon} />
-            </Button>
-          </View>
-          <View style={styles.lineSection}>
-            <Text style={styles.lineTextTwo}> or </Text>
-          </View>
-            <Button style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]} onPress={() => {this.props.loginTwitter()}}>
+        <Container style={styles.container}>
+          <StatusBar hidden />
+          <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
+          <Content>
+            <AuthLogo />
+            <View style={styles.lineSection}>
+              <View style={styles.lineTextThree} />
+              <Text style={styles.lineTextFour}> Log in with social media </Text>
+              <View style={styles.lineTextThree} />
+            </View>
+            <View style={styles.buttonSocialSection}>
+              <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
+                <Icon name="facebook" color="white" style={styles.icon} />
+              </Button>
+              <Button danger style={styles.buttonSocial} onPress={() => {this.props.loginGoogle()}}>
+                <Icon name="google-plus" color="white" style={styles.icon} />
+              </Button>
+              <Button info style={styles.buttonSocial} onPress={() => {this.props.loginTwitter()}}>
+                <Icon name="twitter" color="white" style={styles.icon} />
+              </Button>
+            </View>
+            <View style={styles.lineSection}>
+              <Text style={styles.lineTextTwo}> or </Text>
+            </View>
+            <Button
+              style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
+              onPress={() => { this.props.loginTwitter(); }}
+            >
               <Icon name="phone" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Login with phone number</Text>
             </Button>
-          <View style={styles.formSection}>
-            <Item rounded style={styles.item}>
-              <Input
-                style={styles.formInput}
-                placeholder="Username"
-                placeholderTextColor={'#BDBDBD'}
-                onChangeText={usernameText => this.handleInputChange('username', usernameText)}
-                value={username}
-              />
-            </Item>
-            <Item rounded style={styles.item}>
-              <Input
-                style={styles.formInput}
-                placeholder="Password"
-                placeholderTextColor={'#BDBDBD'}
-                secureTextEntry
-                onChangeText={passwordText => this.handleInputChange('password', passwordText)}
-                value={password}
-              />
-            </Item>
-          </View>
-          <View>
-            {(username === '' || password === '') ?
-              <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
-                <Text>Log In</Text>
+            <View style={styles.formSection}>
+              <Item rounded style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Username"
+                  placeholderTextColor={'#BDBDBD'}
+                  onChangeText={usernameText => this.handleInputChange('username', usernameText)}
+                  value={username}
+                />
+              </Item>
+              <Item rounded style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Password"
+                  placeholderTextColor={'#BDBDBD'}
+                  secureTextEntry
+                  onChangeText={passwordText => this.handleInputChange('password', passwordText)}
+                  value={password}
+                />
+              </Item>
+            </View>
+            <View>
+              {(username === '' || password === '') ?
+                <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
+                  <Text>Log In</Text>
+                </Button>
+                :
+                <Button primary block style={styles.button} onPress={() => { this.onLogin(); }}>
+                  <Text>Log In</Text>
+                </Button>
+              }
+              <Button
+                transparent
+                style={styles.buttonRegister}
+                onPress={() => { Actions.registerMenu(); }}
+              >
+                <Text style={styles.registerText}>{"Don't have an account?"}</Text>
+                <Text style={styles.registerTextBold}>Register</Text>
               </Button>
-              :
-              <Button primary block style={styles.button} onPress={() => { this.onLogin(); }}>
-                <Text>Log In</Text>
+              <Button
+                transparent
+                style={styles.buttonRegister}
+                onPress={() => { this.setModalVisible(); }}
+              >
+                <Text style={styles.registerText}>Subscribe to Newsletter</Text>
               </Button>
-            }
-            <Button
-              transparent
-              style={styles.buttonRegister}
-              onPress={() => { Actions.registerMenu(); }}
-            >
-              <Text style={styles.registerText}>{"Don't have an account?"}</Text>
-              <Text style={styles.registerTextBold}>Register</Text>
-            </Button>
-            <Button
-              transparent
-              style={styles.buttonRegister}
-              onPress={() => { this.setModalVisible(); }}
-            >
-              <Text style={styles.registerText}>Subscribe to Newsletter</Text>
-            </Button>
-          </View>
-        </Content>
-      </Container>
-    </Image>
+            </View>
+          </Content>
+        </Container>
+      </Image>
     );
   }
 }
@@ -224,7 +225,7 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isFetching: selectors.getIsFetching(),
+  isFetching: selectors.getIsFetching()
   // @TODO please create the selectors function
   // profileData: selectors.getProfileData()
 });

@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import Button from '../../components/Button';
+import AuthLogo from '../../components/AuthLogo';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -36,9 +37,7 @@ class RegisterMenu extends Component {
       <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
         <Container style={styles.container}>
           <Content>
-            <View style={styles.headerSection}>
-              <Image source={Logo} resizeMode="center" />
-            </View>
+            <AuthLogo />
             <View style={styles.lineSection}>
               <View style={styles.lineTextThree} />
               <Text style={styles.lineTextFour}> Register with social media </Text>

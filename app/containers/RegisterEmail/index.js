@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import InputItem from '../../components/InputItem';
+import AuthLogo from '../../components/AuthLogo';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -134,9 +135,7 @@ class RegisterEmail extends Component {
       <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
         <Container style={styles.container}>
           <Content>
-            <View style={styles.headerSection}>
-              <Image source={Logo} resizeMode="center" />
-            </View>
+            <AuthLogo />
             <View style={styles.formSection}>
               <InputItem
                 error={error_first_name}
