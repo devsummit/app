@@ -148,8 +148,17 @@ class Main extends Component {
               style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
               onPress={() => { this.props.loginTwitter(); }}
             >
-              <Icon name="phone" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Login with phone number</Text>
+              <LoginButton
+                style={styles.buttonLoggin}
+                type="phone"
+                onLogin={token => this.onLoginMobile(token)}
+                onError={e => this.onLoginMobile(e)}
+                primary
+                block
+              >
+                <Icon name="phone" color="white" style={styles.icon} />
+                <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+              </LoginButton>
             </Button>
             <View style={styles.formSection}>
               <Item rounded style={styles.item}>
