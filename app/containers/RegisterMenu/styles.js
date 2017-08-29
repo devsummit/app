@@ -47,6 +47,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 0.3
   },
+  buttonRegister: {
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  registerText: {
+    textAlign: 'center',
+    color: '#FFFFFF'
+  },
+  registerTextBold: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 8,
+    color: '#FFD740'
+  },
   headerSection: {
     justifyContent: 'center',
     alignItems: 'center',
