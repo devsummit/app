@@ -76,7 +76,7 @@ class Main extends Component {
 
   configureAccountKit = () => {
     AccountKit.configure({
-      countryWhitelist: [ 'ID' ],
+      countryWhitelist: ['ID'],
       defaultCountry: 'ID',
       initialPhoneCountryPrefix: '+62',
       initialPhoneNumber: '87809000750'
@@ -145,11 +145,20 @@ class Main extends Component {
               <Text style={styles.lineTextTwo}> or </Text>
             </View>
             <Button
-              style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
+              style={[styles.button, { backgroundColor: '#FFD740', margin: 12 }]}
               onPress={() => { this.props.loginTwitter(); }}
             >
-              <Icon name="phone" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Login with phone number</Text>
+              <LoginButton
+                style={styles.buttonLoggin}
+                type="phone"
+                onLogin={token => this.onLoginMobile(token)}
+                onError={e => this.onLoginMobile(e)}
+                primary
+                block
+              >
+                <Icon name="phone" color="white" style={styles.icon} />
+                <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+              </LoginButton>
             </Button>
             <View style={styles.formSection}>
               <Item rounded style={styles.item}>
@@ -174,7 +183,7 @@ class Main extends Component {
             </View>
             <View>
               {(username === '' || password === '') ?
-                <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
+                <Button disabled block style={[styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' }]}>
                   <Text>Log In</Text>
                 </Button>
                 :

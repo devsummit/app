@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   text: {
-    flex: 3
+    flex: 5
   },
   button: {
-    flex: 1,
+    flex: 3,
     justifyContent: 'center',
     alignSelf: 'flex-end',
     borderRadius: 90
