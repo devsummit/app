@@ -7,7 +7,7 @@ import {
   Button,
   Text
 } from 'native-base';
-import { Alert, Image, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 
@@ -204,10 +204,14 @@ class RegisterEmail extends Component {
             >
               <Text style={styles.buttomText}>Register</Text>
             </Button>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', margin: 16 }} onPress={() => Actions.pop()}>
-              <Icon name="chevron-left" style={{ color: '#FFFFFF', fontSize: 25 }} />
-              <Text style={{ fontSize: 20, color: '#FFFFFF', marginLeft: 10 }}>Back</Text>
-            </TouchableOpacity>
+            <Button
+              transparent
+              style={styles.buttonRegister}
+              onPress={() => { Actions.main(); }}
+            >
+              <Text style={styles.registerText}>{"Already have account?"}</Text>
+              <Text style={styles.registerTextBold}>Sign In</Text>
+            </Button>
           </Content>
         </Container>
       </Image>
