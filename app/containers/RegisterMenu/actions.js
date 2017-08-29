@@ -52,7 +52,7 @@ export function registerGoogle() {
               email: response.data.emails[0].value,
               social_id: response.data.id
             }
-            Actions.registerEmail({ prefilledData: prefilledData })
+            Actions.registerEmail({ prefilledData })
           }).catch(err => console.log(err));
         }
       }).catch(err => console.log(err));

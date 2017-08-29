@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 /**
  *  Select the main portion of the root reducer
  */
-const selectChangePasswordReducer = () => (state) => state.get('changePassword');
+const selectChangePasswordReducer = () => state => state.get('changePassword');
 
 /**
  *  Selects the username field data
@@ -14,7 +14,7 @@ const selectChangePasswordReducer = () => (state) => state.get('changePassword')
  */
 export const getInputFields = () => createSelector(
   selectChangePasswordReducer(),
-  (state) => state.get('inputFields').toJS()
+  state => state.get('inputFields').toJS()
 );
 
 /**
@@ -23,15 +23,15 @@ export const getInputFields = () => createSelector(
  */
 export const getErrorFields = () => createSelector(
   selectChangePasswordReducer(),
-  (state) => state.get('errorFields').toJS()
+  state => state.get('errorFields').toJS()
 );
 
 export const getIsPasswordUpdated = () => createSelector(
   selectChangePasswordReducer(),
-  (state) =>  state.get('isPasswordUpdated')
+  state => state.get('isPasswordUpdated')
 );
 
 export const getIsPasswordWrong = () => createSelector(
   selectChangePasswordReducer(),
-  (state) => state.get('isPasswordWrong')
+  state => state.get('isPasswordWrong')
 );

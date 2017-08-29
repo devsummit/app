@@ -16,6 +16,7 @@ import {
   Text,
   Title
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import { StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
@@ -71,8 +72,8 @@ class ChangePassword extends Component {
       const { error_current_password, error_new_password, error_confirm_password, error_password_not_the_same } = errorFields || false;
 
       if (isPasswordUpdated) {
-        Alert.alert('Success', 'Password changed');
-        this.props.updateIsPasswordUpdated(false)
+        Alert.alert('Success', 'Password changed', [{ text: 'Ok', onPress: () => Actions.mainTabs() }]);
+        this.props.updateIsPasswordUpdate(false);
       }
 
       if (isPasswordWrong) {
