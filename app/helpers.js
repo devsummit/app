@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
 
 import { API_BASE_URL, CLIENT_SECRET } from './constants';
@@ -38,23 +39,19 @@ export const getAccessToken = async () => {
 
   DevSummitAxios.post('/auth/refreshtoken', { refresh_token: refreshToken })
     .then(async (response) => {
-      if (response.data.data ) {
+      if (response.data.data && response.data.data.exist == false) {
+        console.log('logout here')
         const keys = ['access_token', 'refresh_token', 'role_id', 'profile_data'];
         await AsyncStorage.multiRemove(keys);
-        updateIsLogOut();
+        return Actions.main();
       }
       const { access_token: accessToken, refresh_token: refreshtoken } = response.data.data;
-      const roleId = JSON.stringify(response.data.included.role_id);
-      const profileData = JSON.stringify(response.data.included);
       await AsyncStorage.multiSet([
         [ 'access_token', accessToken ],
-        [ 'refresh_token', refreshtoken ],
-        [ 'role_id', roleId ],
-        [ 'profile_data', profileData ]
+        [ 'refresh_token', refreshtoken ]
       ]);
     })
     .catch(err => err);
-
   return token;
 };
 
