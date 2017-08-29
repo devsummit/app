@@ -28,11 +28,10 @@ class Profile extends Component {
         this.handleInputChange('username', profileData.username)
         this.handleInputChange('firstName', profileData.first_name)
         this.handleInputChange('lastName', profileData.last_name)
-
-        if (profileData.url || profileData.url === '') {
+        if (profileData.photos.length === 0 || !profileData.photos[0].url || profileData.photos[0].url === '') {
           this.handleInputChange('profilePic', 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg')
         } else {
-          this.handleInputChange('profilePic', profileData.url)
+          this.handleInputChange('profilePic', profileData.photos[0].url)
         }
       }
     })
