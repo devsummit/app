@@ -5,6 +5,8 @@ const config = require('../config/local').default;
 
 export const API_BASE_URL = config.API_BASE_URL;
 
+export const CLIENT_SECRET = config.CLIENT_SECRET;
+
 export const role_option = [
   {
     value: 'key0',
