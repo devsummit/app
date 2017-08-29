@@ -4,6 +4,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  background: {
+    flex: 1,
+    width: undefined,
+    height: undefined
+  },
   title: {
     fontSize: 18,
     backgroundColor: '#efefef',

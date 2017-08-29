@@ -4,12 +4,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  background: {
+    flex: 1,
+    width: undefined,
+    height: undefined
+  },
   title: {
     fontSize: 18,
     backgroundColor: '#efefef',
     padding: 8,
     paddingLeft: 20,
     marginBottom: 20
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: '#FFD740',
+    borderRadius: 50,
+    margin: 20
   },
   button: {
     marginLeft: 12,

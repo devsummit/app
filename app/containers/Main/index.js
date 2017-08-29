@@ -8,7 +8,6 @@ import {
   StatusBar
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import LinearGradient from 'react-native-linear-gradient';
 import AccountKit, {
   LoginButton
 } from 'react-native-facebook-account-kit';
@@ -20,7 +19,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
-import InputItem from '../../components/InputItem';
 import AuthLogo from '../../components/AuthLogo';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
@@ -30,6 +28,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 const Transition = createTransition(Fade);
+const background = require('./../../../assets/images/background.png');
 
 class Main extends Component {
   state = {
@@ -103,7 +102,7 @@ class Main extends Component {
       return (
         <Transition>
           <Container>
-            <Header style={{display:'none'}}/>
+            <Header style={{ display: 'none' }} />
             <View style={styles.spinner}>
               <Spinner color="white" />
             </View>
@@ -112,7 +111,7 @@ class Main extends Component {
       );
     }
     return (
-      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
+      <Image style={styles.background} source={background}>
         <Container style={styles.container}>
           <StatusBar hidden />
           <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
@@ -127,10 +126,18 @@ class Main extends Component {
               <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
                 <Icon name="facebook" color="white" style={styles.icon} />
               </Button>
-              <Button danger style={styles.buttonSocial} onPress={() => {this.props.loginGoogle()}}>
+              <Button
+                danger
+                style={styles.buttonSocial}
+                onPress={() => { this.props.loginGoogle(); }}
+              >
                 <Icon name="google-plus" color="white" style={styles.icon} />
               </Button>
-              <Button info style={styles.buttonSocial} onPress={() => {this.props.loginTwitter()}}>
+              <Button
+                info
+                style={styles.buttonSocial}
+                onPress={() => { this.props.loginTwitter(); }}
+              >
                 <Icon name="twitter" color="white" style={styles.icon} />
               </Button>
             </View>

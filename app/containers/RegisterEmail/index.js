@@ -8,7 +8,6 @@ import {
   Text
 } from 'native-base';
 import { Alert, Image, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 
 // import redux components
@@ -24,7 +23,7 @@ import * as selectors from './selectors';
 // import constants
 import { role_option } from '../../constants';
 
-const Logo = require('../../../assets/images/logo.png');
+const background = require('../../../assets/images/background.png');
 
 class RegisterEmail extends Component {
 
@@ -132,7 +131,7 @@ class RegisterEmail extends Component {
     } = errorFields || false;
 
     return (
-      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
+      <Image style={styles.background} source={background}>
         <Container style={styles.container}>
           <Content>
             <AuthLogo />
@@ -179,7 +178,7 @@ class RegisterEmail extends Component {
                 value={password}
               />
             </View>
-            <View style={{ borderWidth: 1, borderColor: '#FFD740', borderRadius: 50, margin: 20 }}>
+            <View style={styles.pickerWrapper}>
               <Picker
                 style={styles.picker}
                 placeholder="Role"
@@ -208,8 +207,8 @@ class RegisterEmail extends Component {
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
             >
-              <Text style={styles.registerText}>{"Already have account?"}</Text>
-              <Text style={styles.registerTextBold}>Sign In</Text>
+              <Text style={styles.registerText}>{'Already have account?'}</Text>
+              <Text style={styles.registerTextBold}>{'Sign In'}</Text>
             </Button>
           </Content>
         </Container>

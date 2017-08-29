@@ -4,6 +4,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  background: {
+    flex: 1,
+    width: undefined,
+    height: undefined
+  },
   titleText: {
     fontSize: 10.5,
     color: 'white',
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
   },
   buttonRegister: {
     marginLeft: 'auto',
-    marginRight: 'auto',
+    marginRight: 'auto'
   },
   buttonText: {
     textAlign: 'center',
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderColor: '#FFD740',
     borderWidth: 1
-  },
+  }
 });
 
 export default styles;

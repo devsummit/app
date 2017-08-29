@@ -5,7 +5,7 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { twitter } from 'react-native-simple-auth';
@@ -21,7 +21,7 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-const Logo = require('../../../assets/images/logo.png');
+const background = require('../../../assets/images/background.png');
 
 class RegisterMenu extends Component {
   registerFacebook = () => {
@@ -34,7 +34,7 @@ class RegisterMenu extends Component {
 
   render() {
     return (
-      <Image style={{ width: undefined, height: undefined, flex: 1 }} source={require('./../../../assets/images/background.png')}>
+      <Image style={styles.background} source={background}>
         <Container style={styles.container}>
           <Content>
             <AuthLogo />
@@ -44,13 +44,27 @@ class RegisterMenu extends Component {
               <View style={styles.lineTextThree} />
             </View>
             <View style={styles.buttonSocialSection}>
-              <Button block style={styles.buttonSocial} onPress={() => { this.registerFacebook(); }} >
+              <Button
+                block
+                style={styles.buttonSocial}
+                onPress={() => { this.registerFacebook(); }}
+              >
                 <Icon name="facebook" color="white" style={styles.iconSocial} />
               </Button>
-              <Button info block style={styles.buttonSocial} onPress={this.registerTwitter} >
+              <Button
+                info
+                block
+                style={styles.buttonSocial}
+                onPress={this.registerTwitter}
+              >
                 <Icon name="twitter" color="white" style={styles.iconSocial} />
               </Button>
-              <Button danger block style={styles.buttonSocial} onPress={() => { this.props.registerGoogle(); }}>
+              <Button
+                danger
+                block
+                style={styles.buttonSocial}
+                onPress={() => { this.props.registerGoogle(); }}
+              >
                 <Icon name="google-plus" color="white" style={styles.iconSocial} />
               </Button>
             </View>
@@ -59,7 +73,12 @@ class RegisterMenu extends Component {
               <Text style={styles.lineTextTwo}> or </Text>
               <View style={styles.lineTextOne} />
             </View>
-            <Button warning block style={styles.button} onPress={() => { Actions.registerEmail(); }}>
+            <Button
+              warning
+              block
+              style={styles.button}
+              onPress={() => { Actions.registerEmail(); }}
+            >
               <Icon name="envelope" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Register with Email</Text>
             </Button>
@@ -74,8 +93,8 @@ class RegisterMenu extends Component {
           style={styles.buttonRegister}
           onPress={() => { Actions.main(); }}
         >
-          <Text style={styles.registerText}>{"Already have account?"}</Text>
-          <Text style={styles.registerTextBold}>Sign In</Text>
+          <Text style={styles.registerText}>{'Already have account?'}</Text>
+          <Text style={styles.registerTextBold}>{'Sign In'}</Text>
         </Button>
       </Image>
     );

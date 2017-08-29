@@ -4,6 +4,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  background: {
+    flex: 1,
+    width: undefined,
+    height: undefined
+  },
   title: {
     fontSize: 18,
     backgroundColor: '#efefef',
@@ -19,6 +24,12 @@ const styles = StyleSheet.create({
   formInput: {
     paddingLeft: 20,
     color: '#FFFFFF'
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: '#FFD740',
+    borderRadius: 50,
+    margin: 20
   },
   buttonRegister: {
     marginLeft: 'auto',
