@@ -48,6 +48,20 @@ const styles = StyleSheet.create({
     borderColor: '#FFD740',
     borderWidth: 1
   },
+  buttonRegister: {
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  registerText: {
+    textAlign: 'center',
+    color: '#FFFFFF'
+  },
+  registerTextBold: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginLeft: 8,
+    color: '#FFD740'
+  },
   labelText: {
     fontSize: 12,
     opacity: 0.6
