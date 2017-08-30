@@ -202,7 +202,7 @@ class RegisterEmail extends Component {
             >
               <Text style={styles.buttomText}>Register</Text>
             </Button>
-            <Button
+            <Button onBlur="register()"
               transparent
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
