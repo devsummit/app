@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 
 import { API_BASE_URL, CLIENT_SECRET } from './constants';
 
-import { updateIsLogOut } from './containers/Profile/actions';
+// import { updateIsLogOut } from './containers/Profile/actions';
 
 export const DevSummitAxios = axios.create({
   baseURL: API_BASE_URL
@@ -17,7 +17,7 @@ export const decodeToken = (token) => {
 }
 
 export const getAccessToken = async () => {
-  const token = await AsyncStorage.getItem('access_token');
+  let token = await AsyncStorage.getItem('access_token');
   // decode token to acquire exp data
   // check token expiry with new Date().getTime()
   // if still true return the token
@@ -31,16 +31,16 @@ export const getAccessToken = async () => {
   const tokenExp = decodeToken(token);
   const exp = Math.floor(new Date().getTime() / 1000);
 
+  // if not expired
   if (exp < tokenExp.exp) {
     return token;
   }
 
   const refreshToken = await AsyncStorage.getItem('refresh_token');
 
-  DevSummitAxios.post('/auth/refreshtoken', { refresh_token: refreshToken })
+  await DevSummitAxios.post('/auth/refreshtoken', { refresh_token: refreshToken })
     .then(async (response) => {
-      if (response.data.data && response.data.data.exist == false) {
-        console.log('logout here')
+      if (response.data.data && response.data.data.exist === false) {
         const keys = ['access_token', 'refresh_token', 'role_id', 'profile_data'];
         await AsyncStorage.multiRemove(keys);
         return Actions.main();
@@ -50,6 +50,7 @@ export const getAccessToken = async () => {
         [ 'access_token', accessToken ],
         [ 'refresh_token', refreshtoken ]
       ]);
+      token = accessToken;
     })
     .catch(err => err);
   return token;
