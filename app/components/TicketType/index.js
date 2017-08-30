@@ -17,16 +17,16 @@ export default (props) => {
         <Body style={styles.summary}>
           <Text>{ticket.ticket_type}</Text>
           <Text note style={{ color: 'green' }}>
-            Rp { Intl.NumberFormat('id').format(100000) }
+            Rp {Intl.NumberFormat('id').format(ticket.price)}
           </Text>
-          <Text note>{ ticket.information }</Text>
+          <Text note>{ticket.information}</Text>
         </Body>
         <View style={styles.btnGroup}>
-          <Text style={styles.plusMinus} onPress={props.onReduce(ticket.id)}>
+          <Text style={styles.plusMinus} onPress={() => props.onReduce(ticket.id)}>
             <Icon name="minus" />
           </Text>
           <Text style={styles.ticketCount}>{props.count}</Text>
-          <Text style={styles.plusMinus} onPress={props.onAdd(ticket.id)}>
+          <Text style={styles.plusMinus} onPress={() => props.onAdd(ticket.id)}>
             <Icon name="plus" />
           </Text>
         </View>
