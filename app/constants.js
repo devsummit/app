@@ -29,5 +29,4 @@ export const ROLES = {
   4: 'speaker'
 };
 
-
 export const PRIMARYCOLOR = '#f39e21';

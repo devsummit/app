@@ -5,7 +5,8 @@ import { fromJS } from 'immutable';
  */
 import {
   SET_TICKET_TYPE,
-  UPDATE_ORDER
+  UPDATE_ORDER,
+  IS_UPDATING_ORDER
 } from './constants';
 
 /*
@@ -13,7 +14,8 @@ import {
  */
 const initialState = fromJS({
   ticketTypes: [],
-  order: {}
+  order: {},
+  isUpdatingOrder: false
 });
 
 function newOrderReducer(state = initialState, action) {
@@ -22,6 +24,8 @@ function newOrderReducer(state = initialState, action) {
       return state.set('ticketTypes', action.data);
     case UPDATE_ORDER:
       return state.setIn([ 'order', action.id ], fromJS(action.payload));
+    case IS_UPDATING_ORDER:
+      return state.set('isUpdatingOrder', action.status);
     default:
       return state;
   }

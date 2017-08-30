@@ -3,9 +3,10 @@ import {
   Container,
   Content,
   List,
-  Fab
+  Fab,
+  Spinner
 } from 'native-base';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, RefreshControl, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -14,6 +15,7 @@ import styles from './styles';
 import OrderItem from '../../components/OrderItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { PRIMARYCOLOR } from '../../constants';
 
 
 class OrderList extends Component {
@@ -22,9 +24,24 @@ class OrderList extends Component {
   }
 
   render() {
+    if (this.props.isFetching) {
+      return (
+        <Container>
+          <Content>
+            <Spinner color={PRIMARYCOLOR} />
+          </Content>
+        </Container>
+      );
+    }
     return (
       <Container style={styles.container}>
-        <Content>
+        <Content refreshControl={
+          <RefreshControl
+            refreshing={this.props.isFetching}
+            onRefresh={() => { this.props.getOrderList(); }}
+          />
+        }
+        >
           <List style={{ paddingRight: 10 }}>
             {this.props.orders.map((order) => {
               return (
@@ -50,7 +67,8 @@ class OrderList extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  orders: selectors.getOrders()
+  orders: selectors.getOrders(),
+  isFetching: selectors.getIsFetchingOrders()
 });
 
 export default connect(mapStateToProps, actions)(OrderList);

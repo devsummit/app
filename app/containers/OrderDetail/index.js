@@ -12,12 +12,13 @@ import {
   Row,
   Col,
   List,
-  ListItem
+  ListItem,
+  Spinner
 } from 'native-base';
+import { RefreshControl, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
@@ -29,9 +30,9 @@ class OrderDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      headerRight: <Button style={styles.roundButton} onPress={() => params.handleCheckOut()} >
-        <Icon name="check" color={PRIMARYCOLOR} />
-        <Text style={styles.textButton}>Check Out</Text>
+      headerRight: <Button style={styles.roundButton} onPress={() => params.saveOrder()} >
+        <Icon name="save" color={PRIMARYCOLOR} />
+        <Text style={styles.textButton}>save</Text>
       </Button>
     };
   };
@@ -39,8 +40,8 @@ class OrderDetail extends Component {
   componentWillMount = () => {
     this.props.getOrderDetail(this.props.orderId);
     this.props.navigation.setParams({
-      handleCheckOut:
-      this.handleCheckOut
+      saveOrder:
+      this.saveOrder
     });
   }
 
@@ -61,15 +62,38 @@ class OrderDetail extends Component {
     this.props.updateOrder('decrease', typeId);
   };
 
-  handleCheckOut = () => {
-    Actions.payment();
+  saveOrder = () => {
+    Alert.alert(
+      'Are you sure want to update this order?',
+      'Order number '.concat(this.props.orderId),
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order) } },
+      ],
+      { cancelable: false }
+    )
   }
 
   render() {
-
+    if (this.props.isUpdating) {
+      return (
+        <Container>
+          <Content>
+            <Spinner color={PRIMARYCOLOR} />
+          </Content>
+        </Container>
+      )
+    }
     return (
       <Container style={styles.container}>
-        <Content>
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isUpdating}
+              onRefresh={() => { this.props.getOrderDetail(this.props.orderId) }}
+            />
+          }
+        >
           <Card>
             <CardItem>
               <Grid>
@@ -111,14 +135,15 @@ class OrderDetail extends Component {
             </CardItem>
           </Card>
         </Content>
-      </Container>
+      </Container >
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
   ticketTypes: selectors.getTicketTypes(),
-  order: selectors.getOrder()
+  order: selectors.getOrder(),
+  isUpdating: selectors.getIsUpdatingOrder()
 });
 
 export default connect(mapStateToProps, actions)(OrderDetail);

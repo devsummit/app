@@ -35,7 +35,6 @@ function profileReducer(state = initialState, action) {
     case UPDATE_IS_LOG_OUT:
       return state.set('isLogOut', action.status);
     case UPDATE_IS_DISABLED:
-      console.log("REDUCERS");
       return state.set('isDisabled', action.status);
     default:
       return state;

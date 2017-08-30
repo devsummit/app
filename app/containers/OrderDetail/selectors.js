@@ -18,3 +18,8 @@ export const getOrder = () => createSelector(
   selectMainReducer(),
   state => state.get('order').toJS()
 );
+
+export const getIsUpdatingOrder = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isUpdatingOrder')
+);

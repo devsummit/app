@@ -23,7 +23,6 @@ export function getOrderList() {
       DevSummitAxios.get('/api/v1/orders', {
         headers: { Authorization: accessToken }
       }).then((response) => {
-        console.log(response);
         if (response.data && response.data.meta.success) {
           dispatch({
             type: SET_ORDER_LIST,

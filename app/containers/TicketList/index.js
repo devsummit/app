@@ -19,6 +19,8 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import { PRIMARYCOLOR } from '../../constants';
+
 class TicketList extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +61,7 @@ class TicketList extends Component {
                   name="exchange"
                   color="white"
                 />
-              </Button>
+              </Button>PRIMARYCOLOR
             </ListItem>);
         }}
       />);
@@ -85,7 +87,7 @@ class TicketList extends Component {
       return (
         <Container>
           <Content>
-            <Spinner color="#f39e21" />
+            <Spinner color={PRIMARYCOLOR} />
           </Content>
         </Container>
       );
