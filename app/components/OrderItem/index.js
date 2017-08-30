@@ -69,7 +69,7 @@ export default class OrderItem extends Component {
             </TouchableOpacity>
           </Right>
         </View>
-        <Button style={styles.btnCheckOut}>
+        <Button style={styles.btnCheckOut} onPress={() => Actions.payment()}>
           <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
           <Text style={styles.buttonText}>CHECK OUT</Text>
         </Button>

@@ -21,7 +21,7 @@ function orderListReducer(state = initialState, action) {
     case SET_ORDER_LIST:
       return state.set('orders', fromJS(action.data));
     case IS_FETCHING_ORDERS:
-      return state.set('isFetchingOrders', fromJS(action.status));
+      return state.set('isFetchingOrders', action.status);
     default:
       return state;
   }
