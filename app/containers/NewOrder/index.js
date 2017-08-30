@@ -39,7 +39,6 @@ class NewOrder extends Component {
   }
 
   render() {
-    console.log("PROPPPS", this.props)
     const order = this.props.order;
     const arraySub = Object.keys(order).map((key) => {
       return order[key].count * order[key].price;
