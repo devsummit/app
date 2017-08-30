@@ -19,5 +19,5 @@ export const getOrders = () => createSelector(
 
 export const getIsFetchingOrders = () => createSelector(
   selectMainReducer(),
-  state => state.get('isFetchingOrders').toJS()
+  state => state.get('isFetchingOrders')
 );

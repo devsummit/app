@@ -69,7 +69,6 @@ class PaymentDetail extends Component {
   }
 
   render() {
-    console.log(this.props)
     const monthList = [];
     const yearList = [];
 
@@ -102,7 +101,6 @@ class PaymentDetail extends Component {
       detail = PAYMENT_METHODS.filter((data) => {
         return data.payment_type === paymentType;
       })[0];
-      console.log(detail)
     }
 
     const { inputFields, errorFields, getIsFetchingTransaction } = this.props;
@@ -121,7 +119,10 @@ class PaymentDetail extends Component {
       descriptionDetail,
       lastDigitNumber,
       randomNumber,
-      mandiriToken
+      mandiriToken,
+      input1,
+      input2,
+      input3
     } = inputFields || '';
     const {
       errorEmailDetail,
@@ -157,24 +158,28 @@ class PaymentDetail extends Component {
                 title="Email"
                 onChangeText={text => this.handleInputChange('emailDetail', text)}
                 value={emailDetail}
+                placeholder="Email"
               />
               <InputItem
                 error={errorFirstName}
                 title="First Name"
                 onChangeText={text => this.handleInputChange('firstName', text)}
                 value={firstName}
+                placeholder="First Name"
               />
               <InputItem
                 error={errorLastName}
                 title="Last Name"
                 onChangeText={text => this.handleInputChange('lastName', text)}
                 value={lastName}
+                placeholder="Last Name"
               />
               <InputItem
                 error={errorPhoneNumber}
                 title="Phone Number"
                 onChangeText={text => this.handleInputChange('phoneNumber', text)}
                 value={phoneNumber}
+                placeholder="Phone number"
               />
             </Content>
             : <Content />}
@@ -184,6 +189,7 @@ class PaymentDetail extends Component {
               title="VA number"
               onChangeText={text => this.handleInputChange('vaNumber', text)}
               value={vaNumber}
+              placeholder="VA number"
             /> : <Content />
           }
           {detail && detail.ccDetail ?
@@ -193,12 +199,14 @@ class PaymentDetail extends Component {
                 title="Card Number"
                 onChangeText={text => this.handleInputChange('cardNumber', text)}
                 value={cardNumber}
+                placeholder="Card Number"
               />
               <InputItem
                 title="cvv"
                 error={errorCardCvv}
                 onChangeText={text => this.handleInputChange('cardCvv', text)}
                 value={cardCvv}
+                placeholder="cvv"
               />
               <Text>expiry</Text>
               <View style={styles.datePicker}>
@@ -234,6 +242,7 @@ class PaymentDetail extends Component {
                 title="Description"
                 onChangeText={text => this.handleInputChange('descriptionDetail', text)}
                 value={descriptionDetail}
+                placeholder="Description"
               />
             </Content> : <Content />
           }
@@ -244,27 +253,32 @@ class PaymentDetail extends Component {
                 title="16 digits card number"
                 onChangeText={text => this.handleInputChange('cardNumber', text)}
                 value={cardNumber}
+                placeholder="16 digits card number"
               />
-              <Text style={styles.text}>
-                Last 10 digits
-              </Text>
-              <Text
-                style={styles.text}
-                onChangeText={text => this.handleInputChange('lastDigitNumber', text)}
-              >
-                {cardNumber.slice(6, 16)}
-              </Text>
               <InputItem
-                error={errorRandomNumber}
-                title="5 digit random number given"
+                title="input1"
+                onChangeText={text => this.handleInputChange('input1', text)}
+                value={cardNumber.slice(6, 16)}
+                placeholder="Last 10 digits"
+              />
+              <InputItem
+                title="input2"
+                onChangeText={text => this.handleInputChange('input2', text)}
+                value={input2}
+                placeholder="Gross Amount"
+              />
+              <InputItem
+                title="random"
                 onChangeText={text => this.handleInputChange('randomNumber', text)}
-                value={randomNumber}
+                value={input3}
+                placeholder="5 Random Number"
               />
               <InputItem
                 error={errorMandiriToken}
                 title="mandiri token"
                 onChangeText={text => this.handleInputChange('mandiriToken', text)}
                 value={mandiriToken}
+                placeholder="mandiri token"
               />
             </Content> : <Content />
           }
@@ -272,11 +286,7 @@ class PaymentDetail extends Component {
             title="Order ID"
             onChangeText={text => this.handleInputChange('orderId', text)}
             value={orderId}
-          />
-          <InputItem
-            title="Gross Amount"
-            onChangeText={text => this.handleInputChange('grossAmount', text)}
-            value={grossAmount}
+            placeholder="Order ID"
           />
 
           <Button

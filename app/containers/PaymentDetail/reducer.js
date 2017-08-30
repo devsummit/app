@@ -24,14 +24,16 @@ const initialState = fromJS({
     lastName: '',
     phoneNumber: '',
     vaNumber: '',
-    cardNumber: '4365 0263 3573 7199',
+    cardNumber: '4111111111111111',
     orderId: '',
     grossAmount: '',
     cardCvv: '123',
     descriptionDetail: '',
     lastDigitNumber: '',
     randomNumber: '',
-    mandiriToken: ''
+    mandiriToken: '',
+    input1: '',
+    input2: ''
   },
   errorFields: {
     errorEmailDetail: false,

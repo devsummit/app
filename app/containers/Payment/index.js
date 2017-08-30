@@ -22,8 +22,6 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
 
-// import constants
-import { PRIMARYCOLOR } from '../../constants';
 
 let bankList = [];
 
@@ -42,14 +40,12 @@ class Payment extends Component {
   }
 
   handleInputChange = (field, value) => {
-    console.log(field, value)
     this.props.updateInputFields(field, value);
     if (field === 'paymentType' && value !== 'credit_card' && value !== 'bank_transfer') {
       const selectedMethod = PAYMENT_METHODS.filter((data)=> {
         return data.payment_type === value;
       })
       this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
-      console.log(selectedMethod)
     }
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
