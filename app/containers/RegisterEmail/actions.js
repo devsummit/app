@@ -87,10 +87,18 @@ function validateEmail(mail)
 {  
  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value))  
   {  
-    return true; 
+    return true  
   }  
-    return false;  
-}  
+   // alert("You have entered an invalid email address!")  
+    return false  
+} 
+
+function cekLengthUsernameAndPassword(A, B)
+{
+  if ((A.length < 6) && (B.length < 6)) {
+    return true
+  }
+}
 /*
  * Register user
  */
@@ -106,8 +114,8 @@ export function register() {
 
     const role_id = role === 'attendee' ? 1 : role === 'booth' ? 2 : 3;
 
-    if (first_name && role && email && password && username ) {
-      DevSummitAxios.post('/auth/register', 
+    if (first_name && role && email && password && username) {
+      DevSummitAxios.post('/auth/register', {
         first_name, last_name, username, email, password, role: role_id, social_id
       }).then((response) => {
         if (response && response.data.data && response.data.meta.success) {
@@ -117,12 +125,16 @@ export function register() {
         } else if (response.data.data === null && !response.data.meta.success) {
           dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]))
         }
-        if validateEmail() {
-            alert("You have entered an invalid email address!")  
+        if (validateEmail(mail)) {
+          alert("You have entered an invalid email address!")
+        }
+        if (cekLengthUsernameAndPassword(username, password)) {
+          alert("The Password and Username length should be 6 at minimum")
         }
       }).catch((error) => {
         console.log(error, 'error caught');
-      });
+      })
     }
+    
   };
 }
