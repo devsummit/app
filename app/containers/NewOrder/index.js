@@ -8,7 +8,8 @@ import {
   Body
 } from 'native-base';
 import { View } from 'react-native';
-// import { Actions } from 'react-native-router-flux';
+
+import { Actions } from 'react-native-router-flux';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -28,14 +29,17 @@ class NewOrder extends Component {
   increase = (typeId) => {
     this.props.updateOrder('increase', typeId);
   };
+
   decrease = (typeId) => {
     this.props.updateOrder('decrease', typeId);
   };
+
   placeOrder = () => {
     this.props.placeOrder();
   }
 
   render() {
+    console.log("PROPPPS", this.props)
     const order = this.props.order;
     const arraySub = Object.keys(order).map((key) => {
       return order[key].count * order[key].price;
@@ -45,23 +49,23 @@ class NewOrder extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          { this.props.ticketTypes.map((ticket, index) => {
+          {this.props.ticketTypes.map((ticket, index) => {
             return (
               <Card key={ticket.id}>
                 <CardItem>
                   <Body style={styles.summary}>
                     <Text>{ticket.ticket_type}</Text>
                     <Text note style={{ color: 'green' }}>
-                      Rp { Intl.NumberFormat('id').format(ticket.price) }
+                      Rp {Intl.NumberFormat('id').format(ticket.price)}
                     </Text>
-                    <Text note>{ ticket.information }</Text>
+                    <Text note>{ticket.information}</Text>
                   </Body>
                   <View style={styles.btnGroup}>
                     <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
                       <Icon name="minus" />
                     </Text>
                     <Text style={styles.ticketCount}>
-                      { order[ticket.id] ? order[ticket.id].count : 0 }
+                      {order[ticket.id] ? order[ticket.id].count : 0}
                     </Text>
                     <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
                       <Icon name="plus" />
@@ -81,8 +85,9 @@ class NewOrder extends Component {
             </CardItem>
           </Card>
           <Button
+            block
             style={styles.orderBtn}
-            onPress={() => { this.placeOrder(); }}
+            onPress={() => { this.props.placeOrder(); }}
           >
             <Text>Place Order</Text>
           </Button>

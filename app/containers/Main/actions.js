@@ -259,7 +259,7 @@ export function loginFacebook() {
             }
             dispatch(updateIsFetching(false));
           }).catch((err) => {
-            console.log(err)
+            console.log(err.response)
             dispatch(updateIsFetching(false));
           })
           .catch((err) => { console.log(err.response); });

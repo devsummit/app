@@ -9,7 +9,10 @@ export default StyleSheet.create({
     flex: 3
   },
   orderBtn: {
-    alignSelf: 'flex-end'
+    marginBottom: 20,
+    marginRight: 3,
+    marginLeft: 3,
+    marginTop: 10
   },
   btnGroup: {
     alignSelf: 'center',

@@ -12,6 +12,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-end',
   },
+  roundButton: {
+    borderRadius: 90,
+    backgroundColor: 'rgba(52, 52, 52, 0.7)',
+    marginRight: 10
+  },
+  textButton: {
+    color: 'white',
+    alignSelf: 'center'
+  },
   center: {
     flex: 2
   },
