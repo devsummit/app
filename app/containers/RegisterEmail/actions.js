@@ -83,14 +83,13 @@ export function resetState() {
   };
 }
 
-function ValidateEmail(mail)   
+function validateEmail(mail)   
 {  
  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value))  
   {  
-    return (true)  
+    return true; 
   }  
-    alert("You have entered an invalid email address!")  
-    return (false)  
+    return false;  
 }  
 /*
  * Register user
@@ -107,8 +106,8 @@ export function register() {
 
     const role_id = role === 'attendee' ? 1 : role === 'booth' ? 2 : 3;
 
-    if (first_name && role && email && password && username && ValidateEmail(email)) {
-      DevSummitAxios.post('/auth/register', {
+    if (first_name && role && email && password && username ) {
+      DevSummitAxios.post('/auth/register', 
         first_name, last_name, username, email, password, role: role_id, social_id
       }).then((response) => {
         if (response && response.data.data && response.data.meta.success) {
@@ -117,6 +116,9 @@ export function register() {
           dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'))
         } else if (response.data.data === null && !response.data.meta.success) {
           dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]))
+        }
+        if validateEmail() {
+            alert("You have entered an invalid email address!")  
         }
       }).catch((error) => {
         console.log(error, 'error caught');
