@@ -182,7 +182,7 @@ class Main extends Component {
               </Item>
             </View>
             <View>
-              {(username === '' || password === '') ?
+              {(username.length < 5 || password.length < 6) ?
                 <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
                   <Text>Log In</Text>
                 </Button>
