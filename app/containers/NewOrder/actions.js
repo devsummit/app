@@ -18,7 +18,6 @@ export function getTicketType() {
         headers: { Authorization: accessToken }
       }).then((response) => {
         if (response && response.data && response.data.meta.success) {
-          console.log(response, 'response on get tickettype')
           dispatch({
             type: SET_TICKET_TYPE,
             data: response.data.data
