@@ -1,18 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    paddingLeft: 3,
-    paddingRight: 3
-  },
   summary: {
     flex: 3
-  },
-  orderBtn: {
-    marginBottom: 20,
-    marginRight: 3,
-    marginLeft: 3,
-    marginTop: 10
   },
   btnGroup: {
     alignSelf: 'center',

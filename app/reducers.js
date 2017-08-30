@@ -10,6 +10,8 @@ import NewOrderReducer from './containers/NewOrder/reducer';
 import AttendeesListReducer from './containers/AttendeesList/reducer';
 import changePasswordReducer from './containers/ChangePassword/reducer';
 import ProfileReducer from './containers/Profile/reducer';
+import OrderListReducer from './containers/OrderList/reducer';
+import OrderDetailReducer from './containers/OrderDetail/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -20,7 +22,9 @@ const rootReducers = combineReducers({
   attendeesList: AttendeesListReducer,
   changePassword: changePasswordReducer,
   profile: ProfileReducer,
-  newOrder: NewOrderReducer
+  newOrder: NewOrderReducer,
+  orderList: OrderListReducer,
+  orderDetail: OrderDetailReducer
 });
 
 export default rootReducers;

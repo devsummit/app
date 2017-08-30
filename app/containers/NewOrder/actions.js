@@ -1,5 +1,6 @@
 import { Actions } from 'react-native-router-flux';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
+import * as actions from '../OrderList/actions';
 
 /*
  * import constants
@@ -8,6 +9,7 @@ import {
   SET_TICKET_TYPE,
   UPDATE_ORDER
 } from './constants';
+
 
 export function getTicketType() {
   return (dispatch) => {
@@ -56,7 +58,8 @@ export function updateOrder(action, typeId) {
 export function placeOrder() {
   return (dispatch, getState) => {
     const { order } = getState().get('newOrder').toJS();
-    const data = Object.keys(order).map((key) => { return order[key]; });
+    const orderItems = Object.keys(order).map((key) => { return order[key]; });
+    const data = { order_details: orderItems };
 
     getAccessToken().then((accessToken) => {
       DevSummitAxios.post('api/v1/orders', data, {
@@ -66,10 +69,11 @@ export function placeOrder() {
         }
       }).then((response) => {
         if (response.data && response.data.meta) {
-          Actions.orderDetail({ orderId: response.data.data.id });
+          Actions.pop();
+          dispatch(actions.getOrderList());
         }
       })
-        .catch((err) => {});
+        .catch((err) => { });
     });
   }
 }

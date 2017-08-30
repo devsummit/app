@@ -16,7 +16,7 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
-import { primaryColor } from '../../constants';
+import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
@@ -84,7 +84,7 @@ class TicketList extends Component {
       return (
         <Container>
           <Content>
-            <Spinner color="#f39e21" />
+            <Spinner color={PRIMARYCOLOR} />
           </Content>
         </Container>
       );
@@ -96,7 +96,7 @@ class TicketList extends Component {
       >
         <Header title="Ticket List" />
         <Button primary style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
-          <Text style={{textAlign: 'center', flex: 1}}>Order</Text>
+          <Text style={{ textAlign: 'center', flex: 1 }}>Order</Text>
         </Button>
         <Content
           refreshControl={
