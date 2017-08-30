@@ -16,9 +16,10 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
-import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
+
+import { PRIMARYCOLOR } from '../../constants';
 
 class TicketList extends Component {
   constructor(props) {
@@ -41,27 +42,29 @@ class TicketList extends Component {
   }
 
   renderTicketList() {
-    return (<List
-      dataArray={this.props.listTicket}
-      renderRow={(item) => {
-        return (<ListItem>
-          <Text style={styles.text}>Ticket No. {item.id}</Text>
-          <Button
-            small
-            style={styles.button}
-            onPress={() => {
-              Actions.attendeesList({ ticketId: item.id });
-            }}
-          >
-            <Text style={styles.buttonText}>Transfer</Text>
-            <Icon
-              name="exchange"
-              color="white"
-            />
-          </Button>
-        </ListItem>);
-      }}
-    />);
+    return (
+      <List
+        dataArray={this.props.listTicket}
+        renderRow={(item) => {
+          return (
+            <ListItem>
+              <Text style={styles.text}>Ticket No. {item.id}</Text>
+              <Button
+                small
+                style={styles.button}
+                onPress={() => {
+                  Actions.attendeesList({ ticketId: item.id });
+                }}
+              >
+                <Text style={styles.buttonText}>Transfer</Text>
+                <Icon
+                  name="exchange"
+                  color="white"
+                />
+              </Button>PRIMARYCOLOR
+            </ListItem>);
+        }}
+      />);
   }
 
   renderError() {
@@ -95,7 +98,7 @@ class TicketList extends Component {
         style={styles.container}
       >
         <Header title="Ticket List" />
-        <Button primary style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
+        <Button primary style={styles.btnOrder} onPress={() => Actions.orderList()}>
           <Text style={{ textAlign: 'center', flex: 1 }}>Order</Text>
         </Button>
         <Content

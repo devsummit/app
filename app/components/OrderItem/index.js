@@ -67,6 +67,11 @@ export default class OrderItem extends Component {
     return color;
   };
 
+  formatDate = (source) => {
+    const dt = source.split(' ');
+    return `${dt[1]}-${dt[2]}-${dt[3]}`;
+  }
+
   render() {
     return (
       <ListItem
@@ -113,24 +118,24 @@ export default class OrderItem extends Component {
 
         </View>
         {(this.state.status && this.state.status === 'NOT PAID') ?
-          <Button style={[ styles.btnCheckOut, { backgroundColor: PRIMARYCOLOR } ]}>
+          <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: PRIMARYCOLOR } ]}>
             <Icon name="md-cart" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CHECK OUT</Text>
           </Button> : <View />
         }
         {(this.state.status && this.state.status === 'NEED AUTHORIZATION') ?
-          <Button style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
+          <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
             <Icon name="ios-key" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>AUTHORIZE</Text>
           </Button> : <View />
         }
         {(this.state.status && this.state.status === 'PENDING') ?
-          <Button style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
+          <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
             <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Button> : <View />
         }
-      </ListItem >
+      </ListItem>
     );
   }
 }

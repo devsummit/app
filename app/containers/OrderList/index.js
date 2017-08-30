@@ -6,7 +6,7 @@ import {
   Fab,
   Spinner
 } from 'native-base';
-import { RefreshControl, View } from 'react-native';
+import { View, TouchableOpacity, RefreshControl, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -38,7 +38,7 @@ class OrderList extends Component {
         <Content refreshControl={
           <RefreshControl
             refreshing={this.props.isFetching}
-            onRefresh={() => { this.props.getOrderList(); }}
+            onRefresh={() => this.props.getOrderList()}
           />
         }
         >
@@ -58,7 +58,7 @@ class OrderList extends Component {
             })}
           </List>
         </Content>
-        <Fab position="bottomRight" onPress={() => { Actions.newOrder(); }}>
+        <Fab position="bottomRight" onPress={() => Actions.newOrder()} >
           <Icon name="plus" />
         </Fab>
       </Container>

@@ -1,4 +1,4 @@
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 /*
  * import constants

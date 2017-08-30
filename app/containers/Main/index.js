@@ -41,16 +41,12 @@ class Main extends Component {
 
   componentWillReceiveProps(prevProps) {
     if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
-      Actions.mainTabs({ profileData: this.props.profileData });
+      Actions.mainTabs();
       this.props.updateIsLogIn(false);
     }
     if (prevProps.isSubscribed !== this.props.isSubscribed) {
       Alert.alert('Success', 'You have been subscribed, we will send update to your email');
       this.props.updateIsSubscribed(false);
-    }
-    if (prevProps.isNotRegistered !== this.props.isNotRegistered) {
-      Alert.alert('Not Registered', 'Please register your account first');
-      this.props.updateIsNotRegistered(false);
     }
   }
 
@@ -217,12 +213,9 @@ class Main extends Component {
 Main.propTypes = {
 
   isLoggedIn: PropTypes.bool.isRequired,
-  profileData: PropTypes.object.isRequired,
   updateIsLogIn: PropTypes.func.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
   updateIsSubscribed: PropTypes.func.isRequired,
-  isNotRegistered: PropTypes.bool.isRequired,
-  updateIsNotRegistered: PropTypes.func.isRequired,
   loginMobile: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   loginFacebook: PropTypes.func.isRequired,
