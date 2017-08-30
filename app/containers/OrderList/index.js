@@ -38,7 +38,7 @@ class OrderList extends Component {
         <Content refreshControl={
           <RefreshControl
             refreshing={this.props.isFetching}
-            onRefresh={() => { this.props.getOrderList(); }}
+            onRefresh={() => this.props.getOrderList()}
           />
         }
         >
@@ -58,7 +58,7 @@ class OrderList extends Component {
             })}
           </List>
         </Content>
-        <Fab position="bottomRight" onPress={() => { Actions.newOrder(); }}>
+        <Fab position="bottomRight" onPress={() => Actions.newOrder()} >
           <Icon name="plus" />
         </Fab>
       </Container>

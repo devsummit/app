@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   left: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    flex: 2,
+    flex: 2
   },
   center: {
     flex: 3,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   icon: {
-    fontSize: 30,
+    fontSize: 30
   },
   orderId: {
     alignSelf: 'flex-start',
@@ -31,12 +31,11 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderWidth: 1,
     borderRadius: 30,
-    backgroundColor: '#FFA726',
     borderColor: 'transparent',
     flexDirection: 'row',
     elevation: 0,
     flex: 1
-  },
+  }
 });
 
 export default styles;

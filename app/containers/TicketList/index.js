@@ -98,7 +98,7 @@ class TicketList extends Component {
         style={styles.container}
       >
         <Header title="Ticket List" />
-        <Button primary style={styles.btnOrder} onPress={() => { Actions.orderList(); }}>
+        <Button primary style={styles.btnOrder} onPress={() => Actions.orderList()}>
           <Text style={{ textAlign: 'center', flex: 1 }}>Order</Text>
         </Button>
         <Content

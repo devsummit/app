@@ -16,9 +16,13 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   item: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     marginBottom: 10,
     borderColor: '#FFD740',
     borderWidth: 1,
+    borderRadius: 30,
     alignItems: 'center'
   },
   normalOnBlur: {
