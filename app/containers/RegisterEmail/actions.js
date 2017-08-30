@@ -83,6 +83,15 @@ export function resetState() {
   };
 }
 
+function ValidateEmail(mail)   
+{  
+ if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(myForm.emailAddr.value))  
+  {  
+    return (true)  
+  }  
+    alert("You have entered an invalid email address!")  
+    return (false)  
+}  
 /*
  * Register user
  */
@@ -98,7 +107,7 @@ export function register() {
 
     const role_id = role === 'attendee' ? 1 : role === 'booth' ? 2 : 3;
 
-    if (first_name && role && email && password && username) {
+    if (first_name && role && email && password && username && ValidateEmail(email)) {
       DevSummitAxios.post('/auth/register', {
         first_name, last_name, username, email, password, role: role_id, social_id
       }).then((response) => {
