@@ -21,15 +21,15 @@ const initialState = fromJS({
   errorFields: {
 
   }
-})
+});
 
 function registerPaymentReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SINGLE_ERROR_FIELD:
-      return state.setIn(['inputFields', action.field], action.value);
+      return state.setIn([ 'inputFields', action.field ], action.value);
 
     case UPDATE_SINGLE_INPUT_FIELD:
-      return state.setIn(['inputFields', action.field], action.value);
+      return state.setIn([ 'inputFields', action.field ], action.value);
 
     default:
       return state;

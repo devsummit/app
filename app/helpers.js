@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
 
-import { API_BASE_URL, CLIENT_SECRET } from './constants';
+import { API_BASE_URL, CLIENT_SECRET, PRIMARYCOLOR } from './constants';
 
 // import { updateIsLogOut } from './containers/Profile/actions';
 
@@ -47,8 +47,8 @@ export const getAccessToken = async () => {
       }
       const { access_token: accessToken, refresh_token: refreshtoken } = response.data.data;
       await AsyncStorage.multiSet([
-        [ 'access_token', accessToken ],
-        [ 'refresh_token', refreshtoken ]
+        ['access_token', accessToken],
+        ['refresh_token', refreshtoken]
       ]);
       token = accessToken;
     })
@@ -65,3 +65,34 @@ export const getProfileData = async () => {
   const profileData = await AsyncStorage.getItem('profile_data');
   return JSON.parse(profileData);
 };
+
+export const formatDate = (source) => {
+  const dt = source.split(' ');
+  return `${dt[1]}-${dt[2]}-${dt[3]}`;
+}
+
+export const transactionStatus = (payment) => {
+  if (payment) {
+    if (payment.fraud_status === 'accept' && payment.transaction_status === 'capture') {
+      return {
+        message: 'paid',
+        color: 'green'
+      };
+    } else if (payment.fraud_status === 'accept' && payment.transaction_status === 'authorize') {
+      return {
+        message: 'need authorization',
+        color: 'blue'
+      };
+    } else if (payment.transaction_status === 'pending') {
+      return {
+        message: 'pending',
+        color: 'red'
+      };
+    }
+  } else {
+    return {
+      message: 'not paid',
+      color: PRIMARYCOLOR
+    };
+  }
+}

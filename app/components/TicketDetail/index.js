@@ -21,15 +21,7 @@ export default (props) => {
           </Text>
           <Text note>{ticket.information}</Text>
         </Body>
-        <View style={styles.btnGroup}>
-          <Text style={styles.plusMinus} onPress={() => props.onReduce(ticket.id)}>
-            <Icon name="minus" />
-          </Text>
-          <Text style={styles.ticketCount}>{props.count}</Text>
-          <Text style={styles.plusMinus} onPress={() => props.onAdd(ticket.id)}>
-            <Icon name="plus" />
-          </Text>
-        </View>
+        <Text style={styles.ticketCount}> Amount : {props.count}</Text>
       </CardItem>
     </Card>
   );

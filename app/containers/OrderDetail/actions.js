@@ -13,18 +13,6 @@ import {
 import * as actions from '../OrderList/actions';
 // get order detail
 
-export function getOrderDetail(orderId) {
-  return (dispatch, getState) => {
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
-        dispatch({ type: SET_ORDER, data: response.data.data });
-      }).catch((err) => { console.log(err.response); });
-    }).catch((error) => { });
-  };
-}
-
 export function updateIsUpdatingOrder(status) {
   return {
     type: IS_UPDATING_ORDER,
@@ -32,25 +20,40 @@ export function updateIsUpdatingOrder(status) {
   };
 }
 
+export function getOrderDetail(orderId) {
+  return (dispatch, getState) => {
+    dispatch(updateIsUpdatingOrder(true));
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
+        headers: { Authorization: accessToken }
+      }).then((response) => {
+        dispatch({ type: SET_ORDER, data: response.data.data });
+        dispatch(updateIsUpdatingOrder(false));
+      }).catch((err) => { console.log(err.response); });
+    }).catch((error) => { });
+  };
+}
+
+
 export function submitUpdateOrder(orders) {
   return (dispatch) => {
-    dispatch(updateIsUpdatingOrder(true))
-    for (let i in orders) {
+    dispatch(updateIsUpdatingOrder(true));
+    for (const i in orders) {
       if (orders[i] !== undefined) {
         getAccessToken().then((token) => {
           DevSummitAxios.patch(`/api/v1/orders/${orders[i].order_id}/details/${orders[i].id}`, {
             count: orders[i].count
           }, {
-              headers: { Authorization: token }
-            }).then((response) => {
-            }).catch((err) => { console.log(err.response); });
+            headers: { Authorization: token }
+          }).then((response) => {
+          }).catch((err) => { console.log(err.response); });
         }).catch((error) => { });
       }
     }
     dispatch(updateIsUpdatingOrder(false));
     dispatch(actions.getOrderList());
     Actions.pop();
-  }
+  };
 }
 
 

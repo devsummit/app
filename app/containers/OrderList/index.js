@@ -6,7 +6,7 @@ import {
   Fab,
   Spinner
 } from 'native-base';
-import { View, TouchableOpacity, RefreshControl, Text } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -42,7 +42,7 @@ class OrderList extends Component {
           />
         }
         >
-          <List style={{ paddingRight: 10 }}>
+          <List>
             {this.props.orders.map((order) => {
               return (
                 <OrderItem
