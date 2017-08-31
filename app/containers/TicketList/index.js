@@ -61,7 +61,7 @@ class TicketList extends Component {
                   name="exchange"
                   color="white"
                 />
-              </Button>PRIMARYCOLOR
+              </Button>
             </ListItem>);
         }}
       />);
