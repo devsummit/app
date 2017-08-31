@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
-
+import base from 'base-64';
 import { API_BASE_URL, CLIENT_SECRET, PRIMARYCOLOR } from './constants';
 
 // import { updateIsLogOut } from './containers/Profile/actions';
@@ -13,7 +13,7 @@ export const DevSummitAxios = axios.create({
 export const decodeToken = (token) => {
   const base64Url = token.split('.')[0];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
+  return JSON.parse(base.decode(base64));
 }
 
 export const getAccessToken = async () => {
