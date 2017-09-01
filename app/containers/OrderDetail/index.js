@@ -89,11 +89,11 @@ class OrderDetail extends Component {
 
   handleConfirm = () => {
     Alert.alert(
-      'Are you sure want to confirm this payment?',
-      'Order number '.concat(this.props.orderId),
+      'Payment Confirmation',
+      'Confirm payment Order : '.concat(this.props.orderId),
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'OK', onPress: () => { this.props.confirmPayment(this.props.order[0].payment.id); } }
+        { text: 'Confirm', onPress: () => { this.props.confirmPayment(this.props.order[0].payment.id); } }
       ],
       { cancelable: false }
     );

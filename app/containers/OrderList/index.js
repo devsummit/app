@@ -35,10 +35,10 @@ class OrderList extends Component {
     const idx = this.props.orders.indexOf(props);
     Alert.alert(
       'Payment Confirmation',
-      'are you sure want to confirm this payment ?',
+      'Confirm payment Order : '.concat(props.id),
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'OK', onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
+        { text: 'Confirm', onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
       ],
       { cancelable: false }
     );
