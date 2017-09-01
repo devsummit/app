@@ -22,7 +22,7 @@ const initialState = fromJS({
   order: [],
   isUpdatingOrder: false,
   updateOrderStatus: '',
-  IS_CONFIRMING_PAYMENT: false
+  isConfirmingPayment: false
 });
 
 function orderDetailReducer(state = initialState, action) {
