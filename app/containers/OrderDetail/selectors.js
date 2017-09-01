@@ -28,3 +28,8 @@ export const getUpdateOrderStatus = () => createSelector(
   selectMainReducer(),
   state => state.get('updateOrderStatus')
 );
+
+export const getIsConfirmingPayment = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isConfirmingPayment')
+);
