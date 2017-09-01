@@ -5,7 +5,9 @@ import { fromJS } from 'immutable';
  */
 import {
   SET_ORDER_LIST,
-  IS_FETCHING_ORDERS
+  IS_FETCHING_ORDERS,
+  SET_CONFIRM_PAYMENT,
+  IS_CONFIRMING_PAYMENT
 } from './constants';
 
 /*
@@ -13,7 +15,8 @@ import {
  */
 const initialState = fromJS({
   orders: [],
-  isFetchingOrders: false
+  isFetchingOrders: false,
+  isConfirmingPayment: false
 });
 
 function orderListReducer(state = initialState, action) {
@@ -22,6 +25,10 @@ function orderListReducer(state = initialState, action) {
       return state.set('orders', fromJS(action.data));
     case IS_FETCHING_ORDERS:
       return state.set('isFetchingOrders', action.status);
+    case SET_CONFIRM_PAYMENT:
+      return state.setIn([ 'orders', action.idx, 'payment', 'transaction_status' ], action.payload.transaction_status);
+    case IS_CONFIRMING_PAYMENT:
+      return state.set('isConfirmingPayment', action.status);
     default:
       return state;
   }

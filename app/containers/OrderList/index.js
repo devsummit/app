@@ -6,7 +6,7 @@ import {
   Fab,
   Spinner
 } from 'native-base';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,12 +19,34 @@ import { PRIMARYCOLOR } from '../../constants';
 
 
 class OrderList extends Component {
+  state = {
+    selectedOrder: ''
+  }
+
   componentWillMount() {
     this.props.getOrderList();
   }
 
+  componentWillReceiveProps(nextProps) {
+  }
+
+
+  confirmPayment = (props) => {
+    const idx = this.props.orders.indexOf(props);
+    Alert.alert(
+      'Payment Confirmation',
+      'Confirm payment Order : '.concat(props.id),
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Confirm', onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
+      ],
+      { cancelable: false }
+    );
+  }
+
   render() {
-    if (this.props.isFetching) {
+    const { isConfirming, isFetching } = this.props;
+    if (isFetching || isConfirming) {
       return (
         <Container>
           <Content>
@@ -48,6 +70,7 @@ class OrderList extends Component {
                 <OrderItem
                   key={order.id}
                   order={order}
+                  confirmPayment={this.confirmPayment}
                   onPress={() => {
                     Actions.orderDetail({
                       orderId: order.id
@@ -68,7 +91,8 @@ class OrderList extends Component {
 
 const mapStateToProps = createStructuredSelector({
   orders: selectors.getOrders(),
-  isFetching: selectors.getIsFetchingOrders()
+  isFetching: selectors.getIsFetchingOrders(),
+  isConfirming: selectors.getIsConfirmingPayment()
 });
 
 export default connect(mapStateToProps, actions)(OrderList);

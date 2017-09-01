@@ -5,7 +5,9 @@ import { DevSummitAxios, getAccessToken } from '../../helpers';
  */
 import {
   SET_ORDER_LIST,
-  IS_FETCHING_ORDERS
+  IS_FETCHING_ORDERS,
+  IS_CONFIRMING_PAYMENT,
+  SET_CONFIRM_PAYMENT
 } from './constants';
 
 // update fetch transaction status
@@ -33,5 +35,32 @@ export function getOrderList() {
       })
         .catch((err) => { console.log(err.response); });
     }).catch(() => { console.log('fail get access token'); });
+  };
+}
+
+export function updateIsConfirmingPayment(status) {
+  return {
+    type: IS_CONFIRMING_PAYMENT,
+    status
+  };
+}
+
+export function confirmPayment(id, idx) {
+  return (dispatch) => {
+    dispatch(updateIsConfirmingPayment(true));
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.patch(`/api/v1/payments/status/${id}`, {}, {
+        headers: { Authorization: accessToken }
+      }).then((response) => {
+        if (response.data && response.data.data) {
+          dispatch({
+            type: SET_CONFIRM_PAYMENT,
+            payload: response.data.data,
+            idx
+          });
+        }
+        dispatch(updateIsConfirmingPayment(false));
+      }).catch((err) => { console.log(err); });
+    });
   };
 }

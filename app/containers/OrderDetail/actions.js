@@ -8,7 +8,9 @@ import {
   UPDATE_ORDER,
   SET_ORDER,
   IS_UPDATING_ORDER,
-  UPDATE_ORDER_STATUS
+  UPDATE_ORDER_STATUS,
+  IS_CONFIRMING_PAYMENT,
+  SET_CONFIRM_PAYMENT
   // RESET_STATE
 } from './constants';
 
@@ -92,5 +94,31 @@ export function updateOrder(action, detaild) {
         dispatch({ type: UPDATE_ORDER, id: order.indexOf(firstOrder), payload: firstOrder });
       }
     }
+  };
+}
+
+export function updateIsConfirmingPayment(status) {
+  return {
+    type: IS_CONFIRMING_PAYMENT,
+    status
+  };
+}
+
+export function confirmPayment(id) {
+  return (dispatch) => {
+    dispatch(updateIsConfirmingPayment(true));
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.patch(`/api/v1/payments/status/${id}`, {}, {
+        headers: { Authorization: accessToken }
+      }).then((response) => {
+        if (response.data && response.data.data) {
+          dispatch({
+            type: SET_CONFIRM_PAYMENT,
+            payload: response.data.data
+          });
+        }
+        dispatch(updateIsConfirmingPayment(false));
+      }).catch((err) => { console.log(err); });
+    });
   };
 }

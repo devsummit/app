@@ -87,9 +87,22 @@ class OrderDetail extends Component {
     );
   }
 
+  handleConfirm = () => {
+    Alert.alert(
+      'Payment Confirmation',
+      'Confirm payment Order : '.concat(this.props.orderId),
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Confirm', onPress: () => { this.props.confirmPayment(this.props.order[0].payment.id); } }
+      ],
+      { cancelable: false }
+    );
+  }
+
   render() {
     const { status } = this.state;
-    if (this.props.isUpdating || this.props.order.length === 0) {
+    const {isConfirming, isUpdating} = this.props;
+    if (isUpdating || isConfirming || this.props.order.length === 0) {
       return (
         <Container>
           <Content>
@@ -172,7 +185,7 @@ class OrderDetail extends Component {
             </Button> : <View />
           }
           {(this.state.status && this.state.status === 'pending') ?
-            <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
+            <Button onPress={() => this.handleConfirm()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
               <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>CONFIRM</Text>
             </Button> : <View />
@@ -187,7 +200,8 @@ const mapStateToProps = createStructuredSelector({
   ticketTypes: selectors.getTicketTypes(),
   order: selectors.getOrder(),
   isUpdating: selectors.getIsUpdatingOrder(),
-  updateStatus: selectors.getUpdateOrderStatus()
+  updateStatus: selectors.getUpdateOrderStatus(),
+  isConfirming: selectors.getIsConfirmingPayment()
 });
 
 export default connect(mapStateToProps, actions)(OrderDetail);
