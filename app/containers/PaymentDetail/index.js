@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/id';
 import React, { Component } from 'react';
 import {
   Container,
@@ -30,7 +32,11 @@ import { PRIMARYCOLOR } from '../../constants';
 
 class PaymentDetail extends Component {
   componentWillMount() {
-
+    const { order, updateInputFields } = this.props;
+    updateInputFields('orderId', order.id);
+    updateInputFields('grossAmount', order.amount);
+    updateInputFields('input2', order.amount);
+    updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
   componentWillReceiveProps() {
@@ -46,8 +52,8 @@ class PaymentDetail extends Component {
         getTransactionResponse.meta.message.status_message) {
         if (getTransactionResponse.meta.message.validation_messages) {
           const messages = getTransactionResponse.meta.message.validation_messages;
-          let message = ''
-          for (let i = 0; i < messages.length; i++) {
+          let message = '';
+          for (let i = 0; i < messages.length; i += 1) {
             message += messages[i];
           }
           Alert.alert(message);
@@ -81,17 +87,17 @@ class PaymentDetail extends Component {
     } else if (paymentType === 'credit_card') {
       detail = CREDIT_CARD;
 
-      for (let i = 0; i < 12; i++) {
-        let mo = i + 1
+      for (let i = 0; i < 12; i += 1) {
+        let mo = i + 1;
         if (i < 9) {
-          mo = '0'.concat(mo)
+          mo = '0'.concat(mo);
         }
         monthList.push({
           value: 'key'.concat(i),
           label: mo.toString()
         });
       }
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 20; i += 1) {
         yearList.push({
           value: 'key'.concat(i),
           label: (i + 2017).toString()
@@ -114,11 +120,7 @@ class PaymentDetail extends Component {
       cardExpiryYear,
       cardCvv,
       cardNumber,
-      grossAmount,
-      orderId,
       descriptionDetail,
-      lastDigitNumber,
-      randomNumber,
       mandiriToken,
       input1,
       input2,
@@ -133,8 +135,6 @@ class PaymentDetail extends Component {
       errorCardNumber,
       errorCardCvv,
       errorDescriptionDetail,
-      errorLastDigitNumber,
-      errorRandomNumber,
       errorMandiriToken
     } = errorFields || false;
 
@@ -251,27 +251,32 @@ class PaymentDetail extends Component {
               <InputItem
                 error={errorCardNumber}
                 title="16 digits card number"
-                onChangeText={text => this.handleInputChange('cardNumber', text)}
+                onChangeText={(text) => {
+                  this.handleInputChange('cardNumber', text);
+                  this.handleInputChange('input1', text.slice(6, 16));
+                }
+                }
                 value={cardNumber}
                 placeholder="16 digits card number"
+                maxLength={16}
               />
               <InputItem
                 title="input1"
-                onChangeText={text => this.handleInputChange('input1', text)}
-                value={cardNumber.slice(6, 16)}
+                value={input1}
                 placeholder="Last 10 digits"
+                disabled
               />
               <InputItem
                 title="input2"
-                onChangeText={text => this.handleInputChange('input2', text)}
-                value={input2}
+                value={'Total Amount = Rp.'.concat(Intl.NumberFormat('id').format(input2))}
                 placeholder="Gross Amount"
+                disabled
               />
               <InputItem
                 title="random"
-                onChangeText={text => this.handleInputChange('randomNumber', text)}
-                value={input3}
+                value={'Enter this number for token : '.concat(input3)}
                 placeholder="5 Random Number"
+                disabled
               />
               <InputItem
                 error={errorMandiriToken}
@@ -282,12 +287,6 @@ class PaymentDetail extends Component {
               />
             </Content> : <Content />
           }
-          <InputItem
-            title="Order ID"
-            onChangeText={text => this.handleInputChange('orderId', text)}
-            value={orderId}
-            placeholder="Order ID"
-          />
 
           <Button
             style={styles.button}
@@ -320,7 +319,8 @@ PaymentDetail.propTypes = {
   inputFields: PropTypes.object.isRequired,
   errorFields: PropTypes.object.isRequired,
   submitPayment: PropTypes.func.isRequired,
-  getIsFetchingTransaction: PropTypes.bool.isRequired
+  getIsFetchingTransaction: PropTypes.bool.isRequired,
+  order: PropTypes.object.isRequired
 };
 
 /**

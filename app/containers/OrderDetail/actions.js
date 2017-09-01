@@ -4,26 +4,16 @@ import { DevSummitAxios, getAccessToken } from '../../helpers';
  * import constants
  */
 import {
-  SET_TICKET_TYPE,
+  // SET_TICKET_TYPE,
   UPDATE_ORDER,
   SET_ORDER,
-  IS_UPDATING_ORDER
+  IS_UPDATING_ORDER,
+  UPDATE_ORDER_STATUS
+  // RESET_STATE
 } from './constants';
 
 import * as actions from '../OrderList/actions';
 // get order detail
-
-export function getOrderDetail(orderId) {
-  return (dispatch, getState) => {
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
-        dispatch({ type: SET_ORDER, data: response.data.data });
-      }).catch((err) => { console.log(err.response); });
-    }).catch((error) => { });
-  };
-}
 
 export function updateIsUpdatingOrder(status) {
   return {
@@ -32,25 +22,50 @@ export function updateIsUpdatingOrder(status) {
   };
 }
 
+export function getOrderDetail(orderId) {
+  return (dispatch) => {
+    dispatch(updateIsUpdatingOrder(true));
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
+        headers: { Authorization: accessToken }
+      }).then((response) => {
+        dispatch({ type: SET_ORDER, data: response.data.data });
+        dispatch(updateIsUpdatingOrder(false));
+      }).catch((err) => { console.log(err.response); });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
+export function setUpdateOrderStatus(status) {
+  return {
+    type: UPDATE_ORDER_STATUS,
+    status
+  };
+}
+
 export function submitUpdateOrder(orders) {
   return (dispatch) => {
-    dispatch(updateIsUpdatingOrder(true))
-    for (let i in orders) {
+    // dispatch(updateIsUpdatingOrder(true));
+    orders.forEach((item, i) => {
       if (orders[i] !== undefined) {
         getAccessToken().then((token) => {
           DevSummitAxios.patch(`/api/v1/orders/${orders[i].order_id}/details/${orders[i].id}`, {
             count: orders[i].count
           }, {
-              headers: { Authorization: token }
-            }).then((response) => {
-            }).catch((err) => { console.log(err.response); });
+            headers: { Authorization: token }
+          }).then((response) => {
+          }).catch((err) => { console.log(err.response); });
         }).catch((error) => { });
       }
-    }
-    dispatch(updateIsUpdatingOrder(false));
+    });
+    // not working yet, need asynchronous loop
+    // dispatch(updateIsUpdatingOrder(false));
+    // dispatch({ type: RESET_STATE });
     dispatch(actions.getOrderList());
     Actions.pop();
-  }
+  };
 }
 
 

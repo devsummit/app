@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import React, { Component } from 'react';
 import {
   Container,
@@ -15,35 +17,46 @@ import {
   ListItem,
   Spinner
 } from 'native-base';
-import { RefreshControl, Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { RefreshControl, Alert, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
+import TicketDetail from '../../components/TicketDetail';
+import { formatDate, transactionStatus } from '../../helpers';
 
 let total = 0;
 class OrderDetail extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    return {
-      headerRight: <Button style={styles.roundButton} onPress={() => params.saveOrder()} >
-        <Icon name="save" color={PRIMARYCOLOR} />
-        <Text style={styles.textButton}>save</Text>
-      </Button>
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: '',
+      color: ''
     };
-  };
+  }
 
   componentWillMount = () => {
     this.props.getOrderDetail(this.props.orderId);
-    this.props.navigation.setParams({
-      saveOrder:
-      this.saveOrder
-    });
   }
+
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.order && this.props.order.length > 0) {
+      const { payment } = this.props.order[0];
+
+      const stat = transactionStatus(payment);
+      this.setState({
+        status: stat.message,
+        color: stat.color
+      });
+    }
+  }
+
 
   getTotal = () => {
     const order = this.props.order;
@@ -68,21 +81,22 @@ class OrderDetail extends Component {
       'Order number '.concat(this.props.orderId),
       [
         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order) } },
+        { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order); } }
       ],
       { cancelable: false }
-    )
+    );
   }
 
   render() {
-    if (this.props.isUpdating) {
+    const { status } = this.state;
+    if (this.props.isUpdating || this.props.order.length === 0) {
       return (
         <Container>
           <Content>
             <Spinner color={PRIMARYCOLOR} />
           </Content>
         </Container>
-      )
+      );
     }
     return (
       <Container style={styles.container}>
@@ -90,22 +104,32 @@ class OrderDetail extends Component {
           refreshControl={
             <RefreshControl
               refreshing={this.props.isUpdating}
-              onRefresh={() => { this.props.getOrderDetail(this.props.orderId) }}
+              onRefresh={() => { this.props.getOrderDetail(this.props.orderId); }}
             />
           }
         >
           <Card>
             <CardItem>
-              <Grid>
+              <Grid style={{ flex: 3 }}>
                 <Row>
                   <Col><Text>Order number:</Text></Col>
                   <Col><Text>{this.props.orderId}</Text></Col>
                 </Row>
                 <Row>
                   <Col><Text>Order date:</Text></Col>
-                  <Col><Text>11-08-2017</Text></Col>
+                  <Col><Text>{formatDate(this.props.order[0].created_at)}</Text></Col>
                 </Row>
               </Grid>
+              {status === 'not paid' ?
+                <Button style={styles.roundButton} onPress={() => this.saveOrder()} >
+                  <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
+                  <Text style={styles.textButton}>save</Text>
+                </Button> :
+                <Text style={[ styles.statusText,
+                  { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                >
+                  {this.state.status.toUpperCase()}</Text>
+              }
             </CardItem>
           </Card>
           {
@@ -114,13 +138,20 @@ class OrderDetail extends Component {
                 dataArray={this.props.order}
                 renderRow={item =>
                   (<ListItem>
-                    <TicketType
-                      key={item.id}
-                      count={item.count}
-                      ticket={item.ticket}
-                      onAdd={() => this.increase(item.id)}
-                      onReduce={() => this.decrease(item.id)}
-                    />
+                    {this.state.status === 'not paid' ?
+                      <TicketType
+                        key={item.id}
+                        count={item.count}
+                        ticket={item.ticket}
+                        onAdd={() => this.increase(item.id)}
+                        onReduce={() => this.decrease(item.id)}
+                      /> :
+                      <TicketDetail
+                        key={item.id}
+                        count={item.count}
+                        ticket={item.ticket}
+                      />}
+
                   </ListItem>)
                 }
               />
@@ -134,6 +165,18 @@ class OrderDetail extends Component {
               <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
           </Card>
+          {(this.state.status && this.state.status === 'need authorization') ?
+            <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
+              <Icon name="ios-key" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>AUTHORIZE</Text>
+            </Button> : <View />
+          }
+          {(this.state.status && this.state.status === 'pending') ?
+            <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
+              <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
+              <Text style={styles.buttonText}>CONFIRM</Text>
+            </Button> : <View />
+          }
         </Content>
       </Container >
     );
@@ -143,7 +186,8 @@ class OrderDetail extends Component {
 const mapStateToProps = createStructuredSelector({
   ticketTypes: selectors.getTicketTypes(),
   order: selectors.getOrder(),
-  isUpdating: selectors.getIsUpdatingOrder()
+  isUpdating: selectors.getIsUpdatingOrder(),
+  updateStatus: selectors.getUpdateOrderStatus()
 });
 
 export default connect(mapStateToProps, actions)(OrderDetail);

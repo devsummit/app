@@ -1,9 +1,10 @@
+import 'intl';
+import 'intl/locale-data/jsonp/id';
 import React, { Component } from 'react';
 import {
   Text,
   Grid,
   Col,
-  Right,
   Button
 } from 'native-base';
 import { TouchableOpacity, View } from 'react-native';
@@ -11,44 +12,40 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { PRIMARYCOLOR } from '../../constants';
+import { formatDate, transactionStatus } from '../../helpers';
+// import { PRIMARYCOLOR } from '../../constants';
 
 export default class OrderItem extends Component {
   state = {
-    status: ''
+    status: '',
+    color: ''
   }
 
   componentWillMount() {
     let stat = '';
     const { payment } = this.props.order;
-    if (payment) {
-      if (payment.fraud_status === 'accept' && payment.transaction_status === 'capture') {
-        stat = 'PAID';
-      } else if (payment.fraud_status === 'accept' && payment.transaction_status === 'authorize') {
-        stat = 'NEED AUTHORIZATION';
-      } else if (payment.transaction_status === 'pending') {
-        stat = 'PENDING';
-      }
-    } else {
-      stat = 'NOT PAID';
-    }
+    stat = transactionStatus(payment);
     this.setState({
-      status: stat
+      status: stat.message,
+      color: stat.color
     });
   }
+
+  componentWillReceiveProps(nextProps) {
+    let stat = '';
+    const { payment } = this.props.order;
+    stat = transactionStatus(payment);
+    this.setState({
+      status: stat.message,
+      color: stat.color
+    });
+  }
+
 
   onEditPressed() {
     Actions.orderDetail({ orderId: this.props.order.id });
   }
 
-  // onCheckOut() {
-
-  // }
-
-  formatDate = (source) => {
-    const dt = source.split(' ');
-    return `${dt[1]}-${dt[2]}-${dt[3]}`;
-  }
   // confirm green
   // auth blue
   statusColor = (status) => {
@@ -73,6 +70,9 @@ export default class OrderItem extends Component {
   }
 
   render() {
+    const { status, color } = this.state;
+    const { order } = this.props;
+
     return (
       <ListItem
         style={styles.item}
@@ -80,57 +80,59 @@ export default class OrderItem extends Component {
         onPress={this.props.onPress}
       >
         <View style={{ flex: 1, flexDirection: 'row' }}>
-          <Grid style={{ flex: 9 }}>
+          <Grid style={{ flex: 1 }}>
             <Col style={styles.left}>
-              <Text style={styles.orderId}>Order-{this.props.order.id}</Text>
+              <Text style={styles.orderId}>Order-{order.id}</Text>
               <Text
                 note
                 style={styles.orderId}
               >
-                {this.formatDate(this.props.order.created_at)}
+                {formatDate(order.created_at)}
               </Text>
             </Col>
-            <Col style={styles.center}>
-              <Text>{Intl.NumberFormat('id').format(this.props.order.amount)}</Text>
-              {this.state.status ?
+            <Col style={styles.right}>
+              <Text style={styles.text}>{Intl.NumberFormat('id').format(order.amount)}</Text>
+              {status ?
                 <Text
                   note
-                  style={{
-                    color: this.statusColor(this.state.status),
+                  style={[ styles.text, {
+                    color,
                     fontWeight: 'bold'
-                  }}
+                  } ]}
                 >
-                  {this.state.status}
+                  {status.toUpperCase()}
                 </Text> : <View />
               }
             </Col>
           </Grid>
-          {this.state.status && this.state.status === 'NOT PAID' ?
-            <Right style={{ flex: 1, flexDirection: 'row', alignContent: 'space-between' }}>
-              <TouchableOpacity onPress={() => this.onEditPressed()}>
-                <Icon
-                  name="md-create"
-                  style={styles.icon}
-                  color={PRIMARYCOLOR}
-                />
-              </TouchableOpacity>
-            </Right> : <View />}
-
         </View>
-        {(this.state.status && this.state.status === 'NOT PAID') ?
-          <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: PRIMARYCOLOR } ]}>
+        {(status && status === 'not paid') ?
+          <Button
+            onPress={() => Actions.payment({ order })}
+            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
+          >
+            <TouchableOpacity onPress={() => this.onEditPressed()} >
+              <Icon
+                name="md-create"
+                style={styles.icon}
+                color="white"
+              />
+            </TouchableOpacity>
             <Icon name="md-cart" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CHECK OUT</Text>
           </Button> : <View />
         }
-        {(this.state.status && this.state.status === 'NEED AUTHORIZATION') ?
-          <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
+        {(status && status === 'need authorization') ?
+          <Button
+            onPress={() => Actions.payment({ order })}
+            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
+          >
             <Icon name="ios-key" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>AUTHORIZE</Text>
           </Button> : <View />
         }
-        {(this.state.status && this.state.status === 'PENDING') ?
-          <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
+        {(status && status === 'pending') ?
+          <Button onPress={() => Actions.payment({ order })} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
             <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Button> : <View />

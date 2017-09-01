@@ -23,3 +23,8 @@ export const getIsUpdatingOrder = () => createSelector(
   selectMainReducer(),
   state => state.get('isUpdatingOrder')
 );
+
+export const getUpdateOrderStatus = () => createSelector(
+  selectMainReducer(),
+  state => state.get('updateOrderStatus')
+);

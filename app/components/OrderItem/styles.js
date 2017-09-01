@@ -11,17 +11,31 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flex: 2
   },
+  right: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    flex: 3
+  },
   center: {
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center'
   },
   icon: {
+    flex: 1,
+    marginLeft: 10,
     fontSize: 30
+  },
+  buttonText: {
+    marginRight: 10,
+    fontWeight: 'bold'
   },
   orderId: {
     alignSelf: 'flex-start',
     fontWeight: 'bold'
+  },
+  text: {
+    alignSelf: 'flex-end'
   },
   btnCheckOut: {
     width: '100%',
