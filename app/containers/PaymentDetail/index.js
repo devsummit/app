@@ -53,7 +53,7 @@ class PaymentDetail extends Component {
         if (getTransactionResponse.meta.message.validation_messages) {
           const messages = getTransactionResponse.meta.message.validation_messages;
           let message = '';
-          for (let i = 0; i < messages.length; i++) {
+          for (let i = 0; i < messages.length; i += 1) {
             message += messages[i];
           }
           Alert.alert(message);
@@ -87,7 +87,7 @@ class PaymentDetail extends Component {
     } else if (paymentType === 'credit_card') {
       detail = CREDIT_CARD;
 
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 12; i += 1) {
         let mo = i + 1;
         if (i < 9) {
           mo = '0'.concat(mo);
@@ -97,7 +97,7 @@ class PaymentDetail extends Component {
           label: mo.toString()
         });
       }
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 20; i += 1) {
         yearList.push({
           value: 'key'.concat(i),
           label: (i + 2017).toString()
