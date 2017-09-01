@@ -18,7 +18,7 @@ import {
   Spinner
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { RefreshControl, Alert, View, TouchableOpacity } from 'react-native';
+import { RefreshControl, Alert, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -125,7 +125,9 @@ class OrderDetail extends Component {
                   <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
                   <Text style={styles.textButton}>save</Text>
                 </Button> :
-                <Text style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}>
+                <Text style={[ styles.statusText,
+                  { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                >
                   {this.state.status.toUpperCase()}</Text>
               }
             </CardItem>
@@ -184,7 +186,8 @@ class OrderDetail extends Component {
 const mapStateToProps = createStructuredSelector({
   ticketTypes: selectors.getTicketTypes(),
   order: selectors.getOrder(),
-  isUpdating: selectors.getIsUpdatingOrder()
+  isUpdating: selectors.getIsUpdatingOrder(),
+  updateStatus: selectors.getUpdateOrderStatus()
 });
 
 export default connect(mapStateToProps, actions)(OrderDetail);
