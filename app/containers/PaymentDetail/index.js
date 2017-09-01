@@ -12,8 +12,6 @@ import {
 } from 'native-base';
 import { Alert, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Toast from 'react-native-simple-toast';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 
 // import redux components
@@ -320,7 +318,8 @@ PaymentDetail.propTypes = {
   errorFields: PropTypes.object.isRequired,
   submitPayment: PropTypes.func.isRequired,
   getIsFetchingTransaction: PropTypes.bool.isRequired,
-  order: PropTypes.object.isRequired
+  order: PropTypes.object.isRequired,
+  initialPayment: PropTypes.object.isRequired
 };
 
 /**

@@ -7,6 +7,7 @@ import {
   Col,
   Button
 } from 'native-base';
+import PropTypes from 'prop-types';
 import { TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -31,7 +32,7 @@ export default class OrderItem extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     let stat = '';
     const { payment } = this.props.order;
     stat = transactionStatus(payment);
@@ -99,10 +100,10 @@ export default class OrderItem extends Component {
               {status ?
                 <Text
                   note
-                  style={[styles.text, {
+                  style={[ styles.text, {
                     color,
                     fontWeight: 'bold'
-                  }]}
+                  } ]}
                 >
                   {status.toUpperCase()}
                 </Text> : <View />
@@ -113,7 +114,7 @@ export default class OrderItem extends Component {
         {(status && status === 'not paid') ?
           <Button
             onPress={() => Actions.payment({ order })}
-            style={[styles.btnCheckOut, { backgroundColor: color }]}
+            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
           >
             <TouchableOpacity onPress={() => this.onEditPressed()} >
               <Icon
@@ -129,14 +130,14 @@ export default class OrderItem extends Component {
         {(status && status === 'need authorization') ?
           <Button
             onPress={() => Actions.payment({ order })}
-            style={[styles.btnCheckOut, { backgroundColor: color }]}
+            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
           >
             <Icon name="ios-key" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>AUTHORIZE</Text>
           </Button> : <View />
         }
         {(status && status === 'pending') ?
-          <Button onPress={() => this.handleConfirmPayment()} style={[styles.btnCheckOut, { backgroundColor: 'green' }]}>
+          <Button onPress={() => this.handleConfirmPayment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
             <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Button> : <View />
@@ -145,3 +146,10 @@ export default class OrderItem extends Component {
     );
   }
 }
+
+OrderItem.propTypes = {
+  payment: PropTypes.object, // eslint-disable-line react/require-default-props
+  order: PropTypes.object.isRequired,
+  confirmPayment: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired
+};

@@ -46,6 +46,14 @@ export default class App extends Component {
     this.state = {};
   }
 
+  onBackPress = () => {
+    if (Actions.state.index === 0) {
+      return false;
+    }
+    Actions.pop();
+    return true;
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -55,11 +63,12 @@ export default class App extends Component {
           barButtonTextStyle={styles.barButtonTextStyle}
           barButtonIconStyle={styles.barButtonIconStyle}
           leftButtonIconStyle={styles.leftButtonIconStyle}
+          backAndroidHandler={this.onBackPress}
         >
           <Scene key="root" backButtonImage={BackButtonImg}>
             <Scene key="splash" component={Splash} hideNavBar initial />
             <Scene key="main" component={Main} hideNavBar type="replace" />
-            <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace"/>
+            <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace" />
             <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" />
             <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" />
@@ -71,9 +80,9 @@ export default class App extends Component {
             <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} title="Schedule" />
-            <Scene key="attendeesList" component={AttendeesList} title="Select Attendee"/>
-            <Scene key="payment" component={Payment} title="Choose Payment Method"/>
-            <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail"/>
+            <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
+            <Scene key="payment" component={Payment} title="Choose Payment Method" />
+            <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
           </Scene>
         </RouterWithRedux>
       </Provider>

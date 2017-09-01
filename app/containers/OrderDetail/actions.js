@@ -59,7 +59,7 @@ export function submitUpdateOrder(orders) {
             headers: { Authorization: token }
           }).then((response) => {
           }).catch((err) => { console.log(err.response); });
-        }).catch((error) => { });
+        }).catch((error) => { console.log(error); });
       }
     });
     // not working yet, need asynchronous loop
