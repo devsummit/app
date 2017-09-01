@@ -14,7 +14,7 @@ export const decodeToken = (token) => {
   const base64Url = token.split('.')[0];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
   return JSON.parse(base.decode(base64));
-}
+};
 
 export const getAccessToken = async () => {
   let token = await AsyncStorage.getItem('access_token');
@@ -41,14 +41,14 @@ export const getAccessToken = async () => {
   await DevSummitAxios.post('/auth/refreshtoken', { refresh_token: refreshToken })
     .then(async (response) => {
       if (response.data.data && response.data.data.exist === false) {
-        const keys = ['access_token', 'refresh_token', 'role_id', 'profile_data'];
+        const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
         await AsyncStorage.multiRemove(keys);
         return Actions.main();
       }
       const { access_token: accessToken, refresh_token: refreshtoken } = response.data.data;
       await AsyncStorage.multiSet([
-        ['access_token', accessToken],
-        ['refresh_token', refreshtoken]
+        [ 'access_token', accessToken ],
+        [ 'refresh_token', refreshtoken ]
       ]);
       token = accessToken;
     })
@@ -69,7 +69,7 @@ export const getProfileData = async () => {
 export const formatDate = (source) => {
   const dt = source.split(' ');
   return `${dt[1]}-${dt[2]}-${dt[3]}`;
-}
+};
 
 export const transactionStatus = (payment) => {
   if (payment) {
@@ -89,10 +89,13 @@ export const transactionStatus = (payment) => {
         color: 'red'
       };
     }
-  } else {
     return {
-      message: 'not paid',
-      color: PRIMARYCOLOR
+      message: payment.transaction_status,
+      color: 'grey'
     };
   }
-}
+  return {
+    message: 'not paid',
+    color: PRIMARYCOLOR
+  };
+};
