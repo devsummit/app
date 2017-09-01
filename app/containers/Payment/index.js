@@ -42,7 +42,7 @@ class Payment extends Component {
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
     if (field === 'paymentType' && value !== 'credit_card' && value !== 'bank_transfer') {
-      const selectedMethod = PAYMENT_METHODS.filter((data)=> {
+      const selectedMethod = PAYMENT_METHODS.filter((data) => {
         return data.payment_type === value;
       })
       this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
@@ -51,7 +51,7 @@ class Payment extends Component {
   }
 
   render() {
-    const { inputFields } = this.props;
+    const { inputFields, order } = this.props;
     const {
       paymentType,
       bankDestination
@@ -78,7 +78,7 @@ class Payment extends Component {
             ))}
           </Picker>
 
-          { (paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
+          {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
             <View>
               <Text>SELECT BANK</Text>
               <Picker
@@ -100,11 +100,11 @@ class Payment extends Component {
           <Button
             style={styles.button}
             onPress={() => {
-              Actions.paymentDetail();
+              Actions.paymentDetail({ order });
             }}
           >
             <Text>
-                  GO TO PAYMENT DETAIL
+              GO TO PAYMENT DETAIL
             </Text>
           </Button>
           {/* {
@@ -124,7 +124,8 @@ Payment.propTypes = {
   updateErrorFields: PropTypes.func.isRequired,
   updateInputFields: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
-  inputFields: PropTypes.object.isRequired
+  inputFields: PropTypes.object.isRequired,
+  order: PropTypes.object.isRequired
 };
 
 /**
