@@ -9,8 +9,6 @@ import {
 } from 'native-base';
 import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Toast from 'react-native-simple-toast';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 
 // import redux components
@@ -44,7 +42,7 @@ class Payment extends Component {
     if (field === 'paymentType' && value !== 'credit_card' && value !== 'bank_transfer') {
       const selectedMethod = PAYMENT_METHODS.filter((data) => {
         return data.payment_type === value;
-      })
+      });
       this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
     }
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
