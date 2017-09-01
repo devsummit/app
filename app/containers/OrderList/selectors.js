@@ -21,3 +21,8 @@ export const getIsFetchingOrders = () => createSelector(
   selectMainReducer(),
   state => state.get('isFetchingOrders')
 );
+
+export const getIsConfirmingPayment = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isConfirmingPayment')
+);
