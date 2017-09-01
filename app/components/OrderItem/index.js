@@ -46,6 +46,10 @@ export default class OrderItem extends Component {
     Actions.orderDetail({ orderId: this.props.order.id });
   }
 
+  handleConfirmPayment = () => {
+    this.props.confirmPayment(this.props.order);
+  }
+
   // confirm green
   // auth blue
   statusColor = (status) => {
@@ -95,10 +99,10 @@ export default class OrderItem extends Component {
               {status ?
                 <Text
                   note
-                  style={[ styles.text, {
+                  style={[styles.text, {
                     color,
                     fontWeight: 'bold'
-                  } ]}
+                  }]}
                 >
                   {status.toUpperCase()}
                 </Text> : <View />
@@ -109,7 +113,7 @@ export default class OrderItem extends Component {
         {(status && status === 'not paid') ?
           <Button
             onPress={() => Actions.payment({ order })}
-            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
+            style={[styles.btnCheckOut, { backgroundColor: color }]}
           >
             <TouchableOpacity onPress={() => this.onEditPressed()} >
               <Icon
@@ -125,14 +129,14 @@ export default class OrderItem extends Component {
         {(status && status === 'need authorization') ?
           <Button
             onPress={() => Actions.payment({ order })}
-            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
+            style={[styles.btnCheckOut, { backgroundColor: color }]}
           >
             <Icon name="ios-key" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>AUTHORIZE</Text>
           </Button> : <View />
         }
         {(status && status === 'pending') ?
-          <Button onPress={() => Actions.payment({ order })} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
+          <Button onPress={() => this.handleConfirmPayment()} style={[styles.btnCheckOut, { backgroundColor: 'green' }]}>
             <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Button> : <View />
