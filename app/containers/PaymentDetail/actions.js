@@ -61,8 +61,8 @@ export function updateGetTransactionResponse(payload) {
 export function submitPayment() {
   return (dispatch, getState) => {
     dispatch(updateIsFetchingTransaction(true));
-    const paymentMethod = getState().getIn(['methodPayment', 'inputFields']).toJS();
-    const paymentDetail = getState().getIn(['detailPayment', 'inputFields']).toJS();
+    const paymentMethod = getState().getIn([ 'methodPayment', 'inputFields' ]).toJS();
+    const paymentDetail = getState().getIn([ 'detailPayment', 'inputFields' ]).toJS();
 
     const {
       emailDetail, firstName, lastName, phoneNumber, vaNumber, cardExpiryMonth,
@@ -97,8 +97,6 @@ export function submitPayment() {
       .then((token) => {
         const headers = { Authorization: token };
         DevSummitAxios.post('api/v1/payments', data, { headers }).then((response) => {
-          console.log("response from api", response)
-          console.log("ORDER ID", orderId)
           dispatch(updateGetTransactionResponse(response.data));
           dispatch(updateIsFetchingTransaction(false));
         }).catch((err) => {
