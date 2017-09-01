@@ -1,6 +1,6 @@
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Text,
   Card,
