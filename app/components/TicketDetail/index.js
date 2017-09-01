@@ -1,14 +1,12 @@
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Text,
   Card,
   CardItem,
   Body
 } from 'native-base';
-import { View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
 export default (props) => {
