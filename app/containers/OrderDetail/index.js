@@ -17,6 +17,7 @@ import {
   ListItem,
   Spinner
 } from 'native-base';
+import PropTypes from 'prop-types';
 import { Actions } from 'react-native-router-flux';
 import { RefreshControl, Alert, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -45,7 +46,7 @@ class OrderDetail extends Component {
   }
 
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     if (this.props.order && this.props.order.length > 0) {
       const { payment } = this.props.order[0];
 
@@ -80,7 +81,7 @@ class OrderDetail extends Component {
       'Are you sure want to update this order?',
       'Order number '.concat(this.props.orderId),
       [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Cancel' },
         { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order); } }
       ],
       { cancelable: false }
@@ -92,7 +93,7 @@ class OrderDetail extends Component {
       'Payment Confirmation',
       'Confirm payment Order : '.concat(this.props.orderId),
       [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Cancel' },
         { text: 'Confirm', onPress: () => { this.props.confirmPayment(this.props.order[0].payment.id); } }
       ],
       { cancelable: false }
@@ -101,7 +102,7 @@ class OrderDetail extends Component {
 
   render() {
     const { status } = this.state;
-    const {isConfirming, isUpdating} = this.props;
+    const { isConfirming, isUpdating } = this.props;
     if (isUpdating || isConfirming || this.props.order.length === 0) {
       return (
         <Container>
@@ -195,6 +196,17 @@ class OrderDetail extends Component {
     );
   }
 }
+
+OrderDetail.propTypes = {
+  getOrderDetail: PropTypes.func.isRequired,
+  orderId: PropTypes.number.isRequired,
+  order: PropTypes.array.isRequired,
+  updateOrder: PropTypes.func.isRequired,
+  submitUpdateOrder: PropTypes.func.isRequired,
+  confirmPayment: PropTypes.func.isRequired,
+  isConfirming: PropTypes.bool.isRequired,
+  isUpdating: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = createStructuredSelector({
   ticketTypes: selectors.getTicketTypes(),
