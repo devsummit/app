@@ -12,8 +12,8 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { PRIMARYCOLOR } from '../../constants';
 import { formatDate, transactionStatus } from '../../helpers';
+// import { PRIMARYCOLOR } from '../../constants';
 
 export default class OrderItem extends Component {
   state = {
@@ -95,10 +95,10 @@ export default class OrderItem extends Component {
               {status ?
                 <Text
                   note
-                  style={[styles.text, {
+                  style={[ styles.text, {
                     color,
                     fontWeight: 'bold'
-                  }]}
+                  } ]}
                 >
                   {status.toUpperCase()}
                 </Text> : <View />
@@ -107,7 +107,10 @@ export default class OrderItem extends Component {
           </Grid>
         </View>
         {(status && status === 'not paid') ?
-          <Button onPress={() => Actions.payment({ order })} style={[styles.btnCheckOut, { backgroundColor: color }]}>
+          <Button
+            onPress={() => Actions.payment({ order })}
+            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
+          >
             <TouchableOpacity onPress={() => this.onEditPressed()} >
               <Icon
                 name="md-create"
@@ -120,13 +123,16 @@ export default class OrderItem extends Component {
           </Button> : <View />
         }
         {(status && status === 'need authorization') ?
-          <Button onPress={() => Actions.payment()} style={[styles.btnCheckOut, { backgroundColor: color }]}>
+          <Button
+            onPress={() => Actions.payment({ order })}
+            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
+          >
             <Icon name="ios-key" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>AUTHORIZE</Text>
           </Button> : <View />
         }
         {(status && status === 'pending') ?
-          <Button onPress={() => Actions.payment()} style={[styles.btnCheckOut, { backgroundColor: 'green' }]}>
+          <Button onPress={() => Actions.payment({ order })} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
             <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Button> : <View />
