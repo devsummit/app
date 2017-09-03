@@ -90,6 +90,7 @@ class ChangePassword extends Component {
               secureTextEntry
               onChangeText={text => {return this.handleInputChange('current_password', text)}}
               value={current_password}
+              placeholder="Current Password"
             />
             <InputItem
               error={error_new_password}
@@ -97,6 +98,7 @@ class ChangePassword extends Component {
               secureTextEntry
               onChangeText={text => {return this.handleInputChange('new_password', text)}}
               value={new_password}
+              placeholder="New Password"
             />
             <InputItem
               error={error_confirm_password}
@@ -104,6 +106,7 @@ class ChangePassword extends Component {
               secureTextEntry
               onChangeText={text => {return this.handleInputChange('confirm_password', text)}}
               value={confirm_password}
+              placeholder="Confirm New Password"
             />
             {error_password_not_the_same ?
               <Text style={styles.newPassValidator}>Confirm password didn't match</Text>
