@@ -113,13 +113,18 @@ class ChangePassword extends Component {
               :
               null
             }
-            {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password || new_password.length < 6 || confirm_password < 6 || current_password < 6) ?
+            {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password || new_password.length < 6 || confirm_password < 6 || current_password < 6 || current_password === new_password) ?
               <View>
                 { ((new_password !== confirm_password)  ) ?
                   <View>
                   <Text style={styles.newPassValidator}>"both new password doesn't match"</Text>
                   { ((new_password.length < 6)) ?
                     <Text style={styles.newPassValidator}>"new password should be 6 at minimum"</Text>
+                    :
+                    null
+                  }
+                  { ((current_password === new_password)) ?
+                    <Text style={styles.newPassValidator}>"current and new password can't be same"</Text>
                     :
                     null
                   }
