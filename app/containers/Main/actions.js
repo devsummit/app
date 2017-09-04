@@ -107,6 +107,11 @@ export function login() {
         }
         dispatch(updateIsLogIn(true));
       } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+        Alert.alert('Login Failed', response.data.meta.message, [
+          {text: 'Register', onPress: () => Actions.registerEmail()},
+          {text: 'Cancel'}
+        ]);
+      } else {
         Alert.alert('Login Failed', response.data.meta.message);
       }      
       dispatch(updateIsFetching(false));   
@@ -140,6 +145,8 @@ export function loginMobile(mobileToken) {
         }
         dispatch(updateIsLogIn(true));
       } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+        Alert.alert('Login Failed', response.data.meta.message);
+      } else {
         Alert.alert('Login Failed', response.data.meta.message);
       }
     }).catch(err => console.log(err));
