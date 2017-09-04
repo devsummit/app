@@ -102,7 +102,7 @@ export function register() {
       const data = {
         first_name: firstName,
         last_name: lastName,
-        user_name: userName,
+        username: userName,
         email,
         password,
         role,
