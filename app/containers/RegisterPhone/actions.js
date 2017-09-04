@@ -69,10 +69,12 @@ export function toggleIsRegistering(status) {
 }
 
 
-export function updateRegisterStatus(status) {
+export function updateRegisterStatus(status, title, message) {
   return {
     type: UPDATE_REGISTER_STATUS,
-    status
+    status,
+    title,
+    message
   };
 }
 
@@ -87,23 +89,38 @@ export function resetState() {
  */
 export function register() {
   return (dispatch, getState) => {
+    dispatch(toggleIsRegistering(true));
     const { inputFields } = getState().get('registerPhone').toJS();
     const {
-      first_name, email, password, username, social_id, provider, token
+      firstName, email, password, userName, socialId, provider, token
     } = inputFields || null;
     let { role } = inputFields || null;
-    const { last_name } = inputFields || '';
+    const { lastName } = inputFields || '';
 
-    if (first_name && role && email && social_id && provider && username && token) {
-      role = Object.keys(ROLES).find(key => ROLES[key] === role)
-      DevSummitAxios.post('/auth/register', {
-        first_name, last_name, username, email, password, role, social_id, provider, token
-      }).then((response) => {
-        if (response && response.data && response.data.meta && response.data.meta.success) {
-          // do something
-          dispatch(updateRegisterStatus(true));
+    if (firstName && role && email && socialId && provider && userName && token) {
+      role = Object.keys(ROLES).find(key => ROLES[key] === role);
+      const data = {
+        first_name: firstName,
+        last_name: lastName,
+        user_name: userName,
+        email,
+        password,
+        role,
+        social_id: socialId,
+        provider,
+        token
+      };
+      DevSummitAxios.post('/auth/register', data).then((response) => {
+        if (response && response.data.data && response.data.meta.success) {
+          dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+        } else if (response.data.data !== null && !response.data.meta.success) {
+          dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+        } else if (response.data.data === null && !response.data.meta.success) {
+          dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
         }
+        dispatch(toggleIsRegistering(false));
       }).catch((error) => {
+        dispatch(toggleIsRegistering(false));
         console.log(error, 'error caught');
       });
     }
