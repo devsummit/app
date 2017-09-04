@@ -65,6 +65,10 @@ class ChangePassword extends Component {
       }
     }
 
+    componentWillUnmount() {
+      this.props.resetState()
+    }
+
     render() {
       // destructure state
       const { inputFields, errorFields, isPasswordUpdated, isPasswordWrong } = this.props || {};
@@ -80,6 +84,8 @@ class ChangePassword extends Component {
         Alert.alert('Fail', 'Please make sure you input the right password');
         this.props.updateIsPasswordWrong(false)
       }
+
+
 
       return (
         <Container style={styles.container}>
