@@ -59,6 +59,21 @@ class RegisterEmail extends Component {
     }
   }
 
+
+  /*validateEmail(){
+    var testresults
+    var str=document.validation.emailcheck.value
+    var filter=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+    if (filter.test(str))
+      testresults=true
+    else{
+      //alert("Please input a valid email address!")
+      testresults=false
+    }
+    return (testresults)
+  }*/
+
+
   componentWillUnmount() {
     this.props.resetState()
   }
@@ -106,6 +121,19 @@ class RegisterEmail extends Component {
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
+
+
+  checkEmail(inputvalue){
+    var pattern=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if(pattern.test(inputvalue)){
+        return true;
+    }else{
+        return false;
+    }
+  }
+
+
+
 
   render() {
     // destructure state
@@ -195,13 +223,42 @@ class RegisterEmail extends Component {
                 ))}
               </Picker>
             </View>
+          {(username.length < 6 || password.length < 6 || first_name === '' || last_name === '') ?
+          <View>
             <Button
               block
               style={styles.button}
+              disabled block style={[ styles.button, { elevation: 0 } ]}
               onPress={() => this.submitRegistration()}
             >
               <Text style={styles.buttomText}>Register</Text>
             </Button>
+            { ((username.length < 6) && (username !== '')) ?
+              <Text style={styles.registerTextBold}>"username should be 6 at minimum"</Text>
+              :
+              null
+            }
+            { ((password.length < 6) && (password !== '')) ?
+              <Text style={styles.registerTextBold}>"password should be 6 at minimum"</Text>
+              :
+              null
+            }
+            { (this.checkEmail(email) === false && email !== '') ?
+              <Text style={styles.registerTextBold}>"false email"</Text>
+              :
+              null
+            }
+          </View>
+            :
+            <Button
+              block
+              style={styles.button}
+              primary block style={[ styles.button, { elevation: 0 } ]}
+              onPress={() => this.submitRegistration()}
+            >
+              <Text style={styles.buttomText}>Register</Text>
+            </Button>
+          }
             <Button
               transparent
               style={styles.buttonRegister}
