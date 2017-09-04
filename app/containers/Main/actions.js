@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import OAuthManager from 'react-native-oauth';
 import { twitter } from 'react-native-simple-auth';
 import { Actions } from 'react-native-router-flux';
@@ -106,10 +106,10 @@ export function login() {
           console.log(error, 'error caught');
         }
         dispatch(updateIsLogIn(true));
-      } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
-        Actions.registerEmail()
-      }
-      dispatch(updateIsFetching(false));
+      } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+        Alert.alert('Login Failed', response.data.meta.message);
+      }      
+      dispatch(updateIsFetching(false));   
     }).catch((err) => console.log(err))
   };
 }
@@ -139,6 +139,8 @@ export function loginMobile(mobileToken) {
           console.log(error, 'error caught');
         }
         dispatch(updateIsLogIn(true));
+      } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+        Alert.alert('Login Failed', response.data.meta.message);
       }
     }).catch(err => console.log(err));
   }
@@ -181,7 +183,8 @@ export function loginGoogle() {
                 console.log(error, 'error caught');
               }
               dispatch(updateIsLogIn(true));
-            } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+            } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+              Alert.alert('Login Failed', response.data.meta.message);
               axios.get('https://www.googleapis.com/plus/v1/people/me', {
                 headers: {
                   Accept: 'application/json',
@@ -241,7 +244,8 @@ export function loginFacebook() {
                 console.log(error, 'error caught');
               }
               dispatch(updateIsLogIn(true));
-            } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+            } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+              Alert.alert('Login Failed', response.data.meta.message);
               axios.get('https://graph.facebook.com/me?fields=id,first_name,last_name,email', {
                 headers: {
                   Accept: 'application/json',
@@ -298,7 +302,8 @@ export function loginTwitter() {
               console.log(error, 'error caught');
             }
             dispatch(updateIsLogIn(true));
-          } else if (!response.data.meta.success && response.data.meta.message === "user is not registered") {
+          } else if (!response.data.meta.success && response.data.meta.message === "username not found") {
+            Alert.alert('Login Failed', response.data.meta.message);
             const prefilledData = {
               first_name: info.user.name,
               last_name: '',
