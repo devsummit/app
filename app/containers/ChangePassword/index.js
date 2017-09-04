@@ -17,7 +17,7 @@ import {
   Title
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import InputItem from '../../components/InputItem';
@@ -113,10 +113,18 @@ class ChangePassword extends Component {
               :
               null
             }
-            {(current_password === '' || new_password === '' || confirm_password === '') ?
-              <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
-                <Text style={styles.buttomText}>Change Password</Text>
-              </Button>
+            {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password) ?
+              <View>
+                { ((new_password !== confirm_password)  ) ?
+                  <Text style={styles.newPassValidator}>"both new password doesn't match"</Text>
+                  :
+                  null
+                }
+                <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
+                  <Text style={styles.buttomText}>Change Password</Text>
+                </Button>
+
+              </View>
               :
               <Button primary block style={styles.button} onPress={() => {return this.submitChangePassword()}}>
                 <Text style={styles.buttomText}>Change Password</Text>
