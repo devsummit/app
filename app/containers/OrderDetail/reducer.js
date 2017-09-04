@@ -42,8 +42,7 @@ function orderDetailReducer(state = initialState, action) {
     case IS_CONFIRMING_PAYMENT:
       return state.set('isConfirmingPayment', action.status);
     case RESET_STATE:
-      state = initialState;
-      return state;
+      return initialState;
     default:
       return state;
   }
