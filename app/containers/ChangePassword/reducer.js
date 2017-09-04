@@ -8,7 +8,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_IS_PASSWORD_UPDATED,
-  UPDATE_IS_PASSWORD_WRONG
+  UPDATE_IS_PASSWORD_WRONG,
+  RESET_STATE
 } from './constants';
 
 /*
@@ -43,6 +44,9 @@ function changePasswordReducer(state = initialState, action) {
 
     case UPDATE_IS_PASSWORD_WRONG:
       return state.set('isPasswordWrong', action.status);
+
+    case RESET_STATE:
+      return initialState;
 
     default:
       return state;
