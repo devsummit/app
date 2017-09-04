@@ -33,18 +33,28 @@ const background = require('../../../assets/images/background.png');
 
 class RegisterPhone extends Component {
   state = {
-    isEmailValid: false
+    isEmailValid: false,
+    fromLogin: false
   };
   /*
      * initialize some state
      */
   componentWillMount() {
+    if (this.props.fromLogin === true) {
+      this.setState({ fromLogin: true });
+    }
     this.props.resetState();
     this.props.updateInputFields('role', 'attendee');
     this.configureAccountKit();
   }
 
   componentWillReceiveProps(prevProps) {
+    const { fromLogin } = this.state;
+    if (fromLogin && fromLogin === true) {
+      this.setState({ fromLogin: false });
+      Alert.alert('You are not registered, please register first.');
+    }
+
     if (prevProps.isRegistering !== this.props.isRegistering) {
       return;
     }
@@ -186,11 +196,6 @@ class RegisterPhone extends Component {
   }
 
   render() {
-    const { fromLogin } = this.props;
-    if (fromLogin && fromLogin === true) {
-      Alert.alert('You are not registered, please register first.');
-    }
-
     if (this.props.isRegistering) {
       return (
         <Container>
