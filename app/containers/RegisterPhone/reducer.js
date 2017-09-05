@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable';
 /*
  * import contants
  */
@@ -7,10 +8,9 @@ import {
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_REGISTER_METHOD,
   UPDATE_REGISTER_STATUS,
+  TOGGLE_IS_REGISTERING,
   RESET_STATE
 } from './constants';
-
-import { fromJS } from 'immutable';
 
 
 /*
@@ -18,41 +18,46 @@ import { fromJS } from 'immutable';
  */
 const initialState = fromJS({
   inputFields: {
-    first_name: '',
-    last_name: '',
-    username: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
     email: '',
     password: '',
     role: '',
-    social_id: ''
+    socialId: ''
   },
   errorFields: {
-    error_first_name: false,
-    error_last_name: false,
-    error_username: false,
-    error_email: false,
-    error_password: false,
-    error_phone: false,
+    errorFirstName: false,
+    errorLastName: false,
+    errorUserName: false,
+    errorEmail: false,
+    errorPassword: false,
+    errorPhone: false
 
   },
   registerMethod: 'undefined',
   isRegistering: false,
-  isRegistered: false
+  isRegistered: {
+    status: false,
+    title: '',
+    message: ''
+  }
 });
 
 function registerPhoneReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SINGLE_INPUT_FIELD:
       return state.setIn([ 'inputFields', action.field ], action.value);
-
     case UPDATE_SINGLE_ERROR_FIELD:
       return state.setIn([ 'errorFields', action.field ], action.value);
-
     case UPDATE_REGISTER_METHOD:
       return state.set('registerMethod', action.payload);
-
+    case TOGGLE_IS_REGISTERING:
+      return state.set('isRegistering', action.status);
     case UPDATE_REGISTER_STATUS:
-      return state.set('isRegistered', action.status);
+      return (state.setIn([ 'isRegistered', 'status' ], action.status)
+        .setIn([ 'isRegistered', 'title' ], action.title)
+        .setIn([ 'isRegistered', 'message' ], action.message));
 
     case RESET_STATE:
       return initialState;

@@ -6,6 +6,7 @@ import {
   Fab,
   Spinner
 } from 'native-base';
+import PropTypes from 'prop-types';
 import { RefreshControl, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
@@ -27,17 +28,13 @@ class OrderList extends Component {
     this.props.getOrderList();
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
-
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
     Alert.alert(
       'Payment Confirmation',
       'Confirm payment Order : '.concat(props.id),
       [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Cancel' },
         { text: 'Confirm', onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
       ],
       { cancelable: false }
@@ -88,6 +85,14 @@ class OrderList extends Component {
     );
   }
 }
+
+OrderList.propTypes = {
+  orders: PropTypes.array.isRequired,
+  confirmPayment: PropTypes.func.isRequired,
+  getOrderList: PropTypes.func.isRequired,
+  isConfirming: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired
+};
 
 const mapStateToProps = createStructuredSelector({
   orders: selectors.getOrders(),

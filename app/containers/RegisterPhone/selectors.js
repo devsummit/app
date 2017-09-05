@@ -50,6 +50,6 @@ export const getRegisterMethod = () => createSelector(
  */
 export const getRegisterStatus = () => createSelector(
   selectRegisterReducer(),
-  state => state.get('isRegistered')
+  state => state.get('isRegistered').toJS()
 );
 

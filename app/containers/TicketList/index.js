@@ -18,7 +18,6 @@ import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
-
 import { PRIMARYCOLOR } from '../../constants';
 
 class TicketList extends Component {

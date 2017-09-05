@@ -22,7 +22,7 @@ const initialState = fromJS({
   order: [],
   isUpdatingOrder: false,
   updateOrderStatus: '',
-  IS_CONFIRMING_PAYMENT: false
+  isConfirmingPayment: false
 });
 
 function orderDetailReducer(state = initialState, action) {
@@ -42,8 +42,7 @@ function orderDetailReducer(state = initialState, action) {
     case IS_CONFIRMING_PAYMENT:
       return state.set('isConfirmingPayment', action.status);
     case RESET_STATE:
-      state = initialState;
-      return state;
+      return initialState;
     default:
       return state;
   }

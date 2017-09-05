@@ -29,7 +29,7 @@ export function isRegistering(status) {
 
 export function registerGoogle() {
   return (dispatch) => {
-    const manager = new OAuthManager('devsummit')
+    const manager = new OAuthManager('devsummit');
     manager.configure({
       google: {
         callback_url: GOOGLE_CALLBACK_URL,
@@ -37,7 +37,7 @@ export function registerGoogle() {
         client_secret: GOOGLE_CLIENT_SECRET
       }
     });
-    manager.authorize('google', {scopes: 'email'})
+    manager.authorize('google', { scopes: 'email' })
       .then((resp) => {
         if (resp.authorized) {
           axios.get('https://www.googleapis.com/plus/v1/people/me', {
@@ -51,17 +51,17 @@ export function registerGoogle() {
               last_name: response.data.name.familyName,
               email: response.data.emails[0].value,
               social_id: response.data.id
-            }
-            Actions.registerEmail({ prefilledData })
+            };
+            Actions.registerEmail({ prefilledData });
           }).catch(err => console.log(err));
         }
       }).catch(err => console.log(err));
-  }
+  };
 }
 
 export function registerFacebook() {
   return (dispatch) => {
-    const manager = new OAuthManager('devsummit')
+    const manager = new OAuthManager('devsummit');
     manager.configure({
       facebook: {
         client_id: FB_CLIENT_ID,
@@ -82,12 +82,12 @@ export function registerFacebook() {
               last_name: response.data.last_name,
               email: response.data.email,
               social_id: response.data.id
-            }
-            Actions.registerEmail({ prefilledData })
+            };
+            Actions.registerEmail({ prefilledData });
           }).catch(err => console.log(err));
         }
       }).catch(err => console.log(err));
-  }
+  };
 }
 
 export function registerTwitter() {
@@ -103,10 +103,10 @@ export function registerTwitter() {
         email: '',
         social_id: response.user.id_str,
         username: response.user.screen_name.toLowerCase()
-      }
-      Actions.registerEmail({ prefilledData })
+      };
+      Actions.registerEmail({ prefilledData });
     }).catch((err) => {
-      console.log(err)
+      console.log(err);
     });
   };
 }
