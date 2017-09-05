@@ -102,7 +102,7 @@ class RegisterPhone extends Component {
 
   configureAccountKit = () => {
     AccountKit.configure({
-      countryWhitelist: ['ID'],
+      countryWhitelist: [ 'ID' ],
       defaultCountry: 'ID',
       initialPhoneCountryPrefix: '+62',
       initialPhoneNumber: '87809000750'
@@ -187,7 +187,7 @@ class RegisterPhone extends Component {
 
   renderErrorButton = () => {
     return (
-      <Button style={[styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' }]}>
+      <Button style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
         <Text style={styles.buttonText}>
           FIELDS ARE NOT COMPLETE
         </Text>
