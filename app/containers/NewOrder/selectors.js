@@ -23,3 +23,31 @@ export const getIsUpdatingOrder = () => createSelector(
   selectMainReducer(),
   state => state.get('isUpdatingOrder')
 );
+
+export const getReferal = () => createSelector(
+  selectMainReducer(),
+  state => state.get('referal').toJS()
+);
+
+export const getIsGettingReferal = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isGettingReferal')
+);
+
+/**
+ *  Selects the field data
+ *  Returns object
+ */
+export const getInputFields = () => createSelector(
+  selectMainReducer(),
+  state => state.get('inputFields').toJS()
+);
+
+/**
+ *  Selects the error checkeing field data
+ *  Returns object
+ */
+export const getErrorFields = () => createSelector(
+  selectMainReducer(),
+  state => state.get('errorFields').toJS()
+);
