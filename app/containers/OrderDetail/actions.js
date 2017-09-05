@@ -31,7 +31,7 @@ export function getOrderDetail(orderId) {
       DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
         headers: { Authorization: accessToken }
       }).then((response) => {
-        dispatch({ type: SET_ORDER, data: response.data.data });
+        dispatch({ type: SET_ORDER, data: response.data });
         dispatch(updateIsUpdatingOrder(false));
       }).catch((err) => { console.log(err.response); });
     }).catch((error) => {
@@ -73,25 +73,25 @@ export function submitUpdateOrder(orders) {
 
 export function updateOrder(action, detaild) {
   return (dispatch, getState) => {
-    const { order } = getState().get('orderDetail').toJS();
-    const ord = order.filter((item) => {
+    const { data } = getState().getIn([ 'orderDetail', 'order' ]).toJS();
+    const ord = data.filter((item) => {
       return item.id === detaild;
     });
     const firstOrder = ord[0];
     if (action === 'increase') {
       if (firstOrder) {
         firstOrder.count += 1;
-        dispatch({ type: UPDATE_ORDER, id: order.indexOf(firstOrder), payload: firstOrder });
+        dispatch({ type: UPDATE_ORDER, id: data.indexOf(firstOrder), payload: firstOrder });
       } else {
-        const payload = { ticket_id: order.indexOf(ord), count: 1 };
-        dispatch({ type: UPDATE_ORDER, id: order.indexOf(ord), payload });
+        const payload = { ticket_id: data.indexOf(ord), count: 1 };
+        dispatch({ type: UPDATE_ORDER, id: data.indexOf(ord), payload });
       }
     }
 
     if (action === 'decrease') {
       if (firstOrder && firstOrder.count > 0) {
         firstOrder.count -= 1;
-        dispatch({ type: UPDATE_ORDER, id: order.indexOf(firstOrder), payload: firstOrder });
+        dispatch({ type: UPDATE_ORDER, id: data.indexOf(firstOrder), payload: firstOrder });
       }
     }
   };
