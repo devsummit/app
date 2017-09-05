@@ -106,6 +106,16 @@ class ChangePassword extends Component {
               value={new_password}
               placeholder="New Password"
             />
+            { ((new_password.length < 6) && new_password !== '') ?
+              <Text style={styles.newPassValidator}>new password should be 6 at minimum</Text>
+              :
+              null
+            }
+            { ((current_password === new_password) && current_password !== '') ?
+              <Text style={styles.newPassValidator}>current and new password can't be same</Text>
+              :
+              null
+            }
             <InputItem
               error={error_confirm_password}
               title="Confirm New Password"
@@ -114,31 +124,25 @@ class ChangePassword extends Component {
               value={confirm_password}
               placeholder="Confirm New Password"
             />
+            { ((confirm_password.length < 6) && (confirm_password !== '') && (new_password < 6)) ?
+              <Text style={styles.newPassValidator}>confirm password should be 6 at minimum</Text>
+              :
+              null
+            }
             {error_password_not_the_same ?
               <Text style={styles.newPassValidator}>Confirm password didn't match</Text>
               :
               null
             }
+            { ((new_password !== confirm_password) && confirm_password !== ''  ) ?
+              <View>
+              <Text style={styles.newPassValidator}>both new password doesn't match</Text>
+              </View>
+              :
+              null
+            }
             {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password || new_password.length < 6 || confirm_password < 6 || current_password < 6 || current_password === new_password) ?
               <View>
-                { ((new_password !== confirm_password)  ) ?
-                  <View>
-                  <Text style={styles.newPassValidator}>"both new password doesn't match"</Text>
-                  { ((new_password.length < 6)) ?
-                    <Text style={styles.newPassValidator}>"new password should be 6 at minimum"</Text>
-                    :
-                    null
-                  }
-                  { ((current_password === new_password)) ?
-                    <Text style={styles.newPassValidator}>"current and new password can't be same"</Text>
-                    :
-                    null
-                  }
-                  </View>
-                  :
-                  null
-                }
-
                 <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
                   <Text style={styles.buttomText}>Change Password</Text>
                 </Button>
