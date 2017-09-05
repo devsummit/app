@@ -98,10 +98,10 @@ export function login() {
         const profileData = JSON.stringify(response.data.included);
         try {
           await AsyncStorage.multiSet([
-            ['access_token', resData.access_token],
-            ['refresh_token', resData.refresh_token],
-            ['role_id', roleId],
-            ['profile_data', profileData]
+            [ 'access_token', resData.access_token ],
+            [ 'refresh_token', resData.refresh_token ],
+            [ 'role_id', roleId ],
+            [ 'profile_data', profileData ]
           ]);
         } catch (error) {
           console.log(error, 'error caught');
@@ -122,6 +122,7 @@ export function login() {
 
 export function loginMobile(mobileToken) {
   return (dispatch) => {
+    dispatch(updateIsFetching(true));
     DevSummitAxios.post('/auth/login', {
       provider: 'mobile',
       token: mobileToken
@@ -136,11 +137,11 @@ export function loginMobile(mobileToken) {
         const profileData = JSON.stringify(response.data.included);
         try {
           await AsyncStorage.multiSet([
-            ['access_token', resData.access_token],
-            ['refresh_token', resData.refresh_token],
-            ['role_id', roleId],
-            ['profile_data', profileData]
-          ])
+            [ 'access_token', resData.access_token ],
+            [ 'refresh_token', resData.refresh_token ],
+            [ 'role_id', roleId ],
+            [ 'profile_data', profileData ]
+          ]);
         } catch (error) {
           console.log(error, 'error caught');
         }
@@ -151,12 +152,13 @@ export function loginMobile(mobileToken) {
         Alert.alert('Login Failed', response.data.meta.message);
       }
     }).catch(err => console.log(err));
-  }
+    dispatch(updateIsFetching(false));
+  };
 }
 
 export function loginGoogle() {
   return (dispatch) => {
-    const manager = new OAuthManager('devsummit')
+    const manager = new OAuthManager('devsummit');
     manager.configure({
       google: {
         callback_url: GOOGLE_CALLBACK_URL,
@@ -164,7 +166,7 @@ export function loginGoogle() {
         client_secret: GOOGLE_CLIENT_SECRET
       }
     });
-    manager.authorize('google', {scopes: 'email'})
+    manager.authorize('google', { scopes: 'email' })
       .then((resp) => {
         if (resp.authorized) {
           dispatch(updateIsFetching(true));
@@ -182,11 +184,11 @@ export function loginGoogle() {
               const profileData = JSON.stringify(response.data.included);
               try {
                 await AsyncStorage.multiSet([
-                  ['access_token', resData.access_token],
-                  ['refresh_token', resData.refresh_token],
-                  ['role_id', roleId],
-                  ['profile_data', profileData]
-                ])
+                  [ 'access_token', resData.access_token ],
+                  [ 'refresh_token', resData.refresh_token ],
+                  [ 'role_id', roleId ],
+                  [ 'profile_data', profileData ]
+                ]);
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -204,23 +206,23 @@ export function loginGoogle() {
                   last_name: rsp.data.name.familyName,
                   email: rsp.data.emails[0].value,
                   social_id: rsp.data.id
-                }
-                Actions.registerEmail({prefilledData: prefilledData})
+                };
+                Actions.registerEmail({ prefilledData });
               }).catch(err => console.log(err));
             }
             dispatch(updateIsFetching(false));
           }).catch((err) => {
-            console.log(err)
+            console.log(err);
             dispatch(updateIsFetching(false));
-          })
+          });
         }
       }).catch((err) => { console.log(err); });
-  }
+  };
 }
 
 export function loginFacebook() {
   return (dispatch) => {
-    const manager = new OAuthManager('devsummit')
+    const manager = new OAuthManager('devsummit');
     manager.configure({
       facebook: {
         client_id: FB_CLIENT_ID,
@@ -243,11 +245,11 @@ export function loginFacebook() {
               const profileData = JSON.stringify(response.data.included);
               try {
                 await AsyncStorage.multiSet([
-                  ['access_token', resData.access_token],
-                  ['refresh_token', resData.refresh_token],
-                  ['role_id', roleId],
-                  ['profile_data', profileData]
-                ])
+                  [ 'access_token', resData.access_token ],
+                  [ 'refresh_token', resData.refresh_token ],
+                  [ 'role_id', roleId ],
+                  [ 'profile_data', profileData ]
+                ]);
               } catch (error) {
                 console.log(error, 'error caught');
               }
@@ -265,13 +267,13 @@ export function loginFacebook() {
                   last_name: rsp.data.last_name,
                   email: rsp.data.email,
                   social_id: rsp.data.id
-                }
-                Actions.registerEmail({ prefilledData })
+                };
+                Actions.registerEmail({ prefilledData });
               }).catch(err => console.log(err));
             }
             dispatch(updateIsFetching(false));
           }).catch((err) => {
-            console.log(err)
+            console.log(err.response);
             dispatch(updateIsFetching(false));
           })
           .catch((err) => { console.log(err.response); });
@@ -301,11 +303,11 @@ export function loginTwitter() {
             const profileData = JSON.stringify(response.data.included);
             try {
               await AsyncStorage.multiSet([
-                ['access_token', resData.access_token],
-                ['refresh_token', resData.refresh_token],
-                ['role_id', roleId],
-                ['profile_data', profileData]
-              ])
+                [ 'access_token', resData.access_token ],
+                [ 'refresh_token', resData.refresh_token ],
+                [ 'role_id', roleId ],
+                [ 'profile_data', profileData ]
+              ]);
             } catch (error) {
               console.log(error, 'error caught');
             }
@@ -318,15 +320,15 @@ export function loginTwitter() {
               email: '',
               social_id: info.user.id_str,
               username: info.user.screen_name.toLowerCase()
-            }
-            Actions.registerEmail({ prefilledData })
+            };
+            Actions.registerEmail({ prefilledData });
           }
           dispatch(updateIsFetching(false));
         }).catch((err) => {
-          console.log(err)
+          console.log(err);
           dispatch(updateIsFetching(false));
-        })
-    }).catch((error) => { console.log(error) });
+        });
+    }).catch((error) => { console.log(error); });
   };
 }
 
@@ -336,10 +338,10 @@ export function subscribeNewsletter() {
     const { email } = fields;
 
     const headers = { 'Content-Type': 'application/json' };
-    DevSummitAxios.post('/api/v1/newsletters', {email}, {headers}).then((response) => {
+    DevSummitAxios.post('/api/v1/newsletters', { email }, { headers }).then((response) => {
       if (response && response.data && response.data.meta.success) {
         dispatch(updateIsSubscribed(true));
       }
     });
-  }
+  };
 }

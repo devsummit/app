@@ -28,6 +28,8 @@ import SpeakerDetail from './containers/SpeakerDetail';
 import NewOrder from './containers/NewOrder';
 import AttendeesList from './containers/AttendeesList';
 import Splash from './components/Splash';
+import Payment from './containers/Payment';
+import PaymentDetail from './containers/PaymentDetail';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -44,6 +46,14 @@ export default class App extends Component {
     this.state = {};
   }
 
+  onBackPress = () => {
+    if (Actions.state.index === 0) {
+      return false;
+    }
+    Actions.pop();
+    return true;
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -53,11 +63,12 @@ export default class App extends Component {
           barButtonTextStyle={styles.barButtonTextStyle}
           barButtonIconStyle={styles.barButtonIconStyle}
           leftButtonIconStyle={styles.leftButtonIconStyle}
+          backAndroidHandler={this.onBackPress}
         >
           <Scene key="root" backButtonImage={BackButtonImg}>
             <Scene key="splash" component={Splash} hideNavBar initial />
             <Scene key="main" component={Main} hideNavBar type="replace" />
-            <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace"/>
+            <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace" />
             <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" />
             <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" />
@@ -66,10 +77,12 @@ export default class App extends Component {
             <Scene key="changePassword" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
             <Scene key="orderList" component={OrderList} title="Order List" />
+            <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} title="Schedule" />
-            <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
-            <Scene key="attendeesList" component={AttendeesList} title="Select Attendee"/>
+            <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
+            <Scene key="payment" component={Payment} title="Choose Payment Method" />
+            <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
           </Scene>
         </RouterWithRedux>
       </Provider>

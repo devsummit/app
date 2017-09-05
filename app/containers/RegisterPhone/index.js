@@ -5,7 +5,8 @@ import {
   Picker,
   Item,
   Button,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
 import { Alert, Image, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -13,6 +14,7 @@ import AccountKit, {
   LoginButton
 } from 'react-native-facebook-account-kit';
 import Toast from 'react-native-simple-toast';
+import PropTypes from 'prop-types';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -25,24 +27,58 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 // import constants
-import { role_option, primaryColor } from '../../constants';
+import { role_option, PRIMARYCOLOR } from '../../constants';
 
 const background = require('../../../assets/images/background.png');
 
 class RegisterPhone extends Component {
   state = {
-    isEmailValid: false
+    isEmailValid: false,
+    fromLogin: false
   };
   /*
      * initialize some state
      */
   componentWillMount() {
+    if (this.props.fromLogin === true) {
+      this.setState({ fromLogin: true });
+    }
+    this.props.resetState();
     this.props.updateInputFields('role', 'attendee');
     this.configureAccountKit();
   }
 
+  componentWillReceiveProps(prevProps) {
+    const { fromLogin } = this.state;
+    if (fromLogin && fromLogin === true) {
+      this.setState({ fromLogin: false });
+      Alert.alert('You are not registered, please register first.');
+    }
+
+    if (prevProps.isRegistering !== this.props.isRegistering) {
+      return;
+    }
+    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+      if (this.props.isRegistered.message.length > 0) {
+        Alert.alert(
+          this.props.isRegistered.title,
+          this.props.isRegistered.message,
+          [
+            { text: 'OK', onPress: this.props.isRegistered.title === 'Failed' ? () => { } : this.onAlertOk }
+          ],
+          { cancelable: false }
+        );
+      }
+      this.props.updateRegisterStatus(false, '', '');
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetState();
+  }
+
+  onAlertOk = () => {
+    Actions.main();
   }
 
   onLogin(token) {
@@ -50,14 +86,15 @@ class RegisterPhone extends Component {
       this.setState({});
     } else {
       AccountKit.getCurrentAccessToken().then((_token) => {
+        this.props.toggleIsRegistering(true);
         this.props.updateInputFields('token', _token.token);
       });
       AccountKit.getCurrentAccount()
         .then((account) => {
           const phone = account.phoneNumber.countryCode + account.phoneNumber.number;
           this.props.updateInputFields('provider', 'mobile');
-          this.props.updateInputFields('username', phone);
-          this.props.updateInputFields('social_id', account.id);
+          this.props.updateInputFields('userName', phone);
+          this.props.updateInputFields('socialId', account.id);
           this.submitRegistration();
         });
     }
@@ -65,7 +102,7 @@ class RegisterPhone extends Component {
 
   configureAccountKit = () => {
     AccountKit.configure({
-      countryWhitelist: [ 'ID' ],
+      countryWhitelist: ['ID'],
       defaultCountry: 'ID',
       initialPhoneCountryPrefix: '+62',
       initialPhoneNumber: '87809000750'
@@ -78,18 +115,14 @@ class RegisterPhone extends Component {
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
 
-  handleButtonClick = (value) => {
-    this.props.updateRegisterMethod(value);
-  }
-
   submitRegistration = () => {
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
       this.props.register();
       this.props.inputFields.email = '';
-      this.props.inputFields.first_name = '';
-      this.props.inputFields.last_name = '';
+      this.props.inputFields.firstName = '';
+      this.props.inputFields.lastName = '';
     }
   }
 
@@ -99,21 +132,15 @@ class RegisterPhone extends Component {
   isFieldError = () => {
     const { errorFields } = this.props;
     const {
-      error_first_name,
-      error_last_name,
-      error_username,
-      error_email,
-      error_password,
-      error_phone
+      errorFirstName,
+      errorLastName,
+      errorEmail
     } = errorFields;
 
     return (
-      error_first_name ||
-      error_last_name ||
-      error_email ||
-      error_username ||
-      error_password ||
-      error_phone
+      errorFirstName ||
+      errorLastName ||
+      errorEmail
     );
   }
 
@@ -121,7 +148,7 @@ class RegisterPhone extends Component {
     const email = this.props.inputFields.email;
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isValid = re.test(email);
-    (isValid) ? this.validEmail(email) : this.invalidEmail()
+    (isValid) ? this.validEmail(email) : this.invalidEmail();
   };
 
   validateEmailOnBlur = () => {
@@ -160,7 +187,7 @@ class RegisterPhone extends Component {
 
   renderErrorButton = () => {
     return (
-      <Button style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
+      <Button style={[styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' }]}>
         <Text style={styles.buttonText}>
           FIELDS ARE NOT COMPLETE
         </Text>
@@ -170,33 +197,27 @@ class RegisterPhone extends Component {
 
   render() {
     if (this.props.isRegistering) {
-      return;
+      return (
+        <Container>
+          <Content>
+            <Spinner color={PRIMARYCOLOR} />
+          </Content>
+        </Container>
+      );
     }
-    if (this.props.isRegistered) {
-      Alert.alert('Status', 'user registered successfully');
-      Actions.pop();
-    }
-
     // destructure state
-    const { registerMethod, inputFields, errorFields } = this.props || {};
+    const { inputFields, errorFields } = this.props || {};
     const {
-      first_name,
-      last_name,
-      username,
+      firstName,
+      lastName,
       email,
-      password,
-      phone,
-      role,
-      social_id
+      role
     } = inputFields || '';
 
     const {
-      error_first_name,
-      error_last_name,
-      error_username,
-      error_email,
-      error_password,
-      error_phone
+      errorFirstName,
+      errorLastName,
+      errorEmail
     } = errorFields || false;
 
     return (
@@ -206,23 +227,23 @@ class RegisterPhone extends Component {
             <AuthLogo />
             <View style={styles.formSection}>
               <InputItem
-                error={error_first_name}
+                error={errorFirstName}
                 style={styles.formInput}
                 placeholder="First name"
                 placeholderTextColor={'#BDBDBD'}
-                onChangeText={text => this.handleInputChange('first_name', text)}
-                value={first_name}
+                onChangeText={text => this.handleInputChange('firstName', text)}
+                value={firstName}
               />
               <InputItem
-                error={error_last_name}
+                error={errorLastName}
                 style={styles.formInput}
                 placeholder="Last name"
                 placeholderTextColor={'#BDBDBD'}
-                onChangeText={text => this.handleInputChange('last_name', text)}
-                value={last_name}
+                onChangeText={text => this.handleInputChange('lastName', text)}
+                value={lastName}
               />
               <InputItem
-                error={error_email}
+                error={errorEmail}
                 style={styles.formInput}
                 placeholder="Email"
                 placeholderTextColor={'#BDBDBD'}
@@ -244,7 +265,7 @@ class RegisterPhone extends Component {
               </Picker>
             </View>
             {
-              (this.props.inputFields.first_name.length !== 0 &&
+              (this.props.inputFields.firstName.length !== 0 &&
                 this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?
                 this.renderLoginButton() :
                 this.renderErrorButton()
@@ -263,6 +284,20 @@ class RegisterPhone extends Component {
     );
   }
 }
+
+RegisterPhone.propTypes = {
+  updateErrorFields: PropTypes.func.isRequired,
+  isRegistered: PropTypes.object.isRequired,
+  isRegistering: PropTypes.bool.isRequired,
+  updateInputFields: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
+  updateRegisterStatus: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  inputFields: PropTypes.object.isRequired,
+  errorFields: PropTypes.object.isRequired,
+  toggleIsRegistering: PropTypes.func.isRequired,
+  fromLogin: PropTypes.bool // eslint-disable-line react/require-default-props
+};
 
 /**
  *  Map redux state to component props

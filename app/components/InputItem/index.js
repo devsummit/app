@@ -39,6 +39,7 @@ export default class InputItem extends Component {
               value={this.props.value}
               onFocus={() => { this.handleOnFocus(); }}
               onBlur={this.props.onBlur}
+              maxLength={this.props.maxLength}
             />
           </Item>
         </Form>

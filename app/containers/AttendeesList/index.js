@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
-import { primaryColor } from '../../constants';
+import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import * as ticketSelectors from '../TicketList/selectors';
@@ -107,7 +107,7 @@ class AttendeesList extends Component {
       return (
         <Container style={{ alignItems: 'center' }}>
           <Content>
-            <Spinner color={primaryColor} />
+            <Spinner color={PRIMARYCOLOR} />
           </Content>
         </Container>
       );
