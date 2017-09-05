@@ -175,7 +175,7 @@ class RegisterEmail extends Component {
                 value={email}
               />
               { (this.checkEmail(email) === false && email !== '') ?
-                <Text style={styles.registerTextBold}>invalid email</Text>
+                <Text style={styles.registerTextBold}>invalid email address</Text>
                 :
                 null
               }
