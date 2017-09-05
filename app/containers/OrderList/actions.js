@@ -20,7 +20,7 @@ export function updateIsFetchingOrders(status) {
 
 export function getOrderList() {
   return (dispatch) => {
-    // dispatch(updateIsFetchingOrders(true));
+    dispatch(updateIsFetchingOrders(true));
     getAccessToken().then((accessToken) => {
       DevSummitAxios.get('/api/v1/orders', {
         headers: { Authorization: accessToken }
@@ -32,8 +32,10 @@ export function getOrderList() {
           });
           dispatch(updateIsFetchingOrders(false));
         }
-      })
-        .catch((err) => { console.log(err.response); });
+      }).catch((err) => {
+        dispatch(updateIsFetchingOrders(false));
+        console.log(err.response);
+      });
     }).catch(() => { console.log('fail get access token'); });
   };
 }
