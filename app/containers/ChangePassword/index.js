@@ -17,7 +17,7 @@ import {
   Title
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import InputItem from '../../components/InputItem';
@@ -65,6 +65,10 @@ class ChangePassword extends Component {
       }
     }
 
+    componentWillUnmount() {
+      this.props.resetState()
+    }
+
     render() {
       // destructure state
       const { inputFields, errorFields, isPasswordUpdated, isPasswordWrong } = this.props || {};
@@ -81,6 +85,8 @@ class ChangePassword extends Component {
         this.props.updateIsPasswordWrong(false)
       }
 
+
+
       return (
         <Container style={styles.container}>
           <Content>
@@ -90,6 +96,7 @@ class ChangePassword extends Component {
               secureTextEntry
               onChangeText={text => {return this.handleInputChange('current_password', text)}}
               value={current_password}
+              placeholder="Current Password"
             />
             <InputItem
               error={error_new_password}
@@ -97,6 +104,7 @@ class ChangePassword extends Component {
               secureTextEntry
               onChangeText={text => {return this.handleInputChange('new_password', text)}}
               value={new_password}
+              placeholder="New Password"
             />
             <InputItem
               error={error_confirm_password}
@@ -104,16 +112,38 @@ class ChangePassword extends Component {
               secureTextEntry
               onChangeText={text => {return this.handleInputChange('confirm_password', text)}}
               value={confirm_password}
+              placeholder="Confirm New Password"
             />
             {error_password_not_the_same ?
               <Text style={styles.newPassValidator}>Confirm password didn't match</Text>
               :
               null
             }
-            {(current_password === '' || new_password === '' || confirm_password === '') ?
-              <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
-                <Text style={styles.buttomText}>Change Password</Text>
-              </Button>
+            {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password || new_password.length < 6 || confirm_password < 6 || current_password < 6 || current_password === new_password) ?
+              <View>
+                { ((new_password !== confirm_password)  ) ?
+                  <View>
+                  <Text style={styles.newPassValidator}>"both new password doesn't match"</Text>
+                  { ((new_password.length < 6)) ?
+                    <Text style={styles.newPassValidator}>"new password should be 6 at minimum"</Text>
+                    :
+                    null
+                  }
+                  { ((current_password === new_password)) ?
+                    <Text style={styles.newPassValidator}>"current and new password can't be same"</Text>
+                    :
+                    null
+                  }
+                  </View>
+                  :
+                  null
+                }
+
+                <Button disabled block style={[ styles.button, { elevation: 0 } ]}>
+                  <Text style={styles.buttomText}>Change Password</Text>
+                </Button>
+
+              </View>
               :
               <Button primary block style={styles.button} onPress={() => {return this.submitChangePassword()}}>
                 <Text style={styles.buttomText}>Change Password</Text>
