@@ -108,7 +108,7 @@ class RegisterEmail extends Component {
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
 
-
+//email validation
   checkEmail(inputvalue){
     var pattern=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
     if(pattern.test(inputvalue)){
