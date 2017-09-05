@@ -59,21 +59,6 @@ class RegisterEmail extends Component {
     }
   }
 
-
-  /*validateEmail(){
-    var testresults
-    var str=document.validation.emailcheck.value
-    var filter=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
-    if (filter.test(str))
-      testresults=true
-    else{
-      //alert("Please input a valid email address!")
-      testresults=false
-    }
-    return (testresults)
-  }*/
-
-
   componentWillUnmount() {
     this.props.resetState()
   }
@@ -106,6 +91,7 @@ class RegisterEmail extends Component {
   }
 
   submitRegistration = () => {
+    console.log('coba')
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
@@ -188,6 +174,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
+              { (this.checkEmail(email) === false && email !== '') ?
+                <Text style={styles.registerTextBold}>invalid email</Text>
+                :
+                null
+              }
               <InputItem
                 error={error_username}
                 style={styles.formInput}
@@ -196,6 +187,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
+              { ((username.length < 6) && (username !== '')) ?
+                <Text style={styles.registerTextBold}>username should be 6 at minimum</Text>
+                :
+                null
+              }
               <InputItem
                 error={error_password}
                 style={styles.formInput}
@@ -205,6 +201,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
+              { ((password.length < 6) && (password !== '')) ?
+                <Text style={styles.registerTextBold}>password should be 6 at minimum</Text>
+                :
+                null
+              }
             </View>
             <View style={styles.pickerWrapper}>
               <Picker
@@ -223,31 +224,15 @@ class RegisterEmail extends Component {
                 ))}
               </Picker>
             </View>
-          {(username.length < 6 || password.length < 6 || first_name === '' || last_name === '') ?
+          {(username.length < 6 || password.length < 6 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '')?
           <View>
             <Button
               block
-              style={styles.button}
-              disabled block style={[ styles.button, { elevation: 0 } ]}
+              style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
               onPress={() => this.submitRegistration()}
             >
               <Text style={styles.buttomText}>Register</Text>
             </Button>
-            { ((username.length < 6) && (username !== '')) ?
-              <Text style={styles.registerTextBold}>"username should be 6 at minimum"</Text>
-              :
-              null
-            }
-            { ((password.length < 6) && (password !== '')) ?
-              <Text style={styles.registerTextBold}>"password should be 6 at minimum"</Text>
-              :
-              null
-            }
-            { (this.checkEmail(email) === false && email !== '') ?
-              <Text style={styles.registerTextBold}>"false email"</Text>
-              :
-              null
-            }
           </View>
             :
             <Button
@@ -258,12 +243,8 @@ class RegisterEmail extends Component {
             >
               <Text style={styles.buttomText}>Register</Text>
             </Button>
-<<<<<<< HEAD
           }
-            <Button
-=======
             <Button onBlur="register()"
->>>>>>> aa2e6e951337b8e9c09b42333239f02519cc4498
               transparent
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
