@@ -79,7 +79,7 @@ class Main extends Component {
       countryWhitelist: ['ID'],
       defaultCountry: countryCode.toUpperCase() || 'ID',
       initialPhoneCountryPrefix: '+62',
-      initialPhoneNumber: phoneNumber || '87809000750'
+      initialPhoneNumber: phoneNumber || ''
     });
   }
 
