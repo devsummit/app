@@ -11,9 +11,13 @@ import {
 import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
-
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import styles from './styles';
+import * as selectors from './selectors';
+import * as actions from './actions';
+
 
 const speakers = [
   {
@@ -55,12 +59,21 @@ class Speaker extends Component {
     };
   }
 
+  componentWillMount() {
+    console.log(this.props,'===');
+    this.props.fetchSpeakerList();
+  }
+
+  componentWillReceiveProps(prevState) {
+    console.log(this.props);
+  }
+
   render() {
     return (
       <Container>
         <Header title="SPEAKER" />
         <Content style={styles.content}>
-          {speakers.map(data => (
+          {this.props.speaker.map(data => (
             <Card key={data.id}>
               <CardItem>
                 <Body>
@@ -105,4 +118,7 @@ class Speaker extends Component {
   }
 }
 
-export default Speaker;
+const mapStateToProps = createStructuredSelector({
+  speaker: selectors.getListSpeaker()
+})
+export default connect(mapStateToProps, actions)(Speaker);
