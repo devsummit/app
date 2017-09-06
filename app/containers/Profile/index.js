@@ -4,8 +4,9 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View, StyleSheet, Alert, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Alert, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import redux componens
@@ -25,22 +26,23 @@ class Profile extends Component {
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
-        this.handleInputChange('username', profileData.username)
-        this.handleInputChange('firstName', profileData.first_name)
-        this.handleInputChange('lastName', profileData.last_name)
-        if (profileData.photos.length === 0 || !profileData.photos[0].url || profileData.photos[0].url === '') {
-          this.handleInputChange('profilePic', 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg')
-        } else {
-          this.handleInputChange('profilePic', profileData.photos[0].url)
-        }
+        this.handleUpdateAvatar(profileData.photos[0].url);
+        this.handleInputChange('username', profileData.username);
+        this.handleInputChange('firstName', profileData.first_name);
+        this.handleInputChange('lastName', profileData.last_name);
       }
-    })
+    });
   }
 
   componentWillReceiveProps(prevProps) {
     if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
-      Alert.alert('Success', 'Profile changed');
+      Alert.alert('Success', 'Profile has been changed');
       this.props.updateIsProfileUpdated(false)
+    }
+
+    if (prevProps.isAvatarUpdated !== this.props.isAvatarUpdated) {
+      Alert.alert('Success', 'Avatar has been changed');
+      this.props.updateIsAvatarUpdated(false)
     }
 
     if (prevProps.isLogOut !== this.props.isLogOut) {
@@ -53,9 +55,24 @@ class Profile extends Component {
     this.props.updateFields(field, value);
   }
 
+  handleUpdateAvatar = (value) => {
+    this.props.updateAvatar(value);
+  }
+
+  uploadImage = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+    }).then((image) => {
+      this.props.updateImage(image)
+    }).catch((err) => console.log("Error getting image from library", err));
+  }
+
   render() {
     // destructure state
-    const { fields, isDisabled } = this.props || {};
+    const { fields, isDisabled, avatar } = this.props || {};
     const {
       firstName,
       lastName,
@@ -64,20 +81,21 @@ class Profile extends Component {
     } = fields || '';
     return (
       <Container>
-        <Header
-          title="PROFILE"
-        >
-          <View style={styles.section1}>
-            <Image
-              source={{ uri: profilePic }}
-              style={styles.profileImage}
-              resizeMode="cover"
-            />
-          </View>
-        </Header>
+        <Header title="PROFILE" />
         <Content>
           <View style={styles.section3}>
-            <Text style={styles.username}>{username}</Text>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
+              <TouchableOpacity style={styles.section1} onPress={() => this.uploadImage()}>
+                <Image
+                  source={{ uri: avatar }}
+                  style={styles.profileImage}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+              <Text style={styles.username}>{username}</Text>
+            </View>
+          </View>
+          <View style={{alignItems: 'flex-end', marginRight: 20}}>
             <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
               <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
             </TouchableOpacity>
@@ -124,8 +142,10 @@ class Profile extends Component {
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isProfileUpdated: selectors.getIsProfileUpdated(),
+  avatar: selectors.getAvatar(),
+  isAvatarUpdated: selectors.getIsAvatarUpdated(),
   isDisabled: selectors.getIsDisabled(),
-  isLogOut: selectors.getIsLogOut(),
+  isLogOut: selectors.getIsLogOut()
 });
 
 export default connect(mapStateToProps, actions)(Profile);
