@@ -1,9 +1,12 @@
 import { AsyncStorage } from 'react-native';
 
-import { DevSummitAxios, getAccessToken } from '../../helpers';
+import FormData from 'FormData';
+import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_PROFILE_UPDATED,
+  UPDATE_AVATAR,
+  UPDATE_IS_AVATAR_UPDATED,
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED
 } from './constants';
@@ -25,6 +28,20 @@ export function updateFields(field, value) {
 export function updateIsProfileUpdated(status) {
   return {
     type: UPDATE_IS_PROFILE_UPDATED,
+    status
+  };
+}
+
+export function updateAvatar(value) {
+  return {
+    type: UPDATE_AVATAR,
+    value
+  };
+}
+
+export function updateIsAvatarUpdated(status) {
+  return {
+    type: UPDATE_IS_AVATAR_UPDATED,
     status
   };
 }
@@ -62,6 +79,51 @@ export function changeProfile() {
             dispatch(updateIsProfileUpdated(true));
           }
         }).catch((error) => { console.log(error); });
+      });
+  };
+}
+
+export function updateDataStorage(resp) {
+  getProfileData()
+    .then((data) => {
+      const datas = data;
+      datas.photos[0].url = resp.data.url;
+
+      AsyncStorage.setItem('profile_data', JSON.stringify(data));
+    });
+}
+
+export function updateImage(image) {
+  return (dispatch, getState) => {
+    const { avatar } = getState().get('profile').toJS();
+
+    getAccessToken()
+      .then((token) => {
+        // @TODO We need to change into dev-summit url
+        const url = 'http://10.0.2.2:5000/api/v1/user/photo';
+        const form = new FormData();
+
+        form.append('image_data', {
+          uri: image.path,
+          type: image.mime,
+          name: 'image.jpg'
+        });
+
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: token
+          },
+          body: form
+        })
+          .then(resp => resp.json())
+          .then((resp) => {
+            updateDataStorage(resp);
+            dispatch(
+              updateAvatar(resp.data.url),
+              updateIsAvatarUpdated(true)
+            );
+          }).catch(err => console.log('error upload image', err))
       });
   };
 }

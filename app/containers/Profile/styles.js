@@ -6,8 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255,255,255)'
   },
   section1: {
-    flex: 1,
-    justifyContent: 'center',
+    // flex: 1,
     alignItems: 'center',
     padding: 10
   },
