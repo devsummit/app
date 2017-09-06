@@ -22,6 +22,16 @@ export const getIsProfileUpdated = () => createSelector(
   state => state.get('isProfileUpdated')
 );
 
+export const getAvatar = () => createSelector(
+  selectMainReducer(),
+  state => state.get('avatar')
+);
+
+export const getIsAvatarUpdated = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isAvatarUpdated')
+);
+
 export const getIsLogOut = () => createSelector(
   selectMainReducer(),
   state => state.get('isLogOut')
