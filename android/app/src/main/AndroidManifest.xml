@@ -55,4 +55,5 @@
         android:value="@string/ak_client_token" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 </manifest>
