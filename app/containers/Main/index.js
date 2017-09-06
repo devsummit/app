@@ -13,6 +13,7 @@ import AccountKit, {
 } from 'react-native-facebook-account-kit';
 
 import { createTransition, Fade } from 'react-native-transition';
+import RNSimData from 'react-native-sim-data';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -71,11 +72,14 @@ class Main extends Component {
   }
 
   configureAccountKit = () => {
+    const phoneNumber = RNSimData.getTelephoneNumber();
+    const countryCode = RNSimData.getCountryCode();
+
     AccountKit.configure({
-      countryWhitelist: [ 'ID' ],
-      defaultCountry: 'ID',
+      countryWhitelist: ['ID'],
+      defaultCountry: countryCode.toUpperCase() || 'ID',
       initialPhoneCountryPrefix: '+62',
-      initialPhoneNumber: '87809000750'
+      initialPhoneNumber: phoneNumber || '87809000750'
     });
   }
 
