@@ -15,6 +15,7 @@ import AccountKit, {
 } from 'react-native-facebook-account-kit';
 import Toast from 'react-native-simple-toast';
 import PropTypes from 'prop-types';
+import RNSimData from 'react-native-sim-data';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -101,12 +102,15 @@ class RegisterPhone extends Component {
   }
 
   configureAccountKit = () => {
+    const phoneNumber = RNSimData.getTelephoneNumber();
+    const countryCode = RNSimData.getCountryCode();
+
     AccountKit.configure({
       countryWhitelist: ['ID'],
-      defaultCountry: 'ID',
+      defaultCountry: countryCode.toUpperCase() || 'ID',
       initialPhoneCountryPrefix: '+62',
-      initialPhoneNumber: '87809000750'
-    });
+      initialPhoneNumber: phoneNumber || '87809000750'
+    })
   }
 
   handleInputChange = (field, value) => {
