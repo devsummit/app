@@ -1,0 +1,1 @@
+export const FETCH_SCHEDULE_LIST = 'app/containers/Schedle/FETCH_SCHEDULE_LIST';
