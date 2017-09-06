@@ -91,6 +91,7 @@ class RegisterEmail extends Component {
   }
 
   submitRegistration = () => {
+    console.log('coba')
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
@@ -106,6 +107,19 @@ class RegisterEmail extends Component {
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
+
+//email validation
+  checkEmail(inputvalue){
+    var pattern=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if(pattern.test(inputvalue)){
+        return true;
+    }else{
+        return false;
+    }
+  }
+
+
+
 
   render() {
     // destructure state
@@ -160,6 +174,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
+              { (this.checkEmail(email) === false && email !== '') ?
+                <Text style={styles.registerTextBold}>invalid email address</Text>
+                :
+                null
+              }
               <InputItem
                 error={error_username}
                 style={styles.formInput}
@@ -168,6 +187,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
+              { ((username.length < 6) && (username !== '')) ?
+                <Text style={styles.registerTextBold}>username should be 6 at minimum</Text>
+                :
+                null
+              }
               <InputItem
                 error={error_password}
                 style={styles.formInput}
@@ -177,6 +201,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
+              { ((password.length < 6) && (password !== '')) ?
+                <Text style={styles.registerTextBold}>password should be 6 at minimum</Text>
+                :
+                null
+              }
             </View>
             <View style={styles.pickerWrapper}>
               <Picker
@@ -195,14 +224,27 @@ class RegisterEmail extends Component {
                 ))}
               </Picker>
             </View>
+          {(username.length < 6 || password.length < 6 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '')?
+          <View>
             <Button
               block
-              style={styles.button}
+              style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
               onPress={() => this.submitRegistration()}
             >
               <Text style={styles.buttomText}>Register</Text>
             </Button>
+          </View>
+            :
             <Button
+              block
+              style={styles.button}
+              primary block style={[ styles.button, { elevation: 0 } ]}
+              onPress={() => this.submitRegistration()}
+            >
+              <Text style={styles.buttomText}>Register</Text>
+            </Button>
+          }
+            <Button onBlur="register()"
               transparent
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
