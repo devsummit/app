@@ -19,7 +19,7 @@ import {
  */
 const initialState = fromJS({
   ticketTypes: [],
-  order: [],
+  order: {},
   isUpdatingOrder: false,
   updateOrderStatus: '',
   isConfirmingPayment: false
@@ -32,7 +32,7 @@ function orderDetailReducer(state = initialState, action) {
     case SET_ORDER:
       return state.set('order', fromJS(action.data));
     case UPDATE_ORDER:
-      return state.setIn([ 'order', action.id ], fromJS(action.payload));
+      return state.setIn([ 'order', 'data', action.id ], fromJS(action.payload));
     case IS_UPDATING_ORDER:
       return state.set('isUpdatingOrder', action.status);
     case UPDATE_ORDER_STATUS:

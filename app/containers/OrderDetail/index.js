@@ -42,13 +42,14 @@ class OrderDetail extends Component {
   }
 
   componentWillMount = () => {
+    console.log(this.props);
     this.props.getOrderDetail(this.props.orderId);
   }
 
 
   componentWillReceiveProps() {
-    if (this.props.order && this.props.order.length > 0) {
-      const { payment } = this.props.order[0];
+    if (this.props.order && this.props.order.included) {
+      const { payment } = this.props.order.included;
 
       const stat = transactionStatus(payment);
       this.setState({
@@ -60,7 +61,7 @@ class OrderDetail extends Component {
 
 
   getTotal = () => {
-    const order = this.props.order;
+    const order = this.props.order.data;
     const arraySub = order.map((item) => {
       return item.count * item.ticket.price;
     });
@@ -82,7 +83,7 @@ class OrderDetail extends Component {
       'Order number '.concat(this.props.orderId),
       [
         { text: 'Cancel' },
-        { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order); } }
+        { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order.data); } }
       ],
       { cancelable: false }
     );
@@ -94,16 +95,18 @@ class OrderDetail extends Component {
       'Confirm payment Order : '.concat(this.props.orderId),
       [
         { text: 'Cancel' },
-        { text: 'Confirm', onPress: () => { this.props.confirmPayment(this.props.order[0].payment.id); } }
+        { text: 'Confirm', onPress: () => { this.props.confirmPayment(this.props.order.included.payment.id); } }
       ],
       { cancelable: false }
     );
   }
 
   render() {
+    const { order, orderId } = this.props;
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-    if (isUpdating || isConfirming || this.props.order.length === 0) {
+    if (isUpdating || isConfirming ||
+      (Object.keys(order).length === 0 && order.constructor === Object)) {
       return (
         <Container>
           <Content>
@@ -118,7 +121,7 @@ class OrderDetail extends Component {
           refreshControl={
             <RefreshControl
               refreshing={this.props.isUpdating}
-              onRefresh={() => { this.props.getOrderDetail(this.props.orderId); }}
+              onRefresh={() => { this.props.getOrderDetail(orderId); }}
             />
           }
         >
@@ -127,11 +130,11 @@ class OrderDetail extends Component {
               <Grid style={{ flex: 3 }}>
                 <Row>
                   <Col><Text>Order number:</Text></Col>
-                  <Col><Text>{this.props.orderId}</Text></Col>
+                  <Col><Text>{orderId}</Text></Col>
                 </Row>
                 <Row>
                   <Col><Text>Order date:</Text></Col>
-                  <Col><Text>{formatDate(this.props.order[0].created_at)}</Text></Col>
+                  <Col><Text>{formatDate(order.data[0].created_at)}</Text></Col>
                 </Row>
               </Grid>
               {status === 'not paid' ?
@@ -149,7 +152,7 @@ class OrderDetail extends Component {
           {
             <Content>
               <List
-                dataArray={this.props.order}
+                dataArray={order.data}
                 renderRow={item =>
                   (<ListItem>
                     {this.state.status === 'not paid' ?
@@ -179,6 +182,31 @@ class OrderDetail extends Component {
               <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
           </Card>
+          {order.included.referal && order.included.referal.owner ?
+            <View>
+              <Card>
+                <CardItem>
+                  <View>
+                    <Text style={{ fontWeight: 'bold' }}>REFERAL INFO</Text>
+                    <Text>Referal Code :</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{order.included.referal.referal_code}</Text>
+                    <Text>Owner :</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{order.included.referal.owner}</Text>
+                    <Text>Total Discount :</Text>
+                    <Text style={{ fontWeight: 'bold' }}>Rp {Intl.NumberFormat('id').format(order.included.referal.discount_amount * this.getTotal())}</Text>
+                  </View>
+                </CardItem>
+              </Card>
+              <Card>
+                <CardItem style={{ flex: 1 }}>
+                  <Text style={{ flex: 1 }}>Total price after discount: </Text>
+                  <Text style={{ textAlign: 'right', flex: 1 }}>
+                    Rp {Intl.NumberFormat('id').format(this.getTotal() - (order.included.referal.discount_amount * this.getTotal()))}
+                  </Text>
+                </CardItem>
+              </Card>
+            </View> : <View />
+          }
           {(this.state.status && this.state.status === 'need authorization') ?
             <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
               <Icon name="ios-key" color="white" style={styles.icon} />
@@ -200,7 +228,7 @@ class OrderDetail extends Component {
 OrderDetail.propTypes = {
   getOrderDetail: PropTypes.func.isRequired,
   orderId: PropTypes.number.isRequired,
-  order: PropTypes.array.isRequired,
+  order: PropTypes.object.isRequired,
   updateOrder: PropTypes.func.isRequired,
   submitUpdateOrder: PropTypes.func.isRequired,
   confirmPayment: PropTypes.func.isRequired,

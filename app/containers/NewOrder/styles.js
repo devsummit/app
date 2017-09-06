@@ -9,6 +9,7 @@ export default StyleSheet.create({
     flex: 3
   },
   orderBtn: {
+    width: '100%',
     marginBottom: 20,
     marginRight: 3,
     marginLeft: 3,
@@ -31,6 +32,17 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  formInput: {
+    paddingLeft: 20,
+    height: 45,
+    alignSelf: 'flex-start'
+  },
+  disabledFormInput: {
+    paddingLeft: 20,
+    height: 45,
+    color: 'red',
+    alignSelf: 'flex-start'
+  },
   ticketCount: {
     minWidth: 25,
     textAlign: 'center',
@@ -40,5 +52,9 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#777',
     height: 27
+  },
+  iconWrapper: {
+    flex: 1,
+    alignSelf: 'center'
   }
 });

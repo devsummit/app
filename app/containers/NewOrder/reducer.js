@@ -6,7 +6,12 @@ import { fromJS } from 'immutable';
 import {
   SET_TICKET_TYPE,
   UPDATE_ORDER,
-  IS_UPDATING_ORDER
+  IS_UPDATING_ORDER,
+  GET_REFERAL,
+  IS_GETTING_REFERAL,
+  UPDATE_SINGLE_ERROR_FIELD,
+  UPDATE_SINGLE_INPUT_FIELD,
+  RESET_STATE
 } from './constants';
 
 /*
@@ -15,7 +20,16 @@ import {
 const initialState = fromJS({
   ticketTypes: [],
   order: {},
-  isUpdatingOrder: false
+  referal: {},
+  isGettingReferal: false,
+  isUpdatingOrder: false,
+  inputFields: {
+    referalCode: '',
+    isUsingReferal: false
+  },
+  errorFields: {
+    referalCode: false
+  }
 });
 
 function newOrderReducer(state = initialState, action) {
@@ -26,6 +40,16 @@ function newOrderReducer(state = initialState, action) {
       return state.setIn([ 'order', action.id ], fromJS(action.payload));
     case IS_UPDATING_ORDER:
       return state.set('isUpdatingOrder', action.status);
+    case GET_REFERAL:
+      return state.set('referal', fromJS(action.payload));
+    case IS_GETTING_REFERAL:
+      return state.set('isGettingReferal', action.status);
+    case UPDATE_SINGLE_ERROR_FIELD:
+      return state.setIn([ 'errorFields', action.field ], action.status);
+    case UPDATE_SINGLE_INPUT_FIELD:
+      return state.setIn([ 'inputFields', action.field ], action.value);
+    case RESET_STATE:
+      return initialState;
     default:
       return state;
   }

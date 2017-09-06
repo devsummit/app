@@ -53,7 +53,10 @@ export function fetchUserTicket() {
               });
             }
           })
-          .catch((error) => { return console.log(error.response); });
+          .catch((error) => {
+            dispatch(actions.isTransferringTicket(false));
+            console.log(error.response);
+          });
       }).catch((err) => {
         console.log(err);
       });
