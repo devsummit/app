@@ -60,13 +60,9 @@ class Speaker extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props,'===');
     this.props.fetchSpeakerList();
   }
 
-  componentWillReceiveProps(prevState) {
-    console.log(this.props);
-  }
 
   render() {
     return (
