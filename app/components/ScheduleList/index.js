@@ -17,8 +17,8 @@ class ScheduleList extends Component{
                 { events.length > 0 && events.map((event, index)=> (
                     <ScheduleCard
                         key={index}
-                        title={event.title}
-                        description={event.description}
+                        title={event.event.title}
+                        description={event.event.information}
                         stage={event.stage}
                         time_start={event.time_start}
                         time_end={event.time_end}
