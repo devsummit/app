@@ -108,18 +108,12 @@ class RegisterEmail extends Component {
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
 
-//email validation
-  checkEmail(inputvalue){
-    var pattern=/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-    if(pattern.test(inputvalue)){
-        return true;
-    }else{
-        return false;
-    }
+  // email validation
+  checkEmail = (inputvalue) => {
+    const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if (pattern.test(inputvalue)) return true;
+    return false;
   }
-
-
-
 
   render() {
     // destructure state
@@ -144,6 +138,10 @@ class RegisterEmail extends Component {
       error_phone
     } = errorFields || false;
 
+    const checkEmail = this.checkEmail(email) === false && email !== '';
+    const checkUsername = username.length < 4 && username !== '';
+    const checkPassword = password.length < 4 && password !== '';
+
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
@@ -166,6 +164,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('last_name', text)}
                 value={last_name}
               />
+              { checkEmail ?
+                <Text style={styles.errorInput}>invalid email address</Text>
+                :
+                null
+              }
               <InputItem
                 error={error_email}
                 style={styles.formInput}
@@ -174,26 +177,26 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
-              { (this.checkEmail(email) === false && email !== '') ?
-                <Text style={styles.registerTextBold}>invalid email address</Text>
+              { checkUsername ?
+                <Text style={styles.errorInput}>username should be 4 at minimum</Text>
                 :
                 null
               }
               <InputItem
-                error={error_username}
+                error={checkUsername}
                 style={styles.formInput}
                 placeholder="Username"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
-              { ((username.length < 6) && (username !== '')) ?
-                <Text style={styles.registerTextBold}>username should be 6 at minimum</Text>
+              { checkPassword ?
+                <Text style={styles.errorInput}>password should be 4 at minimum</Text>
                 :
                 null
               }
               <InputItem
-                error={error_password}
+                error={checkPassword}
                 style={styles.formInput}
                 placeholder="Password"
                 placeholderTextColor={'#BDBDBD'}
@@ -201,11 +204,6 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
-              { ((password.length < 6) && (password !== '')) ?
-                <Text style={styles.registerTextBold}>password should be 6 at minimum</Text>
-                :
-                null
-              }
             </View>
             <View style={styles.pickerWrapper}>
               <Picker
@@ -224,27 +222,28 @@ class RegisterEmail extends Component {
                 ))}
               </Picker>
             </View>
-          {(username.length < 6 || password.length < 6 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '')?
-          <View>
+            {(username.length < 4 || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
+              <View>
+                <Button
+                  block
+                  style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
+                  onPress={() => this.submitRegistration()}
+                >
+                  <Text style={styles.buttomText}>Register</Text>
+                </Button>
+              </View>
+              :
+              <Button
+                block
+                style={styles.button}
+                primary
+                onPress={() => this.submitRegistration()}
+              >
+                <Text style={styles.buttomText}>Register</Text>
+              </Button>
+            }
             <Button
-              block
-              style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
-              onPress={() => this.submitRegistration()}
-            >
-              <Text style={styles.buttomText}>Register</Text>
-            </Button>
-          </View>
-            :
-            <Button
-              block
-              style={styles.button}
-              primary block style={[ styles.button, { elevation: 0 } ]}
-              onPress={() => this.submitRegistration()}
-            >
-              <Text style={styles.buttomText}>Register</Text>
-            </Button>
-          }
-            <Button onBlur="register()"
+              onBlur="register()"
               transparent
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
