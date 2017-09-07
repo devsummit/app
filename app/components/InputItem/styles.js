@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   normalOnBlur: {
     color: 'grey',
     fontSize: 16
+  },
+  icon: {
+    fontSize: 25,
+    paddingRight: 10
   }
 });
 
