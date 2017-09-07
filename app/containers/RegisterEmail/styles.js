@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     color: '#FFFFFF'
   },
+  errorInput: {
+    paddingLeft: 20,
+    color: '#F44336'
+  },
   item: {
     marginBottom: 10,
     borderColor: '#FFD740',
