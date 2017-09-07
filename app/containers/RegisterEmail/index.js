@@ -170,7 +170,7 @@ class RegisterEmail extends Component {
                 null
               }
               <InputItem
-                error={error_email}
+                error={checkEmail}
                 style={styles.formInput}
                 placeholder="Email"
                 placeholderTextColor={'#BDBDBD'}
