@@ -82,24 +82,18 @@ class Profile extends Component {
     return (
       <Container>
         <Header title="PROFILE" />
+        <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
+          <Image
+            source={{ uri: avatar }}
+            style={styles.profileImage}
+            resizeMode="cover"
+          />
+        </TouchableOpacity>
+        <Text style={styles.username}>{username}</Text>
         <Content>
-          <View style={styles.section3}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-              <TouchableOpacity style={styles.section1} onPress={() => this.uploadImage()}>
-                <Image
-                  source={{ uri: avatar }}
-                  style={styles.profileImage}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
-              <Text style={styles.username}>{username}</Text>
-            </View>
-          </View>
-          <View style={{alignItems: 'flex-end', marginRight: 20}}>
-            <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
-              <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
+            <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
+          </TouchableOpacity>
           <View style={styles.section2}>
             <InputItem
               style={styles.input}

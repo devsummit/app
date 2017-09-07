@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255,255,255)'
   },
   section1: {
-    // flex: 1,
     alignItems: 'center',
     padding: 10
   },
@@ -15,6 +14,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: 15,
     marginRight: 12
+  },
+  input: {
+    paddingLeft: 20
+  },
+  imageProfile: {
+    alignSelf: 'center',
+    marginTop: -50,
+    width: '70%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   section3: {
     flex: 1,
@@ -25,13 +34,16 @@ const styles = StyleSheet.create({
     paddingLeft: 16
   },
   username: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 12
   },
   profileImage: {
     width: 110,
     height: 110,
     borderRadius: 65,
-    borderWidth: 1
+    borderWidth: 1,
+    alignSelf: 'center'
   },
   button: {
     width: '90%',
@@ -54,7 +66,8 @@ const styles = StyleSheet.create({
   },
   iconWrapper: {
     justifyContent: 'flex-end',
-    margin: 8
+    alignItems: 'flex-end',
+    marginRight: 20
   }
 });
 
