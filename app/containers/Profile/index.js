@@ -114,13 +114,18 @@ class Profile extends Component {
             </Button>
             <Button
               block
+              rounded
               disabled={ this.props.firstName === '' ? true : false }
               style={styles.button}
               onPress={() => this.props.changeProfile()}
             >
               <Text>Save changes</Text>
             </Button>
-            <Button block light style={styles.button} onPress={() => { this.props.logOut() }}>
+            <Button
+              block
+              light
+              rounded
+              style={styles.button} onPress={() => { this.props.logOut() }}>
               <Text>Log Out</Text>
             </Button>
           </View>

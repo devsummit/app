@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   username: {
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 12
+    marginBottom: 12
   },
   profileImage: {
     width: 110,
