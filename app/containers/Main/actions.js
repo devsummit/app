@@ -16,8 +16,8 @@ import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_LOGGED_IN,
   UPDATE_IS_SUBSCRIBED,
-  UPDATE_IS_FETCHING,
   UPDATE_IS_NOT_REGISTERED,
+  UPDATE_IS_LOADING,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -67,15 +67,14 @@ export function updateIsSubscribed(status) {
 }
 
 /*
- * Update the isNotRegistered
  * @param {status: status to be set}
+ * Update the isNotRegistered
  */
-
-export function updateIsFetching(status) {
+export function updateisLoading(status) {
   return {
-    type: UPDATE_IS_FETCHING,
+    type: UPDATE_IS_LOADING,
     status
-  };
+  }
 }
 
 /*
@@ -83,11 +82,12 @@ export function updateIsFetching(status) {
  * save access_token & refresh_token to asyncstorage
  */
 export function login() {
+  console.log('here bro');
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
     const { username, password } = fields;
 
-    dispatch(updateIsFetching(true));
+    dispatch(updateisLoading(true));
     DevSummitAxios.post('/auth/login', {
       username,
       password
@@ -114,15 +114,15 @@ export function login() {
         ]);
       } else {
         Alert.alert('Login Failed', response.data.meta.message);
-      }      
-      dispatch(updateIsFetching(false));   
+      }
+      dispatch(updateisLoading(false));
     }).catch((err) => console.log(err))
   };
 }
 
 export function loginMobile(mobileToken) {
   return (dispatch) => {
-    dispatch(updateIsFetching(true));
+    dispatch(updateIsLoading(true));
     DevSummitAxios.post('/auth/login', {
       provider: 'mobile',
       token: mobileToken
@@ -152,7 +152,7 @@ export function loginMobile(mobileToken) {
         Alert.alert('Login Failed', response.data.meta.message);
       }
     }).catch(err => console.log(err));
-    dispatch(updateIsFetching(false));
+    dispatch(updateIsLoading(false));
   };
 }
 
@@ -169,7 +169,7 @@ export function loginGoogle() {
     manager.authorize('google', { scopes: 'email' })
       .then((resp) => {
         if (resp.authorized) {
-          dispatch(updateIsFetching(true));
+          dispatch(updateIsLoading(true));
           DevSummitAxios.post('/auth/login', {
             provider: resp.provider,
             token: resp.response.credentials.idToken
@@ -210,10 +210,10 @@ export function loginGoogle() {
                 Actions.registerEmail({ prefilledData });
               }).catch(err => console.log(err));
             }
-            dispatch(updateIsFetching(false));
+            dispatch(updateIsLoading(false));
           }).catch((err) => {
             console.log(err);
-            dispatch(updateIsFetching(false));
+            dispatch(updateIsLoading(false));
           });
         }
       }).catch((err) => { console.log(err); });
@@ -236,7 +236,7 @@ export function loginFacebook() {
           token: resp.response.credentials.accessToken
         };
         const headers = { 'Content-Type': 'application/json' };
-        dispatch(updateIsFetching(true));
+        dispatch(updateisLoading(true));
         DevSummitAxios.post('/auth/login', data, { headers })
           .then(async (response) => {
             if (response && response.data && response.data.meta.success) {
@@ -271,10 +271,10 @@ export function loginFacebook() {
                 Actions.registerEmail({ prefilledData });
               }).catch(err => console.log(err));
             }
-            dispatch(updateIsFetching(false));
+            dispatch(updateisLoading(false));
           }).catch((err) => {
             console.log(err.response);
-            dispatch(updateIsFetching(false));
+            dispatch(updateisLoading(false));
           })
           .catch((err) => { console.log(err.response); });
       }).catch((err) => { console.log('error login fb', err); });
@@ -294,7 +294,7 @@ export function loginTwitter() {
         token_secret: info.credentials.oauth_token_secret
       };
       const headers = { 'Content-Type': 'application/json' };
-      dispatch(updateIsFetching(true));
+      dispatch(updateisLoading(true));
       DevSummitAxios.post('/auth/login', data, { headers })
         .then(async (response) => {
           if (response && response.data && response.data.meta.success) {
@@ -323,10 +323,10 @@ export function loginTwitter() {
             };
             Actions.registerEmail({ prefilledData });
           }
-          dispatch(updateIsFetching(false));
+          dispatch(updateisLoading(false));
         }).catch((err) => {
           console.log(err);
-          dispatch(updateIsFetching(false));
+          dispatch(updateisLoading(false));
         });
     }).catch((error) => { console.log(error); });
   };

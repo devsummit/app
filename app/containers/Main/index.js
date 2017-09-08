@@ -5,7 +5,8 @@ import {
   Image,
   View,
   Alert,
-  StatusBar
+  StatusBar,
+  ActivityIndicator
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, {
@@ -92,20 +93,8 @@ class Main extends Component {
   }
 
   render() {
-    const { fields, isFetching } = this.props;
+    const { fields, isLoading } = this.props;
     const { username, password, email } = fields || '';
-    if (isFetching) {
-      return (
-        <Transition>
-          <Container>
-            <Header style={{ display: 'none' }} />
-            <View style={styles.spinner}>
-              <Spinner color="white" />
-            </View>
-          </Container>
-        </Transition>
-      );
-    }
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
@@ -178,13 +167,16 @@ class Main extends Component {
               </Item>
             </View>
             <View>
-              {(username.length < 5 || password.length < 6) ?
+              {(username.length < 4 || password.length < 4) ?
                 <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
                   <Text>Log In</Text>
                 </Button>
                 :
                 <Button primary block style={styles.button} onPress={() => { this.onLogin(); }}>
-                  <Text>Log In</Text>
+                  { isLoading ?
+                    <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
+                    <Text>Log In</Text>
+                  }
                 </Button>
               }
               <Button
@@ -221,7 +213,7 @@ Main.propTypes = {
   loginFacebook: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   subscribeNewsletter: PropTypes.func.isRequired,
   loginGoogle: PropTypes.func.isRequired,
   loginTwitter: PropTypes.func.isRequired
@@ -234,7 +226,7 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isFetching: selectors.getIsFetching()
+  isLoading: selectors.getIsLoading()
   // @TODO please create the selectors function
   // profileData: selectors.getProfileData()
 });
