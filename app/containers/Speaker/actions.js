@@ -4,25 +4,24 @@ import {
 } from '../../helpers';
 
 import {
-  FETCH_SCHEDULE_LIST
+  FETCH_SPEAKER_LIST
 } from './constants';
 
 /* 
- * Get schedule data
+ * Get speaker data
 */
 
-export function fetchScheduleList() {
+export function fetchSpeakerList() {
   return (dispatch) => {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/schedules', { headers })
+        DevSummitAxios.get('api/v1/speakers', { headers })
           .then((response) => {
             dispatch({
-              type: FETCH_SCHEDULE_LIST,
+              type: FETCH_SPEAKER_LIST,
               payloads: response.data.data
             });
-            console.log(response);
           });
       });
   };

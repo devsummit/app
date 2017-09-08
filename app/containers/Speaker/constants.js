@@ -1,0 +1,1 @@
+export const FETCH_SPEAKER_LIST = 'app/containers/Speaker/FETCH_SPEAKER_LIST';

@@ -14,6 +14,7 @@ import paymentMethodReducer from './containers/Payment/reducer';
 import paymentDetailReducer from './containers/PaymentDetail/reducer';
 import OrderListReducer from './containers/OrderList/reducer';
 import OrderDetailReducer from './containers/OrderDetail/reducer';
+import SpeakerListReducer from './containers/Speaker/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -28,7 +29,8 @@ const rootReducers = combineReducers({
   methodPayment: paymentMethodReducer,
   detailPayment: paymentDetailReducer,
   orderList: OrderListReducer,
-  orderDetail: OrderDetailReducer
+  orderDetail: OrderDetailReducer,
+  speakerList: SpeakerListReducer
 });
 
 export default rootReducers;
