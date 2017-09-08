@@ -14,6 +14,7 @@ import paymentMethodReducer from './containers/Payment/reducer';
 import paymentDetailReducer from './containers/PaymentDetail/reducer';
 import OrderListReducer from './containers/OrderList/reducer';
 import OrderDetailReducer from './containers/OrderDetail/reducer';
+import SpeakerListReducer from './containers/Speaker/reducer';
 import ScheduleListReducer from './containers/Schedule/reducer';
 
 const rootReducers = combineReducers({
@@ -30,6 +31,7 @@ const rootReducers = combineReducers({
   detailPayment: paymentDetailReducer,
   orderList: OrderListReducer,
   orderDetail: OrderDetailReducer,
+  speakerList: SpeakerListReducer,
   scheduleList: ScheduleListReducer
 });
 
