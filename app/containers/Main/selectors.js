@@ -36,11 +36,10 @@ export const getIsSubscribed = () => createSelector(
 );
 
 /**
- *  Get is fetching status
+ *  Get is loading status
  *  Returns boolean
  */
-export const getIsFetching = () => createSelector(
+export const getIsLoading = () => createSelector(
   selectMainReducer(),
-  state => state.get('isFetching')
+  state => state.get('isLoading')
 );
-
