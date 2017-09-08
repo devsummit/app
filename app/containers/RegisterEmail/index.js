@@ -238,7 +238,8 @@ class RegisterEmail extends Component {
                 onPress={() => this.submitRegistration()}
               >
                 {isRegistering ?
-                  <ActivityIndicator /> : <Text style={styles.buttomText}>Register</Text>
+                  <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
+                  <Text style={styles.buttomText}>Register</Text>
                 }
               </Button>
             }
