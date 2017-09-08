@@ -21,11 +21,22 @@ import { PRIMARYCOLOR } from '../../constants';
 
 class OrderList extends Component {
   state = {
-    selectedOrder: ''
+    selectedOrder: '',
+    isLoading: true
   }
 
   componentWillMount() {
     this.props.getOrderList();
+  }
+
+  componentWillReceiveProps(prevState) {
+    const { isConfirming, isFetching } = this.props;
+    this.setState({ isLoading: isConfirming || isFetching });
+    if ((prevState.orders !== this.props.orders)) {
+      this.setState({
+        isLoading: false
+      });
+    }
   }
 
   confirmPayment = (props) => {
@@ -42,8 +53,7 @@ class OrderList extends Component {
   }
 
   render() {
-    const { isConfirming, isFetching } = this.props;
-    if (isFetching || isConfirming) {
+    if (this.state.isLoading) {
       return (
         <Container>
           <Content>

@@ -21,3 +21,4 @@ export function fetchUserSchedule() {
         }).catch((err) => { console.log(err); });
     };
 }
+

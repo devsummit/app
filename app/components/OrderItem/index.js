@@ -15,7 +15,7 @@ import styles from './styles';
 import ListItem from '../ListItem';
 import { formatDate, transactionStatus } from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
-
+let amount = 0;
 export default class OrderItem extends Component {
   state = {
     status: '',
@@ -30,9 +30,12 @@ export default class OrderItem extends Component {
       status: stat.message,
       color: stat.color
     });
+    const { order } = this.props;
+    amount = order.referal && order.referal.discount_amount ?
+      order.amount - (order.amount * order.referal.discount_amount) : order.amount;
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     let stat = '';
     const { payment } = this.props.order;
     stat = transactionStatus(payment);
@@ -40,8 +43,10 @@ export default class OrderItem extends Component {
       status: stat.message,
       color: stat.color
     });
+    const { order } = this.props;
+    amount = order.referal && order.referal.discount_amount ?
+      order.amount - (order.amount * order.referal.discount_amount) : order.amount;
   }
-
 
   onEditPressed() {
     Actions.orderDetail({ orderId: this.props.order.id });
@@ -77,7 +82,6 @@ export default class OrderItem extends Component {
   render() {
     const { status, color } = this.state;
     const { order } = this.props;
-
     return (
       <ListItem
         style={styles.item}
@@ -96,7 +100,7 @@ export default class OrderItem extends Component {
               </Text>
             </Col>
             <Col style={styles.right}>
-              <Text style={styles.text}>{Intl.NumberFormat('id').format(order.amount)}</Text>
+              <Text style={styles.text}>{Intl.NumberFormat('id').format(amount)}</Text>
               {status ?
                 <Text
                   note

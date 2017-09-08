@@ -7,7 +7,12 @@ import * as actions from '../OrderList/actions';
  */
 import {
   SET_TICKET_TYPE,
-  UPDATE_ORDER
+  UPDATE_ORDER,
+  IS_GETTING_REFERAL,
+  GET_REFERAL,
+  UPDATE_SINGLE_ERROR_FIELD,
+  UPDATE_SINGLE_INPUT_FIELD,
+  RESET_STATE
 } from './constants';
 
 
@@ -18,7 +23,6 @@ export function getTicketType() {
         headers: { Authorization: accessToken }
       }).then((response) => {
         if (response && response.data && response.data.meta.success) {
-          console.log(response, 'response on get tickettype')
           dispatch({
             type: SET_TICKET_TYPE,
             data: response.data.data
@@ -58,9 +62,17 @@ export function updateOrder(action, typeId) {
 
 export function placeOrder() {
   return (dispatch, getState) => {
-    const { order } = getState().get('newOrder').toJS();
+    const { order, inputFields, referal } = getState().get('newOrder').toJS();
     const orderItems = Object.keys(order).map((key) => { return order[key]; });
-    const data = { order_details: orderItems };
+    let data = {};
+    if (inputFields && inputFields.isUsingReferal === true && referal && referal.referal_code) {
+      data = {
+        order_details: orderItems,
+        referal_code: referal.referal_code
+      };
+    } else {
+      data = { order_details: orderItems };
+    }
 
     getAccessToken().then((accessToken) => {
       DevSummitAxios.post('api/v1/orders', data, {
@@ -74,7 +86,62 @@ export function placeOrder() {
           dispatch(actions.getOrderList());
         }
       })
-        .catch((err) => { });
+        .catch((err) => { console.log(err); });
     });
-  }
+  };
+}
+
+export function updateInputFields(field, value) {
+  return {
+    type: UPDATE_SINGLE_INPUT_FIELD,
+    field,
+    value
+  };
+}
+
+export function updateErrorFields(field, status) {
+  return {
+    type: UPDATE_SINGLE_ERROR_FIELD,
+    field,
+    status
+  };
+}
+
+export function updateIsGettingReferal(status) {
+  return {
+    type: IS_GETTING_REFERAL,
+    status
+  };
+}
+
+export function reset() {
+  return {
+    type: RESET_STATE
+  };
+}
+
+export function GetReferal() {
+  return (dispatch, getState) => {
+    dispatch(updateIsGettingReferal(true));
+    const { referalCode } = getState().getIn([ 'newOrder', 'inputFields' ]).toJS();
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.post('api/v1/referals/check', { referal_code: referalCode }, {
+        headers: {
+          Authorization: accessToken,
+          'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+        if (response.data && response.data.data) {
+          dispatch({
+            type: GET_REFERAL,
+            payload: response.data.data
+          });
+        }
+        dispatch(updateIsGettingReferal(false));
+      }).catch((err) => {
+        console.log(err);
+        dispatch(updateIsGettingReferal(false));
+      });
+    });
+  };
 }

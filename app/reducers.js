@@ -31,7 +31,6 @@ const rootReducers = combineReducers({
   orderList: OrderListReducer,
   orderDetail: OrderDetailReducer,
   scheduleList: ScheduleListReducer
-
 });
 
 export default rootReducers;

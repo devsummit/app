@@ -107,9 +107,9 @@ export function register() {
         if (response && response.data.data && response.data.meta.success) {
           dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
         } else if (response.data.data !== null && !response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'))
+          dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
         } else if (response.data.data === null && !response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]))
+          dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
         }
       }).catch((error) => {
         console.log(error, 'error caught');
