@@ -19,7 +19,7 @@ class ScheduleList extends Component{
                         key={index}
                         title={event.event.title}
                         description={event.event.information}
-                        stage={event.stage}
+                        stage={event.stage.name}
                         time_start={event.time_start}
                         time_end={event.time_end}
                     />
