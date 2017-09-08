@@ -12,6 +12,7 @@ import {
 import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
+  UPDATE_IS_LOADING,
   UPDATE_IS_PASSWORD_UPDATED,
   UPDATE_IS_PASSWORD_WRONG,
   RESET_STATE
@@ -45,6 +46,13 @@ export function updateErrorFields(field, value) {
 	}
 }
 
+export function updateIsLoading(status) {
+  return {
+    type: UPDATE_IS_LOADING,
+    status
+  };
+}
+
 export function updateIsPasswordUpdate(status) {
   return {
     type: UPDATE_IS_PASSWORD_UPDATED,
@@ -67,6 +75,7 @@ export function resetState() {
 
 export function changePassword() {
   return (dispatch, getState) => {
+    dispatch(updateIsLoading(true));
     const { inputFields } = getState().get('changePassword').toJS();
     const { current_password, new_password, confirm_password } = inputFields;
 
@@ -85,6 +94,8 @@ export function changePassword() {
           } else {
             dispatch(updateIsPasswordWrong(true));
           }
+
+          dispatch(updateIsLoading(false));
         });
       });
   };
