@@ -5,11 +5,11 @@ import {
     Body,
     Right,
     Text,
-    Icon,
 } from 'native-base';
 import { View, TouchableHighlight } from 'react-native';
 import moment from 'moment';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
 class ScheduleCard extends Component {
@@ -25,7 +25,7 @@ class ScheduleCard extends Component {
 
     render() {
         const { isOpen } = this.state;
-        const { title, description, stage, time_start, time_end } = this.props;
+        const { title, description, stage, first_name, last_name, time_start, time_end } = this.props;
         const start = new moment(time_start);
         const end = new moment(time_end);
         const dayStart = start.format('DD');
@@ -43,14 +43,12 @@ class ScheduleCard extends Component {
                         </View>
                         <View>
                             <Text style={styles.eventTitle}>{ title }</Text>
-                            <Text>
-                                <Text style={styles.smallText}><Icon name="home" style={styles.smallIcon}/> { stage }</Text>
-                                <Text> | </Text>
-                                <Text style={styles.smallText}><Icon name="clock" style={styles.smallIcon }/> { timeStart }</Text>
-                            </Text>
+                            <Text style={styles.smallText}><Icon name="home" style={styles.smallIcon}/> { stage }</Text>
+                            <Text style={styles.smallText}><Icon name="clock-o" style={styles.smallIcon }/> { timeStart }</Text>
+                            <Text style={styles.smallText}><Icon name="user" style={styles.smallIcon }/> { first_name } { last_name }</Text>
                         </View>
                         <Right>
-                        <Icon name={isOpen ? "ios-arrow-up-outline" : "ios-arrow-down-outline"}/>
+                        <Icon name={isOpen ? "chevron-up" : "chevron-down"}/>
                         </Right>
                     </CardItem>
                 </TouchableHighlight>
@@ -66,7 +64,7 @@ class ScheduleCard extends Component {
                                 <Text style={styles.footerLabel}>End on: </Text>
                                 <Icon name="calendar" style={styles.smallIcon}/>
                                 <Text style={styles.smallText}> { dateEnd } </Text>
-                                <Icon name="clock" style={styles.smallIcon}/>
+                                <Icon name="clock-o" style={styles.smallIcon}/>
                                 <Text style={styles.smallText}> { timeEnd }</Text>
                             </Body>
                         </CardItem>

@@ -1,1 +1,1 @@
-export const FETCH_SCHEDULE_LIST = 'app/containers/Schedle/FETCH_SCHEDULE_LIST';
+export const FETCH_USER_SCHEDULE = 'app/containers/Schedule/FETCH_USER_SCHEDULE';
