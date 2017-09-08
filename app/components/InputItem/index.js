@@ -5,6 +5,7 @@ import {
   Input
 } from 'native-base';
 import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 
 export default class InputItem extends Component {
@@ -28,7 +29,7 @@ export default class InputItem extends Component {
     return (
       <View>
         <Form>
-          <Item style={styles.item} rounded error={this.props.error} >
+          <Item style={this.props.error ? [styles.item, {borderColor: '#F44336'}] : styles.item} rounded error={this.props.error} >
             <Input
               style={this.props.style}
               disabled={this.props.disabled}
@@ -41,6 +42,9 @@ export default class InputItem extends Component {
               onBlur={this.props.onBlur}
               maxLength={this.props.maxLength}
             />
+            {this.props.error ?
+              <Icon name={'error-outline'} color={'#F44336'} style={styles.icon} /> : <View />
+            }
           </Item>
         </Form>
       </View>
