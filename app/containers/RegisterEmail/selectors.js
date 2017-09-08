@@ -52,4 +52,3 @@ export const getRegisterStatus = () => createSelector(
   selectRegisterReducer(),
   state => state.get('isRegistered').toJS()
 );
-
