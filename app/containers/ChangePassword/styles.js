@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)'
+    flex: 1,
+    backgroundColor: 'rgb(255,255,255)',
+    paddingTop: 20
   },
   title: {
     fontSize: 18,
@@ -38,11 +40,13 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   newPassValidator: {
-    margin: 8,
-    marginLeft: 16,
+    marginLeft: 20,
     fontSize: 12,
     color: 'red'
-  } 
+  },
+  input: {
+    paddingLeft: 20
+  }
 });
 
 export default styles;

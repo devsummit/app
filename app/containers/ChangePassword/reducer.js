@@ -8,6 +8,7 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_IS_PASSWORD_UPDATED,
+  UPDATE_IS_LOADING,
   UPDATE_IS_PASSWORD_WRONG,
   RESET_STATE
 } from './constants';
@@ -27,6 +28,7 @@ const initialState = fromJS({
     error_confirm_password: false,
     error_password_not_the_same: false
   },
+  isLoading: false,
   isPasswordUpdated: false,
   isPasswordWrong: false
 });
@@ -41,6 +43,9 @@ function changePasswordReducer(state = initialState, action) {
 
     case UPDATE_IS_PASSWORD_UPDATED:
       return state.set('isPasswordUpdated', action.status);
+
+    case UPDATE_IS_LOADING:
+      return state.set('isLoading', action.status);
 
     case UPDATE_IS_PASSWORD_WRONG:
       return state.set('isPasswordWrong', action.status);
