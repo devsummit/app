@@ -82,7 +82,6 @@ export function updateisLoading(status) {
  * save access_token & refresh_token to asyncstorage
  */
 export function login() {
-  console.log('here bro');
   return (dispatch, getState) => {
     const { fields } = getState().get('main').toJS();
     const { username, password } = fields;

@@ -21,7 +21,7 @@ import {
  * @param {field: name of the field}
  * @param {value: value to be set}
  */
-export function updateInputFields(field, value) {
+ export function updateInputFields(field, value) {
   return {
     type: UPDATE_SINGLE_INPUT_FIELD,
     field,
@@ -84,12 +84,12 @@ export function resetState() {
 }
 
 
-
 /*
  * Register user
  */
 export function register() {
   return (dispatch, getState) => {
+    dispatch(toggleIsRegistering(true));
     const { inputFields } = getState().get('registerEmail').toJS();
 
     const {
@@ -103,14 +103,15 @@ export function register() {
     if (first_name && role && email && password && username) {
       DevSummitAxios.post('/auth/register', {
         first_name, last_name, username, email, password, role: role_id, social_id
-      }).then((response) => {
+      }).then(async (response) => {
         if (response && response.data.data && response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+          await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
         } else if (response.data.data !== null && !response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+          await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
         } else if (response.data.data === null && !response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
+          await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
         }
+        dispatch(toggleIsRegistering(false));
       }).catch((error) => {
         console.log(error, 'error caught');
       });
