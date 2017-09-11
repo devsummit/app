@@ -25,16 +25,13 @@ const initialState = fromJS({
     phoneNumber: '',
     vaNumber: '',
     cardNumber: '',
-    orderId: '',
-    grossAmount: '',
     cardCvv: '',
     cardExpiryMonth: '',
     cardExpiryYear: '',
     descriptionDetail: '',
     mandiriToken: '',
     input1: '',
-    input2: '',
-    input3: ''
+    input3: '',
   },
   errorFields: {
     errorEmailDetail: false,

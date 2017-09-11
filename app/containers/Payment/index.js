@@ -62,23 +62,23 @@ class Payment extends Component {
     }
     return (
       <Container style={styles.container}>
-        <Content> 
+        <Content>
           <Text style={styles.littleText}>METHOD</Text>
-            <View style={styles.pickerWrapper}>
-              <Picker
-                style={styles.picker}
-                mode="dropdown"
-                selectedValue={paymentType}
-                onValueChange={value => this.handleInputChange('paymentType', value)}
-              >
-                {PAYMENT_METHODS.map(component => (
-                  <Item key={component.value} label={component.label} value={component.payment_type} />
-                ))}
-              </Picker>
-            </View>
+          <View style={styles.pickerWrapper}>
+            <Picker
+              style={styles.picker}
+              mode="dropdown"
+              selectedValue={paymentType}
+              onValueChange={value => this.handleInputChange('paymentType', value)}
+            >
+              {PAYMENT_METHODS.map(component => (
+                <Item key={component.value} label={component.label} value={component.payment_type} />
+              ))}
+            </Picker>
+          </View>
           {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
-          <View>
-            <Text style={styles.littleText}>BANK</Text>
+            <View>
+              <Text style={styles.littleText}>BANK</Text>
               <View style={styles.pickerWrapper}>
                 <Picker
                   style={styles.picker}
@@ -95,7 +95,7 @@ class Payment extends Component {
                     />
                   ))}
                 </Picker>
-            </View>
+              </View>
             </View> : <View />}
           <Button
             style={styles.button}
