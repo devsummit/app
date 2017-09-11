@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Text, Form, Item, Label, Input } from 'native-base';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   View,
   Modal,
-  Keyboard,
-  Alert
+  Keyboard
 } from 'react-native';
 import Button from '../Button';
-import styles from './styles'
+import styles from './styles';
 
 export default class ModalComponent extends Component {
   state = {
@@ -26,11 +24,11 @@ export default class ModalComponent extends Component {
   }
 
   _keyboardDidShow = () => {
-    this.setState({onKeyboardShow: true})
+    this.setState({ onKeyboardShow: true });
   }
 
   _keyboardDidHide = () => {
-    this.setState({onKeyboardShow: false})
+    this.setState({ onKeyboardShow: false });
   }
 
   render() {
@@ -43,8 +41,12 @@ export default class ModalComponent extends Component {
           onRequestClose={this.props.onModalPress}
         >
           <View style={styles.modalContainer}>
-            <View style={{flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
-            <View style={[styles.modalComponent, {flex: this.state.onKeyboardShow ? 0.7 : 0.35}]}>
+            <View style={{ flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
+            <View
+              style={[ styles.modalComponent,
+                { flex: this.state.onKeyboardShow ? 0.7 : 0.35 }
+              ]}
+            >
               <Text style={styles.modalTitle}>{this.props.modalTitle}</Text>
               <View style={styles.inputItem}>
                 <Form>
@@ -70,16 +72,16 @@ export default class ModalComponent extends Component {
                 <Button
                   transparent
                   style={styles.button}
-                  onPress={ this.props.onModalPress }
+                  onPress={this.props.onModalPress}
                 >
                   <Text style={styles.buttonText}>cancel</Text>
                 </Button>
               </View>
             </View>
-            <View style={{flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
+            <View style={{ flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
           </View>
         </Modal>
       </View>
-    )
+    );
   }
 }
