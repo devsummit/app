@@ -93,16 +93,16 @@ export function register() {
     const { inputFields } = getState().get('registerEmail').toJS();
 
     const {
-      first_name, role, email, password, username, social_id
+      first_name, role, email, password, username
     } = inputFields || null;
 
     const { last_name } = inputFields || '';
 
-    const role_id = role === 'attendee' ? 1 : role === 'booth' ? 2 : 3;
+    const role_id = role === 'attendee' ? 2 : role === 'booth' ? 3 : 4;
 
     if (first_name && role && email && password && username) {
       DevSummitAxios.post('/auth/register', {
-        first_name, last_name, username, email, password, role: role_id, social_id
+        first_name, last_name, username, email, password, role: role_id
       }).then(async (response) => {
         if (response && response.data.data && response.data.meta.success) {
           await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
