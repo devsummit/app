@@ -99,6 +99,8 @@ export function submitPayment() {
         DevSummitAxios.post('api/v1/payments', data, { headers }).then((response) => {
           dispatch(updateGetTransactionResponse(response.data));
           dispatch(updateIsFetchingTransaction(false));
+
+          console.log('hehehehe', response);
         }).catch((err) => {
           console.log(err);
         });
