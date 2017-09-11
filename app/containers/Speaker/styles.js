@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
   content: {
     marginTop: -40,
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
   searchHeader: {
     marginTop: -30,
-    backgroundColor:'rgb(255,255,255)',
+    backgroundColor: 'rgb(255,255,255)',
     borderRadius: 50
   },
   bodySection: {
@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   profileSection: {
-    flex: 2,
+    flex: 2
   },
   nameSection: {
     marginLeft: 15,
-    flex: 8,
+    flex: 8
   },
   profilePic: {
     height: 60,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   name: {
     color: '#333',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   job: {
     color: '#333',
@@ -53,14 +53,14 @@ const styles = StyleSheet.create({
   seeMoreLine: {
     height: 1,
     opacity: 0.1,
-    backgroundColor: 'black',
+    backgroundColor: 'black'
   },
   footerButton: {
     borderRadius: 50,
     height: 35,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-})
+  }
+});
 
 export default styles;
