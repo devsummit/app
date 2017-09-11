@@ -42,9 +42,6 @@ class RegisterEmail extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if (prevProps.isRegistering !== this.props.isRegistering) {
-      console.log('isregistering...');
-    }
     if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
       if (this.props.isRegistered.message !== '') {
         Toast.show(this.props.isRegistered.message);
