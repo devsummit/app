@@ -12,8 +12,7 @@ import {
   CardItem,
   Body
 } from 'native-base';
-import { View, StyleSheet, Alert, Image, KeyboardAvoidingView } from 'react-native';
-import IconFA from 'react-native-vector-icons/FontAwesome';
+import { View, Image, KeyboardAvoidingView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -54,7 +53,8 @@ class Speaker extends Component {
   handleFilter = (param) => {
     const filteredSpeaker = [];
     this.props.speaker.map((data) => {
-      if (data.user.first_name.toLowerCase().includes(param.toLowerCase()) || data.user.last_name.toLowerCase().includes(param.toLowerCase())) {
+      if (data.user.first_name.toLowerCase().includes(param.toLowerCase())
+      || data.user.last_name.toLowerCase().includes(param.toLowerCase())) {
         filteredSpeaker.push(data);
       }
     });
