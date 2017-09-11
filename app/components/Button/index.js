@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button as ButtonNativeBase } from 'native-base';
-import PropTypes from 'prop-types';
 
 export default class Button extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ export default class Button extends Component {
 
   componentWillUnmount() {
     if (this.state.timeout !== null) {
-      clearTimeout(this.state.timeout)
+      clearTimeout(this.state.timeout);
     }
   }
 
@@ -21,8 +20,8 @@ export default class Button extends Component {
     this.setState({ onClick: true });
     inputFunction();
 
-    const to = setTimeout(() => { this.setState({ onClick: false }); }, 2000)
-    this.setState({timeout: to})
+    const to = setTimeout(() => { this.setState({ onClick: false }); }, 2000);
+    this.setState({ timeout: to });
   }
 
   render() {
