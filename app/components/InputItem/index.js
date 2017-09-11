@@ -29,7 +29,13 @@ export default class InputItem extends Component {
     return (
       <View>
         <Form>
-          <Item style={this.props.error ? [styles.item, {borderColor: '#F44336'}] : styles.item} rounded error={this.props.error} >
+          <Item
+            rounded
+            error={this.props.error}
+            style={this.props.error ?
+              [ styles.item, { borderColor: '#F44336' } ] :
+              styles.item}
+          >
             <Input
               style={this.props.style}
               disabled={this.props.disabled}
