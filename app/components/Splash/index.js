@@ -12,7 +12,7 @@ export default class Splash extends Component {
     super();
     this.state = {
       isActive: true
-    }
+    };
   }
 
   componentDidMount() {
