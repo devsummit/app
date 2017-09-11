@@ -102,6 +102,8 @@ class OrderDetail extends Component {
 
   render() {
     const { order, orderId } = this.props;
+
+    console.log("order", order)
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
     if (isUpdating || isConfirming ||
@@ -172,6 +174,16 @@ class OrderDetail extends Component {
                 }
               />
             </Content>
+          }
+          { order.included.payment && order.included.payment.payment_type === 'cstore' && order.included.payment.fraud_status ?
+            <Card>
+              <CardItem>
+                <Body>
+                  <Text>Payment Code</Text>
+                </Body>
+                <Right><Text>{order.included.payment.fraud_status}</Text></Right>
+              </CardItem>
+            </Card> : <View />
           }
           <Card>
             <CardItem>
