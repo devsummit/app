@@ -31,9 +31,7 @@ import { PRIMARYCOLOR } from '../../constants';
 class PaymentDetail extends Component {
   componentWillMount() {
     const { order, updateInputFields } = this.props;
-    updateInputFields('orderId', order.id);
-    updateInputFields('grossAmount', order.amount);
-    updateInputFields('input2', order.amount);
+    updateInputFields('order', order);
     updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
@@ -47,20 +45,20 @@ class PaymentDetail extends Component {
       } else if (
         getTransactionResponse.meta &&
         getTransactionResponse.meta.message &&
-        getTransactionResponse.meta.message.status_message) {   
-        if (getTransactionResponse.meta.message.validation_messages) {      
+        getTransactionResponse.meta.message.status_message) {
+        if (getTransactionResponse.meta.message.validation_messages) {
           const messages = getTransactionResponse.meta.message.validation_messages;
           let message = '';
           for (let i = 0; i < messages.length; i += 1) {
             message += messages[i];
           }
           Alert.alert(message);
-        } else {     
+        } else {
           Alert.alert(getTransactionResponse.meta.message.status_message);
           this.props.updateGetTransactionResponse({});
           Actions.pop();
         }
-      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {     
+      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {
         Alert.alert(getTransactionResponse.meta.message);
         this.props.updateGetTransactionResponse({});
       }
