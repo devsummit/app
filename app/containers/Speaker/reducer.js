@@ -11,7 +11,6 @@ const initialState = fromJS({
 function speakerListReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_SPEAKER_LIST:
-      console.log(action.payloads,'STRING');
       return state.set('speaker', action.payloads);
     default:
       return state;
