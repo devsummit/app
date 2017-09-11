@@ -47,20 +47,20 @@ class PaymentDetail extends Component {
       } else if (
         getTransactionResponse.meta &&
         getTransactionResponse.meta.message &&
-        getTransactionResponse.meta.message.status_message) {
-        if (getTransactionResponse.meta.message.validation_messages) {
+        getTransactionResponse.meta.message.status_message) {   
+        if (getTransactionResponse.meta.message.validation_messages) {      
           const messages = getTransactionResponse.meta.message.validation_messages;
           let message = '';
           for (let i = 0; i < messages.length; i += 1) {
             message += messages[i];
           }
           Alert.alert(message);
-        } else {
+        } else {     
           Alert.alert(getTransactionResponse.meta.message.status_message);
           this.props.updateGetTransactionResponse({});
           Actions.pop();
         }
-      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {
+      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {     
         Alert.alert(getTransactionResponse.meta.message);
         this.props.updateGetTransactionResponse({});
       }
@@ -148,7 +148,7 @@ class PaymentDetail extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <Text style={styles.text}>{detail.label}</Text>
+          <Text style={styles.text}>{detail.label.toUpperCase()}</Text>
           {detail && detail.basicDetail ?
             <Content>
               <InputItem
@@ -206,8 +206,8 @@ class PaymentDetail extends Component {
                 value={cardCvv}
                 placeholder="cvv"
               />
-              <Text>expiry</Text>
-              <View style={styles.datePicker}>
+              <Text style={styles.text}>EXPIRY (MM/YYYY)</Text>
+              <View style={[styles.datePicker]}>
                 <Picker
                   style={styles.monthPicker}
                   placeholder="expiry month"
