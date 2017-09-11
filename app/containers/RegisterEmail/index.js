@@ -7,8 +7,9 @@ import {
   Button,
   Text
 } from 'native-base';
-import { Alert, Image, View } from 'react-native';
+import { Alert, Image, View, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Toast from 'react-native-simple-toast';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -26,7 +27,6 @@ import { role_option } from '../../constants';
 const background = require('../../../assets/images/background.png');
 
 class RegisterEmail extends Component {
-
   /*
      * initialize some state
      */
@@ -44,17 +44,16 @@ class RegisterEmail extends Component {
   componentWillReceiveProps(prevProps) {
     if (prevProps.isRegistering !== this.props.isRegistering) {
       console.log('isregistering...');
-      return;
     }
     if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-      Alert.alert(
-        this.props.isRegistered.title,
-        this.props.isRegistered.message,
-        [
-          { text: 'OK', onPress: this.props.isRegistered.title === 'Failed' ? () => {} : this.onAlertOk }
-        ],
-        { cancelable: false }
-      );
+      if (this.props.isRegistered.message !== '') {
+        Toast.show(this.props.isRegistered.message);
+      }
+
+      setTimeout(() => {
+        this.onAlertOk();
+      }, 3000);
+
       this.props.updateRegisterStatus(false, '', '');
     }
   }
@@ -91,7 +90,6 @@ class RegisterEmail extends Component {
   }
 
   submitRegistration = () => {
-    console.log('coba')
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
@@ -117,7 +115,7 @@ class RegisterEmail extends Component {
 
   render() {
     // destructure state
-    const { registerMethod, inputFields, errorFields } = this.props || {};
+    const { registerMethod, inputFields, errorFields, isRegistering } = this.props || {};
     const {
       first_name,
       last_name,
@@ -239,7 +237,10 @@ class RegisterEmail extends Component {
                 primary
                 onPress={() => this.submitRegistration()}
               >
-                <Text style={styles.buttomText}>Register</Text>
+                {isRegistering ?
+                  <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
+                  <Text style={styles.buttomText}>Register</Text>
+                }
               </Button>
             }
             <Button

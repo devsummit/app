@@ -31,6 +31,11 @@ export const getIsPasswordUpdated = () => createSelector(
   state => state.get('isPasswordUpdated')
 );
 
+export const getIsLoading = () => createSelector(
+  selectChangePasswordReducer(),
+  state => state.get('isLoading')
+);
+
 export const getIsPasswordWrong = () => createSelector(
   selectChangePasswordReducer(),
   state => state.get('isPasswordWrong')

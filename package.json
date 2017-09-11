@@ -24,7 +24,7 @@
     "react-native-oauth": "^2.2.0",
     "react-native-router-flux": "^4.0.0-beta.15",
     "react-native-simple-auth": "^2.1.0",
-    "react-native-simple-toast": "^0.0.6",
+    "react-native-simple-toast": "0.0.6",
     "react-native-transition": "^1.1.7",
     "react-native-vector-icons": "^4.3.0",
     "react-redux": "^5.0.5",
