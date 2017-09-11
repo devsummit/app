@@ -9,6 +9,11 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
+  searchHeader: {
+    marginTop: -30,
+    backgroundColor:'rgb(255,255,255)',
+    borderRadius: 50
+  },
   bodySection: {
     flex: 1,
     flexDirection: 'row',
