@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop: 40,
-    marginBottom: 0,
+    marginBottom: 0
   },
   content2: {
     marginTop: -60,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     alignItems: 'center',
-    height: 100,
+    height: 100
   },
   pageTitle: {
     fontFamily: 'Montserrat',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   pointSection: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row'
   },
   pointTitle: {
