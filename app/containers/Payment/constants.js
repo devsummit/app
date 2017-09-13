@@ -55,6 +55,13 @@ export const PAYMENT_METHODS = [
     payment_type: 'danamon_online',
     bankDestination: 'danamon',
     basicDetail: true
+  },
+  {
+    value: 'key8',
+    label: 'Indomaret Payment',
+    payment_type: 'cstore',
+    bankDestination: 'indomaret',
+    basicDetail: true,
   }
 ];
 

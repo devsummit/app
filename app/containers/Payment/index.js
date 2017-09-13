@@ -63,37 +63,39 @@ class Payment extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <Text>SELECT METHOD</Text>
-          <Picker
-            style={styles.picker}
-            placeholder="Payment method"
-            mode="dropdown"
-            selectedValue={paymentType}
-            onValueChange={value => this.handleInputChange('paymentType', value)}
-          >
-            {PAYMENT_METHODS.map(component => (
-              <Item key={component.value} label={component.label} value={component.payment_type} />
-            ))}
-          </Picker>
-
+          <Text style={styles.littleText}>METHOD</Text>
+          <View style={styles.pickerWrapper}>
+            <Picker
+              style={styles.picker}
+              mode="dropdown"
+              selectedValue={paymentType}
+              onValueChange={value => this.handleInputChange('paymentType', value)}
+            >
+              {PAYMENT_METHODS.map(component => (
+                <Item key={component.value} label={component.label} value={component.payment_type} />
+              ))}
+            </Picker>
+          </View>
           {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
             <View>
-              <Text>SELECT BANK</Text>
-              <Picker
-                style={styles.picker}
-                placeholder="Bank"
-                mode="dropdown"
-                selectedValue={bankDestination}
-                onValueChange={value => this.handleInputChange('bankDestination', value)}
-              >
-                {bankList.map(component => (
-                  <Item
-                    key={component.value}
-                    label={component.label}
-                    value={component.bankDestination}
-                  />
-                ))}
-              </Picker>
+              <Text style={styles.littleText}>BANK</Text>
+              <View style={styles.pickerWrapper}>
+                <Picker
+                  style={styles.picker}
+                  placeholder="Bank"
+                  mode="dropdown"
+                  selectedValue={bankDestination}
+                  onValueChange={value => this.handleInputChange('bankDestination', value)}
+                >
+                  {bankList.map(component => (
+                    <Item
+                      key={component.value}
+                      label={component.label}
+                      value={component.bankDestination}
+                    />
+                  ))}
+                </Picker>
+              </View>
             </View> : <View />}
           <Button
             style={styles.button}
