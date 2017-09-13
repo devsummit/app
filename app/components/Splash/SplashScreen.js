@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import { Container, Content, Text } from 'native-base';
+import React from 'react';
 import { StyleSheet, Image, View, StatusBar } from 'react-native';
 import { createTransition, Fade } from 'react-native-transition';
-import App from './../../index';
 
 const Transition = createTransition(Fade);
 
@@ -25,7 +23,7 @@ const styles = StyleSheet.create({
 const SplashScreen = () => {
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor='white'/>
+      <StatusBar barStyle="dark-content" backgroundColor={'white'} />
       <View>
         <Image source={Logo} style={styles.logo} />
       </View>

@@ -12,13 +12,13 @@ const Header = (props) => {
   return (
     <View style={styles.headerBase}>
       <LinearGradient
-        colors={['#f39e21', '#f72d48']}
+        colors={[ '#f39e21', '#f72d48' ]}
       >
         <View style={styles.header}>
           <View style={styles.headerText}>
             <Text style={styles.pageTitle}>{props.title}</Text>
             <View style={styles.pointSection}>
-              <Icon name="coin" style={styles.coin}/>
+              <Icon name="coin" style={styles.coin} />
               <Text style={styles.points}> 1000 pts</Text>
             </View>
           </View>
@@ -29,6 +29,6 @@ const Header = (props) => {
       </LinearGradient>
     </View>
   );
-}
+};
 
 export default Header;

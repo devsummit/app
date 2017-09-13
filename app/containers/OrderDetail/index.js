@@ -42,7 +42,6 @@ class OrderDetail extends Component {
   }
 
   componentWillMount = () => {
-    console.log(this.props);
     this.props.getOrderDetail(this.props.orderId);
   }
 
