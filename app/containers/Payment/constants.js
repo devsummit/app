@@ -61,7 +61,7 @@ export const PAYMENT_METHODS = [
     label: 'Indomaret Payment',
     payment_type: 'cstore',
     bankDestination: 'indomaret',
-    basicDetail: true,
+    basicDetail: true
   }
 ];
 
@@ -122,7 +122,7 @@ export const CREDIT_CARD_LIST = [
     value: 'key5',
     label: 'MAYBANK',
     bankDestination: 'maybank'
-  },
+  }
 ];
 
 export const CREDIT_CARD = {
