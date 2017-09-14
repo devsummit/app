@@ -31,9 +31,7 @@ import { PRIMARYCOLOR } from '../../constants';
 class PaymentDetail extends Component {
   componentWillMount() {
     const { order, updateInputFields } = this.props;
-    updateInputFields('orderId', order.id);
-    updateInputFields('grossAmount', order.amount);
-    updateInputFields('input2', order.amount);
+    updateInputFields('order', order);
     updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
@@ -148,7 +146,7 @@ class PaymentDetail extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <Text style={styles.text}>{detail.label}</Text>
+          <Text style={styles.text}>{detail.label.toUpperCase()}</Text>
           {detail && detail.basicDetail ?
             <Content>
               <InputItem
@@ -206,8 +204,8 @@ class PaymentDetail extends Component {
                 value={cardCvv}
                 placeholder="cvv"
               />
-              <Text>expiry</Text>
-              <View style={styles.datePicker}>
+              <Text style={styles.text}>EXPIRY (MM/YYYY)</Text>
+              <View style={[styles.datePicker]}>
                 <Picker
                   style={styles.monthPicker}
                   placeholder="expiry month"
