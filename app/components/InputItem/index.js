@@ -47,6 +47,7 @@ export default class InputItem extends Component {
               onFocus={() => { this.handleOnFocus(); }}
               onBlur={this.props.onBlur}
               maxLength={this.props.maxLength}
+              multiline={this.props.multiline}
             />
             {this.props.error ?
               <Icon name={'error-outline'} color={'#F44336'} style={styles.icon} /> : <View />
