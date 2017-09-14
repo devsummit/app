@@ -81,7 +81,7 @@ export const BANK_TRANSFERS = [
   {
     value: 'key2',
     label: 'Mandiri Bill Payment',
-    bankDestination: 'echannel'
+    bankDestination: 'mandiri_bill'
   },
   {
     value: 'key3',
