@@ -25,7 +25,7 @@ import * as selectors from './selectors';
 
 class Profile extends Component {
   state = {
-    id: 4
+    id: null
   }
   componentWillMount() {
     getProfileData().then((profileData) => {
@@ -34,16 +34,20 @@ class Profile extends Component {
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
-        this.handleInputChange('boothInfo', profileData.booth_info);
-        this.handleInputChange('job', profileData.job);
+        if (profileData.role_id === 3) {
+          this.handleInputChange('boothInfo', profileData.booth.summary);
+        }
+        if (profileData.role_id === 4) {
+          this.handleInputChange('job', profileData.speaker.job);
+          this.handleInputChange('summary', profileData.speaker.summary);
+        }
       }
     });
     AsyncStorage.getItem('role_id')
       .then((roleId) => {
         const id = JSON.parse(roleId);
-        console.log(id);
-        this.setState({ id:4 }).catch(err => console.log('error', err));
-      }).catch(e => console.log('Error'));
+        this.setState({ id });
+      }).catch(() => console.log('Error'));
   }
 
   componentWillReceiveProps(prevProps) {
@@ -90,10 +94,11 @@ class Profile extends Component {
     const {
       firstName,
       lastName,
-      boothInfo,
       username,
-      profilePic,
-      job
+      boothInfo,
+      job,
+      summary,
+      profilePic
     } = fields || '';
 
     return (
@@ -129,11 +134,12 @@ class Profile extends Component {
               value={lastName}
             />
             {speaker ? <InputItem
-              style={styles.inputInfo}
+              style={styles.inputJob}
               title="Job"
               placeholder="Job"
+              placeholderTextColor={'#BDBDBD'}
               disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('Job', text); }}
+              onChangeText={(text) => { this.handleInputChange('job', text); }}
               value={job}
               maxLength={255}
               multiline
@@ -141,11 +147,12 @@ class Profile extends Component {
             : <View />}
             {speaker ? <InputItem
               style={styles.inputInfo}
-              title="Job"
-              placeholder="Job"
+              title="Summary"
+              placeholder="Summary"
+              placeholderTextColor={'#BDBDBD'}
               disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('Job', text); }}
-              value={job}
+              onChangeText={(text) => { this.handleInputChange('summary', text); }}
+              value={summary}
               maxLength={255}
               multiline
             />
