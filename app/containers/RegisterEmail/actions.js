@@ -98,7 +98,7 @@ export function register() {
 
     const { last_name } = inputFields || '';
 
-    const role_id = role === 'attendee' ? 2 : role === 'booth' ? 3 : 4;
+    const role_id = role === 'attendee' ? 2 : role === 'booth' ? 3 : 5;
 
     if (first_name && role && email && password && username) {
       DevSummitAxios.post('/auth/register', {
