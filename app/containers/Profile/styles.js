@@ -16,10 +16,17 @@ const styles = StyleSheet.create({
     marginRight: 12
   },
   input: {
-    paddingLeft: 20
+    paddingLeft: 12
   },
   inputInfo: {
     height: 200,
+    paddingLeft: 12,
+    textAlignVertical: 'top'
+  },
+  inputJob: {
+    height: 100,
+    paddingLeft: 12,
+    flexWrap: 'wrap',
     textAlignVertical: 'top'
   },
   imageProfile: {
