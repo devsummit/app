@@ -63,13 +63,14 @@ export function updateIsDisabled(status) {
 export function changeProfile() {
   return (dispatch, getState) => {
     const { fields } = getState().get('profile').toJS();
-    const { username, firstName, lastName, profilePic } = fields;
+    const { username, firstName, lastName, profilePic, boothInfo } = fields;
 
     getAccessToken()
       .then((token) => {
         DevSummitAxios.patch('/auth/me/changesetting', {
           first_name: firstName,
-          last_name: lastName
+          last_name: lastName,
+          booth_info: boothInfo
         }, {
           headers: {
             Authorization: token
@@ -77,6 +78,7 @@ export function changeProfile() {
         }).then((response) => {
           if (response && response.data && response.data.meta.success) {
             dispatch(updateIsProfileUpdated(true));
+            console.log(response);
           }
         }).catch((error) => { console.log(error); });
       });
