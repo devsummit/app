@@ -18,12 +18,20 @@ const styles = StyleSheet.create({
   input: {
     paddingLeft: 20
   },
+  inputInfo: {
+    height: 200,
+    textAlignVertical: 'top'
+  },
   imageProfile: {
     alignSelf: 'center',
     marginTop: -50,
     width: '70%',
     marginLeft: 'auto',
     marginRight: 'auto'
+  },
+  errorInput: {
+    paddingLeft: 20,
+    color: '#FFFFFF'
   },
   section3: {
     flex: 1,
