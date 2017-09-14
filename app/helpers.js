@@ -41,14 +41,14 @@ export const getAccessToken = async () => {
   await DevSummitAxios.post('/auth/refreshtoken', { refresh_token: refreshToken })
     .then(async (response) => {
       if (response.data.data && response.data.data.exist === false) {
-        const keys = ['access_token', 'refresh_token', 'role_id', 'profile_data'];
+        const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
         await AsyncStorage.multiRemove(keys);
         return Actions.main();
       }
       const { access_token: accessToken, refresh_token: refreshtoken } = response.data.data;
       await AsyncStorage.multiSet([
-        ['access_token', accessToken],
-        ['refresh_token', refreshtoken]
+        [ 'access_token', accessToken ],
+        [ 'refresh_token', refreshtoken ]
       ]);
       token = accessToken;
     })
@@ -68,13 +68,11 @@ export const getProfileData = async () => {
 
 export const formatDate = (source) => {
   const dt = source.split(' ');
-  console.log('source', dt)
   return `${dt[0]} ${dt[1]}`;
 };
 
 export const transactionStatus = (payment) => {
   if (payment) {
-    console.log(payment)
     if (payment.fraud_status === 'accept' && payment.transaction_status === 'capture') {
       return {
         message: 'paid',
@@ -85,11 +83,6 @@ export const transactionStatus = (payment) => {
         message: 'need authorization',
         color: 'blue'
       };
-    } else if (payment.payment_type === 'cstore') {
-      return {
-        message: 'pending',
-        color: 'red'
-      }
     } else if (payment.transaction_status === 'pending') {
       return {
         message: 'pending',
