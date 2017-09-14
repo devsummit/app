@@ -87,7 +87,7 @@ export const transactionStatus = (payment) => {
       };
     } else if (payment.payment_type === 'cstore') {
       return {
-        message: 'waiting for payment',
+        message: 'pending',
         color: 'red'
       }
     } else if (payment.transaction_status === 'pending') {
