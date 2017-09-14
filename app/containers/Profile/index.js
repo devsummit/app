@@ -4,10 +4,11 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View, Alert, Image, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Toast from 'react-native-simple-toast';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -23,6 +24,9 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 class Profile extends Component {
+  state = {
+    id: null
+  }
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
@@ -30,24 +34,31 @@ class Profile extends Component {
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
+        this.handleInputChange('boothInfo', profileData.booth_info);
       }
     });
+    AsyncStorage.getItem('role_id')
+      .then((roleId) => {
+        const id = JSON.parse(roleId);
+        console.log(id);
+        this.setState({ id }).catch(err => console.log('error', err));
+      }).catch(e => console.log('Error'));
   }
 
   componentWillReceiveProps(prevProps) {
     if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
       Alert.alert('Success', 'Profile has been changed');
-      this.props.updateIsProfileUpdated(false)
+      this.props.updateIsProfileUpdated(false);
     }
 
     if (prevProps.isAvatarUpdated !== this.props.isAvatarUpdated) {
       Alert.alert('Success', 'Avatar has been changed');
-      this.props.updateIsAvatarUpdated(false)
+      this.props.updateIsAvatarUpdated(false);
     }
 
     if (prevProps.isLogOut !== this.props.isLogOut) {
-      Actions.main()
-      this.props.updateIsLogOut(false)
+      Actions.main();
+      this.props.updateIsLogOut(false);
     }
   }
 
@@ -64,23 +75,26 @@ class Profile extends Component {
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
+      includeBase64: true
     }).then((image) => {
-      this.props.updateImage(image)
-    }).catch((err) => console.log("Error getting image from library", err));
+      this.props.updateImage(image);
+    }).catch(err => console.log('Error getting image from library', err));
   }
 
   render() {
     // destructure state
-    const { fields, isDisabled, avatar } = this.props || {};
+    const roleId = this.state.id === 3;
+    const { fields, isDisabled, avatar, errorFields } = this.props || {};
     const {
       firstName,
       lastName,
+      boothInfo,
       username,
       profilePic
     } = fields || '';
+
     return (
-      <Container>
+      <ScrollView>
         <Header title="PROFILE" />
         <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
           <Image
@@ -98,24 +112,36 @@ class Profile extends Component {
             <InputItem
               style={styles.input}
               title="First Name"
-              disabled={isDisabled ? true : false}
-              onChangeText={(text) => { this.handleInputChange('firstName', text) }}
+              placeholder="First Name"
+              disabled={!!isDisabled}
+              onChangeText={(text) => { this.handleInputChange('firstName', text); }}
               value={firstName}
             />
             <InputItem
               style={styles.input}
               title="Last Name"
-              disabled={isDisabled ? true : false}
-              onChangeText={(text) => {this.handleInputChange('lastName', text)}}
+              placeholder="Last Name"
+              disabled={!!isDisabled}
+              onChangeText={(text) => { this.handleInputChange('lastName', text); }}
               value={lastName}
             />
+            {roleId ? <InputItem
+              style={styles.inputInfo}
+              title="Booth Info"
+              placeholder="Booth Info"
+              disabled={!!isDisabled}
+              onChangeText={(text) => { this.handleInputChange('boothInfo', text); }}
+              value={boothInfo}
+              maxLength={255}
+              multiline
+            /> : <View />}
             <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
               <Text style={styles.changePassText}>Change Password</Text>
             </Button>
             <Button
               block
               rounded
-              disabled={ this.props.firstName === '' ? true : false }
+              disabled={this.props.firstName === ''}
               style={styles.button}
               onPress={() => this.props.changeProfile()}
             >
@@ -125,13 +151,15 @@ class Profile extends Component {
               block
               light
               rounded
-              style={styles.button} onPress={() => { this.props.logOut() }}>
+              style={styles.button}
+              onPress={() => { this.props.logOut(); }}
+            >
               <Text>Log Out</Text>
             </Button>
           </View>
         </Content>
-      </Container>
-    )
+      </ScrollView>
+    );
   }
 }
 
