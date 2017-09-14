@@ -25,13 +25,18 @@ const styles = StyleSheet.create({
   },
   buttonsSection: {
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between'
   },
   button: {
     margin: 6
   },
   buttonText: {
     fontSize: 15
+  },
+  buttonUpload: {
+    marginVertical: 12,
+    alignSelf: 'center',
+    backgroundColor: '#FB8C00'
   }
 })
 
