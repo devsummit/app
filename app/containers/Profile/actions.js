@@ -60,39 +60,45 @@ export function updateIsDisabled(status) {
   };
 }
 
+export function updateDataStorage(resp) {
+  getProfileData()
+    .then(() => {
+      const newData = JSON.stringify(resp.data.data);
+      AsyncStorage.removeItem('profile_data', () => {
+        try {
+          AsyncStorage.setItem('profile_data', newData);
+        } catch (e) {
+          console.log('error save profile data');
+        }
+      });
+    });
+}
+
 export function changeProfile() {
   return (dispatch, getState) => {
     const { fields } = getState().get('profile').toJS();
-    const { username, firstName, lastName, profilePic, boothInfo } = fields;
+    const { username, firstName, lastName, profilePic, boothInfo, job, summary } = fields;
 
     getAccessToken()
       .then((token) => {
         DevSummitAxios.patch('/auth/me/changesetting', {
           first_name: firstName,
           last_name: lastName,
-          booth_info: boothInfo
+          booth_info: boothInfo,
+          speaker_job: job,
+          speaker_summary: summary
         }, {
           headers: {
             Authorization: token
           }
         }).then((response) => {
           if (response && response.data && response.data.meta.success) {
+            updateDataStorage(response);
             dispatch(updateIsProfileUpdated(true));
-            console.log(response);
           }
         }).catch((error) => { console.log(error); });
       });
   };
-}
-
-export function updateDataStorage(resp) {
-  getProfileData()
-    .then((data) => {
-      const datas = data;
-      datas.photos[0].url = resp.data.url;
-
-      AsyncStorage.setItem('profile_data', JSON.stringify(data));
-    });
 }
 
 export function updateImage(image) {
