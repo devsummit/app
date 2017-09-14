@@ -34,15 +34,20 @@ class Profile extends Component {
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
-        this.handleInputChange('boothInfo', profileData.booth_info);
+        if (profileData.role_id === 3) {
+          this.handleInputChange('boothInfo', profileData.booth.summary);
+        }
+        if (profileData.role_id === 4) {
+          this.handleInputChange('job', profileData.speaker.job);
+          this.handleInputChange('summary', profileData.speaker.summary);
+        }
       }
     });
     AsyncStorage.getItem('role_id')
       .then((roleId) => {
         const id = JSON.parse(roleId);
-        console.log(id);
-        this.setState({ id }).catch(err => console.log('error', err));
-      }).catch(e => console.log('Error'));
+        this.setState({ id });
+      }).catch(() => console.log('Error'));
   }
 
   componentWillReceiveProps(prevProps) {
@@ -83,13 +88,16 @@ class Profile extends Component {
 
   render() {
     // destructure state
-    const roleId = this.state.id === 3;
+    const booth = this.state.id === 3;
+    const speaker = this.state.id === 4;
     const { fields, isDisabled, avatar, errorFields } = this.props || {};
     const {
       firstName,
       lastName,
-      boothInfo,
       username,
+      boothInfo,
+      job,
+      summary,
       profilePic
     } = fields || '';
 
@@ -125,7 +133,31 @@ class Profile extends Component {
               onChangeText={(text) => { this.handleInputChange('lastName', text); }}
               value={lastName}
             />
-            {roleId ? <InputItem
+            {speaker ? <InputItem
+              style={styles.inputJob}
+              title="Job"
+              placeholder="Job"
+              placeholderTextColor={'#BDBDBD'}
+              disabled={!!isDisabled}
+              onChangeText={(text) => { this.handleInputChange('job', text); }}
+              value={job}
+              maxLength={255}
+              multiline
+            />
+            : <View />}
+            {speaker ? <InputItem
+              style={styles.inputInfo}
+              title="Summary"
+              placeholder="Summary"
+              placeholderTextColor={'#BDBDBD'}
+              disabled={!!isDisabled}
+              onChangeText={(text) => { this.handleInputChange('summary', text); }}
+              value={summary}
+              maxLength={255}
+              multiline
+            />
+            : <View />}
+            {booth ? <InputItem
               style={styles.inputInfo}
               title="Booth Info"
               placeholder="Booth Info"
