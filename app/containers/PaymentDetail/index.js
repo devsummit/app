@@ -32,6 +32,11 @@ class PaymentDetail extends Component {
   componentWillMount() {
     const { order, updateInputFields } = this.props;
     updateInputFields('order', order);
+    updateInputFields('orderId', order.id);
+    updateInputFields('grossAmount', order.amount);
+    updateInputFields('input2', order.amount);
+    updateInputFields('cardExpiryMonth', '01');
+    updateInputFields('cardExpiryYear', '2017');
     updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
@@ -43,11 +48,9 @@ class PaymentDetail extends Component {
         this.props.updateGetTransactionResponse({});
         Actions.pop();
       } else if (
-        getTransactionResponse.meta &&
-        getTransactionResponse.meta.message &&
-        getTransactionResponse.meta.message.status_message) {
-        if (getTransactionResponse.meta.message.validation_messages) {
-          const messages = getTransactionResponse.meta.message.validation_messages;
+        getTransactionResponse.meta) {
+        if (getTransactionResponse.meta.message) {
+          const messages = getTransactionResponse.meta.message;
           let message = '';
           for (let i = 0; i < messages.length; i += 1) {
             message += messages[i];
@@ -205,7 +208,7 @@ class PaymentDetail extends Component {
                 placeholder="cvv"
               />
               <Text style={styles.text}>EXPIRY (MM/YYYY)</Text>
-              <View style={[styles.datePicker]}>
+              <View style={[ styles.datePicker ]}>
                 <Picker
                   style={styles.monthPicker}
                   placeholder="expiry month"
