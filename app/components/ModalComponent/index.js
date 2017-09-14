@@ -41,11 +41,10 @@ export default class ModalComponent extends Component {
           onRequestClose={this.props.onModalPress}
         >
           <View style={styles.modalContainer}>
-            <View style={{ flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
+            <View />
             <View
-              style={[ styles.modalComponent,
-                { flex: this.state.onKeyboardShow ? 0.7 : 0.35 }
-              ]}
+              style={ styles.modalComponent
+              }
             >
               <Text style={styles.modalTitle}>{this.props.modalTitle}</Text>
               <View style={styles.inputItem}>
@@ -55,26 +54,47 @@ export default class ModalComponent extends Component {
                       {this.props.inputTitle}
                     </Label>
                     <Input
-                      onChangeText={this.props.onChangeText}
-                      value={this.props.value}
+                      onChangeText={this.props.onChangeTitle}
+                      value={this.props.titleValue}
                     />
                   </Item>
                 </Form>
+                <Form>
+                  <Item floatingLabel >
+                    <Label>
+                      {this.props.inputSummary}
+                    </Label>
+                    <Input
+                      onChangeText={this.props.onChangeSummary}
+                      value={this.props.summaryValue}
+                      multiline={true}
+                      numberOfLines={3}
+                      maxLength={255}
+                    />
+                  </Item>
+                </Form>
+                <Text style={{ alignSelf: 'center' }}>{this.props.fileName}</Text>
+                <Button
+                  style={styles.buttonUpload}
+                  onPress={this.props.onUpload}
+                >
+                  <Text style={styles.buttonText}>Upload File</Text>
+                </Button>
               </View>
               <View style={styles.buttonsSection}>
-                <Button
-                  transparent
-                  style={styles.button}
-                  onPress={this.props.onSubmit}
-                >
-                  <Text style={styles.buttonText}>ok</Text>
-                </Button>
                 <Button
                   transparent
                   style={styles.button}
                   onPress={this.props.onModalPress}
                 >
                   <Text style={styles.buttonText}>cancel</Text>
+                </Button>
+                <Button
+                  transparent
+                  style={styles.button}
+                  onPress={this.props.onSubmit}
+                >
+                  <Text style={styles.buttonText}>save</Text>
                 </Button>
               </View>
             </View>
