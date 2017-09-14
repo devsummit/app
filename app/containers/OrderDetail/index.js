@@ -102,8 +102,6 @@ class OrderDetail extends Component {
 
   render() {
     const { order, orderId } = this.props;
-
-    console.log("order", order)
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
     if (isUpdating || isConfirming ||
