@@ -104,6 +104,8 @@ export function submitPayment() {
           dispatch(updateGetTransactionResponse(response.data));
           dispatch(updateIsFetchingTransaction(false));
         }).catch((err) => {
+          dispatch(updateIsFetchingTransaction(false));
+          console.log(err);
         });
       });
   };
