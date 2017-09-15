@@ -78,9 +78,9 @@ export const transactionStatus = (payment) => {
         message: 'paid',
         color: 'green'
       };
-    } else if (payment.fraud_status === 'accept' && payment.transaction_status === 'authorize') {
+    } else if (payment.fraud_status === 'challenge') {
       return {
-        message: 'need authorization',
+        message: 'waiting for authorization',
         color: 'blue'
       };
     } else if (payment.transaction_status === 'pending') {
