@@ -35,7 +35,8 @@ export function fetchMaterialList() {
               type: FETCH_MATERIAL_LIST,
               payloads: response.data.data
             });
-          });
+          })
+          .catch(e => console.log('error here', e));
       });
   };
 }
