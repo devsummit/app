@@ -16,6 +16,7 @@ import OrderListReducer from './containers/OrderList/reducer';
 import OrderDetailReducer from './containers/OrderDetail/reducer';
 import SpeakerListReducer from './containers/Speaker/reducer';
 import ScheduleListReducer from './containers/Schedule/reducer';
+import MaterialListReducer from './containers/MaterialList/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -32,7 +33,8 @@ const rootReducers = combineReducers({
   orderList: OrderListReducer,
   orderDetail: OrderDetailReducer,
   speakerList: SpeakerListReducer,
-  scheduleList: ScheduleListReducer
+  scheduleList: ScheduleListReducer,
+  materialList: MaterialListReducer
 });
 
 export default rootReducers;
