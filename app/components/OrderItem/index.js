@@ -132,13 +132,7 @@ export default class OrderItem extends Component {
           </Button> : <View />
         }
         {(status && status === 'need authorization') ?
-          <Button
-            onPress={() => Actions.payment({ order })}
-            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
-          >
-            <Icon name="ios-key" color="white" style={styles.icon} />
-            <Text style={styles.buttonText}>AUTHORIZE</Text>
-          </Button> : <View />
+          <View /> : <View />
         }
         {(status && status === 'pending') ?
           <Button onPress={() => this.handleConfirmPayment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
