@@ -217,10 +217,7 @@ class OrderDetail extends Component {
             </View> : <View />
           }
           {(this.state.status && this.state.status === 'need authorization') ?
-            <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
-              <Icon name="ios-key" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>AUTHORIZE</Text>
-            </Button> : <View />
+            <View /> : <View />
           }
           {(this.state.status && this.state.status === 'pending') ?
             <Button onPress={() => this.handleConfirm()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
