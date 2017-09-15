@@ -28,7 +28,7 @@ class Speaker extends Component {
     this.state = {
       firstName: 'John',
       lastName: 'Doe',
-      speakerFilter: []
+      speakerFilter: this.props.speaker
     };
   }
 
@@ -86,7 +86,7 @@ class Speaker extends Component {
                     <View style={styles.profileSection}>
                       <Image
                         style={styles.profilePic}
-                        source={{ uri: data.profile_picture }}
+                        source={{ uri: data.user.photos[0].url }}
                       />
                     </View>
                     <View style={styles.nameSection}>
@@ -105,8 +105,9 @@ class Speaker extends Component {
                   style={styles.footerButton}
                   onPress={() => {
                     Actions.speakerDetail({
-                      profilePicture: data.profile_picture,
-                      nameTitle: data.full_name,
+                      profilePicture: data.user.photos[0].url,
+                      firstName: data.user.first_name,
+                      lastName: data.user.last_name,
                       job: data.job,
                       summary: data.summary
                     });

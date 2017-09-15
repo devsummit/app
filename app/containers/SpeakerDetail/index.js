@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { 
+import {
     Container,
     Content,
     Card,
@@ -16,13 +16,14 @@ class SpeakerDetail extends Component {
             <Container>
                 <Content style={styles.content}>
                     <View style={styles.profileSection}>
-                        <Image 
+                        <Image
                             style={styles.profilePic}
                             source={{uri: this.props.profilePicture}}
                         />
                     </View>
                     <View style={styles.nameSection}>
-                        <Text style={styles.name}>{this.props.nameTitle}</Text>
+                        <Text style={styles.name}>{this.props.firstName} {' '}</Text>
+                        <Text style={styles.name}>{this.props.lastName}</Text>
                     </View>
                     <Card>
                         <View style={styles.cardSection}>

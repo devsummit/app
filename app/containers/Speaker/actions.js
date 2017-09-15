@@ -7,7 +7,7 @@ import {
   FETCH_SPEAKER_LIST
 } from './constants';
 
-/* 
+/*
  * Get speaker data
 */
 
@@ -26,4 +26,3 @@ export function fetchSpeakerList() {
       });
   };
 }
-
