@@ -118,7 +118,7 @@ export function confirmPayment(id) {
           });
         }
         dispatch(updateIsConfirmingPayment(false));
-      }).catch((err) => { console.log(err); });
+      }).catch((err) => { console.log('error here', err); });
     });
   };
 }
