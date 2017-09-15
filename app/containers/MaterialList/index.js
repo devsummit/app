@@ -21,10 +21,10 @@ import { connect } from 'react-redux';
 import HeaderPoint from '../../components/Header';
 import ModalComponent from '../../components/ModalComponent';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import Toast from 'react-native-simple-toast';
 import styles from './styles';
 import * as selectors from './selectors';
 import * as actions from './actions';
-
 
 class MaterialList extends Component {
   constructor(props) {
@@ -33,8 +33,8 @@ class MaterialList extends Component {
       firstName: 'John',
       lastName: 'Doe',
       materialFilter: [],
-      visible: false,
-      fileName: ''
+      fileName: '',
+      invisible: false
     };
   }
 
@@ -48,8 +48,13 @@ class MaterialList extends Component {
         materialFilter: prevProps.material
       });
     }
-  }
 
+    if (prevProps && prevProps.visible && this.props.visible !== prevProps.visible) {
+      this.setState({
+        visible: prevProps.visible
+      });
+    }
+  }
 
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
@@ -58,10 +63,7 @@ class MaterialList extends Component {
   handleFilter = (param) => {
     const filteredMaterial = [];
     this.props.material.map((data) => {
-      if (data.user.first_name.toLowerCase().includes(param.toLowerCase())
-      || data.user.last_name.toLowerCase().includes(param.toLowerCase())) {
         filteredMaterial.push(data);
-      }
     });
     this.setState({
       materialFilter: filteredMaterial
@@ -73,11 +75,14 @@ class MaterialList extends Component {
       filetype: [DocumentPickerUtil.allFiles()],
     },(error,res) => {
       this.setState({  fileName: res.fileName });
+      this.handleInputChange('file', res);
     });
   }
 
   saveMaterialList = () => {
     this.props.saveMaterialList();
+    this.setState({invisible: !this.state.invisible});
+    Toast.show('Saved');
   }
 
   render() {
@@ -91,14 +96,8 @@ class MaterialList extends Component {
                 <Body>
                   <View style={styles.bodySection}>
                     <View style={styles.profileSection}>
-                      <Image
-                        style={styles.profilePic}
-                        source={{ uri: data.profile_picture }}
-                      />
                     </View>
                     <View style={styles.nameSection}>
-                      <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                      <Text style={styles.job}>{data.job}</Text>
                       <Text numberOfLines={3} style={styles.summary} >
                         {data.summary}
                       </Text>
@@ -110,14 +109,14 @@ class MaterialList extends Component {
           ))}
         </Content>
         <Fab
-          active={this.state.active}
+          active={this.state.invisible}
           style={{ backgroundColor: '#FFA726' }}
           position="bottomRight"
-          onPress={() => this.setState({ visible: !this.state.visible })}>
+          onPress={() => this.setState({ invisible: !this.state.invisible })}>
           <Icon name="plus" />
         </Fab>
         <ModalComponent
-          visible={this.state.visible}
+          visible={this.state.invisible}
           modalTitle={'Create Material'}
           inputTitle={'Title'}
           onChangeTitle={text => this.handleInputChange('title', text)}
@@ -125,7 +124,7 @@ class MaterialList extends Component {
           onChangeSummary={text => this.handleInputChange('summary', text)}
           onSubmit={() => this.saveMaterialList()}
           onUpload={() => this.openPicker()}
-          onModalPress={() => this.setState({ visible: !this.state.visible })}
+          onModalPress={() => this.setState({ invisible: !this.state.invisible })}
           fileName={this.state.fileName}
         />
       </Container>
@@ -134,6 +133,7 @@ class MaterialList extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  material: selectors.getListMaterial()
+  material: selectors.getListMaterial(),
+  visible: selectors.getModalStatus()
 });
 export default connect(mapStateToProps, actions)(MaterialList);
