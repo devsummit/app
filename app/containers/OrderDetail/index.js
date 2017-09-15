@@ -37,14 +37,13 @@ class OrderDetail extends Component {
     super(props);
     this.state = {
       status: '',
-      color: ''
+      color: '',
     };
   }
 
   componentWillMount = () => {
     this.props.getOrderDetail(this.props.orderId);
   }
-
 
   componentWillReceiveProps() {
     if (this.props.order && this.props.order.included) {
@@ -133,6 +132,10 @@ class OrderDetail extends Component {
                 </Row>
                 <Row>
                   <Col><Text>Order date:</Text></Col>
+                  <Col><Text>{formatDate(order.included.payment.created_at)}</Text></Col>
+                </Row>
+                <Row>
+                  <Col><Text>Expired time:</Text></Col>
                   <Col><Text>{formatDate(order.data[0].created_at)}</Text></Col>
                 </Row>
               </Grid>
@@ -191,6 +194,17 @@ class OrderDetail extends Component {
               <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
           </Card>
+          <Card>
+            <CardItem>
+              <Body>
+                <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening Permata Virtual Account dari Veritrans: </Text>
+                <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
+                  {order.included.payment.va_number}
+                </Text>
+                <Text>Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka antrian akan otomatis dibatalkan.</Text>
+              </Body>
+            </CardItem>
+          </Card>
           {order.included.referal && order.included.referal.owner ?
             <View>
               <Card>
@@ -217,10 +231,7 @@ class OrderDetail extends Component {
             </View> : <View />
           }
           {(this.state.status && this.state.status === 'need authorization') ?
-            <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
-              <Icon name="ios-key" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>AUTHORIZE</Text>
-            </Button> : <View />
+            <View /> : <View />
           }
           {(this.state.status && this.state.status === 'pending') ?
             <Button onPress={() => this.handleConfirm()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>

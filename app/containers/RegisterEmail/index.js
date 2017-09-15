@@ -140,8 +140,8 @@ class RegisterEmail extends Component {
     const emails = typeof this.props.prefilledData !== 'undefined' || '' ? this.props.prefilledData.email : text => this.handleInputChange('email', text);
 
     const checkEmail = this.checkEmail(email) === false && email !== '';
-    //const checkUsername = username.length < 4 && username !== '';
-    //const checkPassword = password.length < 4 && password !== '';
+    const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
+    const checkPassword = password.length < 4 && password !== '';
 
     return (
       <Image style={styles.background} source={background}>
@@ -199,11 +199,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={emails}
               />}
-              {/* { checkUsername !== 'undefined' ?
+              { { checkUsername !== 'undefined' ?
                 <Text style={styles.errorInput}>username should be 4 at minimum</Text>
                 :
                 null
-              } */}
+              } }
               <InputItem
                 style={styles.formInput}
                 placeholder="Username"
@@ -211,11 +211,11 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
-              {/* { checkPassword ?
+              { { checkPassword ?
                 <Text style={styles.errorInput}>password should be 4 at minimum</Text>
                 :
                 null
-              } */}
+              } }
               <InputItem
                 style={styles.formInput}
                 placeholder="Password"
@@ -242,7 +242,7 @@ class RegisterEmail extends Component {
                 ))}
               </Picker>
             </View>
-            {(password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
+            {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
               <View>
                 <Button
                   block
