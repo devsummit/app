@@ -10,6 +10,7 @@ export const PAYMENT_METHODS = [
     value: 'key1',
     label: 'Bank Transfer',
     payment_type: 'bank_transfer'
+
   },
   {
     value: 'key2',
@@ -76,7 +77,7 @@ export const BANK_TRANSFERS = [
     label: 'BCA Virtual Account',
     bankDestination: 'bca',
     basicDetail: true,
-    vaNumber: true
+    vaNumber: false
   },
   {
     value: 'key2',
@@ -88,7 +89,7 @@ export const BANK_TRANSFERS = [
     label: 'BNI Virtual Account',
     bankDestination: 'bni',
     basicDetail: true,
-    vaNumber: true
+    vaNumber: false
   }
 ];
 
