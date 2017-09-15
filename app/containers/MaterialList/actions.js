@@ -5,18 +5,22 @@ import {
 
 import {
   FETCH_MATERIAL_LIST,
-  UPDATE_SINGLE_INPUT_FIELD
+  UPDATE_SINGLE_INPUT_FIELD,
+  UPDATE_MODAL_STATUS
 } from './constants';
-
-/* 
- * Get speaker data
-*/
 
 export function updateInputFields(field, value) {
   return {
     type: UPDATE_SINGLE_INPUT_FIELD,
     field,
     value
+  };
+}
+
+export function updateModalStatus(status) {
+  return {
+    type: UPDATE_MODAL_STATUS,
+    status
   };
 }
 
@@ -36,20 +40,39 @@ export function fetchMaterialList() {
   };
 }
 
-export function saveMaterialList() {
+export function saveMaterialList(image) {
   return (dispatch, getState) => {
-    const { inputFields } = getState().get('materialList').toJS();
-
+    const { fields } = getState().get('materialList').toJS();
     const {
       title,
       summary,
       file
-    } = inputFields || null;
+    } = fields || null;
+    getAccessToken()
+      .then((token) => {
+        // @TODO We need to change into dev-summit url
+        const url = 'http://192.168.40.67:5000/api/v1/documents';
+        const form = new FormData();
 
-    DevSummitAxios.post('api/v1/documents', {
-      title, summary
-    }).catch((error) => {
-      console.log(error, 'error caught');
+        form.append('title', title);
+        form.append('summary', summary);
+        form.append('document_data', {
+          uri: file.uri,
+          type: file.type,
+          name: file.fileName,
+        });
+
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: token
+          },
+          body: form
+        })
+          .then(resp => resp.json())
+          .then((resp) => {
+            dispatch(updateModalStatus(false));
+          }).catch(err => console.log(err))
       });
   };
 }
