@@ -34,10 +34,10 @@ export const orderByDay = '';
 
 class Schedule extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-        isLoading: true,
-      };
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
   }
 
   componentWillMount() {
@@ -51,7 +51,7 @@ class Schedule extends Component {
       });
     }
   }
-  
+
   render() {
     return (
       <Container style={styles.container}>
@@ -60,7 +60,7 @@ class Schedule extends Component {
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Day 1</Text></TabHeading> }>
               <Content style={styles.content}>
                 <View style={styles.cards}>
-                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule} />) : (
+                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[0]} />) : (
                     <View style={styles.loading}>
                       <Spinner color={ PRIMARYCOLOR }/>
                       <Text style={{color: '#3a3a3a'}}>Loading...</Text>
@@ -72,7 +72,7 @@ class Schedule extends Component {
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Day 2</Text></TabHeading> }>
             <Content style={styles.content}>
               <View style={styles.cards}>
-                { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule} />) : (
+                { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[1]} />) : (
                   <View style={styles.loading}>
                     <Spinner color={ PRIMARYCOLOR }/>
                     <Text style={{color: '#3a3a3a'}}>Loading...</Text>
@@ -84,7 +84,7 @@ class Schedule extends Component {
           <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Day 3</Text></TabHeading> }>
               <Content style={styles.content}>
                 <View style={styles.cards}>
-                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule} />) : (
+                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[2]} />) : (
                     <View style={styles.loading}>
                       <Spinner color={ PRIMARYCOLOR }/>
                       <Text style={{color: '#3a3a3a'}}>Loading...</Text>
