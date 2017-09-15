@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255,255,255)'
   },
   bodySection: {
-     
+
   },
   profileSection: {
     justifyContent: 'center',
@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
     borderRadius: 500
   },
   nameSection: {
-    alignItems: 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   name: {
     marginBottom: 12,
