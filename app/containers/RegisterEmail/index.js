@@ -134,7 +134,7 @@ class RegisterEmail extends Component {
     } = errorFields || false;
 
     const checkEmail = this.checkEmail(email) === false && email !== '';
-    const checkUsername = username.length < 4 && username !== '';
+    const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
 
     return (
@@ -217,7 +217,7 @@ class RegisterEmail extends Component {
                 ))}
               </Picker>
             </View>
-            {(username.length < 4 || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
+            {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
               <View>
                 <Button
                   block
