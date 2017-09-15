@@ -11,3 +11,8 @@ export const getInputFields = () => createSelector(
   selectListMaterialReducer(),
   state => state.get('inputFields').toJS()
 );
+
+export const getModalStatus = () => createSelector(
+  selectListMaterialReducer(),
+  state => state.get('visible')                                                                   
+);
