@@ -3,21 +3,34 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white'
-    },
-    searchHeader: {
-        marginTop: -30,
-        backgroundColor:'rgb(255,255,255)',
-        borderRadius: 50
+        backgroundColor: 'white',
     },
     content: {
-        marginRight: 5,
-        marginLeft: 5
+        marginRight: 3,
+        marginLeft: 3
     },
     cards: {
         flex:1, 
         backgroundColor:'white',
         marginTop:5
+    },
+    loading: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    tabs: {
+        marginTop: -50,
+    },
+    tabHeading: {
+        backgroundColor: 'transparent'
+    },
+    tabTitle: {
+        fontSize: 12
+    },
+    tabBarSelectedItemStyle: {
+        borderBottomWidth: 2,
+        borderBottomColor: 'red',
     }
 });
 

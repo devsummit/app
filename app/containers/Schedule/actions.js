@@ -10,7 +10,7 @@ export function fetchUserSchedule() {
         getAccessToken()
         .then((token) => {
             const headers = { Authorization: token };
-            DevSummitAxios.get('api/v1/schedules', { headers })
+            DevSummitAxios.get('api/v1/schedules?filter=day', { headers })
                 .then((response) => {
                     dispatch({
                         type: FETCH_USER_SCHEDULE,
@@ -21,4 +21,3 @@ export function fetchUserSchedule() {
         }).catch((err) => { console.log(err); });
     };
 }
-

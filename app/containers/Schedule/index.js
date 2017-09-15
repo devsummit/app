@@ -10,7 +10,10 @@ import {
   Button,
   Text,
   Label,
-  Spinner
+  Spinner,
+  Tab,
+  Tabs,
+  TabHeading
 } from 'native-base';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 
@@ -27,12 +30,14 @@ import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors'
 
+export const orderByDay = '';
+
 class Schedule extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-        isLoading: true
-      };
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
   }
 
   componentWillMount() {
@@ -49,33 +54,47 @@ class Schedule extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <HeaderPoint
-            title="SCHEDULE"
-        />
-        <Container style={styles.content}>
-          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
-            <Item>
-              <Icon name="ios-search"/>
-              <Input placeholder="Search event ..."/>
-              <Icon name="ios-calendar"/>
-            </Item>
-            <Button transparent>
-              <Text>Search</Text>
-            </Button>
-          </Header>
-          <Content>
-            <View style={styles.cards}>
-                { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule} />) : (
-                  <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Container style={styles.container}>
+        <HeaderPoint title= "SCHEDULE"/>
+        <Tabs style={styles.tabs}>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Day 1</Text></TabHeading> }>
+              <Content style={styles.content}>
+                <View style={styles.cards}>
+                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[0]} />) : (
+                    <View style={styles.loading}>
+                      <Spinner color={ PRIMARYCOLOR }/>
+                      <Text style={{color: '#3a3a3a'}}>Loading...</Text>
+                    </View>
+                  )}
+                </View>
+              </Content>
+            </Tab>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Day 2</Text></TabHeading> }>
+            <Content style={styles.content}>
+              <View style={styles.cards}>
+                { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[1]} />) : (
+                  <View style={styles.loading}>
                     <Spinner color={ PRIMARYCOLOR }/>
                     <Text style={{color: '#3a3a3a'}}>Loading...</Text>
                   </View>
                 )}
-            </View>
-          </Content>
-        </Container>
-      </View>
+              </View>
+            </Content>
+          </Tab>
+          <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Day 3</Text></TabHeading> }>
+              <Content style={styles.content}>
+                <View style={styles.cards}>
+                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[2]} />) : (
+                    <View style={styles.loading}>
+                      <Spinner color={ PRIMARYCOLOR }/>
+                      <Text style={{color: '#3a3a3a'}}>Loading...</Text>
+                    </View>
+                  )}
+                </View>
+              </Content>
+            </Tab>
+        </Tabs>
+      </Container>
     );
   }
 }
