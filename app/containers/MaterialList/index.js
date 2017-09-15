@@ -32,7 +32,7 @@ class MaterialList extends Component {
     this.state = {
       firstName: 'John',
       lastName: 'Doe',
-      materialFilter: [],
+      materialFilter: this.props.material,
       fileName: '',
       invisible: false
     };
@@ -86,28 +86,42 @@ class MaterialList extends Component {
   }
 
   render() {
+    const { material } = this.props;
     return (
       <Container>
         <HeaderPoint title="MATERIAL" />
-        <Content>
-          {this.state.materialFilter.map(data => (
-            <Card key={data.id}>
-              <CardItem>
-                <Body>
-                  <View style={styles.bodySection}>
-                    <View style={styles.profileSection}>
+        {material.length > 0 ?
+          <Content>
+            {this.state.materialFilter.map(data => (
+              <Card key={data.id}>
+                <CardItem>
+                  <Body>
+                    <View style={styles.bodySection}>
+                      <View style={styles.profileSection}>
+                        <Image
+                          source={{ uri: data.user.photos[0].url }}
+                          style={styles.photo}
+                        />
+                      </View>
+                      <View style={styles.nameSection}>
+                        <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text numberOfLines={3} style={styles.summary}>
+                          {data.summary}
+                        </Text>
+                        <View style={styles.materialUrl}>
+                          <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
+                          <Icon name="download" color="red" style={styles.icon} />
+                        </View>
+                      </View>
                     </View>
-                    <View style={styles.nameSection}>
-                      <Text numberOfLines={3} style={styles.summary} >
-                        {data.summary}
-                      </Text>
-                    </View>
-                  </View>
-                </Body>
-              </CardItem>
-            </Card>
-          ))}
-        </Content>
+                  </Body>
+                </CardItem>
+              </Card>
+            ))}
+          </Content> :
+          <Text style={styles.noMaterial}>You don't have any material.</Text>
+        }
         <Fab
           active={this.state.invisible}
           style={{ backgroundColor: '#FFA726' }}
