@@ -21,14 +21,39 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     flex: 8
   },
+  photo: {
+    height: 70,
+    width: 70,
+    borderRadius: 35
+  },
+  noMaterial: {
+    fontSize: 16,
+    padding: 8
+  },
   name: {
     color: '#333',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold'
   },
-  summary: {
+  title: {
     color: '#333',
-    paddingTop: 10
+    fontSize: 16,
+    marginVertical: 4
+  },
+  summary: {
+    fontSize: 16,
+    color: '#333'
+  },
+  material: {
+    fontSize: 12,
+    marginRight: 8
+  },
+  icon: {
+    fontSize: 16,
+  },
+  materialUrl: {
+    flexDirection: 'row',
+    paddingRight: 8
   },
   footerSection: {
     flex: 1,
