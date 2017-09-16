@@ -49,31 +49,12 @@ class PaymentDetail extends Component {
     updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
-  componentWillReceiveProps(prevProps) {
+  componentWillReceiveProps() {
     const { getTransactionResponse } = this.props;
-    if (Object.keys(getTransactionResponse).length > 0) {
-      if (getTransactionResponse.data && getTransactionResponse.data.status_message) {
-        Alert.alert(getTransactionResponse.data.status_message);
-        this.props.updateGetTransactionResponse({});
-        Actions.pop();
-      } else if (
-        getTransactionResponse.meta) {
-        if (getTransactionResponse.meta.message) {
-          const messages = getTransactionResponse.meta.message;
-          let message = '';
-          for (let i = 0; i < messages.length; i += 1) {
-            message += messages[i];
-          }
-          Alert.alert(message);
-        } else {
-          Alert.alert(getTransactionResponse.meta.message.status_message);
-          this.props.updateGetTransactionResponse({});
-          Actions.pop();
-        }
-      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {
-        Alert.alert(getTransactionResponse.meta.message);
-        this.props.updateGetTransactionResponse({});
-      }
+    if (getTransactionResponse && getTransactionResponse.meta && getTransactionResponse.meta.message) {
+      Alert.alert(getTransactionResponse.meta.message);
+      this.props.resetResponse();
+      Actions.pop();
     }
   }
 
@@ -322,7 +303,7 @@ class PaymentDetail extends Component {
 PaymentDetail.propTypes = {
   getTransactionResponse: PropTypes.object.isRequired,
   updateErrorFields: PropTypes.func.isRequired,
-  updateGetTransactionResponse: PropTypes.func.isRequired,
+  resetResponse: PropTypes.func.isRequired,
   updateInputFields: PropTypes.func.isRequired,
   inputFields: PropTypes.object.isRequired,
   errorFields: PropTypes.object.isRequired,
