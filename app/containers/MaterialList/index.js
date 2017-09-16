@@ -13,15 +13,15 @@ import {
   Body,
   Fab
 } from 'native-base';
-import { Alert, View, Image, KeyboardAvoidingView, TouchableOpacity,TouchableHighlight,  Modal } from 'react-native';
+import { Alert, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
+import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
 import HeaderPoint from '../../components/Header';
 import ModalComponent from '../../components/ModalComponent';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
-import Toast from 'react-native-simple-toast';
 import styles from './styles';
 import * as selectors from './selectors';
 import * as actions from './actions';
@@ -34,7 +34,8 @@ class MaterialList extends Component {
       lastName: 'Doe',
       materialFilter: this.props.material,
       fileName: '',
-      invisible: false
+      invisible: false,
+      isLoading: true
     };
   }
 
@@ -45,7 +46,8 @@ class MaterialList extends Component {
   componentWillReceiveProps(prevProps) {
     if (prevProps && prevProps.material && this.props.material !== prevProps.material) {
       this.setState({
-        materialFilter: prevProps.material
+        materialFilter: prevProps.material,
+        isLoading: false
       });
     }
 
@@ -63,7 +65,7 @@ class MaterialList extends Component {
   handleFilter = (param) => {
     const filteredMaterial = [];
     this.props.material.map((data) => {
-        filteredMaterial.push(data);
+      filteredMaterial.push(data);
     });
     this.setState({
       materialFilter: filteredMaterial
@@ -72,27 +74,32 @@ class MaterialList extends Component {
 
   openPicker = () => {
     DocumentPicker.show({
-      filetype: [DocumentPickerUtil.allFiles()],
-    },(error,res) => {
-      this.setState({  fileName: res.fileName });
+      filetype: [DocumentPickerUtil.allFiles()]
+    }, (error, res) => {
+      this.setState({ fileName: res.fileName });
       this.handleInputChange('file', res);
     });
   }
 
   saveMaterialList = () => {
     this.props.saveMaterialList();
-    this.setState({invisible: !this.state.invisible});
+    this.setState({ invisible: !this.state.invisible });
     Toast.show('Saved');
   }
 
   render() {
     const { material } = this.props;
+
+    if (this.props.isFetching) {
+      return <View />
+    }
+
     return (
       <Container>
         <HeaderPoint title="MATERIAL" />
         {material.length > 0 ?
           <Content>
-            {this.state.materialFilter.map(data => (
+            {(this.state.filteredMaterial || material).map(data => (
               <Card key={data.id}>
                 <CardItem>
                   <Body>
@@ -148,6 +155,7 @@ class MaterialList extends Component {
 
 const mapStateToProps = createStructuredSelector({
   material: selectors.getListMaterial(),
-  visible: selectors.getModalStatus()
+  visible: selectors.getModalStatus(),
+  isFetching: selectors.getIsFetchingMaterial()
 });
 export default connect(mapStateToProps, actions)(MaterialList);
