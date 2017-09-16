@@ -10,7 +10,7 @@ import {
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED
 } from './constants';
-
+import local from '../../../config/local';
 
 /*
  * Update the input fields
@@ -63,7 +63,7 @@ export function updateIsDisabled(status) {
 export function updateDataStorage(resp) {
   getProfileData()
     .then(() => {
-      const newData = JSON.stringify(resp.data.data);
+      const newData = JSON.stringify(resp.data);
       AsyncStorage.removeItem('profile_data', () => {
         try {
           AsyncStorage.setItem('profile_data', newData);
@@ -108,7 +108,7 @@ export function updateImage(image) {
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = 'http://10.0.2.2:5000/api/v1/user/photo';
+        const url = local.API_BASE_URL.concat('api/v1/user/photo');
         const form = new FormData();
 
         form.append('image_data', {
@@ -128,7 +128,7 @@ export function updateImage(image) {
           .then((resp) => {
             updateDataStorage(resp);
             dispatch(
-              updateAvatar(resp.data.url),
+              updateAvatar(resp.data.photos[0].url),
               updateIsAvatarUpdated(true)
             );
           }).catch(err => console.log('error upload image', err))
