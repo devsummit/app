@@ -6,7 +6,9 @@ import {
 import {
   FETCH_MATERIAL_LIST,
   UPDATE_SINGLE_INPUT_FIELD,
-  UPDATE_MODAL_STATUS
+  UPDATE_MODAL_STATUS,
+  ADD_MATERIAL_ITEM,
+  IS_FETCHING_MATERIAL
 } from './constants';
 
 export function updateInputFields(field, value) {
@@ -17,6 +19,14 @@ export function updateInputFields(field, value) {
   };
 }
 
+export function addMaterialItem(item, material) {
+  material.push(item);
+  return {
+    type: ADD_MATERIAL_ITEM,
+    material
+  };
+}
+
 export function updateModalStatus(status) {
   return {
     type: UPDATE_MODAL_STATUS,
@@ -24,8 +34,16 @@ export function updateModalStatus(status) {
   };
 }
 
+export function isFetchingMaterial(status) {
+  return {
+    type: IS_FETCHING_MATERIAL,
+    status
+  };
+}
+
 export function fetchMaterialList() {
   return (dispatch) => {
+    dispatch(isFetchingMaterial(true));
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
@@ -35,15 +53,19 @@ export function fetchMaterialList() {
               type: FETCH_MATERIAL_LIST,
               payloads: response.data.data
             });
+            dispatch(isFetchingMaterial(false));
           })
-          .catch(e => console.log('error here', e));
+          .catch((err) => {
+            dispatch(isFetchingMaterial(false));
+          });
       });
   };
 }
 
 export function saveMaterialList(image) {
   return (dispatch, getState) => {
-    const { fields } = getState().get('materialList').toJS();
+    dispatch(isFetchingMaterial(true));
+    const { fields, material } = getState().get('materialList').toJS();
     const {
       title,
       summary,
@@ -72,8 +94,13 @@ export function saveMaterialList(image) {
         })
           .then(resp => resp.json())
           .then((resp) => {
+            dispatch(addMaterialItem(resp.data, material));
             dispatch(updateModalStatus(false));
-          }).catch(err => console.log(err))
+            dispatch(isFetchingMaterial(false));
+          }).catch((err) => {
+            dispatch(isFetchingMaterial(false));
+            console.log(err);
+          });
       });
   };
 }
