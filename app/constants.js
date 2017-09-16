@@ -16,11 +16,11 @@ export const role_option = [
   {
     value: 'key1',
     label: 'booth'
-  },
-  {
-    value: 'key2',
-    label: 'hackaton'
   }
+  // {
+  //   value: 'key2',
+  //   label: 'hackaton'
+  // }
 ];
 
 export const ROLES = {
