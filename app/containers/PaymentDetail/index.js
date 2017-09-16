@@ -28,9 +28,18 @@ import { BANK_TRANSFERS, CREDIT_CARD, PAYMENT_METHODS } from '../Payment/constan
 // import constants
 import { PRIMARYCOLOR } from '../../constants';
 
+import { getProfileData } from '../../helpers';
+
 class PaymentDetail extends Component {
   componentWillMount() {
     const { order, updateInputFields } = this.props;
+    getProfileData().then((profileData) => {
+      if (profileData) {
+        updateInputFields('firstName', profileData.first_name);
+        updateInputFields('lastName', profileData.last_name);
+        updateInputFields('emailDetail', profileData.email);
+      }
+    });
     updateInputFields('order', order);
     updateInputFields('orderId', order.id);
     updateInputFields('grossAmount', order.amount);
@@ -40,7 +49,7 @@ class PaymentDetail extends Component {
     updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(prevProps) {
     const { getTransactionResponse } = this.props;
     if (Object.keys(getTransactionResponse).length > 0) {
       if (getTransactionResponse.data && getTransactionResponse.data.status_message) {
