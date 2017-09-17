@@ -18,7 +18,6 @@ import {
   Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { Actions } from 'react-native-router-flux';
 import { RefreshControl, Alert, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -37,7 +36,7 @@ class OrderDetail extends Component {
     super(props);
     this.state = {
       status: '',
-      color: '',
+      color: ''
     };
   }
 
@@ -132,12 +131,14 @@ class OrderDetail extends Component {
                 </Row>
                 <Row>
                   <Col><Text>Order date:</Text></Col>
-                  <Col><Text>{formatDate(order.included.payment.created_at)}</Text></Col>
-                </Row>
-                <Row>
-                  <Col><Text>Expired time:</Text></Col>
                   <Col><Text>{formatDate(order.data[0].created_at)}</Text></Col>
                 </Row>
+                {order.included.payment ?
+                  <Row>
+                    <Col><Text>Expired time:</Text></Col>
+                    <Col><Text>{formatDate(order.included.payment.expired_at)}</Text></Col>
+                  </Row> : <View />
+                }
               </Grid>
               {status === 'not paid' ?
                 <Button style={styles.roundButton} onPress={() => this.saveOrder()} >
@@ -176,7 +177,7 @@ class OrderDetail extends Component {
               />
             </Content>
           }
-          { order.included.payment && order.included.payment.payment_type === 'cstore' && order.included.payment.fraud_status ?
+          {order.included.payment && order.included.payment.payment_type === 'cstore' && order.included.payment.fraud_status ?
             <Card>
               <CardItem>
                 <Body>
@@ -186,6 +187,7 @@ class OrderDetail extends Component {
               </CardItem>
             </Card> : <View />
           }
+
           <Card>
             <CardItem>
               <Body>
@@ -194,17 +196,20 @@ class OrderDetail extends Component {
               <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
           </Card>
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening Permata Virtual Account dari Veritrans: </Text>
-                <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
-                  {order.included.payment.va_number}
-                </Text>
-                <Text>Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka antrian akan otomatis dibatalkan.</Text>
-              </Body>
-            </CardItem>
-          </Card>
+
+          {order.included.payment ?
+            <Card>
+              <CardItem>
+                <Body>
+                  <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening Permata Virtual Account dari Veritrans: </Text>
+                  <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
+                    {order.included.payment.va_number}
+                  </Text>
+                  <Text>Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka antrian akan otomatis dibatalkan.</Text>
+                </Body>
+              </CardItem>
+            </Card> : <View />
+          }
           {order.included.referal && order.included.referal.owner ?
             <View>
               <Card>

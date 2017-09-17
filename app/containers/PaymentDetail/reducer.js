@@ -8,7 +8,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   GET_TRANSACTION_RESPONSE,
-  IS_FETCHING_TRANSACTION
+  IS_FETCHING_TRANSACTION,
+  CLEAR_TRANSACTION_RESPONSE
 } from './constants';
 
 
@@ -31,7 +32,7 @@ const initialState = fromJS({
     descriptionDetail: '',
     mandiriToken: '',
     input1: '',
-    input3: '',
+    input3: ''
   },
   errorFields: {
     errorEmailDetail: false,
@@ -58,6 +59,8 @@ function paymentDetailReducer(state = initialState, action) {
       return state.set('transactionResponse', action.payload);
     case IS_FETCHING_TRANSACTION:
       return state.set('isFetchingTransaction', action.status);
+    case CLEAR_TRANSACTION_RESPONSE:
+      return state.set('transactionResponse', {});
     default:
       return state;
   }
