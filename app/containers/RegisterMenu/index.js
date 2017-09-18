@@ -51,16 +51,16 @@ class RegisterMenu extends Component {
               <Icon name="phone" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Register with Phone</Text>
             </Button>
+            <Button
+              transparent
+              style={styles.buttonRegister}
+              onPress={() => { Actions.main(); }}
+            >
+              <Text style={styles.registerText}>{'Already have account?'}</Text>
+              <Text style={styles.registerTextBold}>{'Sign In'}</Text>
+            </Button>
           </Content>
         </Container>
-        <Button
-          transparent
-          style={styles.buttonRegister}
-          onPress={() => { Actions.main(); }}
-        >
-          <Text style={styles.registerText}>{'Already have account?'}</Text>
-          <Text style={styles.registerTextBold}>{'Sign In'}</Text>
-        </Button>
       </Image>
     );
   }
