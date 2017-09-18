@@ -83,22 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     marginRight: 20
-  },
-  points: {
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: 'white',
-    marginTop: -85,
-    textAlign: 'center'
-  },
-  coin: {
-    color: 'white',
-    fontSize: 22,
-  },
-  pointSection: {
-    flex: 1,
-    flexDirection: 'row'
   }
 });
 

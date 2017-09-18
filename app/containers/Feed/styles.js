@@ -3,9 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'center'
+    backgroundColor: 'white',
   },
   item: {
     flex: 1,
@@ -50,6 +48,19 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 14,
     marginTop: 12
+  },
+  tabs: {
+    marginTop: -50,
+  },
+  tabHeading: {
+      backgroundColor: 'transparent'
+  },
+  tabTitle: {
+      fontSize: 16
+  },
+  tabBarSelectedItemStyle: {
+      borderBottomWidth: 2,
+      borderBottomColor: 'red',
   }
 });
 

@@ -96,10 +96,7 @@ class TicketList extends Component {
       <Container
         style={styles.container}
       >
-        <Header title="Ticket List" />
-        <Button primary style={styles.btnOrder} onPress={() => Actions.orderList()}>
-          <Text style={{ textAlign: 'center', flex: 1 }}>Order</Text>
-        </Button>
+        
         <Content
           refreshControl={
             <RefreshControl
@@ -114,6 +111,9 @@ class TicketList extends Component {
               this.renderError()
           }
         </Content>
+        <Button primary style={styles.btnOrder} onPress={() => Actions.newOrder()}>
+          <Text style={{ textAlign: 'center', flex: 1 }}>Get Ticket Here</Text>
+        </Button>
       </Container>
     );
   }

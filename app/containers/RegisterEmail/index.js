@@ -200,23 +200,6 @@ class RegisterEmail extends Component {
                 value={password}
               />
             </View>
-            <View style={styles.pickerWrapper}>
-              <Picker
-                style={styles.picker}
-                placeholder="Role"
-                mode="dropdown"
-                selectedValue={role}
-                onValueChange={value => this.handleInputChange('role', value)}
-              >
-                {role_option.map(component => (
-                  <Item
-                    key={component.value}
-                    label={component.label}
-                    value={component.label}
-                  />
-                ))}
-              </Picker>
-            </View>
             {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
               <View>
                 <Button
