@@ -179,15 +179,6 @@ class Profile extends Component {
             >
               <Text>Save changes</Text>
             </Button>
-            <Button
-              block
-              light
-              rounded
-              style={styles.button}
-              onPress={() => { this.props.logOut(); }}
-            >
-              <Text>Log Out</Text>
-            </Button>
           </View>
         </Content>
       </ScrollView>

@@ -52,15 +52,17 @@ export default class MainTabs extends Component {
                 </TabHeading>}>
               <Schedule />
             </Tab>
-            <Tab
+            { speaker ? 
+              <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="wallet"
                     style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
                 </TabHeading>}>
-            { speaker ? <MaterialList /> : <Ticket /> }
+                <MaterialList />
             </Tab>
+            : null}
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
