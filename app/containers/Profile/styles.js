@@ -31,10 +31,7 @@ const styles = StyleSheet.create({
   },
   imageProfile: {
     alignSelf: 'center',
-    marginTop: -50,
-    width: '70%',
-    marginLeft: 'auto',
-    marginRight: 'auto'
+    marginTop: -50
   },
   errorInput: {
     paddingLeft: 20,
@@ -54,9 +51,9 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   profileImage: {
-    width: 110,
-    height: 110,
-    borderRadius: 65,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     borderWidth: 1,
     alignSelf: 'center'
   },
