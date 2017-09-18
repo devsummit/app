@@ -29,6 +29,7 @@ class BoothInfo extends Component {
   }
 
   render() {
+    console.log('landing here', this.props);
     const booth = this.state.id === 3;
     const { summary, user } = this.props;
 

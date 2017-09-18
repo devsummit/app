@@ -6,7 +6,6 @@ import Toast from 'react-native-simple-toast';
 import Schedule from '../Schedule';
 import MaterialList from '../MaterialList';
 import BoothList from '../BoothList';
-import BoothInfo from '../BoothInfo';
 import Feed from '../Feed';
 import Settings from '../Settings';
 
@@ -55,10 +54,8 @@ export default class MainTabs extends Component {
 
   viewCurrentUser() {
     const role = this.state.roleId;
-    if (role === 2) {
+    if (role === 2 || role === 3) {
       return (<BoothList />);
-    } else if (role === 3) {
-      return (<BoothInfo />);
     } else if (role === 4) {
       return (<MaterialList />);
     }
