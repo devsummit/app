@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     marginTop: -25,
     elevation: 5,
     width: '70%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    margin: 20
   },
   errorContent: {
     alignItems: 'center'

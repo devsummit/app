@@ -32,9 +32,9 @@ class Feed extends Component {
       >
         <HeaderPoint title="FEED" />
         <Tabs style={styles.tabs}>
-        <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "plus"/><Text style={styles.tabTitle}>Notifications</Text></TabHeading> }>
+        <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading> }>
           <ListItem>
-              <Text style={styles.text}>Materi Nomor 1</Text>
+              <Text style={styles.text}>Feed 1</Text>
               <Button
                 small
                 style={styles.button}
@@ -50,7 +50,7 @@ class Feed extends Component {
               </Button>
             </ListItem>
             <ListItem>
-              <Text style={styles.text}>Materi Nomor 2</Text>
+              <Text style={styles.text}>Feed 2</Text>
               <Button
                 small
                 style={styles.button}
@@ -66,7 +66,7 @@ class Feed extends Component {
               </Button>
             </ListItem>
             <ListItem>
-              <Text style={styles.text}>Materi Nomor 3</Text>
+              <Text style={styles.text}>Feed 3</Text>
               <Button
                 small
                 style={styles.button}
@@ -82,7 +82,7 @@ class Feed extends Component {
               </Button>
             </ListItem>
             <ListItem>
-              <Text style={styles.text}>Materi Nomor 4</Text>
+              <Text style={styles.text}>Feed 4</Text>
               <Button
                 small
                 style={styles.button}
@@ -98,7 +98,7 @@ class Feed extends Component {
               </Button>
             </ListItem>
             <ListItem>
-              <Text style={styles.text}>Materi Nomor 5</Text>
+              <Text style={styles.text}>Feed 5</Text>
               <Button
                 small
                 style={styles.button}
@@ -114,7 +114,7 @@ class Feed extends Component {
               </Button>
             </ListItem>
           </Tab>
-          <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "plus"/><Text style={styles.tabTitle}>Ticket</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading> }>
               <TicketList />
           </Tab>
         </Tabs>
