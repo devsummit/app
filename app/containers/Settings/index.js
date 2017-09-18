@@ -22,11 +22,24 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 import styles from './styles';
 
-class Profile extends Component {
+import * as actions from './actions';
+import * as selectors from './selectors';
+
+class Settings extends Component {
   state = {
     id: null
   }
+
+  componentWillReceiveProps(prevProps) {
+
+    if (prevProps.isLogOut !== this.props.isLogOut) {
+      Actions.main();
+      this.props.updateIsLogOut(false);
+    }
+  }
+
   render() {
+
     return (
     <Container>
       <Content>
@@ -68,4 +81,11 @@ class Profile extends Component {
   }
 }
 
-export default connect(null, null)(Profile);
+/**
+ *  Map redux state to component props
+ */
+const mapStateToProps = createStructuredSelector({
+  isLogOut: selectors.getIsLogOut()
+});
+
+export default connect(mapStateToProps, actions)(Settings);
