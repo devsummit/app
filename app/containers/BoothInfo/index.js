@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Container,
   Content,
   Text,
   Grid,
@@ -11,19 +10,10 @@ import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-simple-toast';
-
-// import redux componens
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { getProfileData } from '../../helpers';
-import InputItem from '../../components/InputItem';
-import Button from '../../components/Button';
-import Header from '../../components/Header';
-import styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 
-import * as actions from './actions';
-import * as selectors from './selectors';
+import Header from '../../components/Header';
+import styles from './styles';
 
 class BoothInfo extends Component {
   state = {
@@ -40,11 +30,7 @@ class BoothInfo extends Component {
 
   render() {
     const booth = this.state.id === 3;
-    const { fields, avatar } = this.props || {};
-    const {
-      name,
-      boothInfo
-    } = fields || '';
+    const { summary, user } = this.props;
 
     return (
       <ScrollView>
@@ -52,14 +38,15 @@ class BoothInfo extends Component {
         <Content>
           <LinearGradient
             colors={[ '#f72d48', '#f39e21' ]}
-          ><Image
+          >
+            <Image
               source={{ uri: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg' }}
-              style={styles.profileImage}
+              style={styles.boothImage}
               resizeMode="cover"
             />
-            <View style={styles.topView}>
-              <Text style={styles.boldedText}>Booth One</Text>
-              <Text style={styles.descText}>This one is a very descriptive description about Booth description</Text>
+            <View style={styles.info}>
+              <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
+              <Text style={styles.summary}>{summary}</Text>
             </View>
           </LinearGradient>
           <Grid style={{ flex: 1 }}>
@@ -82,17 +69,10 @@ class BoothInfo extends Component {
             <Col style={styles.col1} />
             <Col style={styles.col2} />
           </Grid>
-          {booth ? <Button warning style={{ width: '100%', justifyContent: 'center' }} onClick={() => Actions.boothList()}><Text>Save</Text></Button> : <View />}
         </Content>
       </ScrollView>
     );
   }
 }
-/**
- *  Map redux state to component props
- */
-const mapStateToProps = createStructuredSelector({
-  // avatar: selectors.getAvatar()
-});
 
-export default connect(mapStateToProps, actions)(BoothInfo);
+export default BoothInfo;

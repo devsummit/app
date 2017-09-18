@@ -4,25 +4,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgb(255,255,255)'
   },
-  bodySection: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  bigTextSection: {
-    flex: 1
-  },
-  descriptionSection: {
-    flex: 3
-  },
-  bigText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: 'black'
-  },
-  descriptionText: {
-    fontSize: 14,
-    opacity: 0.5
-  },
   btnBooth: {
     alignSelf: 'center',
     borderRadius: 20,
@@ -32,9 +13,61 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: -25
   },
-  btnOpen: {
-    alignSelf: 'center',
-    width: '30%',
+  content: {
+    marginTop: 20,
+    marginHorizontal: 10
+  },
+  searchHeader: {
+    marginTop: -30,
+    backgroundColor: 'rgb(255,255,255)',
+    borderRadius: 50
+  },
+  bodySection: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 5
+  },
+  profileSection: {
+    flex: 2
+  },
+  nameSection: {
+    marginLeft: 15,
+    flex: 8
+  },
+  profilePic: {
+    height: 60,
+    width: 60,
+    borderRadius: 50
+  },
+  name: {
+    color: '#333',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  job: {
+    color: '#333',
+    fontSize: 14,
+    opacity: 0.8
+  },
+  summary: {
+    color: '#333',
+    paddingTop: 10
+  },
+  footerSection: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end'
+  },
+  seeMoreLine: {
+    height: 1,
+    opacity: 0.1,
+    backgroundColor: 'black'
+  },
+  footerButton: {
+    borderRadius: 50,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

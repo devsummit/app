@@ -1,11 +1,8 @@
 import { createSelector } from 'reselect';
 
-/**
- *  Select the main portion of the root reducer
- */
-const selectMainReducer = () => state => state.get('booth');
+const selectListBoothReducer = () => state => state.get('boothList');
 
-export const getAvatar = () => createSelector(
-    selectMainReducer(),
-    state => state.get('avatar')
-  );
+export const getListBooth = () => createSelector(
+  selectListBoothReducer(),
+  state => state.get('booth')
+);

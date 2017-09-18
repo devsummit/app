@@ -1,11 +1,21 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  topView: {
-    alignItems: 'stretch',
-    height: 290,
-    margin: 'auto',
-    justifyContent: 'center'
+  info: {
+    margin: 12
+  },
+  name: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontSize: 24
+  },
+  summary: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginTop: 8
   },
   col1: {
     backgroundColor: '#EB9532',
@@ -22,22 +32,13 @@ const styles = StyleSheet.create({
   boldedText: {
     fontWeight: 'bold',
     color: 'white',
-    fontSize: 30,
+    fontSize: 20,
     padding: 10
   },
-  descText: {
-    color: 'white',
-    padding: 10,
-    fontSize: 14
-  },
-  profileImage: {
-    width: 110,
-    height: 110,
-    marginTop: 20,
-    borderRadius: 65,
-    borderWidth: 1,
-    alignSelf: 'center'
-  },
+  boothImage: {
+    width,
+    height: 200
+  }
 });
 
 export default styles;
