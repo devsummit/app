@@ -104,6 +104,9 @@ class Profile extends Component {
     return (
       <ScrollView>
         <Header title="PROFILE" />
+          <View style={styles.pointsSection}>
+            <Text style={styles.points}><Icon name="usd" style={styles.coin}/> 1000 pts</Text>
+          </View>
         <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
           <Image
             source={{ uri: avatar }}
