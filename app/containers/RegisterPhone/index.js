@@ -251,19 +251,6 @@ class RegisterPhone extends Component {
                 value={email}
               />
             </View>
-            <View style={styles.pickerWrapper}>
-              <Picker
-                style={styles.picker}
-                placeholder="Role"
-                mode="dropdown"
-                selectedValue={role}
-                onValueChange={value => this.handleInputChange('role', value)}
-              >
-                {role_option.map(component => (
-                  <Item key={component.value} label={component.label} value={component.label} />
-                ))}
-              </Picker>
-            </View>
             {
               (this.props.inputFields.firstName.length !== 0 &&
                 this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?

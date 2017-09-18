@@ -10,6 +10,7 @@ import Profile from '../Profile';
 import MaterialList from '../MaterialList';
 import BoothList from '../BoothList';
 import BoothInfo from '../BoothInfo';
+import Feed from '../Feed';
 
 export default class MainTabs extends Component {
   state = {
@@ -68,23 +69,19 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="calendar"
-                    style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-                  />
-                </TabHeading>}
-            >
-              <Schedule />
+                    name="feed"
+                    style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
+                </TabHeading>}>
+              <Feed />
             </Tab>
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="people"
-                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-                  />
-                </TabHeading>}
-            >
-              <Speaker />
+                    name="calendar"
+                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
+                </TabHeading>}>
+              <Schedule />
             </Tab>
             <Tab
               heading={
