@@ -102,32 +102,7 @@ class Main extends Component {
           <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
           <Content>
             <AuthLogo />
-            <View style={styles.lineSection}>
-              <View style={styles.lineTextThree} />
-              <Text style={styles.lineTextFour}> Log in with social media </Text>
-              <View style={styles.lineTextThree} />
-            </View>
             <View style={styles.buttonSocialSection}>
-              <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
-                <Icon name="facebook" color="white" style={styles.icon} />
-              </Button>
-              <Button
-                danger
-                style={styles.buttonSocial}
-                onPress={() => { this.props.loginGoogle(); }}
-              >
-                <Icon name="google-plus" color="white" style={styles.icon} />
-              </Button>
-              <Button
-                info
-                style={styles.buttonSocial}
-                onPress={() => { this.props.loginTwitter(); }}
-              >
-                <Icon name="twitter" color="white" style={styles.icon} />
-              </Button>
-            </View>
-            <View style={styles.lineSection}>
-              <Text style={styles.lineTextTwo}> or </Text>
             </View>
             <Button
               style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
