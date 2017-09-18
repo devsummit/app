@@ -18,6 +18,7 @@ import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
 import Login from './containers/Login';
 import Schedule from './containers/Schedule';
+import ScheduleDetail from './containers/ScheduleDetail';
 import Main from './containers/Main';
 import ChangePassword from './containers/ChangePassword';
 import OrderList from './containers/OrderList';
@@ -83,6 +84,7 @@ export default class App extends Component {
             <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} title="Schedule" />
+            <Scene key="scheduleDetail" component={ScheduleDetail} title="Schedule Detail" />
             <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
             <Scene key="payment" component={Payment} title="Choose Payment Method" />
             <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
