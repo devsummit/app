@@ -31,6 +31,7 @@ import Splash from './components/Splash';
 import Payment from './containers/Payment';
 import PaymentDetail from './containers/PaymentDetail';
 import BoothList from './containers/BoothList';
+import BoothInfo from './containers/BoothInfo';
 import EditBooth from './containers/EditBooth';
 import Profile from './containers/Profile';
 
@@ -87,6 +88,7 @@ export default class App extends Component {
             <Scene key="payment" component={Payment} title="Choose Payment Method" />
             <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
             <Scene key="boothList" component={BoothList} title="Booth List"/>
+            <Scene key="boothInfo" component={BoothInfo} title="Booth Info"/>
             <Scene key="editBooth" component={EditBooth} title="Edit Booth"/>
             <Scene key="profile" component={Profile} title="Profile"/>
           </Scene>
