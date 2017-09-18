@@ -25,12 +25,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     color: '#FFFFFF'
   },
-  pickerWrapper: {
-    borderWidth: 1,
-    borderColor: '#FFD740',
-    borderRadius: 50,
-    margin: 20
-  },
   buttonRegister: {
     marginLeft: 'auto',
     marginRight: 'auto'
@@ -49,10 +43,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderColor: '#FFD740',
     borderWidth: 1
-  },
-  picker: {
-    margin: 12,
-    color: '#FFFFFF'
   },
   button: {
     width: '90%',
