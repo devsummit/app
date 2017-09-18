@@ -102,8 +102,6 @@ class Main extends Component {
           <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
           <Content>
             <AuthLogo />
-            <View style={styles.buttonSocialSection}>
-            </View>
             <Button
               style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
               onPress={() => { this.props.loginTwitter(); }}
