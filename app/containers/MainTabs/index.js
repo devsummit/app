@@ -9,7 +9,7 @@ import Ticket from '../TicketList';
 import Profile from '../Profile';
 import MaterialList from '../MaterialList';
 import BoothList from '../BoothList';
-import BoothInfo from '../EditBooth';
+import BoothInfo from '../BoothInfo';
 
 export default class MainTabs extends Component {
   state = {
