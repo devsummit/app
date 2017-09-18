@@ -9,7 +9,10 @@ import {
   Button,
   Text,
   Spinner,
-  Right
+  Right,
+  Tabs,
+  Tab,
+  TabHeading
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { RefreshControl, View } from 'react-native';
@@ -20,6 +23,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
 import { PRIMARYCOLOR } from '../../constants';
+import HeaderPoint from '../../components/Header';
+
+import TicketList from '../TicketList';
 
 class Feed extends Component {
   constructor(props) {
@@ -31,12 +37,10 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
-        <Header title="Feed" />
-        <Button primary style={styles.btnOrder} onPress={() => Actions.newOrder()}>
-          <Text style={{ textAlign: 'center', flex: 1 }}>Get Ticket</Text>
-        </Button>
-        <Content>
-            <ListItem>
+        <HeaderPoint title="Feed" />
+        <Tabs style={styles.tabs}>
+        <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "plus"/><Text style={styles.tabTitle}>Notifications</Text></TabHeading> }>
+          <ListItem>
               <Text style={styles.text}>Materi Nomor 1</Text>
               <Button
                 small
@@ -116,7 +120,11 @@ class Feed extends Component {
                 />
               </Button>
             </ListItem>
-        </Content>
+          </Tab>
+          <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "plus"/><Text style={styles.tabTitle}>Ticket</Text></TabHeading> }>
+              <TicketList />
+          </Tab>
+        </Tabs>
       </Container>
     );
   }
