@@ -32,6 +32,8 @@ import Payment from './containers/Payment';
 import PaymentDetail from './containers/PaymentDetail';
 import BoothList from './containers/BoothList';
 import BoothInfo from './containers/BoothInfo';
+import EditBooth from './containers/EditBooth';
+import Profile from './containers/Profile';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -87,6 +89,8 @@ export default class App extends Component {
             <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
             <Scene key="boothList" component={BoothList} title="Booth List"/>
             <Scene key="boothInfo" component={BoothInfo} title="Booth Info"/>
+            <Scene key="editBooth" component={EditBooth} title="Edit Booth"/>
+            <Scene key="profile" component={Profile} title="Profile"/>
           </Scene>
         </RouterWithRedux>
       </Provider>

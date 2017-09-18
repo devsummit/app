@@ -11,6 +11,7 @@ import MaterialList from '../MaterialList';
 import BoothList from '../BoothList';
 import BoothInfo from '../BoothInfo';
 import Feed from '../Feed';
+import Settings from '../Settings';
 
 export default class MainTabs extends Component {
   state = {
@@ -83,7 +84,8 @@ export default class MainTabs extends Component {
                 </TabHeading>}>
               <Schedule />
             </Tab>
-            <Tab
+            { speaker ? 
+              <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
@@ -94,6 +96,7 @@ export default class MainTabs extends Component {
             >
               {this.viewCurrentUser()}
             </Tab>
+            : null}
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
