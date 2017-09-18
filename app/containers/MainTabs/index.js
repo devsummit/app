@@ -37,18 +37,18 @@ export default class MainTabs extends Component {
     if (role === 2) {
       return (<IconSimpleLine
         name="organization"
-        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
       />);
     }
     if (role === 3) {
       return (<IconSimpleLine
         name="organization"
-        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
       />);
     } else if (role === 4) {
       return (<IconSimpleLine
         name="speech"
-        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
       />);
     }
   }
