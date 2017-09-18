@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import {
   Container,
-  Content,
-  Card,
-  CardItem,
-  List,
   ListItem,
   Button,
   Text,
-  Spinner,
-  Right,
   Tabs,
   Tab,
   TabHeading
@@ -20,9 +14,8 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Header from '../../components/Header';
 import styles from './styles';
-import { PRIMARYCOLOR } from '../../constants';
+import {PRIMARYCOLOR} from '../../constants';
 import HeaderPoint from '../../components/Header';
 
 import TicketList from '../TicketList';
@@ -37,7 +30,7 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
-        <HeaderPoint title="Feed" />
+        <HeaderPoint title="FEED" />
         <Tabs style={styles.tabs}>
         <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "plus"/><Text style={styles.tabTitle}>Notifications</Text></TabHeading> }>
           <ListItem>
