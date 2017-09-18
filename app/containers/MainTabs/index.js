@@ -30,14 +30,20 @@ export default class MainTabs extends Component {
     this.setState({ currentTab: number });
   }
 
+  /**
+    role_id 2 = attende
+    role_id 3 = booth
+    role_id 4 = speaker
+  */
   changeIcon() {
     const role = this.state.roleId;
     if (role === 2) {
       return (<IconSimpleLine
-        name="user"
+        name="organization"
         style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
       />);
-    } else if (role === 3) {
+    }
+    if (role === 3) {
       return (<IconSimpleLine
         name="organization"
         style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
@@ -55,9 +61,9 @@ export default class MainTabs extends Component {
     if (role === 2) {
       return (<BoothList />);
     } else if (role === 3) {
-      return (<MaterialList />);
-    } else if (role === 4) {
       return (<BoothInfo />);
+    } else if (role === 4) {
+      return (<MaterialList />);
     }
   }
 
@@ -84,26 +90,24 @@ export default class MainTabs extends Component {
                 </TabHeading>}>
               <Schedule />
             </Tab>
-            { speaker ? 
-              <Tab
-              heading={
-                <TabHeading style={{ backgroundColor: 'white' }}>
-                  <IconSimpleLine
-                    name="home"
-                    style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-                  />
-                </TabHeading>}
-            >
-              {this.viewCurrentUser()}
-            </Tab>
-            : null}
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   {this.changeIcon()}
                 </TabHeading>}
             >
-              <Profile />
+              {this.viewCurrentUser()}
+            </Tab>
+            <Tab
+              heading={
+                <TabHeading style={{ backgroundColor: 'white' }}>
+                  <IconSimpleLine
+                    name="settings"
+                    style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                  />
+                </TabHeading>}
+            >
+              <Settings />
             </Tab>
           </Tabs>
         </View>
