@@ -8,6 +8,7 @@ import Speaker from '../Speaker';
 import Ticket from '../TicketList';
 import Profile from '../Profile';
 import MaterialList from '../MaterialList';
+import Feed from '../Feed';
 
 export default class MainTabs extends Component {
   state={
@@ -36,19 +37,19 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="calendar"
+                    name="feed"
                     style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
                 </TabHeading>}>
-              <Schedule />
+              <Feed />
             </Tab>
             <Tab 
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="people"
+                    name="calendar"
                     style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
                 </TabHeading>}>
-              <Speaker />
+              <Schedule />
             </Tab>
             <Tab
               heading={
