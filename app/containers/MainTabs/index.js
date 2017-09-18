@@ -8,69 +8,106 @@ import Speaker from '../Speaker';
 import Ticket from '../TicketList';
 import Profile from '../Profile';
 import MaterialList from '../MaterialList';
+import BoothList from '../BoothList';
+import BoothInfo from '../EditBooth';
 
 export default class MainTabs extends Component {
-  state={
+  state = {
     currentTab: 0,
     roleId: null
   }
 
   componentWillMount() {
     AsyncStorage.getItem('role_id')
-    .then(id => {
-      this.setState({ roleId: JSON.parse(id) });
-    }).catch(e => Toast.show('Error getting role id'));
+      .then((id) => {
+        this.setState({ roleId: JSON.parse(id) });
+      }).catch(e => Toast.show('Error getting role id'));
   }
 
   handleCurrentTab = (number) => {
-    this.setState({ currentTab: number })
+    this.setState({ currentTab: number });
+  }
+
+  changeIcon() {
+    const role = this.state.roleId;
+    if (role === 2) {
+      return (<IconSimpleLine
+        name="user"
+        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+      />);
+    } else if (role === 3) {
+      return (<IconSimpleLine
+        name="organization"
+        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+      />);
+    } else if (role === 4) {
+      return (<IconSimpleLine
+        name="speech"
+        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+      />);
+    }
+  }
+
+  viewCurrentUser() {
+    const role = this.state.roleId;
+    if (role === 2) {
+      return (<BoothList />);
+    } else if (role === 3) {
+      return (<MaterialList />);
+    } else if (role === 4) {
+      return (<BoothInfo />);
+    }
   }
 
   render() {
-    const speaker = this.state.roleId === 4;
     return (
       <Container>
         <View style={{ flex: 1 }}>
           <Tabs onChangeTab={(i, ref) => this.handleCurrentTab(i.i)} tabBarPosition="bottom" initialPage={0}>
-            <Tab 
+            <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="calendar"
-                    style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
-                </TabHeading>}>
+                    style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                  />
+                </TabHeading>}
+            >
               <Schedule />
             </Tab>
-            <Tab 
+            <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="people"
-                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
-                </TabHeading>}>
+                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                  />
+                </TabHeading>}
+            >
               <Speaker />
             </Tab>
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="wallet"
-                    style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
-                </TabHeading>}>
-            { speaker ? <MaterialList /> : <Ticket /> }
+                    name="home"
+                    style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                  />
+                </TabHeading>}
+            >
+              {this.viewCurrentUser()}
             </Tab>
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
-                  <IconSimpleLine
-                    name="user"
-                    style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
-                </TabHeading>}>
+                  {this.changeIcon()}
+                </TabHeading>}
+            >
               <Profile />
             </Tab>
           </Tabs>
         </View>
       </Container>
-    )
+    );
   }
 }
