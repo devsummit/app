@@ -9,6 +9,7 @@ import Ticket from '../TicketList';
 import Profile from '../Profile';
 import MaterialList from '../MaterialList';
 import Feed from '../Feed';
+import Settings from '../Settings';
 
 export default class MainTabs extends Component {
   state={
@@ -64,10 +65,10 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="user"
+                    name="settings"
                     style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]} />
                 </TabHeading>}>
-              <Profile />
+              <Settings />
             </Tab>
           </Tabs>
         </View>
