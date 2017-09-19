@@ -2,6 +2,26 @@
 # yarn lockfile v1
 
 
+"File@>= 0.0.0":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/File/-/File-0.10.2.tgz#e899f776d273e2243ba86105bb3b056d0fb95604"
+  dependencies:
+    mime ">= 0.0.0"
+
+"FileReader@>= 0.0.0":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/FileReader/-/FileReader-0.10.2.tgz#1b117bdb6b5ed85e241ac3cb10f1b7086524e539"
+
+FormData@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/FormData/-/FormData-0.10.1.tgz#806853e89fdc03bbb1c620a5184ac5e47b341d00"
+  dependencies:
+    File ">= 0.0.0"
+    FileReader ">= 0.0.0"
+    bufferjs ">= 0.0.0"
+    forEachAsync ">= 2.0.0"
+    remedial ">= 0.0.0"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
@@ -1035,6 +1055,10 @@ bser@^2.0.0:
   dependencies:
     node-int64 "^0.4.0"
 
+"bufferjs@>= 0.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/bufferjs/-/bufferjs-3.0.1.tgz#0692e829cb10a10550e647390b035eb06c38e8ef"
+
 builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -1945,6 +1969,10 @@ for-own@^0.1.4:
   resolved "https://registry.yarnpkg.com/for-own/-/for-own-0.1.5.tgz#5265c681a4f294dabbf17c9509b6763aa84510ce"
   dependencies:
     for-in "^1.0.1"
+
+"forEachAsync@>= 2.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/forEachAsync/-/forEachAsync-3.0.0.tgz#3475a95a77e4dc2d2800913e6824de77b00cd80a"
 
 foreach@^2.0.5:
   version "2.0.5"
@@ -3176,7 +3204,7 @@ mime@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.4.tgz#115f9e3b6b3daf2959983cb38f149a2d40eb5d53"
 
-mime@^1.3.4:
+"mime@>= 0.0.0", mime@^1.3.4:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.6.tgz#591d84d3653a6b0b4a3b9df8de5aa8108e72e5e0"
 
@@ -3759,6 +3787,10 @@ react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
 
+react-native-document-picker@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-2.0.0.tgz#cbbb7358bfd23ed565bf4e04ce7e32f50c0b17eb"
+
 react-native-drawer-layout-polyfill@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout-polyfill/-/react-native-drawer-layout-polyfill-1.3.2.tgz#192c84d7a5a6b8a6d2be2c7daa5e4164518d0cc7"
@@ -3788,11 +3820,19 @@ react-native-facebook-account-kit@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-facebook-account-kit/-/react-native-facebook-account-kit-0.7.0.tgz#80899b5f59cc9ea7f1a01babf490e66c5bda15dd"
 
+react-native-file-upload@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-file-upload/-/react-native-file-upload-1.0.4.tgz#dbe563b52c9d46c28e825726ded84518b8598888"
+
 react-native-form-validator@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/react-native-form-validator/-/react-native-form-validator-0.1.3.tgz#d08ce76cae87e54dfda986a5c6460248cfc01e87"
   dependencies:
     moment "2.x.x"
+
+react-native-image-crop-picker@^0.16.0:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.16.1.tgz#37efb419276c691ac0f99d497ef787b53e652fc2"
 
 "react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
   version "0.2.9"
@@ -3836,7 +3876,7 @@ react-native-simple-auth@^2.1.0:
     hmacsha1 "^1.0.0"
     ramda "^0.22.1"
 
-react-native-simple-toast@^0.0.6:
+react-native-simple-toast@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-simple-toast/-/react-native-simple-toast-0.0.6.tgz#f1ddb2c07c192cf2b75b860d283028a0769b2f72"
 
@@ -4136,6 +4176,10 @@ regjsparser@^0.1.4:
   resolved "https://registry.yarnpkg.com/regjsparser/-/regjsparser-0.1.5.tgz#7ee8f84dc6fa792d3fd0ae228d24bd949ead205c"
   dependencies:
     jsesc "~0.5.0"
+
+"remedial@>= 0.0.0":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/remedial/-/remedial-1.0.7.tgz#d6674413a65676007be00dd400980987b2c300c1"
 
 remove-trailing-separator@^1.0.1:
   version "1.0.2"

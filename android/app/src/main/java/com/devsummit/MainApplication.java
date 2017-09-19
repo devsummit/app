@@ -3,6 +3,11 @@ package com.devsummit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import io.fullstack.oauth.OAuthManagerPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.fullstack.oauth.OAuthManagerPackage;
@@ -29,6 +34,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new OAuthManagerPackage(),
+            new LinearGradientPackage(),
+            new PickerPackage(),
+            new RNAccountKitPackage(),
             new ReactNativeDocumentPicker(),
           new VectorIconsPackage(),
           new PickerPackage(),
