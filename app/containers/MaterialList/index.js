@@ -145,7 +145,12 @@ class MaterialList extends Component {
               </Card>
             ))}
           </Content> :
-          <Text style={styles.noMaterial}>You don't have any material.</Text>
+          <Button
+            style={{ marginVertical: 12, alignSelf: 'center', backgroundColor: '#FB8C00' }}
+            onPress={() => this.setState({ invisible: !this.state.invisible })}
+          >
+            <Text style={styles.buttonText}>Upload File</Text>
+          </Button>
         }
         <Fab
           active={this.state.invisible}
@@ -161,8 +166,8 @@ class MaterialList extends Component {
           onChangeTitle={text => this.handleInputChange('title', text)}
           inputSummary={'Summary'}
           onChangeSummary={text => this.handleInputChange('summary', text)}
-          onSubmit={() => this.saveMaterialList()}
-          onUpload={() => this.openPicker()}
+          onSubmit={this.saveMaterialList}
+          onUpload={this.openPicker}
           onModalPress={() => this.setState({ invisible: !this.state.invisible })}
           fileName={this.state.fileName}
         />
