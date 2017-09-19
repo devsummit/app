@@ -21,3 +21,8 @@ export const getIsFetchingMaterial = () => createSelector(
   selectListMaterialReducer(),
   state => state.get('isFetchingMaterial')
 );
+
+export const getDeleteMaterialList = () => createSelector(
+  selectListMaterialReducer(),
+  state => state.get('deleteMatarialList')
+);
