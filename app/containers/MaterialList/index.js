@@ -30,8 +30,6 @@ class MaterialList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: 'John',
-      lastName: 'Doe',
       materialFilter: this.props.material,
       fileName: '',
       invisible: false,
@@ -85,13 +83,29 @@ class MaterialList extends Component {
     this.props.saveMaterialList();
     this.setState({ invisible: !this.state.invisible });
     Toast.show('Saved');
+    this.setState({ fileName: '' });
+  }
+
+  showAlert = (id) => {
+    Alert.alert('Remove Material', 'Are you sure ?',
+      [
+        {text: 'Cancel'},
+        {text: 'OK', onPress: () => this.removeItem(id)}
+      ],
+      {cancelable: false}
+    );
+  }
+
+  removeItem = (id) => {
+    this.props.deleteMaterialList(id);
+    Toast.show('Deleted');
   }
 
   render() {
     const { material } = this.props;
 
     if (this.props.isFetching) {
-      return <View />
+      this.props.fetchMaterialList();
     }
 
     return (
@@ -111,14 +125,18 @@ class MaterialList extends Component {
                         />
                       </View>
                       <View style={styles.nameSection}>
-                        <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                          <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                          <TouchableOpacity onPress={() => this.showAlert(data.id)}>
+                            <Icon name="remove" color="red" style={styles.icon} />
+                          </TouchableOpacity>
+                        </View>
                         <Text style={styles.title}>{data.title}</Text>
                         <Text numberOfLines={3} style={styles.summary}>
                           {data.summary}
                         </Text>
                         <View style={styles.materialUrl}>
                           <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
-                          <Icon name="download" color="red" style={styles.icon} />
                         </View>
                       </View>
                     </View>
