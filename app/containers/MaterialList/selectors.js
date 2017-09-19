@@ -14,5 +14,15 @@ export const getInputFields = () => createSelector(
 
 export const getModalStatus = () => createSelector(
   selectListMaterialReducer(),
-  state => state.get('visible')                                                                   
+  state => state.get('visible')
+);
+
+export const getIsFetchingMaterial = () => createSelector(
+  selectListMaterialReducer(),
+  state => state.get('isFetchingMaterial')
+);
+
+export const getDeleteMaterialList = () => createSelector(
+  selectListMaterialReducer(),
+  state => state.get('deleteMatarialList')
 );
