@@ -3,6 +3,7 @@ package com.devsummit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.fullstack.oauth.OAuthManagerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;

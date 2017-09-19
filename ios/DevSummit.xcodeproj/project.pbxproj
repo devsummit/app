@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -70,6 +69,9 @@
 		ECCBDE869DDC47D3931DC190 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57D81C450593401E840FD4EA /* libBVLinearGradient.a */; };
 		F24C284F4B26478BA5E82133 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0734BBCA670443449F4129EA /* Roboto_medium.ttf */; };
 		FF374A8D70304E939852BECE /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FF1D7F829F340049673C6FD /* rubicon-icon-font.ttf */; };
+		9EBB1DFFCA0C43428332C179 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE11D505913A4F80A1F456A9 /* libCodePush.a */; };
+		51061D2CC40E47918A7D3F74 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3023B3B6D41E49BEA0A838F2 /* libz.tbd */; };
+		56D58EC0C3C4499C9233B610 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3581D61350C34C4FBC5A7D51 /* Feather.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -415,6 +417,10 @@
 		F4F1F13B8754452DD73C14E7 /* Pods-DevSummit-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSummit-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DevSummit-tvOS/Pods-DevSummit-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FDCEF007DB4B44F881D6DF1E /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		FE7BCD2DCEE965D9E9674E84 /* libPods-DevSummit-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DevSummit-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B8635118C404DEEB70D2863 /* CodePush.xcodeproj */ = {isa = PBXFileReference; name = "CodePush.xcodeproj"; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		FE11D505913A4F80A1F456A9 /* libCodePush.a */ = {isa = PBXFileReference; name = "libCodePush.a"; path = "libCodePush.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3023B3B6D41E49BEA0A838F2 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		3581D61350C34C4FBC5A7D51 /* Feather.ttf */ = {isa = PBXFileReference; name = "Feather.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -449,6 +455,8 @@
 				77C84D18639F4804840977BB /* libLRDRCTSimpleToast.a in Frameworks */,
 				E13594ED3DBC442AA997B50A /* libRNVectorIcons.a in Frameworks */,
 				27C2FC0AA753180504381E78 /* Pods_DevSummit.framework in Frameworks */,
+				9EBB1DFFCA0C43428332C179 /* libCodePush.a in Frameworks */,
+				51061D2CC40E47918A7D3F74 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +648,7 @@
 				83A648AA963F4A00BF7D0004 /* Octicons.ttf */,
 				5495AEB5F06F4ADA98235424 /* SimpleLineIcons.ttf */,
 				830998FAEA804D8A89DC3695 /* Zocial.ttf */,
+				3581D61350C34C4FBC5A7D51 /* Feather.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -674,6 +683,7 @@
 				8715AF7F54774F51AABF9BDA /* OAuthManager.xcodeproj */,
 				A97481A26DC34FA69313BAE1 /* LRDRCTSimpleToast.xcodeproj */,
 				FDCEF007DB4B44F881D6DF1E /* RNVectorIcons.xcodeproj */,
+				9B8635118C404DEEB70D2863 /* CodePush.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -694,6 +704,7 @@
 				FE7BCD2DCEE965D9E9674E84 /* libPods-DevSummit-tvOS.a */,
 				4C05AAFFBB757C702732FAFE /* libPods-DevSummit-tvOSTests.a */,
 				8456E5B7D01BB2AE082533B0 /* Pods_DevSummitTests.framework */,
+				3023B3B6D41E49BEA0A838F2 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1279,6 +1290,7 @@
 				78594D1D18E34DA18E77F2E9 /* Octicons.ttf in Resources */,
 				88BC9473ACF84367A86887FB /* SimpleLineIcons.ttf in Resources */,
 				6D95CBC09335452D89B69F15 /* Zocial.ttf in Resources */,
+				56D58EC0C3C4499C9233B610 /* Feather.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1591,12 +1603,14 @@
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = DevSummitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1628,12 +1642,14 @@
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = DevSummitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1666,6 +1682,7 @@
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = DevSummit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1694,6 +1711,7 @@
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = DevSummit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1729,11 +1747,13 @@
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = "DevSummit-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1775,11 +1795,13 @@
 					"$(SRCROOT)/../node_modules/react-native-oauth/ios/OAuthManager/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 				);
 				INFOPLIST_FILE = "DevSummit-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1821,6 +1843,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.DevSummit-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1846,6 +1869,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
