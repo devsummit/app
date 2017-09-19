@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 16,
+    textAlign:'right',
   },
   materialUrl: {
     flexDirection: 'row',
