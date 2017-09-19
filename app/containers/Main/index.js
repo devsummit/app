@@ -99,9 +99,8 @@ class Main extends Component {
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
           <StatusBar hidden />
-          <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
+          <AuthLogo style={styles.logo} />
           <Content>
-            <AuthLogo />
             <View style={styles.formSection}>
               <Item rounded style={styles.item}>
                 <Input
