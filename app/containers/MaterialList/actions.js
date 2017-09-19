@@ -3,6 +3,7 @@ import {
   getAccessToken
 } from '../../helpers';
 
+import local from '../../../config/local';
 import {
   FETCH_MATERIAL_LIST,
   UPDATE_SINGLE_INPUT_FIELD,
@@ -74,7 +75,7 @@ export function saveMaterialList(image) {
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = 'http://192.168.40.67:5000/api/v1/documents';
+        const url = local.API_BASE_URL.concat('api/v1/documents');
         const form = new FormData();
 
         form.append('title', title);
@@ -82,7 +83,7 @@ export function saveMaterialList(image) {
         form.append('document_data', {
           uri: file.uri,
           type: file.type,
-          name: file.fileName,
+          name: file.fileName
         });
 
         fetch(url, {

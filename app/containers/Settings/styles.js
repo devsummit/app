@@ -31,7 +31,10 @@ const styles = StyleSheet.create({
   },
   imageProfile: {
     alignSelf: 'center',
-    marginTop: -50
+    marginTop: -50,
+    width: '70%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   errorInput: {
     paddingLeft: 20,
@@ -51,9 +54,9 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 110,
+    height: 110,
+    borderRadius: 65,
     borderWidth: 1,
     alignSelf: 'center'
   },
@@ -80,22 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     marginRight: 20
-  },
-  points: {
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: 'white',
-    marginTop: -85,
-    textAlign: 'center'
-  },
-  coin: {
-    color: 'white',
-    fontSize: 22,
-  },
-  pointSection: {
-    flex: 1,
-    flexDirection: 'row'
   }
 });
 

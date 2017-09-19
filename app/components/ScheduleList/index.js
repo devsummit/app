@@ -16,11 +16,10 @@ export default class ScheduleList extends Component {
         { events.length > 0 && events.map((event, index) => (
           <ScheduleCard
             key={index}
-            title={event.event.title}
-            description={event.event.information}
+            event={event.event}
+            speaker={event.speaker}
             stage={event.stage.name}
-            first_name={event.user.first_name}
-            last_name={event.user.last_name}
+            user={event.user}
             time_start={event.time_start}
             time_end={event.time_end}
           />

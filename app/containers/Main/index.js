@@ -102,49 +102,6 @@ class Main extends Component {
           <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
           <Content>
             <AuthLogo />
-            <View style={styles.lineSection}>
-              <View style={styles.lineTextThree} />
-              <Text style={styles.lineTextFour}> Log in with social media </Text>
-              <View style={styles.lineTextThree} />
-            </View>
-            <View style={styles.buttonSocialSection}>
-              <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
-                <Icon name="facebook" color="white" style={styles.icon} />
-              </Button>
-              <Button
-                danger
-                style={styles.buttonSocial}
-                onPress={() => { this.props.loginGoogle(); }}
-              >
-                <Icon name="google-plus" color="white" style={styles.icon} />
-              </Button>
-              <Button
-                info
-                style={styles.buttonSocial}
-                onPress={() => { this.props.loginTwitter(); }}
-              >
-                <Icon name="twitter" color="white" style={styles.icon} />
-              </Button>
-            </View>
-            <View style={styles.lineSection}>
-              <Text style={styles.lineTextTwo}> or </Text>
-            </View>
-            <Button
-              style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
-              onPress={() => { this.props.loginTwitter(); }}
-            >
-              <LoginButton
-                style={styles.buttonLoggin}
-                type="phone"
-                onLogin={token => this.onLoginMobile(token)}
-                onError={e => this.onLoginMobile(e)}
-                primary
-                block
-              >
-                <Icon name="phone" color="white" style={styles.icon} />
-                <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
-              </LoginButton>
-            </Button>
             <View style={styles.formSection}>
               <Item rounded style={styles.item}>
                 <Input
@@ -179,6 +136,27 @@ class Main extends Component {
                   }
                 </Button>
               }
+              <View style={styles.lineSection}>
+                <View style={styles.lineTextThree} />
+                <Text style={styles.lineTextFour}> or </Text>
+                <View style={styles.lineTextThree} />
+              </View>
+              <Button
+                style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
+                onPress={() => { this.props.loginTwitter(); }}
+              >
+                <LoginButton
+                  style={styles.buttonLoggin}
+                  type="phone"
+                  onLogin={token => this.onLoginMobile(token)}
+                  onError={e => this.onLoginMobile(e)}
+                  primary
+                  block
+                >
+                  <Icon name="phone" color="white" style={styles.icon} />
+                  <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+                </LoginButton>
+              </Button>
               <Button
                 transparent
                 style={styles.buttonRegister}

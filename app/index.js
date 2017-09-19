@@ -18,6 +18,7 @@ import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
 import Login from './containers/Login';
 import Schedule from './containers/Schedule';
+import ScheduleDetail from './containers/ScheduleDetail';
 import Main from './containers/Main';
 import ChangePassword from './containers/ChangePassword';
 import OrderList from './containers/OrderList';
@@ -30,6 +31,9 @@ import AttendeesList from './containers/AttendeesList';
 import Splash from './components/Splash';
 import Payment from './containers/Payment';
 import PaymentDetail from './containers/PaymentDetail';
+import BoothList from './containers/BoothList';
+import BoothInfo from './containers/BoothInfo';
+import Profile from './containers/Profile';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -80,9 +84,13 @@ export default class App extends Component {
             <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} title="Schedule" />
+            <Scene key="scheduleDetail" component={ScheduleDetail} title="Schedule Detail" />
             <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
             <Scene key="payment" component={Payment} title="Choose Payment Method" />
             <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
+            <Scene key="boothList" component={BoothList} title="Booth List" />
+            <Scene key="boothInfo" component={BoothInfo} title="Booth Info" />
+            <Scene key="profile" component={Profile} title="Profile" />
           </Scene>
         </RouterWithRedux>
       </Provider>

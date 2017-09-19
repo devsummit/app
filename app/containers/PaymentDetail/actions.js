@@ -8,7 +8,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   IS_FETCHING_TRANSACTION,
-  GET_TRANSACTION_RESPONSE
+  GET_TRANSACTION_RESPONSE,
+  CLEAR_TRANSACTION_RESPONSE
 } from './constants';
 
 import {
@@ -56,6 +57,12 @@ export function updateGetTransactionResponse(payload) {
   };
 }
 
+// update transaction response
+export function resetResponse() {
+  return {
+    type: CLEAR_TRANSACTION_RESPONSE
+  };
+}
 // Send parameter to API
 
 export function submitPayment() {

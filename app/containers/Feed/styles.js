@@ -3,9 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'center'
+    backgroundColor: 'white',
   },
   item: {
     flex: 1,
@@ -15,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 5
   },
   button: {
-    flex: 3,
+    flex: 2,
     justifyContent: 'center',
     alignSelf: 'flex-end',
     borderRadius: 90
@@ -41,7 +39,8 @@ const styles = StyleSheet.create({
     marginTop: -25,
     elevation: 5,
     width: '70%',
-    margin: 20
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   errorContent: {
     alignItems: 'center'
@@ -49,6 +48,19 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 14,
     marginTop: 12
+  },
+  tabs: {
+    marginTop: -50,
+  },
+  tabHeading: {
+      backgroundColor: 'transparent'
+  },
+  tabTitle: {
+      fontSize: 16
+  },
+  tabBarSelectedItemStyle: {
+      borderBottomWidth: 2,
+      borderBottomColor: 'red',
   }
 });
 
