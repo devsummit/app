@@ -76,7 +76,7 @@ export default class ModalComponent extends Component {
                 <Text style={{ alignSelf: 'center' }}>{this.props.fileName}</Text>
                 <Button
                   style={styles.buttonUpload}
-                  onPress={this.props.onUpload}
+                  onPress={() => this.props.onUpload()}
                 >
                   <Text style={styles.buttonText}>Upload File</Text>
                 </Button>
@@ -92,7 +92,7 @@ export default class ModalComponent extends Component {
                 <Button
                   transparent
                   style={styles.button}
-                  onPress={this.props.onSubmit}
+                  onPress={() => this.props.onSubmit()}
                 >
                   <Text style={styles.buttonText}>save</Text>
                 </Button>
