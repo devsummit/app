@@ -18,7 +18,6 @@ import {
   Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { Actions } from 'react-native-router-flux';
 import { RefreshControl, Alert, View } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -42,10 +41,8 @@ class OrderDetail extends Component {
   }
 
   componentWillMount = () => {
-    console.log(this.props);
     this.props.getOrderDetail(this.props.orderId);
   }
-
 
   componentWillReceiveProps() {
     if (this.props.order && this.props.order.included) {
@@ -136,6 +133,12 @@ class OrderDetail extends Component {
                   <Col><Text>Order date:</Text></Col>
                   <Col><Text>{formatDate(order.data[0].created_at)}</Text></Col>
                 </Row>
+                {order.included.payment ?
+                  <Row>
+                    <Col><Text>Expired time:</Text></Col>
+                    <Col><Text>{formatDate(order.included.payment.expired_at)}</Text></Col>
+                  </Row> : <View />
+                }
               </Grid>
               {status === 'not paid' ?
                 <Button style={styles.roundButton} onPress={() => this.saveOrder()} >
@@ -174,6 +177,17 @@ class OrderDetail extends Component {
               />
             </Content>
           }
+          {order.included.payment && order.included.payment.payment_type === 'cstore' && order.included.payment.fraud_status ?
+            <Card>
+              <CardItem>
+                <Body>
+                  <Text>Payment Code</Text>
+                </Body>
+                <Right><Text>{order.included.payment.fraud_status}</Text></Right>
+              </CardItem>
+            </Card> : <View />
+          }
+
           <Card>
             <CardItem>
               <Body>
@@ -182,6 +196,20 @@ class OrderDetail extends Component {
               <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
           </Card>
+
+          {order.included.payment ?
+            <Card>
+              <CardItem>
+                <Body>
+                  <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening Permata Virtual Account dari Veritrans: </Text>
+                  <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
+                    {order.included.payment.va_number}
+                  </Text>
+                  <Text>Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka antrian akan otomatis dibatalkan.</Text>
+                </Body>
+              </CardItem>
+            </Card> : <View />
+          }
           {order.included.referal && order.included.referal.owner ?
             <View>
               <Card>
@@ -208,10 +236,7 @@ class OrderDetail extends Component {
             </View> : <View />
           }
           {(this.state.status && this.state.status === 'need authorization') ?
-            <Button onPress={() => Actions.payment()} style={[ styles.btnCheckOut, { backgroundColor: 'blue' } ]}>
-              <Icon name="ios-key" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>AUTHORIZE</Text>
-            </Button> : <View />
+            <View /> : <View />
           }
           {(this.state.status && this.state.status === 'pending') ?
             <Button onPress={() => this.handleConfirm()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>

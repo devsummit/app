@@ -68,7 +68,7 @@ export const getProfileData = async () => {
 
 export const formatDate = (source) => {
   const dt = source.split(' ');
-  return `${dt[1]}-${dt[2]}-${dt[3]}`;
+  return `${dt[0]} ${dt[1]}`;
 };
 
 export const transactionStatus = (payment) => {
@@ -78,9 +78,9 @@ export const transactionStatus = (payment) => {
         message: 'paid',
         color: 'green'
       };
-    } else if (payment.fraud_status === 'accept' && payment.transaction_status === 'authorize') {
+    } else if (payment.fraud_status === 'challenge') {
       return {
-        message: 'need authorization',
+        message: 'waiting for authorization',
         color: 'blue'
       };
     } else if (payment.transaction_status === 'pending') {

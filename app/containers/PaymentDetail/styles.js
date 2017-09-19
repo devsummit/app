@@ -2,16 +2,31 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   monthPicker: {
-    width: 100
+    width: 100,
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   yearPicker: {
-    width: 100
+    width: 100,
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   container: {
     backgroundColor: '#fff'
   },
   text: {
-    flex: 3
+    color: '#FFD740',
+    width: '90%',
+    fontWeight: "bold",
+    fontSize: 13,
+    marginTop: 20,
+    marginBottom: 10,
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   button: {
     marginTop: 15,
@@ -19,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 0.4,
     justifyContent: 'center',
     borderRadius: 30,
-    width: '70%',
+    width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -41,7 +56,14 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#FFD740',
+    width: '90%',
+    marginBottom: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 });
 

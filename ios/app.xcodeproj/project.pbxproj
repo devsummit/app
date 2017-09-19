@@ -68,6 +68,7 @@
 		B7357AB38746417C848964E8 /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3966FA1815904F318C7C639E /* libLRDRCTSimpleToast.a */; };
 		ECB24CF1E26C4CD4A1A2746B /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3836E160964801BB46E0BE /* libCodePush.a */; };
 		D19B7C61AB204D4C9B1D0C7E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC68CDBCC424FECBACF47F1 /* libz.tbd */; };
+		7D69D941106D4F9EB5E6B6DB /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFAE845B1CD469FAED85CAB /* libRNDocumentPicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -325,9 +326,14 @@
 		4BEB48EBEEAD4F38B84760E4 /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		CCFC7D14F69E4DC5A3A6DDFA /* LRDRCTSimpleToast.xcodeproj */ = {isa = PBXFileReference; name = "LRDRCTSimpleToast.xcodeproj"; path = "../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		3966FA1815904F318C7C639E /* libLRDRCTSimpleToast.a */ = {isa = PBXFileReference; name = "libLRDRCTSimpleToast.a"; path = "libLRDRCTSimpleToast.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+<<<<<<< HEAD
 		880BEB3476B04B7A8CC761D0 /* CodePush.xcodeproj */ = {isa = PBXFileReference; name = "CodePush.xcodeproj"; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		1A3836E160964801BB46E0BE /* libCodePush.a */ = {isa = PBXFileReference; name = "libCodePush.a"; path = "libCodePush.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		4EC68CDBCC424FECBACF47F1 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+=======
+		BD0BC10FCDDF45309B5A4E07 /* RNDocumentPicker.xcodeproj */ = {isa = PBXFileReference; name = "RNDocumentPicker.xcodeproj"; path = "../node_modules/react-native-document-picker/ios/RNDocumentPicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2FFAE845B1CD469FAED85CAB /* libRNDocumentPicker.a */ = {isa = PBXFileReference; name = "libRNDocumentPicker.a"; path = "libRNDocumentPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+>>>>>>> develop
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,8 +366,12 @@
 				1BEF6E04ACB44E60A762B127 /* libimageCropPicker.a in Frameworks */,
 				5B5FC62013EA45DB95956BEF /* libRNImagePicker.a in Frameworks */,
 				B7357AB38746417C848964E8 /* libLRDRCTSimpleToast.a in Frameworks */,
+<<<<<<< HEAD
 				ECB24CF1E26C4CD4A1A2746B /* libCodePush.a in Frameworks */,
 				D19B7C61AB204D4C9B1D0C7E /* libz.tbd in Frameworks */,
+=======
+				7D69D941106D4F9EB5E6B6DB /* libRNDocumentPicker.a in Frameworks */,
+>>>>>>> develop
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,7 +545,11 @@
 				050444D96594449499AE7C37 /* imageCropPicker.xcodeproj */,
 				DC6A8C9F9AA14DE3BB202A6B /* RNImagePicker.xcodeproj */,
 				CCFC7D14F69E4DC5A3A6DDFA /* LRDRCTSimpleToast.xcodeproj */,
+<<<<<<< HEAD
 				880BEB3476B04B7A8CC761D0 /* CodePush.xcodeproj */,
+=======
+				BD0BC10FCDDF45309B5A4E07 /* RNDocumentPicker.xcodeproj */,
+>>>>>>> develop
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1148,7 +1162,11 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+<<<<<<< HEAD
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+=======
+					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
+>>>>>>> develop
 				);
 			};
 			name = Debug;
@@ -1185,7 +1203,11 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+<<<<<<< HEAD
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+=======
+					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
+>>>>>>> develop
 				);
 			};
 			name = Release;
@@ -1213,7 +1235,11 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+<<<<<<< HEAD
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+=======
+					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
+>>>>>>> develop
 				);
 			};
 			name = Debug;
@@ -1240,7 +1266,11 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+<<<<<<< HEAD
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+=======
+					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
+>>>>>>> develop
 				);
 			};
 			name = Release;
@@ -1286,7 +1316,11 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+<<<<<<< HEAD
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+=======
+					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
+>>>>>>> develop
 				);
 			};
 			name = Debug;
@@ -1332,7 +1366,11 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+<<<<<<< HEAD
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
+=======
+					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
+>>>>>>> develop
 				);
 			};
 			name = Release;

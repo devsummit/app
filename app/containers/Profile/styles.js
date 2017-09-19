@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255,255,255)'
   },
   section1: {
-    // flex: 1,
     alignItems: 'center',
     padding: 10
   },
@@ -15,6 +14,28 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: 15,
     marginRight: 12
+  },
+  input: {
+    paddingLeft: 12
+  },
+  inputInfo: {
+    height: 200,
+    paddingLeft: 12,
+    textAlignVertical: 'top'
+  },
+  inputJob: {
+    height: 100,
+    paddingLeft: 12,
+    flexWrap: 'wrap',
+    textAlignVertical: 'top'
+  },
+  imageProfile: {
+    alignSelf: 'center',
+    marginTop: -50
+  },
+  errorInput: {
+    paddingLeft: 20,
+    color: '#FFFFFF'
   },
   section3: {
     flex: 1,
@@ -25,13 +46,16 @@ const styles = StyleSheet.create({
     paddingLeft: 16
   },
   username: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 12
   },
   profileImage: {
-    width: 110,
-    height: 110,
-    borderRadius: 65,
-    borderWidth: 1
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 1,
+    alignSelf: 'center'
   },
   button: {
     width: '90%',
@@ -54,7 +78,24 @@ const styles = StyleSheet.create({
   },
   iconWrapper: {
     justifyContent: 'flex-end',
-    margin: 8
+    alignItems: 'flex-end',
+    marginRight: 20
+  },
+  points: {
+    fontFamily: 'Montserrat',
+    fontWeight: 'bold',
+    fontSize: 22,
+    color: 'white',
+    marginTop: -85,
+    textAlign: 'center'
+  },
+  coin: {
+    color: 'white',
+    fontSize: 22,
+  },
+  pointSection: {
+    flex: 1,
+    flexDirection: 'row'
   }
 });
 

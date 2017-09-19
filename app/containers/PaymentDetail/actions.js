@@ -8,7 +8,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   IS_FETCHING_TRANSACTION,
-  GET_TRANSACTION_RESPONSE
+  GET_TRANSACTION_RESPONSE,
+  CLEAR_TRANSACTION_RESPONSE
 } from './constants';
 
 import {
@@ -56,6 +57,12 @@ export function updateGetTransactionResponse(payload) {
   };
 }
 
+// update transaction response
+export function resetResponse() {
+  return {
+    type: CLEAR_TRANSACTION_RESPONSE
+  };
+}
 // Send parameter to API
 
 export function submitPayment() {
@@ -66,17 +73,21 @@ export function submitPayment() {
 
     const {
       emailDetail, firstName, lastName, phoneNumber, vaNumber, cardExpiryMonth,
-      cardExpiryYear, grossAmount, orderId, cardNumber, cardCvv, descriptionDetail,
-      mandiriToken, input1, input2, input3
+      cardExpiryYear, cardNumber, cardCvv, descriptionDetail,
+      mandiriToken, input1, order, input3
     } = paymentDetail || '';
 
+    let totalAmount = order.amount;
+    if (order && order.referal && order.referal.discount_amount) {
+      totalAmount = order.amount - (order.referal.discount_amount * order.amount);
+    }
 
     const { bankDestination, paymentType } = paymentMethod || '';
     const data = {
       bank: bankDestination,
       payment_type: paymentType,
-      gross_amount: grossAmount,
-      order_id: orderId,
+      gross_amount: totalAmount,
+      order_id: order.id,
       email: emailDetail,
       first_name: firstName,
       last_name: lastName,
@@ -88,7 +99,7 @@ export function submitPayment() {
       card_number: cardNumber,
       description: descriptionDetail,
       input1,
-      input2,
+      input2: totalAmount,
       random: input3,
       token: mandiriToken,
       client_key: MIDTRANS_CLIENT_KEY
@@ -100,6 +111,7 @@ export function submitPayment() {
           dispatch(updateGetTransactionResponse(response.data));
           dispatch(updateIsFetchingTransaction(false));
         }).catch((err) => {
+          dispatch(updateIsFetchingTransaction(false));
           console.log(err);
         });
       });

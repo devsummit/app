@@ -21,13 +21,18 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginBottom: 10,
     borderColor: '#FFD740',
-    borderWidth: 1,
+    borderWidth: 2,
+    padding: 5,
     borderRadius: 30,
     alignItems: 'center'
   },
   normalOnBlur: {
     color: 'grey',
     fontSize: 16
+  },
+  icon: {
+    fontSize: 25,
+    paddingRight: 10
   }
 });
 

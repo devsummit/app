@@ -1,0 +1,60 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.devsummit"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="22" />
+
+    <application
+      android:name=".MainApplication"
+      android:allowBackup="true"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:theme="@style/AppTheme">
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+        android:windowSoftInputMode="adjustResize"
+        android:launchMode="singleTask">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="devsummit" />
+        </intent-filter>
+      </activity>
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+            <meta-data
+          android:name="io.fabric.ApiKey"
+          android:value="91389a8adc10be8228360a1dc3fa758f2c2ff159"
+      />
+      <!-- Set the AccountKitActivity theme -->
+      <activity
+        tools:replace="android:theme"
+        android:name="com.facebook.accountkit.ui.AccountKitActivity"
+        android:theme="@style/LoginThemeYellow" />
+      <meta-data
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/fb_app_id" />
+      <meta-data
+        android:name="com.facebook.accountkit.ApplicationName"
+        android:value="@string/app_name" />
+      <meta-data
+        android:name="com.facebook.accountkit.ClientToken"
+        android:value="@string/ak_client_token" />
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

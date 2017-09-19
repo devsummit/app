@@ -10,6 +10,7 @@ export const PAYMENT_METHODS = [
     value: 'key1',
     label: 'Bank Transfer',
     payment_type: 'bank_transfer'
+
   },
   {
     value: 'key2',
@@ -55,6 +56,13 @@ export const PAYMENT_METHODS = [
     payment_type: 'danamon_online',
     bankDestination: 'danamon',
     basicDetail: true
+  },
+  {
+    value: 'key8',
+    label: 'Indomaret Payment',
+    payment_type: 'cstore',
+    bankDestination: 'indomaret',
+    basicDetail: true
   }
 ];
 
@@ -69,19 +77,19 @@ export const BANK_TRANSFERS = [
     label: 'BCA Virtual Account',
     bankDestination: 'bca',
     basicDetail: true,
-    vaNumber: true
+    vaNumber: false
   },
   {
     value: 'key2',
     label: 'Mandiri Bill Payment',
-    bankDestination: 'echannel'
+    bankDestination: 'mandiri_bill'
   },
   {
     value: 'key3',
     label: 'BNI Virtual Account',
     bankDestination: 'bni',
     basicDetail: true,
-    vaNumber: true
+    vaNumber: false
   }
 ];
 
@@ -115,7 +123,7 @@ export const CREDIT_CARD_LIST = [
     value: 'key5',
     label: 'MAYBANK',
     bankDestination: 'maybank'
-  },
+  }
 ];
 
 export const CREDIT_CARD = {

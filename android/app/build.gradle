@@ -167,6 +167,7 @@ android {
 
 dependencies {
   compile project(':react-native-code-push')
+  compile project(':react-native-document-picker')
   compile project(':react-native-image-crop-picker')
   compile project(':react-native-facebook-account-kit')
   compile project(':react-native-oauth')

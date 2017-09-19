@@ -5,7 +5,8 @@ import {
   Image,
   View,
   Alert,
-  StatusBar
+  StatusBar,
+  ActivityIndicator
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, {
@@ -92,20 +93,8 @@ class Main extends Component {
   }
 
   render() {
-    const { fields, isFetching } = this.props;
+    const { fields, isLoading } = this.props;
     const { username, password, email } = fields || '';
-    if (isFetching) {
-      return (
-        <Transition>
-          <Container>
-            <Header style={{ display: 'none' }} />
-            <View style={styles.spinner}>
-              <Spinner color="white" />
-            </View>
-          </Container>
-        </Transition>
-      );
-    }
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
@@ -113,49 +102,6 @@ class Main extends Component {
           <Header androidStatusBarColor="#f39e21" style={{ display: 'none' }} />
           <Content>
             <AuthLogo />
-            <View style={styles.lineSection}>
-              <View style={styles.lineTextThree} />
-              <Text style={styles.lineTextFour}> Log in with social media </Text>
-              <View style={styles.lineTextThree} />
-            </View>
-            <View style={styles.buttonSocialSection}>
-              <Button primary style={styles.buttonSocial} onPress={() => { this.loginFacebook(); }}>
-                <Icon name="facebook" color="white" style={styles.icon} />
-              </Button>
-              <Button
-                danger
-                style={styles.buttonSocial}
-                onPress={() => { this.props.loginGoogle(); }}
-              >
-                <Icon name="google-plus" color="white" style={styles.icon} />
-              </Button>
-              <Button
-                info
-                style={styles.buttonSocial}
-                onPress={() => { this.props.loginTwitter(); }}
-              >
-                <Icon name="twitter" color="white" style={styles.icon} />
-              </Button>
-            </View>
-            <View style={styles.lineSection}>
-              <Text style={styles.lineTextTwo}> or </Text>
-            </View>
-            <Button
-              style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
-              onPress={() => { this.props.loginTwitter(); }}
-            >
-              <LoginButton
-                style={styles.buttonLoggin}
-                type="phone"
-                onLogin={token => this.onLoginMobile(token)}
-                onError={e => this.onLoginMobile(e)}
-                primary
-                block
-              >
-                <Icon name="phone" color="white" style={styles.icon} />
-                <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
-              </LoginButton>
-            </Button>
             <View style={styles.formSection}>
               <Item rounded style={styles.item}>
                 <Input
@@ -178,15 +124,39 @@ class Main extends Component {
               </Item>
             </View>
             <View>
-              {(username.length < 5 || password.length < 6) ?
+              {(username.length < 4 || password.length < 4) ?
                 <Button disabled block style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
                   <Text>Log In</Text>
                 </Button>
                 :
                 <Button primary block style={styles.button} onPress={() => { this.onLogin(); }}>
-                  <Text>Log In</Text>
+                  { isLoading ?
+                    <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
+                    <Text>Log In</Text>
+                  }
                 </Button>
               }
+              <View style={styles.lineSection}>
+                <View style={styles.lineTextThree} />
+                <Text style={styles.lineTextFour}> or </Text>
+                <View style={styles.lineTextThree} />
+              </View>
+              <Button
+                style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
+                onPress={() => { this.props.loginTwitter(); }}
+              >
+                <LoginButton
+                  style={styles.buttonLoggin}
+                  type="phone"
+                  onLogin={token => this.onLoginMobile(token)}
+                  onError={e => this.onLoginMobile(e)}
+                  primary
+                  block
+                >
+                  <Icon name="phone" color="white" style={styles.icon} />
+                  <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+                </LoginButton>
+              </Button>
               <Button
                 transparent
                 style={styles.buttonRegister}
@@ -221,7 +191,7 @@ Main.propTypes = {
   loginFacebook: PropTypes.func.isRequired,
   updateFields: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   subscribeNewsletter: PropTypes.func.isRequired,
   loginGoogle: PropTypes.func.isRequired,
   loginTwitter: PropTypes.func.isRequired
@@ -234,7 +204,7 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isFetching: selectors.getIsFetching()
+  isLoading: selectors.getIsLoading()
   // @TODO please create the selectors function
   // profileData: selectors.getProfileData()
 });

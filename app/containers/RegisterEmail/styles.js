@@ -16,12 +16,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     marginBottom: 20
   },
-  pickerWrapper: {
-    borderWidth: 1,
-    borderColor: '#FFD740',
-    borderRadius: 50,
-    margin: 20
-  },
   button: {
     marginLeft: 12,
     marginRight: 12,
@@ -36,10 +30,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 9
   },
-  picker: {
-    margin: 12,
-    color: '#FFFFFF'
-  },
   formSection: {
     marginTop: 8,
     marginRight: 18,
@@ -48,6 +38,10 @@ const styles = StyleSheet.create({
   formInput: {
     paddingLeft: 20,
     color: '#FFFFFF'
+  },
+  errorInput: {
+    paddingLeft: 20,
+    color: '#F44336'
   },
   item: {
     marginBottom: 10,

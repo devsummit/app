@@ -16,17 +16,18 @@ export const role_option = [
   {
     value: 'key1',
     label: 'booth'
-  },
-  {
-    value: 'key2',
-    label: 'speaker'
   }
+  // {
+  //   value: 'key2',
+  //   label: 'hackaton'
+  // }
 ];
 
 export const ROLES = {
   2: 'attendee',
   3: 'booth',
-  4: 'speaker'
+  4: 'speaker',
+  5: 'hackaton'
 };
 
 export const PRIMARYCOLOR = '#f39e21';

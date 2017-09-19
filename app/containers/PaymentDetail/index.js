@@ -28,42 +28,33 @@ import { BANK_TRANSFERS, CREDIT_CARD, PAYMENT_METHODS } from '../Payment/constan
 // import constants
 import { PRIMARYCOLOR } from '../../constants';
 
+import { getProfileData } from '../../helpers';
+
 class PaymentDetail extends Component {
   componentWillMount() {
     const { order, updateInputFields } = this.props;
+    getProfileData().then((profileData) => {
+      if (profileData) {
+        updateInputFields('firstName', profileData.first_name);
+        updateInputFields('lastName', profileData.last_name);
+        updateInputFields('emailDetail', profileData.email);
+      }
+    });
+    updateInputFields('order', order);
     updateInputFields('orderId', order.id);
     updateInputFields('grossAmount', order.amount);
     updateInputFields('input2', order.amount);
+    updateInputFields('cardExpiryMonth', '01');
+    updateInputFields('cardExpiryYear', '2017');
     updateInputFields('input3', Math.floor(Math.random() * 90000) + 10000);
   }
 
   componentWillReceiveProps() {
     const { getTransactionResponse } = this.props;
-    if (Object.keys(getTransactionResponse).length > 0) {
-      if (getTransactionResponse.data && getTransactionResponse.data.status_message) {
-        Alert.alert(getTransactionResponse.data.status_message);
-        this.props.updateGetTransactionResponse({});
-        Actions.pop();
-      } else if (
-        getTransactionResponse.meta &&
-        getTransactionResponse.meta.message &&
-        getTransactionResponse.meta.message.status_message) {
-        if (getTransactionResponse.meta.message.validation_messages) {
-          const messages = getTransactionResponse.meta.message.validation_messages;
-          let message = '';
-          for (let i = 0; i < messages.length; i += 1) {
-            message += messages[i];
-          }
-          Alert.alert(message);
-        } else {
-          Alert.alert(getTransactionResponse.meta.message.status_message);
-          this.props.updateGetTransactionResponse({});
-          Actions.pop();
-        }
-      } else if (getTransactionResponse.meta && getTransactionResponse.meta.message.length > 0) {
-        Alert.alert(getTransactionResponse.meta.message);
-        this.props.updateGetTransactionResponse({});
-      }
+    if (getTransactionResponse && getTransactionResponse.meta && getTransactionResponse.meta.message) {
+      Alert.alert(getTransactionResponse.meta.message);
+      this.props.resetResponse();
+      Actions.pop();
     }
   }
 
@@ -148,7 +139,7 @@ class PaymentDetail extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <Text style={styles.text}>{detail.label}</Text>
+          <Text style={styles.text}>{detail.label.toUpperCase()}</Text>
           {detail && detail.basicDetail ?
             <Content>
               <InputItem
@@ -206,8 +197,8 @@ class PaymentDetail extends Component {
                 value={cardCvv}
                 placeholder="cvv"
               />
-              <Text>expiry</Text>
-              <View style={styles.datePicker}>
+              <Text style={styles.text}>EXPIRY (MM/YYYY)</Text>
+              <View style={[ styles.datePicker ]}>
                 <Picker
                   style={styles.monthPicker}
                   placeholder="expiry month"
@@ -312,7 +303,7 @@ class PaymentDetail extends Component {
 PaymentDetail.propTypes = {
   getTransactionResponse: PropTypes.object.isRequired,
   updateErrorFields: PropTypes.func.isRequired,
-  updateGetTransactionResponse: PropTypes.func.isRequired,
+  resetResponse: PropTypes.func.isRequired,
   updateInputFields: PropTypes.func.isRequired,
   inputFields: PropTypes.object.isRequired,
   errorFields: PropTypes.object.isRequired,
