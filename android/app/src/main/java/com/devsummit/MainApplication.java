@@ -11,11 +11,7 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.underscope.react.fbak.RNAccountKitPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
-import com.oblador.vectoricons.VectorIconsPackage;
 import io.fullstack.oauth.OAuthManagerPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import io.underscope.react.fbak.RNAccountKitPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -42,12 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new VectorIconsPackage(),
-            new OAuthManagerPackage(),
-            new LinearGradientPackage(),
-            new PickerPackage(),
-            new RNAccountKitPackage(),
-            new ReactNativeDocumentPicker(),
+          new ReactNativeDocumentPicker(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
           new VectorIconsPackage(),
           new PickerPackage(),

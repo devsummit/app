@@ -100,8 +100,8 @@ export function saveMaterialList(image) {
             dispatch(updateModalStatus(false));
             dispatch(isFetchingMaterial(false));
           }).catch((err) => {
-              dispatch(isFetchingMaterial(false));
-              console.log(err);
+            dispatch(isFetchingMaterial(false));
+            console.log(err);
           });
       });
   };
