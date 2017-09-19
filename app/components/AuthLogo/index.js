@@ -4,9 +4,9 @@ import styles from './styles';
 
 const Logo = require('../../../assets/images/logo.png');
 
-const AuthLogo = () => {
+const AuthLogo = (props) => {
   return (
-    <View style={styles.headerSection}>
+    <View style={props.style}>
       <Image source={Logo} resizeMode="center" />
     </View>
   );
