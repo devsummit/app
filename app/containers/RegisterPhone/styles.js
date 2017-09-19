@@ -9,6 +9,11 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined
   },
+  logo: {
+    flex: 0.7,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   title: {
     fontSize: 18,
     backgroundColor: '#efefef',
