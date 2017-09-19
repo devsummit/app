@@ -33,32 +33,24 @@ export default class MainTabs extends Component {
   */
   changeIcon() {
     const role = this.state.roleId;
-    if (role === 2) {
-      return (<IconSimpleLine
-        name="organization"
-        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-      />);
-    }
-    if (role === 3) {
-      return (<IconSimpleLine
-        name="organization"
-        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-      />);
-    } else if (role === 4) {
+    if (role === 4) {
       return (<IconSimpleLine
         name="speech"
         style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
       />);
     }
+    return (<IconSimpleLine
+      name="organization"
+      style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+    />);
   }
 
   viewCurrentUser() {
     const role = this.state.roleId;
-    if (role === 2 || role === 3) {
-      return (<BoothList />);
-    } else if (role === 4) {
+    if (role === 4) {
       return (<MaterialList />);
     }
+    return (<BoothList />);
   }
 
   render() {
