@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0006210F1644F9CD8FCD4BC1221AD18D /* DCTAuthURLOpener.m in Sources */ = {isa = PBXBuildFile; fileRef = 8102C359316C20AEC139E219A7EC00D3 /* DCTAuthURLOpener.m */; };
-		0106C126F89A32D7868E081386BB4E48 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		0118B1EF1E6AC8630F1FD70724797857 /* NSKeyedUnarchiver+DCTAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C93A987AFA167658F7C9573326A22 /* NSKeyedUnarchiver+DCTAuth.m */; };
 		01319EF0DB7DB861CC562869DE738306 /* DCTOAuth2.h in Headers */ = {isa = PBXBuildFile; fileRef = F4477C7663A70658B1222DCFAF45DA1E /* DCTOAuth2.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		017249793EAA9FDB6831E6E4A8AA4CC4 /* DCTAuthAccountSubclass.h in Headers */ = {isa = PBXBuildFile; fileRef = B74F3E41AFA451D4C5081078A5FB3E3F /* DCTAuthAccountSubclass.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -21,8 +20,6 @@
 		29C67763410C1C5AA0311CEBCBE9F8F0 /* NSString+DCTAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 486A72A1B99EAE761C6C31E62872F9DE /* NSString+DCTAuth.m */; };
 		2BBB4727AE3A5FF36319B6DA5178EC89 /* DCTAuthURLRequestPerformer.h in Headers */ = {isa = PBXBuildFile; fileRef = A82033DD052426E15DE9AFD2DB4D48F3 /* DCTAuthURLRequestPerformer.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2C092B8A349C23EC5AC8F0B346155710 /* DCTAuthURLOpener.h in Headers */ = {isa = PBXBuildFile; fileRef = 2409A7BD6DC8772F9B41808FF8345237 /* DCTAuthURLOpener.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		363438443B5C045C50BA10280936F63F /* Pods-DevSummitTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D8975AF5B11060A7A0BAC313A6F77D29 /* Pods-DevSummitTests-dummy.m */; };
-		3C142ABFF97EAD155FE9C0E1E0B3342B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		3C602A7B83F95541E219907C892F28AB /* DCTOAuth1Signature.m in Sources */ = {isa = PBXBuildFile; fileRef = 3024502E20991D185DC8FB70F2600EB3 /* DCTOAuth1Signature.m */; };
 		3CF675107A4F27DB0EB94965F4E14F5A /* DCTOAuth2Account.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FD6A409D6E595537CC26BC94B42D5C9 /* DCTOAuth2Account.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3EC1B28A8912901F2054B90A9C18510E /* DCTOAuth1Account.m in Sources */ = {isa = PBXBuildFile; fileRef = E624FE06F50E66DE69D5096204F73F61 /* DCTOAuth1Account.m */; };
@@ -30,50 +27,53 @@
 		4251ABB18F511C3935B500F0B969EC15 /* DCTAbstractAuthAccountProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB6E11F806EB7F829B65F9236FAFE9F /* DCTAbstractAuthAccountProperties.m */; };
 		44E829018F04EA3592B44B752A6B04BD /* DCTOAuth2RequestType.h in Headers */ = {isa = PBXBuildFile; fileRef = 44121DAFCA7C7121E3EB1BD201D9B043 /* DCTOAuth2RequestType.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		49FEFA36486A328FBF432312059C6926 /* DCTOAuth1Signature.h in Headers */ = {isa = PBXBuildFile; fileRef = 874F414B749FAEC24C88ED001F89FF9A /* DCTOAuth1Signature.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4EF3BD10491AE9EE950921427BCD2FF4 /* Pods-DevSummit-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1639EB4043E51649D7A4C8719EE0120E /* Pods-DevSummit-tvOS-dummy.m */; };
-		5028492D332D02DDA95EB8E080F5BB9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		52A306594DBC3541E83BC3BB665EBDB4 /* DCTOAuth1ParameterTransmission.h in Headers */ = {isa = PBXBuildFile; fileRef = A9C156B2B1F8644E707543B8E231D1A3 /* DCTOAuth1ParameterTransmission.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		57C1CB567BBB1A67EA26F1C2FAAAE5C2 /* Pods-app-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D22222702BABFD430EFA2EABA302B6B3 /* Pods-app-dummy.m */; };
 		5C18E9CB1D7FA268171A61951127ED8E /* DCTAuthURLOpenerOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C04E2DF65AD4C429B85DABE5F69BA5B3 /* DCTAuthURLOpenerOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		5DD22C8605E9213DB27511C63BF00ADF /* DCTAuthPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = DE58D5F5741E94BD39D42494945305C5 /* DCTAuthPlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		646EFE8B8E34006C317D93D432C2EA3D /* Pods-app-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3E00DA6055CA4674E275415C36A2F6 /* Pods-app-tvOS-dummy.m */; };
 		64C5787FD4C3D5C570C8676673D55BDF /* DCTOAuth1Account.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BFD7C05AEC6676400DD0002C3E2A3A8 /* DCTOAuth1Account.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6905B9CA30344E4615B0B266A795B4B7 /* DCTOAuth2Keys.h in Headers */ = {isa = PBXBuildFile; fileRef = A21CFC8533AE7507BDBF058908769F27 /* DCTOAuth2Keys.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6AFB5DA17745360988AA134EF15C5F0E /* DCTAuth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8139DA72F7EA33426A8D6990EB0787B3 /* DCTAuth-dummy.m */; };
 		6C56534A7BA40E7C8A56030A709B5D38 /* DCTBasicAuthAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 9510102DF1CF3C52528D6D62A733E387 /* DCTBasicAuthAccount.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6D0653C639FE9A5867409414B61FFE32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		6F3D65F366F436FE4F05F9B53ABA33F5 /* DCTAuthAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = C65C3AB18774E4A4FB633644F41A26D6 /* DCTAuthAccount.m */; };
 		6FC968EAD7CA3F03538C6674689735B4 /* DCTAuthURLOpenerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1E936EC853BCCB7ECD54F429B72A95 /* DCTAuthURLOpenerOperation.m */; };
 		7636E9509EE9C65B0E3407846FF2DC62 /* DCTBasicAuthAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 999A937D311A769343E8DD6D55AFFBF7 /* DCTBasicAuthAccount.m */; };
 		7D405D3A0018A438503AA4EC5F63DA19 /* DCTAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = F368FA3AAA6E91A7B5F448050F6203D3 /* DCTAuth.m */; };
 		80ED268CCC39B32E95640CDBAF304B34 /* DCTAuthAccountStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F256FCD53FC942FD2270A959004DC39 /* DCTAuthAccountStore.m */; };
 		88D85846408BCAADFBDF8AE653F24BF4 /* DCTOAuth1Credential.m in Sources */ = {isa = PBXBuildFile; fileRef = 2000D991D2B725FFAEC871FFA7112A57 /* DCTOAuth1Credential.m */; };
+		8D535D917C8147C74C0AE8BC65F850DB /* Pods-app-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 419AA8B4C46E500D23A38AF7E438FF4A /* Pods-app-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F9CF4FE30B5CA870890CA05FE0B4A18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		901E12343CF046C17E00A90257C70758 /* DCTOAuth2Account.m in Sources */ = {isa = PBXBuildFile; fileRef = C62DF30BB03D415AEB8DB4200C412D7E /* DCTOAuth2Account.m */; };
+		93315DBE38ACC0DB22E9ED17EF073B17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		95CE033D58ACE87E0A4163FEC178F314 /* NSKeyedUnarchiver+DCTAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 97807517307BED59A74AC4DF2A6E036E /* NSKeyedUnarchiver+DCTAuth.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		99638312F334221E95D17A5F05B5368C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		99A3E209D843CA560D66853404CB7BD2 /* DCTAuthAccountCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 38F33717D4894602A7EF5D95D67BA0F0 /* DCTAuthAccountCredential.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C27AC786F1E5CBBDABE9E0C2E0979FD /* Pods-DevSummit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B632CC466C6B850A0D39A837A7A905 /* Pods-DevSummit-dummy.m */; };
 		9E6BBADF21BE942480F97ADEA90C7C2E /* DCTBasicAuthCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 17ED29BAD4DBE64FE2E6693419162FC8 /* DCTBasicAuthCredential.m */; };
 		A2EA649FACDCA5D1AD97864EDF78AF79 /* DCTAuthContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE64519C7BB7BD62DE4CD02ABBE96E6 /* DCTAuthContent.m */; };
 		A33F2A55125B7DD925E59AF0E4546049 /* DCTOAuth1Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = FF29007C627D125DFE841875A1340459 /* DCTOAuth1Keys.m */; };
 		A80359C891E53F89B9A0F8952E341065 /* DCTAuthAccountStoreQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BAAAB1DE8A0F70C3ACAF62FDF5D6E7E /* DCTAuthAccountStoreQuery.m */; };
 		A9C20385182706D70262EBF749A5A800 /* DCTAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DB342E311C5B9C373F21AB6FAF68F71 /* DCTAuth.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA7FC7CBA776C8A0AF1F7F7379832E78 /* Pods-DevSummitTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F43D9833205E64B5698CEF50063DDA49 /* Pods-DevSummitTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC2F7FC19F5ACA6CB7D2CB3662E29DCF /* DCTAuthAccount+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E25424554C9D9E5132B57221F8289348 /* DCTAuthAccount+Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B02911283243AC3A9B43712F34AFFDEB /* DCTOAuth2RequestType.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B361A38FEB78E289FC87B4D82F655A /* DCTOAuth2RequestType.m */; };
 		B05D961459915F67057DF45C4047C963 /* DCTAuthPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 54399C8EEE06529F509E88B9EEB57D12 /* DCTAuthPlatform.m */; };
+		B255B28B816B0D5D6D6CD8A110C59BB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		B264640E09C9B2F56C346585FECD8F11 /* DCTAuthContent.h in Headers */ = {isa = PBXBuildFile; fileRef = B3F60BED6A16FEE164AAE6E78F9E0D02 /* DCTAuthContent.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B377AE49F637B717F91D6B71669BC2CE /* DCTAuthMultipartData.h in Headers */ = {isa = PBXBuildFile; fileRef = 31A2124CFDAA14951A6BBBD8667A52FC /* DCTAuthMultipartData.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B924BC357672EAB81C1D459A9CEE9EB4 /* DCTAuthRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 978432A8BC27313EE719C50298E5D495 /* DCTAuthRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B9EFEA8EE9E3853BD93573BAECECF48F /* DCTOAuth2Credential.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6511B217969D8CC98FB52C3C1C8591 /* DCTOAuth2Credential.m */; };
 		BB874442CE67478C3ACF6438E04F2624 /* DCTAuthAccountStoreQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 584A3087A34D46D6B991EEA67CE38972 /* DCTAuthAccountStoreQuery.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		BCAA37C091E3F749DA2993F11761F64E /* Pods-app-tvOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEABFBD19910FD2E8894D4BEE9C22C0 /* Pods-app-tvOSTests-dummy.m */; };
 		BCFEA6C7B338439D287E7001515BF181 /* NSString+DCTAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = A96A4CD66C025B01AABD5553A096FE65 /* NSString+DCTAuth.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		BF27E594EF0D79B64446DD77ACCA6B2D /* DCTOAuth2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8C14D787E892F8074C467F3257FF04 /* DCTOAuth2.m */; };
 		BFE82ED8BF7E348F7B50944E374F5020 /* DCTOAuth2Credential.h in Headers */ = {isa = PBXBuildFile; fileRef = 310CE46C51F5778B0366147F2F212372 /* DCTOAuth2Credential.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		C18A131B3A41A6DABC46FD8702DC918C /* DCTOAuth2Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CAD301082A90511ECE0C8F9B22C02 /* DCTOAuth2Keys.m */; };
-		C38B05B1B7EE0821E937F5CFF9DE3975 /* Pods-DevSummit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CC9A15378E8374A6B2E2A907744CA396 /* Pods-DevSummit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CAF47D4262E2B7BEC92D05A68F11CCF1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		CC4A5888A88A9C05443F1A06B28EDCEA /* DCTAuthRequestMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF9EB66C26BC0DB9A62E9D41A95CFF6 /* DCTAuthRequestMethod.m */; };
+		CC58CC1DDF2F9C98AEEF22DE2F2CA684 /* Pods-appTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 49B9261ACB1E0685C446506A5D36B55B /* Pods-appTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D077956A3CF7C693F6B3CA6B5BD12703 /* DCTAuthURLRequestPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB54A60F69280B6EC5A73EBC475FE82 /* DCTAuthURLRequestPerformer.m */; };
+		D3EB49525D0EAFF1BC4C780F62219D61 /* Pods-appTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C04C93418F3755B49856E000FFD314 /* Pods-appTests-dummy.m */; };
 		D4DC0BD9ADA0A2030EB7EB02305204DB /* DCTOAuth1Credential.h in Headers */ = {isa = PBXBuildFile; fileRef = DCB33D0ECB71E656E20C80F72628CF7A /* DCTOAuth1Credential.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D7274D6B1DA247E01B113BDAA7488AAD /* Pods-DevSummit-tvOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3E9C1F58F6EC65B9AC5492E089ADD1 /* Pods-DevSummit-tvOSTests-dummy.m */; };
 		DD8A1AD8D13E8CF38229E8FCBF7E1DD3 /* DCTAuthAccountStoreQueryDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A3321C6AE4F13C46DA7DC38A382C37B /* DCTAuthAccountStoreQueryDelegate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DECA4AF8510CAC8DCDCF3A8B3D6B4AF8 /* DCTOAuth1Keys.h in Headers */ = {isa = PBXBuildFile; fileRef = 979A48A66F03F5598886D59CC0194225 /* DCTOAuth1Keys.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E189A0C28111FFBCABBC71291109C959 /* DCTAuthContentType.h in Headers */ = {isa = PBXBuildFile; fileRef = 9840A55B02330733DEEC85E526F5E12E /* DCTAuthContentType.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -87,7 +87,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1459C8FA253D322332DCFCF5A772B87D /* PBXContainerItemProxy */ = {
+		370E213932FE36A9AA0B44D9AF7A8A97 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -97,75 +97,75 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0263EFD793CA5DCF3EE2C964ED820BDC /* Pods-DevSummit-tvOSTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummit-tvOSTests-resources.sh"; sourceTree = "<group>"; };
+		07C04C93418F3755B49856E000FFD314 /* Pods-appTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-appTests-dummy.m"; sourceTree = "<group>"; };
 		08048C66A868C4AAC20742F2DE403B9C /* DCTAuthResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthResponse.m; path = DCTAuth/DCTAuthResponse.m; sourceTree = "<group>"; };
-		094266A0CA9ACFE6352B851651F56425 /* Pods-DevSummit-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummit-resources.sh"; sourceTree = "<group>"; };
+		0C3E00DA6055CA4674E275415C36A2F6 /* Pods-app-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-app-tvOS-dummy.m"; sourceTree = "<group>"; };
 		0D8CAD301082A90511ECE0C8F9B22C02 /* DCTOAuth2Keys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2Keys.m; path = DCTAuth/DCTOAuth2Keys.m; sourceTree = "<group>"; };
-		0EC31B9A7FE0BC7F6758502279805D52 /* Pods-DevSummit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DevSummit-acknowledgements.plist"; sourceTree = "<group>"; };
+		12CF4D25DCD30447909777B7A4435D3F /* Pods-appTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-appTests-frameworks.sh"; sourceTree = "<group>"; };
+		14049D760036969BD87A45002AFF8B14 /* Pods-app-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-app-resources.sh"; sourceTree = "<group>"; };
 		1617F0F016912B75EAAC3168794F2981 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1639EB4043E51649D7A4C8719EE0120E /* Pods-DevSummit-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DevSummit-tvOS-dummy.m"; sourceTree = "<group>"; };
 		17ED29BAD4DBE64FE2E6693419162FC8 /* DCTBasicAuthCredential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTBasicAuthCredential.m; path = DCTAuth/DCTBasicAuthCredential.m; sourceTree = "<group>"; };
+		1AE3765F6A74842AEABEF97688704F6A /* Pods-app-tvOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-app-tvOS-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1AF5A1B426003E091049D774E7493811 /* DCTAuthAccount.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccount.h; path = DCTAuth/DCTAuthAccount.h; sourceTree = "<group>"; };
-		1D21688D8AFE5208A99037691E71E649 /* Pods-DevSummit-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummit-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		1D9993C3203731CFF57FB6D066B883CC /* Pods-appTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-appTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		2000D991D2B725FFAEC871FFA7112A57 /* DCTOAuth1Credential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Credential.m; path = DCTAuth/DCTOAuth1Credential.m; sourceTree = "<group>"; };
 		2409A7BD6DC8772F9B41808FF8345237 /* DCTAuthURLOpener.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthURLOpener.h; path = DCTAuth/DCTAuthURLOpener.h; sourceTree = "<group>"; };
-		26B632CC466C6B850A0D39A837A7A905 /* Pods-DevSummit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DevSummit-dummy.m"; sourceTree = "<group>"; };
 		2A3321C6AE4F13C46DA7DC38A382C37B /* DCTAuthAccountStoreQueryDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountStoreQueryDelegate.h; path = DCTAuth/DCTAuthAccountStoreQueryDelegate.h; sourceTree = "<group>"; };
-		2A440835537A3A4E15AC299CE3268330 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2BA3B6CF267A7A3FBF4CF50A84BA0A4E /* Pods-DevSummitTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DevSummitTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		2B1CD8E56143CC4274C5A6D1D5AB2574 /* libPods-app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-app-tvOSTests.a"; path = "libPods-app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C5C93A987AFA167658F7C9573326A22 /* NSKeyedUnarchiver+DCTAuth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSKeyedUnarchiver+DCTAuth.m"; path = "DCTAuth/NSKeyedUnarchiver+DCTAuth.m"; sourceTree = "<group>"; };
-		2D2EB70134ABAE966E25E27974DCB5FB /* libPods-DevSummit-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-DevSummit-tvOSTests.a"; path = "libPods-DevSummit-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8C14D787E892F8074C467F3257FF04 /* DCTOAuth2.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2.m; path = DCTAuth/DCTOAuth2.m; sourceTree = "<group>"; };
 		3024502E20991D185DC8FB70F2600EB3 /* DCTOAuth1Signature.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Signature.m; path = DCTAuth/DCTOAuth1Signature.m; sourceTree = "<group>"; };
 		310CE46C51F5778B0366147F2F212372 /* DCTOAuth2Credential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2Credential.h; path = DCTAuth/DCTOAuth2Credential.h; sourceTree = "<group>"; };
 		31A2124CFDAA14951A6BBBD8667A52FC /* DCTAuthMultipartData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthMultipartData.h; path = DCTAuth/DCTAuthMultipartData.h; sourceTree = "<group>"; };
-		33BD40CF626F10200ABBFBBD0BC7B248 /* Pods-DevSummit-tvOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DevSummit-tvOS-acknowledgements.plist"; sourceTree = "<group>"; };
-		35E23C43DDAD5EB61C1847F46F4D8C30 /* Pods-DevSummit-tvOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummit-tvOS-frameworks.sh"; sourceTree = "<group>"; };
+		3429E96BE1CE7EBB618EA6FB867C2E1E /* Pods-appTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-appTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		38F33717D4894602A7EF5D95D67BA0F0 /* DCTAuthAccountCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountCredential.h; path = DCTAuth/DCTAuthAccountCredential.h; sourceTree = "<group>"; };
+		3AD4073564E6F60ADA1AB0B3C9B5216B /* Pods-app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3BFD7C05AEC6676400DD0002C3E2A3A8 /* DCTOAuth1Account.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Account.h; path = DCTAuth/DCTOAuth1Account.h; sourceTree = "<group>"; };
 		3DB54A60F69280B6EC5A73EBC475FE82 /* DCTAuthURLRequestPerformer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthURLRequestPerformer.m; path = DCTAuth/DCTAuthURLRequestPerformer.m; sourceTree = "<group>"; };
 		3FD6A409D6E595537CC26BC94B42D5C9 /* DCTOAuth2Account.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2Account.h; path = DCTAuth/DCTOAuth2Account.h; sourceTree = "<group>"; };
 		3FE64519C7BB7BD62DE4CD02ABBE96E6 /* DCTAuthContent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthContent.m; path = DCTAuth/DCTAuthContent.m; sourceTree = "<group>"; };
-		40F42F9D4B8EF2F5CC1136CF92B60CBD /* libPods-DevSummit-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-DevSummit-tvOS.a"; path = "libPods-DevSummit-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		415E9E65C6C357A604570531DF1947ED /* DCTAuthAccountStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountStore.h; path = DCTAuth/DCTAuthAccountStore.h; sourceTree = "<group>"; };
+		419AA8B4C46E500D23A38AF7E438FF4A /* Pods-app-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-app-umbrella.h"; sourceTree = "<group>"; };
 		44121DAFCA7C7121E3EB1BD201D9B043 /* DCTOAuth2RequestType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2RequestType.h; path = DCTAuth/DCTOAuth2RequestType.h; sourceTree = "<group>"; };
+		46CBFC23DDA7D99394BAABBEAAB74EEF /* Pods-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-app.release.xcconfig"; sourceTree = "<group>"; };
+		47FDD1EA1010AC0754EBA7F119D73935 /* Pods-app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		484DCFB61DAE9EDE69CA3726A005D838 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486A72A1B99EAE761C6C31E62872F9DE /* NSString+DCTAuth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+DCTAuth.m"; path = "DCTAuth/NSString+DCTAuth.m"; sourceTree = "<group>"; };
-		4921E727ED6A05FCB3F0E6466BC68A72 /* Pods-DevSummit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DevSummit-acknowledgements.markdown"; sourceTree = "<group>"; };
+		49B9261ACB1E0685C446506A5D36B55B /* Pods-appTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-appTests-umbrella.h"; sourceTree = "<group>"; };
+		4B635B5D2B2518362DABF635A221CBCB /* Pods-appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-appTests.release.xcconfig"; sourceTree = "<group>"; };
 		4BAAAB1DE8A0F70C3ACAF62FDF5D6E7E /* DCTAuthAccountStoreQuery.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthAccountStoreQuery.m; path = DCTAuth/DCTAuthAccountStoreQuery.m; sourceTree = "<group>"; };
+		4CA662EEE0CFCC0C6CDFE5C6DFF64263 /* Pods-app-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-app-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		4DF9EB66C26BC0DB9A62E9D41A95CFF6 /* DCTAuthRequestMethod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthRequestMethod.m; path = DCTAuth/DCTAuthRequestMethod.m; sourceTree = "<group>"; };
 		4E8CB8C90206CB66B0F6E0B8ED655D96 /* DCTAuthKeychainAccess.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthKeychainAccess.h; path = DCTAuth/DCTAuthKeychainAccess.h; sourceTree = "<group>"; };
 		4FB6E11F806EB7F829B65F9236FAFE9F /* DCTAbstractAuthAccountProperties.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAbstractAuthAccountProperties.m; path = DCTAuth/DCTAbstractAuthAccountProperties.m; sourceTree = "<group>"; };
-		540AB9D8D465BC8E1203182FDC20CBF0 /* Pods-DevSummitTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DevSummitTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		505B34DDD37D4436A49906017B9AD567 /* Pods-app-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-app-acknowledgements.markdown"; sourceTree = "<group>"; };
 		54399C8EEE06529F509E88B9EEB57D12 /* DCTAuthPlatform.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthPlatform.m; path = DCTAuth/DCTAuthPlatform.m; sourceTree = "<group>"; };
-		55AFFA7BAFDDD9C88D7F512B26959734 /* Pods-DevSummit-tvOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummit-tvOS-resources.sh"; sourceTree = "<group>"; };
-		55C3FAD52E7ADBDE36259ECB830C910D /* Pods-DevSummit-tvOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DevSummit-tvOS-acknowledgements.markdown"; sourceTree = "<group>"; };
+		5636ECBFE48A5F97F0DD06BC82FFAD20 /* Pods-appTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-appTests.debug.xcconfig"; sourceTree = "<group>"; };
+		56641E3ABF68E0C1EDFAED71A61FB450 /* Pods-app.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-app.modulemap"; sourceTree = "<group>"; };
 		584A3087A34D46D6B991EEA67CE38972 /* DCTAuthAccountStoreQuery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountStoreQuery.h; path = DCTAuth/DCTAuthAccountStoreQuery.h; sourceTree = "<group>"; };
-		59E7F8F5020A42B96C29D183CE6B9EEB /* Pods-DevSummit-tvOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DevSummit-tvOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		5CB37BB1D61C6ED5585E87AA6EF23347 /* Pods-DevSummit-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummit-frameworks.sh"; sourceTree = "<group>"; };
-		5EB1EA6AB577847FA09915B1B9FC4C8B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BEABFBD19910FD2E8894D4BEE9C22C0 /* Pods-app-tvOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-app-tvOSTests-dummy.m"; sourceTree = "<group>"; };
+		5D4654C0DA91756A32AE08501DEFC074 /* Pods-app-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-app-frameworks.sh"; sourceTree = "<group>"; };
+		65D4081FF3EC6908119C70303435DB3E /* Pods-app-tvOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-app-tvOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		672B09D37BE9918EC4742D0298FE4152 /* DCTAuth.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = DCTAuth.modulemap; sourceTree = "<group>"; };
-		679DD238C22E45D53C4297D07F88C645 /* Pods-DevSummitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummitTests.release.xcconfig"; sourceTree = "<group>"; };
-		6B6264AFA6A24D5A5B1C57FF3587C695 /* Pods-DevSummitTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummitTests-frameworks.sh"; sourceTree = "<group>"; };
 		6D79650327D384B7F5D20D7EE25E6AB8 /* DCTAuthKeychainAccess.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthKeychainAccess.m; path = DCTAuth/DCTAuthKeychainAccess.m; sourceTree = "<group>"; };
 		6F256FCD53FC942FD2270A959004DC39 /* DCTAuthAccountStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthAccountStore.m; path = DCTAuth/DCTAuthAccountStore.m; sourceTree = "<group>"; };
 		72CCB8B0570B36658AF6A5AA0CACAD47 /* DCTAuthResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthResponse.h; path = DCTAuth/DCTAuthResponse.h; sourceTree = "<group>"; };
 		73A254E8486D01B7777105F990E35734 /* DCTAuthRequestMethod.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthRequestMethod.h; path = DCTAuth/DCTAuthRequestMethod.h; sourceTree = "<group>"; };
-		75F1463EC820CB86AFE9644B5A538020 /* Pods-DevSummitTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummitTests-resources.sh"; sourceTree = "<group>"; };
-		7E458DB0DD37C1E5DE8F1E7A47B6884E /* Pods-DevSummit-tvOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DevSummit-tvOSTests-frameworks.sh"; sourceTree = "<group>"; };
-		7EF0509D8504DDFEAE8D5771E75F171A /* Pods-DevSummit-tvOSTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DevSummit-tvOSTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8102C359316C20AEC139E219A7EC00D3 /* DCTAuthURLOpener.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthURLOpener.m; path = DCTAuth/DCTAuthURLOpener.m; sourceTree = "<group>"; };
 		8139DA72F7EA33426A8D6990EB0787B3 /* DCTAuth-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DCTAuth-dummy.m"; sourceTree = "<group>"; };
+		830A6FFC8031398845E289E4BFF23A19 /* DCTAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DCTAuth.framework; path = DCTAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83DF7DF0C46CB149D848A1F3668E86A3 /* Pods_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_app.framework; path = "Pods-app.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		874F414B749FAEC24C88ED001F89FF9A /* DCTOAuth1Signature.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Signature.h; path = DCTAuth/DCTOAuth1Signature.h; sourceTree = "<group>"; };
-		87A5D93DCE43A35B903EFE35EDCF3A7B /* Pods_DevSummit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DevSummit.framework; path = "Pods-DevSummit.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9072558D2E32FC4E82012E7C8769952C /* Pods-DevSummit-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummit-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		8F4A7F8321E20D83E417529C4A6A93C6 /* Pods-app-tvOSTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-app-tvOSTests-resources.sh"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		943693E18663C6B6DF0BF864682B7BBE /* Pods-DevSummit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummit.release.xcconfig"; sourceTree = "<group>"; };
+		94952E8D2FB581C6E0E9BA3B0CBE2822 /* Pods_appTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_appTests.framework; path = "Pods-appTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9510102DF1CF3C52528D6D62A733E387 /* DCTBasicAuthAccount.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTBasicAuthAccount.h; path = DCTAuth/DCTBasicAuthAccount.h; sourceTree = "<group>"; };
 		97807517307BED59A74AC4DF2A6E036E /* NSKeyedUnarchiver+DCTAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSKeyedUnarchiver+DCTAuth.h"; path = "DCTAuth/NSKeyedUnarchiver+DCTAuth.h"; sourceTree = "<group>"; };
 		978432A8BC27313EE719C50298E5D495 /* DCTAuthRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthRequest.h; path = DCTAuth/DCTAuthRequest.h; sourceTree = "<group>"; };
 		979A48A66F03F5598886D59CC0194225 /* DCTOAuth1Keys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Keys.h; path = DCTAuth/DCTOAuth1Keys.h; sourceTree = "<group>"; };
 		9840A55B02330733DEEC85E526F5E12E /* DCTAuthContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthContentType.h; path = DCTAuth/DCTAuthContentType.h; sourceTree = "<group>"; };
+		989932DBDD463BEA4350404BB89F9415 /* Pods-app-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-app-acknowledgements.plist"; sourceTree = "<group>"; };
 		999A937D311A769343E8DD6D55AFFBF7 /* DCTBasicAuthAccount.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTBasicAuthAccount.m; path = DCTAuth/DCTBasicAuthAccount.m; sourceTree = "<group>"; };
 		9DB342E311C5B9C373F21AB6FAF68F71 /* DCTAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuth.h; path = DCTAuth/DCTAuth.h; sourceTree = "<group>"; };
 		A217ED0BA905E2876EA70CF5E02848DC /* DCTBasicAuthCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTBasicAuthCredential.h; path = DCTAuth/DCTBasicAuthCredential.h; sourceTree = "<group>"; };
@@ -175,55 +175,55 @@
 		A82033DD052426E15DE9AFD2DB4D48F3 /* DCTAuthURLRequestPerformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthURLRequestPerformer.h; path = DCTAuth/DCTAuthURLRequestPerformer.h; sourceTree = "<group>"; };
 		A96A4CD66C025B01AABD5553A096FE65 /* NSString+DCTAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+DCTAuth.h"; path = "DCTAuth/NSString+DCTAuth.h"; sourceTree = "<group>"; };
 		A9C156B2B1F8644E707543B8E231D1A3 /* DCTOAuth1ParameterTransmission.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1ParameterTransmission.h; path = DCTAuth/DCTOAuth1ParameterTransmission.h; sourceTree = "<group>"; };
-		ADFC8BF5A4B983FB1C7A67A5D413E136 /* Pods-DevSummitTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DevSummitTests.modulemap"; sourceTree = "<group>"; };
 		AF51943A7ACB9E0482546DAA713F1F41 /* DCTOAuth1SignatureType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1SignatureType.h; path = DCTAuth/DCTOAuth1SignatureType.h; sourceTree = "<group>"; };
 		B239050CF7C1F59AE4A40F38801C6FFE /* DCTAuth.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DCTAuth.xcconfig; sourceTree = "<group>"; };
+		B2902ABF04F85AD5466C8A4379261A4B /* libPods-app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-app-tvOS.a"; path = "libPods-app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B361A38FEB78E289FC87B4D82F655A /* DCTOAuth2RequestType.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2RequestType.m; path = DCTAuth/DCTOAuth2RequestType.m; sourceTree = "<group>"; };
 		B3F60BED6A16FEE164AAE6E78F9E0D02 /* DCTAuthContent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthContent.h; path = DCTAuth/DCTAuthContent.h; sourceTree = "<group>"; };
+		B66B266F058749D63697EBC9A0C01322 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B74F3E41AFA451D4C5081078A5FB3E3F /* DCTAuthAccountSubclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthAccountSubclass.h; path = DCTAuth/DCTAuthAccountSubclass.h; sourceTree = "<group>"; };
+		B79D338B48C840BA47861BB1D8CE70E1 /* Pods-app-tvOSTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-app-tvOSTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B86B2AB2CCF86D7049F0FDE46FB05E85 /* Pods-app-tvOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-app-tvOSTests-frameworks.sh"; sourceTree = "<group>"; };
 		BE5E740C219E0FC1A0B7D8ED02A7017B /* DCTAuth-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DCTAuth-prefix.pch"; sourceTree = "<group>"; };
 		BE9AD511732B4D25474B2730844C1B53 /* DCTAuthMultipartData.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthMultipartData.m; path = DCTAuth/DCTAuthMultipartData.m; sourceTree = "<group>"; };
+		C009E5F82C6AB25FF2F3D803B0876902 /* Pods-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-app.debug.xcconfig"; sourceTree = "<group>"; };
 		C04E2DF65AD4C429B85DABE5F69BA5B3 /* DCTAuthURLOpenerOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthURLOpenerOperation.h; path = DCTAuth/DCTAuthURLOpenerOperation.h; sourceTree = "<group>"; };
-		C0A10988E69C4862E9DB285FECD91076 /* Pods-DevSummitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C62DF30BB03D415AEB8DB4200C412D7E /* DCTOAuth2Account.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2Account.m; path = DCTAuth/DCTOAuth2Account.m; sourceTree = "<group>"; };
 		C65C3AB18774E4A4FB633644F41A26D6 /* DCTAuthAccount.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthAccount.m; path = DCTAuth/DCTAuthAccount.m; sourceTree = "<group>"; };
 		CAC108544678A8B6AB8D6F8912A80830 /* DCTAbstractAuthAccountProperties.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAbstractAuthAccountProperties.h; path = DCTAuth/DCTAbstractAuthAccountProperties.h; sourceTree = "<group>"; };
-		CC2FB4DCA446950AE207FF3BE54647FB /* Pods-DevSummit-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummit-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		CC9A15378E8374A6B2E2A907744CA396 /* Pods-DevSummit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DevSummit-umbrella.h"; sourceTree = "<group>"; };
-		CD3E9C1F58F6EC65B9AC5492E089ADD1 /* Pods-DevSummit-tvOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DevSummit-tvOSTests-dummy.m"; sourceTree = "<group>"; };
 		CE6511B217969D8CC98FB52C3C1C8591 /* DCTOAuth2Credential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth2Credential.m; path = DCTAuth/DCTOAuth2Credential.m; sourceTree = "<group>"; };
-		D428F4D739AF8BB08EA093CE3585BE39 /* Pods_DevSummitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DevSummitTests.framework; path = "Pods-DevSummitTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D844F7F9D453A39FBA703C6FD734D765 /* Pods-DevSummit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DevSummit.modulemap"; sourceTree = "<group>"; };
-		D8975AF5B11060A7A0BAC313A6F77D29 /* Pods-DevSummitTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DevSummitTests-dummy.m"; sourceTree = "<group>"; };
+		D22222702BABFD430EFA2EABA302B6B3 /* Pods-app-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-app-dummy.m"; sourceTree = "<group>"; };
+		D6B8FDBCD6720E009494198AE1CC9F01 /* Pods-app-tvOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-app-tvOS-acknowledgements.plist"; sourceTree = "<group>"; };
 		DCB33D0ECB71E656E20C80F72628CF7A /* DCTOAuth1Credential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth1Credential.h; path = DCTAuth/DCTOAuth1Credential.h; sourceTree = "<group>"; };
 		DE58D5F5741E94BD39D42494945305C5 /* DCTAuthPlatform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTAuthPlatform.h; path = DCTAuth/DCTAuthPlatform.h; sourceTree = "<group>"; };
+		E1CA1FF2B3FCF2E5262CAEF36F8F4A18 /* Pods-app-tvOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-app-tvOS-frameworks.sh"; sourceTree = "<group>"; };
 		E25424554C9D9E5132B57221F8289348 /* DCTAuthAccount+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "DCTAuthAccount+Private.h"; path = "DCTAuth/DCTAuthAccount+Private.h"; sourceTree = "<group>"; };
-		E4F88CBC4F8224CCE86E33FB4A927B33 /* Pods-DevSummit-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummit-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E56F7F9EB7C28996F356B3D65CD7927E /* Pods-DevSummit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DevSummit.debug.xcconfig"; sourceTree = "<group>"; };
 		E624FE06F50E66DE69D5096204F73F61 /* DCTOAuth1Account.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Account.m; path = DCTAuth/DCTOAuth1Account.m; sourceTree = "<group>"; };
 		E9150F4FE10AA82E0F9DAD5F6A6E78EB /* DCTAuth-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DCTAuth-umbrella.h"; sourceTree = "<group>"; };
 		EF1E936EC853BCCB7ECD54F429B72A95 /* DCTAuthURLOpenerOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuthURLOpenerOperation.m; path = DCTAuth/DCTAuthURLOpenerOperation.m; sourceTree = "<group>"; };
+		EF5EA846869A7C167DC701F3E4445946 /* Pods-app-tvOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-app-tvOS-resources.sh"; sourceTree = "<group>"; };
 		F368FA3AAA6E91A7B5F448050F6203D3 /* DCTAuth.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTAuth.m; path = DCTAuth/DCTAuth.m; sourceTree = "<group>"; };
-		F43D9833205E64B5698CEF50063DDA49 /* Pods-DevSummitTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DevSummitTests-umbrella.h"; sourceTree = "<group>"; };
 		F4477C7663A70658B1222DCFAF45DA1E /* DCTOAuth2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DCTOAuth2.h; path = DCTAuth/DCTOAuth2.h; sourceTree = "<group>"; };
-		FE62B41C6C58474A5DF4B702F74EC107 /* DCTAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DCTAuth.framework; path = DCTAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8EFB17885033BAD63E7B55977023411 /* Pods-appTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-appTests.modulemap"; sourceTree = "<group>"; };
+		FAAA2C7754F628C5163A83DBCFB49118 /* Pods-appTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-appTests-resources.sh"; sourceTree = "<group>"; };
 		FF29007C627D125DFE841875A1340459 /* DCTOAuth1Keys.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DCTOAuth1Keys.m; path = DCTAuth/DCTOAuth1Keys.m; sourceTree = "<group>"; };
+		FFC48F4EEBA902AA99B3FC9FC46618E8 /* Pods-app-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-app-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		00AE6B7C1BB925DED5EFF4EC1F4932DC /* Frameworks */ = {
+		2171418327386FEEFAC3DBB43B5FB7B9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5028492D332D02DDA95EB8E080F5BB9B /* Foundation.framework in Frameworks */,
+				B255B28B816B0D5D6D6CD8A110C59BB2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		29B0D53509D81BD2C3FE7D367D6993BD /* Frameworks */ = {
+		3E2D49463D5537B0DC621F0B2568EE45 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAF47D4262E2B7BEC92D05A68F11CCF1 /* Foundation.framework in Frameworks */,
+				99638312F334221E95D17A5F05B5368C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,53 +235,64 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9C57E1CD9A1A5D525F33DBA7FA295657 /* Frameworks */ = {
+		8426BBB26845B1D6F8A4093C1443E266 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C142ABFF97EAD155FE9C0E1E0B3342B /* Foundation.framework in Frameworks */,
+				93315DBE38ACC0DB22E9ED17EF073B17 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C21191425925D7B2D244F437CE3618FF /* Frameworks */ = {
+		93C3053A6FA0D6C6DD850B3902C450AC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0106C126F89A32D7868E081386BB4E48 /* Foundation.framework in Frameworks */,
+				6D0653C639FE9A5867409414B61FFE32 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2F3257128D7E5055D3055332ABD579D7 /* Products */ = {
+		495C8B235456A09A7EB79DEB267D808F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FE62B41C6C58474A5DF4B702F74EC107 /* DCTAuth.framework */,
-				40F42F9D4B8EF2F5CC1136CF92B60CBD /* libPods-DevSummit-tvOS.a */,
-				2D2EB70134ABAE966E25E27974DCB5FB /* libPods-DevSummit-tvOSTests.a */,
-				87A5D93DCE43A35B903EFE35EDCF3A7B /* Pods_DevSummit.framework */,
-				D428F4D739AF8BB08EA093CE3585BE39 /* Pods_DevSummitTests.framework */,
+				830A6FFC8031398845E289E4BFF23A19 /* DCTAuth.framework */,
+				B2902ABF04F85AD5466C8A4379261A4B /* libPods-app-tvOS.a */,
+				2B1CD8E56143CC4274C5A6D1D5AB2574 /* libPods-app-tvOSTests.a */,
+				83DF7DF0C46CB149D848A1F3668E86A3 /* Pods_app.framework */,
+				94952E8D2FB581C6E0E9BA3B0CBE2822 /* Pods_appTests.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		30375A556F77B2E5C734E0A68CB29682 /* Pods-DevSummit */ = {
+		49ACAADEA36EB0C7B16031F14FF48A2E /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				5EB1EA6AB577847FA09915B1B9FC4C8B /* Info.plist */,
-				D844F7F9D453A39FBA703C6FD734D765 /* Pods-DevSummit.modulemap */,
-				4921E727ED6A05FCB3F0E6466BC68A72 /* Pods-DevSummit-acknowledgements.markdown */,
-				0EC31B9A7FE0BC7F6758502279805D52 /* Pods-DevSummit-acknowledgements.plist */,
-				26B632CC466C6B850A0D39A837A7A905 /* Pods-DevSummit-dummy.m */,
-				5CB37BB1D61C6ED5585E87AA6EF23347 /* Pods-DevSummit-frameworks.sh */,
-				094266A0CA9ACFE6352B851651F56425 /* Pods-DevSummit-resources.sh */,
-				CC9A15378E8374A6B2E2A907744CA396 /* Pods-DevSummit-umbrella.h */,
-				E56F7F9EB7C28996F356B3D65CD7927E /* Pods-DevSummit.debug.xcconfig */,
-				943693E18663C6B6DF0BF864682B7BBE /* Pods-DevSummit.release.xcconfig */,
+				D0342CA984D5D94EC3EDAF2295C5778B /* Pods-app */,
+				B57EF0BF49D2A8046CDE38F3AE83B9C5 /* Pods-app-tvOS */,
+				80DF96A26F5350B49D75423E9CDBA092 /* Pods-app-tvOSTests */,
+				51F1793D95EFA78EF574602BEF2138D0 /* Pods-appTests */,
 			);
-			name = "Pods-DevSummit";
-			path = "Target Support Files/Pods-DevSummit";
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		51F1793D95EFA78EF574602BEF2138D0 /* Pods-appTests */ = {
+			isa = PBXGroup;
+			children = (
+				484DCFB61DAE9EDE69CA3726A005D838 /* Info.plist */,
+				F8EFB17885033BAD63E7B55977023411 /* Pods-appTests.modulemap */,
+				3429E96BE1CE7EBB618EA6FB867C2E1E /* Pods-appTests-acknowledgements.markdown */,
+				1D9993C3203731CFF57FB6D066B883CC /* Pods-appTests-acknowledgements.plist */,
+				07C04C93418F3755B49856E000FFD314 /* Pods-appTests-dummy.m */,
+				12CF4D25DCD30447909777B7A4435D3F /* Pods-appTests-frameworks.sh */,
+				FAAA2C7754F628C5163A83DBCFB49118 /* Pods-appTests-resources.sh */,
+				49B9261ACB1E0685C446506A5D36B55B /* Pods-appTests-umbrella.h */,
+				5636ECBFE48A5F97F0DD06BC82FFAD20 /* Pods-appTests.debug.xcconfig */,
+				4B635B5D2B2518362DABF635A221CBCB /* Pods-appTests.release.xcconfig */,
+			);
+			name = "Pods-appTests";
+			path = "Target Support Files/Pods-appTests";
 			sourceTree = "<group>";
 		};
 		6E23DFCD2F9A7910FC314940CFA01103 /* DCTAuth */ = {
@@ -363,24 +374,24 @@
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
 				B2CCF3879CB678FB9A5324BFC6AB1625 /* Pods */,
-				2F3257128D7E5055D3055332ABD579D7 /* Products */,
-				CF8780DEC9FE352A7BAB6E96CF1DEFA1 /* Targets Support Files */,
+				495C8B235456A09A7EB79DEB267D808F /* Products */,
+				49ACAADEA36EB0C7B16031F14FF48A2E /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		ADB1762654AE9537745A4F1235A19641 /* Pods-DevSummit-tvOSTests */ = {
+		80DF96A26F5350B49D75423E9CDBA092 /* Pods-app-tvOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				7EF0509D8504DDFEAE8D5771E75F171A /* Pods-DevSummit-tvOSTests-acknowledgements.markdown */,
-				59E7F8F5020A42B96C29D183CE6B9EEB /* Pods-DevSummit-tvOSTests-acknowledgements.plist */,
-				CD3E9C1F58F6EC65B9AC5492E089ADD1 /* Pods-DevSummit-tvOSTests-dummy.m */,
-				7E458DB0DD37C1E5DE8F1E7A47B6884E /* Pods-DevSummit-tvOSTests-frameworks.sh */,
-				0263EFD793CA5DCF3EE2C964ED820BDC /* Pods-DevSummit-tvOSTests-resources.sh */,
-				E4F88CBC4F8224CCE86E33FB4A927B33 /* Pods-DevSummit-tvOSTests.debug.xcconfig */,
-				9072558D2E32FC4E82012E7C8769952C /* Pods-DevSummit-tvOSTests.release.xcconfig */,
+				B79D338B48C840BA47861BB1D8CE70E1 /* Pods-app-tvOSTests-acknowledgements.markdown */,
+				65D4081FF3EC6908119C70303435DB3E /* Pods-app-tvOSTests-acknowledgements.plist */,
+				5BEABFBD19910FD2E8894D4BEE9C22C0 /* Pods-app-tvOSTests-dummy.m */,
+				B86B2AB2CCF86D7049F0FDE46FB05E85 /* Pods-app-tvOSTests-frameworks.sh */,
+				8F4A7F8321E20D83E417529C4A6A93C6 /* Pods-app-tvOSTests-resources.sh */,
+				47FDD1EA1010AC0754EBA7F119D73935 /* Pods-app-tvOSTests.debug.xcconfig */,
+				4CA662EEE0CFCC0C6CDFE5C6DFF64263 /* Pods-app-tvOSTests.release.xcconfig */,
 			);
-			name = "Pods-DevSummit-tvOSTests";
-			path = "Target Support Files/Pods-DevSummit-tvOSTests";
+			name = "Pods-app-tvOSTests";
+			path = "Target Support Files/Pods-app-tvOSTests";
 			sourceTree = "<group>";
 		};
 		B2CCF3879CB678FB9A5324BFC6AB1625 /* Pods */ = {
@@ -391,22 +402,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		B7D95726665DCD6B02BCE60D0C24A198 /* Pods-DevSummitTests */ = {
+		B57EF0BF49D2A8046CDE38F3AE83B9C5 /* Pods-app-tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				2A440835537A3A4E15AC299CE3268330 /* Info.plist */,
-				ADFC8BF5A4B983FB1C7A67A5D413E136 /* Pods-DevSummitTests.modulemap */,
-				540AB9D8D465BC8E1203182FDC20CBF0 /* Pods-DevSummitTests-acknowledgements.markdown */,
-				2BA3B6CF267A7A3FBF4CF50A84BA0A4E /* Pods-DevSummitTests-acknowledgements.plist */,
-				D8975AF5B11060A7A0BAC313A6F77D29 /* Pods-DevSummitTests-dummy.m */,
-				6B6264AFA6A24D5A5B1C57FF3587C695 /* Pods-DevSummitTests-frameworks.sh */,
-				75F1463EC820CB86AFE9644B5A538020 /* Pods-DevSummitTests-resources.sh */,
-				F43D9833205E64B5698CEF50063DDA49 /* Pods-DevSummitTests-umbrella.h */,
-				C0A10988E69C4862E9DB285FECD91076 /* Pods-DevSummitTests.debug.xcconfig */,
-				679DD238C22E45D53C4297D07F88C645 /* Pods-DevSummitTests.release.xcconfig */,
+				1AE3765F6A74842AEABEF97688704F6A /* Pods-app-tvOS-acknowledgements.markdown */,
+				D6B8FDBCD6720E009494198AE1CC9F01 /* Pods-app-tvOS-acknowledgements.plist */,
+				0C3E00DA6055CA4674E275415C36A2F6 /* Pods-app-tvOS-dummy.m */,
+				E1CA1FF2B3FCF2E5262CAEF36F8F4A18 /* Pods-app-tvOS-frameworks.sh */,
+				EF5EA846869A7C167DC701F3E4445946 /* Pods-app-tvOS-resources.sh */,
+				3AD4073564E6F60ADA1AB0B3C9B5216B /* Pods-app-tvOS.debug.xcconfig */,
+				FFC48F4EEBA902AA99B3FC9FC46618E8 /* Pods-app-tvOS.release.xcconfig */,
 			);
-			name = "Pods-DevSummitTests";
-			path = "Target Support Files/Pods-DevSummitTests";
+			name = "Pods-app-tvOS";
+			path = "Target Support Files/Pods-app-tvOS";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -417,15 +425,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CF8780DEC9FE352A7BAB6E96CF1DEFA1 /* Targets Support Files */ = {
+		D0342CA984D5D94EC3EDAF2295C5778B /* Pods-app */ = {
 			isa = PBXGroup;
 			children = (
-				30375A556F77B2E5C734E0A68CB29682 /* Pods-DevSummit */,
-				EC25A49E689D97604C0CD8CFF4CF9481 /* Pods-DevSummit-tvOS */,
-				ADB1762654AE9537745A4F1235A19641 /* Pods-DevSummit-tvOSTests */,
-				B7D95726665DCD6B02BCE60D0C24A198 /* Pods-DevSummitTests */,
+				B66B266F058749D63697EBC9A0C01322 /* Info.plist */,
+				56641E3ABF68E0C1EDFAED71A61FB450 /* Pods-app.modulemap */,
+				505B34DDD37D4436A49906017B9AD567 /* Pods-app-acknowledgements.markdown */,
+				989932DBDD463BEA4350404BB89F9415 /* Pods-app-acknowledgements.plist */,
+				D22222702BABFD430EFA2EABA302B6B3 /* Pods-app-dummy.m */,
+				5D4654C0DA91756A32AE08501DEFC074 /* Pods-app-frameworks.sh */,
+				14049D760036969BD87A45002AFF8B14 /* Pods-app-resources.sh */,
+				419AA8B4C46E500D23A38AF7E438FF4A /* Pods-app-umbrella.h */,
+				C009E5F82C6AB25FF2F3D803B0876902 /* Pods-app.debug.xcconfig */,
+				46CBFC23DDA7D99394BAABBEAAB74EEF /* Pods-app.release.xcconfig */,
 			);
-			name = "Targets Support Files";
+			name = "Pods-app";
+			path = "Target Support Files/Pods-app";
 			sourceTree = "<group>";
 		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
@@ -450,29 +465,22 @@
 			path = "../Target Support Files/DCTAuth";
 			sourceTree = "<group>";
 		};
-		EC25A49E689D97604C0CD8CFF4CF9481 /* Pods-DevSummit-tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				55C3FAD52E7ADBDE36259ECB830C910D /* Pods-DevSummit-tvOS-acknowledgements.markdown */,
-				33BD40CF626F10200ABBFBBD0BC7B248 /* Pods-DevSummit-tvOS-acknowledgements.plist */,
-				1639EB4043E51649D7A4C8719EE0120E /* Pods-DevSummit-tvOS-dummy.m */,
-				35E23C43DDAD5EB61C1847F46F4D8C30 /* Pods-DevSummit-tvOS-frameworks.sh */,
-				55AFFA7BAFDDD9C88D7F512B26959734 /* Pods-DevSummit-tvOS-resources.sh */,
-				CC2FB4DCA446950AE207FF3BE54647FB /* Pods-DevSummit-tvOS.debug.xcconfig */,
-				1D21688D8AFE5208A99037691E71E649 /* Pods-DevSummit-tvOS.release.xcconfig */,
-			);
-			name = "Pods-DevSummit-tvOS";
-			path = "Target Support Files/Pods-DevSummit-tvOS";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		4EDB9BED425D0E8376B555918315A8E7 /* Headers */ = {
+		7361A15CE4A5DD4A6BEEAF991D780AFE /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C38B05B1B7EE0821E937F5CFF9DE3975 /* Pods-DevSummit-umbrella.h in Headers */,
+				CC58CC1DDF2F9C98AEEF22DE2F2CA684 /* Pods-appTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		782C7D2B1D461CAF4159F920AECE89C4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D535D917C8147C74C0AE8BC65F850DB /* Pods-app-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,17 +528,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D53DF8D398CEED511A7422B37714BEE6 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AA7FC7CBA776C8A0AF1F7F7379832E78 /* Pods-DevSummitTests-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0500DCB1F2FA12CF017A8B4E882FBD04 /* Pods-app-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34E6B85D2126254AA2E40B22F25158EE /* Build configuration list for PBXNativeTarget "Pods-app-tvOSTests" */;
+			buildPhases = (
+				54DEC079D526EA2271FE388C5E8AB646 /* Sources */,
+				93C3053A6FA0D6C6DD850B3902C450AC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-app-tvOSTests";
+			productName = "Pods-app-tvOSTests";
+			productReference = 2B1CD8E56143CC4274C5A6D1D5AB2574 /* libPods-app-tvOSTests.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		073CE0154758777B2E46C5CBFE578C54 /* DCTAuth */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FD40E2BFAAC3B846B3C9FE5DCF656E98 /* Build configuration list for PBXNativeTarget "DCTAuth" */;
@@ -545,75 +561,59 @@
 			);
 			name = DCTAuth;
 			productName = DCTAuth;
-			productReference = FE62B41C6C58474A5DF4B702F74EC107 /* DCTAuth.framework */;
+			productReference = 830A6FFC8031398845E289E4BFF23A19 /* DCTAuth.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		389B36E15D01653030E58D8A45D0C447 /* Pods-DevSummit-tvOS */ = {
+		57E17FA7F57D342073C3141DB9C3B36F /* Pods-app */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C3E7E38B38E7C2A3173350D397247A5 /* Build configuration list for PBXNativeTarget "Pods-DevSummit-tvOS" */;
+			buildConfigurationList = 0AEE301C1557C6F622BDB0C4A519F19E /* Build configuration list for PBXNativeTarget "Pods-app" */;
 			buildPhases = (
-				F3910DBA9F77C6F015AEBEFF909EA3E0 /* Sources */,
-				29B0D53509D81BD2C3FE7D367D6993BD /* Frameworks */,
+				4DA86C1D53505A09CDCA8B89C5339DBD /* Sources */,
+				8426BBB26845B1D6F8A4093C1443E266 /* Frameworks */,
+				782C7D2B1D461CAF4159F920AECE89C4 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1E452EF33E0B36609E475986410E30E3 /* PBXTargetDependency */,
+			);
+			name = "Pods-app";
+			productName = "Pods-app";
+			productReference = 83DF7DF0C46CB149D848A1F3668E86A3 /* Pods_app.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5A814957D189BFAA6B9834D057C5B69D /* Pods-appTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 964D30AA81EE72C73E7862FFE0ED399F /* Build configuration list for PBXNativeTarget "Pods-appTests" */;
+			buildPhases = (
+				414CAA036E43324D2D3BD8CF1BF2B718 /* Sources */,
+				3E2D49463D5537B0DC621F0B2568EE45 /* Frameworks */,
+				7361A15CE4A5DD4A6BEEAF991D780AFE /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Pods-DevSummit-tvOS";
-			productName = "Pods-DevSummit-tvOS";
-			productReference = 40F42F9D4B8EF2F5CC1136CF92B60CBD /* libPods-DevSummit-tvOS.a */;
+			name = "Pods-appTests";
+			productName = "Pods-appTests";
+			productReference = 94952E8D2FB581C6E0E9BA3B0CBE2822 /* Pods_appTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		78D05934CC467EC545A0243256D0EEEF /* Pods-app-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 115742F7D6881C205885C1E36D030BF4 /* Build configuration list for PBXNativeTarget "Pods-app-tvOS" */;
+			buildPhases = (
+				9922A9217B2C276C2A8A9AF6272B8C78 /* Sources */,
+				2171418327386FEEFAC3DBB43B5FB7B9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-app-tvOS";
+			productName = "Pods-app-tvOS";
+			productReference = B2902ABF04F85AD5466C8A4379261A4B /* libPods-app-tvOS.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		4F389A2ABE6F94CAC3D759CDC62174B9 /* Pods-DevSummit-tvOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 00F2387163035453E31EB8DD77B56723 /* Build configuration list for PBXNativeTarget "Pods-DevSummit-tvOSTests" */;
-			buildPhases = (
-				03B15E15F2ECF6DF9FD384B792C7996F /* Sources */,
-				9C57E1CD9A1A5D525F33DBA7FA295657 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-DevSummit-tvOSTests";
-			productName = "Pods-DevSummit-tvOSTests";
-			productReference = 2D2EB70134ABAE966E25E27974DCB5FB /* libPods-DevSummit-tvOSTests.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		AA522DE65F43C05B008AAB22E66BFDAD /* Pods-DevSummit */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 39E74B0B0F4469D3DF97560033DD8416 /* Build configuration list for PBXNativeTarget "Pods-DevSummit" */;
-			buildPhases = (
-				857ECDC9DD54326CE7D7AC0DFF529B3C /* Sources */,
-				C21191425925D7B2D244F437CE3618FF /* Frameworks */,
-				4EDB9BED425D0E8376B555918315A8E7 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6146448F1F64A14EEB6680A14590AEF9 /* PBXTargetDependency */,
-			);
-			name = "Pods-DevSummit";
-			productName = "Pods-DevSummit";
-			productReference = 87A5D93DCE43A35B903EFE35EDCF3A7B /* Pods_DevSummit.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		CCAC5D4537DE08B3CAE35B6603360C7E /* Pods-DevSummitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 09FAEB5580D3B3E2896414A4249A6D4E /* Build configuration list for PBXNativeTarget "Pods-DevSummitTests" */;
-			buildPhases = (
-				1DC42F6224A996837F2B40C9056D7F2E /* Sources */,
-				00AE6B7C1BB925DED5EFF4EC1F4932DC /* Frameworks */,
-				D53DF8D398CEED511A7422B37714BEE6 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-DevSummitTests";
-			productName = "Pods-DevSummitTests";
-			productReference = D428F4D739AF8BB08EA093CE3585BE39 /* Pods_DevSummitTests.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -632,41 +632,49 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 2F3257128D7E5055D3055332ABD579D7 /* Products */;
+			productRefGroup = 495C8B235456A09A7EB79DEB267D808F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				073CE0154758777B2E46C5CBFE578C54 /* DCTAuth */,
-				AA522DE65F43C05B008AAB22E66BFDAD /* Pods-DevSummit */,
-				389B36E15D01653030E58D8A45D0C447 /* Pods-DevSummit-tvOS */,
-				4F389A2ABE6F94CAC3D759CDC62174B9 /* Pods-DevSummit-tvOSTests */,
-				CCAC5D4537DE08B3CAE35B6603360C7E /* Pods-DevSummitTests */,
+				57E17FA7F57D342073C3141DB9C3B36F /* Pods-app */,
+				78D05934CC467EC545A0243256D0EEEF /* Pods-app-tvOS */,
+				0500DCB1F2FA12CF017A8B4E882FBD04 /* Pods-app-tvOSTests */,
+				5A814957D189BFAA6B9834D057C5B69D /* Pods-appTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		03B15E15F2ECF6DF9FD384B792C7996F /* Sources */ = {
+		414CAA036E43324D2D3BD8CF1BF2B718 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7274D6B1DA247E01B113BDAA7488AAD /* Pods-DevSummit-tvOSTests-dummy.m in Sources */,
+				D3EB49525D0EAFF1BC4C780F62219D61 /* Pods-appTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1DC42F6224A996837F2B40C9056D7F2E /* Sources */ = {
+		4DA86C1D53505A09CDCA8B89C5339DBD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				363438443B5C045C50BA10280936F63F /* Pods-DevSummitTests-dummy.m in Sources */,
+				57C1CB567BBB1A67EA26F1C2FAAAE5C2 /* Pods-app-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		857ECDC9DD54326CE7D7AC0DFF529B3C /* Sources */ = {
+		54DEC079D526EA2271FE388C5E8AB646 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C27AC786F1E5CBBDABE9E0C2E0979FD /* Pods-DevSummit-dummy.m in Sources */,
+				BCAA37C091E3F749DA2993F11761F64E /* Pods-app-tvOSTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9922A9217B2C276C2A8A9AF6272B8C78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				646EFE8B8E34006C317D93D432C2EA3D /* Pods-app-tvOS-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,65 +714,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F3910DBA9F77C6F015AEBEFF909EA3E0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4EF3BD10491AE9EE950921427BCD2FF4 /* Pods-DevSummit-tvOS-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6146448F1F64A14EEB6680A14590AEF9 /* PBXTargetDependency */ = {
+		1E452EF33E0B36609E475986410E30E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DCTAuth;
 			target = 073CE0154758777B2E46C5CBFE578C54 /* DCTAuth */;
-			targetProxy = 1459C8FA253D322332DCFCF5A772B87D /* PBXContainerItemProxy */;
+			targetProxy = 370E213932FE36A9AA0B44D9AF7A8A97 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		073D52D32C740BE7AECA5E66EC1D079D /* Release */ = {
+		35C08950D031C7F01CBC73CC75B84DE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 679DD238C22E45D53C4297D07F88C645 /* Pods-DevSummitTests.release.xcconfig */;
+			baseConfigurationReference = C009E5F82C6AB25FF2F3D803B0876902 /* Pods-app.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DevSummitTests/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-app/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DevSummitTests/Pods-DevSummitTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
+				MODULEMAP_FILE = "Target Support Files/Pods-app/Pods-app.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DevSummitTests;
+				PRODUCT_NAME = Pods_app;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
-		1DFC305058A8CC6A7459EE071D615EEF /* Debug */ = {
+		3A2A4E464EDF6AFF369F666CC1DA3642 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E4F88CBC4F8224CCE86E33FB4A927B33 /* Pods-DevSummit-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 47FDD1EA1010AC0754EBA7F119D73935 /* Pods-app-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -782,6 +782,42 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3CF53109CE2A575F30AD49C005CF1921 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5636ECBFE48A5F97F0DD06BC82FFAD20 /* Pods-appTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-appTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-appTests/Pods-appTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_appTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -865,45 +901,9 @@
 			};
 			name = Debug;
 		};
-		5A10D29AF12AEA2165C5B7B03D1F0DB6 /* Debug */ = {
+		7325FF6A5A679410FB2BD3B21CD2D97E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E56F7F9EB7C28996F356B3D65CD7927E /* Pods-DevSummit.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DevSummit/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DevSummit/Pods-DevSummit.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DevSummit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		6DE22396DA355A49B7D292CF471720D6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 943693E18663C6B6DF0BF864682B7BBE /* Pods-DevSummit.release.xcconfig */;
+			baseConfigurationReference = 46CBFC23DDA7D99394BAABBEAAB74EEF /* Pods-app.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -917,18 +917,18 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DevSummit/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-app/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DevSummit/Pods-DevSummit.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-app/Pods-app.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DevSummit;
+				PRODUCT_NAME = Pods_app;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -969,19 +969,19 @@
 			};
 			name = Release;
 		};
-		88BE00DA6F5CC69B167D87BE747EB37C /* Release */ = {
+		8800CC73356711EE98A16317BB0E7857 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D21688D8AFE5208A99037691E71E649 /* Pods-DevSummit-tvOS.release.xcconfig */;
+			baseConfigurationReference = 3AD4073564E6F60ADA1AB0B3C9B5216B /* Pods-app-tvOS.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -989,42 +989,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		8C0DEF202F632AD076347F2A4CECB122 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0A10988E69C4862E9DB285FECD91076 /* Pods-DevSummitTests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DevSummitTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DevSummitTests/Pods-DevSummitTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DevSummitTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -1072,32 +1036,9 @@
 			};
 			name = Release;
 		};
-		D5D94B6336EA1A2B34429A11632B586A /* Debug */ = {
+		D8FA4810258AA7C47477F801B6746039 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CC2FB4DCA446950AE207FF3BE54647FB /* Pods-DevSummit-tvOS.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		EDB1A6BE56CF501107DEDA32287BD0D8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9072558D2E32FC4E82012E7C8769952C /* Pods-DevSummit-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 4CA662EEE0CFCC0C6CDFE5C6DFF64263 /* Pods-app-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1118,32 +1059,82 @@
 			};
 			name = Release;
 		};
+		DC1BE108240799AA728AAC8E4AF771CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFC48F4EEBA902AA99B3FC9FC46618E8 /* Pods-app-tvOS.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		E55D7FC5DE91D9F32C8B570B43458B46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B635B5D2B2518362DABF635A221CBCB /* Pods-appTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-appTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-appTests/Pods-appTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_appTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00F2387163035453E31EB8DD77B56723 /* Build configuration list for PBXNativeTarget "Pods-DevSummit-tvOSTests" */ = {
+		0AEE301C1557C6F622BDB0C4A519F19E /* Build configuration list for PBXNativeTarget "Pods-app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DFC305058A8CC6A7459EE071D615EEF /* Debug */,
-				EDB1A6BE56CF501107DEDA32287BD0D8 /* Release */,
+				35C08950D031C7F01CBC73CC75B84DE6 /* Debug */,
+				7325FF6A5A679410FB2BD3B21CD2D97E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		09FAEB5580D3B3E2896414A4249A6D4E /* Build configuration list for PBXNativeTarget "Pods-DevSummitTests" */ = {
+		115742F7D6881C205885C1E36D030BF4 /* Build configuration list for PBXNativeTarget "Pods-app-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C0DEF202F632AD076347F2A4CECB122 /* Debug */,
-				073D52D32C740BE7AECA5E66EC1D079D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2C3E7E38B38E7C2A3173350D397247A5 /* Build configuration list for PBXNativeTarget "Pods-DevSummit-tvOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D5D94B6336EA1A2B34429A11632B586A /* Debug */,
-				88BE00DA6F5CC69B167D87BE747EB37C /* Release */,
+				8800CC73356711EE98A16317BB0E7857 /* Debug */,
+				DC1BE108240799AA728AAC8E4AF771CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1157,11 +1148,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		39E74B0B0F4469D3DF97560033DD8416 /* Build configuration list for PBXNativeTarget "Pods-DevSummit" */ = {
+		34E6B85D2126254AA2E40B22F25158EE /* Build configuration list for PBXNativeTarget "Pods-app-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5A10D29AF12AEA2165C5B7B03D1F0DB6 /* Debug */,
-				6DE22396DA355A49B7D292CF471720D6 /* Release */,
+				3A2A4E464EDF6AFF369F666CC1DA3642 /* Debug */,
+				D8FA4810258AA7C47477F801B6746039 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		964D30AA81EE72C73E7862FFE0ED399F /* Build configuration list for PBXNativeTarget "Pods-appTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CF53109CE2A575F30AD49C005CF1921 /* Debug */,
+				E55D7FC5DE91D9F32C8B570B43458B46 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
