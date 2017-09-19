@@ -5,7 +5,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_MODAL_STATUS,
   ADD_MATERIAL_ITEM,
-  IS_FETCHING_MATERIAL
+  IS_FETCHING_MATERIAL,
+  DELETE_MATERIAL_LIST
 } from './constants';
 
 const initialState = fromJS({
@@ -20,7 +21,6 @@ const initialState = fromJS({
 });
 
 function materialListReducer(state = initialState, action) {
-  console.log('landing here reducers state', state.toJS());
   switch (action.type) {
     case FETCH_MATERIAL_LIST:
       return state.set('material', action.payloads);
@@ -32,6 +32,8 @@ function materialListReducer(state = initialState, action) {
       return state.setIn(['fields', action.field], action.value);
     case IS_FETCHING_MATERIAL:
       return state.set('isFetchingMaterial', action.status);
+    case DELETE_MATERIAL_LIST:
+      return state.set('deleteMaterialList', action);
     default:
       return state;
   }
