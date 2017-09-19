@@ -9,7 +9,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_MODAL_STATUS,
   ADD_MATERIAL_ITEM,
-  IS_FETCHING_MATERIAL
+  IS_FETCHING_MATERIAL,
+  DELETE_MATERIAL_LIST
 } from './constants';
 
 export function updateInputFields(field, value) {
@@ -21,7 +22,7 @@ export function updateInputFields(field, value) {
 }
 
 export function addMaterialItem(item, material) {
-  material.push(item);
+  material.unshift(item);
   return {
     type: ADD_MATERIAL_ITEM,
     material
@@ -75,7 +76,7 @@ export function saveMaterialList(image) {
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('api/v1/documents');
+        const url = local.API_BASE_URL.concat('/api/v1/documents');
         const form = new FormData();
 
         form.append('title', title);
@@ -99,7 +100,29 @@ export function saveMaterialList(image) {
             dispatch(updateModalStatus(false));
             dispatch(isFetchingMaterial(false));
           }).catch((err) => {
+              dispatch(isFetchingMaterial(false));
+              console.log(err);
+          });
+      });
+  };
+}
+
+export function deleteMaterialList(id) {
+  return (dispatch) => {
+    dispatch(isFetchingMaterial(true));
+    getAccessToken()
+      .then((token) => {
+        const headers = { Authorization: token };
+        DevSummitAxios.delete(`api/v1/documents/${id}`, { headers })
+          .then((response) => {
+            console.log('landing here to delete item', response);
+            dispatch({
+              type: DELETE_MATERIAL_LIST,
+              payloads: response.data.data
+            });
             dispatch(isFetchingMaterial(false));
+          })
+          .catch((err) => {
             console.log(err);
           });
       });
