@@ -9,7 +9,13 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined
   },
+  logo: {
+    flex: 0.7,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   formSection: {
+    flex: 2,
     marginTop: 8,
     marginRight: 18,
     marginLeft: 16

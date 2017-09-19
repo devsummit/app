@@ -121,7 +121,10 @@ export function login() {
 
 export function loginMobile(mobileToken) {
   return (dispatch) => {
-    dispatch(updateIsLoading(true));
+    dispatch(updateisLoading(true));
+    console.log('jancuk');
+    console.log('tinggiii');
+
     DevSummitAxios.post('/auth/login', {
       provider: 'mobile',
       token: mobileToken
@@ -130,6 +133,7 @@ export function loginMobile(mobileToken) {
         'Content-Type': 'application/json'
       }
     }).then(async (response) => {
+      console.log(response);
       if (response && response.data && response.data.meta.success) {
         const resData = response.data.data;
         const roleId = JSON.stringify(response.data.included.role_id);
@@ -151,7 +155,7 @@ export function loginMobile(mobileToken) {
         Alert.alert('Login Failed', response.data.meta.message);
       }
     }).catch(err => console.log(err));
-    dispatch(updateIsLoading(false));
+    dispatch(updateisLoading(false));
   };
 }
 
@@ -209,10 +213,10 @@ export function loginGoogle() {
                 Actions.registerEmail({ prefilledData });
               }).catch(err => console.log(err));
             }
-            dispatch(updateIsLoading(false));
+            dispatch(updateisLoading(false));
           }).catch((err) => {
             console.log(err);
-            dispatch(updateIsLoading(false));
+            dispatch(updateisLoading(false));
           });
         }
       }).catch((err) => { console.log(err); });
