@@ -66,6 +66,11 @@ export const getProfileData = async () => {
   return JSON.parse(profileData);
 };
 
+export const getBoothData = async () => {
+  const boothData = await AsyncStorage.getItem('booth_data');
+  return JSON.parse(boothData);
+};
+
 export const formatDate = (source) => {
   const dt = source.split(' ');
   return `${dt[0]} ${dt[1]}`;
