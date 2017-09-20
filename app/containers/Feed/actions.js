@@ -6,7 +6,8 @@ import {
   POST_FEEDS,
   IS_POST_FEEDS,
   UPDATE_IMAGE,
-  UPDATE_TEXT
+  UPDATE_TEXT,
+  CLEAR_FIELDS
 } from './constants';
 
 import {
@@ -79,11 +80,14 @@ export function postFeeds(image, text) {
         DevSummitAxios.post('api/v1/feeds', form, { headers })
           .then((response) => {
 
-            console.log("RESP", response)
+            const payloads = response.data.data;
 
-            const payloads = response.data;
+            /**
+             * @todo integrate with socket.io
+             */
+            // dispatch({ type: POST_FEEDS, payloads});
 
-            dispatch({ type: POST_FEEDS, payloads});
+            dispatch({ type: CLEAR_FIELDS })
 
             dispatch(isPostFeeds(false));
 
