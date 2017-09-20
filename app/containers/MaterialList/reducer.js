@@ -10,13 +10,14 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  material: {},
+  material: [],
   isFetchingMaterial: false,
   visible: false,
   fields: {
     title: '',
     summary: '',
-    file: null
+    file: null,
+    is_used: 0
   }
 });
 
