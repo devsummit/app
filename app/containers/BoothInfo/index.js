@@ -3,21 +3,71 @@ import {
   Content,
   Text,
   Grid,
-  Col
+  Col,
+  Button,
+  List,
+  ListItem,
+  CategoryCard,
+  Fab
 } from 'native-base';
-import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import {
+  GridRow,
+  Screen,
+  ListView,
+  Tile,
+  Title,
+  Subtitle,
+  Divider,
+  Card,
+  Caption
+} from '@shoutem/ui';
 import Header from '../../components/Header';
 import styles from './styles';
 
+
+import * as actions from './actions';
+import * as selectors from './selectors';
+
 class BoothInfo extends Component {
-  state = {
-    id: null
+  constructor(props) {
+    super(props);
+    this.renderRow = this.renderRow.bind(this);
+    this.state = {
+      id: null,
+      boothImages: [ {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Chalk Point Kitchen',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Chalk Point Kitchen',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Chalk Point Kitchen',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      } ]
+    };
   }
 
   componentWillMount() {
@@ -28,11 +78,57 @@ class BoothInfo extends Component {
       }).catch(() => console.log('Error'));
   }
 
+  componentWillReceiveProps(prevProps) {
+    if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
+      Alert.alert('Success', 'Profile has been changed');
+      this.props.updateIsProfileUpdated(false);
+    }
+
+    if (prevProps.isAvatarUpdated !== this.props.isAvatarUpdated) {
+      Alert.alert('Success', 'Avatar has been changed');
+      this.props.updateIsAvatarUpdated(false);
+    }
+  }
+
+  uploadImage = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true
+    }).then((image) => {
+      this.props.updateImage(image);
+    }).catch(err => console.log('Error getting image from library', err));
+  }
+
+  renderRow(rowData, sectionId, index) {
+    // rowData contains grouped data for one row,
+    // so we need to remap it into cells and pass to GridRow
+    const cellViews = rowData.map((boothImage, id) => {
+      return (
+        <Image
+          style={styles.boothImageList}
+          source={{ uri: this.props.avatar }}
+        />
+      );
+    });
+    return (
+      <GridRow columns={3}>
+        {cellViews}
+      </GridRow>
+    );
+  }
+
   render() {
     console.log('landing here', this.props);
     const booth = this.state.id === 3;
     const { summary, user } = this.props;
-
+    const items = [ 'Simon Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can' ];
+    const isFirstArticle = true;
+    console.log('landing here boothImages', this.state.boothImages);
+    const groupedData = GridRow.groupByRows(this.state.boothImages, 3, () => {
+      return 1;
+    });
     return (
       <ScrollView>
         <Content>
@@ -40,7 +136,7 @@ class BoothInfo extends Component {
             colors={[ '#f72d48', '#f39e21' ]}
           >
             <Image
-              source={{ uri: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg' }}
+              source={{ uri: this.props.avatar }}
               style={styles.boothImage}
               resizeMode="cover"
             />
@@ -49,30 +145,34 @@ class BoothInfo extends Component {
               <Text style={styles.summary}>{summary}</Text>
             </View>
           </LinearGradient>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-            <Col style={styles.col3} />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col3} />
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-            <Col style={styles.col3} />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col3} />
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-          </Grid>
+          <ListView
+            data={groupedData}
+            renderRow={this.renderRow}
+          />
         </Content>
+        <View style={{ flex: 1 }}>
+          <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={{ }}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={() => this.uploadImage(this)}
+          >
+            <Icon name="upload" />
+          </Fab>
+        </View>
       </ScrollView>
     );
   }
 }
 
-export default BoothInfo;
+const mapStateToProps = createStructuredSelector({
+  fields: selectors.getFields(),
+  isProfileUpdated: selectors.getIsProfileUpdated(),
+  avatar: selectors.getAvatar(),
+  isAvatarUpdated: selectors.getIsAvatarUpdated()
+});
+
+export default connect(mapStateToProps, actions)(BoothInfo);
+
