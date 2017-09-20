@@ -63,6 +63,28 @@ export function fetchMaterialList() {
   };
 }
 
+export function updateStatus(data) {
+  return (dispatch) => {
+
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.patch(`/api/v1/documents/${data.id}`, {
+          title: data.title,
+          summary: data.summary,
+          is_used: !data.is_used
+        }, {
+          headers: {
+            Authorization: token
+          }
+        }).then((response) => {
+          if (response && response.data && response.data.meta.success) {
+            dispatch(updateInputFields('is_used', response.data.datais_used))
+          }
+        }).catch((error) => { console.log(error); });
+      });
+  };
+}
+
 export function saveMaterialList(data) {
   return (dispatch, getState) => {
 
