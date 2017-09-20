@@ -95,12 +95,14 @@ export function login() {
         const resData = response.data.data;
         const roleId = JSON.stringify(response.data.included.role_id);
         const profileData = JSON.stringify(response.data.included);
+        const boothData = JSON.stringify(response.data.included.booth);
         try {
           await AsyncStorage.multiSet([
             [ 'access_token', resData.access_token ],
             [ 'refresh_token', resData.refresh_token ],
             [ 'role_id', roleId ],
-            [ 'profile_data', profileData ]
+            [ 'profile_data', profileData ],
+            [ 'booth_data', boothData ]
           ]);
         } catch (error) {
           console.log(error, 'error caught');

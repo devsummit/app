@@ -9,7 +9,7 @@ import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from '
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { getProfileData } from '../../helpers';
+import { getBoothData } from '../../helpers';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-simple-toast';
@@ -25,10 +25,11 @@ class BoothInfo extends Component {
   }
 
   componentWillMount() {
-    getProfileData()
+    getBoothData()
       .then((boothData) => {
         if (boothData) {
-          this.handleUpdateBoothPhoto(boothData.booth.logo_url);
+          console.log('BOOTH DATA', boothData.logo_url);
+          this.handleUpdateBoothPhoto(boothData.logo_url);
         }
       });
     AsyncStorage.getItem('role_id')
@@ -67,6 +68,7 @@ class BoothInfo extends Component {
     const {
       photoPic
     } = fields || '';
+    
     return (
       <ScrollView>
         <Content>
@@ -74,7 +76,7 @@ class BoothInfo extends Component {
             colors={[ '#f72d48', '#f39e21' ]}
           >
             <Image
-              source={{ uri: boothPhoto }}
+              source={boothPhoto === null ? { uri: photoPic } : {uri: boothPhoto}}
               style={styles.boothImage}
               resizeMode={Image.resizeMode.stretch}
             />

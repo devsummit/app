@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 import FormData from 'FormData';
-import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
+import { DevSummitAxios, getAccessToken, getBoothData } from '../../helpers';
 import {
   UPDATE_FIELD,
   UPDATE_BOOTH_PHOTO,
@@ -32,12 +32,13 @@ export function updateIsBoothPhotoUpdated(status) {
 }
 
 export function updateDataStorage(response) {
-  getProfileData()
+  getBoothData()
     .then(() => {
+      console.log("objectRESSS", response.data);
       const newData = JSON.stringify(response.data);
-      AsyncStorage.removeItem('profile_data', () => {
+      AsyncStorage.removeItem('booth_data', () => {
         try {
-          AsyncStorage.setItem('profile_data', newData);
+          AsyncStorage.setItem('booth_data', newData);
         } catch (e) {
           console.log('Error save data', e);
         }
