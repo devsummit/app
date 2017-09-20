@@ -18,6 +18,7 @@ import SpeakerListReducer from './containers/Speaker/reducer';
 import ScheduleListReducer from './containers/Schedule/reducer';
 import MaterialListReducer from './containers/MaterialList/reducer';
 import BoothListReducer from './containers/BoothList/reducer';
+import codeRedeemReducer from './containers/Feed/reducer';
 
 
 const rootReducers = combineReducers({
@@ -37,7 +38,8 @@ const rootReducers = combineReducers({
   speakerList: SpeakerListReducer,
   scheduleList: ScheduleListReducer,
   materialList: MaterialListReducer,
-  boothList: BoothListReducer
+  boothList: BoothListReducer,
+  code: codeRedeemReducer
 });
 
 export default rootReducers;
