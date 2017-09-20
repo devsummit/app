@@ -6,9 +6,7 @@ import {
   UPDATE_SINGLE_FIELD,
   UPDATE_IS_PROFILE_UPDATED,
   UPDATE_AVATAR,
-  UPDATE_IS_AVATAR_UPDATED,
-  UPDATE_IS_LOG_OUT,
-  UPDATE_IS_DISABLED
+  UPDATE_IS_AVATAR_UPDATED
 } from './constants';
 import local from '../../../config/local';
 
@@ -46,19 +44,6 @@ export function updateIsAvatarUpdated(status) {
   };
 }
 
-export function updateIsLogOut(status) {
-  return {
-    type: UPDATE_IS_LOG_OUT,
-    status
-  };
-}
-
-export function updateIsDisabled(status) {
-  return {
-    type: UPDATE_IS_DISABLED,
-    status
-  };
-}
 
 export function updateDataStorage(resp) {
   getProfileData()
@@ -107,8 +92,9 @@ export function updateImage(image) {
 
     getAccessToken()
       .then((token) => {
+        console.log('token booth info update image', token);
         // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('/api/v1/user/photo');
+        const url = local.API_BASE_URL.concat('/api/v1/booths/galleries');
         const form = new FormData();
 
         form.append('image_data', {
@@ -126,6 +112,7 @@ export function updateImage(image) {
         })
           .then(resp => resp.json())
           .then((resp) => {
+            console.log('response booth info update image', resp);
             updateDataStorage(resp);
             dispatch(
               updateAvatar(resp.data.photos[0].url),

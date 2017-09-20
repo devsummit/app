@@ -108,7 +108,7 @@ class BoothInfo extends Component {
       return (
         <Image
           style={styles.boothImageList}
-          source={{ uri: rowData[0].image.url }}
+          source={{ uri: this.props.avatar }}
         />
       );
     });
