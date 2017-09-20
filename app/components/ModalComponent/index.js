@@ -38,7 +38,7 @@ export default class ModalComponent extends Component {
           animationType={'fade'}
           transparent
           visible={this.props.visible}
-          onRequestClose={this.props.onModalPress}
+          onRequestClose={() => this.props.onModalPress()}
         >
           <View style={styles.modalContainer}>
             <View />
@@ -85,7 +85,7 @@ export default class ModalComponent extends Component {
                 <Button
                   transparent
                   style={styles.button}
-                  onPress={this.props.onModalPress}
+                  onPress={() => this.props.onModalPress()}
                 >
                   <Text style={styles.buttonText}>cancel</Text>
                 </Button>
