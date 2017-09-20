@@ -26,6 +26,7 @@ import * as selectors from './selectors';
 import { getOrders } from '../OrderList/selectors';
 import { getOrderList } from '../OrderList/actions';
 import { PRIMARYCOLOR } from '../../constants';
+import Redeem from '../Redeem';
 
 class TicketList extends Component {
   constructor(props) {
@@ -124,10 +125,11 @@ class TicketList extends Component {
               <Text style={{textAlign: 'center', marginTop: -4, fontSize: 16}}>Ticket Orders</Text>
             </View>
           </TouchableOpacity>
-        </View>
-        <View style={{marginTop: -120, marginBottom: 12, marginLeft: 12, marginRight: 12, borderWidth: 0.3, borderBottomColor: '#90A4AE'}}/>
-
-        <Content
+          </View>
+          <View style={styles.redeem}>
+            <Redeem />
+          </View>
+        <Content style={{ marginTop: -10 }}
           refreshControl={
             <RefreshControl
               refreshing={this.props.isGettingUserTicket}
