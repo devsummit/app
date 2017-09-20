@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Container,
+  Content,
   ListItem,
   Button,
   Text,
@@ -30,6 +31,7 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
+      <Content>
         <HeaderPoint title="FEED" />
         <Tabs style={styles.tabs}>
         <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading> }>
@@ -118,6 +120,7 @@ class Feed extends Component {
               <TicketList />
           </Tab>
         </Tabs>
+        </Content>
       </Container>
     );
   }
