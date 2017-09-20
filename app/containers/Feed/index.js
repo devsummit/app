@@ -195,7 +195,4 @@ class Feed extends Component {
     );
   }
 }
-const mapStateToProps = createStructuredSelector({
-
-});
 export default connect(mapStateToProps, actions)(Feed);
