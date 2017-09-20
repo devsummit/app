@@ -23,3 +23,13 @@ export const getPostFeed = () => createSelector(
   selectFeedReducer(),
   state => state.get('postFeed').toJS()
 );
+
+export const getUpdateImage = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('image').toJS()
+);
+
+export const getUpdateText = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('message')
+)
