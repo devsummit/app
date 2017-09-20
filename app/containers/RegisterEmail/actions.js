@@ -102,8 +102,9 @@ export function register() {
 
     if (first_name && role && email && password && username) {
       DevSummitAxios.post('/auth/register', {
-        first_name, last_name, username, email, password, role: role_id
+        first_name, last_name, username, email, password
       }).then(async (response) => {
+        console.log('landing here', response);
         if (response && response.data.data && response.data.meta.success) {
           await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
         } else if (response.data.data !== null && !response.data.meta.success) {

@@ -53,3 +53,4 @@ fastlane/Preview.html
 fastlane/screenshots
 
 config/local.js
+.vscode/
