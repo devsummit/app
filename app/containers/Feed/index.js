@@ -19,9 +19,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import {PRIMARYCOLOR} from '../../constants';
 import HeaderPoint from '../../components/Header';
-import ModalRedeem from '../../components/ModalRedeem';
-import * as actions from './actions';
-import * as selectors from './selectors';
 
 import TicketList from '../TicketList';
 
@@ -34,7 +31,6 @@ class Feed extends Component {
   }
 
   render() {
-    console.log('here props', this.props);
     return (
       <Container
         style={styles.container}
@@ -135,7 +131,7 @@ class Feed extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  inputFields: selectors.getInputFields()
+
 });
 
-export default connect(mapStateToProps, actions)(Feed);
+export default Feed;
