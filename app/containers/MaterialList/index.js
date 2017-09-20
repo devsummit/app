@@ -87,7 +87,6 @@ class MaterialList extends Component {
 
 
   render() {
-
     const { material } = this.props;
 
     return (
@@ -118,10 +117,20 @@ class MaterialList extends Component {
                                     <Icon name="remove" color="red" style={styles.icon} />
                                   </TouchableOpacity>
                                 </View>
-                                <Text style={styles.title}>{data.title}</Text>
-                                <Text numberOfLines={3} style={styles.summary}>
-                                  {data.summary}
-                                </Text>
+                                <View style={{flex: 1, flexDirection: 'row' }}>
+                                  <View style={{flex: 1}}>
+                                    <Text style={styles.title}>{data.title}</Text>
+                                    <Text numberOfLines={3} style={styles.summary}>
+                                      {data.summary}
+                                    </Text>
+                                  </View>
+                                  <TouchableOpacity style={{ justifyContent: 'center' }} onPress={() => this.props.updateStatus(data)}>
+                                    { data.is_used === 0 ?
+                                      <Text style={{ color: '#000', borderWidth: 1, borderColor: '#000', padding: 8, borderRadius: 10 }}>Set</Text> :
+                                      <Text style={{ color: '#4CAF50', borderWidth: 1, borderColor: '#4CAF50', padding: 8, borderRadius: 10 }}>Used</Text>
+                                    }
+                                  </TouchableOpacity>
+                                </View>
                                 <View style={styles.materialUrl}>
                                   <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
                                 </View>
