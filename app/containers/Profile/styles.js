@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: 'white',
     marginTop: -85,
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'transparent'
   },
   coin: {
     color: 'white',

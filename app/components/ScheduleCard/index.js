@@ -49,13 +49,19 @@ class ScheduleCard extends Component {
               </View>
               <View>
                 <Text style={styles.eventTitle}>{ event.title }</Text>
-                <Text style={styles.smallText}><Icon name="home" style={styles.smallIcon} />{stage}</Text>
-                <Text style={styles.smallText}><Icon name="clock-o" style={styles.smallIcon} />{timeStart}</Text>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                  <Icon name="home" style={styles.smallIcon} />
+                  <Text style={styles.smallText}>{stage}</Text>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                  <Icon name="clock-o" style={styles.smallIcon} />
+                  <Text style={styles.smallText}>{timeStart}</Text>
+                </View>
                 {hasSpeaker ?
-                  <Text style={styles.smallText}>
+                  <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Icon name="user" style={styles.smallIcon} />
-                    {user.first_name} {user.last_name}
-                  </Text> :
+                    <Text style={styles.smallText}>{user.first_name} {user.last_name}</Text>
+                  </View> :
                   <View />
                 }
               </View>

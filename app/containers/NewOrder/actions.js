@@ -12,12 +12,20 @@ import {
   GET_REFERAL,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_SINGLE_INPUT_FIELD,
-  RESET_STATE
+  RESET_STATE,
+  IS_GET_TICKET_TYPE
 } from './constants';
 
+export function isGetTicketType(status) {
+  return {
+    type: IS_GET_TICKET_TYPE,
+    status
+  }
+}
 
 export function getTicketType() {
   return (dispatch) => {
+    dispatch(isGetTicketType(true))
     getAccessToken().then((accessToken) => {
       DevSummitAxios.get('/api/v1/tickets', {
         headers: { Authorization: accessToken }
@@ -27,12 +35,14 @@ export function getTicketType() {
             type: SET_TICKET_TYPE,
             data: response.data.data
           });
+          dispatch(isGetTicketType(false))
         }
       })
         .catch((err) => { console.log('error', err); });
     });
   };
 }
+
 
 export function updateOrder(action, typeId) {
   return (dispatch, getState) => {
@@ -60,7 +70,7 @@ export function updateOrder(action, typeId) {
   };
 }
 
-export function placeOrder() {
+export function placeOrder(redirect = () => {}) {
   return (dispatch, getState) => {
     const { order, inputFields, referal } = getState().get('newOrder').toJS();
     const orderItems = Object.keys(order).map((key) => { return order[key]; });
@@ -82,8 +92,7 @@ export function placeOrder() {
         }
       }).then((response) => {
         if (response.data && response.data.meta) {
-          Actions.pop();
-          dispatch(actions.getOrderList());
+          redirect()
         }
       })
         .catch((err) => { console.log(err); });

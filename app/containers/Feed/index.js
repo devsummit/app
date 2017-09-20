@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Container,
+  Content,
   ListItem,
   Button,
   Text,
@@ -28,18 +29,8 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
-      invisible: false
-    };
-  }
 
-  handleInputChange = (field, value) => {
-    this.props.updateInputFields(field, value);
-  }
-
-  placeRedeem = () => {
-    this.props.placeRedeem();
-    this.setState({ invisible: !this.state.invisible });
+    }
   }
 
   render() {
@@ -48,10 +39,11 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
+      <Content>
         <HeaderPoint title="FEED" />
         <Tabs style={styles.tabs}>
-        <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading> }>
-          <ListItem>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+            <ListItem>
               <Text style={styles.text}>Feed 1</Text>
               <Button
                 small
@@ -132,33 +124,11 @@ class Feed extends Component {
               </Button>
             </ListItem>
           </Tab>
-          <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading> }>
-              <TicketList />
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+            <TicketList />
           </Tab>
         </Tabs>
-        <Fab
-          active={ this.state.active }
-          direction='up'
-          style={{ backgroundColor: '#FFA726' }}
-          position='bottomRight'
-          onPress={() => this.setState({ active: !this.state.active })}
-        >
-          <Icon name='plus' />
-          <Button
-            onPress={() => this.setState({invisible: !this.state.invisible})}
-          >
-            <Icon name='gift' style={ styles.icon } />
-          </Button>
-          <Button>
-            <Icon name='transgender-alt' style={ styles.icon } />
-          </Button>
-        </Fab>
-        <ModalRedeem
-          visible={this.state.invisible}
-          onChangeCode={text => this.handleInputChange('code', text)}
-          onSubmit={() => this.placeRedeem()}
-          onModalPress={() => this.setState({ invisible: !this.state.invisible })}
-        />
+        </Content>
       </Container>
     );
   }

@@ -11,7 +11,8 @@ import {
   IS_GETTING_REFERAL,
   UPDATE_SINGLE_ERROR_FIELD,
   UPDATE_SINGLE_INPUT_FIELD,
-  RESET_STATE
+  RESET_STATE,
+  IS_GET_TICKET_TYPE
 } from './constants';
 
 /*
@@ -23,6 +24,7 @@ const initialState = fromJS({
   referal: {},
   isGettingReferal: false,
   isUpdatingOrder: false,
+  isGetTicketType: false,
   inputFields: {
     referalCode: '',
     isUsingReferal: false
@@ -48,6 +50,8 @@ function newOrderReducer(state = initialState, action) {
       return state.setIn([ 'errorFields', action.field ], action.status);
     case UPDATE_SINGLE_INPUT_FIELD:
       return state.setIn([ 'inputFields', action.field ], action.value);
+    case IS_GET_TICKET_TYPE:
+      return state.set('isGetTicketType', action.status);
     case RESET_STATE:
       return initialState;
     default:

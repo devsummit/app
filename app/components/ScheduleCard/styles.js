@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     month: { fontSize: 15, color: '#0D47A1' },
     eventTitle: { fontSize: 16, fontWeight: '700', marginBottom: 5 },
     description: { textAlign: 'justify' },
-    smallText: { fontSize: 14, color: '#3a3a3a' },
-    smallIcon: {fontSize: 14, color: '#0D47A1'},
+    smallText: { fontSize: 14, color: '#3a3a3a', flex: 9 },
+    smallIcon: {fontSize: 16, color: '#0D47A1', flex: 1 },
     eventFooter: {flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center'},
     footerLabel: { fontWeight: '700', marginRight: 10 }
 });
