@@ -92,7 +92,7 @@ export function register() {
     dispatch(toggleIsRegistering(true));
     const { inputFields } = getState().get('registerPhone').toJS();
     const {
-      firstName, email, password, userName, socialId, provider, token
+      firstName, email, password, userName, socialId, provider, token, referer
     } = inputFields || null;
     let { role } = inputFields || null;
     const { lastName } = inputFields || '';
@@ -108,9 +108,11 @@ export function register() {
         role,
         social_id: socialId,
         provider,
-        token
+        token,
+        referer
       };
       DevSummitAxios.post('/auth/register', data).then((response) => {
+        console.log('response register phone', response);
         if (response && response.data.data && response.data.meta.success) {
           dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
         } else if (response.data.data !== null && !response.data.meta.success) {
