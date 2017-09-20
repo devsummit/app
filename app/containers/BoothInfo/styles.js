@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   summary: {
     color: '#FFFFFF',
     fontSize: 16,
+    alignSelf: 'center',
     marginTop: 8
   },
   col1: {
@@ -36,13 +37,15 @@ const styles = StyleSheet.create({
     padding: 10
   },
   boothImage: {
-    width,
+    alignSelf: 'center',
+    borderRadius: 50,
+    width : width * 0.5,
     height: 200
   },
   boothImageList: {
     width: width * 1/3,
-    height: width * 1/3,
-  }
+    height: 110
+  },
 });
 
 export default styles;
