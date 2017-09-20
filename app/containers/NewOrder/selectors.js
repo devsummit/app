@@ -14,6 +14,11 @@ export const getTicketTypes = () => createSelector(
   state => state.get('ticketTypes')
 );
 
+export const isGetTicketType = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isGetTicketType')
+);
+
 export const getOrder = () => createSelector(
   selectMainReducer(),
   state => state.get('order').toJS()

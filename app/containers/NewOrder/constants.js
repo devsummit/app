@@ -6,3 +6,4 @@ export const IS_GETTING_REFERAL = 'app/containers/NewOrder/IS_GETTING_REFERAL';
 export const UPDATE_SINGLE_INPUT_FIELD = 'app/containers/NewOrder/UPDATE_SINGLE_INPUT_FIELD';
 export const UPDATE_SINGLE_ERROR_FIELD = 'app/containers/NewOrder/UPDATE_SIGNGLE_ERROR_FIELD';
 export const RESET_STATE = 'app/containers/NewOrder/RESET_STATE';
+export const IS_GET_TICKET_TYPE = 'app/containers/NewOrder/IS_GET_TICKET_TYPE';

@@ -6,18 +6,25 @@ import {
   ListItem,
   Button,
   Text,
-  Spinner
+  Spinner,
+  CardItem,
+  Left,
+  Right
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, View } from 'react-native';
+import { RefreshControl, View, TouchableOpacity } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { getOrders } from '../OrderList/selectors';
+import { getOrderList } from '../OrderList/actions';
 import { PRIMARYCOLOR } from '../../constants';
 
 class TicketList extends Component {
@@ -30,6 +37,7 @@ class TicketList extends Component {
 
   componentWillMount() {
     this.props.fetchUserTicket();
+    this.props.getOrderList();
   }
 
   componentWillReceiveProps(prevState) {
@@ -46,7 +54,7 @@ class TicketList extends Component {
         dataArray={this.props.listTicket}
         renderRow={(item) => {
           return (
-            <ListItem>
+            <ListItem style={{ marginLeft: 9, marginRight: 9, padding: 10, marginBottom: 10, borderRadius: 3}}>
               <Text style={styles.text}>Ticket No. {item.id}</Text>
               <Button
                 small
@@ -56,7 +64,7 @@ class TicketList extends Component {
                 }}
               >
                 <Text style={styles.buttonText}>Transfer</Text>
-                <Icon
+                <Icons
                   name="exchange"
                   color="white"
                 />
@@ -92,11 +100,33 @@ class TicketList extends Component {
       );
     }
 
+    const { orders } = this.props;
+
     return (
       <Container
         style={styles.container}
       >
-        
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <TouchableOpacity onPress={() => Actions.orderList()}>
+            <View style={styles.card}>
+              <Text style={{fontSize: 12, fontWeight: 'bold'}}>My Orders</Text>
+              <Icon name="ios-arrow-dropright" style={{flex: 1, fontSize: 30, textAlign: 'right', marginTop: 8}}/>
+              {
+                orders && orders.length > 0
+                  ? <Text style={{flex: 1, marginTop: -8}}>{orders.length} orders is pending</Text>
+                  : <Text style={{fontSize: 12, marginTop: -4}}>All your ticket orders shows up here</Text>
+              }
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Actions.newOrder()}>
+            <View style={styles.ticketCard}>
+              <Icons name="ticket" color="#E57373" style={{flex: 1, fontSize: 30, textAlign: 'center'}}/>
+              <Text style={{textAlign: 'center', marginTop: -4, fontSize: 16}}>Ticket Orders</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View style={{marginTop: -120, marginBottom: 12, marginLeft: 12, marginRight: 12, borderWidth: 0.3, borderBottomColor: '#90A4AE'}}/>
+
         <Content
           refreshControl={
             <RefreshControl
@@ -111,9 +141,6 @@ class TicketList extends Component {
               this.renderError()
           }
         </Content>
-        <Button primary style={styles.btnOrder} onPress={() => Actions.newOrder()}>
-          <Text style={{ textAlign: 'center', flex: 1 }}>Get Ticket Here</Text>
-        </Button>
       </Container>
     );
   }
@@ -133,7 +160,15 @@ TicketList.propTypes = {
 const mapStateToProps = createStructuredSelector({
   listTicket: selectors.getListTicket(),
   isGettingUserTicket: selectors.getIsFetchingTicket(),
-  fetchTicketStatus: selectors.getFetchingUserTicketStatus()
+  fetchTicketStatus: selectors.getFetchingUserTicketStatus(),
+  orders: getOrders()
 });
 
-export default connect(mapStateToProps, actions)(TicketList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getOrderList,
+    ...actions
+  }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TicketList);
