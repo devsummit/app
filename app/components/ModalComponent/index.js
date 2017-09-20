@@ -43,8 +43,7 @@ export default class ModalComponent extends Component {
           <View style={styles.modalContainer}>
             <View />
             <View
-              style={ styles.modalComponent
-              }
+              style={styles.modalComponent}
             >
               <Text style={styles.modalTitle}>{this.props.modalTitle}</Text>
               <View style={styles.inputItem}>
