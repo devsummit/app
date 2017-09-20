@@ -6,9 +6,10 @@ import {
   Col,
   Button,
   List,
-  ListItem
+  ListItem,
+  CategoryCard
 } from 'native-base';
-import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,17 +17,78 @@ import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { 
+  GridRow, 
+  Screen, 
+  ListView, 
+  Tile, 
+  Title, 
+  Subtitle, 
+  Divider, 
+  Card, 
+  Caption 
+} from '@shoutem/ui';
 import Header from '../../components/Header';
 import styles from './styles';
+
 
 
 import * as actions from './actions';
 import * as selectors from './selectors';
 
 class BoothInfo extends Component {
-  state = {
-    id: null
+
+  constructor(props) {
+    super(props);
+    this.renderRow = this.renderRow.bind(this);
+    this.state = {
+      id : null,
+      boothImages: [{
+        "name": "Gaspar Brasserie",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      }, {
+        "name": "Chalk Point Kitchen",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      }, {
+        "name": "Gaspar Brasserie",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      }, {
+        "name": "Gaspar Brasserie",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      }, {
+        "name": "Chalk Point Kitchen",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      }, {
+        "name": "Gaspar Brasserie",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      },{
+        "name": "Chalk Point Kitchen",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      },{
+        "name": "Gaspar Brasserie",
+        "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
+      }],
+    }
   }
+
+  renderRow(rowData, sectionId, index) {
+    // rowData contains grouped data for one row,
+    // so we need to remap it into cells and pass to GridRow
+    const cellViews = rowData.map((boothImage, id) => {
+    return (
+            <Image
+              style={styles.boothImageList}
+              source={{ uri: rowData[0].image.url  }}
+            />
+      );
+    });
+    return (
+      <GridRow columns={3}>
+        {cellViews}
+      </GridRow>
+    );
+  }
+
 
   componentWillMount() {
     AsyncStorage.getItem('role_id')
@@ -69,7 +131,16 @@ class BoothInfo extends Component {
     const booth = this.state.id === 3;
     const { summary, user } = this.props;
     let items = [ 'Simon Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can' ];
+    let isFirstArticle = true;
+    console.log('landing here boothImages',this.state.boothImages);
+    const groupedData = GridRow.groupByRows(this.state.boothImages, 3, () => {
+      if (isFirstArticle) {
+        isFirstArticle = false;
+        return 1;
+      }
 
+      return 1;
+    });
     return (
       <ScrollView>
         {booth ? <Header title="BOOTH INFO" /> : <View />}
@@ -102,88 +173,13 @@ class BoothInfo extends Component {
               </Button>
             </View>
           </LinearGradient>
-          <Grid style={{ flex: 1 }}>
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-            <Image
-              source={{ uri: this.props.avatar }}
-              style={styles.boothImageList}
-              resizeMode="cover"
-            />
-          </Grid>
         </Content>
-        <Content>
-          <List dataArray={items}
-            renderRow={(item) =>
-              <Grid style={{ flex: 1 }}>
-                <Image
-                source={{ uri: this.props.avatar }}
-                style={styles.boothImageList}
-                resizeMode="cover"
-                />
-              </Grid>
-            }>
-          </List>
-        </Content>
+        <Screen>
+          <ListView
+            data={groupedData}
+            renderRow={this.renderRow}
+          />
+        </Screen>
       </ScrollView>
     );
   }
