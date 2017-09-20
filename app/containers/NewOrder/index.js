@@ -83,31 +83,33 @@ class NewOrder extends Component {
         <Content>
           { this.props.isFetchingTicket
             ? <Spinner color={PRIMARYCOLOR}/>
-            : this.props.ticketTypes.map((ticket) => {
-              return (
-                <Card key={ticket.id}>
-                  <CardItem>
-                    <Body style={styles.summary}>
-                      <Text>{ticket.ticket_type}</Text>
-                      <Text note style={{ color: 'green' }}>
-                        Rp {Intl.NumberFormat('id').format(ticket.price)}
-                      </Text>
-                      <Text note>{ticket.information}</Text>
-                    </Body>
-                    <View style={styles.btnGroup}>
-                      <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
-                        <Icon name="minus" />
-                      </Text>
-                      <Text style={styles.ticketCount}>
-                        {order[ticket.id] ? order[ticket.id].count : 0}
-                      </Text>
-                      <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
-                        <Icon name="plus" />
-                      </Text>
-                    </View>
-                  </CardItem>
-                </Card>
-              );
+            : this.props.ticketTypes.map((ticket, index) => {
+              if (index === 0) {
+                return (
+                  <Card key={ticket.id}>
+                    <CardItem>
+                      <Body style={styles.summary}>
+                        <Text>{ticket.ticket_type}</Text>
+                        <Text note style={{ color: 'green' }}>
+                          Rp {Intl.NumberFormat('id').format(ticket.price)}
+                        </Text>
+                        <Text note>{ticket.information}</Text>
+                      </Body>
+                      <View style={styles.btnGroup}>
+                        <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
+                          <Icon name="minus" />
+                        </Text>
+                        <Text style={styles.ticketCount}>
+                          {order[ticket.id] ? order[ticket.id].count : 0}
+                        </Text>
+                        <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
+                          <Icon name="plus" />
+                        </Text>
+                      </View>
+                    </CardItem>
+                  </Card>
+                );
+              }
             })
           }
 

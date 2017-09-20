@@ -107,8 +107,7 @@ class Feed extends Component {
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                      <Text>{this.state.name}</Text>
-                      <Text note>Feed title</Text>
+                    <Text>{ this.state.name }</Text>
                     </Body>
                   </Left>
                 </CardItem>
@@ -135,7 +134,6 @@ class Feed extends Component {
                 <CardItem>
                   <Body>
                     <Item fixedLabel>
-
                     </Item>
                   </Body>
                   <Right>
@@ -144,7 +142,6 @@ class Feed extends Component {
                     </Button>
                   </Right>
                 </CardItem>
-
                 {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
@@ -180,15 +177,12 @@ class Feed extends Component {
                         </Card>
                       )
                     })
-
                 }
-
               </Card>
             </Tab>
             <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
               <TicketList />
             </Tab>
-
           </Tabs>
         </Content>
         <Fab
