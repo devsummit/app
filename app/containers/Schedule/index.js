@@ -55,6 +55,7 @@ class Schedule extends Component {
   render() {
     return (
       <Container style={styles.container}>
+      <Content>
         <HeaderPoint title= "SCHEDULE"/>
         <Tabs style={styles.tabs}>
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>21 Nov</Text></TabHeading> }>
@@ -94,6 +95,7 @@ class Schedule extends Component {
               </Content>
             </Tab>
         </Tabs>
+        </Content>
       </Container>
     );
   }

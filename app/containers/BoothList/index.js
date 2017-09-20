@@ -31,6 +31,7 @@ class BoothList extends Component {
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
+      <Content>
         <HeaderPoint title="BOOTH" />
         <Button
           primary
@@ -77,6 +78,7 @@ class BoothList extends Component {
               </CardItem>
             </Card>
           ))}
+        </Content>
         </Content>
       </Container>
     );
