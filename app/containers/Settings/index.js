@@ -59,7 +59,7 @@ class Settings extends Component {
                 block
                 rounded
                 style={styles.button}
-                onPress={() => Actions.profile()}
+                onPress={() => Actions.connectSosmed()}
               >
                 <Text>Connect To Social Media</Text>
               </Button>
