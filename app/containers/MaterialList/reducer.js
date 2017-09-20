@@ -33,7 +33,7 @@ function materialListReducer(state = initialState, action) {
     case IS_FETCHING_MATERIAL:
       return state.set('isFetchingMaterial', action.status);
     case DELETE_MATERIAL_LIST:
-      return state.set('deleteMaterialList', action);
+      return state.set('deleteMaterialList', action.payloads);
     default:
       return state;
   }
