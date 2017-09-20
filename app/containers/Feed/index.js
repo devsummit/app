@@ -44,7 +44,6 @@ const mapStateToProps = () => createStructuredSelector({
   isFetching: selectors.getIsFetchingFeeds(),
   feeds: selectors.getFetchFeeds(),
   isPosting: selectors.getIsPostingFeed(),
-  postFeed: selectors.getPostFeed(),
   imagesData: selectors.getUpdateImage(),
   textData: selectors.getUpdateText()
 });
@@ -139,9 +138,9 @@ class Feed extends Component {
                     </Item>
                 </Body>
                 <Right>
-                    <Button rounded primary bordered textStyle={{color: '#87838B'}} onPress={ () => this.postFeed() }>
-                        <Text style={{ textAlign: 'center'}}>{ "Post" }</Text>
-                    </Button>
+                      <Button rounded primary bordered textStyle={{color: '#87838B'}} onPress={ () => this.postFeed() }>
+                          <Text style={{ textAlign: 'center'}}>{ "Post" }</Text>
+                      </Button>
                 </Right>
               </CardItem>
 
