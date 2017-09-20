@@ -101,8 +101,7 @@ export function login() {
             [ 'access_token', resData.access_token ],
             [ 'refresh_token', resData.refresh_token ],
             [ 'role_id', roleId ],
-            [ 'profile_data', profileData ],
-            [ 'booth_data', boothData ]
+            [ 'profile_data', profileData ]
           ]);
         } catch (error) {
           console.log(error, 'error caught');
