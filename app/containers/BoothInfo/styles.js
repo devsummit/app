@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
   info: {
     margin: 12
   },
+  icon: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginTop: -30,
+    marginRight: 5
+  },
   name: {
     textAlign: 'center',
     fontWeight: 'bold',
