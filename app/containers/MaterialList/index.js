@@ -96,7 +96,7 @@ class MaterialList extends Component {
           <HeaderPoint title="MATERIAL" />
           {
             this.props.isFetching
-              ? <ActivityIndicator size="large" color="#f39e21"/>
+              ? <ActivityIndicator size="large" color="#f39e21" style={styles.loader}/>
               : (
                   material && material.length > 0 ?
                     <Content>
