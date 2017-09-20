@@ -48,14 +48,12 @@
 		5F9A20DE3C9D4A63A450E90A /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F8F343BFD69408E9B2202AD /* Entypo.ttf */; };
 		6776F4E05F464D0596EB3A65 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE94A86567B240ADB7F9F558 /* Montserrat-Regular.ttf */; };
 		7AF98CA09C1B464CA096F784 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E6D28A473AB4C7196124E35 /* EvilIcons.ttf */; };
-		7BFDA297C190D47B1080B903 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		7D69D941106D4F9EB5E6B6DB /* libRNDocumentPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFAE845B1CD469FAED85CAB /* libRNDocumentPicker.a */; };
 		821FE5BAE73F455583FADECF /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E88A6C08CA7643BBB3847D8E /* libRNVectorIcons.a */; };
 		829A5645B5354E20A848194D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BE9449B0BDF4B96A62EA71B /* Foundation.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8BEDE56CF94A4E0F8D8CDBA4 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEF2C468AE954B31BE665903 /* SimpleLineIcons.ttf */; };
 		9230EC26655A46DF9A12D2B6 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62E9A2DFDFE24AB8A340C32D /* FontAwesome.ttf */; };
-		9CF18D021F711CA6009E4D56 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		9CF18D5E1F713D8D009E4D56 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF18D5D1F713D8D009E4D56 /* AccountKit.framework */; };
 		A378F51888E3440F991E3C70 /* libRNAccountKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 548A0B7D4D4546CC8B295946 /* libRNAccountKit.a */; };
 		AF8AFC3E32D14A4E978B2AC0 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E018BC4CD4814AF487610BC6 /* MaterialIcons.ttf */; };
@@ -473,7 +471,6 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
-				9CF18D021F711CA6009E4D56 /* BuildFile in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				821FE5BAE73F455583FADECF /* libRNVectorIcons.a in Frameworks */,
@@ -484,7 +481,6 @@
 				B7357AB38746417C848964E8 /* libLRDRCTSimpleToast.a in Frameworks */,
 				ECB24CF1E26C4CD4A1A2746B /* libCodePush.a in Frameworks */,
 				D19B7C61AB204D4C9B1D0C7E /* libz.tbd in Frameworks */,
-				7BFDA297C190D47B1080B903 /* BuildFile in Frameworks */,
 				7D69D941106D4F9EB5E6B6DB /* libRNDocumentPicker.a in Frameworks */,
 				D9A387E3C1044CFD3166B14A /* Pods_app.framework in Frameworks */,
 			);
@@ -931,6 +927,10 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 9V94TMUKZC;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1738,6 +1738,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 9V94TMUKZC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1762,6 +1763,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.devsummit.app.ios;
 				PRODUCT_NAME = app;
+				PROVISIONING_PROFILE = "a45879b3-5a63-4b8b-af05-494dec236137";
+				PROVISIONING_PROFILE_SPECIFIER = "DevSummit provisioning-dev";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1771,7 +1774,9 @@
 			baseConfigurationReference = 54E45A76BFF891706A35FC1E /* Pods-app.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9V94TMUKZC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1796,6 +1801,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.devsummit.app.ios;
 				PRODUCT_NAME = app;
+				PROVISIONING_PROFILE = "cb425292-217b-4808-a607-bbccc4bf3549";
+				PROVISIONING_PROFILE_SPECIFIER = "DevSummit provisioning-prod";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
