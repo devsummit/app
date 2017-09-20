@@ -38,6 +38,10 @@ const styles = StyleSheet.create({
   boothImage: {
     width,
     height: 200
+  },
+  boothImageList: {
+    width: width * 1/3,
+    height: 110
   }
 });
 
