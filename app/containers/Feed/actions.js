@@ -1,8 +1,12 @@
+import FormData from 'FormData';
+import { Platform } from 'react-native';
 import {
   FETCH_FEEDS,
   IS_FETCHING_FEEDS,
   POST_FEEDS,
-  IS_POST_FEEDS
+  IS_POST_FEEDS,
+  UPDATE_IMAGE,
+  UPDATE_TEXT
 } from './constants';
 
 import {
@@ -24,8 +28,6 @@ export function fetchFeeds() {
 
           const payloads = response.data.data;
 
-          console.log("actions", payloads)
-
           dispatch({ type: FETCH_FEEDS, payloads });
 
           dispatch(isFetchingFeeds(false));
@@ -45,18 +47,41 @@ export function isFetchingFeeds(status) {
   }
 }
 
-export function postFeeds() {
+export function postFeeds(image, text) {
   return (dispatch) => {
 
-    dispatch(isPostFeeds(true));
+    // dispatch(isPostFeeds(true));
 
     getAccessToken()
       .then((token) => {
 
+        const form = new FormData();
+
+        if (Platform.OS === 'ios') {
+          form.append('attachment', {
+            uri: image.sourceURL,
+            type: image.mime,
+            name: image.filename
+          });
+          form.append('message', text);
+        } else {
+          form.append('attachment', {
+            uri: image.path,
+            type: image.mime,
+            name: 'image.jpg'
+          });
+          form.append('message', text);
+        }
+
+        console.log("FORM", form)
+
         const headers = { Authorization: token }
 
-        DevSummitAxios.post('api/v1/feeds',  { headers })
+
+        DevSummitAxios.post('api/v1/feeds', form, { headers })
           .then((response) => {
+
+            console.log("RESP", response)
 
             const payloads = response.data;
 
@@ -77,3 +102,16 @@ export function isPostFeeds(status) {
   }
 }
 
+export function updateImage(image) {
+  return {
+    type: UPDATE_IMAGE,
+    image
+  }
+}
+
+export function updateText(value) {
+  return {
+    type: UPDATE_TEXT,
+    value
+  }
+}
