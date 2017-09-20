@@ -73,8 +73,6 @@ export function postFeeds(image, text) {
           form.append('message', text);
         }
 
-        console.log("FORM", form)
-
         const headers = { Authorization: token }
 
 

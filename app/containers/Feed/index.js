@@ -19,12 +19,16 @@ import {
   Label,
   Spinner
 } from 'native-base';
+import Toast from 'react-native-simple-toast';
 import PropTypes from 'prop-types';
-import { RefreshControl, View, Image } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
+import { RefreshControl, View, Image, TouchableOpacity } from 'react-native';
 import { createStructuredSelector } from 'reselect';
+import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/share';
+import Icon from 'react-native-vector-icons/Entypo';
+import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import {PRIMARYCOLOR} from '../../constants';
 import HeaderPoint from '../../components/Header';
@@ -40,13 +44,53 @@ const mapStateToProps = () => createStructuredSelector({
   isFetching: selectors.getIsFetchingFeeds(),
   feeds: selectors.getFetchFeeds(),
   isPosting: selectors.getIsPostingFeed(),
-  postFeed: selectors.getPostFeed()
+  postFeed: selectors.getPostFeed(),
+  imagesData: selectors.getUpdateImage(),
+  textData: selectors.getUpdateText()
 });
+
 
 class Feed extends Component {
 
+  state = {
+    name: '',
+    profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg'
+  }
+
+
   componentWillMount() {
     this.props.fetchFeeds();
+
+    AsyncStorage.getItem('profile_data')
+    .then((profile) => {
+      const data = JSON.parse(profile)
+      const name = data.first_name
+      const url = data.photos[0].url
+      this.setState({ name: name, profileUrl: url })
+    });
+  }
+
+  postFeed = () => {
+    this.props.postFeeds(this.props.imagesData, this.props.textData)
+  }
+
+  uploadImage = () => {
+
+    ImagePicker.openPicker({
+        width: 300,
+        height: 200,
+        cropping: true,
+        includeBase64: true
+      }).then((image) => {
+
+        this.props.updateImage(image);
+
+      }).catch(err => Toast.show('Error getting image from library', err))
+
+  }
+
+  handleChange = (value) => {
+    this.props.updateText(value)
   }
 
   render() {
@@ -61,9 +105,9 @@ class Feed extends Component {
             <Card style={{flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3}}>
               <CardItem>
                 <Left>
-                    <Thumbnail source={{ uri: 'https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-64.png' }} />
+                    <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                    <Text>{ 'Kris' }</Text>
+                    <Text>{ this.state.name }</Text>
                     <Text note>Feed title</Text>
                     </Body>
                 </Left>
@@ -77,10 +121,13 @@ class Feed extends Component {
                             placeholder={"Share your activity ..."}
                             multiline={true}
                             numberOfLines={4}
-                            value={ '' }
+                            value={ this.props.textData }
                             disabled={ false }
-                            onChangeText={ (text) => {} }
+                            onChangeText={ (text) => this.handleChange(text) }
                         />
+                        <TouchableOpacity style={styles.icon} onPress={() => this.uploadImage(this)}>
+                          <CameraIcon name="camera" size={24} color="grey"/>
+                        </TouchableOpacity>
                     </Item>
                 </Body>
               </CardItem>
@@ -92,7 +139,7 @@ class Feed extends Component {
                     </Item>
                 </Body>
                 <Right>
-                    <Button rounded primary bordered textStyle={{color: '#87838B'}} onPress={ () => {} }>
+                    <Button rounded primary bordered textStyle={{color: '#87838B'}} onPress={ () => this.postFeed() }>
                         <Text style={{ textAlign: 'center'}}>{ "Post" }</Text>
                     </Button>
                 </Right>
@@ -116,7 +163,7 @@ class Feed extends Component {
                             </CardItem>
                             <CardItem>
                               <Body>
-                                <Image source={{uri: feed.attachment }} style={{height: 200, width: 200, flex: 1}}/>
+                                <Image source={{uri: feed.attachment }} style={{height: 200, width: 300, flex: 1}}/>
                                 <Text>
                                 { feed.message }
                                 </Text>
