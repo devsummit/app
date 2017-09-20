@@ -19,6 +19,7 @@ import ScheduleListReducer from './containers/Schedule/reducer';
 import MaterialListReducer from './containers/MaterialList/reducer';
 import BoothListReducer from './containers/BoothList/reducer';
 import Notification from './containers/Notification/reducer';
+import FeedReducer from './containers/Feed/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -38,7 +39,8 @@ const rootReducers = combineReducers({
   scheduleList: ScheduleListReducer,
   materialList: MaterialListReducer,
   boothList: BoothListReducer,
-  notificationList: Notification
+  notificationList: Notification,
+  feed: FeedReducer
 });
 
 export default rootReducers;
