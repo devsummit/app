@@ -13,7 +13,7 @@ import {
   Body,
   Fab
 } from 'native-base';
-import { Alert, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
+import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
@@ -30,7 +30,6 @@ class MaterialList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      materialFilter: this.props.material,
       fileName: '',
       invisible: false,
       isLoading: true
@@ -42,13 +41,6 @@ class MaterialList extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if (prevProps && prevProps.material && this.props.material !== prevProps.material) {
-      this.setState({
-        materialFilter: prevProps.material,
-        isLoading: false
-      });
-    }
-
     if (prevProps && prevProps.visible && this.props.visible !== prevProps.visible) {
       this.setState({
         visible: prevProps.visible
@@ -58,16 +50,6 @@ class MaterialList extends Component {
 
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
-  }
-
-  handleFilter = (param) => {
-    const filteredMaterial = [];
-    this.props.material.map((data) => {
-      filteredMaterial.push(data);
-    });
-    this.setState({
-      materialFilter: filteredMaterial
-    });
   }
 
   openPicker = () => {
@@ -80,7 +62,7 @@ class MaterialList extends Component {
   }
 
   saveMaterialList = () => {
-    this.props.saveMaterialList();
+    this.props.saveMaterialList(this.props.inputFields);
     this.setState({ invisible: !this.state.invisible });
     Toast.show('Saved');
     this.setState({ fileName: '' });
@@ -101,57 +83,69 @@ class MaterialList extends Component {
     Toast.show('Deleted');
   }
 
-  render() {
-    const { material } = this.props;
+  setModal = () => this.setState({ invisible: !this.state.invisible });
 
-    if (this.props.isFetching) {
-      this.props.fetchMaterialList();
-    }
+
+  render() {
+
+    const { material } = this.props;
 
     return (
       <Container>
         <HeaderPoint title="MATERIAL" />
-        {material.length > 0 ?
-          <Content>
-            {(this.state.filteredMaterial || material).map(data => (
-              <Card key={data.id}>
-                <CardItem>
-                  <Body>
-                    <View style={styles.bodySection}>
-                      <View style={styles.profileSection}>
-                        <Image
-                          source={{ uri: data.user.photos[0].url }}
-                          style={styles.photo}
-                        />
-                      </View>
-                      <View style={styles.nameSection}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                          <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                          <TouchableOpacity onPress={() => this.showAlert(data.id)}>
-                            <Icon name="remove" color="red" style={styles.icon} />
-                          </TouchableOpacity>
-                        </View>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text numberOfLines={3} style={styles.summary}>
-                          {data.summary}
-                        </Text>
-                        <View style={styles.materialUrl}>
-                          <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
-                        </View>
-                      </View>
-                    </View>
-                  </Body>
-                </CardItem>
-              </Card>
-            ))}
-          </Content> :
-          <Text style={styles.noMaterial}>You don't have any material.</Text>
+        {
+          this.props.isFetching
+            ? <ActivityIndicator size="large" color="#f39e21"/>
+            : (
+                material && material.length > 0 ?
+                  <Content>
+                  {material.map(data => (
+                    <Card key={data.id}>
+                      <CardItem>
+                        <Body>
+                          <View style={styles.bodySection}>
+                            <View style={styles.profileSection}>
+                              <Image
+                                source={{ uri: data.user.photos[0].url || ''}}
+                                style={styles.photo}
+                              />
+                            </View>
+                            <View style={styles.nameSection}>
+                              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                                <TouchableOpacity onPress={() => this.showAlert(data.id)}>
+                                  <Icon name="remove" color="red" style={styles.icon} />
+                                </TouchableOpacity>
+                              </View>
+                              <Text style={styles.title}>{data.title}</Text>
+                              <Text numberOfLines={3} style={styles.summary}>
+                                {data.summary}
+                              </Text>
+                              <View style={styles.materialUrl}>
+                                <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
+                              </View>
+                            </View>
+                          </View>
+                        </Body>
+                      </CardItem>
+                    </Card>
+                  ))}
+                </Content> :
+                <Button
+                  block
+                  rounded
+                  style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
+                  onPress={() => this.setState({ invisible: !this.state.invisible })}
+                >
+                  <Text style={styles.buttonText}>Upload File</Text>
+                </Button>
+              )
         }
         <Fab
           active={this.state.invisible}
           style={{ backgroundColor: '#FFA726' }}
           position="bottomRight"
-          onPress={() => this.setState({ invisible: !this.state.invisible })}>
+          onPress={() => this.setModal()}>
           <Icon name="plus" />
         </Fab>
         <ModalComponent
@@ -161,9 +155,9 @@ class MaterialList extends Component {
           onChangeTitle={text => this.handleInputChange('title', text)}
           inputSummary={'Summary'}
           onChangeSummary={text => this.handleInputChange('summary', text)}
-          onSubmit={() => this.saveMaterialList()}
-          onUpload={() => this.openPicker()}
-          onModalPress={() => this.setState({ invisible: !this.state.invisible })}
+          onSubmit={this.saveMaterialList}
+          onUpload={this.openPicker}
+          onModalPress={this.setModal}
           fileName={this.state.fileName}
         />
       </Container>
@@ -174,6 +168,7 @@ class MaterialList extends Component {
 const mapStateToProps = createStructuredSelector({
   material: selectors.getListMaterial(),
   visible: selectors.getModalStatus(),
-  isFetching: selectors.getIsFetchingMaterial()
+  isFetching: selectors.getIsFetchingMaterial(),
+  inputFields: selectors.getInputFields()
 });
 export default connect(mapStateToProps, actions)(MaterialList);
