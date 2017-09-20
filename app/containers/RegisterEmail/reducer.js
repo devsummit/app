@@ -24,7 +24,8 @@ const initialState = fromJS({
     password: '',
     phone: '',
     role: '',
-    social_id: ''
+    social_id: '',
+    referer: ''
   },
   errorFields: {
     error_first_name: false,
