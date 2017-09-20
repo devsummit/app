@@ -31,7 +31,8 @@
         "semi": [ 1, "always" ],
         "space-before-blocks": [ 1, "always" ],
         "consistent-return": 0,
-        "arrow-body-style": [0, "never"]
+        "arrow-body-style": [0, "never"],
+        "no-nested-ternary": [1, "never"]
     },
     "globals": {
       "describe": false,

@@ -55,9 +55,10 @@ class Schedule extends Component {
   render() {
     return (
       <Container style={styles.container}>
+      <Content>
         <HeaderPoint title= "SCHEDULE"/>
         <Tabs style={styles.tabs}>
-            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>21 Nov</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name= "calendar"/><Text style={styles.tabTitle}>21 Nov</Text></TabHeading> }>
               <Content style={styles.content}>
                 <View style={styles.cards}>
                   { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[0]} />) : (
@@ -69,7 +70,7 @@ class Schedule extends Component {
                 </View>
               </Content>
             </Tab>
-            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>22 Nov</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>22 Nov</Text></TabHeading> }>
             <Content style={styles.content}>
               <View style={styles.cards}>
                 { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[1]} />) : (
@@ -81,7 +82,7 @@ class Schedule extends Component {
               </View>
             </Content>
           </Tab>
-          <Tab heading={ <TabHeading style={styles.tabHeading}><Icon name= "calendar"/><Text style={styles.tabTitle}>Nov 23</Text></TabHeading> }>
+          <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>Nov 23</Text></TabHeading> }>
               <Content style={styles.content}>
                 <View style={styles.cards}>
                   { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[2]} />) : (
@@ -94,6 +95,7 @@ class Schedule extends Component {
               </Content>
             </Tab>
         </Tabs>
+        </Content>
       </Container>
     );
   }

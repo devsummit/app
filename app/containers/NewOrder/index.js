@@ -8,6 +8,7 @@ import {
   Body,
   Spinner
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import { View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -37,7 +38,7 @@ class NewOrder extends Component {
   };
 
   placeOrder = () => {
-    this.props.placeOrder();
+    this.props.placeOrder(() => Actions.orderList());
   }
 
   toggleReferal = () => {
@@ -80,32 +81,35 @@ class NewOrder extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          {this.props.ticketTypes.map((ticket) => {
-            return (
-              <Card key={ticket.id}>
-                <CardItem>
-                  <Body style={styles.summary}>
-                    <Text>{ticket.ticket_type}</Text>
-                    <Text note style={{ color: 'green' }}>
-                      Rp {Intl.NumberFormat('id').format(ticket.price)}
-                    </Text>
-                    <Text note>{ticket.information}</Text>
-                  </Body>
-                  <View style={styles.btnGroup}>
-                    <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
-                      <Icon name="minus" />
-                    </Text>
-                    <Text style={styles.ticketCount}>
-                      {order[ticket.id] ? order[ticket.id].count : 0}
-                    </Text>
-                    <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
-                      <Icon name="plus" />
-                    </Text>
-                  </View>
-                </CardItem>
-              </Card>
-            );
-          })}
+          { this.props.isFetchingTicket
+            ? <Spinner color={PRIMARYCOLOR}/>
+            : this.props.ticketTypes.map((ticket) => {
+              return (
+                <Card key={ticket.id}>
+                  <CardItem>
+                    <Body style={styles.summary}>
+                      <Text>{ticket.ticket_type}</Text>
+                      <Text note style={{ color: 'green' }}>
+                        Rp {Intl.NumberFormat('id').format(ticket.price)}
+                      </Text>
+                      <Text note>{ticket.information}</Text>
+                    </Body>
+                    <View style={styles.btnGroup}>
+                      <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
+                        <Icon name="minus" />
+                      </Text>
+                      <Text style={styles.ticketCount}>
+                        {order[ticket.id] ? order[ticket.id].count : 0}
+                      </Text>
+                      <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
+                        <Icon name="plus" />
+                      </Text>
+                    </View>
+                  </CardItem>
+                </Card>
+              );
+            })
+          }
 
           <Card>
             <CardItem style={{ flex: 1 }}>
@@ -177,7 +181,7 @@ class NewOrder extends Component {
           <Button
             block
             style={styles.orderBtn}
-            onPress={() => { this.props.placeOrder(); }}
+            onPress={() => { this.placeOrder(); }}
           >
             <Text>Place Order</Text>
           </Button>
@@ -198,8 +202,8 @@ NewOrder.propTypes = {
   ticketTypes: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]).isRequired,
   placeOrder: PropTypes.func.isRequired,
   getTicketType: PropTypes.func.isRequired,
-  isFetchingReferal: PropTypes.bool.isRequired
-
+  isFetchingReferal: PropTypes.bool.isRequired,
+  isFetchingTicket: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -208,7 +212,8 @@ const mapStateToProps = createStructuredSelector({
   inputFields: selectors.getInputFields(),
   errorFields: selectors.getErrorFields(),
   referalInfo: selectors.getReferal(),
-  isFetchingReferal: selectors.getIsGettingReferal()
+  isFetchingReferal: selectors.getIsGettingReferal(),
+  isFetchingTicket: selectors.isGetTicketType()
 });
 
 export default connect(mapStateToProps, actions)(NewOrder);

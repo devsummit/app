@@ -21,11 +21,10 @@ export function updateInputFields(field, value) {
   };
 }
 
-export function addMaterialItem(item, material) {
-  material.unshift(item);
+export function addMaterialItem(data) {
   return {
     type: ADD_MATERIAL_ITEM,
-    material
+    data
   };
 }
 
@@ -58,69 +57,57 @@ export function fetchMaterialList() {
             dispatch(isFetchingMaterial(false));
           })
           .catch((err) => {
-            dispatch(isFetchingMaterial(false));
+            // maybe we can put toast here later
           });
       });
   };
 }
 
-export function saveMaterialList(image) {
+export function saveMaterialList(data) {
   return (dispatch, getState) => {
-    dispatch(isFetchingMaterial(true));
-    const { fields, material } = getState().get('materialList').toJS();
-    const {
-      title,
-      summary,
-      file
-    } = fields || null;
+
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
         const url = local.API_BASE_URL.concat('/api/v1/documents');
         const form = new FormData();
 
-        form.append('title', title);
-        form.append('summary', summary);
+        form.append('title', data.title);
+        form.append('summary', data.summary);
         form.append('document_data', {
-          uri: file.uri,
-          type: file.type,
-          name: file.fileName
+          uri: data.file.uri,
+          type: data.file.type,
+          name: data.file.fileName
         });
 
-        fetch(url, {
-          method: 'POST',
-          headers: {
-            Authorization: token
-          },
-          body: form
-        })
+        fetch(url, { method: 'POST', headers: { Authorization: token }, body: form })
           .then(resp => resp.json())
           .then((resp) => {
-            dispatch(addMaterialItem(resp.data, material));
-            dispatch(updateModalStatus(false));
-            dispatch(isFetchingMaterial(false));
+
+            dispatch(addMaterialItem(resp.data));
+
           }).catch((err) => {
-            dispatch(isFetchingMaterial(false));
-            console.log(err);
+
+              console.log(err);
+
           });
       });
   };
 }
 
 export function deleteMaterialList(id) {
+
   return (dispatch) => {
-    dispatch(isFetchingMaterial(true));
     getAccessToken()
       .then((token) => {
+
         const headers = { Authorization: token };
+
+        dispatch({ type: DELETE_MATERIAL_LIST, id });
+
         DevSummitAxios.delete(`api/v1/documents/${id}`, { headers })
           .then((response) => {
-            console.log('landing here to delete item', response);
-            dispatch({
-              type: DELETE_MATERIAL_LIST,
-              payloads: response.data.data
-            });
-            dispatch(isFetchingMaterial(false));
+
           })
           .catch((err) => {
             console.log(err);
