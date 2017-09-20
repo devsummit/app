@@ -23,6 +23,9 @@ import TicketList from '../TicketList';
 class Feed extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+
+    }
   }
 
   render() {
@@ -32,8 +35,8 @@ class Feed extends Component {
       >
         <HeaderPoint title="FEED" />
         <Tabs style={styles.tabs}>
-        <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading> }>
-          <ListItem>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+            <ListItem>
               <Text style={styles.text}>Feed 1</Text>
               <Button
                 small
@@ -114,8 +117,8 @@ class Feed extends Component {
               </Button>
             </ListItem>
           </Tab>
-          <Tab heading={ <TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading> }>
-              <TicketList />
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+            <TicketList />
           </Tab>
         </Tabs>
       </Container>
