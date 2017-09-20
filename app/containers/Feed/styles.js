@@ -5,6 +5,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  icon: {
+    marginRight: 10
+  },
   item: {
     flex: 1,
     justifyContent: 'flex-start'

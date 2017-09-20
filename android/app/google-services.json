@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1039974428462",
+    "firebase_url": "https://devsummit-d3496.firebaseio.com",
+    "project_id": "devsummit-d3496",
+    "storage_bucket": "devsummit-d3496.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039974428462:android:df22f8fb77cdf77c",
+        "android_client_info": {
+          "package_name": "com.devsummit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039974428462-aiif8hjgustajofjfhnkc4hcf9el7as8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIzH3kQWktNbxXzmopq-buMsYKFPsLpus"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
