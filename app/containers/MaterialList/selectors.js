@@ -4,12 +4,12 @@ const selectListMaterialReducer = () => state => state.get('materialList');
 
 export const getListMaterial = () => createSelector(
   selectListMaterialReducer(),
-  state => state.get('material')
+  state => state.get('material').toJS()
 );
 
 export const getInputFields = () => createSelector(
   selectListMaterialReducer(),
-  state => state.get('inputFields').toJS()
+  state => state.get('fields').toJS()
 );
 
 export const getModalStatus = () => createSelector(
@@ -22,7 +22,3 @@ export const getIsFetchingMaterial = () => createSelector(
   state => state.get('isFetchingMaterial')
 );
 
-export const getDeleteMaterialList = () => createSelector(
-  selectListMaterialReducer(),
-  state => state.get('deleteMatarialList')
-);
