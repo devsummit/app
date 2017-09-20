@@ -56,5 +56,4 @@
         android:name="com.facebook.accountkit.ClientToken"
         android:value="@string/ak_client_token" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
