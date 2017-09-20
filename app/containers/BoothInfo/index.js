@@ -35,7 +35,6 @@ class BoothInfo extends Component {
 
     return (
       <ScrollView>
-        {booth ? <Header title="BOOTH INFO" /> : <View />}
         <Content>
           <LinearGradient
             colors={[ '#f72d48', '#f39e21' ]}
