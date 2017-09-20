@@ -17,15 +17,14 @@ import {
   Thumbnail,
   Input,
   Label,
-  Spinner,
-  Icon
+  Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { RefreshControl, View, Image } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/share';
 import styles from './styles';
 import {PRIMARYCOLOR} from '../../constants';
 import HeaderPoint from '../../components/Header';
@@ -126,7 +125,7 @@ class Feed extends Component {
                             <CardItem>
                               <Left>
                                 <Button transparent textStyle={{color: '#87838B'}}>
-                                  <Icon name="logo-github" />
+                                  <Icon name="share" />
                                   <Text>Share</Text>
                                 </Button>
                               </Left>
