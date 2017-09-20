@@ -1,1 +1,0 @@
-export const UPDATE_SINGLE_INPUT_FIELD = 'app/containers/Feed/UPDATE_SINGLE_INPUT_FIELD';
