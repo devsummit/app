@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     flex: 8
   },
+  loader: {
+    margin: 20
+  },
   photo: {
     height: 70,
     width: 70,

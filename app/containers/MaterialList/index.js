@@ -92,55 +92,69 @@ class MaterialList extends Component {
 
     return (
       <Container>
-        <HeaderPoint title="MATERIAL" />
-        {
-          this.props.isFetching
-            ? <ActivityIndicator size="large" color="#f39e21"/>
-            : (
-                material && material.length > 0 ?
-                  <Content>
-                  {material.map(data => (
-                    <Card key={data.id}>
-                      <CardItem>
-                        <Body>
-                          <View style={styles.bodySection}>
-                            <View style={styles.profileSection}>
-                              <Image
-                                source={{ uri: data.user.photos[0].url || ''}}
-                                style={styles.photo}
-                              />
-                            </View>
-                            <View style={styles.nameSection}>
-                              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                                <TouchableOpacity onPress={() => this.showAlert(data.id)}>
-                                  <Icon name="remove" color="red" style={styles.icon} />
-                                </TouchableOpacity>
+        <Content>
+          <HeaderPoint title="MATERIAL" />
+          {
+            this.props.isFetching
+              ? <ActivityIndicator size="large" color="#f39e21" style={styles.loader}/>
+              : (
+                  material && material.length > 0 ?
+                    <Content>
+                    {material.map(data => (
+                      <Card key={data.id}>
+                        <CardItem>
+                          <Body>
+                            <View style={styles.bodySection}>
+                              <View style={styles.profileSection}>
+                                <Image
+                                  source={{ uri: data.user.photos[0].url || ''}}
+                                  style={styles.photo}
+                                />
                               </View>
-                              <Text style={styles.title}>{data.title}</Text>
-                              <Text numberOfLines={3} style={styles.summary}>
-                                {data.summary}
-                              </Text>
-                              <View style={styles.materialUrl}>
-                                <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
+                              <View style={styles.nameSection}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                  <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                                  <TouchableOpacity onPress={() => this.showAlert(data.id)}>
+                                    <Icon name="remove" color="red" style={styles.icon} />
+                                  </TouchableOpacity>
+                                </View>
+                                <Text style={styles.title}>{data.title}</Text>
+                                <Text numberOfLines={3} style={styles.summary}>
+                                  {data.summary}
+                                </Text>
+                                <View style={styles.materialUrl}>
+                                  <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
+                                </View>
                               </View>
                             </View>
-                          </View>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                  ))}
-                </Content> :
-                <Button
-                  block
-                  rounded
-                  style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
-                  onPress={() => this.setState({ invisible: !this.state.invisible })}
-                >
-                  <Text style={styles.buttonText}>Upload File</Text>
-                </Button>
-              )
-        }
+                          </Body>
+                        </CardItem>
+                      </Card>
+                    ))}
+                  </Content> :
+                  <Button
+                    block
+                    rounded
+                    style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
+                    onPress={() => this.setState({ invisible: !this.state.invisible })}
+                  >
+                    <Text style={styles.buttonText}>Upload File</Text>
+                  </Button>
+                )
+          }
+          <ModalComponent
+            visible={this.state.invisible}
+            modalTitle={'Create Material'}
+            inputTitle={'Title'}
+            onChangeTitle={text => this.handleInputChange('title', text)}
+            inputSummary={'Summary'}
+            onChangeSummary={text => this.handleInputChange('summary', text)}
+            onSubmit={this.saveMaterialList}
+            onUpload={this.openPicker}
+            onModalPress={this.setModal}
+            fileName={this.state.fileName}
+          />
+        </Content>
         <Fab
           active={this.state.invisible}
           style={{ backgroundColor: '#FFA726' }}
@@ -148,18 +162,6 @@ class MaterialList extends Component {
           onPress={() => this.setModal()}>
           <Icon name="plus" />
         </Fab>
-        <ModalComponent
-          visible={this.state.invisible}
-          modalTitle={'Create Material'}
-          inputTitle={'Title'}
-          onChangeTitle={text => this.handleInputChange('title', text)}
-          inputSummary={'Summary'}
-          onChangeSummary={text => this.handleInputChange('summary', text)}
-          onSubmit={this.saveMaterialList}
-          onUpload={this.openPicker}
-          onModalPress={this.setModal}
-          fileName={this.state.fileName}
-        />
       </Container>
     );
   }

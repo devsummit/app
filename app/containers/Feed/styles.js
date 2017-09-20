@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent'
   },
   tabTitle: {
-      fontSize: 16
+      fontSize: 16,
+      color: "#FFF"
   },
   tabBarSelectedItemStyle: {
       borderBottomWidth: 2,
