@@ -19,6 +19,7 @@
     "react-native": "0.46.4",
     "react-native-code-push": "^5.1.0-beta",
     "react-native-document-picker": "^2.0.0",
+    "react-native-elements": "^0.17.0",
     "react-native-facebook-account-kit": "^0.7.0",
     "react-native-file-upload": "^1.0.4",
     "react-native-form-validator": "^0.1.3",
