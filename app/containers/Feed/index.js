@@ -107,7 +107,6 @@ class Feed extends Component {
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
                     <Text>{ this.state.name }</Text>
-                    <Text note>Feed title</Text>
                     </Body>
                 </Left>
               </CardItem>
@@ -163,19 +162,19 @@ class Feed extends Component {
                             <CardItem>
                               <Body>
                                 <Image source={{uri: feed.attachment }} style={{height: 200, width: 300, flex: 1}}/>
-                                <Text>
+                                <Text style={{ marginTop: 8 }}>
                                 { feed.message }
                                 </Text>
                               </Body>
                             </CardItem>
-                            <CardItem>
+                            {/* <CardItem>
                               <Left>
                                 <Button transparent textStyle={{color: '#87838B'}}>
                                   <Icon name="share" />
                                   <Text>Share</Text>
                                 </Button>
                               </Left>
-                            </CardItem>
+                            </CardItem> */}
                           </Card>
                         )
                       })
