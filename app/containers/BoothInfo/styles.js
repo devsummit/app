@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   boothImageList: {
     width: width * 1/3,
-    height: 110
+    height: width * 1/3,
   }
 });
 
