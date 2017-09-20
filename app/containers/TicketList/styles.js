@@ -75,7 +75,15 @@ const styles = StyleSheet.create({
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
     elevation: 3
-  }
+  },
+  redeem: {
+    margin: 20,
+    marginTop: -155,
+    marginLeft: 10,
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 2
+  },
 });
 
 export default styles;
