@@ -124,8 +124,6 @@ export function login() {
 export function loginMobile(mobileToken) {
   return (dispatch) => {
     dispatch(updateisLoading(true));
-    console.log('jancuk');
-    console.log('tinggiii');
 
     DevSummitAxios.post('/auth/login', {
       provider: 'mobile',

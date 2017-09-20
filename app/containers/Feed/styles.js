@@ -5,6 +5,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  icon: {
+    marginRight: 10
+  },
   item: {
     flex: 1,
     justifyContent: 'flex-start'
@@ -62,6 +65,9 @@ const styles = StyleSheet.create({
   tabBarSelectedItemStyle: {
       borderBottomWidth: 2,
       borderBottomColor: 'red',
+  },
+  icon: {
+    fontSize: 20
   }
 });
 

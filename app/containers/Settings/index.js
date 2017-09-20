@@ -55,14 +55,14 @@ class Settings extends Component {
               >
                 <Text>Edit Profile</Text>
               </Button>
-              <Button
+              {/* <Button
                 block
                 rounded
                 style={styles.button}
                 onPress={() => Actions.profile()}
               >
                 <Text>Connect To Social Media</Text>
-              </Button>
+              </Button> */}
               <Button
                 block
                 light
