@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     color: '#FFFFFF'
   },
+  formInput: {
+    paddingLeft: 20,
+    color: '#FFFFFF'
+  },
   buttonRegister: {
     marginLeft: 'auto',
     marginRight: 'auto'
