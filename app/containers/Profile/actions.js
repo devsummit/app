@@ -108,7 +108,7 @@ export function updateImage(image) {
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('/api/v1/user/photo');
+        const url = local.API_BASE_URL.concat('api/v1/user/photo');
         const form = new FormData();
 
 
