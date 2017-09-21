@@ -97,4 +97,5 @@ const mapStateToProps = createStructuredSelector({
   isFetching: selectors.getIsFetchingNotification(),
   notifications: selectors.getNotification()
 });
+
 export default connect(mapStateToProps, actions)(Notification);

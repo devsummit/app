@@ -112,7 +112,6 @@ export function register() {
         referer
       };
       DevSummitAxios.post('/auth/register', data).then((response) => {
-        console.log('response register phone', response);
         if (response && response.data.data && response.data.meta.success) {
           dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
         } else if (response.data.data !== null && !response.data.meta.success) {

@@ -150,7 +150,6 @@ class RegisterEmail extends Component {
     const checkEmail = this.checkEmail(email) === false && email !== '';
     const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
-    console.log('landing here referer', this.props);
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
