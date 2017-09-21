@@ -16,7 +16,6 @@ import styles from './styles';
 import RegisterMenu from './containers/RegisterMenu';
 import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
-import Login from './containers/Login';
 import Schedule from './containers/Schedule';
 import ScheduleDetail from './containers/ScheduleDetail';
 import Main from './containers/Main';
@@ -77,7 +76,6 @@ export default class App extends Component {
             <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
             <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" />
             <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" />
-            <Scene key="login" component={Login} title="Login" />
             <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
             <Scene key="changePassword" component={ChangePassword} title="Change Password" />
             <Scene key="ticketList" component={TicketList} title="List Ticket" />
