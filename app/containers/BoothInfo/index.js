@@ -3,9 +3,14 @@ import {
   Content,
   Text,
   Grid,
-  Col
+  Col,
+  Button,
+  List,
+  ListItem,
+  CategoryCard,
+  Fab
 } from 'native-base';
-import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,9 +24,39 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+
 class BoothInfo extends Component {
-  state = {
-    id: null
+  constructor(props) {
+    super(props);
+    this.renderRow = this.renderRow.bind(this);
+    this.state = {
+      id: null,
+      boothImages: [ {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Chalk Point Kitchen',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Chalk Point Kitchen',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Chalk Point Kitchen',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      }, {
+        name: 'Gaspar Brasserie',
+        image: { url: 'https://shoutem.github.io/static/getting-started/restaurant-1.jpg' }
+      } ]
+    };
   }
 
   componentWillMount() {
@@ -68,7 +103,7 @@ class BoothInfo extends Component {
     const {
       photoPic
     } = fields || '';
-    
+
     return (
       <ScrollView>
         <Content>
@@ -88,27 +123,23 @@ class BoothInfo extends Component {
               <Text style={styles.summary}>{summary}</Text>
             </View>
           </LinearGradient>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-            <Col style={styles.col3} />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col3} />
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-            <Col style={styles.col3} />
-          </Grid>
-          <Grid style={{ flex: 1 }}>
-            <Col style={styles.col3} />
-            <Col style={styles.col1} />
-            <Col style={styles.col2} />
-          </Grid>
+          <ListView
+            data={groupedData}
+            renderRow={this.renderRow}
+          />
         </Content>
+        <View style={{ flex: 1 }}>
+          <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={{ }}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={() => this.uploadImage(this)}
+          >
+            <Icon name="upload" />
+          </Fab>
+        </View>
       </ScrollView>
     );
   }

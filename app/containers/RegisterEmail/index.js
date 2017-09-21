@@ -14,6 +14,7 @@ import Toast from 'react-native-simple-toast';
 // import redux components
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import CheckBox from 'react-native-icon-checkbox';
 
 import InputItem from '../../components/InputItem';
 import AuthLogo from '../../components/AuthLogo';
@@ -30,6 +31,12 @@ class RegisterEmail extends Component {
   /*
      * initialize some state
      */
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChecked: false,
+    };
+  }
   componentWillMount() {
     this.props.updateInputFields('role', 'attendee');
     if (this.props.prefilledData) {
@@ -110,6 +117,12 @@ class RegisterEmail extends Component {
     return false;
   }
 
+  handlePressCheckedBox = (checked) => {
+    this.setState ({
+      isChecked: checked,
+    });
+  }
+
   render() {
     // destructure state
     const { registerMethod, inputFields, errorFields, isRegistering } = this.props || {};
@@ -121,7 +134,8 @@ class RegisterEmail extends Component {
       password,
       phone,
       role,
-      social_id
+      social_id,
+      referer
     } = inputFields || '';
 
     const {
@@ -136,7 +150,6 @@ class RegisterEmail extends Component {
     const checkEmail = this.checkEmail(email) === false && email !== '';
     const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
-
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
@@ -199,6 +212,27 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
+            </View>
+            <View style={{ flex: 1, padding: 5 }}>
+              <CheckBox
+                label="Use Referer"
+                size={30}
+                checked={this.state.isChecked}
+                onPress={this.handlePressCheckedBox}
+              />
+              { this.state.isChecked ?
+                <InputItem
+                  style={styles.formInput}
+                  placeholder="Referer Name"
+                  placeholderTextColor={'#BDBDBD'}
+                  onChangeText={text => this.handleInputChange('referer', text)}
+                  value={referer}
+                />
+                :
+                null
+              }
+              {/* You can use other Icon */}
+              {/* Here is the example of Radio Icon */}
             </View>
             {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
               <View>

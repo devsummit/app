@@ -23,6 +23,7 @@
     "react-native-fcm": "^9.3.0",
     "react-native-file-upload": "^1.0.4",
     "react-native-form-validator": "^0.1.3",
+    "react-native-icon-checkbox": "^1.2.0",
     "react-native-image-crop-picker": "^0.16.0",
     "react-native-linear-gradient": "^2.2.0",
     "react-native-oauth": "^2.2.0",

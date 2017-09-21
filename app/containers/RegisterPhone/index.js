@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 // import redux components
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import CheckBox from 'react-native-icon-checkbox';
 
 import InputItem from '../../components/InputItem';
 import AuthLogo from '../../components/AuthLogo';
@@ -32,10 +33,14 @@ import { role_option, PRIMARYCOLOR } from '../../constants';
 const background = require('../../../assets/images/background.png');
 
 class RegisterPhone extends Component {
-  state = {
-    isEmailValid: false,
-    fromLogin: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEmailValid: false,
+      fromLogin: false,
+      isChecked: false,
+    };
+  }
   /*
      * initialize some state
      */
@@ -168,6 +173,12 @@ class RegisterPhone extends Component {
     });
   }
 
+  handlePressCheckedBox = (checked) => {
+    this.setState ({
+      isChecked: checked,
+    });
+  }
+
   renderLoginButton() {
     return (
       <Button style={styles.button}>
@@ -211,7 +222,8 @@ class RegisterPhone extends Component {
       firstName,
       lastName,
       email,
-      role
+      role,
+      referer
     } = inputFields || '';
 
     const {
@@ -219,6 +231,8 @@ class RegisterPhone extends Component {
       errorLastName,
       errorEmail
     } = errorFields || false;
+
+    console.log('landing here registerPhone', this.props);
 
     return (
       <Image style={styles.background} source={background}>
@@ -250,6 +264,27 @@ class RegisterPhone extends Component {
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
+            </View>
+            <View style={{ flex: 1, padding: 5 }}>
+              <CheckBox
+                label="Use Referer"
+                size={30}
+                checked={this.state.isChecked}
+                onPress={this.handlePressCheckedBox}
+              />
+              { this.state.isChecked ?
+                <InputItem
+                  style={styles.formInput}
+                  placeholder="Referer Name"
+                  placeholderTextColor={'#BDBDBD'}
+                  onChangeText={text => this.handleInputChange('referer', text)}
+                  value={referer}
+                />
+                :
+                null
+              }
+              {/* You can use other Icon */}
+              {/* Here is the example of Radio Icon */}
             </View>
             {
               (this.props.inputFields.firstName.length !== 0 &&
