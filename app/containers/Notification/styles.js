@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { PRIMARYCOLOR } from '../../constants'
+import { PRIMARYCOLOR } from '../../constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     borderWidth: 1,
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   content: {
     color: 'grey',
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     flex: 8
   },
-  sender:{
+  sender: {
     color: PRIMARYCOLOR,
     fontWeight: 'bold'
   },
