@@ -98,19 +98,18 @@ export function register() {
 
     const { last_name } = inputFields || '';
 
-    const role_id = role === 'attendee' ? 2 : role === 'booth' ? 3 : 5;
+    // const role_id = role === 'attendee' ? 2 : role === 'booth' ? 3 : 5;
 
     if (first_name && role && email && password && username) {
       DevSummitAxios.post('/auth/register', {
         first_name, last_name, username, email, password, referer
       }).then(async (response) => {
-        console.log('landing here response', response);
         if (response && response.data.data && response.data.meta.success) {
-          await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+          await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
         } else if (response.data.data !== null && !response.data.meta.success) {
           await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
         } else if (response.data.data === null && !response.data.meta.success) {
-          await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
+          await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
         }
         dispatch(toggleIsRegistering(false));
       }).catch((error) => {
