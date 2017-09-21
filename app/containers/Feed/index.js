@@ -107,7 +107,7 @@ class Feed extends Component {
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                    <Text>{ this.state.name }</Text>
+                      <Text>{ this.state.name }</Text>
                     </Body>
                   </Left>
                 </CardItem>
@@ -117,12 +117,12 @@ class Feed extends Component {
                     <Item regular>
                       <Input
                         rounded
-                        placeholder={"Share your activity ..."}
-                        multiline={true}
+                        placeholder={'Share your activity ...'}
+                        multiline
                         numberOfLines={4}
                         value={this.props.textData}
                         disabled={false}
-                        onChangeText={(text) => this.handleChange(text)}
+                        onChangeText={text => this.handleChange(text)}
                       />
                       <TouchableOpacity onPress={() => this.uploadImage(this)}>
                         <CameraIcon name="camera" size={24} color="grey" />
