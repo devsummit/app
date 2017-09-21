@@ -4126,6 +4126,10 @@ react-native-facebook-account-kit@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-facebook-account-kit/-/react-native-facebook-account-kit-0.7.0.tgz#80899b5f59cc9ea7f1a01babf490e66c5bda15dd"
 
+react-native-fcm@^9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-9.3.0.tgz#b5463744da7bebb9b485ab9da0468ce94abc94e5"
+
 react-native-file-upload@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-file-upload/-/react-native-file-upload-1.0.4.tgz#dbe563b52c9d46c28e825726ded84518b8598888"
