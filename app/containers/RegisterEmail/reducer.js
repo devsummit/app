@@ -17,23 +17,25 @@ import {
  */
 const initialState = fromJS({
   inputFields: {
-    first_name: '',
-    last_name: '',
+    firstName: '',
+    lastName: '',
     username: '',
     email: '',
     password: '',
     phone: '',
     role: '',
-    social_id: '',
-    referer: ''
+    socialId: '',
+    referer: '',
+    verifyPassword: ''
   },
   errorFields: {
-    error_first_name: false,
-    error_last_name: false,
-    error_username: false,
-    error_email: false,
-    error_password: false,
-    error_phone: false
+    errorFirstName: false,
+    errorLastName: false,
+    errorUserName: false,
+    errorEmail: false,
+    errorPassword: false,
+    errorPhone: false,
+    errorVerifyPassword: false
   },
   registerMethod: 'undefined',
   isRegistering: false,
