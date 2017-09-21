@@ -32,7 +32,7 @@
         "space-before-blocks": [ 1, "always" ],
         "consistent-return": 0,
         "arrow-body-style": [0, "never"],
-        "no-nested-ternary": [1, "never"]
+        "no-nested-ternary": [0, "never"]
     },
     "globals": {
       "describe": false,
