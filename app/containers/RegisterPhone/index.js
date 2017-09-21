@@ -38,7 +38,7 @@ class RegisterPhone extends Component {
     this.state = {
       isEmailValid: false,
       fromLogin: false,
-      isChecked: false,
+      isChecked: false
     };
   }
   /*
@@ -174,8 +174,8 @@ class RegisterPhone extends Component {
   }
 
   handlePressCheckedBox = (checked) => {
-    this.setState ({
-      isChecked: checked,
+    this.setState({
+      isChecked: checked
     });
   }
 
