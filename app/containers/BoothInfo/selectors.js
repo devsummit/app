@@ -1,34 +1,18 @@
-/**
- *  Import node modules
- */
 import { createSelector } from 'reselect';
 
-/**
- *  Select the main portion of the root reducer
- */
-const selectMainReducer = () => state => state.get('profile');
+const selectMainReducer = () => state => state.get('boothInfo');
 
-/**
- *  Selects the username field data
- *  Returns object
- */
 export const getFields = () => createSelector(
   selectMainReducer(),
   state => state.get('fields').toJS()
 );
 
-export const getIsProfileUpdated = () => createSelector(
+export const getIsBoothPhotoUpdated = () => createSelector(
   selectMainReducer(),
-  state => state.get('isProfileUpdated')
+  state => state.get('isBoothPhotoUpdated')
 );
 
-export const getAvatar = () => createSelector(
+export const getBoothPhoto = () => createSelector(
   selectMainReducer(),
-  state => state.get('avatar')
+  state => state.get('boothPhoto')
 );
-
-export const getIsAvatarUpdated = () => createSelector(
-  selectMainReducer(),
-  state => state.get('isAvatarUpdated')
-);
-

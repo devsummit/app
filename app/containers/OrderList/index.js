@@ -88,9 +88,6 @@ class OrderList extends Component {
             })}
           </List>
         </Content>
-        <Fab position="bottomRight" onPress={() => Actions.newOrder()} >
-          <Icon name="plus" />
-        </Fab>
       </Container>
     );
   }

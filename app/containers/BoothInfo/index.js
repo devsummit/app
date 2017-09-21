@@ -12,29 +12,18 @@ import {
 } from 'native-base';
 import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { getBoothData } from '../../helpers';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import {
-  GridRow,
-  Screen,
-  ListView,
-  Tile,
-  Title,
-  Subtitle,
-  Divider,
-  Card,
-  Caption
-} from '@shoutem/ui';
 import Header from '../../components/Header';
 import styles from './styles';
-
-
 import * as actions from './actions';
 import * as selectors from './selectors';
+
 
 class BoothInfo extends Component {
   constructor(props) {
@@ -71,6 +60,13 @@ class BoothInfo extends Component {
   }
 
   componentWillMount() {
+    getBoothData()
+      .then((boothData) => {
+        if (boothData) {
+          console.log('BOOTH DATA', boothData.logo_url);
+          this.handleUpdateBoothPhoto(boothData.logo_url);
+        }
+      });
     AsyncStorage.getItem('role_id')
       .then((roleId) => {
         const id = JSON.parse(roleId);
@@ -79,68 +75,49 @@ class BoothInfo extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
-      Alert.alert('Success', 'Profile has been changed');
-      this.props.updateIsProfileUpdated(false);
+    if (prevProps.isBoothPhotoUpdated !== this.props.isBoothPhotoUpdated) {
+      Alert.alert('Success', 'Booth photo has been changed');
+      this.props.updateIsBoothPhotoUpdated(false);
     }
+  }
 
-    if (prevProps.isAvatarUpdated !== this.props.isAvatarUpdated) {
-      Alert.alert('Success', 'Avatar has been changed');
-      this.props.updateIsAvatarUpdated(false);
-    }
+  handleUpdateBoothPhoto = (value) => {
+    this.props.updateBoothPhoto(value);
   }
 
   uploadImage = () => {
     ImagePicker.openPicker({
       width: 300,
-      height: 400,
+      height: 300,
       cropping: true,
       includeBase64: true
-    }).then((image) => {
-      this.props.updateImage(image);
-    }).catch(err => console.log('Error getting image from library', err));
-  }
-
-  renderRow(rowData, sectionId, index) {
-    // rowData contains grouped data for one row,
-    // so we need to remap it into cells and pass to GridRow
-    const cellViews = rowData.map((boothImage, id) => {
-      return (
-        <Image
-          style={styles.boothImageList}
-          source={{ uri: rowData[0].image.url }}
-        />
-      );
-    });
-    return (
-      <GridRow columns={3}>
-        {cellViews}
-      </GridRow>
-    );
+    })
+      .then((image) => {
+        this.props.updateImage(image);
+      }).catch(err => console.log('error getting image from library', err));
   }
 
   render() {
-    console.log('landing here', this.props);
     const booth = this.state.id === 3;
-    const { summary, user } = this.props;
-    const items = [ 'Simon Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can' ];
-    const isFirstArticle = true;
-    console.log('landing here boothImages', this.state.boothImages);
-    const groupedData = GridRow.groupByRows(this.state.boothImages, 3, () => {
-      return 1;
-    });
+    const { fields, summary, user, boothPhoto } = this.props || {};
+    const {
+      photoPic
+    } = fields || '';
+
     return (
       <ScrollView>
-        {booth ? <Header title="BOOTH INFO" /> : <View />}
         <Content>
           <LinearGradient
             colors={[ '#f72d48', '#f39e21' ]}
           >
             <Image
-              source={{ uri: this.props.avatar }}
+              source={boothPhoto === null ? { uri: photoPic } : {uri: boothPhoto}}
               style={styles.boothImage}
-              resizeMode="cover"
+              resizeMode={Image.resizeMode.stretch}
             />
+            {booth ? <TouchableOpacity style={styles.icon} onPress={() => this.uploadImage(this)}>
+              <Icon name={'camera'} size={24} color="#f72d48"/>
+            </TouchableOpacity> : <View/>}
             <View style={styles.info}>
               <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
               <Text style={styles.summary}>{summary}</Text>
@@ -170,10 +147,8 @@ class BoothInfo extends Component {
 
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
-  isProfileUpdated: selectors.getIsProfileUpdated(),
-  avatar: selectors.getAvatar(),
-  isAvatarUpdated: selectors.getIsAvatarUpdated()
+  isBoothPhotoUpdated: selectors.getIsBoothPhotoUpdated(),
+  boothPhoto: selectors.getBoothPhoto()
 });
 
 export default connect(mapStateToProps, actions)(BoothInfo);
-

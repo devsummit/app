@@ -95,6 +95,7 @@ export function login() {
         const resData = response.data.data;
         const roleId = JSON.stringify(response.data.included.role_id);
         const profileData = JSON.stringify(response.data.included);
+        const boothData = JSON.stringify(response.data.included.booth);
         try {
           await AsyncStorage.multiSet([
             [ 'access_token', resData.access_token ],
@@ -122,8 +123,6 @@ export function login() {
 export function loginMobile(mobileToken) {
   return (dispatch) => {
     dispatch(updateisLoading(true));
-    console.log('jancuk');
-    console.log('tinggiii');
 
     DevSummitAxios.post('/auth/login', {
       provider: 'mobile',

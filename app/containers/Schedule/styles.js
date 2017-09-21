@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         marginLeft: 3
     },
     cards: {
-        flex:1, 
+        flex:1,
         backgroundColor:'white',
         marginTop:5
     },
@@ -26,7 +26,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     tabTitle: {
-        fontSize: 12
+        fontSize: 16,
+        color: "#FFF"
+    },
+    icon: {
+      color: "#FFF"
     },
     tabBarSelectedItemStyle: {
         borderBottomWidth: 2,

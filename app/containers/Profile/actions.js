@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 
 import FormData from 'FormData';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
@@ -108,14 +108,23 @@ export function updateImage(image) {
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('api/v1/user/photo');
+        const url = local.API_BASE_URL.concat('/api/v1/user/photo');
         const form = new FormData();
 
-        form.append('image_data', {
-          uri: image.path,
-          type: image.mime,
-          name: 'image.jpg'
-        });
+
+        if (Platform.OS === 'ios') {
+          form.append('image_data', {
+            uri: image.sourceURL,
+            type: image.mime,
+            name: image.filename
+          });
+        } else {
+          form.append('image_data', {
+            uri: image.path,
+            type: image.mime,
+            name: 'image.jpg'
+          });
+        }
 
         fetch(url, {
           method: 'POST',

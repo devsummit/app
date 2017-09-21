@@ -1,13 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants'
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(255,255,255)'
+    margin: 10
   },
   content: {
-    marginTop: -40,
-    paddingLeft: 5,
-    paddingRight: 5
+    color: 'grey',
+    marginVertical: 10
+  },
+  title: {
+    fontWeight: 'bold'
+  },
+  mainMessage: {
+    flexDirection: 'column',
+    flex: 2
   },
   bodySection: {
     flex: 1,
@@ -20,6 +27,10 @@ const styles = StyleSheet.create({
   nameSection: {
     marginLeft: 15,
     flex: 8
+  },
+  sender:{
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold'
   },
   loader: {
     margin: 20
@@ -38,10 +49,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold'
   },
-  title: {
-    color: '#333',
-    fontSize: 16,
-    marginVertical: 4
+  separator: {
+    backgroundColor: 'black',
+    marginTop: 5,
+    height: 1,
+    width: '100%'
   },
   summary: {
     fontSize: 16,
@@ -53,7 +65,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 16,
-    textAlign:'right',
+    textAlign: 'right',
   },
   materialUrl: {
     flexDirection: 'row',
