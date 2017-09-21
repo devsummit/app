@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import {
   FETCH_FEEDS,
   IS_FETCHING_FEEDS,
-  POST_FEEDS,
+  UPDATE_FEEDS,
   IS_POST_FEEDS,
   UPDATE_IMAGE,
   UPDATE_TEXT,
@@ -19,7 +19,7 @@ const initialState = fromJS({
 
 function feedReducer(state = initialState, action) {
 
-  switch(action.type) {
+  switch (action.type) {
 
     case IS_FETCHING_FEEDS:
       return state.set('isFetching', action.status);
@@ -30,8 +30,8 @@ function feedReducer(state = initialState, action) {
     case IS_POST_FEEDS:
       return state.set('isPosting', action.status);
 
-    case POST_FEEDS:
-      return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]))
+    case UPDATE_FEEDS:
+      return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]));
 
     case UPDATE_IMAGE:
       return state.set('image', fromJS(action.image));

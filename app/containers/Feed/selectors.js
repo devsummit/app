@@ -32,4 +32,4 @@ export const getUpdateImage = () => createSelector(
 export const getUpdateText = () => createSelector(
   selectFeedReducer(),
   state => state.get('message')
-)
+);
