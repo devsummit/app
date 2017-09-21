@@ -3,7 +3,11 @@ import { PRIMARYCOLOR } from '../../constants'
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    borderWidth: 1,
+    flexDirection: 'column',
   },
   content: {
     color: 'grey',
@@ -64,8 +68,9 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   icon: {
-    fontSize: 16,
+    fontSize: 30,
     textAlign: 'right',
+    margin: 20
   },
   materialUrl: {
     flexDirection: 'row',

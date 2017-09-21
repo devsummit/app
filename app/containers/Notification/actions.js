@@ -44,9 +44,9 @@ export function fetchNotification() {
 
 export function fetchNextNotification() {
   return (dispatch, getState) => {
+    dispatch(updateIsFetchingNotification(true))
     const nextUrl = getState().toJS().notificationList.nextUrl;
     if (nextUrl) {
-      dispatch(updateIsFetchingNotification(true))
       getAccessToken().then((token) => {
         const headers = { Authorization: token }
         axios.get(nextUrl, { headers })
@@ -68,6 +68,8 @@ export function fetchNextNotification() {
         console.log(err)
         dispatch(updateIsFetchingNotification(false))
       })
+    } else {
+      dispatch(updateIsFetchingNotification(false))
     }
   }
 }
