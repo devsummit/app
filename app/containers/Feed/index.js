@@ -124,7 +124,7 @@ class Feed extends Component {
                         disabled={false}
                         onChangeText={(text) => this.handleChange(text)}
                       />
-                      <TouchableOpacity style={styles.icon} onPress={() => this.uploadImage(this)}>
+                      <TouchableOpacity onPress={() => this.uploadImage(this)}>
                         <CameraIcon name="camera" size={24} color="grey" />
                       </TouchableOpacity>
                     </Item>
