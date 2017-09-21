@@ -63,7 +63,7 @@ class RegisterEmail extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetState()
+    this.props.resetState();
   }
 
   onAlertOk = () => {
@@ -147,6 +147,12 @@ class RegisterEmail extends Component {
       error_phone
     } = errorFields || false;
 
+
+    const socialId = typeof this.props.prefilledData !== 'undefined' ? this.props.prefilledData.social_id : null;
+    const first = typeof this.props.prefilledData !== 'undefined' || '' ? this.props.prefilledData.first_name : text => this.handleInputChange('first_name', text);
+    const last = typeof this.props.prefilledData !== 'undefined' || '' ? this.props.prefilledData.last_name : text => this.handleInputChange('last_name', text);
+    const emails = typeof this.props.prefilledData !== 'undefined' || '' ? this.props.prefilledData.email : text => this.handleInputChange('email', text);
+
     const checkEmail = this.checkEmail(email) === false && email !== '';
     const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
@@ -156,55 +162,74 @@ class RegisterEmail extends Component {
           <AuthLogo style={styles.logo} />
           <Content>
             <View style={styles.formSection}>
-              <InputItem
+              {socialId === null ? <InputItem
                 error={error_first_name}
                 style={styles.formInput}
                 placeholder="First name"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('first_name', text)}
                 value={first_name}
-              />
-              <InputItem
+              /> : <InputItem
+                error={error_first_name}
+                style={styles.formInput}
+                placeholder="First name"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('first_name', text)}
+                value={first}
+              />}
+              {socialId === null ? <InputItem
                 error={error_last_name}
                 style={styles.formInput}
                 placeholder="Last name"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('last_name', text)}
                 value={last_name}
-              />
+              /> : <InputItem
+                error={error_last_name}
+                style={styles.formInput}
+                placeholder="Last name"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('last_name', text)}
+                value={last}
+              />}
               { checkEmail ?
                 <Text style={styles.errorInput}>invalid email address</Text>
                 :
                 null
               }
-              <InputItem
+              {socialId === null ? <InputItem
                 error={checkEmail}
                 style={styles.formInput}
                 placeholder="Email"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
-              />
-              { checkUsername ?
+              /> : <InputItem
+                error={checkEmail}
+                style={styles.formInput}
+                placeholder="Email"
+                placeholderTextColor={'#BDBDBD'}
+                onChangeText={text => this.handleInputChange('email', text)}
+                value={emails}
+              />}
+              { { checkUsername !== 'undefined' ?
                 <Text style={styles.errorInput}>username should be 4 at minimum</Text>
                 :
                 null
-              }
+              } }
               <InputItem
-                error={checkUsername}
                 style={styles.formInput}
                 placeholder="Username"
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
-              { checkPassword ?
+              { { checkPassword ?
                 <Text style={styles.errorInput}>password should be 4 at minimum</Text>
                 :
                 null
-              }
+              } }
               <InputItem
-                error={checkPassword}
                 style={styles.formInput}
                 placeholder="Password"
                 placeholderTextColor={'#BDBDBD'}
