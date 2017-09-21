@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Picker,
-  Item,
   Button,
   Text
 } from 'native-base';
 import { Alert, Image, View, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
+import PropTypes from 'prop-types';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -22,8 +21,6 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-// import constants
-import { role_option } from '../../constants';
 
 const background = require('../../../assets/images/background.png');
 
@@ -38,11 +35,11 @@ class RegisterEmail extends Component {
     };
   }
   componentWillMount() {
-    this.props.updateInputFields('role', 'attendee');
+    this.props.updateInputFields('role', '');
     this.props.updateInputFields('referer', '');
     if (this.props.prefilledData) {
-      this.props.updateInputFields('first_name', this.props.prefilledData.first_name);
-      this.props.updateInputFields('last_name', this.props.prefilledData.last_name);
+      this.props.updateInputFields('firstName', this.props.prefilledData.firstName);
+      this.props.updateInputFields('lastName', this.props.prefilledData.lastName);
       this.props.updateInputFields('email', this.props.prefilledData.email);
       this.props.updateInputFields('social_id', this.props.prefilledData.social_id);
       this.props.updateInputFields('username', this.props.prefilledData.username);
@@ -52,7 +49,7 @@ class RegisterEmail extends Component {
   componentWillReceiveProps(prevProps) {
     if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
       if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
-        Toast.show(this.props.isRegistered.title.concat(", ").concat(this.props.isRegistered.message));
+        Toast.show(this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message));
       }
 
       setTimeout(() => {
@@ -76,21 +73,19 @@ class RegisterEmail extends Component {
   isFieldError = () => {
     const { errorFields } = this.props;
     const {
-      error_first_name,
-      error_last_name,
-      error_username,
-      error_email,
-      error_password,
-      error_phone
+      errorFirstName,
+      errorLastName,
+      errorUserName,
+      errorEmail,
+      errorPassword
     } = errorFields;
 
     return (
-      error_first_name ||
-      error_last_name ||
-      error_email ||
-      error_username ||
-      error_password ||
-      error_phone
+      errorFirstName ||
+      errorLastName ||
+      errorEmail ||
+      errorUserName ||
+      errorPassword
     );
   }
 
@@ -126,34 +121,26 @@ class RegisterEmail extends Component {
 
   render() {
     // destructure state
-    const { registerMethod, inputFields, errorFields, isRegistering } = this.props || {};
+    const { inputFields, errorFields, isRegistering } = this.props || {};
     const {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       username,
       email,
       password,
-      phone,
-      role,
-      social_id,
       referer,
-      verify_password
+      verifyPassword
     } = inputFields || '';
 
     const {
-      error_first_name,
-      error_last_name,
-      error_username,
-      error_email,
-      error_password,
-      error_phone,
-      error_verify_password
+      errorFirstName,
+      errorLastName
     } = errorFields || false;
 
     const checkEmail = this.checkEmail(email) === false && email !== '';
     const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
-    const checkVerifyPassword = verify_password !== '' && verify_password !== password;
+    const checkVerifyPassword = verifyPassword !== '' && verifyPassword !== password;
 
     return (
       <Image style={styles.background} source={background}>
@@ -162,20 +149,20 @@ class RegisterEmail extends Component {
           <Content>
             <View style={styles.formSection}>
               <InputItem
-                error={error_first_name}
+                error={errorFirstName}
                 style={styles.formInput}
                 placeholder="First name"
                 placeholderTextColor={'#BDBDBD'}
-                onChangeText={text => this.handleInputChange('first_name', text)}
-                value={first_name}
+                onChangeText={text => this.handleInputChange('firstName', text)}
+                value={firstName}
               />
               <InputItem
-                error={error_last_name}
+                error={errorLastName}
                 style={styles.formInput}
                 placeholder="Last name"
                 placeholderTextColor={'#BDBDBD'}
-                onChangeText={text => this.handleInputChange('last_name', text)}
-                value={last_name}
+                onChangeText={text => this.handleInputChange('lastName', text)}
+                value={lastName}
               />
               {checkEmail ?
                 <Text style={styles.errorInput}>invalid email address</Text>
@@ -228,8 +215,8 @@ class RegisterEmail extends Component {
                 placeholder="Verify Password"
                 placeholderTextColor={'#BDBDBD'}
                 secureTextEntry
-                onChangeText={text => this.handleInputChange('verify_password', text)}
-                value={verify_password}
+                onChangeText={text => this.handleInputChange('verifyPassword', text)}
+                value={verifyPassword}
               />
             </View>
             <View style={{ flex: 1, padding: 5 }}>
@@ -253,11 +240,11 @@ class RegisterEmail extends Component {
               {/* You can use other Icon */}
               {/* Here is the example of Radio Icon */}
             </View>
-            {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '' || (verify_password !== password)) ?
+            {((username && username.length < 4) || password.length < 4 || firstName === '' || lastName === '') || (this.checkEmail(email) === false && email !== '') || (verifyPassword !== password) ?
               <View>
                 <Button
                   block
-                  style={[styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' }]}
+                  style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
                   onPress={() => this.submitRegistration()}
                 >
                   <Text style={styles.buttomText}>Register</Text>
@@ -291,6 +278,18 @@ class RegisterEmail extends Component {
     );
   }
 }
+
+RegisterEmail.propTypes = {
+  updateInputFields: PropTypes.func.isRequired,
+  prefilledData: PropTypes.object, // eslint-disable-line react/require-default-props
+  isRegistered: PropTypes.object.isRequired,
+  updateRegisterStatus: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
+  errorFields: PropTypes.object.isRequired,
+  register: PropTypes.func.isRequired,
+  updateRegisterMethod: PropTypes.func.isRequired,
+  updateErrorFields: PropTypes.func.isRequired
+};
 
 /**
  *  Map redux state to component props
