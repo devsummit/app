@@ -17,26 +17,32 @@ import {
   Item,
   Thumbnail,
   Input,
-  Label,
   Spinner
 } from 'native-base';
 import Toast from 'react-native-simple-toast';
-import PropTypes from 'prop-types';
+import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
-import { RefreshControl, View, Image, TouchableOpacity } from 'react-native';
+import { RefreshControl, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import { createStructuredSelector } from 'reselect';
-import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
-import { PRIMARYCOLOR } from '../../constants';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
-
 import TicketList from '../TicketList';
+
+import { API_BASE_URL } from '../../constants';
+
+
+const socket = openSocket(API_BASE_URL);
+
+function subscribeToFeeds(cb) {
+  socket.on('feeds', data => cb(null, data));
+}
 
 /**
  * Map redux state to component props
@@ -49,24 +55,26 @@ const mapStateToProps = () => createStructuredSelector({
   textData: selectors.getUpdateText()
 });
 
-
 class Feed extends Component {
+  constructor(props) {
+    super(props);
+    subscribeToFeeds((err, data) => this.props.updateFeeds(data));
+  }
 
   state = {
     name: '',
     profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg'
-  }
-
+  };
 
   componentWillMount() {
     this.props.fetchFeeds();
 
     AsyncStorage.getItem('profile_data')
       .then((profile) => {
-        const data = JSON.parse(profile)
-        const name = data.first_name
-        const url = data.photos[0].url
-        this.setState({ name: name, profileUrl: url })
+        const data = JSON.parse(profile);
+        const name = data.first_name;
+        const url = data.photos[0].url;
+        this.setState({ name, profileUrl: url });
       });
   }
 
@@ -75,14 +83,12 @@ class Feed extends Component {
   }
 
   uploadImage = () => {
-
     ImagePicker.openPicker({
       width: 300,
       height: 200,
       cropping: true,
       includeBase64: true
     }).then((image) => {
-
       this.props.updateImage(image);
 
     }).catch(err => Toast.show('Error getting image from library', err))
@@ -90,8 +96,10 @@ class Feed extends Component {
   }
 
   handleChange = (value) => {
-    this.props.updateText(value)
+    this.props.updateText(value);
   }
+
+  keyExtractor = item => item.id;
 
   render() {
     return (
@@ -121,7 +129,6 @@ class Feed extends Component {
                         multiline
                         numberOfLines={4}
                         value={this.props.textData}
-                        disabled={false}
                         onChangeText={text => this.handleChange(text)}
                       />
                       <TouchableOpacity onPress={() => this.uploadImage(this)}>
@@ -138,31 +145,33 @@ class Feed extends Component {
                   </Body>
                   <Right>
                     <Button rounded primary bordered textStyle={{ color: '#87838B' }} onPress={() => this.postFeed()}>
-                      <Text style={{ textAlign: 'center' }}>{"Post"}</Text>
+                      <Text style={{ textAlign: 'center' }}>Post</Text>
                     </Button>
                   </Right>
                 </CardItem>
                 {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
-                    :
-                    this.props.feeds && this.props.feeds.map((feed, index) => {
-                      return (
-                        <Card style={{ flex: 0 }} key={index}>
+                    : this.props.feeds &&
+                    <FlatList
+                      keyExtractor={this.keyExtractor}
+                      data={this.props.feeds}
+                      renderItem={({ item }) => (
+                        <Card style={{ flex: 0 }}>
                           <CardItem>
                             <Left>
-                              <Thumbnail source={{ uri: feed.user.photos[0].url }} />
+                              <Thumbnail source={{ uri: item.user.photos[0].url }} />
                               <Body>
-                                <Text>{feed.user.username}</Text>
-                                <Text note>{feed.created_at}</Text>
+                                <Text>{item.user.username}</Text>
+                                <Text note>{item.created_at}</Text>
                               </Body>
                             </Left>
                           </CardItem>
                           <CardItem>
                             <Body>
-                              <Image source={{ uri: feed.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
+                              <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
                               <Text>
-                                {feed.message}
+                                {item.message}
                               </Text>
                             </Body>
                           </CardItem>
@@ -175,8 +184,8 @@ class Feed extends Component {
                             </Left>
                           </CardItem>
                         </Card>
-                      )
-                    })
+                      )}
+                    />
                 }
               </Card>
             </Tab>
@@ -188,11 +197,23 @@ class Feed extends Component {
         <Fab
           style={{ backgroundColor: '#FFA726' }}
           position="topRight"
-          onPress={() => Actions.notification()}>
+          onPress={() => Actions.notification()}
+        >
           <Icon name="bell" />
         </Fab>
       </Container>
     );
   }
 }
+
+Feed.PropTypes = {
+  updateFeeds: func,
+  fetchFeeds: func,
+  updateText: func,
+  postFeeds: func,
+  isFetching: bool,
+  imagesData: object,
+  feeds: array
+};
+
 export default connect(mapStateToProps, actions)(Feed);
