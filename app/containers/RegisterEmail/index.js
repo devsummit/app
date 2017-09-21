@@ -34,11 +34,12 @@ class RegisterEmail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false,
+      isChecked: false
     };
   }
   componentWillMount() {
     this.props.updateInputFields('role', 'attendee');
+    this.props.updateInputFields('referer', '');
     if (this.props.prefilledData) {
       this.props.updateInputFields('first_name', this.props.prefilledData.first_name);
       this.props.updateInputFields('last_name', this.props.prefilledData.last_name);
@@ -50,8 +51,8 @@ class RegisterEmail extends Component {
 
   componentWillReceiveProps(prevProps) {
     if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-      if (this.props.isRegistered.message !== '') {
-        Toast.show(this.props.isRegistered.message);
+      if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
+        Toast.show(this.props.isRegistered.title.concat(", ").concat(this.props.isRegistered.message));
       }
 
       setTimeout(() => {
@@ -63,7 +64,7 @@ class RegisterEmail extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetState()
+    this.props.resetState();
   }
 
   onAlertOk = () => {
@@ -118,8 +119,8 @@ class RegisterEmail extends Component {
   }
 
   handlePressCheckedBox = (checked) => {
-    this.setState ({
-      isChecked: checked,
+    this.setState({
+      isChecked: checked
     });
   }
 
@@ -135,7 +136,8 @@ class RegisterEmail extends Component {
       phone,
       role,
       social_id,
-      referer
+      referer,
+      verify_password
     } = inputFields || '';
 
     const {
@@ -144,12 +146,15 @@ class RegisterEmail extends Component {
       error_username,
       error_email,
       error_password,
-      error_phone
+      error_phone,
+      error_verify_password
     } = errorFields || false;
 
     const checkEmail = this.checkEmail(email) === false && email !== '';
     const checkUsername = typeof (username) !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
+    const checkVerifyPassword = verify_password !== '' && verify_password !== password;
+
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
@@ -172,7 +177,7 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('last_name', text)}
                 value={last_name}
               />
-              { checkEmail ?
+              {checkEmail ?
                 <Text style={styles.errorInput}>invalid email address</Text>
                 :
                 null
@@ -185,7 +190,7 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
-              { checkUsername ?
+              {checkUsername ?
                 <Text style={styles.errorInput}>username should be 4 at minimum</Text>
                 :
                 null
@@ -198,7 +203,7 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
-              { checkPassword ?
+              {checkPassword ?
                 <Text style={styles.errorInput}>password should be 4 at minimum</Text>
                 :
                 null
@@ -212,6 +217,20 @@ class RegisterEmail extends Component {
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
+              {checkVerifyPassword ?
+                <Text style={styles.errorInput}>passwords do not match</Text>
+                :
+                null
+              }
+              <InputItem
+                error={checkVerifyPassword}
+                style={styles.formInput}
+                placeholder="Verify Password"
+                placeholderTextColor={'#BDBDBD'}
+                secureTextEntry
+                onChangeText={text => this.handleInputChange('verify_password', text)}
+                value={verify_password}
+              />
             </View>
             <View style={{ flex: 1, padding: 5 }}>
               <CheckBox
@@ -220,7 +239,7 @@ class RegisterEmail extends Component {
                 checked={this.state.isChecked}
                 onPress={this.handlePressCheckedBox}
               />
-              { this.state.isChecked ?
+              {this.state.isChecked ?
                 <InputItem
                   style={styles.formInput}
                   placeholder="Referer Name"
@@ -234,11 +253,11 @@ class RegisterEmail extends Component {
               {/* You can use other Icon */}
               {/* Here is the example of Radio Icon */}
             </View>
-            {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '') ?
+            {((username && username.length < 4) || password.length < 4 || first_name === '' || last_name === '') || (this.checkEmail(email) === false && email !== '' || (verify_password !== password)) ?
               <View>
                 <Button
                   block
-                  style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
+                  style={[styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' }]}
                   onPress={() => this.submitRegistration()}
                 >
                   <Text style={styles.buttomText}>Register</Text>
