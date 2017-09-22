@@ -31,13 +31,12 @@ const styles = StyleSheet.create({
     flex: 2
   },
   nameSection: {
-    marginLeft: 15,
+    marginLeft: 2,
     flex: 8
   },
   profilePic: {
-    height: 60,
-    width: 60,
-    borderRadius: 50
+    height: 200,
+    width: 362,
   },
   name: {
     color: '#333',
@@ -56,7 +55,9 @@ const styles = StyleSheet.create({
   footerSection: {
     flex: 1,
     alignItems: 'flex-end',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    marginRight: 20
   },
   seeMoreLine: {
     height: 1,
@@ -64,10 +65,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   footerButton: {
-    borderRadius: 50,
+    borderRadius: 10,
     height: 35,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  itemNameSection: {
+    backgroundColor: 'rgba(0, 0, 0, 0.05)'
   }
 });
 

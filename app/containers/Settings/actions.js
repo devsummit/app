@@ -131,7 +131,7 @@ export function updateImage(image) {
               updateAvatar(resp.data.photos[0].url),
               updateIsAvatarUpdated(true)
             );
-          }).catch(err => console.log('error upload image', err))
+          }).catch(err => console.log('error upload image', err));
       });
   };
 }
@@ -144,7 +144,7 @@ export function disabled() {
     } else {
       dispatch(updateIsDisabled(true));
     }
-  }
+  };
 }
 
 export function logOut() {

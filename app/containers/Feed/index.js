@@ -21,8 +21,7 @@ import {
 } from 'native-base';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
-import ImagePicker from 'react-native-image-crop-picker';
-import { RefreshControl, FlatList, Image, TouchableOpacity, AsyncStorage, View } from 'react-native';
+import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -126,6 +125,7 @@ class Feed extends React.Component {
   constructor(props) {
     super(props);
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
+    console.ignoredYellowBox = ['Setting a timer'];
   }
 
   state = {
@@ -157,27 +157,26 @@ class Feed extends React.Component {
       includeBase64: true
     }).then((image) => {
       this.props.updateImage(image);
-    }).catch(err => Toast.show('Error getting image from library', err));
+    }).catch((err) => {
+        console.log(err);
+    });
   }
 
   handleChange = (value) => {
     this.props.updateText(value);
   }
 
-  keyExtractor = item => item.id;
+  _keyExtractor = (item, index) => item.id;
 
   render() {
-    console.log('landing here feed this.props', this.props);
-    console.log('landing here real moment', today);
-    console.log('landing here time difference', timeDifference(today, '2014-04-23 22:06:17'.toDateFromDatetime()));
     return (
       <Container
         style={styles.container}
       >
-        <Content>
-          <HeaderPoint title="FEED" />
-          <Tabs style={styles.tabs}>
-            <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+        <HeaderPoint title="FEED" />
+        <Tabs style={styles.tabs} initialPage={0}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+            <Content>
               <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
                 <CardItem>
                   <Left>
@@ -206,19 +205,23 @@ class Feed extends React.Component {
                 </CardItem>
 
                 <CardItem>
-                  <Body>
-                    <Item fixedLabel />
-                  </Body>
-                  <Right>
-                    <Button rounded primary bordered textStyle={{ color: '#87838B' }} onPress={() => this.postFeed()}>
-                      { this.props.isPosting
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <TouchableOpacity onPress={() => this.uploadImage(this)}>
+                      <View style={{ margin: 10 }}>
+                        <CameraIcon name="camera" size={24} color="grey" />
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.postFeed()}>
+                      <View style={{ borderWidth: 0.5, borderColor: 'blue', borderRadius: 20 }}>
+                        { this.props.isPosting
                         ?
                         <Spinner color="black" />
                         :
-                        <Text style={{ textAlign: 'center' }}>Post</Text>
+                        <Text style={{ textAlign: 'center', margin: 10, paddingLeft: 10, paddingRight: 10 }}>Post</Text>
                       }
-                    </Button>
-                  </Right>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </CardItem>
                 {
                   this.props.isFetching
@@ -232,20 +235,16 @@ class Feed extends React.Component {
                           <Card style={{ flex: 0 }}>
                             <CardItem>
                               <Left>
-                                <Thumbnail source={{ uri: item.user.photos[0].url }} />
+                                <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                 <Body>
                                   <Text>{item.user.username}</Text>
                                   <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
+                                  <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
+                                  <Text>
+                                    {item.message}
+                                  </Text>
                                 </Body>
                               </Left>
-                            </CardItem>
-                            <CardItem>
-                              <Body>
-                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
-                                <Text>
-                                  {item.message}
-                                </Text>
-                              </Body>
                             </CardItem>
                             <CardItem>
                               <Left>
@@ -261,12 +260,12 @@ class Feed extends React.Component {
                     </View>
                 }
               </Card>
-            </Tab>
-            <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
-              <TicketList />
-            </Tab>
-          </Tabs>
-        </Content>
+            </Content>
+          </Tab>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+            <TicketList />
+          </Tab>
+        </Tabs>
         <Fab
           style={{ backgroundColor: '#FFA726' }}
           position="topRight"
@@ -286,7 +285,8 @@ Feed.PropTypes = {
   postFeeds: func,
   isFetching: bool,
   imagesData: object,
-  feeds: array
+  feeds: array,
+  textData: string
 };
 
 export default connect(mapStateToProps, actions)(Feed);

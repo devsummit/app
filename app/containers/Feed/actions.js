@@ -8,7 +8,8 @@ import {
   UPDATE_IMAGE,
   UPDATE_TEXT,
   UPDATE_FEEDS,
-  CLEAR_FIELDS
+  CLEAR_TEXT_FIELD,
+  CLEAR_IMAGE
 } from './constants';
 
 import {
@@ -23,10 +24,9 @@ import {
 export function updateFeeds(payload) {
   const data = JSON.parse(payload);
   const payloads = data.data;
-  return {
-    type: UPDATE_FEEDS,
-    payloads
-  };
+  if (payloads) {
+    return { type: UPDATE_FEEDS, payloads };
+  }
 }
 
 
@@ -73,32 +73,37 @@ export function postFeeds(image, text) {
       .then((token) => {
         const form = new FormData();
 
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === 'ios' && image.sourceURL) {
           form.append('attachment', {
             uri: image.sourceURL,
             type: image.mime,
             name: image.filename
           });
-          form.append('message', text);
-        } else {
+        }
+
+        if (image.path) {
           form.append('attachment', {
             uri: image.path,
             type: image.mime,
             name: 'image.jpg'
           });
-          form.append('message', text);
         }
+        form.append('message', text);
 
         const headers = { Authorization: token };
         
         DevSummitAxios.post('api/v1/feeds', form, { headers })
-          .then((response) => {
-            dispatch({ type: CLEAR_FIELDS, response });
+          .then((res) => {
 
-            dispatch(isPostFeeds(false));
+            dispatch({ type: CLEAR_TEXT_FIELD, res });
+            dispatch({ type: CLEAR_IMAGE, res });
+
           })
-          .catch(err => console.log(err));        
-        dispatch(isPostFeeds(false));
+          .catch((err) => {
+            dispatch({ type: CLEAR_IMAGE, err });
+            dispatch({ type: CLEAR_TEXT_FIELD, err });
+            console.log(err)
+          });
       });
   };
 }
