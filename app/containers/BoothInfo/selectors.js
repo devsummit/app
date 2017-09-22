@@ -16,3 +16,8 @@ export const getBoothPhoto = () => createSelector(
   selectMainReducer(),
   state => state.get('boothPhoto')
 );
+
+export const getBoothGalleries = () => createSelector(
+  selectMainReducer(),
+  state => state.get('boothGalleries')
+)

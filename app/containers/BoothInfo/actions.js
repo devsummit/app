@@ -5,7 +5,9 @@ import { DevSummitAxios, getAccessToken, getBoothData } from '../../helpers';
 import {
   UPDATE_FIELD,
   UPDATE_BOOTH_PHOTO,
-  UPDATE_IS_BOOTH_PHOTO_UPDATED
+  UPDATE_IS_BOOTH_PHOTO_UPDATED,
+  UPDATE_IS_BOOTH_GALLERY_UPDATED,
+  FETCH_BOOTH_INFO
 } from './constants';
 import local from '../../../config/local';
 
@@ -31,10 +33,16 @@ export function updateIsBoothPhotoUpdated(status) {
   };
 }
 
+export function updateIsBoothGalleriesUpdated(status) {
+  return {
+    type: UPDATE_IS_BOOTH_GALLERY_UPDATED,
+    status
+  };
+}
+
 export function updateDataStorage(response) {
   getBoothData()
     .then(() => {
-      console.log("objectRESSS", response.data);
       const newData = JSON.stringify(response.data);
       AsyncStorage.removeItem('booth_data', () => {
         try {
@@ -46,33 +54,64 @@ export function updateDataStorage(response) {
     });
 }
 
-export function updateImage(image) {
-  return (dispatch, getState) => {
-    const { boothPhoto } = getState().get('boothInfo').toJS();
+export function fetchBoothInfo() {
+  return (dispatch) => {
+    getAccessToken()
+      .then((token) => {
+        const headers = { Authorization: token };
+        DevSummitAxios.get('api/v1/booths/galleries', { headers })
+          .then(async (response) => {
+            await dispatch({
+              type: FETCH_BOOTH_INFO,
+              payloads: response.data
+            });
+          });
+      });
+  };
+}
+
+export function uploadBoothImage(image) {
+  return (dispatch) => {
 
     getAccessToken()
       .then((token) => {
-        const url = local.API_BASE_URL.concat('/api/v1/booths/updatelogo');
+        const headers = { Authorization: token };
         const form = new FormData();
+
+        form.append('image_files', {
+          uri: image.path,
+          type: image.mime,
+          name: 'image.jpg'
+        });
+
+        DevSummitAxios.post('/api/v1/booths/galleries', form, { headers })
+          .then((response) => {
+            dispatch(updateBoothPhoto(response.data.data[0].url));
+            // dispatch(updateIsBoothGalleriesUpdated(true));
+          }).catch(err => console.log('error upload image', err));
+      });
+  };
+}
+
+export function updateImage(image) {
+  return (dispatch) => {
+    getAccessToken()
+      .then((token) => {
+        const headers = { Authorization: token };
+        const form = new FormData();
+
         form.append('image_data', {
           uri: image.path,
           type: image.mime,
           name: 'image.jpg'
         });
 
-        fetch(url, {
-          method: 'PUT',
-          headers: {
-            Authorization: token
-          },
-          body: form
-        })
-          .then(response => response.json())
+        DevSummitAxios.patch('/api/v1/booths/updatelogo', form, { headers })
           .then((response) => {
-            updateDataStorage(response);
-            dispatch(updateBoothPhoto(response.data.logo_url));
-            dispatch(updateIsBoothPhotoUpdated(true));
-          }).catch(err => console.log('error upload image', err));
+            updateDataStorage(response.data);
+            dispatch(updateBoothPhoto(response.data.data.logo_url));
+            // dispatch(updateIsBoothPhotoUpdated(true));
+          }).catch(err => console.log('error change booth logo', err));
       });
   };
 }
