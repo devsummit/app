@@ -64,7 +64,7 @@ function timeDifference(current, previous) {
       var elapsed = current - previous;
   
       if (elapsed < msPerMinute) {
-           return Math.round(elapsed/1000) + ' seconds ago';   
+           return 'few seconds ago';   
       }
   
       else if (elapsed < msPerHour) {
@@ -76,16 +76,33 @@ function timeDifference(current, previous) {
       }
   
       else if (elapsed < msPerMonth) {
-          return 'approximately ' + Math.round(elapsed/msPerDay) + ' days ago';   
+        if ((previous.getMonth() + 1) === 1) {
+          return `${previous.getDate()} Jan`;   
+        } else if ((previous.getMonth() + 1) === 2) {
+          return `${previous.getDate()} Feb`; 
+        } else if ((previous.getMonth() + 1) === 3) {
+          return `${previous.getDate()} Mar`; 
+        } else if ((previous.getMonth() + 1) === 4) {
+          return `${previous.getDate()} Apr`; 
+        } else if ((previous.getMonth() + 1) === 5) {
+          return `${previous.getDate()} May`; 
+        } else if ((previous.getMonth() + 1) === 6) {
+          return `${previous.getDate()} Jun`; 
+        } else if ((previous.getMonth() + 1) === 7) {
+          return `${previous.getDate()} Jul`; 
+        } else if ((previous.getMonth() + 1) === 8) {
+          return `${previous.getDate()} Aug`; 
+        } else if ((previous.getMonth() + 1) === 9) {
+          return `${previous.getDate()} Sep`; 
+        } else if ((previous.getMonth() + 1) === 10) {
+          return `${previous.getDate()} Oct`; 
+        } else if ((previous.getMonth() + 1) === 11) {
+          return `${previous.getDate()} Nov`; 
+        } else if ((previous.getMonth() + 1) === 12) {
+          return `${previous.getDate()} Dec`; 
+        }
       }
-  
-      else if (elapsed < msPerYear) {
-          return 'approximately ' + Math.round(elapsed/msPerMonth) + ' months ago';   
-      }
-  
-      else {
-          return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';   
-      }
+      
   }
 
   String.prototype.toDateFromDatetime = function() {
@@ -151,7 +168,7 @@ class Feed extends React.Component {
 
   render() {
     console.log('landing here feed this.props', this.props);
-    console.log('landing here real moment');
+    console.log('landing here real moment', today);
     console.log('landing here time difference', timeDifference(today, '2014-04-23 22:06:17'.toDateFromDatetime()));
     return (
       <Container
