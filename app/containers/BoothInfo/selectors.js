@@ -12,7 +12,17 @@ export const getIsBoothPhotoUpdated = () => createSelector(
   state => state.get('isBoothPhotoUpdated')
 );
 
+export const getIsBoothGalleryUpdated = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isBoothGalleryUpdated')
+);
+
 export const getBoothPhoto = () => createSelector(
   selectMainReducer(),
   state => state.get('boothPhoto')
 );
+
+export const getBoothGalleries = () => createSelector(
+  selectMainReducer(),
+  state => state.get('boothGalleries')
+)
