@@ -8,7 +8,7 @@ import {
   CardItem,
   Body
 } from 'native-base';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -42,19 +42,20 @@ class BoothList extends Component {
         </Button>
         <Content style={styles.content}>
           {booth.map(data => (
-            <Card key={data.id}>
-              <CardItem>
+            <Card key={data.id} >
+              <Body>
+                <View style={styles.profileSection}>
+                  <Image
+                    style={styles.profilePic}
+                    source={{ uri: data.logo_url }}
+                  />
+                </View>
+              </Body>
+              <CardItem style={styles.itemNameSection}>
                 <Body>
                   <View style={styles.bodySection}>
-                    {/* <View style={styles.profileSection}>
-                      <Image
-                        style={styles.profilePic}
-                        source={{ uri: data.user.photos[0].url }}
-                      />
-                    </View> */}
                     <View style={styles.nameSection}>
                       <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                      <Text style={styles.job}>{data.job}</Text>
                       <Text numberOfLines={3} style={styles.summary} >
                         {data.summary}
                       </Text>
@@ -69,7 +70,8 @@ class BoothList extends Component {
                   onPress={() => {
                     Actions.boothInfo({
                       summary: data.summary,
-                      user: data.user
+                      user: data.user,
+                      photo: data.logo_url
                     });
                   }}
                 >
