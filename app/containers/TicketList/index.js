@@ -12,7 +12,7 @@ import {
   Right
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, View, TouchableOpacity } from 'react-native';
+import { RefreshControl, View, TouchableOpacity, ScrollView } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -55,7 +55,7 @@ class TicketList extends Component {
         dataArray={this.props.listTicket}
         renderRow={(item) => {
           return (
-            <ListItem style={{ marginLeft: 9, marginRight: 9, padding: 10, marginBottom: 10, borderRadius: 3}}>
+            <ListItem style={{ marginLeft: 9, marginRight: 9, padding: 10, marginBottom: 10, borderRadius: 3 }}>
               <Text style={styles.text}>Ticket No. {item.id}</Text>
               <Button
                 small
@@ -70,7 +70,8 @@ class TicketList extends Component {
                   color="white"
                 />
               </Button>
-            </ListItem>);
+            </ListItem>
+          );
         }}
       />);
   }
@@ -102,34 +103,36 @@ class TicketList extends Component {
     }
 
     const { orders } = this.props;
-
     return (
-      <Container
+      <ScrollView
         style={styles.container}
       >
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={styles.card}>
-              <Text style={{fontSize: 12, fontWeight: 'bold'}}>My Orders</Text>
-              <Icon name="ios-arrow-dropright" style={{flex: 1, fontSize: 30, textAlign: 'right', marginTop: 8}}/>
-              {
-                orders && orders.length > 0
-                  ? <Text style={{flex: 1, marginTop: -8}}>{orders.length} orders is pending</Text>
-                  : <Text style={{fontSize: 12, marginTop: -4}}>All your ticket orders shows up here</Text>
-              }
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>My Orders</Text>
+              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                {
+                  orders && orders.length > 0
+                    ? <Text style={{ flex: 2 }}>{orders.length} orders is pending</Text>
+                    : <Text style={{ fontSize: 12, marginTop: -4 }}>All your ticket orders shows up here</Text>
+                }
+                <Icon name="ios-arrow-dropright" style={{ flex: 0, fontSize: 30, textAlign: 'right', marginTop: 8 }} />
+              </View>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => Actions.newOrder()}>
             <View style={styles.ticketCard}>
-              <Icons name="ticket" color="#E57373" style={{flex: 1, fontSize: 30, textAlign: 'center'}}/>
-              <Text style={{textAlign: 'center', marginTop: -4, fontSize: 16}}>Ticket Orders</Text>
+              <Icons name="ticket" color="#E57373" style={{ flex: 1, fontSize: 30, textAlign: 'center' }} />
+              <Text style={{ textAlign: 'center', fontSize: 16 }}>Ticket Orders</Text>
             </View>
           </TouchableOpacity>
-          </View>
-          <View style={styles.redeem}>
-            <Redeem />
-          </View>
-        <Content style={{ marginTop: -10 }}
+        </View>
+        <View style={styles.redeem}>
+          <Redeem />
+        </View>
+        <Content
+          style={{ marginTop: -10 }}
           refreshControl={
             <RefreshControl
               refreshing={this.props.isGettingUserTicket}
@@ -143,7 +146,7 @@ class TicketList extends Component {
               this.renderError()
           }
         </Content>
-      </Container>
+      </ScrollView>
     );
   }
 }
@@ -170,7 +173,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     getOrderList,
     ...actions
-  }, dispatch)
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TicketList);
