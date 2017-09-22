@@ -31,35 +31,7 @@ class BoothInfo extends Component {
     super(props);
     // this.renderRow = this.renderRow.bind(this);
     this.state = {
-      id: null,
-      boothImages: [ {
-        name: 'Gaspar Brasserie',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Chalk Point Kitchen',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Gaspar Brasserie',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Gaspar Brasserie',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Chalk Point Kitchen',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Gaspar Brasserie',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Chalk Point Kitchen',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Chalk Point Kitchen',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      }, {
-        name: 'Gaspar Brasserie',
-        image: { url: 'https://www.anime-planet.com/images/people/nao-toyama-5137.jpg?t=1457714098' }
-      } ]
+      id: null
     };
   }
 
@@ -70,6 +42,7 @@ class BoothInfo extends Component {
           this.handleUpdateBoothPhoto(boothData.logo_url);
         }
       });
+
     AsyncStorage.getItem('role_id')
       .then((roleId) => {
         const id = JSON.parse(roleId);
@@ -128,11 +101,11 @@ class BoothInfo extends Component {
 
   render() {
     const booth = this.state.id === 3;
-    const { fields, summary, user, boothPhoto, boothGalleries } = this.props || {};
+    const { fields, summary, user, boothGalleries, boothPhoto } = this.props || {};
     const {
       photoPic
     } = fields || '';
-    console.log('check render', this.props);
+    const images = boothGalleries.data;
 
     return (
       <View style={{ flex: 1 }}>
@@ -144,9 +117,10 @@ class BoothInfo extends Component {
               <View style={{ flex: 1 }}>
                 <TouchableOpacity
                   disabled={!booth}
-                  onPress={() => this.changeLogo(this)}>
+                  onPress={() => this.changeLogo(this)}
+                >
                   <Image
-                    source={boothPhoto === null ? { uri: photoPic } : {uri: boothPhoto}}
+                    source={{ uri: boothPhoto }}
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>
@@ -157,12 +131,13 @@ class BoothInfo extends Component {
               </View>
             </LinearGradient>
             <View>
+              { images ?
               <PhotoGrid
-                data={boothGalleries}
+                data={images}
                 itemsPerRow={2}
                 itemMargin={1}
                 renderItem={this.renderItem}
-              />
+              /> : <View />}
             </View>
           </Content>
         </ScrollView>
@@ -184,6 +159,7 @@ class BoothInfo extends Component {
 const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isBoothPhotoUpdated: selectors.getIsBoothPhotoUpdated(),
+  isBoothGalleryUpdated: selectors.getIsBoothGalleryUpdated(),
   boothPhoto: selectors.getBoothPhoto(),
   boothGalleries: selectors.getBoothGalleries()
 });
