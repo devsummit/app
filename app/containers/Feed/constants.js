@@ -4,5 +4,6 @@ export const POST_FEEDS = 'app/containers/Feed/POST_FEEDS';
 export const IS_POST_FEEDS = 'app/containers/Feed/IS_POST_FEEDS';
 export const UPDATE_IMAGE = 'app/containers/Feed/UPDATE_IMAGE';
 export const UPDATE_TEXT = 'app/containers/Feed/UPDATE_TEXT';
-export const CLEAR_FIELDS = 'app/containers/Feed/CLEAR_FIELDS';
+export const CLEAR_TEXT_FIELD = 'app/containers/Feed/CLEAR_TEXT_FIELD';
 export const UPDATE_FEEDS = 'app/containers/Feed/UPDATE_FEEDS';
+export const CLEAR_IMAGE = 'app/containers/Feed/CLEAR_IMAGE';
