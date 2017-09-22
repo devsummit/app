@@ -6,7 +6,8 @@ import {
   IS_POST_FEEDS,
   UPDATE_IMAGE,
   UPDATE_TEXT,
-  CLEAR_FIELDS
+  CLEAR_TEXT_FIELD,
+  CLEAR_IMAGE
 } from './constants';
 
 const initialState = fromJS({
@@ -34,13 +35,16 @@ function feedReducer(state = initialState, action) {
       return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]));
 
     case UPDATE_IMAGE:
-      return state.set('image', fromJS(action.image));
+      return state.set('image', action.image);
 
     case UPDATE_TEXT:
       return state.set('message', action.value);
 
-    case CLEAR_FIELDS:
+    case CLEAR_TEXT_FIELD:
       return state.set('message', '');
+
+    case CLEAR_IMAGE:
+      return state.set('image', {});
 
     default:
       return state;
