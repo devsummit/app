@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    marginRight: 20
+    paddingRight: 20
   },
   seeMoreLine: {
     height: 1,
