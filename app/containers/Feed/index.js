@@ -80,7 +80,7 @@ class Feed extends Component {
   }
 
   postFeed = () => {
-    this.props.postFeeds(this.props.imagesData, this.props.textData)
+    this.props.postFeeds(this.props.imagesData, this.props.textData);
   }
 
   uploadImage = () => {
@@ -107,10 +107,10 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
-        <Content>
-          <HeaderPoint title="FEED" />
-          <Tabs style={styles.tabs}>
-            <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+        <HeaderPoint title="FEED" />
+        <Tabs style={styles.tabs} initialPage={0}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+            <Content>
               <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
                 <CardItem>
                   <Left>
@@ -189,12 +189,12 @@ class Feed extends Component {
                     />
                 }
               </Card>
-            </Tab>
-            <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
-              <TicketList />
-            </Tab>
-          </Tabs>
-        </Content>
+            </Content>
+          </Tab>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+            <TicketList />
+          </Tab>
+        </Tabs>
         <Fab
           style={{ backgroundColor: '#FFA726' }}
           position="topRight"
