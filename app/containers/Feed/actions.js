@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 import {
   FETCH_FEEDS,
   IS_FETCHING_FEEDS,
+  IS_POST_FEEDS,
   UPDATE_IMAGE,
   UPDATE_TEXT,
   UPDATE_FEEDS,
@@ -60,13 +61,14 @@ export function fetchFeeds() {
 
 export function isPostFeeds(status) {
   return {
-    type: IS_FETCHING_FEEDS,
+    type: IS_POST_FEEDS,
     status
   };
 }
 
 export function postFeeds(image, text) {
   return (dispatch) => {
+    dispatch(isPostFeeds(true));
     getAccessToken()
       .then((token) => {
         const form = new FormData();
@@ -88,14 +90,15 @@ export function postFeeds(image, text) {
         }
 
         const headers = { Authorization: token };
-
+        
         DevSummitAxios.post('api/v1/feeds', form, { headers })
           .then((response) => {
             dispatch({ type: CLEAR_FIELDS, response });
 
             dispatch(isPostFeeds(false));
           })
-          .catch(err => console.log(err));
+          .catch(err => console.log(err));        
+        dispatch(isPostFeeds(false));
       });
   };
 }

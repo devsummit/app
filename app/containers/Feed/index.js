@@ -22,13 +22,17 @@ import {
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
-import { RefreshControl, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { RefreshControl, FlatList, Image, TouchableOpacity, AsyncStorage, View } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
+import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
+import * as moment from 'moment';
+import Moment from 'react-moment';
+import 'moment/locale/pt-br';
 import styles from './styles';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
@@ -44,6 +48,51 @@ function subscribeToFeeds(cb) {
   socket.on('feeds', data => cb(null, data));
 }
 
+const today = new Date();
+const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+const dateTime = `${date} ${time}`;
+
+function timeDifference(current, previous) {
+  
+      var msPerMinute = 60 * 1000;
+      var msPerHour = msPerMinute * 60;
+      var msPerDay = msPerHour * 24;
+      var msPerMonth = msPerDay * 30;
+      var msPerYear = msPerDay * 365;
+  
+      var elapsed = current - previous;
+  
+      if (elapsed < msPerMinute) {
+           return Math.round(elapsed/1000) + ' seconds ago';   
+      }
+  
+      else if (elapsed < msPerHour) {
+           return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+      }
+  
+      else if (elapsed < msPerDay ) {
+           return Math.round(elapsed/msPerHour ) + ' hours ago';   
+      }
+  
+      else if (elapsed < msPerMonth) {
+          return 'approximately ' + Math.round(elapsed/msPerDay) + ' days ago';   
+      }
+  
+      else if (elapsed < msPerYear) {
+          return 'approximately ' + Math.round(elapsed/msPerMonth) + ' months ago';   
+      }
+  
+      else {
+          return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';   
+      }
+  }
+
+  String.prototype.toDateFromDatetime = function() {
+    var parts = this.split(/[- :]/);
+    return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+  };
+
 /**
  * Map redux state to component props
  */
@@ -55,7 +104,8 @@ const mapStateToProps = () => createStructuredSelector({
   textData: selectors.getUpdateText()
 });
 
-class Feed extends Component {
+
+class Feed extends React.Component {
   constructor(props) {
     super(props);
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -79,7 +129,7 @@ class Feed extends Component {
   }
 
   postFeed = () => {
-    this.props.postFeeds(this.props.imagesData, this.props.textData)
+    this.props.postFeeds(this.props.imagesData, this.props.textData);
   }
 
   uploadImage = () => {
@@ -90,9 +140,7 @@ class Feed extends Component {
       includeBase64: true
     }).then((image) => {
       this.props.updateImage(image);
-
-    }).catch(err => Toast.show('Error getting image from library', err))
-
+    }).catch(err => Toast.show('Error getting image from library', err));
   }
 
   handleChange = (value) => {
@@ -102,6 +150,9 @@ class Feed extends Component {
   keyExtractor = item => item.id;
 
   render() {
+    console.log('landing here feed this.props', this.props);
+    console.log('landing here real moment');
+    console.log('landing here time difference', timeDifference(today, '2014-04-23 22:06:17'.toDateFromDatetime()));
     return (
       <Container
         style={styles.container}
@@ -119,7 +170,6 @@ class Feed extends Component {
                     </Body>
                   </Left>
                 </CardItem>
-
                 <CardItem>
                   <Body>
                     <Item regular>
@@ -132,7 +182,7 @@ class Feed extends Component {
                         onChangeText={text => this.handleChange(text)}
                       />
                       <TouchableOpacity onPress={() => this.uploadImage(this)}>
-                        <CameraIcon name="camera" size={24} color="grey" />
+                        <CameraIcon name="camera" size={24} color="grey" style={{ marginRight: 10 }} />
                       </TouchableOpacity>
                     </Item>
                   </Body>
@@ -140,12 +190,16 @@ class Feed extends Component {
 
                 <CardItem>
                   <Body>
-                    <Item fixedLabel>
-                    </Item>
+                    <Item fixedLabel />
                   </Body>
                   <Right>
                     <Button rounded primary bordered textStyle={{ color: '#87838B' }} onPress={() => this.postFeed()}>
-                      <Text style={{ textAlign: 'center' }}>Post</Text>
+                      { this.props.isPosting
+                        ?
+                        <Spinner color="black" />
+                        :
+                        <Text style={{ textAlign: 'center' }}>Post</Text>
+                      }
                     </Button>
                   </Right>
                 </CardItem>
@@ -153,39 +207,41 @@ class Feed extends Component {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
                     : this.props.feeds &&
-                    <FlatList
-                      keyExtractor={this.keyExtractor}
-                      data={this.props.feeds}
-                      renderItem={({ item }) => (
-                        <Card style={{ flex: 0 }}>
-                          <CardItem>
-                            <Left>
-                              <Thumbnail source={{ uri: item.user.photos[0].url }} />
+                    <View>
+                      <FlatList
+                        keyExtractor={this.keyExtractor}
+                        data={this.props.feeds}
+                        renderItem={({ item }) => (
+                          <Card style={{ flex: 0 }}>
+                            <CardItem>
+                              <Left>
+                                <Thumbnail source={{ uri: item.user.photos[0].url }} />
+                                <Body>
+                                  <Text>{item.user.username}</Text>
+                                  <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
+                                </Body>
+                              </Left>
+                            </CardItem>
+                            <CardItem>
                               <Body>
-                                <Text>{item.user.username}</Text>
-                                <Text note>{item.created_at}</Text>
+                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
+                                <Text>
+                                  {item.message}
+                                </Text>
                               </Body>
-                            </Left>
-                          </CardItem>
-                          <CardItem>
-                            <Body>
-                              <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
-                              <Text>
-                                {item.message}
-                              </Text>
-                            </Body>
-                          </CardItem>
-                          <CardItem>
-                            <Left>
-                              <Button transparent textStyle={{ color: '#87838B' }}>
-                                <Icon name="share" />
-                                <Text>Share</Text>
-                              </Button>
-                            </Left>
-                          </CardItem>
-                        </Card>
-                      )}
-                    />
+                            </CardItem>
+                            <CardItem>
+                              <Left>
+                                <Button transparent textStyle={{ color: '#87838B' }}>
+                                  <Icon name="share" />
+                                  <Text>Share</Text>
+                                </Button>
+                              </Left>
+                            </CardItem>
+                          </Card>
+                        )}
+                      />
+                    </View>
                 }
               </Card>
             </Tab>
