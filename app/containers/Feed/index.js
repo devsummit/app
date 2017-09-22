@@ -90,9 +90,9 @@ class Feed extends Component {
       includeBase64: true
     }).then((image) => {
       this.props.updateImage(image);
-
-    }).catch(err => Toast.show('Error getting image from library', err))
-
+    }).catch((err) => {
+        console.log(err);
+    });
   }
 
   handleChange = (value) => {
