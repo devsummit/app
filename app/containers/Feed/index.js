@@ -22,7 +22,7 @@ import {
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
-import { RefreshControl, FlatList, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -59,6 +59,7 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
+    console.ignoredYellowBox = ['Setting a timer'];
   }
 
   state = {
@@ -99,7 +100,7 @@ class Feed extends Component {
     this.props.updateText(value);
   }
 
-  keyExtractor = item => item.id;
+  _keyExtractor = (item, index) => item.id;
 
   render() {
     return (
@@ -131,36 +132,36 @@ class Feed extends Component {
                         value={this.props.textData}
                         onChangeText={text => this.handleChange(text)}
                       />
-                      <TouchableOpacity onPress={() => this.uploadImage(this)}>
-                        <CameraIcon name="camera" size={24} color="grey" />
-                      </TouchableOpacity>
                     </Item>
                   </Body>
                 </CardItem>
 
                 <CardItem>
-                  <Body>
-                    <Item fixedLabel>
-                    </Item>
-                  </Body>
-                  <Right>
-                    <Button rounded primary bordered textStyle={{ color: '#87838B' }} onPress={() => this.postFeed()}>
-                      <Text style={{ textAlign: 'center' }}>Post</Text>
-                    </Button>
-                  </Right>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <TouchableOpacity onPress={() => this.uploadImage(this)}>
+                      <View style={{ margin: 10 }}>
+                        <CameraIcon name="camera" size={24} color="grey" />
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.postFeed()}>
+                      <View style={{ borderWidth: 0.5, borderColor: 'blue', borderRadius: 20 }}>
+                        <Text style={{ textAlign: 'center', margin: 10, paddingLeft: 10, paddingRight: 10 }}>Post</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </CardItem>
                 {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
                     : this.props.feeds &&
                     <FlatList
-                      keyExtractor={this.keyExtractor}
+                      keyExtractor={this._keyExtractor}
                       data={this.props.feeds}
                       renderItem={({ item }) => (
                         <Card style={{ flex: 0 }}>
                           <CardItem>
                             <Left>
-                              <Thumbnail source={{ uri: item.user.photos[0].url }} />
+                              <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                               <Body>
                                 <Text>{item.user.username}</Text>
                                 <Text note>{item.created_at}</Text>
@@ -213,7 +214,8 @@ Feed.PropTypes = {
   postFeeds: func,
   isFetching: bool,
   imagesData: object,
-  feeds: array
+  feeds: array,
+  textData: string
 };
 
 export default connect(mapStateToProps, actions)(Feed);
