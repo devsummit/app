@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'center',
     backgroundColor: '#E0E0E0'
   },
   item: {
@@ -54,19 +53,18 @@ const styles = StyleSheet.create({
   card: {
     position: 'relative',
     height: 100,
-    width: 240,
     margin: 10,
     padding: 10,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
-    elevation: 3
+    elevation: 3,
+    width: width * 0.6
   },
   ticketCard: {
     position: 'relative',
     height: 100,
-    width: 80,
     margin: 10,
     padding: 10,
     marginLeft: 4,
@@ -74,16 +72,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
-    elevation: 3
+    elevation: 3,
+    width: width * 0.3
   },
   redeem: {
     margin: 20,
-    marginTop: -155,
-    marginLeft: 10,
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 2
-  },
+  }
 });
 
 export default styles;
