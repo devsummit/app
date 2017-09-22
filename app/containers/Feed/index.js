@@ -25,12 +25,10 @@ import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import ImagePicker from 'react-native-image-crop-picker';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
-import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
-import * as moment from 'moment';
-import Moment from 'react-moment';
 import 'moment/locale/pt-br';
 import styles from './styles';
 import HeaderPoint from '../../components/Header';
@@ -53,55 +51,55 @@ const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
 const dateTime = `${date} ${time}`;
 
 function timeDifference(current, previous) {
-  
+
       var msPerMinute = 60 * 1000;
       var msPerHour = msPerMinute * 60;
       var msPerDay = msPerHour * 24;
       var msPerMonth = msPerDay * 30;
       var msPerYear = msPerDay * 365;
-  
+
       var elapsed = current - previous;
-  
+
       if (elapsed < msPerMinute) {
-           return 'few seconds ago';   
+           return 'few seconds ago';
       }
-  
+
       else if (elapsed < msPerHour) {
-           return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+           return Math.round(elapsed/msPerMinute) + ' minutes ago';
       }
-  
+
       else if (elapsed < msPerDay ) {
-           return Math.round(elapsed/msPerHour ) + ' hours ago';   
+           return Math.round(elapsed/msPerHour ) + ' hours ago';
       }
-  
+
       else if (elapsed < msPerMonth) {
         if ((previous.getMonth() + 1) === 1) {
-          return `${previous.getDate()} Jan`;   
+          return `${previous.getDate()} Jan`;
         } else if ((previous.getMonth() + 1) === 2) {
-          return `${previous.getDate()} Feb`; 
+          return `${previous.getDate()} Feb`;
         } else if ((previous.getMonth() + 1) === 3) {
-          return `${previous.getDate()} Mar`; 
+          return `${previous.getDate()} Mar`;
         } else if ((previous.getMonth() + 1) === 4) {
-          return `${previous.getDate()} Apr`; 
+          return `${previous.getDate()} Apr`;
         } else if ((previous.getMonth() + 1) === 5) {
-          return `${previous.getDate()} May`; 
+          return `${previous.getDate()} May`;
         } else if ((previous.getMonth() + 1) === 6) {
-          return `${previous.getDate()} Jun`; 
+          return `${previous.getDate()} Jun`;
         } else if ((previous.getMonth() + 1) === 7) {
-          return `${previous.getDate()} Jul`; 
+          return `${previous.getDate()} Jul`;
         } else if ((previous.getMonth() + 1) === 8) {
-          return `${previous.getDate()} Aug`; 
+          return `${previous.getDate()} Aug`;
         } else if ((previous.getMonth() + 1) === 9) {
-          return `${previous.getDate()} Sep`; 
+          return `${previous.getDate()} Sep`;
         } else if ((previous.getMonth() + 1) === 10) {
-          return `${previous.getDate()} Oct`; 
+          return `${previous.getDate()} Oct`;
         } else if ((previous.getMonth() + 1) === 11) {
-          return `${previous.getDate()} Nov`; 
+          return `${previous.getDate()} Nov`;
         } else if ((previous.getMonth() + 1) === 12) {
-          return `${previous.getDate()} Dec`; 
+          return `${previous.getDate()} Dec`;
         }
       }
-      
+
   }
 
   String.prototype.toDateFromDatetime = function() {
@@ -197,9 +195,6 @@ class Feed extends React.Component {
                         value={this.props.textData}
                         onChangeText={text => this.handleChange(text)}
                       />
-                      <TouchableOpacity onPress={() => this.uploadImage(this)}>
-                        <CameraIcon name="camera" size={24} color="grey" style={{ marginRight: 10 }} />
-                      </TouchableOpacity>
                     </Item>
                   </Body>
                 </CardItem>
@@ -212,13 +207,13 @@ class Feed extends React.Component {
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.postFeed()}>
-                      <View style={{ borderWidth: 0.5, borderColor: 'blue', borderRadius: 20 }}>
+                      <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, paddingLeft: 10, paddingRight: 10 }}>
                         { this.props.isPosting
-                        ?
-                        <Spinner color="black" />
-                        :
-                        <Text style={{ textAlign: 'center', margin: 10, paddingLeft: 10, paddingRight: 10 }}>Post</Text>
-                      }
+                          ?
+                          <Spinner color="yellow" />
+                          :
+                          <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
+                        }
                       </View>
                     </TouchableOpacity>
                   </View>

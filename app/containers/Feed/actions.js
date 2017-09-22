@@ -91,17 +91,18 @@ export function postFeeds(image, text) {
         form.append('message', text);
 
         const headers = { Authorization: token };
-        
+
         DevSummitAxios.post('api/v1/feeds', form, { headers })
           .then((res) => {
 
             dispatch({ type: CLEAR_TEXT_FIELD, res });
             dispatch({ type: CLEAR_IMAGE, res });
-
+            dispatch(isPostFeeds(false));
           })
           .catch((err) => {
             dispatch({ type: CLEAR_IMAGE, err });
             dispatch({ type: CLEAR_TEXT_FIELD, err });
+            dispatch(isPostFeeds(false));
             console.log(err)
           });
       });
