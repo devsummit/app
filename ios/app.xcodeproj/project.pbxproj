@@ -54,6 +54,9 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8BEDE56CF94A4E0F8D8CDBA4 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEF2C468AE954B31BE665903 /* SimpleLineIcons.ttf */; };
 		9230EC26655A46DF9A12D2B6 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62E9A2DFDFE24AB8A340C32D /* FontAwesome.ttf */; };
+		9C8C802A1F756F8400A1B3F7 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C80281F756F8400A1B3F7 /* QBImagePicker.framework */; };
+		9C8C802B1F756F8400A1B3F7 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C80291F756F8400A1B3F7 /* RSKImageCropper.framework */; };
+		9C8C802D1F756FAF00A1B3F7 /* DCTAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8C802C1F756FAF00A1B3F7 /* DCTAuth.framework */; };
 		9CBF8E481F75678700AFFF12 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CBF8E471F75678700AFFF12 /* Default-568h@2x.png */; };
 		9CF18D5E1F713D8D009E4D56 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF18D5D1F713D8D009E4D56 /* AccountKit.framework */; };
 		A378F51888E3440F991E3C70 /* libRNAccountKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 548A0B7D4D4546CC8B295946 /* libRNAccountKit.a */; };
@@ -426,6 +429,9 @@
 		880BEB3476B04B7A8CC761D0 /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		8BE9449B0BDF4B96A62EA71B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		8C2789ECD5A3467992136260 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		9C8C80281F756F8400A1B3F7 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QBImagePicker.framework; path = "../../../../Library/Developer/Xcode/DerivedData/app-ajvfieiqxodevdhbivseeghgbhkk/Build/Products/Debug-iphoneos/QBImagePicker.framework"; sourceTree = "<group>"; };
+		9C8C80291F756F8400A1B3F7 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RSKImageCropper.framework; path = "../../../../Library/Developer/Xcode/DerivedData/app-ajvfieiqxodevdhbivseeghgbhkk/Build/Products/Debug-iphoneos/RSKImageCropper.framework"; sourceTree = "<group>"; };
+		9C8C802C1F756FAF00A1B3F7 /* DCTAuth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCTAuth.framework; path = "../../../../Library/Developer/Xcode/DerivedData/app-ajvfieiqxodevdhbivseeghgbhkk/Build/Products/Debug-iphoneos/DCTAuth/DCTAuth.framework"; sourceTree = "<group>"; };
 		9CBF8E471F75678700AFFF12 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9CF18D5D1F713D8D009E4D56 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
 		9FE471EA53B245B08626FB55 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -464,6 +470,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C8C802D1F756FAF00A1B3F7 /* DCTAuth.framework in Frameworks */,
+				9C8C802A1F756F8400A1B3F7 /* QBImagePicker.framework in Frameworks */,
+				9C8C802B1F756F8400A1B3F7 /* RSKImageCropper.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -822,6 +831,9 @@
 		D6BDC836B1B9E556BD146D78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9C8C802C1F756FAF00A1B3F7 /* DCTAuth.framework */,
+				9C8C80281F756F8400A1B3F7 /* QBImagePicker.framework */,
+				9C8C80291F756F8400A1B3F7 /* RSKImageCropper.framework */,
 				9CF18D5D1F713D8D009E4D56 /* AccountKit.framework */,
 				21828B77CAC488DC78F8DF01 /* libPods-app-tvOS.a */,
 				0D7F5FC4147F936F92C3AC0E /* libPods-app-tvOSTests.a */,

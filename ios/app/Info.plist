@@ -38,7 +38,9 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>DevSummit requires access to the location library when in use</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>DevSummit requires access to the photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>
