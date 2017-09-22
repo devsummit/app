@@ -8,7 +8,7 @@ import {
   CardItem,
   Body
 } from 'native-base';
-import { View, Image } from 'react-native';
+import { View, Image, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -36,7 +36,7 @@ class BoothList extends Component {
           <Button
             primary
             style={styles.btnBooth}
-            onPress={() => Actions.boothInfo()}
+            onPress={() => Alert.alert('Coming soon!!!')}
           >
             <Text>Become booth</Text>
           </Button>
