@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 import {
   FETCH_FEEDS,
   IS_FETCHING_FEEDS,
+  IS_POST_FEEDS,
   UPDATE_IMAGE,
   UPDATE_TEXT,
   UPDATE_FEEDS,
@@ -60,13 +61,14 @@ export function fetchFeeds() {
 
 export function isPostFeeds(status) {
   return {
-    type: IS_FETCHING_FEEDS,
+    type: IS_POST_FEEDS,
     status
   };
 }
 
 export function postFeeds(image, text) {
   return (dispatch) => {
+    dispatch(isPostFeeds(true));
     getAccessToken()
       .then((token) => {
         const form = new FormData();
@@ -95,11 +97,12 @@ export function postFeeds(image, text) {
 
             dispatch({ type: CLEAR_TEXT_FIELD, res });
             dispatch({ type: CLEAR_IMAGE, res });
-
+            dispatch(isPostFeeds(false));
           })
           .catch((err) => {
             dispatch({ type: CLEAR_IMAGE, err });
             dispatch({ type: CLEAR_TEXT_FIELD, err });
+            dispatch(isPostFeeds(false));
             console.log(err)
           });
       });

@@ -26,10 +26,12 @@ import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import ImagePicker from 'react-native-image-crop-picker';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import CloseIcon from 'react-native-vector-icons/Ionicons';
+import 'moment/locale/pt-br';
 import styles from './styles';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
@@ -45,6 +47,68 @@ function subscribeToFeeds(cb) {
   socket.on('feeds', data => cb(null, data));
 }
 
+const today = new Date();
+const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+const dateTime = `${date} ${time}`;
+
+function timeDifference(current, previous) {
+
+      var msPerMinute = 60 * 1000;
+      var msPerHour = msPerMinute * 60;
+      var msPerDay = msPerHour * 24;
+      var msPerMonth = msPerDay * 30;
+      var msPerYear = msPerDay * 365;
+
+      var elapsed = current - previous;
+
+      if (elapsed < msPerMinute) {
+           return 'few seconds ago';
+      }
+
+      else if (elapsed < msPerHour) {
+           return Math.round(elapsed/msPerMinute) + ' minutes ago';
+      }
+
+      else if (elapsed < msPerDay ) {
+           return Math.round(elapsed/msPerHour ) + ' hours ago';
+      }
+
+      else if (elapsed < msPerMonth) {
+        if ((previous.getMonth() + 1) === 1) {
+          return `${previous.getDate()} Jan`;
+        } else if ((previous.getMonth() + 1) === 2) {
+          return `${previous.getDate()} Feb`;
+        } else if ((previous.getMonth() + 1) === 3) {
+          return `${previous.getDate()} Mar`;
+        } else if ((previous.getMonth() + 1) === 4) {
+          return `${previous.getDate()} Apr`;
+        } else if ((previous.getMonth() + 1) === 5) {
+          return `${previous.getDate()} May`;
+        } else if ((previous.getMonth() + 1) === 6) {
+          return `${previous.getDate()} Jun`;
+        } else if ((previous.getMonth() + 1) === 7) {
+          return `${previous.getDate()} Jul`;
+        } else if ((previous.getMonth() + 1) === 8) {
+          return `${previous.getDate()} Aug`;
+        } else if ((previous.getMonth() + 1) === 9) {
+          return `${previous.getDate()} Sep`;
+        } else if ((previous.getMonth() + 1) === 10) {
+          return `${previous.getDate()} Oct`;
+        } else if ((previous.getMonth() + 1) === 11) {
+          return `${previous.getDate()} Nov`;
+        } else if ((previous.getMonth() + 1) === 12) {
+          return `${previous.getDate()} Dec`;
+        }
+      }
+
+  }
+
+  String.prototype.toDateFromDatetime = function() {
+    var parts = this.split(/[- :]/);
+    return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+  };
+
 /**
  * Map redux state to component props
  */
@@ -56,7 +120,8 @@ const mapStateToProps = () => createStructuredSelector({
   textData: selectors.getUpdateText()
 });
 
-class Feed extends Component {
+
+class Feed extends React.Component {
   constructor(props) {
     super(props);
     console.ignoredYellowBox = ['Setting a timer'];
@@ -87,7 +152,7 @@ class Feed extends Component {
   }
 
   postFeed = () => {
-    this.props.postFeeds(this.props.imagesData, this.props.textData)
+    this.props.postFeeds(this.props.imagesData, this.props.textData);
   }
 
   uploadImage = () => {
@@ -115,10 +180,10 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
-        <Content>
-          <HeaderPoint title="FEED" />
-          <Tabs style={styles.tabs}>
-            <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+        <HeaderPoint title="FEED" />
+        <Tabs style={styles.tabs} initialPage={0}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+            <Content>
               <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
                 <CardItem>
                   <Left>
@@ -128,7 +193,6 @@ class Feed extends Component {
                     </Body>
                   </Left>
                 </CardItem>
-
                 <CardItem>
                   <Body>
                     <Item regular>
@@ -159,8 +223,13 @@ class Feed extends Component {
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.postFeed()}>
-                      <View style={{ borderWidth: 0.5, borderColor: 'blue', borderRadius: 20 }}>
-                        <Text style={{ textAlign: 'center', margin: 10, paddingLeft: 10, paddingRight: 10 }}>Post</Text>
+                      <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, paddingLeft: 10, paddingRight: 10 }}>
+                        { this.props.isPosting
+                          ?
+                          <Spinner color="yellow" />
+                          :
+                          <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
+                        }
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -208,12 +277,12 @@ class Feed extends Component {
                     />
                 }
               </Card>
-            </Tab>
-            <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
-              <TicketList />
-            </Tab>
-          </Tabs>
-        </Content>
+            </Content>
+          </Tab>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+            <TicketList />
+          </Tab>
+        </Tabs>
         <Fab
           style={{ backgroundColor: '#FFA726' }}
           position="topRight"
