@@ -22,7 +22,7 @@ import {
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
-import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, Modal, TouchableWithoutFeedback } from 'react-native';
+import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ActivityIndicator } from 'react-native';develop
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -223,10 +223,9 @@ class Feed extends React.Component {
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.postFeed()}>
-                      <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, paddingLeft: 10, paddingRight: 10 }}>
-                        { this.props.isPosting
-                          ?
-                          <Spinner color="yellow" />
+                      <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
+                        { this.props.isPosting ?
+                          <ActivityIndicator color="yellow" />
                           :
                           <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
                         }
