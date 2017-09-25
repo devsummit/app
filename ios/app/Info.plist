@@ -53,41 +53,20 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>DevSummit requires access to the photo library.</string>
-	<string/>
+	<key/>
+	<string>UIAppFonts</string>
+	<key>Entypo.ttf,EvilIcons.ttf,FontAwesome.ttf,Foundation.ttf,Ionicons.ttf,MaterialIcons.ttf,Octicons.ttf,Roboto_medium.ttf,Roboto.ttf,rubicon-icon-font.ttf,SimpleLineIcons.ttf,Zocial.ttf,MaterialCommunityIcons.ttf,Montserrat-Bold.ttf,Montserrat-Regular.ttf</key>
+	<string>UILaunchStoryboardName</string>
+	<key>LaunchScreen</key>
+	<string>UIRequiredDeviceCapabilities</string>
+	<key>armv7</key>
+	<string>UISupportedInterfaceOrientations</string>
+	<key>UIInterfaceOrientationPortrait,UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight</key>
+	<string>UIViewControllerBasedStatusBarAppearance</string>
 	<key>UIAppFonts</key>
-	<array>
-		<string>Entypo.ttf</string>
-		<string>EvilIcons.ttf</string>
-		<string>FontAwesome.ttf</string>
-		<string>Foundation.ttf</string>
-		<string>Ionicons.ttf</string>
-		<string>MaterialIcons.ttf</string>
-		<string>Octicons.ttf</string>
-		<string>Roboto_medium.ttf</string>
-		<string>Roboto.ttf</string>
-		<string>rubicon-icon-font.ttf</string>
-		<string>SimpleLineIcons.ttf</string>
-		<string>Zocial.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
-		<string>Montserrat-Bold.ttf</string>
-		<string>Montserrat-Regular.ttf</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<array/>
 </dict>
 </plist>
