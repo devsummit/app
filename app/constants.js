@@ -4,10 +4,10 @@
 const config = require('../config/local').default;
 
 export const API_BASE_URL = config.API_BASE_URL;
-export const MIDTRANS_CLIENT_KEY = 'VT-client-g8cB-IVLwe64YIdv';
+export const MIDTRANS_CLIENT_KEY = config.MIDTRANS_CLIENT_KEY;
 
 // TODO MERCHANT CODE FOR DEVELOPMENT
-export const MERCHANT_CODE = 'M1066775';
+export const MERCHANT_CODE = config.MIDTRANS_MERCHANT_ID;
 
 export const CLIENT_SECRET = config.CLIENT_SECRET;
 
