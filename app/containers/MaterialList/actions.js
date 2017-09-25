@@ -9,6 +9,7 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_MODAL_STATUS,
   ADD_MATERIAL_ITEM,
+  UPDATE_FLAG_MATERIAL,
   IS_FETCHING_MATERIAL,
   DELETE_MATERIAL_LIST
 } from './constants';
@@ -32,6 +33,15 @@ export function updateModalStatus(status) {
   return {
     type: UPDATE_MODAL_STATUS,
     status
+  };
+}
+
+export function updateFlagMaterial(key, field, value) {
+  return {
+    type: UPDATE_FLAG_MATERIAL,
+    key,
+    field,
+    value
   };
 }
 
@@ -63,7 +73,7 @@ export function fetchMaterialList() {
   };
 }
 
-export function updateStatus(data) {
+export function updateStatus(data, key) {
   return (dispatch) => {
 
     getAccessToken()
@@ -78,7 +88,7 @@ export function updateStatus(data) {
           }
         }).then((response) => {
           if (response && response.data && response.data.meta.success) {
-            dispatch(updateInputFields('is_used', response.data.datais_used))
+            dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
           }
         }).catch((error) => { console.log(error); });
       });
