@@ -7,7 +7,7 @@ script:
 - docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android yarn
 after_script:
 - if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
-  docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta"
+  docker run --rm -v $(pwd):/opt/workspace -e FASTLANE_API_TOKEN=$FASTLANE_API_TOKEN -e FASTLANE_BUILD_SECRET=$FASTLANE_BUILD_SECRET refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta"
   ;fi
 env:
   global:
