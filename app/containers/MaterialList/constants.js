@@ -4,3 +4,4 @@ export const UPDATE_MODAL_STATUS = 'app/containers/MaterialList/UPDATE_MODAL_STA
 export const ADD_MATERIAL_ITEM = 'app/containers/MaterialList/ADD_MATERIAL_ITEM';
 export const IS_FETCHING_MATERIAL = 'app/containers/MaterialList/IS_FETCHING_MATERIAL';
 export const DELETE_MATERIAL_LIST = 'app/containers/MaterialList/DELETE_MATERIAL_LIST';
+export const UPDATE_FLAG_MATERIAL = 'app/containers/MaterialList/UPDATE_FLAG_MATERIAL';
