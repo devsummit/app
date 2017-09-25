@@ -19,11 +19,6 @@ export const getIsPostingFeed = () => createSelector(
   state => state.get('isPosting')
 );
 
-// export const getPostFeed = () => createSelector(
-//   selectFeedReducer(),
-//   state => state.get('postFeed').toJS()
-// );
-
 export const getUpdateImage = () => createSelector(
   selectFeedReducer(),
   state => state.get('image').toJS()
@@ -32,4 +27,9 @@ export const getUpdateImage = () => createSelector(
 export const getUpdateText = () => createSelector(
   selectFeedReducer(),
   state => state.get('message')
+);
+
+export const getCurrentPage = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('currentPage')
 );
