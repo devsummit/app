@@ -8,7 +8,8 @@ import {
   UPDATE_TEXT,
   CLEAR_TEXT_FIELD,
   CLEAR_IMAGE,
-  UPDATE_CURRENT_PAGE
+  UPDATE_CURRENT_PAGE,
+  LOAD_MORE_FEEDS
 } from './constants';
 
 const initialState = fromJS({
@@ -35,6 +36,9 @@ function feedReducer(state = initialState, action) {
 
     case UPDATE_FEEDS:
       return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]));
+
+    case LOAD_MORE_FEEDS:
+      return state.set('feeds', fromJS(state.get('feeds').toJS().concat(action.payloads)));
 
     case UPDATE_IMAGE:
       return state.set('image', fromJS(action.image));
