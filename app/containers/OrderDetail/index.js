@@ -289,6 +289,7 @@ class OrderDetail extends Component {
           <Modal
             animationType={'slide'}
             visible={this.state.modalVisible}
+            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
           >
             <View style={{ flex: 1 }}>
               <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
@@ -301,7 +302,7 @@ class OrderDetail extends Component {
               </View>
               <WebView
                 automaticallyAdjustContentInsets={false}
-                source={{ uri: payment.va_number || '' }}
+                source={{ uri: payment ? payment.va_number : '' }}
                 style={{ marginTop: 20 }}
                 scalesPageToFit={this.state.scalesPageToFit}
                 ref={WEBVIEW_REF}
@@ -320,7 +321,7 @@ class OrderDetail extends Component {
 
 OrderDetail.propTypes = {
   getOrderDetail: PropTypes.func.isRequired,
-  orderId: PropTypes.number.isRequired,
+  orderId: PropTypes.string.isRequired,
   order: PropTypes.object.isRequired,
   updateOrder: PropTypes.func.isRequired,
   submitUpdateOrder: PropTypes.func.isRequired,

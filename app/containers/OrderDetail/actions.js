@@ -31,8 +31,7 @@ export function getOrderDetail(orderId) {
       DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
         headers: { Authorization: accessToken }
       }).then((response) => {
-        console.log("RESPONSE", response)
-        const data = response.data.data
+        const data = response.data
         dispatch({ type: SET_ORDER, data });
         dispatch(updateIsUpdatingOrder(false));
       }).catch((err) => { console.log(err.response); });
