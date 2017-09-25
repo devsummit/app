@@ -272,7 +272,7 @@ class Feed extends Component {
                               <Left>
                                 <Button transparent textStyle={{ color: '#87838B' }}>
                                   <Icon name="share" />
-                                  <Text>Share</Text>
+                                  <Text style={{ marginLeft: 8 }}>Share</Text>
                                 </Button>
                               </Left>
                             </CardItem>
