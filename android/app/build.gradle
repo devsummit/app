@@ -117,7 +117,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.devsummit"
+        applicationId "io.devsummit.app.android"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 3
@@ -169,6 +169,9 @@ android {
             }
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -177,7 +180,13 @@ dependencies {
   compile project(':react-native-document-picker')
   compile project(':react-native-image-crop-picker')
   compile project(':react-native-facebook-account-kit')
-  compile project(':react-native-oauth')
+  compile(project(':react-native-oauth')){
+      android {
+          lintOptions {
+              abortOnError false
+          }
+      }
+  }
   compile project(':react-native-linear-gradient')
   compile project(':react-native-vector-icons')
   compile fileTree(dir: "libs", include: ["*.jar"])

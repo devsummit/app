@@ -1,4 +1,4 @@
-package com.devsummit;
+package io.devsummit.app.android;
 
 import android.app.Application;
 
@@ -6,13 +6,15 @@ import com.facebook.react.ReactApplication;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
+
+import io.devsummit.BuildConfig;
+import io.devsummit.R;
 import io.fullstack.oauth.OAuthManagerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.underscope.react.fbak.RNAccountKitPackage;
-import com.microsoft.codepush.react.CodePush;
+
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
-import io.fullstack.oauth.OAuthManagerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
