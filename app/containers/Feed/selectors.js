@@ -33,4 +33,3 @@ export const getCurrentPage = () => createSelector(
   selectFeedReducer(),
   state => state.get('currentPage')
 );
-
