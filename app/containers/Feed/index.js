@@ -245,7 +245,6 @@ class Feed extends React.Component {
                             <Left>
                               <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                               <Body>
-                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
                                 <Text>{item.user.username}</Text>
                                 <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                               </Body>
