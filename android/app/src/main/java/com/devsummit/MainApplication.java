@@ -11,6 +11,7 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.underscope.react.fbak.RNAccountKitPackage;
 import com.microsoft.codepush.react.CodePush;
+import cl.json.RNSharePackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import io.fullstack.oauth.OAuthManagerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -43,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeDocumentPicker(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
           new VectorIconsPackage(),
+          new RNSharePackage(),
           new PickerPackage(),
           new OAuthManagerPackage(),
           new RNAccountKitPackage(),
