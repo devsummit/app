@@ -75,7 +75,7 @@ class BoothList extends Component {
                       });
                     }}
                   >
-                    <Text style={styles.footerButtonText}>See more</Text>
+                    <Text>See more</Text>
                   </Button>
                 </CardItem>
               </Card>
