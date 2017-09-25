@@ -4301,6 +4301,10 @@ react-native-router-flux@^4.0.0-beta.15:
     react-native-button "^2.0.0"
     react-navigation "^1.0.0-beta.11"
 
+react-native-share@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.21.tgz#45cc1c7bae5af8e6e88b77c3bfa23fb88521a354"
+
 react-native-simple-auth@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-simple-auth/-/react-native-simple-auth-2.1.0.tgz#60d36576625d16576d6068d8f4d85328c8aaf446"

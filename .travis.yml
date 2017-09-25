@@ -1,6 +1,14 @@
-language: ruby
-rvm:
-- 2.0.0
-- 1.9.3
-- jruby-19mode
-- rbx-2
+language: node
+node_js:
+- 8
+script:
+- cp config/development.js config/local.js
+- npm install
+after_script:
+- if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
+  android && fastlane android beta
+  ;fi
+env:
+  global:
+  - secure: LJu98WWycfWmZg1YXvbSSzk8qMbpw3rarBi/0aur8yWeDcUZWzJX9uRvhJRw39wJ0nT0cLn9XBJEajVpI1+tE1DVKXhKtcosbchJ8kIByNldTIZrxLtgVYWgxd3TfcAibZwo/dqyC5ab1QDWjYayHZ8udOJHExf8ZhBpzM3w6SrsOwmiUYQrSP5mWJHjqy+0PalhhnRaej+0U+4T4eawIg8GvZTxtT1O1ckwmPUHMHBhzZhpldq6pUR2LL0Q3FGOIIDNcPXLFfQd90rJRvNwIhufYS49J//V2nNIvXh0w4SEIo+LMQur9+6sav6ESlBvZHi0NlN4Jpd5NDmOEYSN7lPpwxCDUA6C7ARJXJdk1Plw6q0IbiVlK1RBaPA+TFDTuyHzd7Vcrv+T9eG5CyQ6GJeKA/aWehtZd95GaSjJYKFY1YnHVAPR0rwKjM/G1250QxDH1Rq+hvBf33kNpbIzQMGEs3a/gXlbai0pTTKXI4WyUoSxVaMDMebTWwr5AkxAwe2oKkS+CkqhzxyaiNj8EGk32Ida7dnK0uDOOtJP5Y9nKMDEGiGCQivdY97iOE4r9o5uc33Xttm+rCUSXiGnwIcFPTJW9RJh2NXGyRDjmifwaqn+t9pV85ucYYEDqdF2VA0ekmploj6EyOt2wjGqeU6tney2YLQVfIPbxVfYkc0=
+  - secure: AZ5+FJ7IrA5YpZe5E8XeV6FPHx5K2cEVHnHzxqjaXOfHhQ9LammxZg55Lde1nGks3FnfLRIsYkb/f0exYCa+u8wVykm7NeO9SMqeMxKh6iZMFKfm1neY6to15Qyc8MjngXpt81ykyRGfjneOkbQBr5614ibh3nfKHk6ECbklzDjklIkeLYHto+mXAElXxA/tCO82K7Tfu8fsVcWqsVJ6JIVMrRp7bkj4VDuRPTKxG+o+q0T/Cwd3J4f62czEU2pcp5NcAwmJIYBDxflF9qD3NGj5zSMOO20RLuARDhuivUT4hyKp4dbXvLUNGCSfbJ4JYucdCfVw64dmATcqPRsJgaLzoibb3KQg8MQatdfGsxkCFmJ83mgZ4ZbMu17Uqb/mjac5G8rr0zCMqhDPAPHX4m/b2tJH16q6j8bO5t0n3KjfMjH2w7dzeeiYh4CZ9WtJGhI/U0dGz1JFFr7AZISa/opCJCvBFfSIpEa2sx0+2oK9HNfQljMbiC8htGKltrFPjJCBAGEyujIR0DQJ9xgCubRgKbpD8MRy0cLHcf9xlStTDbVuzY2W4aEAHWC+mcFJUnGK6WdVJEEPj9mQn9IEJpKa5q3fAyGZll4Ouh8O9cL1tWZIIoJWd+UYlIAb2fvlsXJeAlnLJTp9FFB/1+ebb84ojJY6/TFQokbGjP/sO5M=
