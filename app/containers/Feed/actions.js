@@ -54,7 +54,6 @@ export function fetchFeeds(currentpage) {
         DevSummitAxios.get(`/api/v1/feeds?page=${currentpage}`, { headers: { Authorization: token } })
           .then((response) => {
             const payloads = response.data.data;
-            console.log("PAYLOADS", payloads)
 
             dispatch({ type: FETCH_FEEDS, payloads });
 

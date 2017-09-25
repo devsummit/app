@@ -252,7 +252,7 @@ class Feed extends Component {
                                 <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                 <Body>
                                   <Text>{item.user.username}</Text>
-                                  <Text note>{item.created_at}</Text>
+                                  <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                                 </Body>
                               </Left>
                             </CardItem>
