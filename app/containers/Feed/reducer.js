@@ -7,7 +7,8 @@ import {
   UPDATE_IMAGE,
   UPDATE_TEXT,
   CLEAR_TEXT_FIELD,
-  CLEAR_IMAGE
+  CLEAR_IMAGE,
+  UPDATE_CURRENT_PAGE
 } from './constants';
 
 const initialState = fromJS({
@@ -15,7 +16,8 @@ const initialState = fromJS({
   image: {},
   message: '',
   isFetching: false,
-  isPosting: false
+  isPosting: false,
+  currentPage: 1
 });
 
 function feedReducer(state = initialState, action) {
@@ -45,6 +47,9 @@ function feedReducer(state = initialState, action) {
 
     case CLEAR_IMAGE:
       return state.set('image', fromJS({}));
+
+    case UPDATE_CURRENT_PAGE:
+      return state.set('currentPage', action.value);
 
     default:
       return state;
