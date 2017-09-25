@@ -99,8 +99,8 @@ class OrderDetail extends Component {
 
   capitalizeEachWord = (str) => {
     const lower = str.toLowerCase();
-    return lower.replace(/(^| )(\w)/g, (word) => {
-      return word.toUpperCase();
+    return lower.replace(/(^| )(\w)/g, (words) => {
+      return words.toUpperCase();
     });
   }
 
