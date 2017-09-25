@@ -30,8 +30,8 @@ platform :android do
     gradle(task: "assembleRelease")
     crashlytics(
       groups: "tester",
-      api_token: "0358cc3a86e3b2a8ceb8963ddb2a20d34e55431934c718f067fe465d0442efcf",
-      build_secret: "91389a8adc10be8228360a1dc3fa758f2c2ff159")
+      build_secret: "0358cc3a86e3b2a8ceb8963ddb2a20d34e55431934c718f067fe465d0442efcf",
+      api_token: "91389a8adc10be8228360a1dc3fa758f2c2ff159")
 
     # sh "your_script.sh"
     # You can also use other beta testing services here
