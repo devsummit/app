@@ -3,12 +3,11 @@ import {
   Container,
   Content,
   Button,
-  Text,
   Card,
   CardItem,
   Body
 } from 'native-base';
-import { View, Image, Alert, Modal, TouchableHighlight, ScrollView } from 'react-native';
+import { View, Image, Text, Alert, Modal, TouchableHighlight, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -45,7 +44,7 @@ class BoothList extends Component {
               this.setModalVisible(true);
             }}
           >
-            <Text>Become booth</Text>
+            <Text style={{ color: '#FFF', fontSize: 16 }}>Become booth</Text>
           </Button>
           <View style={{ marginTop: 22 }}>
             <Modal
@@ -57,18 +56,20 @@ class BoothList extends Component {
               <ScrollView>
                 <View style={{ marginTop: 22, marginLeft: 22, marginRight: 22, marginBottom: 22 }}>
                   <View>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>This is how to become booth : </Text>
-                    <Text />
-                    <Text />
-                    <Text>1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-                    <Text />
-                    <Text>2. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-                    <Text />
-                    <Text>3. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-                    <Text />
-                    <Text>4. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-                    <Text />
-                    <Text>5. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
+                    <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>How to become booth</Text>
+                    <View style={{ alignItems: 'center', marginTop: 20 }}>
+                      <Text style={{ fontSize: 16 }}>
+                        Dengan mendaftar, Anda berhak mendapat satu petak eksekutif untuk menampilkan layanan Anda pada 4000 pengunjung Devsummit.{'\n'}
+                        Temukan cara mendaftar sebagai booth di narahubung:
+                      </Text>
+                      <View style={{ margin: 20 }}>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Fajar Adityo</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
+                      </View>
+                      <Text style={{ fontSize: 16 }}>
+                        Apabila Anda sudah terdaftar, silahkan masukkan kode booth.{'\n'}
+                      </Text>
+                    </View>
                     <View style={styles.redeem}>
                       <Redeem />
                     </View>
@@ -79,7 +80,7 @@ class BoothList extends Component {
                         this.setModalVisible(!this.state.modalVisible);
                       }}
                     >
-                      <Text>Hide</Text>
+                      <Text style={{ color: '#FFF' }}>Back</Text>
                     </Button>
                   </View>
                 </View>
