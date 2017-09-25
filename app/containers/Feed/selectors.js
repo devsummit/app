@@ -26,7 +26,7 @@ export const getIsPostingFeed = () => createSelector(
 
 export const getUpdateImage = () => createSelector(
   selectFeedReducer(),
-  state => state.get('image')
+  state => state.get('image').toJS()
 );
 
 export const getUpdateText = () => createSelector(

@@ -35,7 +35,7 @@ function feedReducer(state = initialState, action) {
       return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]));
 
     case UPDATE_IMAGE:
-      return state.set('image', action.image);
+      return state.set('image', fromJS(action.image));
 
     case UPDATE_TEXT:
       return state.set('message', action.value);
@@ -44,7 +44,7 @@ function feedReducer(state = initialState, action) {
       return state.set('message', '');
 
     case CLEAR_IMAGE:
-      return state.set('image', {});
+      return state.set('image', fromJS({}));
 
     default:
       return state;

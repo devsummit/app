@@ -21,7 +21,8 @@ import {
 } from 'native-base';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
-import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ActivityIndicator } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
+import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ActivityIndicator } from 'react-native';develop
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -29,6 +30,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
+import CloseIcon from 'react-native-vector-icons/Ionicons';
 import 'moment/locale/pt-br';
 import styles from './styles';
 import HeaderPoint from '../../components/Header';
@@ -122,13 +124,15 @@ const mapStateToProps = () => createStructuredSelector({
 class Feed extends React.Component {
   constructor(props) {
     super(props);
-    subscribeToFeeds((err, data) => this.props.updateFeeds(data));
     console.ignoredYellowBox = ['Setting a timer'];
+    subscribeToFeeds((err, data) => this.props.updateFeeds(data));
   }
 
   state = {
     name: '',
-    profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg'
+    profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
+    modalVisible: false,
+    imagePreview: ''
   };
 
   componentWillMount() {
@@ -141,6 +145,10 @@ class Feed extends React.Component {
         const url = data.photos[0].url;
         this.setState({ name, profileUrl: url });
       });
+  }
+
+  setModalVisible = (visible, image) => {
+    this.setState({ modalVisible: visible, imagePreview: image });
   }
 
   postFeed = () => {
@@ -167,6 +175,7 @@ class Feed extends React.Component {
   _keyExtractor = (item, index) => item.id;
 
   render() {
+    console.log("this state modal", this.state.modalVisible)
     return (
       <Container
         style={styles.container}
@@ -199,6 +208,13 @@ class Feed extends React.Component {
                   </Body>
                 </CardItem>
 
+                {
+                  this.props.imagesData && (this.props.imagesData.path || this.props.imagesData.sourceURL) &&
+                  <CardItem cardBody>
+                    <Image source={{uri: (this.props.imagesData.path || this.props.imagesData.sourceURL)}} style={{height: 200, width: null, flex: 1}}/>
+                  </CardItem>
+                }
+
                 <CardItem>
                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <TouchableOpacity onPress={() => this.uploadImage(this)}>
@@ -221,37 +237,43 @@ class Feed extends React.Component {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
                     : this.props.feeds &&
-                    <View>
-                      <FlatList
-                        keyExtractor={this.keyExtractor}
-                        data={this.props.feeds}
-                        renderItem={({ item }) => (
-                          <Card style={{ flex: 0 }}>
-                            <CardItem>
-                              <Left>
-                                <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
-                                <Body>
-                                  <Text>{item.user.username}</Text>
-                                  <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
-                                  <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
-                                  <Text>
-                                    {item.message}
-                                  </Text>
-                                </Body>
-                              </Left>
-                            </CardItem>
-                            <CardItem>
-                              <Left>
-                                <Button transparent textStyle={{ color: '#87838B' }}>
-                                  <Icon name="share" />
-                                  <Text>Share</Text>
-                                </Button>
-                              </Left>
-                            </CardItem>
-                          </Card>
-                        )}
-                      />
-                    </View>
+                    <FlatList
+                      keyExtractor={this._keyExtractor}
+                      data={this.props.feeds}
+                      renderItem={({ item }) => (
+                        <Card style={{ flex: 0 }}>
+                          <CardItem>
+                            <Left>
+                              <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                              <Body>
+                                <Text>{item.user.username}</Text>
+                                <Text note>{item.created_at}</Text>
+                              </Body>
+                            </Left>
+                          </CardItem>
+
+                          <CardItem>
+                            <Body>
+                              <TouchableOpacity onPress={() => this.setModalVisible(true, item.attachment) }>
+                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, justifyContent: 'space-between' }} />
+                              </TouchableOpacity>
+                              <Text>
+                                {item.message}
+                              </Text>
+                            </Body>
+                          </CardItem>
+
+                          <CardItem>
+                            <Left>
+                              <Button transparent textStyle={{ color: '#87838B' }}>
+                                <Icon name="share" />
+                                <Text>Share</Text>
+                              </Button>
+                            </Left>
+                          </CardItem>
+                        </Card>
+                      )}
+                    />
                 }
               </Card>
             </Content>
@@ -267,6 +289,19 @@ class Feed extends React.Component {
         >
           <Icon name="bell" />
         </Fab>
+        <Modal
+          animationType={'fade'}
+          transparent
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+        >
+          <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808'}}>
+            <View style={{ flex: 1, margin: 10 }}>
+              <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
+            </View>
+          </View>
+
+        </Modal>
       </Container>
     );
   }
