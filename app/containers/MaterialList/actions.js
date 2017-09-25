@@ -9,6 +9,7 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_MODAL_STATUS,
   ADD_MATERIAL_ITEM,
+  UPDATE_FLAG_MATERIAL,
   IS_FETCHING_MATERIAL,
   DELETE_MATERIAL_LIST
 } from './constants';
@@ -32,6 +33,15 @@ export function updateModalStatus(status) {
   return {
     type: UPDATE_MODAL_STATUS,
     status
+  };
+}
+
+export function updateFlagMaterial(key, field, value) {
+  return {
+    type: UPDATE_FLAG_MATERIAL,
+    key,
+    field,
+    value
   };
 }
 
@@ -59,6 +69,28 @@ export function fetchMaterialList() {
           .catch((err) => {
             // maybe we can put toast here later
           });
+      });
+  };
+}
+
+export function updateStatus(data, key) {
+  return (dispatch) => {
+
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.patch(`/api/v1/documents/${data.id}`, {
+          title: data.title,
+          summary: data.summary,
+          is_used: !data.is_used
+        }, {
+          headers: {
+            Authorization: token
+          }
+        }).then((response) => {
+          if (response && response.data && response.data.meta.success) {
+            dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
+          }
+        }).catch((error) => { console.log(error); });
       });
   };
 }

@@ -20,6 +20,7 @@ import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
+import FlagMaterial from './FlagMaterial';
 import HeaderPoint from '../../components/Header';
 import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
@@ -87,8 +88,7 @@ class MaterialList extends Component {
 
 
   render() {
-
-    const { material } = this.props;
+    const { material, inputFields } = this.props;
 
     return (
       <Container>
@@ -100,7 +100,7 @@ class MaterialList extends Component {
               : (
                   material && material.length > 0 ?
                     <Content>
-                    {material.map(data => (
+                    {material.map((data, key) => (
                       <Card key={data.id}>
                         <CardItem>
                           <Body>
@@ -118,10 +118,19 @@ class MaterialList extends Component {
                                     <Icon name="remove" color="red" style={styles.icon} />
                                   </TouchableOpacity>
                                 </View>
-                                <Text style={styles.title}>{data.title}</Text>
-                                <Text numberOfLines={3} style={styles.summary}>
-                                  {data.summary}
-                                </Text>
+                                <View style={{flex: 1, flexDirection: 'row' }}>
+                                  <View style={{flex: 1}}>
+                                    <Text style={styles.title}>{data.title}</Text>
+                                    <Text numberOfLines={3} style={styles.summary}>
+                                      {data.summary}
+                                    </Text>
+                                  </View>
+                                  <FlagMaterial
+                                    onPress={() => this.props.updateStatus(data, key)}
+                                    isUsed={data.is_used}
+                                    id={data.id}
+                                  />
+                                </View>
                                 <View style={styles.materialUrl}>
                                   <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
                                 </View>
