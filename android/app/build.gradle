@@ -175,6 +175,7 @@ android {
 }
 
 dependencies {
+  compile project(':react-native-share')
   compile project(':react-native-fcm')
   compile project(':react-native-code-push')
   compile project(':react-native-document-picker')
