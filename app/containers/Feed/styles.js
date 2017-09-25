@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   icon: {
-    marginRight: 10
+    marginRight: 10,
+    fontSize: 20
   },
   item: {
     flex: 1,
@@ -56,18 +57,15 @@ const styles = StyleSheet.create({
     marginTop: -50,
   },
   tabHeading: {
-      backgroundColor: 'transparent'
+    backgroundColor: 'transparent'
   },
   tabTitle: {
-      fontSize: 16,
-      color: "#FFF"
+    fontSize: 16,
+    color: "#FFF"
   },
   tabBarSelectedItemStyle: {
-      borderBottomWidth: 2,
-      borderBottomColor: 'red',
-  },
-  icon: {
-    fontSize: 20
+    borderBottomWidth: 2,
+    borderBottomColor: 'red',
   }
 });
 

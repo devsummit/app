@@ -122,7 +122,7 @@ const mapStateToProps = () => createStructuredSelector({
 });
 
 
-class Feed extends React.Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
     console.ignoredYellowBox = ['Setting a timer'];
@@ -133,11 +133,11 @@ class Feed extends React.Component {
     name: '',
     profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
     modalVisible: false,
-    imagePreview: ''
+    imagePreview: '',
+    refreshing: false
   };
 
   componentWillMount() {
-    console.log("CURRENT PAGE", this.props.currentPage);
     this.props.fetchFeeds(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data')
@@ -175,13 +175,12 @@ class Feed extends React.Component {
   }
 
   fetchNextFeeds = () => {
-    console.log("HERE");
+    this.props.fetchPageWithPaginate(this.props.currentPage);
   }
 
   _keyExtractor = (item, index) => item.id;
 
   render() {
-    console.log("this state modal", this.state.modalVisible)
     return (
       <Container
         style={styles.container}
@@ -243,45 +242,54 @@ class Feed extends React.Component {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
                     : this.props.feeds &&
-                    <FlatList
-                      keyExtractor={this._keyExtractor}
-                      data={this.props.feeds}
-                      onEndReached={() => this.fetchNextFeeds()}
-                      onEndReachedThreshold={1}
-                      renderItem={({ item }) => (
-                        <Card style={{ flex: 0 }}>
-                          <CardItem>
-                            <Left>
-                              <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
-                              <Body>
-                                <Text>{item.user.username}</Text>
-                                <Text note>{item.created_at}</Text>
-                              </Body>
-                            </Left>
-                          </CardItem>
+                    <View>
+                      <FlatList
+                        keyExtractor={this._keyExtractor}
+                        data={this.props.feeds}
+                        renderItem={({ item }) => (
+                          <Card style={{ flex: 0 }}>
+                            <CardItem>
+                              <Left>
+                                <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                <Body>
+                                  <Text>{item.user.username}</Text>
+                                  <Text note>{item.created_at}</Text>
+                                </Body>
+                              </Left>
+                            </CardItem>
 
+                            <CardItem>
+                              <Body>
+                                <TouchableOpacity onPress={() => this.setModalVisible(true, item.attachment) }>
+                                  <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, justifyContent: 'space-between' }} />
+                                </TouchableOpacity>
+                                <Text>
+                                  {item.message}
+                                </Text>
+                              </Body>
+                            </CardItem>
+
+                            <CardItem>
+                              <Left>
+                                <Button transparent textStyle={{ color: '#87838B' }}>
+                                  <Icon name="share" />
+                                  <Text>Share</Text>
+                                </Button>
+                              </Left>
+                            </CardItem>
+                          </Card>
+                        )}
+                      />
+                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                        <Card>
                           <CardItem>
-                            <Body>
-                              <TouchableOpacity onPress={() => this.setModalVisible(true, item.attachment) }>
-                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, justifyContent: 'space-between' }} />
-                              </TouchableOpacity>
-                              <Text>
-                                {item.message}
-                              </Text>
+                            <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                              <Text style={{ color: '#42A5F5' }}>Show more Feeds</Text>
                             </Body>
                           </CardItem>
-
-                          <CardItem>
-                            <Left>
-                              <Button transparent textStyle={{ color: '#87838B' }}>
-                                <Icon name="share" />
-                                <Text>Share</Text>
-                              </Button>
-                            </Left>
-                          </CardItem>
                         </Card>
-                      )}
-                    />
+                      </TouchableOpacity>
+                    </View>
                 }
               </Card>
             </Content>
