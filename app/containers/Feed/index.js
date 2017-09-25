@@ -19,7 +19,7 @@ import {
   Input,
   Spinner
 } from 'native-base';
-import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { RefreshControl, View, FlatList, Image, TouchableOpacity, Modal, AsyncStorage, TouchableHighlight, ActivityIndicator } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -245,8 +245,12 @@ class Feed extends React.Component {
                             <Left>
                               <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                               <Body>
+                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
+                                <Text>
+                                  {item.message}
+                                </Text>
                                 <Text>{item.user.username}</Text>
-                                <Text note>{item.created_at}</Text>
+                                <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                               </Body>
                             </Left>
                           </CardItem>
