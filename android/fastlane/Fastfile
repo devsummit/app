@@ -31,7 +31,10 @@ platform :android do
     crashlytics(
       groups: "tester",
       build_secret: "0358cc3a86e3b2a8ceb8963ddb2a20d34e55431934c718f067fe465d0442efcf",
-      api_token: "91389a8adc10be8228360a1dc3fa758f2c2ff159")
+      api_token: "91389a8adc10be8228360a1dc3fa758f2c2ff159"
+      notes: prompt("Changelog: ")
+    )
+
 
     # sh "your_script.sh"
     # You can also use other beta testing services here
