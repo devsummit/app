@@ -18,12 +18,12 @@ import {
   Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View } from 'react-native';
+import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
-import { PRIMARYCOLOR } from '../../constants';
+import { PRIMARYCOLOR, MERCHANT_CODE } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
@@ -34,9 +34,12 @@ let total = 0;
 class OrderDetail extends Component {
   constructor(props) {
     super(props);
+    this.setModalVisible = this.setModalVisible.bind(this);
     this.state = {
       status: '',
-      color: ''
+      color: '',
+      modalVisible: false,
+      scalesPageToFit: true
     };
   }
 
@@ -54,6 +57,10 @@ class OrderDetail extends Component {
         color: stat.color
       });
     }
+  }
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
   }
 
   getTotal = () => {
@@ -97,6 +104,32 @@ class OrderDetail extends Component {
     );
   }
 
+  checkPaymentType = () => {
+    if (this.props.order.included.payment !== null && this.props.order.included.payment.payment_type === 'bca_klikbca' && this.props.order.included.payment.payment_type !== null && this.props.order.included.payment.va_number !== null) {
+      return (
+        <View>
+          <TouchableOpacity onPress={() => this.setModalVisible(true)} >
+            <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
+              {this.props.order.included.payment.va_number}
+            </Text>
+          </TouchableOpacity>
+          <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
+            Including this code : {MERCHANT_CODE}
+          </Text>
+        </View>
+      );
+    } else if (this.props.order.included.payment !== null && this.props.order.included.payment.payment_type !== null && this.props.order.included.payment.va_number !== null) {
+      return (
+        <TouchableOpacity onPress={() => this.setModalVisible(true)} >
+          <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
+            {this.props.order.included.payment.va_number}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+    return (<View />)
+  }
+
   capitalizeEachWord = (str) => {
     const lower = str.toLowerCase();
     return lower.replace(/(^| )(\w)/g, (words) => {
@@ -106,9 +139,11 @@ class OrderDetail extends Component {
 
   render() {
     const { order, orderId } = this.props;
+    const { included } = order || {};
+    const { payment} = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-    console.log('ORDERRR', order);
+    const WEBVIEW_REF = 'webview';
     if (isUpdating || isConfirming ||
       (Object.keys(order).length === 0 && order.constructor === Object)) {
       return (
@@ -204,14 +239,14 @@ class OrderDetail extends Component {
             </CardItem>
           </Card>
 
-          {order.included.payment ?
+          {order.included.payment && order.included.payment.payment_type !== 'cstore' && this.state.status !== 'paid' ?
             <Card>
               <CardItem>
                 <Body>
                   <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening { this.capitalizeEachWord(order.included.payment.payment_type.split('_').join(' ')) } dari Veritrans: </Text>
-                  <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
-                    {order.included.payment.va_number}
-                  </Text>
+
+                  {this.checkPaymentType()}
+
                   <Text>Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka antrian akan otomatis dibatalkan.</Text>
                 </Body>
               </CardItem>
@@ -251,6 +286,32 @@ class OrderDetail extends Component {
               <Text style={styles.buttonText}>CONFIRM</Text>
             </Button> : <View />
           }
+          <Modal
+            animationType={'slide'}
+            visible={this.state.modalVisible}
+          >
+            <View style={{ flex: 1 }}>
+              <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
+                <TouchableOpacity onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+                >
+                  <Icon name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
+                </TouchableOpacity>
+              </View>
+              <WebView
+                automaticallyAdjustContentInsets={false}
+                source={{ uri: payment.va_number || '' }}
+                style={{ marginTop: 20 }}
+                scalesPageToFit={this.state.scalesPageToFit}
+                ref={WEBVIEW_REF}
+                decelerationRate="normal"
+                javaScriptEnabled
+                domStorageEnabled
+                startInLoadingState
+              />
+            </View>
+          </Modal>
         </Content>
       </Container >
     );
