@@ -8,9 +8,10 @@ before_script:
 script:
 - cp config/development.js config/local.js
 - npm install
+- docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android yarn
 after_script:
 - if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
-  android && fastlane android beta
+  docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta"
   ;fi
 env:
   global:
