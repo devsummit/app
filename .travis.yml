@@ -3,7 +3,6 @@ node_js:
 - 8
 script:
 - cp config/development.js config/local.js
-- npm install
 - docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android yarn
 after_script:
 - if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
