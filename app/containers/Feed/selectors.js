@@ -33,3 +33,8 @@ export const getUpdateText = () => createSelector(
   selectFeedReducer(),
   state => state.get('message')
 );
+
+export const getCurrentPage = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('currentPage')
+);

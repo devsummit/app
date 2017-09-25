@@ -7,3 +7,4 @@ export const UPDATE_TEXT = 'app/containers/Feed/UPDATE_TEXT';
 export const CLEAR_TEXT_FIELD = 'app/containers/Feed/CLEAR_TEXT_FIELD';
 export const UPDATE_FEEDS = 'app/containers/Feed/UPDATE_FEEDS';
 export const CLEAR_IMAGE = 'app/containers/Feed/CLEAR_IMAGE';
+export const UPDATE_CURRENT_PAGE = 'app/containers/Feed/UPDATE_CURRENT_PAGE';
