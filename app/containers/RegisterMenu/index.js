@@ -36,8 +36,8 @@ class RegisterMenu extends Component {
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
+          <AuthLogo style={styles.logo} />
           <Content>
-            <AuthLogo style={styles.logo}/>
             <Button
               warning
               block

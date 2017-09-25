@@ -19,7 +19,7 @@ import {
   Input,
   Spinner
 } from 'native-base';
-import { RefreshControl, View, FlatList, Image, TouchableOpacity, Modal, AsyncStorage, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ActivityIndicator, Modal } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
