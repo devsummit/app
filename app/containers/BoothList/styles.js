@@ -13,6 +13,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: -25
   },
+  btnModal: {
+    alignSelf: 'center',
+    borderRadius: 20,
+    width: '70%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    justifyContent: 'center',
+    marginTop: 10
+  },
   content: {
     marginTop: 20,
     marginHorizontal: 10
