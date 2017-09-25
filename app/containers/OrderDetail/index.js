@@ -56,7 +56,6 @@ class OrderDetail extends Component {
     }
   }
 
-
   getTotal = () => {
     const order = this.props.order.data;
     const arraySub = order.map((item) => {
@@ -98,10 +97,18 @@ class OrderDetail extends Component {
     );
   }
 
+  capitalizeEachWord = (str) => {
+    const lower = str.toLowerCase();
+    return lower.replace(/(^| )(\w)/g, (word) => {
+      return word.toUpperCase();
+    });
+  }
+
   render() {
     const { order, orderId } = this.props;
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+    console.log('ORDERRR', order);
     if (isUpdating || isConfirming ||
       (Object.keys(order).length === 0 && order.constructor === Object)) {
       return (
@@ -201,7 +208,7 @@ class OrderDetail extends Component {
             <Card>
               <CardItem>
                 <Body>
-                  <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening Permata Virtual Account dari Veritrans: </Text>
+                  <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening { this.capitalizeEachWord(order.included.payment.payment_type.split('_').join(' ')) } dari Veritrans: </Text>
                   <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
                     {order.included.payment.va_number}
                   </Text>
