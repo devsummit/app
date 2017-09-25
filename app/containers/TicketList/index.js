@@ -57,7 +57,7 @@ class TicketList extends Component {
           return (
             <ListItem style={{ marginLeft: 9, marginRight: 9, padding: 10, marginBottom: 10, borderRadius: 3 }}>
               <Text style={styles.text}>Ticket No. {item.id}</Text>
-              <Button
+              {/* <Button
                 small
                 style={styles.button}
                 onPress={() => {
@@ -69,7 +69,7 @@ class TicketList extends Component {
                   name="exchange"
                   color="white"
                 />
-              </Button>
+              </Button> */}
             </ListItem>
           );
         }}
