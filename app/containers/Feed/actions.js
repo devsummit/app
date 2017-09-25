@@ -9,7 +9,9 @@ import {
   UPDATE_TEXT,
   UPDATE_FEEDS,
   CLEAR_TEXT_FIELD,
-  CLEAR_IMAGE
+  CLEAR_IMAGE,
+  UPDATE_CURRENT_PAGE,
+  LOAD_MORE_FEEDS
 } from './constants';
 
 import {
@@ -29,6 +31,12 @@ export function updateFeeds(payload) {
   }
 }
 
+export function updateCurrentPage(value) {
+  return {
+    type: UPDATE_CURRENT_PAGE,
+    value
+  };
+}
 
 export function isFetchingFeeds(status) {
   return {
@@ -37,17 +45,19 @@ export function isFetchingFeeds(status) {
   };
 }
 
-export function fetchFeeds() {
+export function fetchFeeds(currentpage) {
   return (dispatch) => {
     dispatch(isFetchingFeeds(true));
 
     getAccessToken()
       .then((token) => {
-        DevSummitAxios.get('/api/v1/feeds', { headers: { Authorization: token } })
+        DevSummitAxios.get(`/api/v1/feeds?page=${currentpage}`, { headers: { Authorization: token } })
           .then((response) => {
             const payloads = response.data.data;
 
             dispatch({ type: FETCH_FEEDS, payloads });
+
+            dispatch(updateCurrentPage(currentpage + 1));
 
             dispatch(isFetchingFeeds(false));
           })
@@ -57,6 +67,25 @@ export function fetchFeeds() {
           });
       });
   };
+}
+
+export function fetchPageWithPaginate(page) {
+  return (dispatch) => {
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.get(`/api/v1/feeds?page=${page}`, { headers: { Authorization: token } })
+          .then((response) => {
+            const payloads = response.data.data;
+
+            dispatch({ type: LOAD_MORE_FEEDS, payloads });
+
+            dispatch(updateCurrentPage(page + 1));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+  }
 }
 
 export function isPostFeeds(status) {
@@ -94,7 +123,6 @@ export function postFeeds(image, text) {
 
         DevSummitAxios.post('api/v1/feeds', form, { headers })
           .then((res) => {
-
             dispatch({ type: CLEAR_TEXT_FIELD, res });
             dispatch({ type: CLEAR_IMAGE, res });
             dispatch(isPostFeeds(false));

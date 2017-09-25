@@ -19,7 +19,16 @@ import {
   Input,
   Spinner
 } from 'native-base';
-import { RefreshControl, View, FlatList, Image, TouchableOpacity, AsyncStorage, TouchableHighlight, ActivityIndicator, Modal } from 'react-native';
+import {
+  RefreshControl,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  AsyncStorage,
+  ActivityIndicator,
+  Modal
+} from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -29,7 +38,6 @@ import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
-import CloseIcon from 'react-native-vector-icons/Ionicons';
 import 'moment/locale/pt-br';
 import styles from './styles';
 import HeaderPoint from '../../components/Header';
@@ -53,60 +61,53 @@ const dateTime = `${date} ${time}`;
 
 function timeDifference(current, previous) {
 
-      var msPerMinute = 60 * 1000;
-      var msPerHour = msPerMinute * 60;
-      var msPerDay = msPerHour * 24;
-      var msPerMonth = msPerDay * 30;
-      var msPerYear = msPerDay * 365;
+  let msPerMinute = 60 * 1000;
+  let msPerHour = msPerMinute * 60;
+  let msPerDay = msPerHour * 24;
+  let msPerMonth = msPerDay * 30;
+  let msPerYear = msPerDay * 365;
 
-      var elapsed = current - previous;
+  let elapsed = current - previous;
 
-      if (elapsed < msPerMinute) {
-           return 'few seconds ago';
-      }
-
-      else if (elapsed < msPerHour) {
-           return Math.round(elapsed/msPerMinute) + ' minutes ago';
-      }
-
-      else if (elapsed < msPerDay ) {
-           return Math.round(elapsed/msPerHour ) + ' hours ago';
-      }
-
-      else if (elapsed < msPerMonth) {
-        if ((previous.getMonth() + 1) === 1) {
-          return `${previous.getDate()} Jan`;
-        } else if ((previous.getMonth() + 1) === 2) {
-          return `${previous.getDate()} Feb`;
-        } else if ((previous.getMonth() + 1) === 3) {
-          return `${previous.getDate()} Mar`;
-        } else if ((previous.getMonth() + 1) === 4) {
-          return `${previous.getDate()} Apr`;
-        } else if ((previous.getMonth() + 1) === 5) {
-          return `${previous.getDate()} May`;
-        } else if ((previous.getMonth() + 1) === 6) {
-          return `${previous.getDate()} Jun`;
-        } else if ((previous.getMonth() + 1) === 7) {
-          return `${previous.getDate()} Jul`;
-        } else if ((previous.getMonth() + 1) === 8) {
-          return `${previous.getDate()} Aug`;
-        } else if ((previous.getMonth() + 1) === 9) {
-          return `${previous.getDate()} Sep`;
-        } else if ((previous.getMonth() + 1) === 10) {
-          return `${previous.getDate()} Oct`;
-        } else if ((previous.getMonth() + 1) === 11) {
-          return `${previous.getDate()} Nov`;
-        } else if ((previous.getMonth() + 1) === 12) {
-          return `${previous.getDate()} Dec`;
-        }
-      }
-
+  if (elapsed < msPerMinute) {
+    return 'few seconds ago';
+  } else if (elapsed < msPerHour) {
+    return Math.round(elapsed/msPerMinute) + ' minutes ago';
+  } else if (elapsed < msPerDay ) {
+    return Math.round(elapsed/msPerHour ) + ' hours ago';
+  } else if (elapsed < msPerMonth) {
+    if ((previous.getMonth() + 1) === 1) {
+      return `${previous.getDate()} Jan`;
+    } else if ((previous.getMonth() + 1) === 2) {
+      return `${previous.getDate()} Feb`;
+    } else if ((previous.getMonth() + 1) === 3) {
+      return `${previous.getDate()} Mar`;
+    } else if ((previous.getMonth() + 1) === 4) {
+      return `${previous.getDate()} Apr`;
+    } else if ((previous.getMonth() + 1) === 5) {
+      return `${previous.getDate()} May`;
+    } else if ((previous.getMonth() + 1) === 6) {
+      return `${previous.getDate()} Jun`;
+    } else if ((previous.getMonth() + 1) === 7) {
+      return `${previous.getDate()} Jul`;
+    } else if ((previous.getMonth() + 1) === 8) {
+      return `${previous.getDate()} Aug`;
+    } else if ((previous.getMonth() + 1) === 9) {
+      return `${previous.getDate()} Sep`;
+    } else if ((previous.getMonth() + 1) === 10) {
+      return `${previous.getDate()} Oct`;
+    } else if ((previous.getMonth() + 1) === 11) {
+      return `${previous.getDate()} Nov`;
+    } else if ((previous.getMonth() + 1) === 12) {
+      return `${previous.getDate()} Dec`;
+    }
   }
+}
 
-  String.prototype.toDateFromDatetime = function() {
-    var parts = this.split(/[- :]/);
-    return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
-  };
+String.prototype.toDateFromDatetime = function() {
+  var parts = this.split(/[- :]/);
+  return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+};
 
 /**
  * Map redux state to component props
@@ -116,11 +117,12 @@ const mapStateToProps = () => createStructuredSelector({
   feeds: selectors.getFetchFeeds(),
   isPosting: selectors.getIsPostingFeed(),
   imagesData: selectors.getUpdateImage(),
-  textData: selectors.getUpdateText()
+  textData: selectors.getUpdateText(),
+  currentPage: selectors.getCurrentPage()
 });
 
 
-class Feed extends React.Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -139,7 +141,7 @@ class Feed extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchFeeds();
+    this.props.fetchFeeds(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data')
       .then((profile) => {
@@ -175,8 +177,12 @@ class Feed extends React.Component {
     this.props.updateText(value);
   }
 
+  fetchNextFeeds = () => {
+    this.props.fetchPageWithPaginate(this.props.currentPage);
+  }
+
   _keyExtractor = (item, index) => item.id;
-  
+
   onCancel = () => {
     this.setState({visible: false});
   }
@@ -190,7 +196,7 @@ class Feed extends React.Component {
     this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { message: _message }) });
     this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
   }
-  
+
   render() {
     return (
       <Container
@@ -253,30 +259,49 @@ class Feed extends React.Component {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
                     : this.props.feeds &&
-                    <FlatList
-                      keyExtractor={this._keyExtractor}
-                      data={this.props.feeds}
-                      renderItem={({ item }) => (
-                        <Card style={{ flex: 0 }}>
-                          <CardItem>
-                            <Left>
-                              <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
-                              <Body>
-                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, flex: 1 }} />
-                                <Text>{item.user.username}</Text>
-                                <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
-                              </Body>
-                            </Left>
-                          </CardItem>
+                    <View>
+                      <FlatList
+                        keyExtractor={this._keyExtractor}
+                        data={this.props.feeds}
+                        renderItem={({ item }) => (
+                          <Card style={{ flex: 0 }}>
+                            <CardItem>
+                              <Left>
+                                <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                <Body>
+                                  <Text>{item.user.username}</Text>
+                                  <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
+                                </Body>
+                              </Left>
+                            </CardItem>
 
+                            <CardItem>
+                              <Body>
+                                <TouchableOpacity onPress={() => this.setModalVisible(true, item.attachment) }>
+                                  <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, justifyContent: 'space-between' }} />
+                                </TouchableOpacity>
+                                <Text>
+                                  {item.message}
+                                </Text>
+                              </Body>
+                            </CardItem>
+
+                            <CardItem>
+                              <Left>
+                                <Button transparent textStyle={{ color: '#87838B' }}>
+                                  <Icon name="share" />
+                                  <Text style={{ marginLeft: 8 }}>Share</Text>
+                                </Button>
+                              </Left>
+                            </CardItem>
+                          </Card>
+                        )}
+                      />
+                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                        <Card>
                           <CardItem>
-                            <Body>
-                              <TouchableOpacity onPress={() => this.setModalVisible(true, item.attachment) }>
-                                <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, justifyContent: 'space-between' }} />
-                              </TouchableOpacity>
-                              <Text>
-                                {item.message}
-                              </Text>
+                            <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                              <Text style={{ color: '#42A5F5' }}>Show more Feeds</Text>
                             </Body>
                           </CardItem>
 
@@ -289,8 +314,8 @@ class Feed extends React.Component {
                             </Left>
                           </CardItem>
                         </Card>
-                      )}
-                    />
+                      </TouchableOpacity>
+                    </View>
                 }
               </Card>
             </Content>

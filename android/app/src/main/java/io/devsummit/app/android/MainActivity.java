@@ -1,9 +1,8 @@
-package com.devsummit;
+package io.devsummit.app.android;
 
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
