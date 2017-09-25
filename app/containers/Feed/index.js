@@ -133,8 +133,7 @@ class Feed extends Component {
     name: '',
     profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
     modalVisible: false,
-    imagePreview: '',
-    refreshing: false
+    imagePreview: ''
   };
 
   componentWillMount() {
