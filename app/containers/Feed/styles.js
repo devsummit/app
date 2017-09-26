@@ -70,6 +70,10 @@ const styles = StyleSheet.create({
   buttonShare: {
     fontSize: 12,
     color: '#0000ff'
+  },
+  textOption: {
+    fontSize: 18,
+    marginBottom: 30
   }
 });
 
