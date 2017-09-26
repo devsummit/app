@@ -15,7 +15,7 @@ import schedule from './Schedule';
 import settings from './Settings';
 import speaker from './Speaker';
 
-const id = {
+const en = {
   global,
   attendeeList,
   booth,
@@ -34,4 +34,4 @@ const id = {
   speaker
 };
 
-export default id;
+export default en;
