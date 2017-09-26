@@ -23,6 +23,7 @@ import { createStructuredSelector } from 'reselect';
 import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
 import HeaderPoint from '../../components/Header';
+import strings from '../../localization';
 import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
 import * as selectors from './selectors';
@@ -60,7 +61,7 @@ class Notification extends Component {
     };
     return (
       <Container style={styles.container}>
-        <HeaderPoint title='NOTIFICATION' />
+        <HeaderPoint title={strings.notification.title} />
         <View style={styles.view}>
           {
             notifications && notifications.length > 0 ?
@@ -108,9 +109,9 @@ class Notification extends Component {
               this.props.isFetching
                 ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
                 :
-                <View style={{ flex: 1, height: ScreenHeight, backgroundColor: PRIMARYCOLOR, alignItems:'center', justifyContent:'center'}}>
+                <View style={{ flex: 1, height: ScreenHeight, backgroundColor: PRIMARYCOLOR, alignItems: 'center', justifyContent: 'center'}}>
                   <Icon name={'bell-slash-o'} color={'#fff'} style={styles.icon} />
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}> NO NOTIFICATIONS </Text>
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>{strings.notification.noNotification}</Text>
                 </View>
           }
 
