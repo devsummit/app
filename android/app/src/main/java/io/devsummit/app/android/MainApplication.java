@@ -14,8 +14,8 @@ import com.evollu.react.fcm.FIRMessagingPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
 
-import io.devsummit.BuildConfig;
-import io.devsummit.R;
+import io.devsummit.app.android.BuildConfig;
+import io.devsummit.app.android.R;
 import io.fullstack.oauth.OAuthManagerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
