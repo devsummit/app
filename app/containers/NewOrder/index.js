@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import strings from '../../localization';
 import Button from '../../components/Button';
 import InputItem from '../../components/InputItem';
 import styles from './styles';
@@ -115,7 +116,7 @@ class NewOrder extends Component {
 
           <Card>
             <CardItem style={{ flex: 1 }}>
-              <Text style={{ flex: 1 }}>Total price: </Text>
+              <Text style={{ flex: 1 }}>{strings.order.total}</Text>
               <Text style={{ textAlign: 'right', flex: 1 }}>
                 Rp {Intl.NumberFormat('id').format(total)}
               </Text>
@@ -125,7 +126,7 @@ class NewOrder extends Component {
             <CardItem>
               <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: 'bold' }}>USE REFERAL CODE</Text>
+                  <Text style={{ fontWeight: 'bold' }}>{strings.order.useReferalCode}</Text>
                   <TouchableOpacity
                     style={styles.iconWrapper}
                     onPress={() => { this.toggleReferal(); }}
@@ -146,7 +147,7 @@ class NewOrder extends Component {
                       style={styles.orderBtn}
                       onPress={() => this.OnCheckReferal()}
                     >
-                      <Text style={{ textAlign: 'center' }}>CHECK REFERAL CODE</Text>
+                      <Text style={{ textAlign: 'center' }}>{strings.order.checkCode}</Text>
                     </Button>
                   </View>
                   : <View />
@@ -160,19 +161,19 @@ class NewOrder extends Component {
                 <Card>
                   <CardItem>
                     <View>
-                      <Text style={{ fontWeight: 'bold' }}>REFERAL INFO</Text>
-                      <Text>Referal Code :</Text>
+                      <Text style={{ fontWeight: 'bold' }}>{strings.order.referalInfo}</Text>
+                      <Text>{strings.order.referalCode}</Text>
                       <Text style={{ fontWeight: 'bold' }}>{referalInfo.referal_code}</Text>
-                      <Text>Owner :</Text>
+                      <Text>{strings.order.owner}</Text>
                       <Text style={{ fontWeight: 'bold' }}>{referalInfo.owner}</Text>
-                      <Text>Total Discount :</Text>
+                      <Text>{strings.order.totalDiscount}</Text>
                       <Text style={{ fontWeight: 'bold' }}>Rp {Intl.NumberFormat('id').format(referalInfo.discount_amount * total)}</Text>
                     </View>
                   </CardItem>
                 </Card>
                 <Card>
                   <CardItem style={{ flex: 1 }}>
-                    <Text style={{ flex: 1 }}>Total price after discount: </Text>
+                    <Text style={{ flex: 1 }}>{strings.order.totalAfterDiscount}</Text>
                     <Text style={{ textAlign: 'right', flex: 1 }}>
                       Rp {Intl.NumberFormat('id').format(total - (referalInfo.discount_amount * total))}
                     </Text>
@@ -185,7 +186,7 @@ class NewOrder extends Component {
             style={styles.orderBtn}
             onPress={() => { this.placeOrder(); }}
           >
-            <Text>Place Order</Text>
+            <Text>{strings.order.placeOrder}</Text>
           </Button>
 
         </Content>
