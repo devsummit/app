@@ -10,7 +10,6 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import io.underscope.react.fbak.RNAccountKitPackage;
-import com.evollu.react.fcm.FIRMessagingPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
 
@@ -56,7 +55,6 @@ public class MainApplication extends Application implements ReactApplication {
             new PickerPackage(),
             new FIRMessagingPackage(),
             new RNAccountKitPackage(),
-          new FIRMessagingPackage(),
           new ReactNativeDocumentPicker(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
           new VectorIconsPackage(),
