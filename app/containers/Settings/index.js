@@ -11,6 +11,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import strings from '../../localization';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import styles from './styles';
@@ -40,7 +41,7 @@ class Settings extends Component {
       <Container>
         <Content>
           <ScrollView>
-            <Header title="SETTINGS" />
+            <Header title={strings.settings.title} />
             <Content>
               <View style={styles.section2}>
                 <Button
@@ -49,7 +50,7 @@ class Settings extends Component {
                   style={styles.button}
                   onPress={() => Actions.profile()}
                 >
-                  <Text>Edit Profile</Text>
+                  <Text>{strings.settings.editProfile}</Text>
                 </Button>
                 {/* <Button
                 block
@@ -65,7 +66,7 @@ class Settings extends Component {
                   style={styles.button}
                   onPress={() => { this.setModalVisible(true); }}
                 >
-                  <Text>Code of Conduct</Text>
+                  <Text>{strings.settings.codeConduct}</Text>
                 </Button>
                 <Button
                   block
@@ -74,7 +75,7 @@ class Settings extends Component {
                   style={styles.button}
                   onPress={() => { this.props.logOut(); }}
                 >
-                  <Text>Log Out</Text>
+                  <Text>{strings.settings.logout}</Text>
                 </Button>
               </View>
               <View style={{ marginTop: 22 }}>
@@ -109,7 +110,7 @@ class Settings extends Component {
                             this.setModalVisible(!this.state.modalVisible);
                           }}
                         >
-                          <Text style={{ color: '#FFF' }}>Back</Text>
+                          <Text style={{ color: '#FFF' }}>{strings.global.back}</Text>
                         </Button>
                       </View>
                     </View>
