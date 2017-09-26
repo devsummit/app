@@ -19,4 +19,4 @@ export default {
   lastDigitsNumber: 'Last 10 digits',
   totalAmount: 'Total amount',
   submitPayment: 'Submit payment'
-}
+};
