@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import styles from './styles';
+import strings from '../../localization';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
@@ -63,7 +64,7 @@ class Payment extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <Text style={styles.littleText}>METHOD</Text>
+          <Text style={styles.littleText}>{strings.payment.method}</Text>
           <View style={styles.pickerWrapper}>
             <Picker
               style={styles.picker}
@@ -78,7 +79,7 @@ class Payment extends Component {
           </View>
           {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
             <View>
-              <Text style={styles.littleText}>BANK</Text>
+              <Text style={styles.littleText}>{strings.payment.bank}</Text>
               <View style={styles.pickerWrapper}>
                 <Picker
                   style={styles.picker}
@@ -104,7 +105,7 @@ class Payment extends Component {
             }}
           >
             <Text>
-              GO TO PAYMENT DETAIL
+              {strings.payment.goToPaymentDetail}
             </Text>
           </Button>
           {/* {
