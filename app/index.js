@@ -13,6 +13,7 @@ import reducers from './reducers';
 import styles from './styles';
 
 // Containers import
+import strings from './localization';
 import RegisterMenu from './containers/RegisterMenu';
 import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
@@ -37,6 +38,21 @@ import Notification from './containers/Notification';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
+
+const lang = strings.getInterfaceLanguage();
+let setlang;
+switch (lang) {
+  case 'in-ID':
+    setlang = 'id';
+    break;
+  case 'en-US':
+    setlang = 'en';
+    break;
+  default:
+    setlang = 'en';
+    break;
+}
+strings.setLanguage(setlang);
 
 /**
 *  Apply middlewares
