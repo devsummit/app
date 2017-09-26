@@ -124,11 +124,14 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: '',
+      postId: '',
       name: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       modalVisible: false,
       imagePreview: '',
       visible: false,
+      optionVisible: false,
       shareOptions: {
         message: '',
         url: ''
@@ -146,7 +149,8 @@ class Feed extends Component {
         const data = JSON.parse(profile);
         const name = data.first_name;
         const url = data.photos[0].url;
-        this.setState({ name, profileUrl: url });
+        const id = data.id;
+        this.setState({ name, profileUrl: url, userId: id });
       });
   }
 
@@ -182,13 +186,27 @@ class Feed extends Component {
   _keyExtractor = (item, index) => item.id;
 
   onCancel = () => {
-    this.setState({visible: false});
+    this.setState({ visible: false });
   }
 
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
     this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { message: _message }) });
     this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+  }
+
+  onOpenOption = (Id) => {
+    this.setState({ optionVisible: true });
+    this.setState({ postId: Id });
+    console.log('post id', this.state.userId);
+  }
+
+  onCancelOption = () => {
+    this.setState({ optionVisible: false });
+  }
+
+  removePost = () => {
+    console.log('post id', this.state.userid);
   }
 
   render() {
@@ -265,8 +283,11 @@ class Feed extends Component {
                                 <Body>
                                   <Text>{item.user.username}</Text>
                                   <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
-                                </Body>
+                                </Body>                          
                               </Left>
+                              <TouchableOpacity onPress={() => this.onOpenOption(item.user_id)}>
+                                <Icon name='dots-three-horizontal' />
+                              </TouchableOpacity>
                             </CardItem>
 
                             <CardItem>
@@ -326,7 +347,20 @@ class Feed extends Component {
                 >
                   Whatsapp
                 </Button>
-            </ShareSheet>
+              </ShareSheet>
+              <ShareSheet visible={this.state.optionVisible} onCancel={this.onCancelOption.bind(this)}>
+                { this.state.userId === this.state.postId ?
+                <Button onPress={() => this.removePost()}>
+                  <Icon name='erase' style={{ color: '#0000ff' }} />
+                  <Text style={{ fontSize: 12 }}>   Remove Post</Text>
+                </Button>
+                :
+                <Button>
+                  <Icon name='warning' style={{ color: '#0000ff' }} />
+                  <Text style={{ fontSize: 12 }}>   Report This Post</Text>
+                </Button>
+                }
+              </ShareSheet>
           </Tab>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
             <TicketList />
