@@ -62,6 +62,7 @@
 		9CE3941C1F7A20A40021C0F3 /* libGoogleToolboxForMac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE3941D1F7A20A40021C0F3 /* libGoogleToolboxForMac.a */; };
 		9CE394D21F7A25450021C0F3 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE394CF1F7A240F0021C0F3 /* libRNFIRMessaging.a */; };
 		9CE394D31F7A254A0021C0F3 /* libDCTAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE394D41F7A254A0021C0F3 /* libDCTAuth.a */; };
+		9CE395181F7A283B0021C0F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9CE394EE1F7A283A0021C0F3 /* GoogleService-Info.plist */; };
 		9CF18D5E1F713D8D009E4D56 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF18D5D1F713D8D009E4D56 /* AccountKit.framework */; };
 		A378F51888E3440F991E3C70 /* libRNAccountKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 548A0B7D4D4546CC8B295946 /* libRNAccountKit.a */; };
 		AB630825F164BE78F908A874 /* libPods-appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C040C13964CB860EFDE4110 /* libPods-appTests.a */; };
@@ -457,6 +458,7 @@
 		9CE3948B1F7A22550021C0F3 /* libDCTAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDCTAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CE394A41F7A240F0021C0F3 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
 		9CE394D41F7A254A0021C0F3 /* libDCTAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDCTAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CE394EE1F7A283A0021C0F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "app/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9CF18D5D1F713D8D009E4D56 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
 		9FE471EA53B245B08626FB55 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		AE94A86567B240ADB7F9F558 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 		13B07FAE1A68108700A75B9A /* app */ = {
 			isa = PBXGroup;
 			children = (
+				9CE394EE1F7A283A0021C0F3 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1442,6 +1445,7 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				D0F9086A74D44F0D9D750F3A /* Entypo.ttf in Resources */,
 				7AF98CA09C1B464CA096F784 /* EvilIcons.ttf in Resources */,
+				9CE395181F7A283B0021C0F3 /* GoogleService-Info.plist in Resources */,
 				1E0B2C69847849B799673B68 /* FontAwesome.ttf in Resources */,
 				9CBF8E481F75678700AFFF12 /* Default-568h@2x.png in Resources */,
 				B32C9E0832994B2C95B51EE0 /* Foundation.ttf in Resources */,

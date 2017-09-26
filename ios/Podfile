@@ -10,6 +10,7 @@ target 'app' do
   # Pods for app
     pod 'DCTAuth', :git => 'https://github.com/danielctull/DCTAuth.git'
     pod 'Fabric'
+    pod 'Firebase/Core'
     pod 'FirebaseMessaging'
     pod 'Crashlytics'
 
