@@ -26,6 +26,7 @@
     "react-native-icon-checkbox": "^1.2.0",
     "react-native-image-crop-picker": "^0.16.0",
     "react-native-linear-gradient": "^2.2.0",
+    "react-native-localization": "^0.1.32",
     "react-native-oauth": "^2.2.0",
     "react-native-photo-grid": "0.0.2",
     "react-native-router-flux": "^4.0.0-beta.15",
