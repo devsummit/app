@@ -20,6 +20,7 @@ import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
+import strings from '../../localization';
 import FlagMaterial from './FlagMaterial';
 import HeaderPoint from '../../components/Header';
 import ModalComponent from '../../components/ModalComponent';
@@ -65,15 +66,15 @@ class MaterialList extends Component {
   saveMaterialList = () => {
     this.props.saveMaterialList(this.props.inputFields);
     this.setState({ invisible: !this.state.invisible });
-    Toast.show('Saved');
+    Toast.show(strings.material.saved);
     this.setState({ fileName: '' });
   }
 
   showAlert = (id) => {
-    Alert.alert('Remove Material', 'Are you sure ?',
+    Alert.alert(strings.material.confirm, strings.material.remove,
       [
-        {text: 'Cancel'},
-        {text: 'OK', onPress: () => this.removeItem(id)}
+        {text: strings.global.cancel},
+        {text: strings.global.ok, onPress: () => this.removeItem(id)}
       ],
       {cancelable: false}
     );
@@ -81,7 +82,7 @@ class MaterialList extends Component {
 
   removeItem = (id) => {
     this.props.deleteMaterialList(id);
-    Toast.show('Deleted');
+    Toast.show(strings.material.deleted);
   }
 
   setModal = () => this.setState({ invisible: !this.state.invisible });
@@ -93,7 +94,7 @@ class MaterialList extends Component {
     return (
       <Container>
         <Content>
-          <HeaderPoint title="MATERIAL" />
+          <HeaderPoint title={strings.material.title} />
           {
             this.props.isFetching
               ? <ActivityIndicator size="large" color="#f39e21" style={styles.loader}/>
@@ -147,16 +148,16 @@ class MaterialList extends Component {
                     style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
                     onPress={() => this.setState({ invisible: !this.state.invisible })}
                   >
-                    <Text style={styles.buttonText}>Upload File</Text>
+                    <Text style={styles.buttonText}>{strings.material.upload}</Text>
                   </Button>
                 )
           }
           <ModalComponent
             visible={this.state.invisible}
-            modalTitle={'Create Material'}
-            inputTitle={'Title'}
+            modalTitle={strings.material.create}
+            inputTitle={strings.material.materialTitle}
             onChangeTitle={text => this.handleInputChange('title', text)}
-            inputSummary={'Summary'}
+            inputSummary={strings.material.materialSummary}
             onChangeSummary={text => this.handleInputChange('summary', text)}
             onSubmit={this.saveMaterialList}
             onUpload={this.openPicker}

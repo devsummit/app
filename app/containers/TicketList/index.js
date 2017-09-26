@@ -20,6 +20,7 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
+import strings from '../../localization';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -56,7 +57,7 @@ class TicketList extends Component {
         renderRow={(item) => {
           return (
             <ListItem style={{ marginLeft: 9, marginRight: 9, padding: 10, marginBottom: 10, borderRadius: 3 }}>
-              <Text style={styles.text}>Ticket No. {item.id}</Text>
+              <Text style={styles.text}>{strings.order.ticketNumber} {item.id}</Text>
               {/* <Button
                 small
                 style={styles.button}
@@ -79,14 +80,14 @@ class TicketList extends Component {
   renderError() {
     return (
       <View style={styles.errorContent}>
-        <Text style={styles.errorText}>You have no tickets, please order or try to refresh</Text>
+        <Text style={styles.errorText}>{strings.order.noTicket}</Text>
         <Button
           small
           bordered
           style={styles.refreshButton}
           onPress={() => { this.props.fetchUserTicket(); }}
         >
-          <Text>refresh</Text>
+          <Text>{strings.order.refresh}</Text>
         </Button>
       </View>);
   }
@@ -110,12 +111,12 @@ class TicketList extends Component {
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={styles.card}>
-              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>My Orders</Text>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{strings.order.myOrder}</Text>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                 {
                   orders && orders.length > 0
-                    ? <Text style={{ flex: 2 }}>{orders.length} orders is pending</Text>
-                    : <Text style={{ fontSize: 12, marginTop: -4 }}>All your ticket orders shows up here</Text>
+                    ? <Text style={{ flex: 2 }}>{orders.length} {strings.order.pending}</Text>
+                    : <Text style={{ fontSize: 12, marginTop: -4 }}>{strings.order.allTicket}</Text>
                 }
                 <Icon name="ios-arrow-dropright" style={{ flex: 0, fontSize: 30, textAlign: 'right', marginTop: 8 }} />
               </View>
@@ -124,7 +125,7 @@ class TicketList extends Component {
           <TouchableOpacity onPress={() => Actions.newOrder()}>
             <View style={styles.ticketCard}>
               <Icons name="ticket" color="#E57373" style={{ flex: 1, fontSize: 30, textAlign: 'center' }} />
-              <Text style={{ textAlign: 'center', fontSize: 16 }}>Ticket Orders</Text>
+              <Text style={{ textAlign: 'center', fontSize: 16 }}>{strings.order.ticketOrder}</Text>
             </View>
           </TouchableOpacity>
         </View>

@@ -20,6 +20,7 @@ import { createStructuredSelector } from 'reselect';
 
 import InputItem from '../../components/InputItem';
 import styles from './styles';
+import strings from '../../localization';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import * as paymentSelectors from '../Payment/selectors';
@@ -144,31 +145,31 @@ class PaymentDetail extends Component {
             <Content>
               <InputItem
                 error={errorEmailDetail}
-                title="Email"
+                title={strings.payment.email}
                 onChangeText={text => this.handleInputChange('emailDetail', text)}
                 value={emailDetail}
-                placeholder="Email"
+                placeholder={strings.payment.email}
               />
               <InputItem
                 error={errorFirstName}
-                title="First Name"
+                title={strings.payment.firstName}
                 onChangeText={text => this.handleInputChange('firstName', text)}
                 value={firstName}
-                placeholder="First Name"
+                placeholder={strings.payment.firstName}
               />
               <InputItem
                 error={errorLastName}
-                title="Last Name"
+                title={strings.payment.lastName}
                 onChangeText={text => this.handleInputChange('lastName', text)}
                 value={lastName}
-                placeholder="Last Name"
+                placeholder={strings.payment.lastName}
               />
               <InputItem
                 error={errorPhoneNumber}
-                title="Phone Number"
+                title={strings.payment.phone}
                 onChangeText={text => this.handleInputChange('phoneNumber', text)}
                 value={phoneNumber}
-                placeholder="Phone number"
+                placeholder={strings.payment.phone}
               />
             </Content>
             : <Content />}
@@ -185,10 +186,10 @@ class PaymentDetail extends Component {
             <Content>
               <InputItem
                 error={errorCardNumber}
-                title="Card Number"
+                title={strings.payment.cardNumber}
                 onChangeText={text => this.handleInputChange('cardNumber', text)}
                 value={cardNumber}
-                placeholder="Card Number"
+                placeholder={strings.payment.cardNumber}
               />
               <InputItem
                 title="cvv"
@@ -197,11 +198,11 @@ class PaymentDetail extends Component {
                 value={cardCvv}
                 placeholder="cvv"
               />
-              <Text style={styles.text}>EXPIRY (MM/YYYY)</Text>
+              <Text style={styles.text}>{strings.payment.expiry}</Text>
               <View style={[ styles.datePicker ]}>
                 <Picker
                   style={styles.monthPicker}
-                  placeholder="expiry month"
+                  placeholder={strings.payment.expiryMonth}
                   mode="dropdown"
                   selectedValue={cardExpiryMonth}
                   onValueChange={value => this.handleInputChange('cardExpiryMonth', value)}
@@ -212,7 +213,7 @@ class PaymentDetail extends Component {
                 </Picker>
                 <Picker
                   style={styles.yearPicker}
-                  placeholder="expiry year"
+                  placeholder={strings.payment.expiryYear}
                   mode="dropdown"
                   selectedValue={cardExpiryYear}
                   onValueChange={value => this.handleInputChange('cardExpiryYear', value)}
@@ -228,10 +229,10 @@ class PaymentDetail extends Component {
             <Content>
               <InputItem
                 error={errorDescriptionDetail}
-                title="Description"
+                title={strings.payment.description}
                 onChangeText={text => this.handleInputChange('descriptionDetail', text)}
                 value={descriptionDetail}
-                placeholder="Description"
+                placeholder={strings.payment.description}
               />
             </Content> : <Content />
           }
@@ -239,20 +240,20 @@ class PaymentDetail extends Component {
             <Content>
               <InputItem
                 error={errorCardNumber}
-                title="16 digits card number"
+                title={strings.payment.digitsNumber}
                 onChangeText={(text) => {
                   this.handleInputChange('cardNumber', text);
                   this.handleInputChange('input1', text.slice(6, 16));
                 }
                 }
                 value={cardNumber}
-                placeholder="16 digits card number"
+                placeholder={strings.payment.digitsNumber}
                 maxLength={16}
               />
               <InputItem
                 title="input1"
                 value={input1}
-                placeholder="Last 10 digits"
+                placeholder={strings.payment.lastDigitsNumber}
                 disabled
               />
               <InputItem
@@ -269,10 +270,10 @@ class PaymentDetail extends Component {
               />
               <InputItem
                 error={errorMandiriToken}
-                title="mandiri token"
+                title="Mandiri token"
                 onChangeText={text => this.handleInputChange('mandiriToken', text)}
                 value={mandiriToken}
-                placeholder="mandiri token"
+                placeholder="Mandiri token"
               />
             </Content> : <Content />
           }
@@ -284,7 +285,7 @@ class PaymentDetail extends Component {
             }}
           >
             <Text>
-              SUBMIT PAYMENT
+              {strings.payment.submitPayment}
             </Text>
           </Button>
           {/* {

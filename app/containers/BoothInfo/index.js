@@ -13,13 +13,14 @@ import {
 import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import PhotoGrid from 'react-native-photo-grid';
-import { createStructuredSelector } from 'reselect';
-import { getBoothData } from '../../helpers';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
+import PhotoGrid from 'react-native-photo-grid';
+import { createStructuredSelector } from 'reselect';
+import strings from '../../localization';
+import { getBoothData } from '../../helpers';
 import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
@@ -54,7 +55,7 @@ class BoothInfo extends Component {
 
   componentWillReceiveProps(prevProps) {
     if (prevProps.isBoothPhotoUpdated !== this.props.isBoothPhotoUpdated) {
-      Alert.alert('Success', 'Booth photo has been changed');
+      Alert.alert(strings.global.success, strings.booth.imageChanged);
       this.props.updateIsBoothPhotoUpdated(false);
     }
   }
@@ -72,7 +73,7 @@ class BoothInfo extends Component {
     })
       .then((image) => {
         this.props.updateImage(image);
-      }).catch(err => console.log('error getting image from library', err));
+      }).catch(err => console.log(strings.booth.errorImage, err));
   }
 
 
@@ -85,7 +86,7 @@ class BoothInfo extends Component {
     })
       .then((image) => {
         this.props.uploadBoothImage(image);
-      }).catch(err => console.log('error getting image from library', err));
+      }).catch(err => console.log(strings.booth.errorImage, err));
   }
 
   renderItem = (images) => {
@@ -132,12 +133,12 @@ class BoothInfo extends Component {
             </LinearGradient>
             <View>
               { images ?
-              <PhotoGrid
-                data={images}
-                itemsPerRow={2}
-                itemMargin={1}
-                renderItem={this.renderItem}
-              /> : <View />}
+                <PhotoGrid
+                  data={images}
+                  itemsPerRow={2}
+                  itemMargin={1}
+                  renderItem={this.renderItem}
+                /> : <View />}
             </View>
           </Content>
         </ScrollView>

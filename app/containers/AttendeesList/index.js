@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import strings from '../../localization';
 import { PRIMARYCOLOR } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -46,12 +47,12 @@ class AttendeesList extends Component {
 
   handleTransferPressed = (ticketId, receiverId, targetName) => {
     Alert.alert(
-      'Are you sure want to send this ticket to :',
+      strings.attendeesList.confirm,
       targetName,
       [
-        { text: 'Cancel' },
+        { text: strings.attendeesList.cancel },
         {
-          text: 'OK',
+          text: strings.global.ok,
           onPress: () => {
             this.props.transferTicket(ticketId, receiverId);
           }
@@ -75,7 +76,7 @@ class AttendeesList extends Component {
                 this.handleTransferPressed(this.props.ticketId, item.user_id, `${item.user.first_name} ${item.user.last_name}`);
               }}
             >
-              <Text style={styles.buttonText}>Transfer</Text>
+              <Text style={styles.buttonText}>{strings.attendeesList.transfer}</Text>
               <Icon
                 name="exchange"
                 color="white"
@@ -91,7 +92,7 @@ class AttendeesList extends Component {
   renderError() {
     return (
       <Content style={styles.errorContent}>
-        <Text style={styles.buttonText}>No attendee listed, try to refresh</Text>
+        <Text style={styles.buttonText}>{strings.attendeesList.noAttendee}</Text>
         <Button
           small
           style={styles.refreshButton}

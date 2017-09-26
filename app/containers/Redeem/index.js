@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import strings from '../../localization';
 import {PRIMARYCOLOR} from '../../constants';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
@@ -42,12 +43,12 @@ class Redeem extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.modalTitle}>Redeem your code</Text>
+        <Text style={styles.modalTitle}>{strings.redeem.redeemCode}</Text>
         <View style={styles.inputItem}>
           <Form>
             <Item>
               <Input
-                placeholder='Enter code'
+                placeholder={strings.redeem.enterCode}
                 onChangeText={text => this.handleInputChange('code', text)}
               />
             </Item>
@@ -59,7 +60,7 @@ class Redeem extends Component {
             style={styles.button}
             onPress={() => this.placeRedeem()}
           >
-            <Text style={styles.buttonText}>REDEEM</Text>
+            <Text style={styles.buttonText}>{strings.redeem.redeem}</Text>
           </Button>
         </View>
       </View>

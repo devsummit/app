@@ -39,6 +39,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import 'moment/locale/pt-br';
 import styles from './styles';
+import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -124,7 +125,8 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      firstName: '',
+      lastName: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       modalVisible: false,
       imagePreview: '',
@@ -144,9 +146,10 @@ class Feed extends Component {
     AsyncStorage.getItem('profile_data')
       .then((profile) => {
         const data = JSON.parse(profile);
-        const name = data.first_name;
+        const firstName = data.first_name;
+        const lastName = data.last_name;
         const url = data.photos[0].url;
-        this.setState({ name, profileUrl: url });
+        this.setState({ firstName, lastName, profileUrl: url });
       });
   }
 
@@ -196,16 +199,16 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
-        <HeaderPoint title="FEED" />
+        <HeaderPoint title={strings.feed.title} />
         <Tabs style={styles.tabs} initialPage={0}>
-          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
             <Content>
               <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
                 <CardItem>
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                      <Text>{ this.state.name }</Text>
+                      <Text>{this.state.firstName} {this.state.lastName}</Text>
                     </Body>
                   </Left>
                 </CardItem>
@@ -214,7 +217,7 @@ class Feed extends Component {
                     <Item regular>
                       <Input
                         rounded
-                        placeholder={'Share your activity ...'}
+                        placeholder={strings.feed.shareActvity}
                         multiline
                         numberOfLines={4}
                         value={this.props.textData}
@@ -243,7 +246,7 @@ class Feed extends Component {
                         { this.props.isPosting ?
                           <ActivityIndicator color="yellow" />
                           :
-                          <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
+                          <Text style={{ textAlign: 'center', margin: 10 }}>{strings.feed.post}</Text>
                         }
                       </View>
                     </TouchableOpacity>
@@ -284,7 +287,7 @@ class Feed extends Component {
                               <Left>
                                 <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment )}>
                                   <Icon name="share" style={{ color: '#0000ff' }}/>
-                                  <Text style={styles.buttonShare}>  Share</Text>
+                                  <Text style={styles.buttonShare}>{strings.feed.share}</Text>
                                 </Button>
                               </Left>
                             </CardItem>
@@ -295,7 +298,7 @@ class Feed extends Component {
                         <Card>
                           <CardItem>
                             <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                              <Text style={{ color: '#42A5F5' }}>Show more Feeds</Text>
+                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
                             </Body>
                           </CardItem>
                         </Card>
@@ -310,25 +313,25 @@ class Feed extends Component {
                   onPress={() => { this.onCancel();
                     setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
                 >
-                  Twitter
+                  {strings.global.twitter}
                 </Button>
                 <Button
                   iconSrc={{ uri: FACEBOOK_ICON }}
                   onPress={() => { this.onCancel();
                     setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
                 >
-                  Facebook
+                  {strings.global.facebook}
                 </Button>
                 <Button
                   iconSrc={{ uri: WHATSAPP_ICON }}
                   onPress={() => { this.onCancel();
                     setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
                 >
-                  Whatsapp
+                  {strings.global.whatsapp}
                 </Button>
             </ShareSheet>
           </Tab>
-          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.ticket}</Text></TabHeading>}>
             <TicketList />
           </Tab>
         </Tabs>
