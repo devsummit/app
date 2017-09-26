@@ -66,6 +66,10 @@ const styles = StyleSheet.create({
   tabBarSelectedItemStyle: {
     borderBottomWidth: 2,
     borderBottomColor: 'red',
+  },
+  buttonShare: {
+    fontSize: 12,
+    color: '#0000ff'
   }
 });
 
