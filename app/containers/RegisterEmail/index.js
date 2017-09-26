@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import CheckBox from 'react-native-icon-checkbox';
 
 import InputItem from '../../components/InputItem';
+import strings from '../../localization';
 import AuthLogo from '../../components/AuthLogo';
 import styles from './styles';
 import * as actions from './actions';
@@ -151,7 +152,7 @@ class RegisterEmail extends Component {
               <InputItem
                 error={errorFirstName}
                 style={styles.formInput}
-                placeholder="First name"
+                placeholder={strings.register.firstName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('firstName', text)}
                 value={firstName}
@@ -159,60 +160,60 @@ class RegisterEmail extends Component {
               <InputItem
                 error={errorLastName}
                 style={styles.formInput}
-                placeholder="Last name"
+                placeholder={strings.register.lastName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('lastName', text)}
                 value={lastName}
               />
               {checkEmail ?
-                <Text style={styles.errorInput}>invalid email address</Text>
+                <Text style={styles.errorInput}>{strings.register.errorInvalidEmail}</Text>
                 :
                 null
               }
               <InputItem
                 error={checkEmail}
                 style={styles.formInput}
-                placeholder="Email"
+                placeholder={strings.register.email}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
               />
               {checkUsername ?
-                <Text style={styles.errorInput}>username should be 4 at minimum</Text>
+                <Text style={styles.errorInput}>{strings.register.errorUsernameLenght}</Text>
                 :
                 null
               }
               <InputItem
                 error={checkUsername}
                 style={styles.formInput}
-                placeholder="Username"
+                placeholder={strings.register.username}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('username', text)}
                 value={username}
               />
               {checkPassword ?
-                <Text style={styles.errorInput}>password should be 4 at minimum</Text>
+                <Text style={styles.errorInput}>{strings.register.errorPasswordLenght}</Text>
                 :
                 null
               }
               <InputItem
                 error={checkPassword}
                 style={styles.formInput}
-                placeholder="Password"
+                placeholder={strings.register.password}
                 placeholderTextColor={'#BDBDBD'}
                 secureTextEntry
                 onChangeText={text => this.handleInputChange('password', text)}
                 value={password}
               />
               {checkVerifyPassword ?
-                <Text style={styles.errorInput}>passwords do not match</Text>
+                <Text style={styles.errorInput}>{strings.register.errorNotMatch}</Text>
                 :
                 null
               }
               <InputItem
                 error={checkVerifyPassword}
                 style={styles.formInput}
-                placeholder="Verify Password"
+                placeholder={strings.register.verifyPassword}
                 placeholderTextColor={'#BDBDBD'}
                 secureTextEntry
                 onChangeText={text => this.handleInputChange('verifyPassword', text)}
@@ -221,7 +222,7 @@ class RegisterEmail extends Component {
             </View>
             <View style={{ flex: 1, padding: 5 }}>
               <CheckBox
-                label="Use Referer"
+                label={strings.register.useReferer}
                 size={30}
                 checked={this.state.isChecked}
                 onPress={this.handlePressCheckedBox}
@@ -229,7 +230,7 @@ class RegisterEmail extends Component {
               {this.state.isChecked ?
                 <InputItem
                   style={styles.formInput}
-                  placeholder="Referer Name"
+                  placeholder={strings.register.refererName}
                   placeholderTextColor={'#BDBDBD'}
                   onChangeText={text => this.handleInputChange('referer', text)}
                   value={referer}
@@ -247,7 +248,7 @@ class RegisterEmail extends Component {
                   style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
                   onPress={() => this.submitRegistration()}
                 >
-                  <Text style={styles.buttomText}>Register</Text>
+                  <Text style={styles.buttomText}>{strings.register.register}</Text>
                 </Button>
               </View>
               :
@@ -259,7 +260,7 @@ class RegisterEmail extends Component {
               >
                 {isRegistering ?
                   <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
-                  <Text style={styles.buttomText}>Register</Text>
+                  <Text style={styles.buttomText}>{strings.register.register}</Text>
                 }
               </Button>
             }
@@ -269,8 +270,8 @@ class RegisterEmail extends Component {
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
             >
-              <Text style={styles.registerText}>{'Already have account?'}</Text>
-              <Text style={styles.registerTextBold}>{'Sign In'}</Text>
+              <Text style={styles.registerText}>{strings.register.alreadyHave}</Text>
+              <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>
             </Button>
           </Content>
         </Container>

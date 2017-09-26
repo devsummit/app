@@ -21,6 +21,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import CheckBox from 'react-native-icon-checkbox';
 
+import strings from '../../localization';
 import InputItem from '../../components/InputItem';
 import AuthLogo from '../../components/AuthLogo';
 import styles from './styles';
@@ -57,7 +58,7 @@ class RegisterPhone extends Component {
     const { fromLogin } = this.state;
     if (fromLogin && fromLogin === true) {
       this.setState({ fromLogin: false });
-      Alert.alert('You are not registered, please register first.');
+      Alert.alert(strings.register.notRegistered);
     }
 
     if (prevProps.isRegistering !== this.props.isRegistering) {
@@ -69,7 +70,7 @@ class RegisterPhone extends Component {
           this.props.isRegistered.title,
           this.props.isRegistered.message,
           [
-            { text: 'OK', onPress: this.props.isRegistered.title === 'Failed' ? () => { } : this.onAlertOk }
+            { text: strings.global.ok, onPress: this.props.isRegistered.title === 'Failed' ? () => { } : this.onAlertOk }
           ],
           { cancelable: false }
         );
@@ -122,7 +123,7 @@ class RegisterPhone extends Component {
 
   submitRegistration = () => {
     if (this.isFieldError()) {
-      Alert.alert('Warning', 'Field is not complete');
+      Alert.alert(strings.global.warning, strings.register.fieldNotComplete);
     } else {
       this.props.register();
       this.props.inputFields.email = '';
@@ -190,7 +191,7 @@ class RegisterPhone extends Component {
           primary
           block
         >
-          <Text style={styles.buttonText}>REGISTER WITH PHONE</Text>
+          <Text style={styles.buttonText}>{strings.register.withPhone}</Text>
         </LoginButton>
       </Button>
     );
@@ -200,7 +201,7 @@ class RegisterPhone extends Component {
     return (
       <Button style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
         <Text style={styles.buttonText}>
-          FIELDS ARE NOT COMPLETE
+          {strings.register.fieldNotComplete}
         </Text>
       </Button>
     );
@@ -243,7 +244,7 @@ class RegisterPhone extends Component {
               <InputItem
                 error={errorFirstName}
                 style={styles.formInput}
-                placeholder="First name"
+                placeholder={strings.register.firstName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('firstName', text)}
                 value={firstName}
@@ -251,7 +252,7 @@ class RegisterPhone extends Component {
               <InputItem
                 error={errorLastName}
                 style={styles.formInput}
-                placeholder="Last name"
+                placeholder={strings.register.lastName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('lastName', text)}
                 value={lastName}
@@ -259,7 +260,7 @@ class RegisterPhone extends Component {
               <InputItem
                 error={errorEmail}
                 style={styles.formInput}
-                placeholder="Email"
+                placeholder={strings.register.email}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('email', text)}
                 value={email}
@@ -267,7 +268,7 @@ class RegisterPhone extends Component {
             </View>
             <View style={{ flex: 1, padding: 5 }}>
               <CheckBox
-                label="Use Referer"
+                label={strings.register.useReferer}
                 size={30}
                 checked={this.state.isChecked}
                 onPress={this.handlePressCheckedBox}
@@ -275,7 +276,7 @@ class RegisterPhone extends Component {
               { this.state.isChecked ?
                 <InputItem
                   style={styles.formInput}
-                  placeholder="Referer Name"
+                  placeholder={strings.register.refererName}
                   placeholderTextColor={'#BDBDBD'}
                   onChangeText={text => this.handleInputChange('referer', text)}
                   value={referer}
@@ -299,8 +300,8 @@ class RegisterPhone extends Component {
           style={styles.buttonRegister}
           onPress={() => { Actions.main(); }}
         >
-          <Text style={styles.registerText}>{'Already have account?'}</Text>
-          <Text style={styles.registerTextBold}>{'Sign In'}</Text>
+          <Text style={styles.registerText}>{strings.register.alreadyHave}</Text>
+          <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>
         </Button>
       </Image>
     );
