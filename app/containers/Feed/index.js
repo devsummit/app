@@ -332,13 +332,6 @@ class Feed extends Component {
             <TicketList />
           </Tab>
         </Tabs>
-        <Fab
-          style={{ backgroundColor: '#FFA726' }}
-          position="topRight"
-          onPress={() => Actions.notification()}
-        >
-          <Icon name="bell" />
-        </Fab>
         <Modal
           animationType={'fade'}
           transparent
