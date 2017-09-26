@@ -59,60 +59,63 @@ class Notification extends Component {
         contentSize.height - paddingToBottom;
     };
     return (
-      <View style={styles.container}>
-        {
-          notifications && notifications.length > 0 ?
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              ref="sv"
-              style={{ flex: 1 }}
-              onContentSizeChange={this.handleSize}
-              onScroll={({ nativeEvent }) => {
-                this.scroll = nativeEvent.contentOffset.y
-                if (isCloseToBottom(nativeEvent)) {
-                  if (!this.props.isFetching) {
-                    fetchNextNotification()
+      <Container style={styles.container}>
+        <HeaderPoint title='NOTIFICATION' />
+        <View style={styles.view}>
+          {
+            notifications && notifications.length > 0 ?
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                ref="sv"
+                style={{ flex: 1 }}
+                onContentSizeChange={this.handleSize}
+                onScroll={({ nativeEvent }) => {
+                  this.scroll = nativeEvent.contentOffset.y
+                  if (isCloseToBottom(nativeEvent)) {
+                    if (!this.props.isFetching) {
+                      fetchNextNotification()
+                    }
                   }
-                }
-              }}
-              scrollEventThrottle={400}>
-              <Content>
-                {notifications.map(data => (
-                  <Card key={data.id}>
-                    <CardItem style={{ margin: 5 }}>
-                      <Body>
-                        <View style={styles.bodySection}>
-                          <View style={styles.mainMessage}>
-                            <Text style={styles.title}>{data.type.toUpperCase()}</Text>
-                            <View style={styles.separator} />
-                            <Text style={styles.content}>{data.message}</Text>
-                            <Text style={{ color: PRIMARYCOLOR }}>{formatDate(data.created_at)}</Text>
+                }}
+                scrollEventThrottle={400}>
+                <Content>
+                  {notifications.map(data => (
+                    <Card key={data.id}>
+                      <CardItem style={{ margin: 5 }}>
+                        <Body>
+                          <View style={styles.bodySection}>
+                            <View style={styles.mainMessage}>
+                              <Text style={styles.title}>{data.type.toUpperCase()}</Text>
+                              <View style={styles.separator} />
+                              <Text style={styles.content}>{data.message}</Text>
+                              <Text style={{ color: PRIMARYCOLOR }}>{formatDate(data.created_at)}</Text>
+                            </View>
+                            <Right style={{ flex: 1 }}>
+                              <Text style={styles.sender}>{data.sender.first_name}</Text>
+                            </Right>
                           </View>
-                          <Right style={{ flex: 1 }}>
-                            <Text style={styles.sender}>{data.sender.first_name}</Text>
-                          </Right>
-                        </View>
-                      </Body>
-                    </CardItem>
-                  </Card>
-                ))}
-                {
-                  this.props.isFetching
-                    ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
-                    : <View />
-                }
-              </Content>
-            </ScrollView> :
-            this.props.isFetching
-              ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
-              :
-              <View style={{ flex: 1, height: ScreenHeight, backgroundColor: PRIMARYCOLOR, alignItems:'center', justifyContent:'center'}}>
-                <Icon name={'bell-slash-o'} color={'#fff'} style={styles.icon} />
-                <Text style={{ color: 'white', fontWeight: 'bold' }}> NO NOTIFICATIONS </Text>
-              </View>
-        }
+                        </Body>
+                      </CardItem>
+                    </Card>
+                  ))}
+                  {
+                    this.props.isFetching
+                      ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
+                      : <View />
+                  }
+                </Content>
+              </ScrollView> :
+              this.props.isFetching
+                ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
+                :
+                <View style={{ flex: 1, height: ScreenHeight, backgroundColor: PRIMARYCOLOR, alignItems:'center', justifyContent:'center'}}>
+                  <Icon name={'bell-slash-o'} color={'#fff'} style={styles.icon} />
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}> NO NOTIFICATIONS </Text>
+                </View>
+          }
 
-      </View>
+        </View>
+      </Container>
     );
   }
 }
