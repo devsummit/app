@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.devsummit"
+    package="io.devsummit.app.android"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -14,7 +14,7 @@
         android:targetSdkVersion="22" />
 
     <application
-      android:name=".app.android.MainApplication"
+      android:name=".MainApplication"
       android:allowBackup="true"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"

@@ -5,6 +5,8 @@
 # Xcode
 #
 build/
+Pods/
+*.dSYM.zip
 *.pbxuser
 !default.pbxuser
 *.mode1v3

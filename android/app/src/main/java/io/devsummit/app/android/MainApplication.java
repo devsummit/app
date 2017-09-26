@@ -3,6 +3,13 @@ package io.devsummit.app.android;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import cl.json.RNSharePackage;
+import io.fullstack.oauth.OAuthManagerPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -42,6 +49,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
+            new RNSharePackage(),
+            new OAuthManagerPackage(),
+            new LinearGradientPackage(),
+            new PickerPackage(),
+            new FIRMessagingPackage(),
+            new RNAccountKitPackage(),
           new FIRMessagingPackage(),
           new ReactNativeDocumentPicker(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
