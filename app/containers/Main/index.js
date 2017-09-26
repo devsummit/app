@@ -95,6 +95,7 @@ class Main extends Component {
   render() {
     const { fields, isLoading } = this.props;
     const { username, password, email } = fields || '';
+    const visible = false;
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
@@ -164,13 +165,14 @@ class Main extends Component {
                 <Text style={styles.registerText}>{"Don't have an account?"}</Text>
                 <Text style={styles.registerTextBold}>Register</Text>
               </Button>
-              <Button
+              {visible ? <Button
+                hidden
                 transparent
                 style={styles.buttonRegister}
                 onPress={() => { this.setModalVisible(); }}
               >
                 <Text style={styles.registerText}>Subscribe to Newsletter</Text>
-              </Button>
+              </Button> : <View />}
             </View>
           </Content>
         </Container>
