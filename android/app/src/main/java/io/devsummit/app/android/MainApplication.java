@@ -11,16 +11,10 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import io.underscope.react.fbak.RNAccountKitPackage;
 import com.microsoft.codepush.react.CodePush;
-import com.oblador.vectoricons.VectorIconsPackage;
 
 import io.devsummit.app.android.BuildConfig;
 import io.devsummit.app.android.R;
-import io.fullstack.oauth.OAuthManagerPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import io.underscope.react.fbak.RNAccountKitPackage;
 
-import cl.json.RNSharePackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -56,13 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
             new FIRMessagingPackage(),
             new RNAccountKitPackage(),
           new ReactNativeDocumentPicker(),
-          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
-          new VectorIconsPackage(),
-          new RNSharePackage(),
-          new PickerPackage(),
-          new OAuthManagerPackage(),
-          new RNAccountKitPackage(),
-          new LinearGradientPackage()
+          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG)
       );
     }
   };
