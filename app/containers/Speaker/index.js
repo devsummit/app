@@ -16,6 +16,7 @@ import { View, Image, KeyboardAvoidingView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import styles from './styles';
 import * as selectors from './selectors';
@@ -66,12 +67,12 @@ class Speaker extends Component {
   render() {
     return (
       <Container>
-        <HeaderPoint title="SPEAKER" />
+        <HeaderPoint title={strings.speaker.title} />
         <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
           <Item>
             <Icon name="ios-search" />
             <Input
-              placeholder="Search speaker ..."
+              placeholder={strings.speaker.search}
               onChangeText={text => this.handleFilter(text)}
             />
             <Icon name="ios-calendar" />
@@ -113,7 +114,7 @@ class Speaker extends Component {
                     });
                   }}
                 >
-                  <Text style={styles.footerButtonText}>See more</Text>
+                  <Text style={styles.footerButtonText}>{strings.speaker.more}</Text>
                 </Button>
               </CardItem>
             </Card>
