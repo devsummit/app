@@ -5,6 +5,7 @@ export default {
   back: 'Back',
   success: 'Success',
   failed: 'Failed',
+  warning: 'Warning',
   confirm: 'Confirm',
   twitter: 'Twitter',
   facebook: 'Facebook',
