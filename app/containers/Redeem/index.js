@@ -13,13 +13,14 @@ import {
   Input
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, View } from 'react-native';
+import { RefreshControl, View, AsyncStorage } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { getProfileData } from '../../helpers';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
-import {PRIMARYCOLOR} from '../../constants';
+import { PRIMARYCOLOR } from '../../constants';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -28,8 +29,24 @@ class Redeem extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 3
     };
   }
+
+  // componentWillMount = () => {
+  //   getProfileData().then((profileData) => {
+  //     if (profileData) {
+  //       this.handleInputChange('username', '');
+  //       this.handleInputChange('firstName', '');
+  //       this.handleInputChange('lastName', '');
+  //     }
+  //   });
+  //   AsyncStorage.getItem('role_id')
+  //     .then((roleId) => {
+  //       const id = JSON.parse(roleId);
+  //       this.setState({ id });
+  //     }).catch(() => console.log('Error'));
+  // }
 
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
@@ -47,12 +64,12 @@ class Redeem extends Component {
           <Form>
             <Item>
               <Input
-                placeholder='Enter code'
+                placeholder="Enter code"
                 onChangeText={text => this.handleInputChange('code', text)}
               />
             </Item>
           </Form>
-          </View>
+        </View>
         <View style={styles.buttonsSection}>
           <Button
             transparent
