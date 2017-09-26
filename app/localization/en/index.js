@@ -3,7 +3,6 @@ import attendeeList from './AttendeesList';
 import booth from './Booth';
 import changePassword from './ChangePassword';
 import feed from './Feed';
-import mainTabs from './MainTabs';
 import material from './Material';
 import notification from './Notification';
 import order from './Order';
@@ -21,7 +20,6 @@ const en = {
   booth,
   changePassword,
   feed,
-  mainTabs,
   material,
   notification,
   order,
