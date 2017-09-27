@@ -10,7 +10,7 @@ import {
   CategoryCard,
   Fab
 } from 'native-base';
-import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage } from 'react-native';
+import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -32,7 +32,9 @@ class BoothInfo extends Component {
     super(props);
     // this.renderRow = this.renderRow.bind(this);
     this.state = {
-      id: null
+      id: null,
+      imagePreview: '',
+      modalVisible: false
     };
   }
 
@@ -76,6 +78,9 @@ class BoothInfo extends Component {
       }).catch(err => console.log(strings.booth.errorImage, err));
   }
 
+  setModalVisible = (visible, image) => {
+    this.setState({ modalVisible: visible, imagePreview: image });
+  }
 
   uploadImage = () => {
     ImagePicker.openPicker({
@@ -92,13 +97,28 @@ class BoothInfo extends Component {
   renderItem = (images) => {
     return (
       <View style={{ flex: 1 }}>
-        <Image
-          style={styles.boothImageList}
-          source={{ uri: images.url }}
-        />
+        <TouchableOpacity onPress={() => this.setModalVisible(true, images.url) }>
+          <Image
+            style={styles.boothImageList}
+            source={{ uri: images.url }}
+          />
+        </TouchableOpacity>
+        <Modal
+          animationType={'fade'}
+          transparent
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+        >
+          <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808'}}>
+            <View style={{ flex: 1, margin: 10 }}>
+              <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
+            </View>
+          </View>
+        </Modal>
       </View>
-    )
+    );
   }
+
 
   render() {
     const booth = this.state.id === 3;
@@ -138,7 +158,9 @@ class BoothInfo extends Component {
                   itemsPerRow={2}
                   itemMargin={1}
                   renderItem={this.renderItem}
-                /> : <View />}
+                />
+                :
+                <View />}
             </View>
           </Content>
         </ScrollView>
@@ -152,6 +174,18 @@ class BoothInfo extends Component {
         >
           <Icon name="upload" />
         </Fab>
+        <Modal
+          animationType={'fade'}
+          transparent
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+        >
+          <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '080808' }}>
+            <View style={{ flex: 1, margin: 10 }}>
+              <Image source={{ uri: this.state.imagePreview }} resizeModel={'contain'} style={{ flex: 1 }} />
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
