@@ -33,21 +33,6 @@ class Redeem extends Component {
     };
   }
 
-  // componentWillMount = () => {
-  //   getProfileData().then((profileData) => {
-  //     if (profileData) {
-  //       this.handleInputChange('username', '');
-  //       this.handleInputChange('firstName', '');
-  //       this.handleInputChange('lastName', '');
-  //     }
-  //   });
-  //   AsyncStorage.getItem('role_id')
-  //     .then((roleId) => {
-  //       const id = JSON.parse(roleId);
-  //       this.setState({ id });
-  //     }).catch(() => console.log('Error'));
-  // }
-
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
   }
