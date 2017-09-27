@@ -407,7 +407,6 @@ class Feed extends Component {
 class CustomInput extends Component {
   componentDidMount() {
     this._input._root.focus();
-    BackHandler.addEventListener("hardwareBackPress", () => { console.log("HERERE"); this.setModalPost(false) })
   }
 
   render() {
