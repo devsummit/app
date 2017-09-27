@@ -1,5 +1,6 @@
 import FormData from 'FormData';
 import { Platform } from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import {
   FETCH_FEEDS,
@@ -95,6 +96,18 @@ export function isPostFeeds(status) {
   };
 }
 
+export function clearImage() {
+  return {
+    type: CLEAR_IMAGE
+  };
+}
+
+export function clearTextField() {
+  return {
+    type: CLEAR_TEXT_FIELD
+  };
+}
+
 export function postFeeds(image, text) {
   return (dispatch) => {
     dispatch(isPostFeeds(true));
@@ -123,15 +136,17 @@ export function postFeeds(image, text) {
 
         DevSummitAxios.post('api/v1/feeds', form, { headers })
           .then((res) => {
-            dispatch({ type: CLEAR_TEXT_FIELD, res });
-            dispatch({ type: CLEAR_IMAGE, res });
+            dispatch(clearTextField());
+            dispatch(clearImage());
+            Toast.show('Posted succesfully!');
             dispatch(isPostFeeds(false));
           })
           .catch((err) => {
-            dispatch({ type: CLEAR_IMAGE, err });
-            dispatch({ type: CLEAR_TEXT_FIELD, err });
+            dispatch(clearTextField());
+            dispatch(clearImage());
             dispatch(isPostFeeds(false));
-            console.log(err)
+            Toast.show('Upss, Something when wrong!', Toast.LONG);
+            console.log(err);
           });
       });
   };
