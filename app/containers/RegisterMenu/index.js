@@ -15,6 +15,7 @@ import { twitter } from 'react-native-simple-auth';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import strings from '../../localization';
 import Button from '../../components/Button';
 import AuthLogo from '../../components/AuthLogo';
 import styles from './styles';
@@ -45,19 +46,19 @@ class RegisterMenu extends Component {
               onPress={() => { Actions.registerEmail(); }}
             >
               <Icon name="envelope" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Register with Email</Text>
+              <Text style={styles.buttonText}>{strings.register.withEmail}</Text>
             </Button>
             <Button style={[ styles.button, { backgroundColor: '#FFD740' } ]} onPress={() => { Actions.registerPhone(); }}>
               <Icon name="phone" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Register with Phone</Text>
+              <Text style={styles.buttonText}>{strings.register.withPhone}</Text>
             </Button>
             <Button
               transparent
               style={styles.buttonRegister}
               onPress={() => { Actions.main(); }}
             >
-              <Text style={styles.registerText}>{'Already have account?'}</Text>
-              <Text style={styles.registerTextBold}>{'Sign In'}</Text>
+              <Text style={styles.registerText}>{strings.register.alreadyHave}</Text>
+              <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>
             </Button>
           </Content>
         </Container>

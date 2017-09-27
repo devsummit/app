@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
+import strings from '../../localization';
 import { PRIMARYCOLOR, MERCHANT_CODE } from '../../constants';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -82,11 +83,11 @@ class OrderDetail extends Component {
 
   saveOrder = () => {
     Alert.alert(
-      'Are you sure want to update this order?',
+      strings.order.confirmUpdate,
       'Order number '.concat(this.props.orderId),
       [
-        { text: 'Cancel' },
-        { text: 'OK', onPress: () => { this.props.submitUpdateOrder(this.props.order.data); } }
+        { text: strings.global.cancel },
+        { text: strings.global.ok, onPress: () => { this.props.submitUpdateOrder(this.props.order.data); } }
       ],
       { cancelable: false }
     );
@@ -94,11 +95,11 @@ class OrderDetail extends Component {
 
   handleConfirm = () => {
     Alert.alert(
-      'Payment Confirmation',
+      strings.order.confirmPayment,
       'Confirm payment Order : '.concat(this.props.orderId),
       [
-        { text: 'Cancel' },
-        { text: 'Confirm', onPress: () => { this.props.confirmPayment(this.props.order.included.payment.id); } }
+        { text: strings.global.cancel },
+        { text: strings.global.confirm, onPress: () => { this.props.confirmPayment(this.props.order.included.payment.id); } }
       ],
       { cancelable: false }
     );
@@ -114,7 +115,7 @@ class OrderDetail extends Component {
             </Text>
           </TouchableOpacity>
           <Text style={{ alignSelf: 'center', margin: 4, fontWeight: 'bold', fontSize: 16 }}>
-            Including this code : {MERCHANT_CODE}
+            {strings.order.includeCode} {MERCHANT_CODE}
           </Text>
         </View>
       );
@@ -168,16 +169,16 @@ class OrderDetail extends Component {
             <CardItem>
               <Grid style={{ flex: 3 }}>
                 <Row>
-                  <Col><Text>Order number:</Text></Col>
+                  <Col><Text>{strings.order.orderNumber}</Text></Col>
                   <Col><Text>{orderId}</Text></Col>
                 </Row>
                 <Row>
-                  <Col><Text>Order date:</Text></Col>
+                  <Col><Text>{strings.order.orderDate}</Text></Col>
                   <Col><Text>{formatDate(order.data[0].created_at)}</Text></Col>
                 </Row>
                 {order.included.payment ?
                   <Row>
-                    <Col><Text>Expired time:</Text></Col>
+                    <Col><Text>{strings.order.expiredDate}</Text></Col>
                     <Col><Text>{formatDate(order.included.payment.expired_at)}</Text></Col>
                   </Row> : <View />
                 }
@@ -223,7 +224,7 @@ class OrderDetail extends Component {
             <Card>
               <CardItem>
                 <Body>
-                  <Text>Payment Code</Text>
+                  <Text>{strings.order.paymentCode}</Text>
                 </Body>
                 <Right><Text>{order.included.payment.fraud_status}</Text></Right>
               </CardItem>
@@ -233,7 +234,7 @@ class OrderDetail extends Component {
           <Card>
             <CardItem>
               <Body>
-                <Text>Total</Text>
+                <Text>{strings.order.total}</Text>
               </Body>
               <Right><Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text></Right>
             </CardItem>
@@ -243,11 +244,11 @@ class OrderDetail extends Component {
             <Card>
               <CardItem>
                 <Body>
-                  <Text>Lakukan pembayaran sesuai dengan total nominal Rp {Intl.NumberFormat('id').format(this.getTotal())} ke nomor rekening { this.capitalizeEachWord(order.included.payment.payment_type.split('_').join(' ')) } dari Veritrans: </Text>
+                  <Text>{strings.order.instruction1} Rp {Intl.NumberFormat('id').format(this.getTotal())} {strings.order.instruction2} { this.capitalizeEachWord(order.included.payment.payment_type.split('_').join(' ')) } {strings.order.instruction3} </Text>
 
                   {this.checkPaymentType()}
 
-                  <Text>Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka antrian akan otomatis dibatalkan.</Text>
+                  <Text>{strings.order.attention}</Text>
                 </Body>
               </CardItem>
             </Card> : <View />
@@ -257,19 +258,19 @@ class OrderDetail extends Component {
               <Card>
                 <CardItem>
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>REFERAL INFO</Text>
-                    <Text>Referal Code :</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.referalInfo}</Text>
+                    <Text>{strings.order.referalCode}</Text>
                     <Text style={{ fontWeight: 'bold' }}>{order.included.referal.referal_code}</Text>
-                    <Text>Owner :</Text>
+                    <Text>{strings.order.owner}</Text>
                     <Text style={{ fontWeight: 'bold' }}>{order.included.referal.owner}</Text>
-                    <Text>Total Discount :</Text>
+                    <Text>{strings.order.totalDiscount}</Text>
                     <Text style={{ fontWeight: 'bold' }}>Rp {Intl.NumberFormat('id').format(order.included.referal.discount_amount * this.getTotal())}</Text>
                   </View>
                 </CardItem>
               </Card>
               <Card>
                 <CardItem style={{ flex: 1 }}>
-                  <Text style={{ flex: 1 }}>Total price after discount: </Text>
+                  <Text style={{ flex: 1 }}>{strings.order.totalAfterDiscount}</Text>
                   <Text style={{ textAlign: 'right', flex: 1 }}>
                     Rp {Intl.NumberFormat('id').format(this.getTotal() - (order.included.referal.discount_amount * this.getTotal()))}
                   </Text>
@@ -283,7 +284,7 @@ class OrderDetail extends Component {
           {(this.state.status && this.state.status === 'pending') ?
             <Button onPress={() => this.handleConfirm()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
               <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>CONFIRM</Text>
+              <Text style={styles.buttonText}>{strings.global.confirm}</Text>
             </Button> : <View />
           }
           <Modal

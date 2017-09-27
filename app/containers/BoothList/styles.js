@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     paddingTop: 10
   },
   footerSection: {
+    width: '100%',
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
@@ -76,9 +77,11 @@ const styles = StyleSheet.create({
   footerButton: {
     borderRadius: 10,
     height: 35,
+    padding: 7,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
+
   itemNameSection: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)'
   }

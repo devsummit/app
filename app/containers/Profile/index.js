@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { getProfileData } from '../../helpers';
+import strings from '../../localization';
 import InputItem from '../../components/InputItem';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
@@ -121,24 +122,24 @@ class Profile extends Component {
           <View style={styles.section2}>
             <InputItem
               style={styles.input}
-              title="First Name"
-              placeholder="First Name"
+              title={strings.profile.firstName}
+              placeholder={strings.profile.firstName}
               disabled={!!isDisabled}
               onChangeText={(text) => { this.handleInputChange('firstName', text); }}
               value={firstName}
             />
             <InputItem
               style={styles.input}
-              title="Last Name"
-              placeholder="Last Name"
+              title={strings.profile.lastName}
+              placeholder={strings.profile.lastName}
               disabled={!!isDisabled}
               onChangeText={(text) => { this.handleInputChange('lastName', text); }}
               value={lastName}
             />
             {speaker ? <InputItem
               style={styles.inputJob}
-              title="Job"
-              placeholder="Job"
+              title={strings.profile.job}
+              placeholder={strings.profile.job}
               placeholderTextColor={'#BDBDBD'}
               disabled={!!isDisabled}
               onChangeText={(text) => { this.handleInputChange('job', text); }}
@@ -149,8 +150,8 @@ class Profile extends Component {
             : <View />}
             {speaker ? <InputItem
               style={styles.inputInfo}
-              title="Summary"
-              placeholder="Summary"
+              title={strings.profile.summary}
+              placeholder={strings.profile.summary}
               placeholderTextColor={'#BDBDBD'}
               disabled={!!isDisabled}
               onChangeText={(text) => { this.handleInputChange('summary', text); }}
@@ -161,8 +162,8 @@ class Profile extends Component {
             : <View />}
             {booth ? <InputItem
               style={styles.inputInfo}
-              title="Booth Info"
-              placeholder="Booth Info"
+              title={strings.profile.boothInfo}
+              placeholder={strings.profile.boothInfo}
               disabled={!!isDisabled}
               onChangeText={(text) => { this.handleInputChange('boothInfo', text); }}
               value={boothInfo}
@@ -170,7 +171,7 @@ class Profile extends Component {
               multiline
             /> : <View />}
             <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
-              <Text style={styles.changePassText}>Change Password</Text>
+              <Text style={styles.changePassText}>{strings.profile.changePassword}</Text>
             </Button>
             <Button
               block
@@ -179,7 +180,7 @@ class Profile extends Component {
               style={styles.button}
               onPress={() => this.props.changeProfile()}
             >
-              <Text>Save changes</Text>
+              <Text>{strings.global.save}</Text>
             </Button>
           </View>
         </Content>

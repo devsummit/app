@@ -12,6 +12,7 @@ import { Actions } from 'react-native-router-flux';
 import { ActivityIndicator, Alert, View } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import strings from '../../localization';
 import styles from './styles';
 import InputItem from '../../components/InputItem';
 import Button from '../../components/Button';
@@ -80,7 +81,7 @@ class ChangePassword extends Component {
       } = errorFields || false;
 
       if (isPasswordUpdated) {
-        Toast.show('Password has been changed');
+        Toast.show(strings.changePassword.successChange);
         setTimeout(() => {
           Actions.pop();
         }, 2000);
@@ -89,7 +90,7 @@ class ChangePassword extends Component {
 
       if (isPasswordWrong) {
         // Alert.alert('Fail', 'Please make sure you input the right password');
-        Toast.show('Failed to change password, please make sure you input the right password', Toast.LONG);
+        Toast.show(strings.changePassword.failedChange, Toast.LONG);
         this.props.updateIsPasswordWrong(false)
       }
       return (
@@ -98,46 +99,46 @@ class ChangePassword extends Component {
             <InputItem
               error={error_current_password}
               style={styles.input}
-              title="Current Password"
+              title={strings.changePassword.currentPassword}
               secureTextEntry
               onChangeText={text => this.handleInputChange('current_password', text)}
               value={current_password}
-              placeholder="Current Password"
+              placeholder={strings.changePassword.currentPassword}
               placeholderTextColor={'#BDBDBD'}
             />
             { ((new_password.length < 4) && new_password !== '') ?
-              <Text style={styles.newPassValidator}>new password should be 4 at minimum</Text>
+              <Text style={styles.newPassValidator}>{strings.changePassword.errorNewPasswordLength}</Text>
               :
               null
             }
             { ((current_password === new_password) && current_password !== '') ?
-              <Text style={styles.newPassValidator}>current and new password can't be same</Text>
+              <Text style={styles.newPassValidator}>{strings.changePassword.errorNoDifferent}</Text>
               :
               null
             }
             <InputItem
               error={error_new_password}
               style={styles.input}
-              title="New Password"
+              title={strings.changePassword.newPassword}
               secureTextEntry
               onChangeText={text => this.handleInputChange('new_password', text)}
               value={new_password}
-              placeholder="New Password"
+              placeholder={strings.changePassword.newPassword}
               placeholderTextColor={'#BDBDBD'}
             />
             { ((confirm_password.length < 4) && (confirm_password !== '') && (new_password < 4)) ?
-              <Text style={styles.newPassValidator}>confirm password should be 4 at minimum</Text>
+              <Text style={styles.newPassValidator}>{strings.changePassword.errorNewPasswordLength}</Text>
               :
               null
             }
             {error_password_not_the_same ?
-              <Text style={styles.newPassValidator}>Confirm password didn't match</Text>
+              <Text style={styles.newPassValidator}>{strings.changePassword.errorNotMatch}</Text>
               :
               null
             }
-            { ((new_password !== confirm_password) && confirm_password !== ''  ) ?
+            { ((new_password !== confirm_password) && confirm_password !== '') ?
               <View>
-                <Text style={styles.newPassValidator}>both new password doesn't match</Text>
+                <Text style={styles.newPassValidator}>{strings.changePassword.errorBothNotMatch}</Text>
               </View>
               :
               null
@@ -145,11 +146,11 @@ class ChangePassword extends Component {
             <InputItem
               error={error_confirm_password}
               style={styles.input}
-              title="Confirm New Password"
+              title={strings.changePassword.confirmPassword}
               secureTextEntry
               onChangeText={text => this.handleInputChange('confirm_password', text)}
               value={confirm_password}
-              placeholder="Confirm New Password"
+              placeholder={strings.changePassword.confirmPassword}
               placeholderTextColor={'#BDBDBD'}
             />
             {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password || new_password.length < 4 || confirm_password < 4 || current_password < 4 || current_password === new_password) ?
@@ -160,7 +161,7 @@ class ChangePassword extends Component {
                   block
                   style={[ styles.button, { elevation: 0 } ]}
                 >
-                  <Text style={styles.buttomText}>Change Password</Text>
+                  <Text style={styles.buttomText}>{strings.changePassword.changePassword}</Text>
                 </Button>
 
               </View>
@@ -174,7 +175,7 @@ class ChangePassword extends Component {
               >
                 {isLoading ?
                   <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
-                  <Text style={styles.buttomText}>Change Password</Text>
+                  <Text style={styles.buttomText}>{strings.changePassword.changePassword}</Text>
                 }
               </Button>
             }

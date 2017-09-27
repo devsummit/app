@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect'
 
 import HeaderPoint from '../../components/Header';
+import strings from '../../localization';
 import ScheduleList from '../../components/ScheduleList';
 import styles from './styles';
 import { PRIMARYCOLOR } from '../../constants';
@@ -55,46 +56,46 @@ class Schedule extends Component {
   render() {
     return (
       <Container style={styles.container}>
-      <Content>
-        <HeaderPoint title= "SCHEDULE"/>
-        <Tabs style={styles.tabs}>
+        <Content>
+          <HeaderPoint title={strings.schedule.title} />
+          <Tabs style={styles.tabs}>
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name= "calendar"/><Text style={styles.tabTitle}>21 Nov</Text></TabHeading> }>
               <Content style={styles.content}>
                 <View style={styles.cards}>
                   { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[0]} />) : (
                     <View style={styles.loading}>
-                      <Spinner color={ PRIMARYCOLOR }/>
-                      <Text style={{color: '#3a3a3a'}}>Loading...</Text>
+                      <Spinner color={PRIMARYCOLOR} />
+                      <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
                     </View>
                   )}
                 </View>
               </Content>
             </Tab>
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>22 Nov</Text></TabHeading> }>
-            <Content style={styles.content}>
-              <View style={styles.cards}>
-                { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[1]} />) : (
-                  <View style={styles.loading}>
-                    <Spinner color={ PRIMARYCOLOR }/>
-                    <Text style={{color: '#3a3a3a'}}>Loading...</Text>
-                  </View>
-                )}
-              </View>
-            </Content>
-          </Tab>
-          <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>Nov 23</Text></TabHeading> }>
               <Content style={styles.content}>
                 <View style={styles.cards}>
-                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[2]} />) : (
+                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[1]} />) : (
                     <View style={styles.loading}>
-                      <Spinner color={ PRIMARYCOLOR }/>
-                      <Text style={{color: '#3a3a3a'}}>Loading...</Text>
+                      <Spinner color={PRIMARYCOLOR} />
+                      <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
                     </View>
                   )}
                 </View>
               </Content>
             </Tab>
-        </Tabs>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>Nov 23</Text></TabHeading> }>
+              <Content style={styles.content}>
+                <View style={styles.cards}>
+                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[2]} />) : (
+                    <View style={styles.loading}>
+                      <Spinner color={PRIMARYCOLOR} />
+                      <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
+                    </View>
+                  )}
+                </View>
+              </Content>
+            </Tab>
+          </Tabs>
         </Content>
       </Container>
     );
