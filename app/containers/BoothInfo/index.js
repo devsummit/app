@@ -169,7 +169,7 @@ class BoothInfo extends Component {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
           <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '080808' }}>
-            <View style={{ flex: 1, margin: 10 }}>
+            <View style={{ flex: 1, margin: 0 }}>
               <Image source={{ uri: this.state.imagePreview }} resizeModel={'contain'} style={{ flex: 1 }} />
             </View>
           </View>
