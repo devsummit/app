@@ -49,13 +49,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new VectorIconsPackage(),
-            new RNSharePackage(),
-            new OAuthManagerPackage(),
-            new LinearGradientPackage(),
-            new PickerPackage(),
-            new FIRMessagingPackage(),
-            new RNAccountKitPackage(),
           new FIRMessagingPackage(),
           new ReactNativeDocumentPicker(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
