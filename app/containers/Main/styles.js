@@ -57,23 +57,23 @@ const styles = StyleSheet.create({
   },
   buttonRegister: {
     marginLeft: 'auto',
-    marginRight: 'auto',
-    width: '87%',
+    marginRight: 'auto'
   },
   registerText: {
     textAlign: 'center',
-    color: '#FFFFFF',
+    color: '#FFFFFF'
   },
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFD740',
-    marginLeft: 'auto'
+    marginLeft: -25
   },
   buttonText: {
     textAlign: 'center',
+    marginRight: 24,
     alignSelf: 'center',
-    paddingRight: 26
+    flex: 7
   },
   lineSection: {
     position: 'relative',
