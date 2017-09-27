@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import strings from '../../localization';
 import OrderItem from '../../components/OrderItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -42,11 +43,11 @@ class OrderList extends Component {
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
     Alert.alert(
-      'Payment Confirmation',
+      strings.order.confirmPayment,
       'Confirm payment Order : '.concat(props.id),
       [
-        { text: 'Cancel' },
-        { text: 'Confirm', onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
+        { text: strings.global.cancel },
+        { text: strings.global.confirm, onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
       ],
       { cancelable: false }
     );

@@ -28,27 +28,27 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    flex: 9,
+    flex: 10,
     marginRight: 24
   },
   buttonRegister: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 10
+    width: '83%',
   },
   registerText: {
     textAlign: 'center',
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
-    marginLeft: 8,
-    color: '#FFD740'
+    color: '#FFD740',
+    marginLeft: 'auto'
   },
   icon: {
-    textAlign: 'left',
-    flex: 1,
+    textAlign: 'center',
+    flex: 2,
     fontSize: 18
   }
 });

@@ -8,6 +8,7 @@ import {
     Body
 } from 'native-base';
 import { Image, View } from 'react-native'
+import strings from '../../localization';
 import styles from './styles';
 
 class SpeakerDetail extends Component {
@@ -28,12 +29,12 @@ class SpeakerDetail extends Component {
                     <Card>
                         <View style={styles.cardSection}>
                             <View style={styles.jobSection}>
-                                <Text style={styles.jobTitle}>JOB</Text>
+                                <Text style={styles.jobTitle}>{strings.speaker.job}</Text>
                                 <Text style={styles.job}>{this.props.job}</Text>
                             </View>
                             <View style={styles.line}></View>
                             <View style={styles.jobSection}>
-                                <Text style={styles.jobTitle}>SUMMARY</Text>
+                                <Text style={styles.jobTitle}>{strings.speaker.summary}</Text>
                                 <Text style={styles.job}>{this.props.summary}</Text>
                             </View>
                         </View>

@@ -9,6 +9,7 @@ import BoothList from '../BoothList';
 import Feed from '../Feed';
 import Settings from '../Settings';
 import PushNotification from './PushNotification';
+import Notification from '../Notification';
 
 export default class MainTabs extends Component {
   constructor(props) {
@@ -80,8 +81,19 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="calendar"
+                    name="bell"
                     style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                  />
+                </TabHeading>}
+            >
+              <Notification />
+            </Tab>
+            <Tab
+              heading={
+                <TabHeading style={{ backgroundColor: 'white' }}>
+                  <IconSimpleLine
+                    name="calendar"
+                    style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
                   />
                 </TabHeading>}
             >

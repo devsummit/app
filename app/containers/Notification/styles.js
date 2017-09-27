@@ -2,11 +2,10 @@ import { StyleSheet } from 'react-native';
 import { PRIMARYCOLOR } from '../../constants';
 
 const styles = StyleSheet.create({
-  container: {
+  view: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',
-    borderWidth: 1,
     flexDirection: 'column'
   },
   content: {
@@ -86,6 +85,10 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
   }
 });
 

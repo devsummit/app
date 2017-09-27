@@ -5,6 +5,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgb(255,255,255)'
   },
+  btnModal: {
+    alignSelf: 'center',
+    borderRadius: 20,
+    width: '70%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    justifyContent: 'center',
+    marginTop: 10
+  },
   section1: {
     alignItems: 'center',
     padding: 10

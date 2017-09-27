@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  ListItem,
   Text,
   Tabs,
   Tab,
@@ -12,26 +11,23 @@ import {
   CardItem,
   Body,
   Left,
-  Right,
   Item,
   Thumbnail,
   Input,
   Spinner
 } from 'native-base';
 import {
-  RefreshControl,
   View,
   FlatList,
   Image,
   TouchableOpacity,
   AsyncStorage,
-  ActivityIndicator,
+  BackHandler,
   KeyboardAvoidingView,
   Modal,
   ScrollView,
   TouchableHighlight
 } from 'react-native';
-import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { createStructuredSelector } from 'reselect';
@@ -42,6 +38,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import 'moment/locale/pt-br';
 import styles from './styles';
+import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -127,7 +124,8 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      firstName: '',
+      lastName: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       modalVisible: false,
       postToFeeds: false,
@@ -148,9 +146,10 @@ class Feed extends Component {
     AsyncStorage.getItem('profile_data')
       .then((profile) => {
         const data = JSON.parse(profile);
-        const name = data.first_name;
+        const firstName = data.first_name;
+        const lastName = data.last_name;
         const url = data.photos[0].url;
-        this.setState({ name, profileUrl: url });
+        this.setState({ firstName, lastName, profileUrl: url });
       });
   }
 
@@ -219,9 +218,9 @@ class Feed extends Component {
       <Container
         style={styles.container}
       >
-        <HeaderPoint title="FEED" />
+        <HeaderPoint title={strings.feed.title} />
         <Tabs style={styles.tabs} initialPage={0}>
-          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
             <Content>
               <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
                 {
@@ -260,7 +259,7 @@ class Feed extends Component {
                               <Left>
                                 <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment )}>
                                   <Icon name="share" style={{ color: '#0000ff' }}/>
-                                  <Text style={styles.buttonShare}>  Share</Text>
+                                  <Text style={styles.buttonShare}>{strings.feed.share}</Text>
                                 </Button>
                               </Left>
                             </CardItem>
@@ -271,7 +270,7 @@ class Feed extends Component {
                         <Card>
                           <CardItem>
                             <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                              <Text style={{ color: '#42A5F5' }}>Show more Feeds</Text>
+                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
                             </Body>
                           </CardItem>
                         </Card>
@@ -280,31 +279,31 @@ class Feed extends Component {
                 }
               </Card>
             </Content>
-            <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
-              <Button
-                iconSrc={{ uri: TWITTER_ICON }}
-                onPress={() => { this.onCancel();
-                  setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
-              >
-                Twitter
-              </Button>
-              <Button
-                iconSrc={{ uri: FACEBOOK_ICON }}
-                onPress={() => { this.onCancel();
-                  setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
-              >
-                Facebook
-              </Button>
-              <Button
-                iconSrc={{ uri: WHATSAPP_ICON }}
-                onPress={() => { this.onCancel();
-                  setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
-              >
-                Whatsapp
-              </Button>
-          </ShareSheet>
+              <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
+                <Button
+                  iconSrc={{ uri: TWITTER_ICON }}
+                  onPress={() => { this.onCancel();
+                    setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
+                >
+                  {strings.global.twitter}
+                </Button>
+                <Button
+                  iconSrc={{ uri: FACEBOOK_ICON }}
+                  onPress={() => { this.onCancel();
+                    setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
+                >
+                  {strings.global.facebook}
+                </Button>
+                <Button
+                  iconSrc={{ uri: WHATSAPP_ICON }}
+                  onPress={() => { this.onCancel();
+                    setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
+                >
+                  {strings.global.whatsapp}
+                </Button>
+            </ShareSheet>
           </Tab>
-          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
+          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.ticket}</Text></TabHeading>}>
             <TicketList />
           </Tab>
         </Tabs>
@@ -383,9 +382,9 @@ class Feed extends Component {
                     <Image source={{uri: (this.props.imagesData.path || this.props.imagesData.sourceURL)}} style={{height: 200, width: null, flex: 1}}/>
                   </CardItem>
                 }
-            </ScrollView>
-          </KeyboardAvoidingView>
-         </Card>
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </Card>
         </Modal>
         {/* Modal for picture preview */}
         <Modal
@@ -408,6 +407,7 @@ class Feed extends Component {
 class CustomInput extends Component {
   componentDidMount() {
     this._input._root.focus();
+    BackHandler.addEventListener("hardwareBackPress", () => { console.log("HERERE"); this.setModalPost(false) })
   }
 
   render() {
@@ -421,7 +421,7 @@ class CustomInput extends Component {
         value={this.props.textData}
         onChangeText={text => this.props.onChangeText(text)}
       />
-    )
+    );
   }
 }
 
