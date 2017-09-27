@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
-    marginLeft: 8,
-    color: '#FFD740'
+    color: '#FFD740',
+    marginLeft: -24
   },
   labelText: {
     fontSize: 12,
