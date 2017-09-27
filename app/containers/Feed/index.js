@@ -26,7 +26,10 @@ import {
   TouchableOpacity,
   AsyncStorage,
   ActivityIndicator,
-  Modal
+  KeyboardAvoidingView,
+  Modal,
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
@@ -127,6 +130,7 @@ class Feed extends Component {
       name: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       modalVisible: false,
+      postToFeeds: false,
       imagePreview: '',
       visible: false,
       shareOptions: {
@@ -154,15 +158,34 @@ class Feed extends Component {
     this.setState({ modalVisible: visible, imagePreview: image });
   }
 
-  postFeed = () => {
+  setModalPost = (visible) => {
+    this.setState({ postToFeeds: visible });
+    this.props.clearImage();
+    this.props.clearTextField();
+  }
+
+  postFeed = (callback) => {
     this.props.postFeeds(this.props.imagesData, this.props.textData);
+    this.setModalPost(false)
   }
 
   uploadImage = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 200,
+      width: 400,
+      height: 300,
       cropping: true,
+      includeBase64: true
+    }).then((image) => {
+      this.props.updateImage(image);
+    }).catch((err) => {
+        console.log(err);
+    });
+  }
+
+  takeImage = () => {
+    ImagePicker.openCamera({
+      width: 400,
+      height: 300,
       includeBase64: true
     }).then((image) => {
       this.props.updateImage(image);
@@ -201,54 +224,6 @@ class Feed extends Component {
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>News feed</Text></TabHeading>}>
             <Content>
               <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
-                <CardItem>
-                  <Left>
-                    <Thumbnail source={{ uri: this.state.profileUrl }} />
-                    <Body>
-                      <Text>{ this.state.name }</Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-                <CardItem>
-                  <Body>
-                    <Item regular>
-                      <Input
-                        rounded
-                        placeholder={'Share your activity ...'}
-                        multiline
-                        numberOfLines={4}
-                        value={this.props.textData}
-                        onChangeText={text => this.handleChange(text)}
-                      />
-                    </Item>
-                  </Body>
-                </CardItem>
-
-                {
-                  this.props.imagesData && (this.props.imagesData.path || this.props.imagesData.sourceURL) &&
-                  <CardItem cardBody>
-                    <Image source={{uri: (this.props.imagesData.path || this.props.imagesData.sourceURL)}} style={{height: 200, width: null, flex: 1}}/>
-                  </CardItem>
-                }
-
-                <CardItem>
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <TouchableOpacity onPress={() => this.uploadImage(this)}>
-                      <View style={{ margin: 10 }}>
-                        <CameraIcon name="camera" size={24} color="grey" />
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.postFeed()}>
-                      <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
-                        { this.props.isPosting ?
-                          <ActivityIndicator color="yellow" />
-                          :
-                          <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
-                        }
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                </CardItem>
                 {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
@@ -257,6 +232,7 @@ class Feed extends Component {
                       <FlatList
                         keyExtractor={this._keyExtractor}
                         data={this.props.feeds}
+                        initialNumToRender={5}
                         renderItem={({ item }) => (
                           <Card style={{ flex: 0 }}>
                             <CardItem>
@@ -304,41 +280,114 @@ class Feed extends Component {
                 }
               </Card>
             </Content>
-              <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
-                <Button
-                  iconSrc={{ uri: TWITTER_ICON }}
-                  onPress={() => { this.onCancel();
-                    setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
-                >
-                  Twitter
-                </Button>
-                <Button
-                  iconSrc={{ uri: FACEBOOK_ICON }}
-                  onPress={() => { this.onCancel();
-                    setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
-                >
-                  Facebook
-                </Button>
-                <Button
-                  iconSrc={{ uri: WHATSAPP_ICON }}
-                  onPress={() => { this.onCancel();
-                    setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
-                >
-                  Whatsapp
-                </Button>
-            </ShareSheet>
+            <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
+              <Button
+                iconSrc={{ uri: TWITTER_ICON }}
+                onPress={() => { this.onCancel();
+                  setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
+              >
+                Twitter
+              </Button>
+              <Button
+                iconSrc={{ uri: FACEBOOK_ICON }}
+                onPress={() => { this.onCancel();
+                  setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
+              >
+                Facebook
+              </Button>
+              <Button
+                iconSrc={{ uri: WHATSAPP_ICON }}
+                onPress={() => { this.onCancel();
+                  setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
+              >
+                Whatsapp
+              </Button>
+          </ShareSheet>
           </Tab>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Ticket</Text></TabHeading>}>
             <TicketList />
           </Tab>
         </Tabs>
         <Fab
-          style={{ backgroundColor: '#FFA726' }}
-          position="topRight"
-          onPress={() => Actions.notification()}
+          style={{ backgroundColor: '#0D47A1' }}
+          position="bottomRight"
+          onPress={() => this.setModalPost(true)}
         >
-          <Icon name="bell" />
+          <Icon name="brush" />
         </Fab>
+       {/* Modal for create new feeds post */}
+        <Modal
+          animationType={'fade'}
+          transparent
+          visible={this.state.postToFeeds}
+          onRequestClose={() => this.setModalPost(!this.state.postToFeeds)}
+        >
+          <Card>
+            <KeyboardAvoidingView>
+              <ScrollView
+                keyboardShouldPersistTaps="always"
+                ref={ref => this.scrollView = ref}
+                onContentSizeChange={(height, width) => this.scrollView.scrollToEnd({animated: true})}>
+                <CardItem>
+                  <Left>
+                    <Thumbnail source={{ uri: this.state.profileUrl }} />
+                    <Body>
+                      <Text>{ this.state.name }</Text>
+                    </Body>
+                  </Left>
+                </CardItem>
+
+                <CardItem>
+                  <Item regular>
+                    <CustomInput
+                      textData={this.props.textData}
+                      onChangeText={text => this.handleChange(text)}
+                    />
+                  </Item>
+                </CardItem>
+
+                <CardItem>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <TouchableHighlight onPress={() => this.uploadImage(this)}>
+                      <View style={{ margin: 10 }}>
+                        <CameraIcon name="image" size={24} color="grey" />
+                      </View>
+                    </TouchableHighlight>
+                    <TouchableOpacity onPress={() => this.takeImage(this)}>
+                      <View style={{ margin: 10 }}>
+                        <CameraIcon name="camera" size={24} color="grey" />
+                      </View>
+                    </TouchableOpacity>
+                    {
+                      this.props.textData !== '' || (this.props.imagesData.path || this.props.imagesData.sourceURL)
+                      ? (
+                          <TouchableOpacity onPress={() => this.postFeed()}>
+                            <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
+                            </View>
+                          </TouchableOpacity>
+                        )
+                      : (
+                          <TouchableOpacity activeOpacity={1}>
+                            <View style={{ borderWidth: 1, borderColor: 'grey', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', margin: 10, color: 'grey' }}>Post</Text>
+                            </View>
+                          </TouchableOpacity>
+                        )
+                    }
+                  </View>
+                </CardItem>
+                {
+                  this.props.imagesData && (this.props.imagesData.path || this.props.imagesData.sourceURL) &&
+                  <CardItem cardBody>
+                    <Image source={{uri: (this.props.imagesData.path || this.props.imagesData.sourceURL)}} style={{height: 200, width: null, flex: 1}}/>
+                  </CardItem>
+                }
+            </ScrollView>
+          </KeyboardAvoidingView>
+         </Card>
+        </Modal>
+        {/* Modal for picture preview */}
         <Modal
           animationType={'fade'}
           transparent
@@ -350,10 +399,29 @@ class Feed extends Component {
               <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
             </View>
           </View>
-
         </Modal>
       </Container>
     );
+  }
+}
+
+class CustomInput extends Component {
+  componentDidMount() {
+    this._input._root.focus();
+  }
+
+  render() {
+    return (
+      <Input
+        rounded
+        placeholder={'Share your activity ...'}
+        multiline
+        ref={input => this._input = input}
+        numberOfLines={8}
+        value={this.props.textData}
+        onChangeText={text => this.props.onChangeText(text)}
+      />
+    )
   }
 }
 
