@@ -115,7 +115,7 @@ class TicketList extends Component {
                 {
                   orders && orders.length > 0
                     ? <Text style={{ flex: 2 }}>{orders.length} orders is pending</Text>
-                    : <Text style={{ fontSize: 12, marginTop: -4 }}>All your ticket orders shows up here</Text>
+                    : <Text style={{ fontSize: 12, flex: 2 }}>All your ticket orders shows up here</Text>
                 }
                 <Icon name="ios-arrow-dropright" style={{ flex: 0, fontSize: 30, textAlign: 'right', marginTop: 8 }} />
               </View>
