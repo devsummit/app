@@ -103,18 +103,6 @@ class BoothInfo extends Component {
             source={{ uri: images.url }}
           />
         </TouchableOpacity>
-        <Modal
-          animationType={'fade'}
-          transparent
-          visible={this.state.modalVisible}
-          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
-        >
-          <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808'}}>
-            <View style={{ flex: 1, margin: 10 }}>
-              <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
-            </View>
-          </View>
-        </Modal>
       </View>
     );
   }
