@@ -122,7 +122,7 @@ class BoothList extends Component {
                       });
                     }}
                   >
-                    <Text>{strings.booth.more}</Text>
+                    <Text style={{ color: 'blue' }}>{strings.booth.more}</Text>
                   </Button>
                 </CardItem>
               </Card>
