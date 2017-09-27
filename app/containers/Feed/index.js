@@ -331,7 +331,7 @@ class Feed extends Component {
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                      <Text>{ this.state.name }</Text>
+                      <Text>{this.state.firstName} {this.state.lastName}</Text>
                     </Body>
                   </Left>
                 </CardItem>
