@@ -20,8 +20,7 @@ export function updateInputFields(field, value) {
 export function updateDataStorage(res) {
   getProfileData()
     .then(() => {
-      const data = JSON.stringify(res.data);
-      console.log('DATAAAaaAAA', res.data)
+      const data = JSON.stringify(res.data.included);
       AsyncStorage.removeItem('profile_data', () => {
         try {
           AsyncStorage.setItem('profile_data', data);
