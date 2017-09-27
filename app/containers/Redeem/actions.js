@@ -20,8 +20,8 @@ export function updateInputFields(field, value) {
 export function updateDataStorage(res) {
   getProfileData()
     .then(() => {
-      let data = JSON.stringify(res.data);
-      data = '';
+      const data = JSON.stringify(res.data);
+      console.log('DATAAAaaAAA', res.data)
       AsyncStorage.removeItem('profile_data', () => {
         try {
           AsyncStorage.setItem('profile_data', data);
@@ -53,7 +53,6 @@ export function placeRedeem() {
           { headers: { Authorization: token } })
           .then((res) => {
             updateDataStorage(res);
-            console.log('RESOPSIKNMONK', res);
             Alert.alert('Information', res.data.meta.message);
           }).catch((error) => { console.log('ERROR', error) });
       });
