@@ -11,6 +11,7 @@ import {
   CardItem,
   Body,
   Left,
+  Right,
   Item,
   Thumbnail,
   Input,
@@ -312,7 +313,7 @@ class Feed extends Component {
           position="bottomRight"
           onPress={() => this.setModalPost(true)}
         >
-          <Icon name="brush" />
+          <CameraIcon name="pencil-square-o" />
         </Fab>
        {/* Modal for create new feeds post */}
         <Modal
@@ -331,9 +332,14 @@ class Feed extends Component {
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                      <Text>{ this.state.name }</Text>
+                      <Text>{this.state.firstName} {this.state.lastName}</Text>
                     </Body>
                   </Left>
+                  <TouchableOpacity onPress={() => this.setModalPost(false)}>
+                    <Right>
+                      <CameraIcon name="times-circle-o" size={30} />
+                    </Right>
+                  </TouchableOpacity>
                 </CardItem>
 
                 <CardItem>
@@ -362,7 +368,7 @@ class Feed extends Component {
                       ? (
                           <TouchableOpacity onPress={() => this.postFeed()}>
                             <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ textAlign: 'center', margin: 10 }}>Post</Text>
+                                <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
                             </View>
                           </TouchableOpacity>
                         )
@@ -413,7 +419,8 @@ class CustomInput extends Component {
     return (
       <Input
         rounded
-        placeholder={'Share your activity ...'}
+        placeholder={strings.feed.shareActivity}
+        style={{ textAlignVertical: 'top' }}
         multiline
         ref={input => this._input = input}
         numberOfLines={8}
