@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   header: {
-    height: 130
+    height: 100
   },
   headerText: {
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     height: 80
   },
   pageTitle: {
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     margin: 12,
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
     color: 'white'
   },
 });
