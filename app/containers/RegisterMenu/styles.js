@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
   buttonRegister: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '83%',
   },
   registerText: {
     textAlign: 'center',
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFD740',
-    marginLeft: 'auto'
+    marginLeft: -24
   },
   icon: {
     textAlign: 'center',
