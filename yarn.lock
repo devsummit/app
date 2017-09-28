@@ -4278,6 +4278,10 @@ react-native-linear-gradient@^2.2.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-localization@^0.1.32:
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/react-native-localization/-/react-native-localization-0.1.32.tgz#623bf3359abdd0f0afff50951dcf06cffda01b2a"
+
 react-native-oauth@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-oauth/-/react-native-oauth-2.2.0.tgz#8aa7fad344b22cd29f24a4c3385244684dbcbe9e"

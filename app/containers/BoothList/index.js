@@ -94,6 +94,7 @@ class BoothList extends Component {
                   <View style={styles.profileSection}>
                     <Image
                       style={styles.profilePic}
+                      resizeMode='stretch'
                       source={{ uri: data.logo_url }}
                     />
                   </View>
@@ -122,7 +123,7 @@ class BoothList extends Component {
                       });
                     }}
                   >
-                    <Text>{strings.booth.more}</Text>
+                    <Text style={{ color: 'blue' }}>{strings.booth.more}</Text>
                   </Button>
                 </CardItem>
               </Card>

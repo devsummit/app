@@ -102,7 +102,7 @@ class BoothInfo extends Component {
 
   render() {
     const booth = this.state.id === 3;
-    const { fields, summary, user, boothGalleries, boothPhoto } = this.props || {};
+    const { fields, summary, user, boothGalleries, boothPhoto, photo } = this.props || {};
     const {
       photoPic
     } = fields || '';
@@ -121,7 +121,7 @@ class BoothInfo extends Component {
                   onPress={() => this.changeLogo(this)}
                 >
                   <Image
-                    source={{ uri: boothPhoto }}
+                    source={{ uri: photo }}
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>

@@ -222,6 +222,9 @@ class RegisterEmail extends Component {
             </View>
             <View style={{ flex: 1, padding: 5 }}>
               <CheckBox
+                color={'#FFF'}
+                iconStyle={{ color: '#FFF', marginLeft: 20 }}
+                labelStyle={{ color: '#FFF' }}
                 label={strings.register.useReferer}
                 size={30}
                 checked={this.state.isChecked}
