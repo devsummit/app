@@ -11,7 +11,9 @@ import {
   CLEAR_TEXT_FIELD,
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
-  LOAD_MORE_FEEDS
+  LOAD_MORE_FEEDS,
+  REMOVE_FEED,
+  IS_REMOVE_FEED
 } from './constants';
 
 import {
@@ -148,5 +150,49 @@ export function updateText(value) {
   return {
     type: UPDATE_TEXT,
     value
+  };
+}
+
+export function isRemoveFeed(status) {
+  return {
+    type: IS_REMOVE_FEED,
+    status
+  };
+}
+
+export function removeFeed(idFeed) {
+  return (dispatch) => {
+    dispatch(isRemoveFeed(true));
+    getAccessToken()
+      .then((token) => {
+        const headers = { Authorization: token };
+        dispatch({ type: REMOVE_FEED, idFeed });
+        DevSummitAxios.delete(`/api/v1/feeds/${idFeed}`, { headers })
+          .then((res) => {
+            dispatch(isRemoveFeed(false));
+            console.log('response remove feed', res);
+          }).catch((err) => {
+            console.log(err);
+          });
+      });
+  };
+}
+
+export function reportFeed(idFeed) {
+  return  (dispatch) => {
+    getAccessToken()
+      .then((token) => {
+        const headers = { Authorization: token };
+        const payloads = {
+          report_type: 'Harassment',
+          feed_id: idFeed
+        };
+        DevSummitAxios.post('/api/v1/feeds/reports', payloads, { headers })
+          .then((res) => {
+            console.log('response report', res);
+          }).catch((err) => {
+            console.log(err);
+          });
+      });
   };
 }
