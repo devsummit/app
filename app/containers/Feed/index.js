@@ -209,9 +209,15 @@ class Feed extends Component {
   }
 
   onOpen = (_message, _url) => {
+    console.log('check here', _message, _url);
     this.setState({ visible: true });
-    this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { message: _message }) });
-    this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+    if (_url) {
+      this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+    }
+
+    this.setState({
+      shareOptions: Object.assign({}, this.state.shareOptions, { message: _message })
+    });
   }
 
   render() {
