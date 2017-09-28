@@ -94,6 +94,7 @@ class BoothList extends Component {
                   <View style={styles.profileSection}>
                     <Image
                       style={styles.profilePic}
+                      resizeMode='stretch'
                       source={{ uri: data.logo_url }}
                     />
                   </View>
