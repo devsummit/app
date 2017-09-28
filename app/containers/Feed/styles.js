@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'red',
   },
   buttonShare: {
-    fontSize: 12,
+    fontSize: 16,
     color: '#0000ff'
   }
 });
