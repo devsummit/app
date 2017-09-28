@@ -16,7 +16,8 @@ import {
   Item,
   Thumbnail,
   Input,
-  Spinner
+  Spinner,
+  Picker
 } from 'native-base';
 import {
   RefreshControl,
@@ -26,7 +27,8 @@ import {
   TouchableOpacity,
   AsyncStorage,
   ActivityIndicator,
-  Modal
+  Modal,
+  Alert
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import { func, bool, object, array, string } from 'prop-types';
@@ -46,6 +48,7 @@ import * as selectors from './selectors';
 import TicketList from '../TicketList';
 import Share, { ShareSheet,Button } from 'react-native-share';
 import { API_BASE_URL } from '../../constants';
+import { CONTENT_REPORT } from './constants';
 
 const socket = openSocket(API_BASE_URL);
 
@@ -117,7 +120,8 @@ const mapStateToProps = () => createStructuredSelector({
   isPosting: selectors.getIsPostingFeed(),
   imagesData: selectors.getUpdateImage(),
   textData: selectors.getUpdateText(),
-  currentPage: selectors.getCurrentPage()
+  currentPage: selectors.getCurrentPage(),
+  isRemoving: selectors.getIsRemoveFeed()
 });
 
 
@@ -126,15 +130,17 @@ class Feed extends Component {
     super(props);
     this.state = {
       userId: '',
+      userPostID: '',
       postId: '',
-      name: '',
       firstName: '',
       lastName: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       modalVisible: false,
       imagePreview: '',
       visible: false,
+      invisible: false,
       optionVisible: false,
+      report: '',
       shareOptions: {
         message: '',
         url: ''
@@ -154,7 +160,7 @@ class Feed extends Component {
         const lastName = data.last_name;
         const url = data.photos[0].url;
         const id = data.id;
-        this.setState({ name, firstName, lastName, profileUrl: url, userId: id });
+        this.setState({ firstName, lastName, profileUrl: url, userId: id });
       });
   }
 
@@ -199,18 +205,42 @@ class Feed extends Component {
     this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
   }
 
-  onOpenOption = (Id) => {
+  onOpenOption = (Id, _postId) => {
     this.setState({ optionVisible: true });
-    this.setState({ postId: Id });
-    console.log('post id', this.state.userId);
+    this.setState({ userPostID: Id });
+    this.setState({ postId: _postId });
   }
 
   onCancelOption = () => {
     this.setState({ optionVisible: false });
   }
 
-  removePost = () => {
-    console.log('post id', this.state.userid);
+  alertRemoveFeed = (postId) => {
+    Alert.alert('', 'Are you sure you want to delete this post?',
+      [
+        { text: 'CANCEL' },
+        { text: 'DELETE', onPress: () => this.removeFeed(postId) }
+      ],
+      { cancelable: false }
+    );
+  }
+  
+  removeFeed = (postId) => {
+    this.props.removeFeed(postId);
+    this.setState({ optionVisible: false });
+    if (!this.props.isRemoving) {
+      Toast.show('Post has been removed');
+      this.props.fetchFeeds(1);
+    }
+  }
+
+  reportFeed = (postId) => {
+    this.props.reportFeed(postId);
+    this.setState({ optionVisible: false });
+  }
+
+  handleInputChange = (value) => {
+    this.setState({ report: value });
   }
 
   render() {
@@ -289,7 +319,7 @@ class Feed extends Component {
                                   <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                                 </Body>                          
                               </Left>
-                              <TouchableOpacity onPress={() => this.onOpenOption(item.user_id)}>
+                              <TouchableOpacity onPress={() => this.onOpenOption(item.user_id, item.id)}>
                                 <Icon name='dots-three-horizontal' />
                               </TouchableOpacity>
                             </CardItem>
@@ -353,18 +383,19 @@ class Feed extends Component {
                 </Button>
               </ShareSheet>
               <ShareSheet visible={this.state.optionVisible} onCancel={this.onCancelOption.bind(this)}>
-                { this.state.userId === this.state.postId ?
-                <Button onPress={() => this.removePost()}>
+                { this.state.userId === this.state.userPostID ?
+                <Button onPress={() => this.alertRemoveFeed(this.state.postId)}>
                   <Icon name='erase' style={{ color: '#0000ff' }} />
                   <Text style={{ fontSize: 12 }}>   Remove Post</Text>
                 </Button>
                 :
-                <Button>
+                <Button onPress={() => this.setState({ invisible: !this.state.invisible })}>
                   <Icon name='warning' style={{ color: '#0000ff' }} />
                   <Text style={{ fontSize: 12 }}>   Report This Post</Text>
                 </Button>
                 }
               </ShareSheet>
+              
           </Tab>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.ticket}</Text></TabHeading>}>
             <TicketList />
@@ -381,7 +412,29 @@ class Feed extends Component {
               <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
             </View>
           </View>
-
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.invisible}
+          onRequestClose={() => this.setState({ invisible: !this.state.invisible })}
+        >
+          <View >
+            <View style={ styles.modalText }>
+              <Text>All reports are confidential</Text>
+              <Text style={{ fontSize: 12 }}>What best describe this content?</Text>
+            </View>
+            <Picker
+              mode="dropdown"
+              placeholder="Chosee your report here"
+              selectedValue={this.state.report}
+              onValueChange={value => this.handleInputChange(value)}
+            >
+              { CONTENT_REPORT.map(item => (
+                <Item key={ item.value } label={ item.label } value={ item.report }/>
+              )) }
+            </Picker>
+          </View>
         </Modal>
       </Container>
     );
@@ -400,7 +453,10 @@ Feed.PropTypes = {
   isFetching: bool,
   imagesData: object,
   feeds: array,
-  textData: string
+  textData: string,
+  isRemoving: bool,
+  removeFeed: func,
+  reportFeed: func
 };
 
 export default connect(mapStateToProps, actions)(Feed);
