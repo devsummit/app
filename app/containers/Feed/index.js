@@ -240,7 +240,7 @@ class Feed extends Component {
                                 <Left>
                                   <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                   <Body>
-                                    <Text>{item.user.username}</Text>
+                                    <Text>{item.user.first_name} {item.user.last_name}</Text>
                                     <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                                   </Body>
                                 </Left>
@@ -248,12 +248,12 @@ class Feed extends Component {
 
                               <CardItem>
                                 <Body>
-                                  <TouchableOpacity onPress={() => this.setModalVisible(true, item.attachment) }>
-                                    <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300, justifyContent: 'space-between' }} />
-                                  </TouchableOpacity>
-                                  <Text>
+                                  <Text style={{ marginBottom: 8 }}>
                                     {item.message}
                                   </Text>
+                                  <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => this.setModalVisible(true, item.attachment) }>
+                                    <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300 }} />
+                                  </TouchableOpacity>
                                 </Body>
                               </CardItem>
 
@@ -281,41 +281,11 @@ class Feed extends Component {
                   }
                 </Card>
               </Content>
-                <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
-                  <Button
-                    iconSrc={{ uri: TWITTER_ICON }}
-                    onPress={() => { this.onCancel();
-                      setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
-                  >
-                    {strings.global.twitter}
-                  </Button>
-                  <Button
-                    iconSrc={{ uri: FACEBOOK_ICON }}
-                    onPress={() => { this.onCancel();
-                      setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
-                  >
-                    {strings.global.facebook}
-                  </Button>
-                  <Button
-                    iconSrc={{ uri: WHATSAPP_ICON }}
-                    onPress={() => { this.onCancel();
-                      setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
-                  >
-                    {strings.global.whatsapp}
-                  </Button>
-              </ShareSheet>
             </Tab>
             <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.ticket}</Text></TabHeading>}>
               <TicketList />
             </Tab>
           </Tabs>
-          <Fab
-            style={{ backgroundColor: '#0D47A1' }}
-            position="bottomRight"
-            onPress={() => this.setModalPost(true)}
-          >
-            <CameraIcon name="pencil-square-o" />
-          </Fab>
          {/* Modal for create new feeds post */}
           <Modal
             animationType={'fade'}
@@ -407,6 +377,36 @@ class Feed extends Component {
             </View>
           </Modal>
         </Content>
+        <Fab
+          style={{ backgroundColor: '#0D47A1' }}
+          position="bottomRight"
+          onPress={() => this.setModalPost(true)}
+        >
+          <CameraIcon name="pencil-square-o" />
+        </Fab>
+        <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
+          <Button
+            iconSrc={{ uri: TWITTER_ICON }}
+            onPress={() => { this.onCancel();
+              setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {"social": "twitter"})); }, 300); }}
+          >
+            {strings.global.twitter}
+          </Button>
+          <Button
+            iconSrc={{ uri: FACEBOOK_ICON }}
+            onPress={() => { this.onCancel();
+              setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'facebook'})); }, 300); }}
+          >
+            {strings.global.facebook}
+          </Button>
+          <Button
+            iconSrc={{ uri: WHATSAPP_ICON }}
+            onPress={() => { this.onCancel();
+              setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, {'social':'whatsapp'})); }, 300); }}
+          >
+            {strings.global.whatsapp}
+          </Button>
+      </ShareSheet>
       </Container>
     );
   }
