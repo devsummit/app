@@ -13,6 +13,7 @@ import register from './Register';
 import schedule from './Schedule';
 import settings from './Settings';
 import speaker from './Speaker';
+import codeConduct from './CodeConduct';
 
 const id = {
   global,
@@ -29,7 +30,8 @@ const id = {
   register,
   schedule,
   settings,
-  speaker
+  speaker,
+  codeConduct
 };
 
 export default id;
