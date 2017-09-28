@@ -258,12 +258,12 @@ class Feed extends Component {
                               </CardItem>
 
                               <CardItem>
-                                <Left>
+                                <Right>
                                   <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment )}>
-                                    <Icon name="share" style={{ color: '#0000ff' }}/>
+                                    <Icon name="share" style={{ fontSize: 16, color: '#0000ff' }} />
                                     <Text style={styles.buttonShare}>{strings.feed.share}</Text>
                                   </Button>
-                                </Left>
+                                </Right>
                               </CardItem>
                             </Card>
                           )}
