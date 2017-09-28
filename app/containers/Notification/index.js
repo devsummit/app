@@ -30,7 +30,8 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import { PRIMARYCOLOR } from '../../constants'
 import { formatDate } from '../../helpers'
-let ScreenHeight = Dimensions.get("window").height;
+
+const { height } = Dimensions.get('window');
 
 class Notification extends Component {
   constructor(props) {
@@ -102,17 +103,17 @@ class Notification extends Component {
                     ))}
                     {
                       this.props.isFetching
-                        ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
+                        ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
                         : <View />
                     }
                   </Content>
                 </ScrollView> :
                 this.props.isFetching
-                  ? <ActivityIndicator size="large" color={PRIMARYCOLOR} />
+                  ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
                   :
-                  <View style={{ flex: 1, height: ScreenHeight, backgroundColor: PRIMARYCOLOR, alignItems: 'center', justifyContent: 'center'}}>
-                    <Icon name={'bell-slash-o'} color={'#fff'} style={styles.icon} />
-                    <Text style={{ color: 'white', fontWeight: 'bold' }}>{strings.notification.noNotification}</Text>
+                  <View style={{ height, backgroundColor: '#FFF', alignItems: 'center' }} >
+                    <Icon name={'bell-slash-o'} color={PRIMARYCOLOR} style={styles.icon} />
+                    <Text style={{ color: PRIMARYCOLOR, fontWeight: 'bold' }}>{strings.notification.noNotification}</Text>
                   </View>
             }
 
