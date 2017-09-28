@@ -18,13 +18,6 @@ const CodeConduct = () => {
         <Text style={styles.content}>{strings.codeConduct.content5} {'\n'} {'\n'}</Text>
         <Text style={styles.content}>{strings.codeConduct.content6} {'\n'} {'\n'}</Text>
         <Text style={[ styles.content, { textAlign: 'center', fontWeight: 'bold', fontSize: 16 } ]}>{strings.codeConduct.content7} {'\n'} {'\n'}</Text>
-        <Button
-          primary
-          style={styles.btnModal}
-          onPress={() => Actions.pop()}
-        >
-          <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.global.back}</Text>
-        </Button>
       </View>
     </ScrollView>
   );
