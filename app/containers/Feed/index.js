@@ -28,7 +28,6 @@ import {
   Alert,
   BackHandler,
   KeyboardAvoidingView,
-  Modal,
   ScrollView,
   TouchableHighlight
 } from 'react-native';
