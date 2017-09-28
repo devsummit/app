@@ -74,6 +74,18 @@ const styles = StyleSheet.create({
   textOption: {
     fontSize: 18,
     marginBottom: 30
+  },
+  modalComponent: {
+    margin: 18,
+    padding: 10,
+    backgroundColor: 'white',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 2
+  },
+  modalText: {
+    marginLeft: 10
   }
 });
 
