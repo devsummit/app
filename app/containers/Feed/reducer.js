@@ -9,7 +9,9 @@ import {
   CLEAR_TEXT_FIELD,
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
-  LOAD_MORE_FEEDS
+  LOAD_MORE_FEEDS,
+  REMOVE_POST,
+  IS_REMOVE_POST
 } from './constants';
 
 const initialState = fromJS({
@@ -18,6 +20,7 @@ const initialState = fromJS({
   message: '',
   isFetching: false,
   isPosting: false,
+  isRemoving: false,
   currentPage: 1
 });
 
@@ -54,6 +57,12 @@ function feedReducer(state = initialState, action) {
 
     case UPDATE_CURRENT_PAGE:
       return state.set('currentPage', action.value);
+
+    case REMOVE_POST:
+      return state.set('feeds', fromJS([ ...state.get('feeds').toJS().filter(item => item.id !== action.id)]));
+
+    case IS_REMOVE_POST:
+      return state.set('isRemoving', action.status);
 
     default:
       return state;
