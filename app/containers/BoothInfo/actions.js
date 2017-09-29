@@ -62,12 +62,12 @@ export function updateDataStorage(response) {
     });
 }
 
-export function fetchBoothInfo() {
+export function fetchBoothInfo(id) {
   return (dispatch) => {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/booths/galleries', { headers })
+        DevSummitAxios.get('api/v1/booths/galleries/' + id, { headers })
           .then(async (response) => {
             await dispatch({
               type: FETCH_BOOTH_INFO,
