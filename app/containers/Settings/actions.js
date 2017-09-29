@@ -10,6 +10,7 @@ import {
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED
 } from './constants';
+import { restoreCurrentPage } from '../Feed/actions';
 import local from '../../../config/local';
 
 /*
@@ -151,6 +152,7 @@ export function logOut() {
   return async (dispatch, getState) => {
     const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
     await AsyncStorage.multiRemove(keys);
+    dispatch(restoreCurrentPage());
     dispatch(updateIsLogOut(true));
   };
 }
