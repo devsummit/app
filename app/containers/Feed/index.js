@@ -227,15 +227,15 @@ class Feed extends Component {
   }
 
   onOpen = (_message, _url) => {
-    console.log('check here', _message, _url);
     this.setState({ visible: true });
-    if (_url) {
-      this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
-    }
-
+    
     this.setState({
       shareOptions: Object.assign({}, this.state.shareOptions, { message: _message })
     });
+
+    if (_url) {
+      this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+    }
   }
 
   onCancelOption = () => {
@@ -277,6 +277,7 @@ class Feed extends Component {
   }
 
   render() {
+    console.log('this', this.state.shareOptions);
     return (
       <Container
         style={styles.container}
