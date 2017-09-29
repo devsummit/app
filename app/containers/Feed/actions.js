@@ -13,8 +13,12 @@ import {
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
   LOAD_MORE_FEEDS,
+<<<<<<< HEAD
   REMOVE_FEED,
   IS_REMOVE_FEED
+=======
+  RESTORE_CURRENT_PAGE
+>>>>>>> develop
 } from './constants';
 
 import {
@@ -209,5 +213,10 @@ export function reportFeed(idFeed) {
             console.log(err);
           });
       });
+  };
+}
+export function restoreCurrentPage() {
+  return {
+    type: RESTORE_CURRENT_PAGE
   };
 }

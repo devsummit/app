@@ -10,8 +10,12 @@ import {
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
   LOAD_MORE_FEEDS,
+<<<<<<< HEAD
   REMOVE_POST,
   IS_REMOVE_POST
+=======
+  RESTORE_CURRENT_PAGE
+>>>>>>> develop
 } from './constants';
 
 const initialState = fromJS({
@@ -63,6 +67,8 @@ function feedReducer(state = initialState, action) {
 
     case IS_REMOVE_POST:
       return state.set('isRemoving', action.status);
+    case RESTORE_CURRENT_PAGE:
+      return state.set('currentPage', 1);
 
     default:
       return state;

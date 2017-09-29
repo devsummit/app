@@ -13,24 +13,25 @@ export const REMOVE_FEED = 'app/containers/Feed/REMOVE_FEED';
 export const IS_REMOVE_FEED = 'app/containers/Feed/IS_REMOVE_FEED';
 
 export const CONTENT_REPORT = [
-    {
-        value: 'key0',
-        label: 'Spam or scam',
-        report: 'Spam'
-    },
-    {
-        value: 'key1',
-        label: 'Racism, hateful towards certain group',
-        report: 'Racism'
-    },
-    {
-        value: 'key2',
-        label: 'Pornography, sexually explicit content',
-        report: 'Pornography'
-    },
-    {
-        value: 'key3',
-        label: 'Violence or harmful behavior',
-        report: 'Violence'
-    }
+  {
+    value: 'key0',
+    label: 'Spam or scam',
+    report: 'spam'
+  },
+  {
+    value: 'key1',
+    label: 'Racism, hateful towards certain group',
+    report: 'racism'
+  },
+  {
+    value: 'key2',
+    label: 'Pornography, sexually explicit content',
+    report: 'pornography'
+  },
+  {
+    value: 'key3',
+    label: 'Violence or harmful behavior',
+    report: 'violence'
+  }
 ];
+export const RESTORE_CURRENT_PAGE = 'app/containers/Feed/RESTORE_CURRENT_PAGE';

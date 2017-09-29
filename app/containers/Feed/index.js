@@ -39,6 +39,7 @@ import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
+import Share, { ShareSheet,Button } from 'react-native-share';
 import 'moment/locale/pt-br';
 import styles from './styles';
 import strings from '../../localization';
@@ -46,7 +47,6 @@ import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketList from '../TicketList';
-import Share, { ShareSheet,Button } from 'react-native-share';
 import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT } from './constants';
 
@@ -62,21 +62,20 @@ const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
 const dateTime = `${date} ${time}`;
 
 function timeDifference(current, previous) {
+  const msPerMinute = 60 * 1000;
+  const msPerHour = msPerMinute * 60;
+  const msPerDay = msPerHour * 24;
+  const msPerMonth = msPerDay * 30;
+  const msPerYear = msPerDay * 365;
 
-  let msPerMinute = 60 * 1000;
-  let msPerHour = msPerMinute * 60;
-  let msPerDay = msPerHour * 24;
-  let msPerMonth = msPerDay * 30;
-  let msPerYear = msPerDay * 365;
-
-  let elapsed = current - previous;
+  const elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
     return 'few seconds ago';
   } else if (elapsed < msPerHour) {
-    return Math.round(elapsed/msPerMinute) + ' minutes ago';
-  } else if (elapsed < msPerDay ) {
-    return Math.round(elapsed/msPerHour ) + ' hours ago';
+    return `${Math.round(elapsed / msPerMinute)} minutes ago`;
+  } else if (elapsed < msPerDay) {
+    return `${Math.round(elapsed / msPerHour)} hours ago`;
   } else if (elapsed < msPerMonth) {
     if ((previous.getMonth() + 1) === 1) {
       return `${previous.getDate()} Jan`;
@@ -106,10 +105,12 @@ function timeDifference(current, previous) {
   }
 }
 
+/* eslint-disable */
 String.prototype.toDateFromDatetime = function() {
   var parts = this.split(/[- :]/);
   return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
 };
+/* eslint-enable */
 
 /**
  * Map redux state to component props
@@ -250,7 +251,7 @@ class Feed extends Component {
       { cancelable: false }
     );
   }
-  
+
   removeFeed = (postId) => {
     this.props.removeFeed(postId);
     this.setState({ optionVisible: false });
