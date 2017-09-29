@@ -13,12 +13,9 @@ import {
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
   LOAD_MORE_FEEDS,
-<<<<<<< HEAD
   REMOVE_FEED,
-  IS_REMOVE_FEED
-=======
+  IS_REMOVE_FEED,
   RESTORE_CURRENT_PAGE
->>>>>>> develop
 } from './constants';
 
 import {
@@ -185,11 +182,10 @@ export function removeFeed(idFeed) {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        dispatch({ type: REMOVE_FEED, idFeed });
+        dispatch({ type: REMOVE_FEED, id: idFeed });
         DevSummitAxios.delete(`/api/v1/feeds/${idFeed}`, { headers })
           .then((res) => {
             dispatch(isRemoveFeed(false));
-            console.log('response remove feed', res);
           }).catch((err) => {
             console.log(err);
           });
@@ -198,7 +194,7 @@ export function removeFeed(idFeed) {
 }
 
 export function reportFeed(idFeed) {
-  return  (dispatch) => {
+  return () => {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
@@ -208,7 +204,7 @@ export function reportFeed(idFeed) {
         };
         DevSummitAxios.post('/api/v1/feeds/reports', payloads, { headers })
           .then((res) => {
-            console.log('response report', res);
+            Toast.show('Thank you for make this feed a lovely place', Toast.LONG);
           }).catch((err) => {
             console.log(err);
           });
