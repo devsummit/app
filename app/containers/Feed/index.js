@@ -114,6 +114,7 @@ String.prototype.toDateFromDatetime = function() {
 const mapStateToProps = () => createStructuredSelector({
   isFetching: selectors.getIsFetchingFeeds(),
   feeds: selectors.getFetchFeeds(),
+  links: selectors.getFeedsLinks(),
   isPosting: selectors.getIsPostingFeed(),
   imagesData: selectors.getUpdateImage(),
   textData: selectors.getUpdateText(),
@@ -221,6 +222,7 @@ class Feed extends Component {
   }
 
   render() {
+    console.log('this.props', this.props.links)
     return (
       <Container
         style={styles.container}
@@ -274,15 +276,19 @@ class Feed extends Component {
                             </Card>
                           )}
                         />
-                        <TouchableOpacity onPress={this.fetchNextFeeds}>
-                          <Card>
-                            <CardItem>
-                              <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
-                              </Body>
-                            </CardItem>
-                          </Card>
-                        </TouchableOpacity>
+                        {
+                          this.props.links.next ?
+                            <TouchableOpacity onPress={this.fetchNextFeeds}>
+                              <Card>
+                                <CardItem>
+                                  <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                                    <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                                  </Body>
+                                </CardItem>
+                              </Card>
+                            </TouchableOpacity>
+                          : <View></View>
+                        }
                       </View>
                   }
                 </Card>
@@ -451,6 +457,7 @@ Feed.PropTypes = {
   isFetching: bool,
   imagesData: object,
   feeds: array,
+  links: object,
   textData: string
 };
 
