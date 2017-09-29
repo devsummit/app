@@ -38,3 +38,13 @@ export const getCurrentPage = () => createSelector(
   selectFeedReducer(),
   state => state.get('currentPage')
 );
+
+export const getIsRemoveFeed = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('isRemoving')
+);
+
+export const removedFeed = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('feeds').toJS()
+);

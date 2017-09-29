@@ -70,6 +70,26 @@ const styles = StyleSheet.create({
   buttonShare: {
     fontSize: 16,
     color: '#0000ff'
+  },
+  buttonReport: {
+    fontSize: 15,
+    color: '#0000ff'
+  },
+  textOption: {
+    fontSize: 18,
+    marginBottom: 30
+  },
+  modalComponent: {
+    margin: 18,
+    padding: 10,
+    backgroundColor: 'white',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 2
+  },
+  modalText: {
+    marginLeft: 10
   }
 });
 

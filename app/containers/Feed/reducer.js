@@ -11,6 +11,8 @@ import {
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
   LOAD_MORE_FEEDS,
+  REMOVE_FEED,
+  IS_REMOVE_FEED,
   RESTORE_CURRENT_PAGE
 } from './constants';
 
@@ -21,6 +23,7 @@ const initialState = fromJS({
   message: '',
   isFetching: false,
   isPosting: false,
+  isRemoving: false,
   currentPage: 1
 });
 
@@ -60,6 +63,12 @@ function feedReducer(state = initialState, action) {
 
     case UPDATE_CURRENT_PAGE:
       return state.set('currentPage', action.value);
+
+    case REMOVE_FEED:
+      return state.set('feeds', fromJS([ ...state.get('feeds').toJS().filter(item => item.id !== action.id) ]));
+
+    case IS_REMOVE_FEED:
+      return state.set('isRemoving', action.status);
 
     case RESTORE_CURRENT_PAGE:
       return state.set('currentPage', 1);
