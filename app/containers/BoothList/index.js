@@ -119,7 +119,8 @@ class BoothList extends Component {
                       Actions.boothInfo({
                         summary: data.summary,
                         user: data.user,
-                        photo: data.logo_url
+                        booth_photo: data.logo_url,
+                        booth_id: data.id
                       });
                     }}
                   >
