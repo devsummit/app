@@ -190,6 +190,7 @@ export function removeFeed(idFeed) {
         dispatch({ type: REMOVE_FEED, id: idFeed });
         DevSummitAxios.delete(`/api/v1/feeds/${idFeed}`, { headers })
           .then((res) => {
+            Toast.show('Post has been removed');
             dispatch(isRemoveFeed(false));
           }).catch((err) => {
             console.log(err);
