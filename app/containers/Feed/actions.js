@@ -12,7 +12,8 @@ import {
   CLEAR_TEXT_FIELD,
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
-  LOAD_MORE_FEEDS
+  LOAD_MORE_FEEDS,
+  RESTORE_CURRENT_PAGE
 } from './constants';
 
 import {
@@ -163,5 +164,11 @@ export function updateText(value) {
   return {
     type: UPDATE_TEXT,
     value
+  };
+}
+
+export function restoreCurrentPage() {
+  return {
+    type: RESTORE_CURRENT_PAGE
   };
 }

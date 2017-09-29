@@ -9,3 +9,4 @@ export const UPDATE_FEEDS = 'app/containers/Feed/UPDATE_FEEDS';
 export const CLEAR_IMAGE = 'app/containers/Feed/CLEAR_IMAGE';
 export const UPDATE_CURRENT_PAGE = 'app/containers/Feed/UPDATE_CURRENT_PAGE';
 export const LOAD_MORE_FEEDS = 'app/containers/Feed/LOAD_MORE_FEEDS';
+export const RESTORE_CURRENT_PAGE = 'app/containers/Feed/RESTORE_CURRENT_PAGE';
