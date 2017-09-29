@@ -7,7 +7,8 @@ import {
   UPDATE_BOOTH_PHOTO,
   UPDATE_IS_BOOTH_PHOTO_UPDATED,
   UPDATE_IS_BOOTH_GALLERY_UPDATED,
-  FETCH_BOOTH_INFO
+  FETCH_BOOTH_INFO,
+  UPDATE_BOOTH_GALLERY
 } from './constants';
 import local from '../../../config/local';
 
@@ -22,6 +23,13 @@ export function updateFields(field, value) {
 export function updateBoothPhoto(value) {
   return {
     type: UPDATE_BOOTH_PHOTO,
+    value
+  };
+}
+
+export function updateBoothGallery(value) {
+  return {
+    type: UPDATE_BOOTH_GALLERY,
     value
   };
 }
@@ -54,12 +62,12 @@ export function updateDataStorage(response) {
     });
 }
 
-export function fetchBoothInfo() {
+export function fetchBoothInfo(id) {
   return (dispatch) => {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/booths/galleries', { headers })
+        DevSummitAxios.get('api/v1/booths/galleries/' + id, { headers })
           .then(async (response) => {
             await dispatch({
               type: FETCH_BOOTH_INFO,
@@ -72,7 +80,7 @@ export function fetchBoothInfo() {
 
 export function uploadBoothImage(image) {
   return (dispatch) => {
-
+    dispatch(updateIsBoothGalleriesUpdated(false));
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
@@ -86,8 +94,12 @@ export function uploadBoothImage(image) {
 
         DevSummitAxios.post('/api/v1/booths/galleries', form, { headers })
           .then((response) => {
-            dispatch(updateBoothPhoto(response.data.data[0].url));
+            dispatch(updateBoothGallery(response.data.data[0]));
             // dispatch(updateIsBoothGalleriesUpdated(true));
+            dispatch({
+              type: UPDATE_IS_BOOTH_GALLERY_UPDATED,
+              status: true
+            })
           }).catch(err => console.log('error upload image', err));
       });
   };
@@ -95,8 +107,10 @@ export function uploadBoothImage(image) {
 
 export function updateImage(image) {
   return (dispatch) => {
+    dispatch(updateIsBoothPhotoUpdated(false));
     getAccessToken()
       .then((token) => {
+
         const headers = { Authorization: token };
         const form = new FormData();
 
@@ -110,7 +124,7 @@ export function updateImage(image) {
           .then((response) => {
             updateDataStorage(response.data);
             dispatch(updateBoothPhoto(response.data.data.logo_url));
-            // dispatch(updateIsBoothPhotoUpdated(true));
+            dispatch(updateIsBoothPhotoUpdated(true));
           }).catch(err => console.log('error change booth logo', err));
       });
   };
