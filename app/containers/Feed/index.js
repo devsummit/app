@@ -238,12 +238,6 @@ class Feed extends Component {
     });
   }
 
-  onOpenOption = (Id, _postId) => {
-    this.setState({ optionVisible: true });
-    this.setState({ userPostID: Id });
-    this.setState({ postId: _postId });
-  }
-
   onCancelOption = () => {
     this.setState({ optionVisible: false });
   }
@@ -261,10 +255,6 @@ class Feed extends Component {
   removeFeed = (postId) => {
     this.props.removeFeed(postId);
     this.setState({ optionVisible: false });
-    if (!this.props.isRemoving) {
-      Toast.show('Post has been removed');
-      this.props.fetchFeeds(1);
-    }
   }
 
   alertReportFeed = (postId) => {
@@ -332,18 +322,17 @@ class Feed extends Component {
                                 <Left>
                                   {
                                     this.state.userId === item.user_id ?
-                                      <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpenOption(item.user_id, item.id)}>
+                                      <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.alertRemoveFeed(item.id)}>
                                         <Icon name="uninstall" style={{ fontSize: 14, color: '#0000ff' }} />
                                         <Text style={styles.buttonReport}> {strings.feed.delete}</Text>
                                       </Button>
                                       :
-                                      <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpenOption(item.user_id, item.id)}>
+                                      <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.alertReportFeed(item.id)}>
                                         <Icon name="warning" style={{ fontSize: 14, color: '#0000ff' }} />
                                         <Text style={styles.buttonReport}> {strings.feed.report}</Text>
                                       </Button>
 
                                   }
-
                                 </Left>
                                 <Right>
                                   <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment)}>
@@ -366,7 +355,7 @@ class Feed extends Component {
                                 </CardItem>
                               </Card>
                             </TouchableOpacity>
-                          : <View></View>
+                            : <View />
                         }
                       </View>
                   }
@@ -522,20 +511,6 @@ class Feed extends Component {
           >
             {strings.global.whatsapp}
           </Button>
-        </ShareSheet>
-        {/* Sheet For Report */}
-        <ShareSheet visible={this.state.optionVisible} onCancel={this.onCancelOption.bind(this)}>
-          { this.state.userId === this.state.userPostID ?
-            <Button onPress={() => this.alertRemoveFeed(this.state.postId)}>
-              <Icon name='erase' style={{ color: '#0000ff' }} />
-              <Text style={{ fontSize: 12 }}>   Remove Post</Text>
-            </Button>
-            :
-            <Button onPress={() => this.alertReportFeed(this.state.postId)}>
-              <Icon name='warning' style={{ color: '#0000ff' }} />
-              <Text style={{ fontSize: 12 }}>   Report This Post</Text>
-            </Button>
-          }
         </ShareSheet>
       </Container>
     );
