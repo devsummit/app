@@ -30,7 +30,6 @@ import * as selectors from './selectors';
 class BoothInfo extends Component {
   constructor(props) {
     super(props);
-    // this.renderRow = this.renderRow.bind(this);
     this.state = {
       logged_user: null,
       imagePreview: '',
@@ -39,19 +38,14 @@ class BoothInfo extends Component {
   }
 
   componentWillMount() {
-    getBoothData()
-      .then((boothData) => {
-        if (boothData) {
-          this.handleUpdateBoothPhoto(boothData.logo_url);
-        }
-      });
+    this.props.updateBoothPhoto(this.props.booth_photo);
+
     AsyncStorage.getItem('profile_data')
       .then((user) => {
         const logged_user = JSON.parse(user);
         this.setState({ logged_user });
       }).catch(() => console.log('Error'));
-    
-    this.props.fetchBoothInfo();
+    this.props.fetchBoothInfo(this.props.booth_id);
   }
 
   componentWillReceiveProps(prevProps) {
@@ -59,10 +53,6 @@ class BoothInfo extends Component {
       Alert.alert(strings.global.success, strings.booth.imageChanged);
       this.props.updateIsBoothPhotoUpdated(false);
     }
-  }
-
-  handleUpdateBoothPhoto = (value) => {
-    this.props.updateBoothPhoto(value);
   }
 
   changeLogo = () => {
