@@ -114,7 +114,7 @@ NS_DESIGNATED_INITIALIZER;
 /*!
  @abstract Returns a view controller to resume a login that was pending when the app shutdown.
  */
-- (UIViewController<AKFViewController> *)viewControllerForLoginResume;
+- (nullable UIViewController<AKFViewController> *)viewControllerForLoginResume;
 
 @end
 
