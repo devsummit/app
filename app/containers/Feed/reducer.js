@@ -9,7 +9,8 @@ import {
   CLEAR_TEXT_FIELD,
   CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
-  LOAD_MORE_FEEDS
+  LOAD_MORE_FEEDS,
+  RESTORE_CURRENT_PAGE
 } from './constants';
 
 const initialState = fromJS({
@@ -54,6 +55,9 @@ function feedReducer(state = initialState, action) {
 
     case UPDATE_CURRENT_PAGE:
       return state.set('currentPage', action.value);
+
+    case RESTORE_CURRENT_PAGE:
+      return state.set('currentPage', 1);
 
     default:
       return state;
