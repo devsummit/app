@@ -222,7 +222,6 @@ class Feed extends Component {
   }
 
   render() {
-    console.log('this.props', this.props.links)
     return (
       <Container
         style={styles.container}
