@@ -14,6 +14,11 @@ export const getFetchFeeds = () => createSelector(
   state => state.get('feeds').toJS()
 );
 
+export const getFeedsLinks = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('links').toJS()
+);
+
 export const getIsPostingFeed = () => createSelector(
   selectFeedReducer(),
   state => state.get('isPosting')

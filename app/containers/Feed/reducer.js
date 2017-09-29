@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable';
 import {
   FETCH_FEEDS,
+  SET_LINKS,
   IS_FETCHING_FEEDS,
   UPDATE_FEEDS,
   IS_POST_FEEDS,
@@ -15,6 +16,7 @@ import {
 
 const initialState = fromJS({
   feeds: [],
+  links: {},
   image: {},
   message: '',
   isFetching: false,
@@ -31,6 +33,9 @@ function feedReducer(state = initialState, action) {
 
     case FETCH_FEEDS:
       return state.set('feeds', fromJS(action.payloads));
+
+    case SET_LINKS:
+      return state.set('links', fromJS(action.links));
 
     case IS_POST_FEEDS:
       return state.set('isPosting', action.status);

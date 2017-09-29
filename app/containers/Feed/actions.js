@@ -4,6 +4,7 @@ import Toast from 'react-native-simple-toast';
 
 import {
   FETCH_FEEDS,
+  SET_LINKS,
   IS_FETCHING_FEEDS,
   IS_POST_FEEDS,
   UPDATE_IMAGE,
@@ -56,8 +57,10 @@ export function fetchFeeds(currentpage) {
         DevSummitAxios.get(`/api/v1/feeds?page=${currentpage}`, { headers: { Authorization: token } })
           .then((response) => {
             const payloads = response.data.data;
+            const links = response.data.links;
 
             dispatch({ type: FETCH_FEEDS, payloads });
+            dispatch({ type: SET_LINKS, links });
 
             dispatch(updateCurrentPage(currentpage + 1));
 
@@ -78,8 +81,10 @@ export function fetchPageWithPaginate(page) {
         DevSummitAxios.get(`/api/v1/feeds?page=${page}`, { headers: { Authorization: token } })
           .then((response) => {
             const payloads = response.data.data;
+            const links = response.data.links;
 
             dispatch({ type: LOAD_MORE_FEEDS, payloads });
+            dispatch({ type: SET_LINKS, links });
 
             dispatch(updateCurrentPage(page + 1));
           })
