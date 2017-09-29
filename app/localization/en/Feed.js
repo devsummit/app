@@ -5,5 +5,7 @@ export default {
   post: 'Post',
   share: 'Share',
   showMore: 'Show more feeds',
-  ticket: 'Ticket'
+  ticket: 'Ticket',
+  report: 'Report',
+  delete: 'Delete'
 };

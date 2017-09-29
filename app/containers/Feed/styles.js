@@ -71,6 +71,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#0000ff'
   },
+  buttonReport: {
+    fontSize: 15,
+    color: '#0000ff'
+  },
   textOption: {
     fontSize: 18,
     marginBottom: 30
