@@ -32,7 +32,7 @@ class BoothInfo extends Component {
     super(props);
     // this.renderRow = this.renderRow.bind(this);
     this.state = {
-      id: null,
+      logged_user: null,
       imagePreview: '',
       modalVisible: false
     };
@@ -45,13 +45,12 @@ class BoothInfo extends Component {
           this.handleUpdateBoothPhoto(boothData.logo_url);
         }
       });
-
-    AsyncStorage.getItem('role_id')
-      .then((roleId) => {
-        const id = JSON.parse(roleId);
-        this.setState({ id });
+    AsyncStorage.getItem('profile_data')
+      .then((user) => {
+        const logged_user = JSON.parse(user);
+        this.setState({ logged_user });
       }).catch(() => console.log('Error'));
-
+    
     this.props.fetchBoothInfo();
   }
 
@@ -68,7 +67,7 @@ class BoothInfo extends Component {
 
   changeLogo = () => {
     ImagePicker.openPicker({
-      width: 300,
+      width: 400,
       height: 300,
       cropping: true,
       includeBase64: true
@@ -84,8 +83,8 @@ class BoothInfo extends Component {
 
   uploadImage = () => {
     ImagePicker.openPicker({
-      width: 300,
-      height: 200,
+      width: 400,
+      height: 300,
       cropping: true,
       includeBase64: true
     })
@@ -109,8 +108,11 @@ class BoothInfo extends Component {
 
 
   render() {
-    const booth = this.state.id === 3;
-    const { fields, summary, user, boothGalleries, boothPhoto, photo } = this.props || {};
+    const { logged_user } = this.state || {};
+    const { role_id, id } = logged_user || {};
+    const booth = role_id === 3;
+    const logged_uid = id || null;
+    const { fields, summary, user, boothGalleries, boothPhoto} = this.props || {};
     const {
       photoPic
     } = fields || '';
@@ -129,7 +131,7 @@ class BoothInfo extends Component {
                   onPress={() => this.changeLogo(this)}
                 >
                   <Image
-                    source={{ uri: photo }}
+                    source={{ uri: boothPhoto }}
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>
@@ -152,25 +154,27 @@ class BoothInfo extends Component {
             </View>
           </Content>
         </ScrollView>
-        <Fab
-          active={this.state.active}
-          direction="up"
-          containerStyle={{ }}
-          style={{ backgroundColor: '#5067FF' }}
-          position="bottomRight"
-          onPress={() => this.uploadImage(this)}
-        >
-          <Icon name="upload" />
-        </Fab>
+        {
+          booth && logged_uid === user.id ?
+            <Fab
+              active={this.state.active}
+              direction="up"
+              containerStyle={{ }}
+              style={{ backgroundColor: '#5067FF' }}
+              position="bottomRight"
+              onPress={() => this.uploadImage(this)}>
+              <Icon name="upload" />
+            </Fab> : <View></View>
+        }
         <Modal
           animationType={'fade'}
           transparent
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
-          <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '080808' }}>
-            <View style={{ flex: 1, margin: 0 }}>
-              <Image source={{ uri: this.state.imagePreview }} resizeModel={'contain'} style={{ flex: 1 }} />
+          <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808' }}>
+            <View style={{ flex: 1, margin: 10 }}>
+              <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
             </View>
           </View>
         </Modal>

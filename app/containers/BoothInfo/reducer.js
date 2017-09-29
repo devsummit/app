@@ -5,7 +5,8 @@ import {
   UPDATE_BOOTH_PHOTO,
   UPDATE_IS_BOOTH_PHOTO_UPDATED,
   UPDATE_IS_BOOTH_GALLERY_UPDATED,
-  FETCH_BOOTH_INFO
+  FETCH_BOOTH_INFO,
+  UPDATE_BOOTH_GALLERY
 } from './constants';
 
 const initialState = fromJS({
@@ -21,7 +22,8 @@ const initialState = fromJS({
 function boothInfoReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_BOOTH_PHOTO:
-      return state.set('boothPhoto', action.value);
+      console.log(action.value, 'coba situ')
+      return state.set('boothPhoto', fromJS(action.value));
     case UPDATE_FIELD:
       return state.setIn([ 'fields', action.fields ], action.value);
     case UPDATE_IS_BOOTH_PHOTO_UPDATED:
@@ -29,7 +31,10 @@ function boothInfoReducer(state = initialState, action) {
     case UPDATE_IS_BOOTH_GALLERY_UPDATED:
       return state.set('isBoothGalleryUpdated', action.status);
     case FETCH_BOOTH_INFO:
-      return state.set('boothGalleries', action.payloads);
+      return state.set('boothGalleries', fromJS(action.payloads));
+    case UPDATE_BOOTH_GALLERY:
+      console.log(action.value, 'let see')
+      return state.setIn(['boothGalleries', 'data'], fromJS([...state.getIn(['boothGalleries', 'data']).toJS(), action.value]));
     default:
       return state;
   }
