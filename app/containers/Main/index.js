@@ -76,7 +76,7 @@ class Main extends Component {
       countryWhitelist: [ 'ID' ],
       defaultCountry: 'ID',
       initialPhoneCountryPrefix: '+62',
-      initialPhoneNumber: '87809000750'
+      initialPhoneNumber: ''
     });
   }
 
