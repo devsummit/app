@@ -126,7 +126,7 @@ class NewOrder extends Component {
             <CardItem>
               <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: 'bold' }}>{strings.order.useReferalCode}</Text>
+                  <Text style={{ fontWeight: 'bold', flex: 1 }}>{strings.order.useReferalCode}</Text>
                   <TouchableOpacity
                     style={styles.iconWrapper}
                     onPress={() => { this.toggleReferal(); }}
@@ -135,19 +135,19 @@ class NewOrder extends Component {
                   </TouchableOpacity>
                 </View>
                 {inputFields.isUsingReferal && inputFields.isUsingReferal === true ?
-                  <View style={{ flexDirection: 'column', flex: 1, alignSelf: 'stretch' }}>
+                  <View style={{ flexDirection: 'column', flex: 1, alignSelf: 'stretch', marginTop: 10 }}>
                     <InputItem
                       title="referal code"
                       value={inputFields.referalCode}
                       onChangeText={text => this.handleInputChange('referalCode', text)}
-                      placeholder="referal code"
+                      placeholder="Referal code"
                       disabled={!inputFields.isUsingReferal}
                     />
                     <Button
                       style={styles.orderBtn}
                       onPress={() => this.OnCheckReferal()}
                     >
-                      <Text style={{ textAlign: 'center' }}>{strings.order.checkCode}</Text>
+                      <Text>{strings.order.checkCode}</Text>
                     </Button>
                   </View>
                   : <View />
@@ -184,6 +184,7 @@ class NewOrder extends Component {
           <Button
             block
             style={styles.orderBtn}
+            disabled={total > 0 ? false : true}
             onPress={() => { this.placeOrder(); }}
           >
             <Text>{strings.order.placeOrder}</Text>
