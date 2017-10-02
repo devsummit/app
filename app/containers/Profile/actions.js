@@ -61,13 +61,29 @@ export function updateIsDisabled(status) {
   };
 }
 
-export function updateDataStorage(resp) {
+export function updateDataStorage1(resp) {
   getProfileData()
     .then(() => {
+      console.log('landing here resp.data 1', resp.data);
       const newData = JSON.stringify(resp.data);
-      AsyncStorage.removeItem('profile_data', () => {
+      AsyncStorage.removeItem('profile_data1', () => {
         try {
-          AsyncStorage.setItem('profile_data', newData);
+          AsyncStorage.setItem('profile_data1', newData);
+        } catch (e) {
+          console.log('error save profile data');
+        }
+      });
+    });
+}
+
+export function updateDataStorage2(resp) {
+  getProfileData()
+    .then(() => {
+      console.log('landing here resp.data 2', resp.data);
+      const newData = JSON.stringify(resp.data);
+      AsyncStorage.removeItem('profile_data2', () => {
+        try {
+          AsyncStorage.setItem('profile_data2', newData);
         } catch (e) {
           console.log('error save profile data');
         }
@@ -94,7 +110,7 @@ export function changeProfile() {
           }
         }).then((response) => {
           if (response && response.data && response.data.meta.success && response.data.meta.message === 'Data retrieved succesfully') {
-            updateDataStorage(response);
+            updateDataStorage1(response);
             dispatch(updateIsProfileUpdated(true));
           } else {
             Alert.alert('Failed', 'Payload is invalid');
@@ -138,7 +154,7 @@ export function updateImage(image) {
         })
           .then(resp => resp.json())
           .then((resp) => {
-            updateDataStorage(resp);
+            updateDataStorage2(resp);
             dispatch(
               updateAvatar(resp.data.photos[0].url),
               updateIsAvatarUpdated(true)
