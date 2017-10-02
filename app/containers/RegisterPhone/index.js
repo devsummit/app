@@ -111,7 +111,7 @@ class RegisterPhone extends Component {
       countryWhitelist: [ 'ID' ],
       defaultCountry: 'ID',
       initialPhoneCountryPrefix: '+62',
-      initialPhoneNumber: ''
+      initialPhoneNumber: ' '
     });
   }
 
