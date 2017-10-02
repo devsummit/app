@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    borderRadius: 90,
-    margin: 20
+    borderRadius: 90
   },
   buttonText: {
     textAlign: 'left',
@@ -47,8 +46,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   errorText: {
-    fontSize: 14,
-    marginTop: 12
+    fontSize: 14
   },
   card: {
     position: 'relative',
@@ -61,11 +59,10 @@ const styles = StyleSheet.create({
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
     elevation: 3,
-    width: width * 0.47,
+    width: width * 0.45,
     alignSelf: 'center'
   },
   redeem: {
-    
     margin: 20,
     padding: 10,
     backgroundColor: 'whitesmoke',
