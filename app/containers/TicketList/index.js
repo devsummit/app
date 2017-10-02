@@ -6,20 +6,15 @@ import {
   ListItem,
   Button,
   Text,
-  Spinner,
-  CardItem,
-  Left,
-  Right
+  Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, View, TouchableOpacity, ScrollView } from 'react-native';
+import { RefreshControl, View, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/FontAwesome';
-import Header from '../../components/Header';
 import strings from '../../localization';
 import styles from './styles';
 import * as actions from './actions';
@@ -33,7 +28,8 @@ class TicketList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
+      isLoading: true,
+      modalVisible: false
     };
   }
 
@@ -48,6 +44,11 @@ class TicketList extends Component {
         isLoading: false
       });
     }
+  }
+
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
   }
 
   renderTicketList() {
@@ -108,30 +109,43 @@ class TicketList extends Component {
       <ScrollView
         style={styles.container}
       >
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
+            <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
+              <Icons name="shopping-basket" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, padding: 1 }} />
+              <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center' }}>{strings.order.myOrder}</Text>
+              {
+                orders && orders.length > 0
+                  ? <Text style={{ textAlign: 'center' }}>{orders.length} {strings.order.pending}</Text>
+                  : <Text style={{ fontSize: 12, textAlign: 'center', padding: 1 }}>{strings.order.allTicket}</Text>
+              }
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setModalVisible(true)}>
             <View style={styles.card}>
-              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>{strings.order.myOrder}</Text>
-              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                {
-                  orders && orders.length > 0
-                    ? <Text style={{ flex: 2 }}>{orders.length} {strings.order.pending}</Text>
-                    : <Text style={{ fontSize: 12, marginTop: -4 }}>{strings.order.allTicket}</Text>
-                }
-                <Icon name="ios-arrow-dropright" style={{ flex: 0, fontSize: 30, textAlign: 'right', marginTop: 8 }} />
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => Actions.newOrder()}>
-            <View style={styles.ticketCard}>
-              <Icons name="ticket" color="#E57373" style={{ flex: 1, fontSize: 30, textAlign: 'center' }} />
-              <Text style={{ textAlign: 'center', fontSize: 16 }}>{strings.order.ticketOrder}</Text>
+              <Icons name="ticket" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
+              <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.redeem}</Text>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.redeem}>
-          <Redeem />
-        </View>
+        <TouchableOpacity onPress={() => Actions.newOrder()}>
+          <View style={styles.card}>
+            <Icons name="shopping-cart" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
+            <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.ticketOrder}</Text>
+          </View>
+        </TouchableOpacity>
+
+        { /* Redeem Modal */ }
+        <Modal
+          animationType="slide"
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+        >
+          <View style={styles.redeem}>
+            <Redeem />
+          </View>
+        </Modal>
+
         <Content
           style={{ marginTop: -10 }}
           refreshControl={
