@@ -6,7 +6,8 @@ import {
   Card,
   CardItem,
   Body,
-  Spinner
+  Spinner,
+  Input
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { View, TouchableOpacity } from 'react-native';
@@ -19,7 +20,6 @@ import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import strings from '../../localization';
 import Button from '../../components/Button';
-import InputItem from '../../components/InputItem';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -83,18 +83,18 @@ class NewOrder extends Component {
       <Container style={styles.container}>
         <Content>
           { this.props.isFetchingTicket
-            ? <Spinner color={PRIMARYCOLOR}/>
+            ? <Spinner color={PRIMARYCOLOR} />
             : this.props.ticketTypes.map((ticket, index) => {
               if (index === 0) {
                 return (
                   <Card key={ticket.id}>
-                    <CardItem>
+                    <CardItem style={{ flex: 1, flexDirection: 'column' }}>
                       <Body style={styles.summary}>
-                        <Text>{ticket.ticket_type}</Text>
-                        <Text note style={{ color: 'green' }}>
+                        <Text style={styles.title}>{ticket.ticket_type.toUpperCase()}</Text>
+                        <Text style={{ color: 'orange', fontWeight: 'bold' }}>
                           Rp {Intl.NumberFormat('id').format(ticket.price)}
                         </Text>
-                        <Text note>{ticket.information}</Text>
+                        <Text note style={{ marginLeft: 'auto', marginRight: 'auto', width: 210, textAlign: 'center' }}>{ticket.information}</Text>
                       </Body>
                       <View style={styles.btnGroup}>
                         <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
@@ -114,19 +114,17 @@ class NewOrder extends Component {
             })
           }
 
-          <Card>
-            <CardItem style={{ flex: 1 }}>
-              <Text style={{ flex: 1 }}>{strings.order.total}</Text>
-              <Text style={{ textAlign: 'right', flex: 1 }}>
-                Rp {Intl.NumberFormat('id').format(total)}
-              </Text>
-            </CardItem>
-          </Card>
-          <Card>
-            <CardItem>
-              <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: 'bold', flex: 1 }}>{strings.order.useReferalCode}</Text>
+          <Card style={{ marginBottom: 0 }}>
+            <CardItem style={{ flex: 1, flexDirection: 'column' }}>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column', flex: 1 }}>
+                  <Text style={{ flex: 1 }}>{strings.order.total}</Text>
+                  <Text style={{ textAlign: 'left', flex: 1 }}>
+                  Rp {Intl.NumberFormat('id').format(total)}
+                  </Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={{ fontWeight: 'bold', marginRight: 5 }}>{strings.order.useReferalCode}</Text>
                   <TouchableOpacity
                     style={styles.iconWrapper}
                     onPress={() => { this.toggleReferal(); }}
@@ -134,9 +132,12 @@ class NewOrder extends Component {
                     <Icon name={'check-square-o'} size={24} color={inputFields.isUsingReferal ? '#3F51B5' : '#BDBDBD'} />
                   </TouchableOpacity>
                 </View>
+              </View> 
+              <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
                 {inputFields.isUsingReferal && inputFields.isUsingReferal === true ?
                   <View style={{ flexDirection: 'column', flex: 1, alignSelf: 'stretch', marginTop: 10 }}>
-                    <InputItem
+                    <Input
+                      style={styles.inputStyle}
                       title="referal code"
                       value={inputFields.referalCode}
                       onChangeText={text => this.handleInputChange('referalCode', text)}
@@ -184,7 +185,7 @@ class NewOrder extends Component {
           <Button
             block
             style={styles.orderBtn}
-            disabled={total > 0 ? false : true}
+            disabled={!(total > 0)}
             onPress={() => { this.placeOrder(); }}
           >
             <Text>{strings.order.placeOrder}</Text>
