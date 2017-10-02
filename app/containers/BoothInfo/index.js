@@ -131,7 +131,7 @@ class BoothInfo extends Component {
                 </View>
               </View>
             </LinearGradient>
-            <View>
+            <View style={{ margin: 2.5 }}>
               { images ?
                 <PhotoGrid
                   data={images}
@@ -140,7 +140,8 @@ class BoothInfo extends Component {
                   renderItem={this.renderItem}
                 />
                 :
-                <View />}
+                <View />
+              }
             </View>
           </Content>
         </ScrollView>
