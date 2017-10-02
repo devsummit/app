@@ -10,18 +10,14 @@ import styles from './styles';
 const Header = (props) => {
   return (
     <View style={styles.headerBase}>
-      <LinearGradient
-        colors={[ '#f39e21', '#f72d48' ]}
-      >
-        <View style={styles.header}>
-          <View style={styles.headerText}>
-            <Text style={styles.pageTitle}>{props.title}</Text>
-          </View>
-          <View style={styles.content}>
-            {props.children}
-          </View>
+      <View style={styles.header}>
+        <View style={styles.headerText}>
+          <Text style={styles.pageTitle}>{props.title}</Text>
         </View>
-      </LinearGradient>
+        <View style={styles.content}>
+          {props.children}
+        </View>
+      </View>
     </View>
   );
 };
