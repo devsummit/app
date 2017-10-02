@@ -50,9 +50,12 @@ const styles = StyleSheet.create({
     margin: 8
   },
   boothImageList: {
-    width: 187,
+    width: 188,
     height: 150
   },
+  viewImage: {
+    padding: 1.5
+  }
 });
 
 export default styles;
