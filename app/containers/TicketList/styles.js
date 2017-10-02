@@ -53,32 +53,22 @@ const styles = StyleSheet.create({
   card: {
     position: 'relative',
     height: 100,
-    margin: 10,
+    margin: 5,
     padding: 10,
+    marginTop: 10,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
     elevation: 3,
-    width: width * 0.6
-  },
-  ticketCard: {
-    position: 'relative',
-    height: 100,
-    margin: 10,
-    padding: 10,
-    marginLeft: 4,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: '#f8f8f8',
-    backgroundColor: '#f8f8f8',
-    elevation: 3,
-    width: width * 0.3
+    width: width * 0.47,
+    alignSelf: 'center'
   },
   redeem: {
+    
     margin: 20,
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'whitesmoke',
     borderRadius: 2
   }
 });

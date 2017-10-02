@@ -11,9 +11,8 @@ export default StyleSheet.create({
   orderBtn: {
     width: '100%',
     marginBottom: 20,
-    marginRight: 3,
-    marginLeft: 3,
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'center'
   },
   btnGroup: {
     alignSelf: 'center',
@@ -55,6 +54,6 @@ export default StyleSheet.create({
   },
   iconWrapper: {
     flex: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
   }
 });
