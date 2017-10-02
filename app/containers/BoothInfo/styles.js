@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     margin: 8
   },
   boothImageList: {
-    width: width * 0.5,
+    width: 187,
     height: 150
   },
 });
