@@ -1,4 +1,4 @@
-import { AsyncStorage, Platform } from 'react-native';
+import { AsyncStorage, Platform, Alert } from 'react-native';
 
 import FormData from 'FormData';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
@@ -11,6 +11,7 @@ import {
   UPDATE_IS_DISABLED
 } from './constants';
 import local from '../../../config/local';
+
 
 /*
  * Update the input fields
@@ -92,9 +93,11 @@ export function changeProfile() {
             Authorization: token
           }
         }).then((response) => {
-          if (response && response.data && response.data.meta.success) {
+          if (response && response.data && response.data.meta.success && response.data.meta.message === 'Data retrieved succesfully') {
             updateDataStorage(response);
             dispatch(updateIsProfileUpdated(true));
+          } else {
+            Alert.alert('Failed', 'Payload is invalid');
           }
         }).catch((error) => { console.log(error); });
       });
