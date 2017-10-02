@@ -57,7 +57,7 @@ class TicketList extends Component {
         dataArray={this.props.listTicket}
         renderRow={(item) => {
           return (
-            <ListItem style={{ marginLeft: 9, marginRight: 9, padding: 10, marginBottom: 10, borderRadius: 3 }}>
+            <ListItem style={[ styles.card, { alignSelf: 'center', height: 50, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3}]}>
               <Text style={styles.text}>{strings.order.ticketNumber} {item.id}</Text>
               {/* <Button
                 small
@@ -80,7 +80,7 @@ class TicketList extends Component {
 
   renderError() {
     return (
-      <View style={styles.errorContent}>
+      <View style={[styles.errorContent, styles.card, {width: '95%', height: 100}]}>
         <Text style={styles.errorText}>{strings.order.noTicket}</Text>
         <Button
           small
@@ -112,11 +112,11 @@ class TicketList extends Component {
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
-              <Icons name="shopping-basket" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, padding: 1 }} />
+              <Icons name="shopping-basket" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, marginTop: 3 }} />
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center' }}>{strings.order.myOrder}</Text>
               {
-                orders && orders.length > 0
-                  ? <Text style={{ textAlign: 'center' }}>{orders.length} {strings.order.pending}</Text>
+                orders && orders.length < 0
+                  ? <Text style={{ marginBottom: 5, fontSize: 12, textAlign: 'center' }}>{orders.length} {strings.order.pending}</Text>
                   : <Text style={{ fontSize: 12, textAlign: 'center', padding: 1 }}>{strings.order.allTicket}</Text>
               }
             </View>
@@ -129,7 +129,7 @@ class TicketList extends Component {
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => Actions.newOrder()}>
-          <View style={styles.card}>
+          <View style={[ styles.card, { width: '94%' } ]}>
             <Icons name="shopping-cart" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
             <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.ticketOrder}</Text>
           </View>
@@ -141,13 +141,14 @@ class TicketList extends Component {
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
-          <View style={styles.redeem}>
-            <Redeem />
-          </View>
+          <View style={{ flex: 1, justifyContent: 'center' }}>    
+            <View style={styles.redeem}>
+              <Redeem />
+            </View>
+          </View>  
         </Modal>
 
         <Content
-          style={{ marginTop: -10 }}
           refreshControl={
             <RefreshControl
               refreshing={this.props.isGettingUserTicket}
