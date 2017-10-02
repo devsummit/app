@@ -167,7 +167,7 @@ class MaterialList extends Component {
         </Content>
         <Fab
           active={this.state.invisible}
-          style={{ backgroundColor: '#FFA726' }}
+          style={{ backgroundColor: '#f39e21' }}
           position="bottomRight"
           onPress={() => this.setModal()}>
           <Icon name="plus" />
