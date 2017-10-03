@@ -5,7 +5,9 @@ import {
   Text,
   Grid,
   Col,
-  Button
+  Button,
+  Card,
+  CardItem
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, View } from 'react-native';
@@ -87,11 +89,10 @@ export default class OrderItem extends Component {
         style={styles.item}
         button
         onPress={this.props.onPress}
-      >
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <Grid style={{ flex: 1 }}>
+      > 
+      <View style={{ flexDirection: 'row' }}>
+        <Card >
             <Col style={styles.left}>
-              <Text style={styles.orderId}>Order-{order.id}</Text>
               <Text
                 note
                 style={styles.orderId}
@@ -113,20 +114,11 @@ export default class OrderItem extends Component {
                 </Text> : <View />
               }
             </Col>
-          </Grid>
-        </View>
         {(status && status === 'not paid') ?
           <Button
             onPress={() => Actions.payment({ order })}
             style={[ styles.btnCheckOut, { backgroundColor: color } ]}
           >
-            <TouchableOpacity onPress={() => this.onEditPressed()} >
-              <Icon
-                name="md-create"
-                style={styles.icon}
-                color="white"
-              />
-            </TouchableOpacity>
             <Icon name="md-cart" color="white" style={styles.icon} />
             <Text style={styles.buttonText}>CHECK OUT</Text>
           </Button> : <View />
@@ -140,6 +132,8 @@ export default class OrderItem extends Component {
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Button> : <View />
         }
+        </Card>
+        </View>
       </ListItem>
     );
   }
