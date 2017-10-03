@@ -155,6 +155,7 @@ class Feed extends Component {
   }
 
   componentWillMount() {
+    console.log('landing here compwilmount feed', this.props);
     this.props.fetchFeeds(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data')
@@ -277,7 +278,7 @@ class Feed extends Component {
   }
 
   render() {
-    console.log('this', this.state.shareOptions);
+    console.log('this', this);
     return (
       <Container
         style={styles.container}
@@ -298,6 +299,40 @@ class Feed extends Component {
                           data={this.props.feeds}
                           initialNumToRender={5}
                           renderItem={({ item }) => (
+                            console.log('landing here item', item)
+                            (item.type === 'sponsor') 
+                            ?
+                            <Card style={{ flex: 0 }}>
+                              <CardItem>
+                                <Left>
+                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                  <Body>
+                                    <Text>{item.user.first_name} {item.user.last_name}</Text>
+                                    <Text note><IconSimpleLine name="globe"/>sponsored</Text>
+                                  </Body>
+                                </Left>
+
+                              </CardItem>
+                              <CardItem>
+                                <Body>
+                                  <Text style={{ marginBottom: 8 }}>
+                                    {item.message}
+                                  </Text>
+                                  <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => this.setModalVisible(true, item.attachment) }>
+                                    <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300 }} />
+                                  </TouchableOpacity>
+                                </Body>
+                              </CardItem>
+                              <CardItem>
+                                <Right>
+                                  <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment)}>
+                                    <Icon name="share" style={{ fontSize: 16, color: '#0000ff' }} />
+                                    <Text style={styles.buttonShare}>{strings.feed.share}</Text>
+                                  </Button>
+                                </Right>
+                              </CardItem>
+                            </Card>
+                            :
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
