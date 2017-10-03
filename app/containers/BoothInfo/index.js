@@ -85,7 +85,7 @@ class BoothInfo extends Component {
 
   renderItem = (images) => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={ styles.viewImage }>
         <TouchableOpacity onPress={() => this.setModalVisible(true, images.url) }>
           <Image
             style={styles.boothImageList}
@@ -136,11 +136,11 @@ class BoothInfo extends Component {
                 <PhotoGrid
                   data={images}
                   itemsPerRow={2}
-                  itemMargin={1}
                   renderItem={this.renderItem}
                 />
                 :
-                <View />}
+                <View />
+              }
             </View>
           </Content>
         </ScrollView>
