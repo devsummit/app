@@ -85,56 +85,59 @@ export default class OrderItem extends Component {
     const { status, color } = this.state;
     const { order } = this.props;
     return (
-      <ListItem
-        style={styles.item}
+      <CardItem
+        style={styles.container}
         button
         onPress={this.props.onPress}
       > 
-      <View style={{ flexDirection: 'row' }}>
-        <Card >
-            <Col style={styles.left}>
+        <View style={styles.item}>
+          <View style={{ justifyContent: 'flex-start', flex: 4 }}>
+            <Text>Order-{order.id}</Text>
               <Text
                 note
                 style={styles.orderId}
               >
                 {formatDate(order.created_at)}
               </Text>
-            </Col>
-            <Col style={styles.right}>
-              <Text style={styles.text}>{Intl.NumberFormat('id').format(amount)}</Text>
-              {status ?
-                <Text
-                  note
-                  style={[ styles.text, {
-                    color,
-                    fontWeight: 'bold'
-                  } ]}
-                >
-                  {status.toUpperCase()}
-                </Text> : <View />
-              }
-            </Col>
-        {(status && status === 'not paid') ?
-          <Button
-            onPress={() => Actions.payment({ order })}
-            style={[ styles.btnCheckOut, { backgroundColor: color } ]}
-          >
-            <Icon name="md-cart" color="white" style={styles.icon} />
-            <Text style={styles.buttonText}>CHECK OUT</Text>
-          </Button> : <View />
-        }
-        {(status && status === 'need authorization') ?
-          <View /> : <View />
-        }
-        {(status && status === 'pending') ?
-          <Button onPress={() => this.handleConfirmPayment()} style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}>
-            <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
-            <Text style={styles.buttonText}>CONFIRM</Text>
-          </Button> : <View />
-        }
-        </Card>
+            <View style={ styles.viewText }>
+              <Text style={styles.text}>Rp. {Intl.NumberFormat('id').format(amount)}</Text>
+              <View style={{ flex: 1 }}>
+                {status ?
+                  <Text note style={ [styles.statusText, { backgroundColor: color }] }>
+                    {status.toUpperCase()}
+                  </Text> : <View />
+                }
+              </View>
+            </View>
+          </View>
+          <View style={styles.buttonSection}>
+            { !(status && status === 'paid') ?
+              <TouchableOpacity onPress={() => this.onEditPressed()} >
+                  <Icon
+                    name="md-create"
+                    style={styles.icon}
+                  />
+              </TouchableOpacity> : <View />
+            }
+            {(status && status === 'not paid') ?
+              <TouchableOpacity
+                onPress={() => Actions.payment({ order })}
+                style={styles.btnCheckOut}
+              >
+              <Icon name="md-cart" color="white" style={styles.icon} />
+              </TouchableOpacity> : <View />
+            }
+            {(status && status === 'need authorization') ?
+              <View /> : <View />
+            }
+            {(status && status === 'pending') ?
+              <TouchableOpacity onPress={() => this.handleConfirmPayment()} style={ styles.btnCheckOut }>
+                <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
+              </TouchableOpacity> : <View />
+            }
+          </View>
         </View>
-      </ListItem>
+      </CardItem>
     );
   }
 }
