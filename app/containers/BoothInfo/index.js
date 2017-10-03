@@ -10,7 +10,7 @@ import {
   CategoryCard,
   Fab
 } from 'native-base';
-import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
+import { View, Alert, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -84,13 +84,14 @@ class BoothInfo extends Component {
   }
 
   renderItem = (images) => {
+    console.log('checking image', images);
     return (
-      <TouchableOpacity onPress={() => this.setModalVisible(true, images.url)}>
+      <TouchableWithoutFeedback onPress={() => this.setModalVisible(true, images.url)}>
         <Image
           style={styles.boothImageList}
           source={{ uri: images.url }}
         />
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
 
