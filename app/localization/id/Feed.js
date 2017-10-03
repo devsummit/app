@@ -5,5 +5,7 @@ export default {
   post: 'Kirim',
   share: 'Bagikan',
   showMore: 'Tampilkan lebih banyak',
-  ticket: 'Tiket'
+  ticket: 'Tiket',
+  report: 'Lapor',
+  delete: 'Hapus'
 };
