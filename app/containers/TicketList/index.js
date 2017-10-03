@@ -109,13 +109,14 @@ class TicketList extends Component {
       <ScrollView
         style={styles.container}
       >
+        {/* My order and redeem code */}
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
               <Icons name="shopping-basket" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, marginTop: 3 }} />
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center' }}>{strings.order.myOrder}</Text>
               {
-                orders && orders.length < 0
+                orders && orders.length > 0
                   ? <Text style={{ marginBottom: 5, fontSize: 12, textAlign: 'center' }}>{orders.length} {strings.order.pending}</Text>
                   : <Text style={{ fontSize: 12, textAlign: 'center', padding: 1 }}>{strings.order.allTicket}</Text>
               }
@@ -128,6 +129,7 @@ class TicketList extends Component {
             </View>
           </TouchableOpacity>
         </View>
+        
         <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
             <Icons name="shopping-cart" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
