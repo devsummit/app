@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
     elevation: 3,
-    width: width * 0.3
+    width: width * 0.47
   },
   redeem: {
     margin: 20,
