@@ -53,14 +53,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end'
   },
-  status: {
-    alignSelf: 'flex-end',
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: 'white',
-    borderRadius: 3,
-    padding: 3,
-  },
   buttonSection: {
     flex: 1,
     flexDirection: 'row',
