@@ -61,7 +61,8 @@ export default StyleSheet.create({
     color: 'white',
     padding: 8,
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   inputStyle: {
     width: '90%',
