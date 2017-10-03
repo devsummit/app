@@ -10,3 +10,4 @@ export const UPDATE_IS_BOOTH_GALLERY_UPDATED = 'app/containers/BoothInfo/UPDATE_
 export const UPDATE_FIELD = 'app/containers/BoothInfo/UPDATE_FIELD';
 export const FETCH_BOOTH_INFO = 'app/containers/BoothInfo/FETCH_BOOTH_INFO';
 export const UPDATE_BOOTH_GALLERY = 'app/containers/BoothInfo/UPDATE_BOOTH_GALLERY';
+export const CLEAR_BOOTH_GALLERY = 'app/containers/BoothInfo/CLEAR_BOOTH_GALLERY';

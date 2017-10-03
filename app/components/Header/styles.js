@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white'
   },
+  headerBase: {
+    backgroundColor: '#FF8B00'
+  }
 });
 
 export default styles;
