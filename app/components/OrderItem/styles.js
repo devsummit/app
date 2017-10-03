@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end'
   },
   btnCheckOut: {
-    width: '100%',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 6,
@@ -49,6 +48,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     elevation: 0,
     flex: 1
+  },
+  card: {
+    flex: 0,
   }
 });
 
