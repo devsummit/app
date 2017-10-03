@@ -15,12 +15,10 @@ export function updateInputFields(field, value) {
 
 export function updateDataStorage(res) {
   getProfileData().then(() => {
-    console.log('landing here redeem update data storage res', res);
     const data = JSON.stringify(res.data.included);
     AsyncStorage.removeItem('booth_data', () => {
       try {
         AsyncStorage.setItem('booth_data', data);
-        console.log('landing here data', res.data.included);
         if (res.data.included.role_id === 3) {
           Toast.show('Congratulation for becoming Booth');
         } else if (res.data.included.role_id === 8) {
