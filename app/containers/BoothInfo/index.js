@@ -85,14 +85,12 @@ class BoothInfo extends Component {
 
   renderItem = (images) => {
     return (
-      <View style={ styles.viewImage }>
-        <TouchableOpacity onPress={() => this.setModalVisible(true, images.url) }>
-          <Image
-            style={styles.boothImageList}
-            source={{ uri: images.url }}
-          />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={() => this.setModalVisible(true, images.url)}>
+        <Image
+          style={styles.boothImageList}
+          source={{ uri: images.url }}
+        />
+      </TouchableOpacity>
     );
   }
 
@@ -131,7 +129,7 @@ class BoothInfo extends Component {
                 </View>
               </View>
             </LinearGradient>
-            <View>
+            <View style={styles.imageWrapper}>
               { images ?
                 <PhotoGrid
                   data={images}
@@ -152,9 +150,10 @@ class BoothInfo extends Component {
               containerStyle={{ }}
               style={{ backgroundColor: '#5067FF' }}
               position="bottomRight"
-              onPress={() => this.uploadImage(this)}>
+              onPress={() => this.uploadImage(this)}
+            >
               <Icon name="upload" />
-            </Fab> : <View></View>
+            </Fab> : <View />
         }
         <Modal
           animationType={'fade'}
