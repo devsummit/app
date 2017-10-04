@@ -1,4 +1,4 @@
-import { AsyncStorage, Platform } from 'react-native';
+import { AsyncStorage, Platform, Alert } from 'react-native';
 
 import FormData from 'FormData';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
@@ -60,100 +60,132 @@ export function updateIsDisabled(status) {
   };
 }
 
-export function updateDataStorage(resp) {
-  getProfileData()
-    .then(() => {
-      const newData = JSON.stringify(resp.data);
-      AsyncStorage.removeItem('profile_data', () => {
-        try {
-          AsyncStorage.setItem('profile_data', newData);
-        } catch (e) {
-          console.log('error save profile data');
-        }
-      });
+export function updateDataStorage1(resp) {
+  getProfileData().then(() => {
+    const newData = JSON.stringify(resp.data);
+    AsyncStorage.removeItem('profile_data', () => {
+      try {
+        AsyncStorage.setItem('profile_data', newData);
+      } catch (e) {
+        console.log('error save profile data');
+      }
     });
+  });
+}
+
+export function updateDataStorage2(resp) {
+  getProfileData().then(() => {
+    const newData = JSON.stringify(resp.data);
+    AsyncStorage.removeItem('profile_data2', () => {
+      try {
+        AsyncStorage.setItem('profile_data2', newData);
+      } catch (e) {
+        console.log('error save profile data');
+      }
+    });
+  });
 }
 
 export function changeProfile() {
   return (dispatch, getState) => {
-    const { fields } = getState().get('profile').toJS();
+    const { fields } = getState()
+      .get('profile')
+      .toJS();
     const { username, firstName, lastName, profilePic, boothInfo, job, summary } = fields;
 
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.patch('/auth/me/changesetting', {
+    getAccessToken().then((token) => {
+      DevSummitAxios.patch(
+        '/auth/me/changesetting',
+        {
           first_name: firstName,
           last_name: lastName,
           booth_info: boothInfo,
           speaker_job: job,
           speaker_summary: summary
-        }, {
+        },
+        {
           headers: {
             Authorization: token
           }
-        }).then((response) => {
-          if (response && response.data && response.data.meta.success) {
-            updateDataStorage(response);
+        }
+      )
+        .then((response) => {
+          if (
+            response &&
+            response.data &&
+            response.data.meta.success &&
+            response.data.meta.message === 'Data retrieved succesfully'
+          ) {
+            updateDataStorage1(response);
             dispatch(updateIsProfileUpdated(true));
+          } else {
+            Alert.alert('Failed', 'Payload is invalid');
           }
-        }).catch((error) => { console.log(error); });
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   };
 }
 
 export function updateImage(image) {
   return (dispatch, getState) => {
-    const { avatar } = getState().get('profile').toJS();
+    const { avatar } = getState()
+      .get('profile')
+      .toJS();
 
-    getAccessToken()
-      .then((token) => {
-        // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('/api/v1/user/photo');
-        const form = new FormData();
+    getAccessToken().then((token) => {
+      // @TODO We need to change into dev-summit url
+      const url = local.API_BASE_URL.concat('/api/v1/user/photo');
+      const form = new FormData();
 
+      if (Platform.OS === 'ios') {
+        form.append('image_data', {
+          uri: image.sourceURL,
+          type: image.mime,
+          name: image.filename
+        });
+      } else {
+        form.append('image_data', {
+          uri: image.path,
+          type: image.mime,
+          name: 'image.jpg'
+        });
+      }
 
-        if (Platform.OS === 'ios') {
-          form.append('image_data', {
-            uri: image.sourceURL,
-            type: image.mime,
-            name: image.filename
-          });
-        } else {
-          form.append('image_data', {
-            uri: image.path,
-            type: image.mime,
-            name: 'image.jpg'
-          });
-        }
-
-        fetch(url, {
-          method: 'POST',
+      DevSummitAxios.post(
+        '/api/v1/user/photo',
+        {
+          form
+        },
+        {
           headers: {
             Authorization: token
-          },
-          body: form
+          }
+        }
+      )
+        .then(resp => resp.json())
+        .then((resp) => {
+          updateDataStorage2(resp);
+          dispatch(updateAvatar(resp.data.photos[0].url), updateIsAvatarUpdated(true));
         })
-          .then(resp => resp.json())
-          .then((resp) => {
-            updateDataStorage(resp);
-            dispatch(
-              updateAvatar(resp.data.photos[0].url),
-              updateIsAvatarUpdated(true)
-            );
-          }).catch(err => console.log('error upload image', err))
-      });
+        .catch(err => console.log('error upload image', err));
+    });
   };
 }
 
 export function disabled() {
   return (dispatch, getState) => {
-    const status = getState().get('profile').toJS().isDisabled;
+    const status = getState()
+      .get('profile')
+      .toJS().isDisabled;
     if (status === true) {
       dispatch(updateIsDisabled(false));
     } else {
       dispatch(updateIsDisabled(true));
     }
-  }
+  };
 }
 
 export function logOut() {
