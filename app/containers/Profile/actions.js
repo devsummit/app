@@ -62,7 +62,6 @@ export function updateIsDisabled(status) {
 
 export function updateDataStorage1(resp) {
   getProfileData().then(() => {
-    console.log('landing here resp.data 1', resp.data);
     const newData = JSON.stringify(resp.data);
     AsyncStorage.removeItem('profile_data1', () => {
       try {
@@ -76,7 +75,6 @@ export function updateDataStorage1(resp) {
 
 export function updateDataStorage2(resp) {
   getProfileData().then(() => {
-    console.log('landing here resp.data 2', resp.data);
     const newData = JSON.stringify(resp.data);
     AsyncStorage.removeItem('profile_data2', () => {
       try {
