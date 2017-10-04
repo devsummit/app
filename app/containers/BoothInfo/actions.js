@@ -8,7 +8,8 @@ import {
   UPDATE_IS_BOOTH_PHOTO_UPDATED,
   UPDATE_IS_BOOTH_GALLERY_UPDATED,
   FETCH_BOOTH_INFO,
-  UPDATE_BOOTH_GALLERY
+  UPDATE_BOOTH_GALLERY,
+  CLEAR_BOOTH_GALLERY
 } from './constants';
 import local from '../../../config/local';
 
@@ -48,6 +49,12 @@ export function updateIsBoothGalleriesUpdated(status) {
   };
 }
 
+export function clearBoothGallery() {
+  return {
+    type: CLEAR_BOOTH_GALLERY
+  };
+}
+
 export function updateDataStorage(response) {
   getBoothData()
     .then(() => {
@@ -75,6 +82,7 @@ export function fetchBoothInfo(id) {
             });
           });
       });
+    dispatch(clearBoothGallery());
   };
 }
 

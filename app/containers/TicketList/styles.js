@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    borderRadius: 90,
-    margin: 20
+    borderRadius: 90
   },
   buttonText: {
     textAlign: 'left',
@@ -47,38 +46,26 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   errorText: {
-    fontSize: 14,
-    marginTop: 12
+    fontSize: 14
   },
   card: {
     position: 'relative',
     height: 100,
-    margin: 10,
+    margin: 5,
     padding: 10,
+    marginTop: 10,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: '#f8f8f8',
     backgroundColor: '#f8f8f8',
     elevation: 3,
-    width: width * 0.6
-  },
-  ticketCard: {
-    position: 'relative',
-    height: 100,
-    margin: 10,
-    padding: 10,
-    marginLeft: 4,
-    borderRadius: 3,
-    borderWidth: 1,
-    borderColor: '#f8f8f8',
-    backgroundColor: '#f8f8f8',
-    elevation: 3,
-    width: width * 0.3
+    width: width * 0.45,
+    alignSelf: 'center'
   },
   redeem: {
     margin: 20,
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'whitesmoke',
     borderRadius: 2
   }
 });

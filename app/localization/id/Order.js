@@ -30,5 +30,6 @@ export default {
   myOrder: 'Pesanan saya',
   pending: 'Menunggu pembayaran',
   allTicket: 'Seluruh pesanan anda ada disini',
-  ticketOrder: 'Pemesanan tiket'
+  ticketOrder: 'Pemesanan tiket',
+  redeem: 'Tukar kode'
 };

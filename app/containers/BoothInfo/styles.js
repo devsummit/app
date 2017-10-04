@@ -50,9 +50,18 @@ const styles = StyleSheet.create({
     margin: 8
   },
   boothImageList: {
-    width: width * 0.5,
-    height: 150
+    width: width * 0.49,
+    height: 150,
+    margin: 2
   },
+  imageWrapper: {
+    marginLeft: 2,
+    marginRight: 2,
+    marginTop: 2,
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  }
 });
 
 export default styles;
