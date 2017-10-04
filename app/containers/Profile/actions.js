@@ -63,9 +63,10 @@ export function updateIsDisabled(status) {
 export function updateDataStorage1(resp) {
   getProfileData().then(() => {
     const newData = JSON.stringify(resp.data);
-    AsyncStorage.removeItem('profile_data1', () => {
+    console.log('resp.data ====', resp.data)
+    AsyncStorage.removeItem('profile_data', () => {
       try {
-        AsyncStorage.setItem('profile_data1', newData);
+        AsyncStorage.setItem('profile_data', newData);
       } catch (e) {
         console.log('error save profile data');
       }

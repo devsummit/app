@@ -35,15 +35,15 @@ class Profile extends Component {
     getProfileData().then((profileData) => {
       console.log('landing here profile data', profileData);
       if (profileData) {
-        this.handleInputChange('username', profileData.username);
-        this.handleInputChange('firstName', profileData.first_name);
-        this.handleInputChange('lastName', profileData.last_name);
-        if (profileData.role_id === 3) {
-          this.handleInputChange('boothInfo', profileData.booth.summary);
+        this.handleInputChange('username', profileData.data.username);
+        this.handleInputChange('firstName', profileData.data.first_name);
+        this.handleInputChange('lastName', profileData.data.last_name);
+        if (profileData.data.role_id === 3) {
+          this.handleInputChange('boothInfo', profileData.data.booth.summary);
         }
-        if (profileData.role_id === 4) {
-          this.handleInputChange('job', profileData.speaker.job);
-          this.handleInputChange('summary', profileData.speaker.summary);
+        if (profileData.data.role_id === 4) {
+          this.handleInputChange('job', profileData.data.speaker.job);
+          this.handleInputChange('summary', profileData.data.speaker.summary);
         }
       }
       this.setState({
