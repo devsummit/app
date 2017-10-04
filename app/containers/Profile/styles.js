@@ -29,6 +29,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     textAlignVertical: 'top'
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   imageProfile: {
     alignSelf: 'center',
     marginVertical: 20

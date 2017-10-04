@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
 import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -23,26 +24,30 @@ import styles from './styles';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { PRIMARYCOLOR } from '../../constants';
 
 class Profile extends Component {
   state = {
-    id: null
+    id: null,
+    isLoading: true
   }
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
-        this.handleUpdateAvatar(profileData.photos[0].url);
-        this.handleInputChange('username', profileData.username);
-        this.handleInputChange('firstName', profileData.first_name);
-        this.handleInputChange('lastName', profileData.last_name);
-        if (profileData.role_id === 3) {
-          this.handleInputChange('boothInfo', profileData.booth.summary);
+        this.handleInputChange('username', profileData.data.username);
+        this.handleInputChange('firstName', profileData.data.first_name);
+        this.handleInputChange('lastName', profileData.data.last_name);
+        if (profileData.data.role_id === 3) {
+          this.handleInputChange('boothInfo', profileData.data.booth.summary);
         }
-        if (profileData.role_id === 4) {
-          this.handleInputChange('job', profileData.speaker.job);
-          this.handleInputChange('summary', profileData.speaker.summary);
+        if (profileData.data.role_id === 4) {
+          this.handleInputChange('job', profileData.data.speaker.job);
+          this.handleInputChange('summary', profileData.data.speaker.summary);
         }
       }
+      this.setState({
+        isLoading: false
+      });
     });
     AsyncStorage.getItem('role_id')
       .then((roleId) => {
@@ -52,6 +57,7 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
+
     if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
       Alert.alert('Success', 'Profile has been changed');
       this.props.updateIsProfileUpdated(false);
@@ -104,85 +110,85 @@ class Profile extends Component {
 
     return (
       <Container>
-      <ScrollView>
-        <Content>
-          <View style={styles.pointsSection}>
-            <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
-          </View>
-          <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
-            <Image
-              source={{ uri: avatar }}
-              style={styles.profileImage}
-            />
-          </TouchableOpacity>
-          <Text style={styles.username}>{username}</Text>
-          <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
-            <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
-          </TouchableOpacity>
-          <View style={styles.section2}>
-            <InputItem
-              style={styles.input}
-              title={strings.profile.firstName}
-              placeholder={strings.profile.firstName}
-              disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('firstName', text); }}
-              value={firstName}
-            />
-            <InputItem
-              style={styles.input}
-              title={strings.profile.lastName}
-              placeholder={strings.profile.lastName}
-              disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('lastName', text); }}
-              value={lastName}
-            />
-            {speaker ? <InputItem
-              style={styles.inputJob}
-              title={strings.profile.job}
-              placeholder={strings.profile.job}
-              placeholderTextColor={'#BDBDBD'}
-              disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('job', text); }}
-              value={job}
-              maxLength={255}
-              multiline
-            />
-            : <View />}
-            {speaker ? <InputItem
-              style={styles.inputInfo}
-              title={strings.profile.summary}
-              placeholder={strings.profile.summary}
-              placeholderTextColor={'#BDBDBD'}
-              disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('summary', text); }}
-              value={summary}
-              maxLength={255}
-              multiline
-            />
-            : <View />}
-            {booth ? <InputItem
-              style={styles.inputInfo}
-              title={strings.profile.boothInfo}
-              placeholder={strings.profile.boothInfo}
-              disabled={!!isDisabled}
-              onChangeText={(text) => { this.handleInputChange('boothInfo', text); }}
-              value={boothInfo}
-              maxLength={255}
-              multiline
-            /> : <View />}
-            <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
-              <Text style={styles.changePassText}>{strings.profile.changePassword}</Text>
-            </Button>
-            <Button
-              block
-              disabled={this.props.firstName === ''}
-              style={styles.button}
-              onPress={() => this.props.changeProfile()}
-            >
-              <Text>{strings.global.save}</Text>
-            </Button>
-          </View>
-      </Content>
+        <ScrollView>
+          <Content>
+            <View style={styles.pointsSection}>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
+            </View>
+            <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
+              <Image
+                source={{ uri: avatar }}
+                style={styles.profileImage}
+              />
+            </TouchableOpacity>
+            <Text style={styles.username}>{username}</Text>
+            <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
+              <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
+            </TouchableOpacity>
+            <View style={styles.section2}>
+              <InputItem
+                style={styles.input}
+                title={strings.profile.firstName}
+                placeholder={strings.profile.firstName}
+                disabled={!!isDisabled}
+                onChangeText={(text) => { this.handleInputChange('firstName', text); }}
+                value={firstName}
+              />
+              <InputItem
+                style={styles.input}
+                title={strings.profile.lastName}
+                placeholder={strings.profile.lastName}
+                disabled={!!isDisabled}
+                onChangeText={(text) => { this.handleInputChange('lastName', text); }}
+                value={lastName}
+              />
+              {speaker ? <InputItem
+                style={styles.inputJob}
+                title={strings.profile.job}
+                placeholder={strings.profile.job}
+                placeholderTextColor={'#BDBDBD'}
+                disabled={!!isDisabled}
+                onChangeText={(text) => { this.handleInputChange('job', text); }}
+                value={job}
+                maxLength={255}
+                multiline
+              />
+              : <View />}
+              {speaker ? <InputItem
+                style={styles.inputInfo}
+                title={strings.profile.summary}
+                placeholder={strings.profile.summary}
+                placeholderTextColor={'#BDBDBD'}
+                disabled={!!isDisabled}
+                onChangeText={(text) => { this.handleInputChange('summary', text); }}
+                value={summary}
+                maxLength={255}
+                multiline
+              />
+              : <View />}
+              {booth ? <InputItem
+                style={styles.inputInfo}
+                title={strings.profile.boothInfo}
+                placeholder={strings.profile.boothInfo}
+                disabled={!!isDisabled}
+                onChangeText={(text) => { this.handleInputChange('boothInfo', text); }}
+                value={boothInfo}
+                maxLength={255}
+                multiline
+              /> : <View />}
+              <Button transparent style={styles.buttonChangePass} onPress={() => { Actions.changePassword(); }}>
+                <Text style={styles.changePassText}>{strings.profile.changePassword}</Text>
+              </Button>
+              <Button
+                block
+                disabled={this.props.firstName === ''}
+                style={styles.button}
+                onPress={() => this.props.changeProfile()}
+              >
+                <Text>{strings.global.save}</Text>
+              </Button>
+            </View>
+        </Content>
       </ScrollView>
     </Container>
     );
