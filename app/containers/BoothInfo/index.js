@@ -10,7 +10,7 @@ import {
   CategoryCard,
   Fab
 } from 'native-base';
-import { View, Alert, ScrollView, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
+import { View, Alert, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -84,15 +84,14 @@ class BoothInfo extends Component {
   }
 
   renderItem = (images) => {
+    console.log('checking image', images);
     return (
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={() => this.setModalVisible(true, images.url) }>
-          <Image
-            style={styles.boothImageList}
-            source={{ uri: images.url }}
-          />
-        </TouchableOpacity>
-      </View>
+      <TouchableWithoutFeedback onPress={() => this.setModalVisible(true, images.url)}>
+        <Image
+          style={styles.boothImageList}
+          source={{ uri: images.url }}
+        />
+      </TouchableWithoutFeedback>
     );
   }
 
@@ -131,16 +130,16 @@ class BoothInfo extends Component {
                 </View>
               </View>
             </LinearGradient>
-            <View>
+            <View style={styles.imageWrapper}>
               { images ?
                 <PhotoGrid
                   data={images}
                   itemsPerRow={2}
-                  itemMargin={1}
                   renderItem={this.renderItem}
                 />
                 :
-                <View />}
+                <View />
+              }
             </View>
           </Content>
         </ScrollView>
@@ -152,9 +151,10 @@ class BoothInfo extends Component {
               containerStyle={{ }}
               style={{ backgroundColor: '#5067FF' }}
               position="bottomRight"
-              onPress={() => this.uploadImage(this)}>
+              onPress={() => this.uploadImage(this)}
+            >
               <Icon name="upload" />
-            </Fab> : <View></View>
+            </Fab> : <View />
         }
         <Modal
           animationType={'fade'}
