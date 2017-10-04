@@ -39,7 +39,6 @@ class BoothList extends Component {
         <Content>
           <HeaderPoint title={strings.booth.title} />
           <Button
-            primary
             style={styles.btnBooth}
             onPress={() => {
               this.setModalVisible(true);

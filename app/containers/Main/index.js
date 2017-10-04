@@ -103,7 +103,7 @@ class Main extends Component {
           <AuthLogo style={styles.logo} />
           <Content>
             <View style={styles.formSection}>
-              <Item rounded style={styles.item}>
+              <Item regular style={styles.item}>
                 <Input
                   style={styles.formInput}
                   placeholder="Username"
@@ -112,7 +112,7 @@ class Main extends Component {
                   value={username}
                 />
               </Item>
-              <Item rounded style={styles.item}>
+              <Item regular style={styles.item}>
                 <Input
                   style={styles.formInput}
                   placeholder="Password"

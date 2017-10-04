@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
   section2: {
     flex: 2,
     justifyContent: 'flex-start',
-    marginBottom: 15,
-    marginRight: 12
+    margin: 20
   },
   input: {
     paddingLeft: 12
@@ -70,9 +69,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   button: {
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
     marginTop: 6,
+    backgroundColor: '#FF6F00',
     marginBottom: 6
   },
   buttonChangePass: {

@@ -19,11 +19,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    tabs: {
-        marginTop: -50,
-    },
     tabHeading: {
-        backgroundColor: 'transparent'
+        backgroundColor: '#FF6F00'
     },
     tabTitle: {
         fontSize: 16,

@@ -4,13 +4,14 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 // import redux componens
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { getProfileData } from '../../helpers';
 import strings from '../../localization';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
@@ -22,7 +23,23 @@ import * as selectors from './selectors';
 class Settings extends Component {
   state = {
     id: null,
-    modalVisible: false
+    modalVisible: false,
+    firstName: '',
+    lastName: '',
+    photo: null
+  }
+
+  componentWillMount() {
+    getProfileData()
+    .then(res => {
+      console.log('landing here', res);
+      this.setState({
+        firstName: res.first_name,
+        lastName: res.last_name,
+        photo: res.photos[0].url
+      })
+    })
+    .catch(err => console.log('failed getting data profile'))
   }
 
   componentWillReceiveProps(prevProps) {
@@ -44,25 +61,27 @@ class Settings extends Component {
             <Header title={strings.settings.title} />
             <Content>
               <View style={styles.section2}>
-                <Button
+                {/* <Button
                   block
-                  rounded
                   style={styles.button}
                   onPress={() => Actions.profile()}
                 >
                   <Text>{strings.settings.editProfile}</Text>
-                </Button>
-                {/* <Button
-                block
-                rounded
-                style={styles.button}
-                onPress={() => Actions.profile()}
-              >
-                <Text>Connect To Social Media</Text>
-              </Button> */}
+                </Button> */}
+                <TouchableWithoutFeedback onPress={() => Actions.profile()}>
+                  <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                    <Image
+                      source={{ uri: this.state.photo }}
+                      style={{ width: 70, height: 70, borderRadius: 35 }}
+                    />
+                    <View style={{ marginLeft: 8, justifyContent: 'center' }}>
+                      <Text>{this.state.firstName} {this.state.lastName}</Text>
+                    </View>
+                  </View>
+                </TouchableWithoutFeedback>
+                <View style={{ borderColor: '#BDBDBD', borderWidth: 0.5, marginBottom: 20 }} />
                 <Button
                   block
-                  rounded
                   style={styles.button}
                   onPress={() => Actions.codeConduct()}
                 >
@@ -70,9 +89,7 @@ class Settings extends Component {
                 </Button>
                 <Button
                   block
-                  light
-                  rounded
-                  style={styles.button}
+                  style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
                   onPress={() => { this.props.logOut(); }}
                 >
                   <Text>{strings.settings.logout}</Text>

@@ -1,5 +1,5 @@
 export default {
-  title: 'FEED',
+  title: 'Beranda',
   newsFeed: 'News feed',
   shareActivity: 'Bagikan aktifitas anda ...',
   post: 'Kirim',
