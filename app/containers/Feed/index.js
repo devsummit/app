@@ -31,6 +31,7 @@ import {
   ScrollView,
   TouchableHighlight
 } from 'react-native';
+import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { createStructuredSelector } from 'reselect';
