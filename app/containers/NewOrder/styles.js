@@ -6,18 +6,16 @@ export default StyleSheet.create({
     paddingRight: 3
   },
   summary: {
-    flex: 3
+    alignItems: 'center'
   },
   orderBtn: {
     width: '100%',
     marginBottom: 20,
-    marginRight: 3,
-    marginLeft: 3,
-    marginTop: 10
+    marginTop: 10,
+    justifyContent: 'center'
   },
   btnGroup: {
     alignSelf: 'center',
-    flex: 2,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center'
@@ -25,6 +23,7 @@ export default StyleSheet.create({
   plusMinus: {
     padding: 8,
     borderColor: '#777',
+    color: '#777',
     borderWidth: 1,
     borderRadius: 2,
     width: 26,
@@ -51,10 +50,25 @@ export default StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1,
     borderColor: '#777',
+    color: '#777',
     height: 27
   },
   iconWrapper: {
-    flex: 1,
+    alignSelf: 'center',
+  },
+  title: {
+    backgroundColor: 'orange',
+    color: 'white',
+    padding: 8,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  inputStyle: {
+    width: '90%',
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1,
     alignSelf: 'center'
   }
 });

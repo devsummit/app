@@ -31,5 +31,6 @@ export default {
   myOrder: 'My orders',
   pending: 'orders is pending',
   allTicket: 'All your ticket orders shows up here',
-  ticketOrder: 'Ticket orders'
+  ticketOrder: 'Ticket orders',
+  redeem: 'Redeem code'
 };
