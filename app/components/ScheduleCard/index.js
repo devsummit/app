@@ -6,7 +6,7 @@ import {
   Right,
   Text
 } from 'native-base';
-import { View, TouchableHighlight } from 'react-native';
+import { View, TouchableHighlight, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Moment from 'moment';
 
@@ -24,7 +24,30 @@ class ScheduleCard extends Component {
       this.setState({ isOpen });
     }
 
+    eventType = () => {
+      const type = this.props.event.type;
+
+      if (type === 'discuss panel') {
+        return (
+          <Text style={styles.type}>Discuss panel</Text>
+        );
+      } else if (type === 'speaker') {
+        return (
+          <Text style={styles.type}>Speaker</Text>
+        );
+      } else if (type === 'hackaton') {
+        return (
+          <Text style={styles.type}>Hackaton</Text>
+        );
+      }
+
+      return (
+        <Text style={styles.type}>Other</Text>
+      );
+    }
+
     render() {
+      console.log("landing here to check", this.props);
       const { isOpen } = this.state;
       const { event, speaker, stage, user, time_start, time_end} = this.props;
       const start = new Moment(time_start);
@@ -44,26 +67,40 @@ class ScheduleCard extends Component {
           >
             <CardItem>
               <View style={styles.date}>
-                <Text style={styles.day}>{ dayStart }</Text>
-                <Text style={styles.month}>{ monthStart }</Text>
+                <Text style={styles.day}>{ timeStart }</Text>
               </View>
-              <View>
-                <Text style={styles.eventTitle}>{ event.title }</Text>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <Icon name="home" style={styles.smallIcon} />
-                  <Text style={styles.smallText}>{stage}</Text>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <Icon name="clock-o" style={styles.smallIcon} />
-                  <Text style={styles.smallText}>{timeStart}</Text>
-                </View>
+              <View style={{ flex: 1 }}>
                 {hasSpeaker ?
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Icon name="user" style={styles.smallIcon} />
-                    <Text style={styles.smallText}>{user.first_name} {user.last_name}</Text>
-                  </View> :
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Image
+                      source={{ uri: user.photos[0].url}}
+                      style={{ width: 50, height: 50, borderRadius: 25, marginRight: 8 }}
+                    />
+                    <Text>{user.first_name} {user.last_name}</Text>
+                  </View> : <View />
+                }
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{event.title}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ fontSize: 12 }}>{event.information}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                { user.length > 0 ?
+                  user.map(item => {
+                    return(
+                        <Image
+                          source={{ uri: item.photos[0].url }}
+                          style={{ width: 30, height: 30, borderRadius: 15, marginRight: 4, marginVertical: 8 }}
+                        />
+                    )
+                  }) :
                   <View />
                 }
+              </View>
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                  {this.eventType()}
+                </View>
               </View>
             </CardItem>
           </TouchableHighlight>

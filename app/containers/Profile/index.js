@@ -103,19 +103,19 @@ class Profile extends Component {
     } = fields || '';
 
     return (
+      <Container>
       <ScrollView>
-        <Header />
-          <View style={styles.pointsSection}>
-            <Text style={styles.points}><Icon name="usd" style={styles.coin} />1000 pts</Text>
-          </View>
-        <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
-          <Image
-            source={{ uri: avatar }}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-        <Text style={styles.username}>{username}</Text>
         <Content>
+          <View style={styles.pointsSection}>
+            <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
+          </View>
+          <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
+            <Image
+              source={{ uri: avatar }}
+              style={styles.profileImage}
+            />
+          </TouchableOpacity>
+          <Text style={styles.username}>{username}</Text>
           <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
             <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
           </TouchableOpacity>
@@ -175,7 +175,6 @@ class Profile extends Component {
             </Button>
             <Button
               block
-              rounded
               disabled={this.props.firstName === ''}
               style={styles.button}
               onPress={() => this.props.changeProfile()}
@@ -183,8 +182,9 @@ class Profile extends Component {
               <Text>{strings.global.save}</Text>
             </Button>
           </View>
-        </Content>
+      </Content>
       </ScrollView>
+    </Container>
     );
   }
 }

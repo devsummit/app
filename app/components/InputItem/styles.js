@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     borderColor: '#FFD740',
     borderWidth: 2,
     padding: 5,
-    borderRadius: 30,
     alignItems: 'center'
   },
   normalOnBlur: {

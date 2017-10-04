@@ -1,5 +1,5 @@
 export default {
-  title: 'BOOTH',
+  title: 'Booth',
   register: 'Register booth',
   howto: 'How to register booth?',
   info: 'By registering, you are eligible to gain an exclusive slot to display your services to 4000 attendees of Devsummit.',

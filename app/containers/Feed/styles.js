@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'red'
   },
   icon: {
     marginRight: 10,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: '70%',
     marginLeft: 'auto',
-    marginRight: 'auto',
+    marginRight: 'auto'
   },
   errorContent: {
     alignItems: 'center'
@@ -54,18 +54,18 @@ const styles = StyleSheet.create({
     marginTop: 12
   },
   tabs: {
-    marginTop: -50,
   },
   tabHeading: {
-    backgroundColor: 'transparent'
+    flex: 1,
+    backgroundColor: '#FF6F00'
   },
   tabTitle: {
     fontSize: 16,
-    color: "#FFF"
+    color: '#FFF'
   },
   tabBarSelectedItemStyle: {
     borderBottomWidth: 2,
-    borderBottomColor: 'red',
+    borderBottomColor: 'red'
   },
   buttonShare: {
     fontSize: 16,
@@ -73,7 +73,9 @@ const styles = StyleSheet.create({
   },
   buttonReport: {
     fontSize: 15,
-    color: '#0000ff'
+    padding: 8,
+    textAlign: 'center',
+    color: '#000'
   },
   textOption: {
     fontSize: 18,

@@ -1,4 +1,4 @@
 export default {
-  title: 'NOTIFICATION',
+  title: 'Notification',
   noNotification: 'You do not have any notification'
 };

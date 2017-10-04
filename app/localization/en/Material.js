@@ -1,5 +1,5 @@
 export default {
-  title: 'MATERIAL',
+  title: 'Material',
   upload: 'Upload file',
   create: 'Create new material',
   materialTitle: 'Title',

@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
   },
   btnBooth: {
     alignSelf: 'center',
-    borderRadius: 20,
     width: '70%',
+    backgroundColor: '#FF6F00',
     marginLeft: 'auto',
     marginRight: 'auto',
     justifyContent: 'center',
-    marginTop: -25
+    marginTop: 20
   },
   btnModal: {
     alignSelf: 'center',

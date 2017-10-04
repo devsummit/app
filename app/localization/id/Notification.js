@@ -1,4 +1,4 @@
 export default {
-  title: 'NOTIFIKASI',
+  title: 'Notifikasi',
   noNotification: 'Anda tidak memiliki notifikasi'
 };

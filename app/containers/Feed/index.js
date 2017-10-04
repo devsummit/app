@@ -23,6 +23,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   AsyncStorage,
   Modal,
   Alert,
@@ -39,6 +40,7 @@ import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
+import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
 import Share, { ShareSheet, Button } from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 import 'moment/locale/pt-br';
@@ -155,7 +157,6 @@ class Feed extends Component {
   }
 
   componentWillMount() {
-    console.log('landing here compwilmount feed', this.props);
     this.props.fetchFeeds(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data')
@@ -278,7 +279,6 @@ class Feed extends Component {
   }
 
   render() {
-    console.log('this', this);
     return (
       <Container
         style={styles.container}
@@ -286,8 +286,7 @@ class Feed extends Component {
         <HeaderPoint title={strings.feed.title} />
         <Tabs style={styles.tabs} initialPage={0}>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
-            <Content>
-              <Card style={{ flex: 0, marginRight: 10, marginLeft: 8, borderRadius: 3 }}>
+            <Content style={{ backgroundColor: '#E0E0E0' }}>
                 {
                   this.props.isFetching
                     ? <Spinner color="yellow" />
@@ -298,8 +297,7 @@ class Feed extends Component {
                           data={this.props.feeds}
                           initialNumToRender={5}
                           renderItem={({ item }) => (
-                            console.log('landing here item', item)
-                            (item.type === 'sponsor') 
+                            (item.type === 'sponsor')
                             ?
                             <Card style={{ flex: 0 }}>
                               <CardItem>
@@ -332,50 +330,47 @@ class Feed extends Component {
                               </CardItem>
                             </Card>
                             :
-                            <Card style={{ flex: 0 }}>
-                              <CardItem>
-                                <Left>
-                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
-                                  <Body>
+                            <Card style={{ flex: 1 }}>
+                              <View style={{ padding: 12, flexDirection: 'row' }}>
+                                <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                <View>
+                                  <View style={{ marginLeft: 8 }}>
                                     <Text>{item.user.first_name} {item.user.last_name}</Text>
                                     <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
-                                  </Body>
-                                </Left>
-
-                              </CardItem>
-                              <CardItem>
-                                <Body>
-                                  <Text style={{ marginBottom: 8 }}>
-                                    {item.message}
-                                  </Text>
-                                  <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => this.setModalVisible(true, item.attachment)}>
-                                    <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300 }} />
-                                  </TouchableOpacity>
-                                </Body>
-                              </CardItem>
-                              <CardItem>
-                                <Left>
-                                  {
-                                    this.state.userId === item.user_id ?
-                                      <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.alertRemoveFeed(item.id)}>
-                                        <Icon name="uninstall" style={{ fontSize: 14, color: '#0000ff' }} />
-                                        <Text style={styles.buttonReport}> {strings.feed.delete}</Text>
-                                      </Button>
-                                      :
-                                      <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.alertReportFeed(item.id)}>
-                                        <Icon name="warning" style={{ fontSize: 14, color: '#0000ff' }} />
-                                        <Text style={styles.buttonReport}> {strings.feed.report}</Text>
-                                      </Button>
-
-                                  }
-                                </Left>
-                                <Right>
-                                  <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment)}>
-                                    <Icon name="share" style={{ fontSize: 16, color: '#0000ff' }} />
-                                    <Text style={styles.buttonShare}>{strings.feed.share}</Text>
-                                  </Button>
-                                </Right>
-                              </CardItem>
+                                  </View>
+                                  <View>
+                                    <Text style={{ marginVertical: 10, marginLeft: 8 }}>
+                                      {item.message}
+                                    </Text>
+                                    <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 8 }} onPress={() => this.setModalVisible(true, item.attachment)}>
+                                      <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300 }} />
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                              </View>
+                              <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.3 }} />
+                              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                                {
+                                  this.state.userId === item.user_id ?
+                                  <TouchableWithoutFeedback onPress={() => this.alertRemoveFeed(item.id)}>
+                                    <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
+                                      <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                  :
+                                  <TouchableWithoutFeedback onPress={() => this.alertReportFeed(item.id)}>
+                                    <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
+                                      <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                }
+                                <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.3 }} />
+                                <TouchableWithoutFeedback onPress={() => this.onOpen(item.message, item.attachment)}>
+                                  <View style={{ flex: 1, marginLeft: 10, backgroundColor: 'transparent', borderRadius: 8 }}>
+                                    <Text style={styles.buttonReport}>{strings.feed.share}</Text>
+                                  </View>
+                                </TouchableWithoutFeedback>
+                              </View>
                             </Card>
                           )}
                         />
@@ -394,8 +389,14 @@ class Feed extends Component {
                         }
                       </View>
                 }
-              </Card>
             </Content>
+            <Fab
+              style={{ backgroundColor: '#FF8B00' }}
+              position="bottomRight"
+              onPress={() => this.setModalPost(true)}
+            >
+              <CameraIcon name="pencil-square-o" />
+            </Fab>
           </Tab>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.ticket}</Text></TabHeading>}>
             <TicketList />
@@ -493,13 +494,6 @@ class Feed extends Component {
           </View>
         </Modal>
 
-        <Fab
-          style={{ backgroundColor: '#0D47A1' }}
-          position="bottomRight"
-          onPress={() => this.setModalPost(true)}
-        >
-          <CameraIcon name="pencil-square-o" />
-        </Fab>
         {/* Modal For Reports  */}
         <Modal
           animationType="slide"

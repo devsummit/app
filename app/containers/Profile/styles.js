@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   imageProfile: {
     alignSelf: 'center',
-    marginTop: -50
+    marginVertical: 20
   },
   errorInput: {
     paddingLeft: 20,
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   button: {
     width: '90%',
     alignSelf: 'center',
+    backgroundColor: '#FF8B00',
     marginTop: 6,
     marginBottom: 6
   },
@@ -79,24 +80,25 @@ const styles = StyleSheet.create({
   iconWrapper: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    marginRight: 20
+    marginRight: 20,
+    marginBottom: 8
   },
   points: {
     fontFamily: 'Montserrat',
     fontWeight: 'bold',
     fontSize: 22,
-    color: 'white',
-    marginTop: -85,
+    color: '#FF8B00',
     textAlign: 'center',
     backgroundColor: 'transparent'
   },
   coin: {
-    color: 'white',
-    fontSize: 22,
+    color: '#FF8B00',
+    fontSize: 22
   },
-  pointSection: {
+  pointsSection: {
     flex: 1,
-    flexDirection: 'row'
+    alignItems: 'center',
+    marginTop: 20
   }
 });
 

@@ -1,5 +1,5 @@
 export default {
-  title: 'PENGATURAN',
+  title: 'Pengaturan',
   editProfile: 'Edit profil',
   codeConduct: 'Kode etik',
   logout: 'Keluar'
