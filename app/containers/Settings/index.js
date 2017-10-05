@@ -66,8 +66,7 @@ class Settings extends Component {
     this.props.updateAvatar(value);
   }
 
-  render() {
-    console.log('landing here', this.props);
+  render() {);
     const { fields, isDisabled, avatar, errorFields } = this.props || {};
     const {
       firstName,
@@ -85,13 +84,6 @@ class Settings extends Component {
             <Header title={strings.settings.title} />
             <Content>
               <View style={styles.section2}>
-                {/* <Button
-                  block
-                  style={styles.button}
-                  onPress={() => Actions.profile()}
-                >
-                  <Text>{strings.settings.editProfile}</Text>
-                </Button> */}
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
                   <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                     <Image
