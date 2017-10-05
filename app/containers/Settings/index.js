@@ -30,16 +30,21 @@ class Settings extends Component {
   }
 
   componentWillMount() {
-    getProfileData()
-    .then(res => {
-      console.log('landing here', res);
-      this.setState({
-        firstName: res.first_name,
-        lastName: res.last_name,
-        photo: res.photos[0].url
-      })
-    })
-    .catch(err => console.log('failed getting data profile'))
+    getProfileData().then((profileData) => {
+      if (profileData) {
+        this.handleInputChange('username', profileData.username);
+        this.handleInputChange('firstName', profileData.first_name);
+        this.handleInputChange('lastName', profileData.last_name);
+        if (profileData.role_id === 3) {
+          this.handleInputChange('boothInfo', profileData.booth.summary);
+        }
+        if (profileData.data.role_id === 4) {
+          this.handleInputChange('job', profileData.speaker.job);
+          this.handleInputChange('summary', profileData.speaker.summary);
+        }
+        this.props.updateFields(field, value);
+      }
+    });
   }
 
   componentWillReceiveProps(prevProps) {
@@ -53,7 +58,25 @@ class Settings extends Component {
     this.setState({ modalVisible: visible });
   }
 
+  handleInputChange = (field, value) => {
+    this.props.updateFields(field, value);
+  }
+
+  handleUpdateAvatar = (value) => {
+    this.props.updateAvatar(value);
+  }
+
   render() {
+    const { fields, isDisabled, avatar, errorFields } = this.props || {};
+    const {
+      firstName,
+      lastName,
+      username,
+      boothInfo,
+      job,
+      summary,
+      profilePic
+    } = fields || '';
     return (
       <Container>
         <Content>
@@ -71,11 +94,11 @@ class Settings extends Component {
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
                   <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                     <Image
-                      source={{ uri: this.state.photo }}
+                      source={{ uri: profilePic }}
                       style={{ width: 70, height: 70, borderRadius: 35 }}
                     />
                     <View style={{ marginLeft: 8, justifyContent: 'center' }}>
-                      <Text>{this.state.firstName} {this.state.lastName}</Text>
+                      <Text>{firstName} {lastName}</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -114,6 +137,11 @@ class Settings extends Component {
  *  Map redux state to component props
  */
 const mapStateToProps = createStructuredSelector({
+  fields: selectors.getFields(),
+  isProfileUpdated: selectors.getIsProfileUpdated(),
+  avatar: selectors.getAvatar(),
+  isAvatarUpdated: selectors.getIsAvatarUpdated(),
+  isDisabled: selectors.getIsDisabled(),
   isLogOut: selectors.getIsLogOut()
 });
 
