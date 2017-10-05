@@ -62,6 +62,7 @@ export function updateIsDisabled(status) {
 
 export function updateDataStorage1(resp) {
   getProfileData().then(() => {
+    console.log('landing here update data storage 1', resp)
     const newData = JSON.stringify(resp.data);
     AsyncStorage.removeItem('profile_data', () => {
       try {
@@ -116,7 +117,7 @@ export function changeProfile() {
             response.data.meta.success &&
             response.data.meta.message === 'Data retrieved succesfully'
           ) {
-            updateDataStorage1(response);
+            updateDataStorage1(response.data);
             dispatch(updateIsProfileUpdated(true));
           } else {
             Alert.alert('Failed', 'Payload is invalid');

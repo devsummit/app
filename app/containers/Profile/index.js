@@ -32,6 +32,7 @@ class Profile extends Component {
     isLoading: true
   }
   componentWillMount() {
+    console.log('landing here this.props profile', this.props);
     getProfileData().then((profileData) => {
       if (profileData) {
         this.handleInputChange('username', profileData.data.username);
