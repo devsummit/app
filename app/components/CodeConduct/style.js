@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: 'rgb(255,255,255)'
   },
+  app: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 8,
+    marginBottom: 16
+  },
   content: {
     fontSize: 16,
     color: '#000'
