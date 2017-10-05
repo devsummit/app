@@ -120,27 +120,20 @@ class Profile extends Component {
       <Container>
         <ScrollView>
           <Content>
-            <View style={styles.section1}>
-              <View style={ styles.sectionImage }>
-                <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
-                  <Image
-                    source={{ uri: avatar }}
-                    style={styles.profileImage}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View style={ styles.section2 }>
-                <View style={ styles.sectionPoints }>
-                  <Text style={ styles.yourPoints }>Your Points</Text>
-                  <Text style={styles.points}><Icon name="gift" style={styles.coin} /> 1000 pts</Text>
-                </View>
-                <Text style={styles.username}>User Test</Text>
-              </View>
+            <View style={styles.pointsSection}>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} /> {this.state.points} pts</Text>
             </View>
+            <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
+              <Image
+                source={{ uri: avatar }}
+                style={styles.profileImage}
+              />
+            </TouchableOpacity>
+            <Text style={styles.username}>{username}</Text>
             <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
               <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
             </TouchableOpacity>
-            <View style={styles.section3}>
+            <View style={styles.section2}>
               <InputItem
                 style={styles.input}
                 title={strings.profile.firstName}
