@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { RefreshControl, View, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import QRCode from 'react-native-qrcode';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -57,8 +58,16 @@ class TicketList extends Component {
         dataArray={this.props.listTicket}
         renderRow={(item) => {
           return (
-            <ListItem style={[ styles.card, { alignSelf: 'center', height: 50, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3 } ]}>
-              <Text style={styles.text}>{strings.order.ticketNumber} {item.id}</Text>
+            <ListItem style={[ styles.card, { alignSelf: 'center', height: 100, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3 } ]}>
+              <Text style={styles.text}>{strings.order.ticketNumber} {item.id + '\n'}
+                {strings.order.QRInstruction}
+              </Text>
+              <QRCode
+                value={item.ticket_code}
+                size={100}
+                bgColor='black'
+                fgColor='white'
+                />
               {/* <Button
                 small
                 style={styles.button}
