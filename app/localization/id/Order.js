@@ -25,6 +25,7 @@ export default {
 
   // Ticket list
   ticketNumber: 'No. tiket',
+  QRInstruction: 'Anda dapat checkin menggunakan kode QR di samping ini',
   noTicket: 'Anda tidak memiliki tiket, silahkan melakukan pemesanan atau muat ulang halaman ini',
   refresh: 'Muat ulang',
   myOrder: 'Pesanan saya',
