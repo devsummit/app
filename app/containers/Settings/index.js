@@ -89,6 +89,13 @@ class Settings extends Component {
                 </Button>
                 <Button
                   block
+                  style={styles.button}
+                  onPress={() => Actions.privacyPolicy()}
+                >
+                  <Text>{strings.settings.privacyPolicy}</Text>
+                </Button>
+                <Button
+                  block
                   style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
                   onPress={() => { this.props.logOut(); }}
                 >
