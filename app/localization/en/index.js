@@ -14,8 +14,9 @@ import schedule from './Schedule';
 import settings from './Settings';
 import speaker from './Speaker';
 import codeConduct from './CodeConduct';
+import privacyPolicy from './PrivacyPolicy';
 
-const en = {
+const id = {
   global,
   attendeeList,
   booth,
@@ -31,7 +32,8 @@ const en = {
   schedule,
   settings,
   speaker,
-  codeConduct
+  codeConduct,
+  privacyPolicy
 };
 
-export default en;
+export default id;
