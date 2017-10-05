@@ -4,13 +4,14 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 // import redux componens
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { getProfileData } from '../../helpers';
 import strings from '../../localization';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
@@ -83,24 +84,12 @@ class Settings extends Component {
             <Header title={strings.settings.title} />
             <Content>
               <View style={styles.section2}>
-                <Button
+                {/* <Button
                   block
-                  rounded
                   style={styles.button}
                   onPress={() => Actions.profile()}
                 >
                   <Text>{strings.settings.editProfile}</Text>
-<<<<<<< Updated upstream
-                </Button>
-                {/* <Button
-                block
-                rounded
-                style={styles.button}
-                onPress={() => Actions.profile()}
-              >
-                <Text>Connect To Social Media</Text>
-              </Button> */}
-=======
                 </Button> */}
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
                   <View style={{ flexDirection: 'row', marginBottom: 20 }}>
@@ -114,10 +103,8 @@ class Settings extends Component {
                   </View>
                 </TouchableWithoutFeedback>
                 <View style={{ borderColor: '#BDBDBD', borderWidth: 0.5, marginBottom: 20 }} />
->>>>>>> Stashed changes
                 <Button
                   block
-                  rounded
                   style={styles.button}
                   onPress={() => Actions.codeConduct()}
                 >
@@ -125,9 +112,7 @@ class Settings extends Component {
                 </Button>
                 <Button
                   block
-                  light
-                  rounded
-                  style={styles.button}
+                  style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
                   onPress={() => { this.props.logOut(); }}
                 >
                   <Text>{strings.settings.logout}</Text>

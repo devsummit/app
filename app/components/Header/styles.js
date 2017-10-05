@@ -6,13 +6,9 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   header: {
-    height: 100,
+    height: 50,
+    backgroundColor: '#FF8B00',
     paddingTop: (Platform.OS === 'ios') ? 10 : 0
-  },
-  headerText: {
-    alignItems: 'center',
-    // justifyContent: 'center',
-    height: 80
   },
   pageTitle: {
     fontFamily: 'Montserrat',
@@ -20,9 +16,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white'
-  },
-  headerBase: {
-    backgroundColor: '#FF8B00'
   }
 });
 

@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginBottom: 10,
     backgroundColor: '#FFA726',
-    borderRadius: 50,
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row'
@@ -42,6 +41,7 @@ const styles = StyleSheet.create({
   },
   formInput: {
     paddingLeft: 20,
+    height: 40,
     color: '#FFFFFF'
   },
   errorInput: {

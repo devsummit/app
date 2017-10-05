@@ -1,5 +1,5 @@
 export default {
-  title: 'BOOTH',
+  title: 'Booth',
   register: 'Mendaftar booth',
   howto: 'Bagaimana cara mendaftarkan booth?',
   info: 'Dengan mendaftar, Anda berhak mendapat satu petak eksekutif untuk menampilkan layanan Anda pada 4000 pengunjung Devsummit.',
