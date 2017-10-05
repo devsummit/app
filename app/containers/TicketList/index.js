@@ -173,12 +173,17 @@ class TicketList extends Component {
 
         { /* Redeem Modal */ }
         <Modal
-          animationType="slide"
+          animationType="fade"
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+          transparent
         >
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
             <View style={styles.redeem}>
+              <View style={styles.viewredeem}>
+                <Icons name="gift" style={{ fontSize: 60, color: 'white', margin: 10 }} />
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{strings.redeem.redeem}</Text>
+              </View>
               <Redeem />
             </View>
           </View>
