@@ -372,7 +372,6 @@ class Feed extends Component {
                                       </View>
                                     </TouchableWithoutFeedback>
                                 }
-                                <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.3 }} />
                                 <TouchableWithoutFeedback onPress={() => this.onOpen(item.message, item.attachment)}>
                                   <View style={{ flex: 1, marginLeft: 10, backgroundColor: 'transparent', borderRadius: 8 }}>
                                     <Text style={styles.buttonReport}>{strings.feed.share}</Text>
