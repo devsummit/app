@@ -1,6 +1,6 @@
 export default {
   // Schedule
-  title: 'SCHEDULE',
+  title: 'Schedule',
   loading: 'Loading...',
 
   // Schedule detail

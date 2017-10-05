@@ -9,14 +9,9 @@ import styles from './styles';
 
 const Header = (props) => {
   return (
-    <View style={styles.headerBase}>
-      <View style={styles.header}>
-        <View style={styles.headerText}>
-          <Text style={styles.pageTitle}>{props.title}</Text>
-        </View>
-        <View style={styles.content}>
-          {props.children}
-        </View>
+    <View style={styles.header}>
+      <View style={styles.headerText}>
+        <Text style={styles.pageTitle}>{props.title}</Text>
       </View>
     </View>
   );

@@ -1,5 +1,5 @@
 export default {
-  title: 'MATERIAL',
+  title: 'Material',
   upload: 'Unggah dokumen',
   create: 'Membuat materi baru',
   materialTitle: 'Judul',

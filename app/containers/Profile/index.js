@@ -110,24 +110,23 @@ class Profile extends Component {
     } = fields || '';
 
     return (
-      <ScrollView>
-        <Header />
-        <View style={styles.pointsSection}>
-          <Text style={styles.points}><Icon name="usd" style={styles.coin} />1000 pts</Text>
-        </View>
-        <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
-          <Image
-            source={{ uri: avatar }}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-        <Text style={styles.username}>{username}</Text>
-        <Content>
-          <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
-            <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
-          </TouchableOpacity>
-          { !(this.state.isLoading) ?
-            (<View style={styles.section2}>
+      <Container>
+        <ScrollView>
+          <Content>
+            <View style={styles.pointsSection}>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
+            </View>
+            <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
+              <Image
+                source={{ uri: avatar }}
+                style={styles.profileImage}
+              />
+            </TouchableOpacity>
+            <Text style={styles.username}>{username}</Text>
+            <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
+              <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
+            </TouchableOpacity>
+            <View style={styles.section2}>
               <InputItem
                 style={styles.input}
                 title={strings.profile.firstName}
@@ -155,7 +154,7 @@ class Profile extends Component {
                 maxLength={255}
                 multiline
               />
-                : <View />}
+              : <View />}
               {speaker ? <InputItem
                 style={styles.inputInfo}
                 title={strings.profile.summary}
@@ -167,7 +166,7 @@ class Profile extends Component {
                 maxLength={255}
                 multiline
               />
-                : <View />}
+              : <View />}
               {booth ? <InputItem
                 style={styles.inputInfo}
                 title={strings.profile.boothInfo}
@@ -183,23 +182,16 @@ class Profile extends Component {
               </Button>
               <Button
                 block
-                rounded
                 disabled={this.props.firstName === ''}
                 style={styles.button}
                 onPress={() => this.props.changeProfile()}
               >
                 <Text>{strings.global.save}</Text>
               </Button>
-            </View>)
-            : (
-              <View style={styles.loading}>
-                <Spinner color={PRIMARYCOLOR} />
-                <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
-              </View>
-            )}
-
+            </View>
         </Content>
       </ScrollView>
+    </Container>
     );
   }
 }

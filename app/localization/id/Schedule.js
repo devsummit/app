@@ -1,6 +1,6 @@
 export default {
   // Schedule
-  title: 'SUSUNAN ACARA',
+  title: 'Jadwal',
   loading: 'Sedang memuat...',
 
   // Schedule detail
