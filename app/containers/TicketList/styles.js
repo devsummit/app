@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     borderColor: PRIMARYCOLOR
   },
   viewredeem: {
-    backgroundColor: PRIMARYCOLOR,
+    backgroundColor: '#FFF',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
   iconClose: {
     backgroundColor: PRIMARYCOLOR,
     textAlign: 'right',
-    paddingRight: 20,
-    paddingTop: 10,
+    padding: 10,
     color: '#FFFFFF',
     fontSize: 20
   }

@@ -184,8 +184,8 @@ class TicketList extends Component {
                 <Icons style={styles.iconClose} name="times" />
               </TouchableWithoutFeedback>
               <View style={styles.viewredeem}>
-                <Icons name="gift" style={{ fontSize: 60, color: 'white', margin: 10 }} />
-                <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{strings.redeem.redeem}</Text>
+                <Icons name="gift" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>{strings.redeem.redeem}</Text>
               </View>
               <Redeem />
             </View>
