@@ -43,7 +43,6 @@ class Redeem extends Component {
   render() {
     return (
       <View>
-        <Text style={styles.modalTitle}>{strings.redeem.redeemCode}</Text>
         <View style={styles.inputItem}>
           <Form>
             <Item>
