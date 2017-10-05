@@ -31,6 +31,7 @@ import * as actions from './actions';
 import { PRIMARYCOLOR } from '../../constants'
 import { formatDate } from '../../helpers'
 
+const noNotif = require('./../../../assets/images/nonotif.png');
 const { height } = Dimensions.get('window');
 
 class Notification extends Component {
@@ -62,7 +63,6 @@ class Notification extends Component {
     };
     return (
       <Container style={styles.container}>
-        <Content>
           <View style={styles.view}>
             {
               notifications && notifications.length > 0 ?
@@ -110,14 +110,13 @@ class Notification extends Component {
                 this.props.isFetching
                   ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
                   :
-                  <View style={{ height, backgroundColor: '#FFF', alignItems: 'center' }} >
-                    <Icon name={'bell-slash-o'} color={PRIMARYCOLOR} style={styles.icon} />
-                    <Text style={{ color: PRIMARYCOLOR, fontWeight: 'bold' }}>{strings.notification.noNotification}</Text>
+                  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
+                    <Image source={noNotif} style={{ opacity: 0.5 }} />
+                    <Text style={{ fontSize: 16, color: PRIMARYCOLOR, fontWeight: 'bold', marginTop: 20 }}>{strings.notification.noNotification}</Text>
                   </View>
             }
 
           </View>
-        </Content>
       </Container>
     );
   }
