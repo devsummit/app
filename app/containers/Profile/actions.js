@@ -60,25 +60,12 @@ export function updateIsDisabled(status) {
   };
 }
 
-export function updateDataStorage1(resp) {
+export function updateDataStorage(resp) {
   getProfileData().then(() => {
     const newData = JSON.stringify(resp.data);
     AsyncStorage.removeItem('profile_data', () => {
       try {
         AsyncStorage.setItem('profile_data', newData);
-      } catch (e) {
-        console.log('error save profile data');
-      }
-    });
-  });
-}
-
-export function updateDataStorage2(resp) {
-  getProfileData().then(() => {
-    const newData = JSON.stringify(resp.data);
-    AsyncStorage.removeItem('profile_data2', () => {
-      try {
-        AsyncStorage.setItem('profile_data2', newData);
       } catch (e) {
         console.log('error save profile data');
       }
@@ -116,7 +103,7 @@ export function changeProfile() {
             response.data.meta.success &&
             response.data.meta.message === 'Data retrieved succesfully'
           ) {
-            updateDataStorage1(response);
+            updateDataStorage(response.data);
             dispatch(updateIsProfileUpdated(true));
           } else {
             Alert.alert('Failed', 'Payload is invalid');
@@ -167,7 +154,7 @@ export function updateImage(image) {
       )
         .then(resp => resp.json())
         .then((resp) => {
-          updateDataStorage2(resp);
+          updateDataStorage(resp);
           dispatch(updateAvatar(resp.data.photos[0].url), updateIsAvatarUpdated(true));
         })
         .catch(err => console.log('error upload image', err));
