@@ -88,6 +88,14 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontWeight: 'bold',
     marginTop: 5
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    paddingRight: 20,
+    paddingTop: 10,
+    color: '#FFFFFF',
+    fontSize: 20
   }
 });
 
