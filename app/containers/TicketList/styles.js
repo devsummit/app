@@ -44,10 +44,12 @@ const styles = StyleSheet.create({
     margin: 20
   },
   errorContent: {
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 0
   },
   errorText: {
-    fontSize: 14
+    fontSize: 14,
+    textAlign: 'center'
   },
   card: {
     position: 'relative',
@@ -75,7 +77,17 @@ const styles = StyleSheet.create({
     backgroundColor: PRIMARYCOLOR,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
+  },
+  free: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 12,
+    color: 'grey',
+    fontWeight: 'bold',
+    marginTop: 5
   }
 });
 

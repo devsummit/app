@@ -14,6 +14,7 @@ import schedule from './Schedule';
 import settings from './Settings';
 import speaker from './Speaker';
 import codeConduct from './CodeConduct';
+import privacyPolicy from './PrivacyPolicy';
 
 const id = {
   global,
@@ -31,7 +32,8 @@ const id = {
   schedule,
   settings,
   speaker,
-  codeConduct
+  codeConduct,
+  privacyPolicy
 };
 
 export default id;

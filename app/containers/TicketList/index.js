@@ -84,7 +84,7 @@ class TicketList extends Component {
         <Text style={styles.errorText}>{strings.order.noTicket}</Text>
         <Button
           small
-          bordered
+          transparent
           style={styles.refreshButton}
           onPress={() => { this.props.fetchUserTicket(); }}
         >
@@ -113,7 +113,7 @@ class TicketList extends Component {
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
-              <Icons name="shopping-basket" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, marginTop: 3 }} />
+              <Icons name="briefcase" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, marginTop: 3 }} />
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center' }}>{strings.order.myOrder}</Text>
               {
                 orders && orders.length > 0
@@ -124,18 +124,52 @@ class TicketList extends Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this.setModalVisible(true)}>
             <View style={styles.card}>
-              <Icons name="ticket" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
+              <Icons name="gift" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
               <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.redeem}</Text>
             </View>
           </TouchableOpacity>
         </View>
 
+        {/* Ticket Orders */}
         <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
-            <Icons name="shopping-cart" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
+            <Icons name="ticket" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
             <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.ticketOrder}</Text>
           </View>
         </TouchableOpacity>
+
+        {/* Free pass */}
+        <Text style={styles.free}> Or get free past by completing our partner offers </Text>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+          <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+            <View style={styles.card}>
+              <Icons name="plus-circle" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 60 }} />
+              <Text style={{ textAlign: 'center', fontSize: 12 }}>Register our free trial</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+            <View style={styles.card}>
+              <Icons name="plus-circle" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 60 }} />
+              <Text style={{ textAlign: 'center', fontSize: 12 }}>Register our free trial</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        {/* Ticket List */}
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isGettingUserTicket}
+              onRefresh={() => { this.props.fetchUserTicket(); }}
+            />
+          }
+        >
+          {
+            this.props.fetchTicketStatus ?
+              this.renderTicketList() :
+              this.renderError()
+          }
+        </Content>
 
         { /* Redeem Modal */ }
         <Modal
@@ -155,20 +189,6 @@ class TicketList extends Component {
           </View>
         </Modal>
 
-        <Content
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.isGettingUserTicket}
-              onRefresh={() => { this.props.fetchUserTicket(); }}
-            />
-          }
-        >
-          {
-            this.props.fetchTicketStatus ?
-              this.renderTicketList() :
-              this.renderError()
-          }
-        </Content>
       </ScrollView>
     );
   }
