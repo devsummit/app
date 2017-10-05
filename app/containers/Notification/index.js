@@ -110,9 +110,9 @@ class Notification extends Component {
                 this.props.isFetching
                   ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
                   :
-                  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
+                  <View style={styles.artwork} >
                     <Image source={noNotif} style={{ opacity: 0.5 }} />
-                    <Text style={{ fontSize: 16, color: PRIMARYCOLOR, fontWeight: 'bold', marginTop: 20 }}>{strings.notification.noNotification}</Text>
+                    <Text style={styles.artworkText}>{strings.notification.noNotification}</Text>
                   </View>
             }
 
