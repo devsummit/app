@@ -57,7 +57,7 @@ class TicketList extends Component {
         dataArray={this.props.listTicket}
         renderRow={(item) => {
           return (
-            <ListItem style={[ styles.card, { alignSelf: 'center', height: 50, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3}]}>
+            <ListItem style={[ styles.card, { alignSelf: 'center', height: 50, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3 } ]}>
               <Text style={styles.text}>{strings.order.ticketNumber} {item.id}</Text>
               {/* <Button
                 small
@@ -80,7 +80,7 @@ class TicketList extends Component {
 
   renderError() {
     return (
-      <View style={[styles.errorContent, styles.card, {width: '95%', height: 100}]}>
+      <View style={[ styles.errorContent, styles.card, { width: '95%', height: 100 } ]}>
         <Text style={styles.errorText}>{strings.order.noTicket}</Text>
         <Button
           small
@@ -129,7 +129,7 @@ class TicketList extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        
+
         <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
             <Icons name="shopping-cart" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
@@ -139,15 +139,20 @@ class TicketList extends Component {
 
         { /* Redeem Modal */ }
         <Modal
-          animationType="slide"
+          animationType="fade"
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+          transparent
         >
-          <View style={{ flex: 1, justifyContent: 'center' }}>    
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
             <View style={styles.redeem}>
+              <View style={styles.viewredeem}>
+                <Icons name="gift" style={{ fontSize: 60, color: 'white', margin: 10 }} />
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{strings.redeem.redeem}</Text>
+              </View>
               <Redeem />
             </View>
-          </View>  
+          </View>
         </Modal>
 
         <Content
