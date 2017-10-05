@@ -1,12 +1,22 @@
-language: node
-node_js:
-- 8
+language: swift
+osx_image: xcode8.3
+cache:
+  - bundler
+before_script:
+  - gem install fastlane cocoapods
+  - cd ios && pod install
+  - pwd
+  - cd ../
 script:
 - cp config/development.js config/local.js
 - docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android yarn
 after_script:
+- pwd
 - if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then
   docker run --rm -v $(pwd):/opt/workspace -e TRAVIS_COMMIT_RANGE=$TRAVIS_COMMIT_RANGE -e FASTLANE_API_TOKEN=$FASTLANE_API_TOKEN -e FASTLANE_BUILD_SECRET=$FASTLANE_BUILD_SECRET refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta"
+  ;fi
+- if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then
+  cd ios && fastlane ios beta
   ;fi
 env:
   global:
