@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width } = Dimensions.get('window');
 
@@ -98,6 +99,12 @@ const styles = StyleSheet.create({
   images: {
     height: 200,
     width: width * 0.7
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
   }
 });
 
