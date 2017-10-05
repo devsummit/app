@@ -35,13 +35,13 @@ class Profile extends Component {
   componentWillMount() {
 
     getProfileData().then((profileData) => {
-      if (profileData.points === null) {
-        this.setState({ points: 0 });
-      } else {
-          this.setState({ points: profileData.points });
-        }
-      // this.setState({ points: profileData.points });
+      // this.props.updateFields()
       if (profileData) {
+        if (profileData.points === null) {
+          this.props.updateFields('points', 0);
+        } else {
+            this.props.updateFields('points', profileData.points);
+          }
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
@@ -113,15 +113,15 @@ class Profile extends Component {
       boothInfo,
       job,
       summary,
-      profilePic
+      profilePic,
+      points
     } = fields || '';
-
     return (
       <Container>
         <ScrollView>
           <Content>
             <View style={styles.pointsSection}>
-              <Text style={styles.points}><Icon name="gift" style={styles.coin} /> {this.state.points} pts</Text>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} /> {points} pts</Text>
             </View>
             <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
               <Image
