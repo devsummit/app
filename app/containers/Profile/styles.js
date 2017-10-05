@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgb(255,255,255)'
   },
-  section1: {
+  section: {
     alignItems: 'center',
     padding: 10
   },
-  section2: {
+  section3: {
     flex: 2,
     justifyContent: 'flex-start',
     marginBottom: 15,
@@ -36,13 +36,15 @@ const styles = StyleSheet.create({
   },
   imageProfile: {
     alignSelf: 'center',
-    marginVertical: 20
+    marginVertical: 20,
+    // marginLeft: 17,
+    elevation: 5
   },
   errorInput: {
     paddingLeft: 20,
     color: '#FFFFFF'
   },
-  section3: {
+  section4: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontWeight: 'bold',
-    textAlign: 'center',
+    // textAlign: 'center',
     marginBottom: 12
   },
   profileImage: {
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   button: {
     width: '90%',
@@ -89,22 +91,41 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   points: {
+    // flex: 1,
     fontFamily: 'Montserrat',
     fontWeight: 'bold',
     fontSize: 22,
     color: '#FF8B00',
-    textAlign: 'center',
-    backgroundColor: 'transparent'
+  },
+  yourPoints: {
+    // flex : 4,
+    alignSelf: 'center',
   },
   coin: {
     color: '#FF8B00',
     fontSize: 22
   },
-  pointsSection: {
+  section1: {
     flex: 1,
-    alignItems: 'center',
-    marginTop: 20
-  }
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  section2: {
+    flex: 5,
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    // marginLeft: 10
+  },
+  sectionPoints: {
+    // flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)'
+  },
+  sectionImage: {
+    flex: 2.8,
+    justifyContent: 'flex-start',
+  },
 });
 
 export default styles;
