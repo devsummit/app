@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -63,10 +64,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   redeem: {
+    borderWidth: 5,
     margin: 20,
-    padding: 10,
-    backgroundColor: 'whitesmoke',
-    borderRadius: 2
+    marginTop: 0,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  viewredeem: {
+    backgroundColor: PRIMARYCOLOR,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
