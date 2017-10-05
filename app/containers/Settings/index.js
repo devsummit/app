@@ -87,7 +87,7 @@ class Settings extends Component {
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
                   <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                     <Image
-                      source={{ uri: avatar  }}
+                      source={{ uri: this.props.avatar }}
                       style={{ width: 70, height: 70, borderRadius: 35 }}
                     />
                     <View style={{ marginLeft: 8, justifyContent: 'center' }}>
