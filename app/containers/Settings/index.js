@@ -66,7 +66,7 @@ class Settings extends Component {
     this.props.updateAvatar(value);
   }
 
-  render() {);
+  render() {
     const { fields, isDisabled, avatar, errorFields } = this.props || {};
     const {
       firstName,
