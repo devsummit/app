@@ -92,7 +92,7 @@ export function changeProfile() {
     const { fields } = getState()
       .get('profile')
       .toJS();
-    const { username, firstName, lastName, profilePic, boothInfo, job, summary } = fields;
+    const { username, firstName, lastName, profilePic, boothInfo, job, summary, points } = fields;
 
     getAccessToken().then((token) => {
       DevSummitAxios.patch(
