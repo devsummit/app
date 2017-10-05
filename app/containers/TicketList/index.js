@@ -9,7 +9,7 @@ import {
   Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, View, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { RefreshControl, View, TouchableOpacity, ScrollView, Modal, TouchableWithoutFeedback } from 'react-native';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -180,6 +180,9 @@ class TicketList extends Component {
         >
           <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
             <View style={styles.redeem}>
+              <TouchableWithoutFeedback onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                <Icons style={styles.iconClose} name="times" />
+              </TouchableWithoutFeedback>
               <View style={styles.viewredeem}>
                 <Icons name="gift" style={{ fontSize: 60, color: 'white', margin: 10 }} />
                 <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{strings.redeem.redeem}</Text>
