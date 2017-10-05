@@ -77,9 +77,9 @@ export function updateDataStorage1(resp) {
 export function updateDataStorage2(resp) {
   getProfileData().then(() => {
     const newData = JSON.stringify(resp.data);
-    AsyncStorage.removeItem('profile_data2', () => {
+    AsyncStorage.removeItem('profile_data', () => {
       try {
-        AsyncStorage.setItem('profile_data2', newData);
+        AsyncStorage.setItem('profile_data', newData);
       } catch (e) {
         console.log('error save profile data');
       }
@@ -157,19 +157,19 @@ export function updateImage(image) {
 
       DevSummitAxios.post(
         '/api/v1/user/photo',
-        {
-          form
-        },
+          form,
         {
           headers: {
             Authorization: token
           }
         }
       )
-        .then(resp => resp.json())
-        .then((resp) => {
-          updateDataStorage2(resp);
-          dispatch(updateAvatar(resp.data.photos[0].url), updateIsAvatarUpdated(true));
+        .then(resp => {
+          // resp.json();
+          console.log('landing here updateImage resp', resp);
+          console.log('landing here resp', resp);
+          updateDataStorage2(resp.data);
+          dispatch(updateAvatar(resp.data.data.photos[0].url), updateIsAvatarUpdated(true));
         })
         .catch(err => console.log('error upload image', err));
     });
