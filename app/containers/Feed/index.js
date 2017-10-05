@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Text,
   Tabs,
   Tab,
   TabHeading,
@@ -22,6 +21,7 @@ import {
   View,
   FlatList,
   Image,
+  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   AsyncStorage,
@@ -54,6 +54,7 @@ import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 
 const socket = openSocket(API_BASE_URL);
+const noFeeds = require('./../../../assets/images/nofeed.png');
 
 function subscribeToFeeds(cb) {
   socket.on('feeds', data => cb(null, data));
@@ -291,12 +292,17 @@ class Feed extends Component {
         </View>
         <Tabs style={styles.tabs} initialPage={0}>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
-            <Content style={{ backgroundColor: '#E0E0E0' }}>
+            <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
               {
                 this.props.isFetching
                   ? <Spinner color="yellow" />
                   : this.props.feeds &&
-                    <View>
+                  <View style={{ flex: 1 }}>
+                    {!this.props.feeds.length > 0 ?
+                      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image source={noFeeds} style={{ opacity: 0.5 }} />
+                        <Text style={styles.artworkText}>Your feeds is empty</Text>
+                      </View> :
                       <FlatList
                         keyExtractor={this._keyExtractor}
                         data={this.props.feeds}
@@ -381,22 +387,23 @@ class Feed extends Component {
                             </Card>
                         )}
                       />
-                      {
-                        this.props.links.next ?
-                          <TouchableOpacity onPress={this.fetchNextFeeds}>
-                            <Card>
-                              <CardItem>
-                                <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                                  <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
-                                </Body>
-                              </CardItem>
-                            </Card>
-                          </TouchableOpacity>
-                          : <View />
-                      }
-                    </View>
+                    }
+                    {
+                      this.props.links.next && this.props.feeds.length > 0 ?
+                        <TouchableOpacity onPress={this.fetchNextFeeds}>
+                          <Card>
+                            <CardItem>
+                              <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              </Body>
+                            </CardItem>
+                          </Card>
+                        </TouchableOpacity>
+                        : <View />
+                    }
+                  </View>
               }
-            </Content>
+            </View>
             <Fab
               style={{ backgroundColor: '#FF8B00' }}
               position="bottomRight"
