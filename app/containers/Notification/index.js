@@ -63,7 +63,6 @@ class Notification extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          <HeaderPoint title={strings.notification.title} />
           <View style={styles.view}>
             {
               notifications && notifications.length > 0 ?
