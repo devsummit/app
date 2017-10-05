@@ -57,7 +57,7 @@ class TicketList extends Component {
         dataArray={this.props.listTicket}
         renderRow={(item) => {
           return (
-            <ListItem style={[ styles.card, { alignSelf: 'center', height: 50, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3}]}>
+            <ListItem style={[ styles.card, { alignSelf: 'center', height: 50, width: '95%', marginLeft: 'auto', marginRight: 'auto', borderRadius: 3 } ]}>
               <Text style={styles.text}>{strings.order.ticketNumber} {item.id}</Text>
               {/* <Button
                 small
@@ -80,11 +80,11 @@ class TicketList extends Component {
 
   renderError() {
     return (
-      <View style={[styles.errorContent, styles.card, {width: '95%', height: 100}]}>
+      <View style={[ styles.errorContent, styles.card, { width: '95%', height: 100 } ]}>
         <Text style={styles.errorText}>{strings.order.noTicket}</Text>
         <Button
           small
-          bordered
+          transparent
           style={styles.refreshButton}
           onPress={() => { this.props.fetchUserTicket(); }}
         >
@@ -113,7 +113,7 @@ class TicketList extends Component {
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
-              <Icons name="shopping-basket" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, marginTop: 3 }} />
+              <Icons name="briefcase" color="#E57373" style={{ alignSelf: 'center', fontSize: 40, marginTop: 3 }} />
               <Text style={{ fontSize: 16, fontWeight: 'bold', alignSelf: 'center' }}>{strings.order.myOrder}</Text>
               {
                 orders && orders.length > 0
@@ -124,32 +124,38 @@ class TicketList extends Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this.setModalVisible(true)}>
             <View style={styles.card}>
-              <Icons name="ticket" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
+              <Icons name="gift" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
               <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.redeem}</Text>
             </View>
           </TouchableOpacity>
         </View>
-        
+
+        {/* Ticket Orders */}
         <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
-            <Icons name="shopping-cart" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
+            <Icons name="ticket" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 40 }} />
             <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>{strings.order.ticketOrder}</Text>
           </View>
         </TouchableOpacity>
 
-        { /* Redeem Modal */ }
-        <Modal
-          animationType="slide"
-          visible={this.state.modalVisible}
-          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
-        >
-          <View style={{ flex: 1, justifyContent: 'center' }}>    
-            <View style={styles.redeem}>
-              <Redeem />
+        {/* Free pass */}
+        <Text style={styles.free}> Or get free past by completing our partner offers </Text>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+          <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+            <View style={styles.card}>
+              <Icons name="plus-circle" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 60 }} />
+              <Text style={{ textAlign: 'center', fontSize: 12 }}>Register our free trial</Text>
             </View>
-          </View>  
-        </Modal>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+            <View style={styles.card}>
+              <Icons name="plus-circle" color="#E57373" style={{ flex: 1, textAlign: 'center', fontSize: 60 }} />
+              <Text style={{ textAlign: 'center', fontSize: 12 }}>Register our free trial</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
+        {/* Ticket List */}
         <Content
           refreshControl={
             <RefreshControl
@@ -164,6 +170,20 @@ class TicketList extends Component {
               this.renderError()
           }
         </Content>
+
+        { /* Redeem Modal */ }
+        <Modal
+          animationType="slide"
+          visible={this.state.modalVisible}
+          onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+        >
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <View style={styles.redeem}>
+              <Redeem />
+            </View>
+          </View>
+        </Modal>
+
       </ScrollView>
     );
   }

@@ -43,10 +43,12 @@ const styles = StyleSheet.create({
     margin: 20
   },
   errorContent: {
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 0
   },
   errorText: {
-    fontSize: 14
+    fontSize: 14,
+    textAlign: 'center'
   },
   card: {
     position: 'relative',
@@ -67,6 +69,14 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'whitesmoke',
     borderRadius: 2
+  },
+  free: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 12,
+    color: 'grey',
+    fontWeight: 'bold',
+    marginTop: 5
   }
 });
 

@@ -287,17 +287,17 @@ class Feed extends Component {
         <Tabs style={styles.tabs} initialPage={0}>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
             <Content style={{ backgroundColor: '#E0E0E0' }}>
-                {
-                  this.props.isFetching
-                    ? <Spinner color="yellow" />
-                    : this.props.feeds &&
-                      <View>
-                        <FlatList
-                          keyExtractor={this._keyExtractor}
-                          data={this.props.feeds}
-                          initialNumToRender={5}
-                          renderItem={({ item }) => (
-                            (item.type === 'sponsor')
+              {
+                this.props.isFetching
+                  ? <Spinner color="yellow" />
+                  : this.props.feeds &&
+                    <View>
+                      <FlatList
+                        keyExtractor={this._keyExtractor}
+                        data={this.props.feeds}
+                        initialNumToRender={5}
+                        renderItem={({ item }) => (
+                          (item.type === 'sponsor')
                             ?
                             <Card style={{ flex: 0 }}>
                               <CardItem>
@@ -316,7 +316,10 @@ class Feed extends Component {
                                     {item.message}
                                   </Text>
                                   <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => this.setModalVisible(true, item.attachment) }>
-                                    <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300 }} />
+                                    <Image
+                                      source={{ uri: item.attachment }}
+                                      style={styles.images}
+                                    />
                                   </TouchableOpacity>
                                 </Body>
                               </CardItem>
@@ -343,7 +346,7 @@ class Feed extends Component {
                                       {item.message}
                                     </Text>
                                     <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 8 }} onPress={() => this.setModalVisible(true, item.attachment)}>
-                                      <Image source={{ uri: item.attachment }} style={{ height: 200, width: 300 }} />
+                                      <Image source={{ uri: item.attachment }} style={styles.images} />
                                     </TouchableOpacity>
                                   </View>
                                 </View>
@@ -352,17 +355,17 @@ class Feed extends Component {
                               <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                                 {
                                   this.state.userId === item.user_id ?
-                                  <TouchableWithoutFeedback onPress={() => this.alertRemoveFeed(item.id)}>
-                                    <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
-                                      <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
-                                  :
-                                  <TouchableWithoutFeedback onPress={() => this.alertReportFeed(item.id)}>
-                                    <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
-                                      <Text style={styles.buttonReport}>{strings.feed.report}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
+                                    <TouchableWithoutFeedback onPress={() => this.alertRemoveFeed(item.id)}>
+                                      <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
+                                        <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                      </View>
+                                    </TouchableWithoutFeedback>
+                                    :
+                                    <TouchableWithoutFeedback onPress={() => this.alertReportFeed(item.id)}>
+                                      <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
+                                        <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                      </View>
+                                    </TouchableWithoutFeedback>
                                 }
                                 <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.3 }} />
                                 <TouchableWithoutFeedback onPress={() => this.onOpen(item.message, item.attachment)}>
@@ -372,23 +375,23 @@ class Feed extends Component {
                                 </TouchableWithoutFeedback>
                               </View>
                             </Card>
-                          )}
-                        />
-                        {
-                          this.props.links.next ?
-                            <TouchableOpacity onPress={this.fetchNextFeeds}>
-                              <Card>
-                                <CardItem>
-                                  <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                                    <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
-                                  </Body>
-                                </CardItem>
-                              </Card>
-                            </TouchableOpacity>
-                            : <View />
-                        }
-                      </View>
-                }
+                        )}
+                      />
+                      {
+                        this.props.links.next ?
+                          <TouchableOpacity onPress={this.fetchNextFeeds}>
+                            <Card>
+                              <CardItem>
+                                <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
+                                  <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                                </Body>
+                              </CardItem>
+                            </Card>
+                          </TouchableOpacity>
+                          : <View />
+                      }
+                    </View>
+              }
             </Content>
             <Fab
               style={{ backgroundColor: '#FF8B00' }}

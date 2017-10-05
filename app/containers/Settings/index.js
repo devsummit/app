@@ -35,14 +35,14 @@ class Settings extends Component {
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
+        this.handleUpdateAvatar(profileData.photos[0].url);
         if (profileData.role_id === 3) {
           this.handleInputChange('boothInfo', profileData.booth.summary);
         }
-        if (profileData.data.role_id === 4) {
+        if (profileData.role_id === 4) {
           this.handleInputChange('job', profileData.speaker.job);
           this.handleInputChange('summary', profileData.speaker.summary);
         }
-        this.props.updateFields(field, value);
       }
     });
   }
@@ -67,6 +67,7 @@ class Settings extends Component {
   }
 
   render() {
+    console.log('landing here', this.props);
     const { fields, isDisabled, avatar, errorFields } = this.props || {};
     const {
       firstName,
@@ -99,6 +100,7 @@ class Settings extends Component {
                     />
                     <View style={{ marginLeft: 8, justifyContent: 'center' }}>
                       <Text>{firstName} {lastName}</Text>
+                      <Text style={{ color: '#BDBDBD' }}>{username}</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -109,6 +111,13 @@ class Settings extends Component {
                   onPress={() => Actions.codeConduct()}
                 >
                   <Text>{strings.settings.codeConduct}</Text>
+                </Button>
+                <Button
+                  block
+                  style={styles.button}
+                  onPress={() => Actions.privacyPolicy()}
+                >
+                  <Text>{strings.settings.privacyPolicy}</Text>
                 </Button>
                 <Button
                   block
