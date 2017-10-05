@@ -22,9 +22,6 @@ import * as selectors from './selectors';
 class Settings extends Component {
   state = {
     id: null,
-<<<<<<< Updated upstream
-    modalVisible: false
-=======
     modalVisible: false,
     firstName: '',
     lastName: '',
@@ -33,8 +30,6 @@ class Settings extends Component {
 
   componentWillMount() {
     getProfileData().then((profileData) => {
-      console.log('landing here profile data settings', profileData);
-      console.log('landing here this.props settings', this.props);
       if (profileData) {
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
@@ -49,7 +44,6 @@ class Settings extends Component {
         this.props.updateFields(field, value);
       }
     });
->>>>>>> Stashed changes
   }
 
   componentWillReceiveProps(prevProps) {
