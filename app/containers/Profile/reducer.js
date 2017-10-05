@@ -24,7 +24,8 @@ const initialState = fromJS({
     boothInfo: '',
     job: '',
     summary: '',
-    profilePic: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg'
+    profilePic: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
+    points: ''
   },
   avatar: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
   isAvatarUpdated: false,
