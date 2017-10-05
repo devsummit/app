@@ -29,10 +29,17 @@ import { PRIMARYCOLOR } from '../../constants';
 class Profile extends Component {
   state = {
     id: null,
-    isLoading: true
+    isLoading: true,
+    points: null
   }
   componentWillMount() {
     getProfileData().then((profileData) => {
+      if (profileData.points === null) {
+        this.setState({ points: 0 });
+      } else {
+          this.setState({ points: profileData.points });
+        }
+      // this.setState({ points: profileData.points });
       if (profileData) {
         this.handleInputChange('username', profileData.data.username);
         this.handleInputChange('firstName', profileData.data.first_name);
@@ -46,7 +53,7 @@ class Profile extends Component {
         }
       }
       this.setState({
-        isLoading: false
+        isLoading: false,
       });
     });
     AsyncStorage.getItem('role_id')
@@ -113,7 +120,7 @@ class Profile extends Component {
         <ScrollView>
           <Content>
             <View style={styles.pointsSection}>
-              <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} /> {this.state.points} pts</Text>
             </View>
             <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
               <Image
