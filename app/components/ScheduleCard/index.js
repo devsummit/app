@@ -47,7 +47,6 @@ class ScheduleCard extends Component {
     }
 
     render() {
-      console.log("landing here to check", this.props);
       const { isOpen } = this.state;
       const { event, speaker, stage, user, time_start, time_end} = this.props;
       const start = new Moment(time_start);
