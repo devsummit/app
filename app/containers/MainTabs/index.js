@@ -70,7 +70,7 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="feed"
+                    name="home"
                     style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
                   />
                 </TabHeading>}
