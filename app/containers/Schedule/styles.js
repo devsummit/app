@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '500',
     color: "#FFF"
   },
   icon: {
