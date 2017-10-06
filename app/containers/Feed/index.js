@@ -362,7 +362,7 @@ class Feed extends Component {
                                   </View>
                                 </View>
                               </View>
-                              <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.3 }} />
+                              <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.5, marginRight: -20 }} />
                               <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
                                 {
                                   this.state.userId === item.user_id ?
