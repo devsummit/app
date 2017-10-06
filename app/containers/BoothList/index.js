@@ -7,7 +7,7 @@ import {
   CardItem,
   Body
 } from 'native-base';
-import { View, Image, Text, Alert, Modal, TouchableHighlight, ScrollView } from 'react-native';
+import { View, Image, Text, Alert, Modal, TouchableOpacity, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -86,49 +86,33 @@ class BoothList extends Component {
               </ScrollView>
             </Modal>
           </View>
-          <Content style={styles.content}>
+          <View style={styles.content}>
             {booth.map(data => (
-              <Card key={data.id} >
-                <Body>
+              <TouchableOpacity
+                onPress={() => {
+                  Actions.boothInfo({
+                    title: 'Booth Info',
+                    summary: data.summary,
+                    user: data.user,
+                    booth_photo: data.logo_url,
+                    booth_id: data.id
+                  });
+                }}
+              >
+                <View style={{ flex: 1, marginVertical: 10 }} key={data.id}>
                   <View style={styles.profileSection}>
                     <Image
                       style={styles.profilePic}
-                      resizeMode='stretch'
                       source={{ uri: data.logo_url }}
                     />
-                  </View>
-                </Body>
-                <CardItem style={styles.itemNameSection}>
-                  <Body>
-                    <View style={styles.bodySection}>
-                      <View style={styles.nameSection}>
-                        <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                        <Text numberOfLines={3} style={styles.summary} >
-                          {data.summary}
-                        </Text>
-                      </View>
+                    <View style={styles.nameSection}>
+                      <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
                     </View>
-                  </Body>
-                </CardItem>
-                <CardItem footer style={styles.footerSection}>
-                  <Button
-                    bordered
-                    style={styles.footerButton}
-                    onPress={() => {
-                      Actions.boothInfo({
-                        summary: data.summary,
-                        user: data.user,
-                        booth_photo: data.logo_url,
-                        booth_id: data.id
-                      });
-                    }}
-                  >
-                    <Text style={{ color: 'blue' }}>{strings.booth.more}</Text>
-                  </Button>
-                </CardItem>
-              </Card>
+                  </View>
+                </View>
+              </TouchableOpacity>
             ))}
-          </Content>
+          </View>
         </Content>
       </Container>
     );
