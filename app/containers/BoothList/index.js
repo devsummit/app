@@ -99,7 +99,7 @@ class BoothList extends Component {
                   });
                 }}
               >
-                <View style={{ flex: 1, marginVertical: 10 }} key={data.id}>
+                <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
                   <View style={styles.profileSection}>
                     <Image
                       style={styles.profilePic}
