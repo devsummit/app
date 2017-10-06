@@ -4,6 +4,7 @@ cache:
   - bundler
 before_script:
   - gem install fastlane cocoapods
+  - pod repo update
   - cd ios && pod install
   - pwd
   - cd ../
