@@ -45,7 +45,7 @@ export default class MainTabs extends Component {
       />);
     }
     return (<IconSimpleLine
-      name="organization"
+      name="flag"
       style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
     />);
   }
