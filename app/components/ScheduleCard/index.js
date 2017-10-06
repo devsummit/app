@@ -53,57 +53,63 @@ class ScheduleCard extends Component {
       const end = new Moment(time_end);
       const dayStart = start.format('DD');
       const monthStart = start.format('MMM');
-      const timeStart = start.format('hh:mm A');
+      const timeStart = start.format('hh:mm');
+      const period = start.format('A');
       const dateEnd = end.format('MMM DD');
       const timeEnd = end.format('hh:mm A');
       const hasSpeaker = !(Object.keys(speaker).length === 0 && speaker.constructor === Object)
       return (
-        <Card style={styles.container}>
-          <TouchableHighlight
-            onPress={() => Actions.scheduleDetail({
-              event, speaker, stage, user, time_start, time_end
-            })}
-          >
-            <CardItem>
-              <View style={styles.date}>
-                <Text style={styles.day}>{ timeStart }</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                {hasSpeaker ?
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image
-                      source={{ uri: user.photos[0].url}}
-                      style={{ width: 50, height: 50, borderRadius: 25, marginRight: 8 }}
-                    />
-                    <Text>{user.first_name} {user.last_name}</Text>
-                  </View> : <View />
-                }
+        <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
+          <Card style={styles.container}>
+            <TouchableHighlight
+              onPress={() => Actions.scheduleDetail({
+                event, speaker, stage, user, time_start, time_end
+              })}
+            >
+              <CardItem>
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{event.title}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ fontSize: 12 }}>{event.information}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                { user.length > 0 ?
-                  user.map(item => {
-                    return(
+                  <View style={styles.date}>
+                    <Text style={styles.day}>{timeStart}</Text>
+                    <Text style={styles.time}>{period}</Text>
+                  </View>
+                  <View style={{ flex: 4, marginLeft: 20 }}>
+                    {hasSpeaker ?
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image
-                          source={{ uri: item.photos[0].url }}
-                          style={{ width: 30, height: 30, borderRadius: 15, marginRight: 4, marginVertical: 8 }}
+                          source={{ uri: user.photos[0].url}}
+                          style={{ width: 50, height: 50, borderRadius: 25, marginRight: 8 }}
                         />
-                    )
-                  }) :
-                  <View />
-                }
-              </View>
-                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                  {this.eventType()}
+                        <Text>{user.first_name} {user.last_name}</Text>
+                      </View> : <View />
+                    }
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{event.title}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Text style={{ fontSize: 12 }}>{event.information}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                      { user.length > 0 ?
+                        user.map((item) => {
+                          return (
+                            <Image
+                              source={{ uri: item.photos[0].url }}
+                              style={{ width: 30, height: 30, borderRadius: 15, marginRight: 4, marginVertical: 8 }}
+                            />
+                          )
+                        }) :
+                        <View />
+                      }
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                      {this.eventType()}
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </CardItem>
-          </TouchableHighlight>
-        </Card>
+              </CardItem>
+            </TouchableHighlight>
+          </Card>
+        </View>
       );
     }
 }
