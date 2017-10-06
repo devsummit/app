@@ -344,7 +344,7 @@ class Feed extends Component {
                               </CardItem>
                             </Card>
                             :
-                            <Card style={{ flex: 1 }}>
+                            <Card style={{ flex: 1, paddingRight: 20 }}>
                               <View style={{ padding: 12, flexDirection: 'row' }}>
                                 <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                 <View>
@@ -352,8 +352,8 @@ class Feed extends Component {
                                     <Text style={{ color: '#000' }}>{item.user.first_name} {item.user.last_name}</Text>
                                     <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                                   </View>
-                                  <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                                    <Text style={{ color: '#000', margin: 12 }}>
+                                  <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginRight: 20 }}>
+                                    <Text style={{ color: '#000', margin: 10 }}>
                                       {item.message}
                                     </Text>
                                     <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 8 }} onPress={() => this.setModalVisible(true, item.attachment)}>

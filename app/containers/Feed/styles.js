@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 8,
     textAlign: 'center',
-    color: '#000'
+    color: '#000',
+    opacity: 0.5
   },
   textOption: {
     fontSize: 18,
