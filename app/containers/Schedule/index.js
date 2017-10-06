@@ -99,7 +99,7 @@ class Schedule extends Component {
                 </View>
               </View>
             </Tab>
-            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>Nov 23</Text></TabHeading> }>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>23 Nov</Text></TabHeading> }>
               <View style={styles.content}>
                 <View style={styles.cards}>
                   { !(this.state.isLoading) ?
