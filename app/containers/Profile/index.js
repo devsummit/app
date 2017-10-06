@@ -29,12 +29,18 @@ import { PRIMARYCOLOR } from '../../constants';
 class Profile extends Component {
   state = {
     id: null,
-    isLoading: true
+    isLoading: true,
+    points: null
   }
   componentWillMount() {
 
     getProfileData().then((profileData) => {
       if (profileData) {
+        if (profileData.points === null) {
+          this.props.updateFields('points', 0);
+        } else {
+            this.props.updateFields('points', profileData.points);
+          }
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
@@ -47,7 +53,7 @@ class Profile extends Component {
         }
       }
       this.setState({
-        isLoading: false
+        isLoading: false,
       });
     });
     AsyncStorage.getItem('role_id')
@@ -106,15 +112,15 @@ class Profile extends Component {
       boothInfo,
       job,
       summary,
-      profilePic
+      profilePic,
+      points
     } = fields || '';
-
     return (
       <Container>
         <ScrollView>
           <Content>
             <View style={styles.pointsSection}>
-              <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} /> {points} pts</Text>
             </View>
             <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
               <Image
