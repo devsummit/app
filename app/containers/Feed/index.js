@@ -349,11 +349,11 @@ class Feed extends Component {
                                 <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                 <View>
                                   <View style={{ marginLeft: 8 }}>
-                                    <Text>{item.user.first_name} {item.user.last_name}</Text>
+                                    <Text style={{ color: '#000' }}>{item.user.first_name} {item.user.last_name}</Text>
                                     <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
                                   </View>
-                                  <View>
-                                    <Text style={{ marginVertical: 10, marginLeft: 8 }}>
+                                  <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+                                    <Text style={{ color: '#000', margin: 12 }}>
                                       {item.message}
                                     </Text>
                                     <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 8 }} onPress={() => this.setModalVisible(true, item.attachment)}>
