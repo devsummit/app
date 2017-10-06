@@ -54,7 +54,7 @@ class ScheduleCard extends Component {
       const dayStart = start.format('DD');
       const monthStart = start.format('MMM');
       const timeStart = start.format('hh:mm');
-      const tes = start.format('A');
+      const period = start.format('A');
       const dateEnd = end.format('MMM DD');
       const timeEnd = end.format('hh:mm A');
       const hasSpeaker = !(Object.keys(speaker).length === 0 && speaker.constructor === Object)
@@ -70,7 +70,7 @@ class ScheduleCard extends Component {
                 <View style={{ flexDirection: 'row' }}>
                   <View style={styles.date}>
                     <Text style={styles.day}>{timeStart}</Text>
-                    <Text style={styles.time}>{tes}</Text>
+                    <Text style={styles.time}>{period}</Text>
                   </View>
                   <View style={{ flex: 4, marginLeft: 20 }}>
                     {hasSpeaker ?
