@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#333',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '300'
   },
   job: {
