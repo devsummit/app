@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width } = Dimensions.get('window');
 
@@ -71,6 +72,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     fontWeight: '500',
     color: '#FFF'
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
   }
 });
 

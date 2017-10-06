@@ -30,6 +30,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 const background = require('./../../../assets/images/background.png');
+const noImage = require('./../../../assets/images/noimage.png');
 
 
 class BoothInfo extends Component {
@@ -113,7 +114,7 @@ class BoothInfo extends Component {
     const images = boothGalleries.data;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
         <ScrollView>
           <View style={{ flex: 1 }}>
             <Image source={background} style={styles.background}>
@@ -132,24 +133,27 @@ class BoothInfo extends Component {
                 </View>
               </View>
             </Image>
-            <Tabs initialPage={0} style={{ marginTop: 20 }}>
+            <Tabs initialPage={0} style={{ marginTop: 20, backgroundColor: '#E0E0E0' }}>
               <Tab style={{ backgroundColor: '#E0E0E0' }} heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Profile</Text></TabHeading>}>
                 <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#FFFFFF' }}>
                   <Text style={styles.summary}>{summary}</Text>
                 </View>
               </Tab>
               <Tab style={{ backgroundColor: '#E0E0E0' }} heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Gallery</Text></TabHeading>}>
-                <View style={styles.imageWrapper}>
-                  { images ?
+                { images && images.length > 0 ?
+                  <View style={styles.imageWrapper}>
                     <PhotoGrid
                       data={images}
                       itemsPerRow={2}
                       renderItem={this.renderItem}
                     />
-                    :
-                    <View />
-                  }
-                </View>
+                  </View>
+                  :
+                  <View style={{ flex: 1, marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
+                    <Image source={noImage} />
+                    <Text style={styles.artworkText}>No picture available</Text>
+                  </View>
+                }
               </Tab>
             </Tabs>
           </View>
