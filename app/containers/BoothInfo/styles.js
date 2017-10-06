@@ -3,14 +3,15 @@ import { StyleSheet, Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  info: {
-    margin: 12
-  },
   icon: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     marginTop: -30,
     marginRight: 5
+  },
+  background: {
+    height: 200,
+    width
   },
   name: {
     textAlign: 'center',
@@ -19,10 +20,9 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   summary: {
-    color: '#FFFFFF',
+    color: '#616161',
     fontSize: 16,
-    alignSelf: 'center',
-    marginTop: 8
+    margin: 20
   },
   col1: {
     backgroundColor: '#EB9532',
@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
   },
   boothImage: {
     alignSelf: 'center',
-    borderRadius: 50,
-    width: width * 0.7,
-    height: 200,
+    borderRadius: 60,
+    width: 120,
+    height: 120,
     margin: 8
   },
   boothImageList: {
@@ -55,12 +55,22 @@ const styles = StyleSheet.create({
     margin: 2
   },
   imageWrapper: {
+    flex: 1,
     marginLeft: 2,
     marginRight: 2,
-    marginTop: 2,
-    backgroundColor: '#FFF',
+    marginTop: 10,
+    backgroundColor: '#E0E0E0',
     alignItems: 'center',
     justifyContent: 'space-around'
+  },
+  tabHeading: {
+    backgroundColor: '#FF6F00'
+  },
+  tabTitle: {
+    fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '500',
+    color: '#FFF'
   }
 });
 
