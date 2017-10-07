@@ -200,7 +200,7 @@ class OrderDetail extends Component {
               <List
                 dataArray={order.data}
                 renderRow={item =>
-                  (<ListItem>
+                  (<View>
                     {this.state.status === 'not paid' ?
                       <TicketType
                         key={item.id}
@@ -215,7 +215,7 @@ class OrderDetail extends Component {
                         ticket={item.ticket}
                       />}
 
-                  </ListItem>)
+                  </View>)
                 }
               />
             </Content>
@@ -315,7 +315,7 @@ class OrderDetail extends Component {
             </View>
           </Modal>
         </Content>
-      </Container >
+      </Container>
     );
   }
 }
