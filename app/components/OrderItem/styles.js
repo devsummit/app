@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   orderId: {
     alignSelf: 'flex-start',
+    fontSize: 10
   },
   text: {
     alignSelf: 'flex-end',
