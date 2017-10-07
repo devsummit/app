@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'flex-end',
   },
+  item: {
+    marginBottom: 10,
+    borderColor: '#000000',
+    borderWidth: 1
+  },
   datePicker: {
     flex: 1,
     flexDirection: 'row',

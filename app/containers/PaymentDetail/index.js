@@ -142,8 +142,9 @@ class PaymentDetail extends Component {
         <Content>
           <Text style={styles.text}>{detail.label.toUpperCase()}</Text>
           {detail && detail.basicDetail ?
-            <Content>
+            <Content style={{ marginHorizontal: 20 }}>
               <InputItem
+                itemStyle={styles.item}
                 error={errorEmailDetail}
                 title={strings.payment.email}
                 onChangeText={text => this.handleInputChange('emailDetail', text)}
@@ -151,6 +152,7 @@ class PaymentDetail extends Component {
                 placeholder={strings.payment.email}
               />
               <InputItem
+                itemStyle={styles.item}
                 error={errorFirstName}
                 title={strings.payment.firstName}
                 onChangeText={text => this.handleInputChange('firstName', text)}
@@ -158,6 +160,7 @@ class PaymentDetail extends Component {
                 placeholder={strings.payment.firstName}
               />
               <InputItem
+                itemStyle={styles.item}
                 error={errorLastName}
                 title={strings.payment.lastName}
                 onChangeText={text => this.handleInputChange('lastName', text)}
@@ -165,6 +168,7 @@ class PaymentDetail extends Component {
                 placeholder={strings.payment.lastName}
               />
               <InputItem
+                itemStyle={styles.item}
                 error={errorPhoneNumber}
                 title={strings.payment.phone}
                 onChangeText={text => this.handleInputChange('phoneNumber', text)}
@@ -175,6 +179,7 @@ class PaymentDetail extends Component {
             : <Content />}
           {detail && detail.vaNumber ?
             <InputItem
+              itemStyle={styles.item}
               error={errorVaNumber}
               title="VA number"
               onChangeText={text => this.handleInputChange('vaNumber', text)}
@@ -183,8 +188,9 @@ class PaymentDetail extends Component {
             /> : <Content />
           }
           {detail && detail.ccDetail ?
-            <Content>
+            <Content style={{ marginHorizontal: 20 }}>
               <InputItem
+                itemStyle={styles.item}
                 error={errorCardNumber}
                 title={strings.payment.cardNumber}
                 onChangeText={text => this.handleInputChange('cardNumber', text)}
@@ -193,6 +199,7 @@ class PaymentDetail extends Component {
               />
               <InputItem
                 title="cvv"
+                itemStyle={styles.item}
                 error={errorCardCvv}
                 onChangeText={text => this.handleInputChange('cardCvv', text)}
                 value={cardCvv}
@@ -226,8 +233,9 @@ class PaymentDetail extends Component {
             </Content> : <Content />
           }
           {detail && detail.descriptionDetail ?
-            <Content>
+            <Content style={{ marginHorizontal: 20 }}>
               <InputItem
+                itemStyle={styles.item}
                 error={errorDescriptionDetail}
                 title={strings.payment.description}
                 onChangeText={text => this.handleInputChange('descriptionDetail', text)}
@@ -239,6 +247,7 @@ class PaymentDetail extends Component {
           {detail && detail.extraInput ?
             <Content>
               <InputItem
+                itemStyle={styles.item}
                 error={errorCardNumber}
                 title={strings.payment.digitsNumber}
                 onChangeText={(text) => {
@@ -252,23 +261,27 @@ class PaymentDetail extends Component {
               />
               <InputItem
                 title="input1"
+                itemStyle={styles.item}
                 value={input1}
                 placeholder={strings.payment.lastDigitsNumber}
                 disabled
               />
               <InputItem
+                itemStyle={styles.item}
                 title="input2"
                 value={'Total Amount = Rp.'.concat(Intl.NumberFormat('id').format(input2))}
                 placeholder="Gross Amount"
                 disabled
               />
               <InputItem
-                title="random"
+                itemStyle={styles.item}
                 value={'Enter this number for token : '.concat(input3)}
+                title="random"
                 placeholder="5 Random Number"
                 disabled
               />
               <InputItem
+                itemStyle={styles.item}
                 error={errorMandiriToken}
                 title="Mandiri token"
                 onChangeText={text => this.handleInputChange('mandiriToken', text)}

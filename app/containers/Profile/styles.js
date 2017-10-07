@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'flex-start',
     marginBottom: 15,
-    marginRight: 12
+    marginHorizontal: 20
   },
   input: {
     paddingLeft: 12
@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     flexWrap: 'wrap',
     textAlignVertical: 'top'
+  },
+  item: {
+    marginBottom: 10,
+    borderColor: '#000000',
+    borderWidth: 1
   },
   loading: {
     flex: 1,

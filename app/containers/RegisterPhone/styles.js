@@ -30,10 +30,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     color: '#FFFFFF'
   },
-  formInput: {
-    paddingLeft: 20,
-    color: '#FFFFFF'
-  },
   buttonRegister: {
     marginLeft: 'auto',
     marginRight: 'auto'
@@ -45,7 +41,7 @@ const styles = StyleSheet.create({
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
-    marginLeft: 8,
+    marginLeft: -24,
     color: '#FFD740'
   },
   item: {
@@ -59,8 +55,6 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginTop: 6,
     marginBottom: 6,
-    borderWidth: 1,
-    borderRadius: 30,
     backgroundColor: '#FFA726',
     borderColor: 'transparent',
     flexDirection: 'row',
