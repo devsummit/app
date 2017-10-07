@@ -100,11 +100,11 @@ export default class OrderItem extends Component {
                 {formatDate(order.created_at)}
               </Text>
             <View style={ styles.viewText }>
-                {status ?
-                  <Text note style={ [styles.statusText, { backgroundColor: color }] }>
-                    {status.toUpperCase()}
-                  </Text> : <View />
-                }
+              {status ?
+                <Text note style={ [styles.statusText, { backgroundColor: color }] }>
+                  {status.toUpperCase()}
+                </Text> : <View />
+              }
             </View>
           </View>
           <View style={styles.buttonSection}>
