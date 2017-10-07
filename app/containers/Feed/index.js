@@ -292,7 +292,7 @@ class Feed extends Component {
         </View>
         <Tabs style={styles.tabs} initialPage={0}>
           <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
-            <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
+            <Content style={{ backgroundColor: '#E0E0E0' }}>
               {
                 this.props.isFetching
                   ? <Spinner color="yellow" />
@@ -403,7 +403,7 @@ class Feed extends Component {
                     }
                   </View>
               }
-            </View>
+            </Content>
             <Fab
               style={{ backgroundColor: '#FF8B00' }}
               position="bottomRight"
