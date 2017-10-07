@@ -134,6 +134,7 @@ class Profile extends Component {
             </TouchableOpacity>
             <View style={styles.section2}>
               <InputItem
+                itemStyle={styles.item}
                 style={styles.input}
                 title={strings.profile.firstName}
                 placeholder={strings.profile.firstName}
@@ -142,6 +143,7 @@ class Profile extends Component {
                 value={firstName}
               />
               <InputItem
+                itemStyle={styles.item}
                 style={styles.input}
                 title={strings.profile.lastName}
                 placeholder={strings.profile.lastName}
@@ -150,6 +152,7 @@ class Profile extends Component {
                 value={lastName}
               />
               {speaker ? <InputItem
+                itemStyle={styles.item}
                 style={styles.inputJob}
                 title={strings.profile.job}
                 placeholder={strings.profile.job}
@@ -162,6 +165,7 @@ class Profile extends Component {
               />
               : <View />}
               {speaker ? <InputItem
+                itemStyle={styles.item}
                 style={styles.inputInfo}
                 title={strings.profile.summary}
                 placeholder={strings.profile.summary}
@@ -174,6 +178,7 @@ class Profile extends Component {
               />
               : <View />}
               {booth ? <InputItem
+                itemStyle={styles.item}
                 style={styles.inputInfo}
                 title={strings.profile.boothInfo}
                 placeholder={strings.profile.boothInfo}
@@ -195,9 +200,9 @@ class Profile extends Component {
                 <Text>{strings.global.save}</Text>
               </Button>
             </View>
-        </Content>
-      </ScrollView>
-    </Container>
+          </Content>
+        </ScrollView>
+      </Container>
     );
   }
 }

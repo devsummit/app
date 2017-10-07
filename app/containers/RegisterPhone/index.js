@@ -242,6 +242,7 @@ class RegisterPhone extends Component {
           <Content>
             <View style={styles.formSection}>
               <InputItem
+                itemStyle={styles.item}
                 error={errorFirstName}
                 style={styles.formInput}
                 placeholder={strings.register.firstName}
@@ -250,6 +251,7 @@ class RegisterPhone extends Component {
                 value={firstName}
               />
               <InputItem
+                itemStyle={styles.item}
                 error={errorLastName}
                 style={styles.formInput}
                 placeholder={strings.register.lastName}
@@ -258,6 +260,7 @@ class RegisterPhone extends Component {
                 value={lastName}
               />
               <InputItem
+                itemStyle={styles.item}
                 error={errorEmail}
                 style={styles.formInput}
                 placeholder={strings.register.email}
@@ -268,19 +271,25 @@ class RegisterPhone extends Component {
             </View>
             <View style={{ flex: 1, padding: 5 }}>
               <CheckBox
+                color={'#FFF'}
+                iconStyle={{ color: '#FFF', marginLeft: 16 }}
+                labelStyle={{ color: '#FFF' }}
                 label={strings.register.useReferer}
                 size={30}
                 checked={this.state.isChecked}
                 onPress={this.handlePressCheckedBox}
               />
               { this.state.isChecked ?
-                <InputItem
-                  style={styles.formInput}
-                  placeholder={strings.register.refererName}
-                  placeholderTextColor={'#BDBDBD'}
-                  onChangeText={text => this.handleInputChange('referer', text)}
-                  value={referer}
-                />
+                <View style={{ marginHorizontal: 20 }}>
+                  <InputItem
+                    itemStyle={styles.item}
+                    style={styles.formInput}
+                    placeholder={strings.register.refererName}
+                    placeholderTextColor={'#BDBDBD'}
+                    onChangeText={text => this.handleInputChange('referer', text)}
+                    value={referer}
+                  />
+                </View>
                 :
                 null
               }
