@@ -1,15 +1,7 @@
 import 'intl';
 import 'intl/locale-data/jsonp/id';
 import React, { Component } from 'react';
-import {
-  Container,
-  Content,
-  Item,
-  Picker,
-  Button,
-  Text,
-  Spinner
-} from 'native-base';
+import { Container, Content, Item, Picker, Button, Text, Spinner } from 'native-base';
 import { Alert, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
@@ -52,17 +44,21 @@ class PaymentDetail extends Component {
 
   componentWillReceiveProps() {
     const { getTransactionResponse } = this.props;
-    if (getTransactionResponse && getTransactionResponse.meta && getTransactionResponse.meta.message) {
+    if (
+      getTransactionResponse &&
+      getTransactionResponse.meta &&
+      getTransactionResponse.meta.message
+    ) {
       Alert.alert(getTransactionResponse.meta.message);
       this.props.resetResponse();
-      Actions.pop();
+      Actions.orderList();
     }
   }
 
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
-    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
-  }
+    this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
+  };
 
   render() {
     const monthList = [];
@@ -115,7 +111,8 @@ class PaymentDetail extends Component {
       input1,
       input2,
       input3
-    } = inputFields || '';
+    } =
+      inputFields || '';
     const {
       errorEmailDetail,
       errorFirstName,
@@ -126,7 +123,8 @@ class PaymentDetail extends Component {
       errorCardCvv,
       errorDescriptionDetail,
       errorMandiriToken
-    } = errorFields || false;
+    } =
+      errorFields || false;
 
     if (getIsFetchingTransaction) {
       return (
@@ -141,7 +139,7 @@ class PaymentDetail extends Component {
       <Container style={styles.container}>
         <Content>
           <Text style={styles.text}>{detail.label.toUpperCase()}</Text>
-          {detail && detail.basicDetail ?
+          {detail && detail.basicDetail ? (
             <Content style={{ marginHorizontal: 20 }}>
               <InputItem
                 itemStyle={styles.item}
@@ -176,8 +174,10 @@ class PaymentDetail extends Component {
                 placeholder={strings.payment.phone}
               />
             </Content>
-            : <Content />}
-          {detail && detail.vaNumber ?
+          ) : (
+            <Content />
+          )}
+          {detail && detail.vaNumber ? (
             <InputItem
               itemStyle={styles.item}
               error={errorVaNumber}
@@ -185,9 +185,11 @@ class PaymentDetail extends Component {
               onChangeText={text => this.handleInputChange('vaNumber', text)}
               value={vaNumber}
               placeholder="VA number"
-            /> : <Content />
-          }
-          {detail && detail.ccDetail ?
+            />
+          ) : (
+            <Content />
+          )}
+          {detail && detail.ccDetail ? (
             <Content style={{ marginHorizontal: 20 }}>
               <InputItem
                 itemStyle={styles.item}
@@ -214,9 +216,10 @@ class PaymentDetail extends Component {
                   selectedValue={cardExpiryMonth}
                   onValueChange={value => this.handleInputChange('cardExpiryMonth', value)}
                 >
-                  {monthList && monthList.map(component => (
-                    <Item key={component.value} label={component.label} value={component.label} />
-                  ))}
+                  {monthList &&
+                    monthList.map(component => (
+                      <Item key={component.value} label={component.label} value={component.label} />
+                    ))}
                 </Picker>
                 <Picker
                   style={styles.yearPicker}
@@ -225,14 +228,17 @@ class PaymentDetail extends Component {
                   selectedValue={cardExpiryYear}
                   onValueChange={value => this.handleInputChange('cardExpiryYear', value)}
                 >
-                  {monthList && yearList.map(component => (
-                    <Item key={component.value} label={component.label} value={component.label} />
-                  ))}
+                  {monthList &&
+                    yearList.map(component => (
+                      <Item key={component.value} label={component.label} value={component.label} />
+                    ))}
                 </Picker>
               </View>
-            </Content> : <Content />
-          }
-          {detail && detail.descriptionDetail ?
+            </Content>
+          ) : (
+            <Content />
+          )}
+          {detail && detail.descriptionDetail ? (
             <Content style={{ marginHorizontal: 20 }}>
               <InputItem
                 itemStyle={styles.item}
@@ -242,9 +248,11 @@ class PaymentDetail extends Component {
                 value={descriptionDetail}
                 placeholder={strings.payment.description}
               />
-            </Content> : <Content />
-          }
-          {detail && detail.extraInput ?
+            </Content>
+          ) : (
+            <Content />
+          )}
+          {detail && detail.extraInput ? (
             <Content>
               <InputItem
                 itemStyle={styles.item}
@@ -253,8 +261,7 @@ class PaymentDetail extends Component {
                 onChangeText={(text) => {
                   this.handleInputChange('cardNumber', text);
                   this.handleInputChange('input1', text.slice(6, 16));
-                }
-                }
+                }}
                 value={cardNumber}
                 placeholder={strings.payment.digitsNumber}
                 maxLength={16}
@@ -288,8 +295,10 @@ class PaymentDetail extends Component {
                 value={mandiriToken}
                 placeholder="Mandiri token"
               />
-            </Content> : <Content />
-          }
+            </Content>
+          ) : (
+            <Content />
+          )}
 
           <Button
             style={styles.button}
@@ -297,9 +306,7 @@ class PaymentDetail extends Component {
               this.props.submitPayment();
             }}
           >
-            <Text>
-              {strings.payment.submitPayment}
-            </Text>
+            <Text>{strings.payment.submitPayment}</Text>
           </Button>
           {/* {
             (this.props.inputFields.first_name.length !== 0 &&
