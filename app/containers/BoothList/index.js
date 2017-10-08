@@ -7,8 +7,9 @@ import {
   CardItem,
   Body
 } from 'native-base';
-import { View, Image, Text, Alert, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Image, Text, Alert, Modal, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import PhotoGrid from 'react-native-photo-grid';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import strings from '../../localization';
@@ -18,6 +19,7 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import Redeem from '../Redeem';
 
+const noImage = require('./../../../assets/images/noimage.png');
 
 class BoothList extends Component {
   state = {
@@ -30,6 +32,28 @@ class BoothList extends Component {
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  }
+
+  renderItem = (booth) => {
+    return (
+      <TouchableWithoutFeedback onPress={() => 
+        Actions.boothInfo({
+          title: 'Booth Info',
+          summary: booth.summary,
+          user: booth.user,
+          booth_photo: booth.logo_url,
+          booth_id: booth.id
+        })
+      }>
+      <View>
+        <Image
+          style={styles.boothImageList}
+          source={{ uri: booth.logo_url }}
+        />
+        <Text style={styles.boothTitle}>{ booth.name }</Text>
+      </View>
+      </TouchableWithoutFeedback>
+    );
   }
 
   render() {
@@ -86,33 +110,20 @@ class BoothList extends Component {
               </ScrollView>
             </Modal>
           </View>
-          <View style={styles.content}>
-            {booth.map(data => (
-              <TouchableOpacity
-                onPress={() => {
-                  Actions.boothInfo({
-                    title: 'Booth Info',
-                    summary: data.summary,
-                    user: data.user,
-                    booth_photo: data.logo_url,
-                    booth_id: data.id
-                  });
-                }}
-              >
-                <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
-                  <View style={styles.profileSection}>
-                    <Image
-                      style={styles.profilePic}
-                      source={{ uri: data.logo_url }}
-                    />
-                    <View style={styles.nameSection}>
-                      <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                    </View>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
+            { booth && booth.length > 0 ?
+              <View style={styles.imageWrapper}>
+                <PhotoGrid
+                  data={booth}
+                  itemsPerRow={2}
+                  renderItem={this.renderItem}
+                />
+              </View>
+              :
+              <View style={{ flex: 1, marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
+                <Image source={noImage} />
+                <Text style={styles.artworkText}>booth is not available yet</Text>
+              </View>
+            }
         </Content>
       </Container>
     );
