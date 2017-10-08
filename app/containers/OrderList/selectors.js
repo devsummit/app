@@ -12,17 +12,14 @@ const selectMainReducer = () => state => state.get('orderList');
  *  Selects the field data
  *  Returns object
  */
-export const getOrders = () => createSelector(
-  selectMainReducer(),
-  state => state.get('orders').toJS()
-);
+export const getOrders = () =>
+  createSelector(selectMainReducer(), state => state.get('orders').toJS());
 
-export const getIsFetchingOrders = () => createSelector(
-  selectMainReducer(),
-  state => state.get('isFetchingOrders')
-);
+export const getIsFetchingOrders = () =>
+  createSelector(selectMainReducer(), state => state.get('isFetchingOrders'));
 
-export const getIsConfirmingPayment = () => createSelector(
-  selectMainReducer(),
-  state => state.get('isConfirmingPayment')
-);
+export const getIsConfirmingPayment = () =>
+  createSelector(selectMainReducer(), state => state.get('isConfirmingPayment'));
+
+export const getPendingOrders = () =>
+  createSelector(selectMainReducer(), state => state.get('pendingOrder'));

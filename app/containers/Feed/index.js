@@ -81,29 +81,29 @@ function timeDifference(current, previous) {
   } else if (elapsed < msPerDay) {
     return `${Math.round(elapsed / msPerHour)} hours ago`;
   } else if (elapsed < msPerMonth) {
-    if ((previous.getMonth() + 1) === 1) {
+    if (previous.getMonth() + 1 === 1) {
       return `${previous.getDate()} Jan`;
-    } else if ((previous.getMonth() + 1) === 2) {
+    } else if (previous.getMonth() + 1 === 2) {
       return `${previous.getDate()} Feb`;
-    } else if ((previous.getMonth() + 1) === 3) {
+    } else if (previous.getMonth() + 1 === 3) {
       return `${previous.getDate()} Mar`;
-    } else if ((previous.getMonth() + 1) === 4) {
+    } else if (previous.getMonth() + 1 === 4) {
       return `${previous.getDate()} Apr`;
-    } else if ((previous.getMonth() + 1) === 5) {
+    } else if (previous.getMonth() + 1 === 5) {
       return `${previous.getDate()} May`;
-    } else if ((previous.getMonth() + 1) === 6) {
+    } else if (previous.getMonth() + 1 === 6) {
       return `${previous.getDate()} Jun`;
-    } else if ((previous.getMonth() + 1) === 7) {
+    } else if (previous.getMonth() + 1 === 7) {
       return `${previous.getDate()} Jul`;
-    } else if ((previous.getMonth() + 1) === 8) {
+    } else if (previous.getMonth() + 1 === 8) {
       return `${previous.getDate()} Aug`;
-    } else if ((previous.getMonth() + 1) === 9) {
+    } else if (previous.getMonth() + 1 === 9) {
       return `${previous.getDate()} Sep`;
-    } else if ((previous.getMonth() + 1) === 10) {
+    } else if (previous.getMonth() + 1 === 10) {
       return `${previous.getDate()} Oct`;
-    } else if ((previous.getMonth() + 1) === 11) {
+    } else if (previous.getMonth() + 1 === 11) {
       return `${previous.getDate()} Nov`;
-    } else if ((previous.getMonth() + 1) === 12) {
+    } else if (previous.getMonth() + 1 === 12) {
       return `${previous.getDate()} Dec`;
     }
   }
@@ -119,17 +119,17 @@ String.prototype.toDateFromDatetime = function() {
 /**
  * Map redux state to component props
  */
-const mapStateToProps = () => createStructuredSelector({
-  isFetching: selectors.getIsFetchingFeeds(),
-  feeds: selectors.getFetchFeeds(),
-  links: selectors.getFeedsLinks(),
-  isPosting: selectors.getIsPostingFeed(),
-  imagesData: selectors.getUpdateImage(),
-  textData: selectors.getUpdateText(),
-  currentPage: selectors.getCurrentPage(),
-  isRemoving: selectors.getIsRemoveFeed()
-});
-
+const mapStateToProps = () =>
+  createStructuredSelector({
+    isFetching: selectors.getIsFetchingFeeds(),
+    feeds: selectors.getFetchFeeds(),
+    links: selectors.getFeedsLinks(),
+    isPosting: selectors.getIsPostingFeed(),
+    imagesData: selectors.getUpdateImage(),
+    textData: selectors.getUpdateText(),
+    currentPage: selectors.getCurrentPage(),
+    isRemoving: selectors.getIsRemoveFeed()
+  });
 
 class Feed extends Component {
   constructor(props) {
@@ -160,35 +160,34 @@ class Feed extends Component {
   componentWillMount() {
     this.props.fetchFeeds(this.props.currentPage);
 
-    AsyncStorage.getItem('profile_data')
-      .then((profile) => {
-        const data = JSON.parse(profile);
-        const firstName = data.first_name;
-        const lastName = data.last_name;
-        const url = data.photos[0].url;
-        const id = data.id;
-        this.setState({ firstName, lastName, profileUrl: url, userId: id });
-      });
+    AsyncStorage.getItem('profile_data').then((profile) => {
+      const data = JSON.parse(profile);
+      const firstName = data.first_name;
+      const lastName = data.last_name;
+      const url = data.photos[0].url;
+      const id = data.id;
+      this.setState({ firstName, lastName, profileUrl: url, userId: id });
+    });
   }
 
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
-  }
+  };
 
   setModalPost = (visible) => {
     this.setState({ postToFeeds: visible });
     this.props.clearImage();
     this.props.clearTextField();
-  }
+  };
 
   setModalReport = (visible) => {
     this.setState({ modalReport: visible });
-  }
+  };
 
   postFeed = (callback) => {
     this.props.postFeeds(this.props.imagesData, this.props.textData);
     this.setModalPost(false);
-  }
+  };
 
   uploadImage = () => {
     ImagePicker.openPicker({
@@ -196,38 +195,42 @@ class Feed extends Component {
       height: 300,
       cropping: true,
       includeBase64: true
-    }).then((image) => {
-      this.props.updateImage(image);
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+    })
+      .then((image) => {
+        this.props.updateImage(image);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   takeImage = () => {
     ImagePicker.openCamera({
       width: 400,
       height: 300,
       includeBase64: true
-    }).then((image) => {
-      this.props.updateImage(image);
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
+    })
+      .then((image) => {
+        this.props.updateImage(image);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   handleChange = (value) => {
     this.props.updateText(value);
-  }
+  };
 
   fetchNextFeeds = () => {
     this.props.fetchPageWithPaginate(this.props.currentPage);
-  }
+  };
 
   _keyExtractor = (item, index) => item.id;
 
   onCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
@@ -239,94 +242,135 @@ class Feed extends Component {
     if (_url) {
       this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
     }
-  }
+  };
 
   onCancelOption = () => {
     this.setState({ optionVisible: false });
-  }
+  };
 
   alertRemoveFeed = (postId) => {
-    Alert.alert('', 'Are you sure you want to delete this post?',
+    Alert.alert(
+      '',
+      'Are you sure you want to delete this post?',
       [
         { text: 'CANCEL', onPress: () => this.setState({ optionVisible: false }) },
         { text: 'DELETE', onPress: () => this.removeFeed(postId) }
       ],
       { cancelable: false }
     );
-  }
+  };
 
   removeFeed = (postId) => {
     this.props.removeFeed(postId);
     this.setState({ optionVisible: false });
-  }
+  };
 
   alertReportFeed = (postId) => {
-    Alert.alert('', 'Are you sure you want to report this post?',
+    Alert.alert(
+      '',
+      'Are you sure you want to report this post?',
       [
         { text: 'CANCEL', onPress: () => this.setState({ optionVisible: false }) },
         { text: 'REPORT', onPress: () => this.reportFeed(postId) }
       ],
       { cancelable: false }
     );
-  }
+  };
 
   reportFeed = (postId) => {
     this.props.reportFeed(postId);
     this.setState({ optionVisible: false });
-  }
+  };
 
   handleInputChange = (value) => {
     this.setState({ report: value });
-  }
+  };
 
   render() {
     return (
-      <Container
-        style={styles.container}
-      >
-        <View style={{ flexDirection: 'row', backgroundColor: '#FF8B00', justifyContent: 'space-between' }}>
+      <Container style={styles.container}>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#FF8B00',
+            justifyContent: 'space-between'
+          }}
+        >
           <HeaderPoint title={strings.feed.title} />
           <TouchableWithoutFeedback onPress={() => Actions.notification()}>
-            <CameraIcon name="bell" style={{ alignSelf: 'center', color: '#FFF', fontSize: 20, marginRight: 20 }} />
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <CameraIcon
+                name="bell"
+                style={{
+                  elevation: 2,
+                  alignSelf: 'center',
+                  color: '#FFF',
+                  fontSize: 20,
+                  marginRight: 20,
+                  shadowOffset: {
+                    width: 0,
+                    height: 3
+                  },
+                  shadowRadius: 5,
+                  shadowOpacity: 1.0
+                }}
+              />
+            </View>
           </TouchableWithoutFeedback>
         </View>
         <Tabs style={styles.tabs} initialPage={0}>
-          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text></TabHeading>}>
+          <Tab
+            heading={
+              <TabHeading style={styles.tabHeading}>
+                <Text style={styles.tabTitle}>{strings.feed.newsFeed}</Text>
+              </TabHeading>
+            }
+          >
             <Content style={{ backgroundColor: '#E0E0E0' }}>
-              {
-                this.props.isFetching
-                  ? <Spinner color="yellow" />
-                  : this.props.feeds &&
+              {this.props.isFetching ? (
+                <Spinner color="yellow" />
+              ) : (
+                this.props.feeds && (
                   <View style={{ flex: 1 }}>
-                    {!this.props.feeds.length > 0 ?
+                    {!this.props.feeds.length > 0 ? (
                       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Image source={noFeeds} style={{ opacity: 0.5 }} />
                         <Text style={styles.artworkText}>Your feeds is empty</Text>
-                      </View> :
+                      </View>
+                    ) : (
                       <FlatList
                         keyExtractor={this._keyExtractor}
                         data={this.props.feeds}
                         initialNumToRender={5}
-                        renderItem={({ item }) => (
-                          (item.type === 'sponsor')
-                            ?
+                        renderItem={({ item }) =>
+                          (item.type === 'sponsor' ? (
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
                                   <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                   <Body>
-                                    <Text>{item.user.first_name} {item.user.last_name}</Text>
-                                    <Text note><IconSimpleLine name="globe"/>sponsored</Text>
+                                    <Text>
+                                      {item.user.first_name} {item.user.last_name}
+                                    </Text>
+                                    <Text note>
+                                      <IconSimpleLine name="globe" />sponsored
+                                    </Text>
                                   </Body>
                                 </Left>
-
                               </CardItem>
                               <CardItem>
                                 <Body>
-                                  <Text style={{ marginBottom: 8 }}>
-                                    {item.message}
-                                  </Text>
-                                  <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => this.setModalVisible(true, item.attachment) }>
+                                  <Text style={{ marginBottom: 8 }}>{item.message}</Text>
+                                  <TouchableOpacity
+                                    style={{ alignSelf: 'center' }}
+                                    onPress={() => this.setModalVisible(true, item.attachment)}
+                                  >
                                     <Image
                                       source={{ uri: item.attachment }}
                                       style={styles.images}
@@ -336,73 +380,137 @@ class Feed extends Component {
                               </CardItem>
                               <CardItem>
                                 <Right>
-                                  <Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.onOpen(item.message, item.attachment)}>
+                                  <Button
+                                    transparent
+                                    textStyle={{ color: '#87838B' }}
+                                    onPress={() => this.onOpen(item.message, item.attachment)}
+                                  >
                                     <Icon name="share" style={{ fontSize: 16, color: '#0000ff' }} />
                                     <Text style={styles.buttonShare}>{strings.feed.share}</Text>
                                   </Button>
                                 </Right>
                               </CardItem>
                             </Card>
-                            :
+                          ) : (
                             <Card style={{ flex: 1, paddingRight: 20 }}>
                               <View style={{ padding: 12, flexDirection: 'row' }}>
                                 <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
                                 <View>
                                   <View style={{ marginLeft: 8 }}>
-                                    <Text style={{ color: '#000' }}>{item.user.first_name} {item.user.last_name}</Text>
-                                    <Text note>{timeDifference(today, item.created_at.toDateFromDatetime())}</Text>
+                                    <Text style={{ color: '#000' }}>
+                                      {item.user.first_name} {item.user.last_name}
+                                    </Text>
+                                    <Text note>
+                                      {timeDifference(today, item.created_at.toDateFromDatetime())}
+                                    </Text>
                                   </View>
-                                  <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginRight: 20 }}>
+                                  <View
+                                    style={{
+                                      flex: 1,
+                                      flexDirection: 'row',
+                                      flexWrap: 'wrap',
+                                      marginRight: 20
+                                    }}
+                                  >
                                     <Text style={{ color: '#000', margin: 10 }}>
                                       {item.message}
                                     </Text>
-                                    <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 8 }} onPress={() => this.setModalVisible(true, item.attachment)}>
-                                      <Image source={{ uri: item.attachment }} style={styles.images} />
+                                    <TouchableOpacity
+                                      style={{ alignSelf: 'center', marginLeft: 8 }}
+                                      onPress={() => this.setModalVisible(true, item.attachment)}
+                                    >
+                                      <Image
+                                        source={{ uri: item.attachment }}
+                                        style={styles.images}
+                                      />
                                     </TouchableOpacity>
                                   </View>
                                 </View>
                               </View>
-                              <View style={{ borderBottomColor: '#BDBDBD', borderWidth: 0.5, marginRight: -20 }} />
-                              <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                                {
-                                  this.state.userId === item.user_id ?
-                                    <TouchableWithoutFeedback onPress={() => this.alertRemoveFeed(item.id)}>
-                                      <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
-                                        <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
-                                      </View>
-                                    </TouchableWithoutFeedback>
-                                    :
-                                    <TouchableWithoutFeedback onPress={() => this.alertReportFeed(item.id)}>
-                                      <View style={{ flex: 1, backgroundColor: 'transparent', borderRadius: 8 }}>
-                                        <Text style={styles.buttonReport}>{strings.feed.report}</Text>
-                                      </View>
-                                    </TouchableWithoutFeedback>
-                                }
-                                <TouchableWithoutFeedback onPress={() => this.onOpen(item.message, item.attachment)}>
-                                  <View style={{ flex: 1, marginLeft: 10, backgroundColor: 'transparent', borderRadius: 8 }}>
+                              <View
+                                style={{
+                                  borderBottomColor: '#BDBDBD',
+                                  borderWidth: 0.5,
+                                  marginRight: -20
+                                }}
+                              />
+                              <View
+                                style={{
+                                  flex: 1,
+                                  flexDirection: 'row',
+                                  justifyContent: 'space-around'
+                                }}
+                              >
+                                {this.state.userId === item.user_id ? (
+                                  <TouchableWithoutFeedback
+                                    onPress={() => this.alertRemoveFeed(item.id)}
+                                  >
+                                    <View
+                                      style={{
+                                        flex: 1,
+                                        backgroundColor: 'transparent',
+                                        borderRadius: 8
+                                      }}
+                                    >
+                                      <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                ) : (
+                                  <TouchableWithoutFeedback
+                                    onPress={() => this.alertReportFeed(item.id)}
+                                  >
+                                    <View
+                                      style={{
+                                        flex: 1,
+                                        backgroundColor: 'transparent',
+                                        borderRadius: 8
+                                      }}
+                                    >
+                                      <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                )}
+                                <TouchableWithoutFeedback
+                                  onPress={() => this.onOpen(item.message, item.attachment)}
+                                >
+                                  <View
+                                    style={{
+                                      flex: 1,
+                                      marginLeft: 10,
+                                      backgroundColor: 'transparent',
+                                      borderRadius: 8
+                                    }}
+                                  >
                                     <Text style={styles.buttonReport}>{strings.feed.share}</Text>
                                   </View>
                                 </TouchableWithoutFeedback>
                               </View>
                             </Card>
-                        )}
+                          ))}
                       />
-                    }
-                    {
-                      this.props.links.next && this.props.feeds.length > 0 ?
-                        <TouchableOpacity onPress={this.fetchNextFeeds}>
-                          <Card>
-                            <CardItem>
-                              <Body style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
-                              </Body>
-                            </CardItem>
-                          </Card>
-                        </TouchableOpacity>
-                        : <View />
-                    }
+                    )}
+                    {this.props.links.next && this.props.feeds.length > 0 ? (
+                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                        <Card>
+                          <CardItem>
+                            <Body
+                              style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                justifyContent: 'space-around'
+                              }}
+                            >
+                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                            </Body>
+                          </CardItem>
+                        </Card>
+                      </TouchableOpacity>
+                    ) : (
+                      <View />
+                    )}
                   </View>
-              }
+                )
+              )}
             </Content>
             <Fab
               style={{ backgroundColor: '#FF8B00' }}
@@ -412,7 +520,13 @@ class Feed extends Component {
               <CameraIcon name="pencil-square-o" />
             </Fab>
           </Tab>
-          <Tab heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>{strings.feed.ticket}</Text></TabHeading>}>
+          <Tab
+            heading={
+              <TabHeading style={styles.tabHeading}>
+                <Text style={styles.tabTitle}>{strings.feed.ticket}</Text>
+              </TabHeading>
+            }
+          >
             <TicketList />
           </Tab>
         </Tabs>
@@ -427,14 +541,17 @@ class Feed extends Component {
             <KeyboardAvoidingView>
               <ScrollView
                 keyboardShouldPersistTaps="always"
-                ref={ref => this.scrollView = ref}
-                onContentSizeChange={(height, width) => this.scrollView.scrollToEnd({ animated: true })}
+                ref={ref => (this.scrollView = ref)}
+                onContentSizeChange={(height, width) =>
+                  this.scrollView.scrollToEnd({ animated: true })}
               >
                 <CardItem>
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
                     <Body>
-                      <Text>{this.state.firstName} {this.state.lastName}</Text>
+                      <Text>
+                        {this.state.firstName} {this.state.lastName}
+                      </Text>
                     </Body>
                   </Left>
                   <TouchableOpacity onPress={() => this.setModalPost(false)}>
@@ -465,31 +582,57 @@ class Feed extends Component {
                         <CameraIcon name="camera" size={24} color="grey" />
                       </View>
                     </TouchableOpacity>
-                    {
-                      this.props.textData !== '' || (this.props.imagesData.path || this.props.imagesData.sourceURL)
-                        ? (
-                          <TouchableOpacity onPress={() => this.postFeed()}>
-                            <View style={{ borderWidth: 1, borderColor: 'blue', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
-                              <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
-                            </View>
-                          </TouchableOpacity>
-                        )
-                        : (
-                          <TouchableOpacity activeOpacity={1}>
-                            <View style={{ borderWidth: 1, borderColor: 'grey', borderRadius: 20, width: 75, height: 45, alignItems: 'center', justifyContent: 'center' }}>
-                              <Text style={{ textAlign: 'center', margin: 10, color: 'grey' }}>Post</Text>
-                            </View>
-                          </TouchableOpacity>
-                        )
-                    }
+                    {this.props.textData !== '' ||
+                    (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
+                      <TouchableOpacity onPress={() => this.postFeed()}>
+                          <View
+                          style={{
+                              borderWidth: 1,
+                              borderColor: 'blue',
+                              borderRadius: 20,
+                              width: 75,
+                              height: 45,
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                        >
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                            Post
+                            </Text>
+                        </View>
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity activeOpacity={1}>
+                          <View
+                            style={{
+                              borderWidth: 1,
+                              borderColor: 'grey',
+                              borderRadius: 20,
+                              width: 75,
+                              height: 45,
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <Text style={{ textAlign: 'center', margin: 10, color: 'grey' }}>
+                            Post
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      )}
                   </View>
                 </CardItem>
-                {
-                  this.props.imagesData && (this.props.imagesData.path || this.props.imagesData.sourceURL) &&
+                {this.props.imagesData &&
+                  (this.props.imagesData.path || this.props.imagesData.sourceURL) && (
                     <CardItem cardBody>
-                      <Image source={{ uri: (this.props.imagesData.path || this.props.imagesData.sourceURL) }} style={{ height: 200, width: null, flex: 1 }} />
+                      <Image
+                        source={{
+                          uri: this.props.imagesData.path || this.props.imagesData.sourceURL
+                        }}
+                        style={{ height: 200, width: null, flex: 1 }}
+                      />
                     </CardItem>
-                }
+                  )}
               </ScrollView>
             </KeyboardAvoidingView>
           </Card>
@@ -503,7 +646,11 @@ class Feed extends Component {
         >
           <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808' }}>
             <View style={{ flex: 1, margin: 10 }}>
-              <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
+              <Image
+                source={{ uri: this.state.imagePreview }}
+                resizeMode={'contain'}
+                style={{ flex: 1 }}
+              />
             </View>
           </View>
         </Modal>
@@ -515,7 +662,7 @@ class Feed extends Component {
           visible={this.state.modalReport}
           onRequestClose={() => this.setModalReport(false)}
         >
-          <View >
+          <View>
             <View style={styles.modalText}>
               <Text>All reports are confidential</Text>
               <Text style={{ fontSize: 12 }}>What best describe this content?</Text>
@@ -526,9 +673,9 @@ class Feed extends Component {
               selectedValue={this.state.report}
               onValueChange={value => this.handleInputChange(value)}
             >
-              { CONTENT_REPORT.map(item => (
+              {CONTENT_REPORT.map(item => (
                 <Item key={item.value} label={item.label} value={item.report} />
-              )) }
+              ))}
             </Picker>
           </View>
         </Modal>
@@ -538,7 +685,9 @@ class Feed extends Component {
             iconSrc={{ uri: TWITTER_ICON }}
             onPress={() => {
               this.onCancel();
-              setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'twitter' })); }, 300);
+              setTimeout(() => {
+                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'twitter' }));
+              }, 300);
             }}
           >
             {strings.global.twitter}
@@ -547,7 +696,9 @@ class Feed extends Component {
             iconSrc={{ uri: FACEBOOK_ICON }}
             onPress={() => {
               this.onCancel();
-              setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'facebook' })); }, 300);
+              setTimeout(() => {
+                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'facebook' }));
+              }, 300);
             }}
           >
             {strings.global.facebook}
@@ -556,7 +707,9 @@ class Feed extends Component {
             iconSrc={{ uri: WHATSAPP_ICON }}
             onPress={() => {
               this.onCancel();
-              setTimeout(() => { Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'whatsapp' })); }, 300);
+              setTimeout(() => {
+                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'whatsapp' }));
+              }, 300);
             }}
           >
             {strings.global.whatsapp}
@@ -580,7 +733,7 @@ class CustomInput extends Component {
         placeholder={strings.feed.shareActivity}
         style={{ textAlignVertical: 'top' }}
         multiline
-        ref={input => this._input = input}
+        ref={input => (this._input = input)}
         numberOfLines={8}
         value={this.props.textData}
         onChangeText={text => this.props.onChangeText(text)}
@@ -588,7 +741,6 @@ class CustomInput extends Component {
     );
   }
 }
-
 
 Feed.PropTypes = {
   updateFeeds: func,
