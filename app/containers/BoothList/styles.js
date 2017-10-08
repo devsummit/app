@@ -15,15 +15,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20
   },
-  boothImageList: {
-    width: width * 0.49,
-    height: 150,
-    margin: 2
-  },
-  boothTitle: {
-    fontWeight: 'bold',
-    alignSelf: 'center'
-  },
   btnModal: {
     alignSelf: 'center',
     borderRadius: 20,
@@ -32,15 +23,6 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     justifyContent: 'center',
     marginTop: 10
-  },
-  imageWrapper: {
-    flex: 1,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 10,
-    backgroundColor: '#E0E0E0',
-    alignItems: 'center',
-    justifyContent: 'space-around'
   },
   content: {
     flex: 1,
@@ -109,5 +91,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.05)'
   }
 });
-
 export default styles;
