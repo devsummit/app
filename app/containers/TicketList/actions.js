@@ -1,16 +1,12 @@
 import * as actions from '../AttendeesList/actions';
 
-import {
-  DevSummitAxios,
-  getAccessToken
-} from '../../helpers';
+import { DevSummitAxios, getAccessToken } from '../../helpers';
 
 import {
   FETCH_USER_TICKET,
   IS_FETCHING_USER_TICKET,
   FETCHING_USER_TICKET_STATUS
 } from './constants';
-
 
 /*
  * Get user ticket data
@@ -57,7 +53,8 @@ export function fetchUserTicket() {
             dispatch(actions.isTransferringTicket(false));
             console.log(error.response);
           });
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
       });
   };
