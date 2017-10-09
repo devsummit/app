@@ -12,10 +12,11 @@ import {
 import PropTypes from 'prop-types';
 import { TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { formatDate, transactionStatus } from '../../helpers';
+import { transactionStatus } from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
 let amount = 0;
 export default class OrderItem extends Component {
@@ -76,14 +77,10 @@ export default class OrderItem extends Component {
     return color;
   };
 
-  formatDate = (source) => {
-    const dt = source.split(' ');
-    return `${dt[1]}-${dt[2]}-${dt[3]}`;
-  }
-
   render() {
     const { status, color } = this.state;
     const { order } = this.props;
+    const order_date = new Moment(order.created_at).format('YYYY-MM-DD H:m Z');
     return (
       <CardItem
         style={styles.container}
@@ -97,7 +94,7 @@ export default class OrderItem extends Component {
                 note
                 style={styles.orderId}
               >
-                {formatDate(order.created_at)}
+                {order_date}
               </Text>
             <View style={ styles.viewText }>
               {status ?
