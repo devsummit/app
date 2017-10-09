@@ -29,6 +29,17 @@ export function updateDataStorage(res) {
       }
     });
   });
+  getRoleId().then(() => {
+    const id = JSON.stringify(res.data.included.role_id);
+    console.log("IDDD", id);
+    AsyncStorage.removeItem('role_id', () => {
+      try {
+        AsyncStorage.setItem('role_id', id);
+      } catch (e) {
+        console.log('ERROR', e);
+      }
+    });
+  });
 }
 
 export function placeRedeem() {
