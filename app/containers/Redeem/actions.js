@@ -1,4 +1,4 @@
-import { DevSummitAxios, getAccessToken, getProfileData, getRoleId } from '../../helpers';
+import { DevSummitAxios, getAccessToken, getProfileData, getBoothData, getRoleId } from '../../helpers';
 import { Alert, AsyncStorage } from 'react-native';
 import Toast from 'react-native-simple-toast';
 
@@ -14,7 +14,7 @@ export function updateInputFields(field, value) {
 }
 
 export function updateDataStorage(res) {
-  getProfileData().then(() => {
+  getBoothData().then(() => {
     const data = JSON.stringify(res.data.included);
     AsyncStorage.removeItem('booth_data', () => {
       try {
