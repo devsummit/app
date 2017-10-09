@@ -101,7 +101,7 @@ export default class App extends Component {
             <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
             <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
             <Scene key="schedule" component={Schedule} hideNavBar title="Schedule" />
-            <Scene key="scheduleDetail" component={ScheduleDetail} title="Schedule Detail" />
+            <Scene key="scheduleDetail" component={ScheduleDetail} title={this.props.title} />
             <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
             <Scene key="payment" component={Payment} title="Choose Payment Method" />
             <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />

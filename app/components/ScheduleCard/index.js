@@ -26,18 +26,21 @@ class ScheduleCard extends Component {
 
     eventType = () => {
       const type = this.props.event.type;
+      const panel = 'Discuss panel';
+      const speaker = 'Speaker'
+      const hack = 'Hackaton'
 
       if (type === 'discuss panel') {
         return (
-          <Text style={styles.type}>Discuss panel</Text>
+          <Text style={styles.type}>{panel.toUpperCase()}</Text>
         );
       } else if (type === 'speaker') {
         return (
-          <Text style={styles.type}>Speaker</Text>
+          <Text style={styles.type}>{speaker.toUpperCase()}</Text>
         );
       } else if (type === 'hackaton') {
         return (
-          <Text style={styles.type}>Hackaton</Text>
+          <Text style={styles.type}>{hack.toUpperCase()}</Text>
         );
       }
 
@@ -63,7 +66,7 @@ class ScheduleCard extends Component {
           <Card style={styles.container}>
             <TouchableHighlight
               onPress={() => Actions.scheduleDetail({
-                event, speaker, stage, user, time_start, time_end
+                title: event.type.toUpperCase(), event, speaker, stage, user, time_start, time_end
               })}
             >
               <CardItem>
