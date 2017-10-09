@@ -528,6 +528,13 @@ class Feed extends Component {
             }
           >
             <TicketList />
+            <Fab
+              style={{ backgroundColor: '#FF8B00' }}
+              position="bottomRight"
+              onPress={() => this.setModalPost(true)}
+            >
+              <CameraIcon name="plus-circle" />
+            </Fab>
           </Tab>
         </Tabs>
         {/* Modal for create new feeds post */}
