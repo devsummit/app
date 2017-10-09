@@ -141,6 +141,7 @@ class Feed extends Component {
       firstName: '',
       lastName: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
+      fabActive: false,
       modalVisible: false,
       postToFeeds: false,
       imagePreview: '',
@@ -529,11 +530,18 @@ class Feed extends Component {
           >
             <TicketList />
             <Fab
+              active={this.state.fabActive}
               style={{ backgroundColor: '#FF8B00' }}
               position="bottomRight"
-              onPress={() => this.setModalPost(true)}
+              onPress={() => this.setState({ fabActive: !this.state.fabActive })}
             >
-              <CameraIcon name="plus-circle" />
+              <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
+              <Button style={{ backgroundColor: '#FF8B00' }}>
+                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }}/>
+              </Button>
+              <Button style={{ backgroundColor: '#FF8B00' }}>
+                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }}/>
+              </Button>
             </Fab>
           </Tab>
         </Tabs>
