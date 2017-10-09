@@ -33,6 +33,7 @@
     "react-native-share": "^1.0.21",
     "react-native-simple-auth": "^2.1.0",
     "react-native-simple-toast": "0.0.6",
+    "react-native-snap-carousel": "^3.3.3",
     "react-native-transition": "^1.1.7",
     "react-native-vector-icons": "^4.3.0",
     "react-redux": "^5.0.5",
