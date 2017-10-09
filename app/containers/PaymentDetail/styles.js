@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   text: {
-    color: '#FFD740',
+    color: '#000',
     width: '90%',
     fontWeight: "bold",
-    fontSize: 13,
+    fontSize: 16,
     marginTop: 20,
     marginBottom: 10,
     marginLeft: 'auto',
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     flex: 0.4,
     justifyContent: 'center',
-    borderRadius: 30,
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -54,12 +53,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'flex-end',
   },
+  item: {
+    marginBottom: 10,
+    borderColor: '#000000',
+    borderWidth: 1
+  },
   datePicker: {
     flex: 1,
     flexDirection: 'row',
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: '#FFD740',
+    borderWidth: 0.7,
+    borderColor: '#000',
     width: '90%',
     marginBottom: 'auto',
     marginLeft: 'auto',

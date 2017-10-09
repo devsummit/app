@@ -33,8 +33,8 @@ export default class InputItem extends Component {
             regular
             error={this.props.error}
             style={this.props.error ?
-              [ styles.item, { borderColor: '#F44336' } ] :
-              styles.item}
+              [ this.props.itemStyle, { borderColor: '#F44336' } ] :
+              this.props.itemStyle}
           >
             <Input
               style={this.props.style}

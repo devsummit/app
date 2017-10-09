@@ -41,12 +41,12 @@ export default class MainTabs extends Component {
     if (role === 4) {
       return (<IconSimpleLine
         name="speech"
-        style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
       />);
     }
     return (<IconSimpleLine
-      name="organization"
-      style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+      name="flag"
+      style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
     />);
   }
 
@@ -70,7 +70,7 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="feed"
+                    name="home"
                     style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
                   />
                 </TabHeading>}
@@ -81,19 +81,8 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="bell"
-                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-                  />
-                </TabHeading>}
-            >
-              <Notification />
-            </Tab>
-            <Tab
-              heading={
-                <TabHeading style={{ backgroundColor: 'white' }}>
-                  <IconSimpleLine
                     name="calendar"
-                    style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
                   />
                 </TabHeading>}
             >
@@ -112,7 +101,7 @@ export default class MainTabs extends Component {
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="settings"
-                    style={[ this.state.currentTab === 4 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                    style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
                   />
                 </TabHeading>}
             >

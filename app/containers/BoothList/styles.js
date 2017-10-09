@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   content: {
-    marginTop: 20,
+    flex: 1,
+    marginTop: 12,
     marginHorizontal: 10
   },
   searchHeader: {
@@ -39,20 +40,23 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   profileSection: {
-    flex: 2
+    flex: 1,
+    flexDirection: 'row'
   },
   nameSection: {
-    marginLeft: 2,
-    flex: 8
+    marginLeft: 16,
+    flex: 8,
+    justifyContent: 'center'
   },
   profilePic: {
-    height: 200,
-    width
+    height: 50,
+    width: 50,
+    borderRadius: 25
   },
   name: {
     color: '#333',
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize: 16,
+    fontWeight: '300'
   },
   job: {
     color: '#333',
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
   },
   summary: {
     color: '#333',
-    paddingTop: 10
+    marginTop: 8
   },
   footerSection: {
     width: '100%',
@@ -83,7 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   itemNameSection: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)'
   }

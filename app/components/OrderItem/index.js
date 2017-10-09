@@ -89,7 +89,7 @@ export default class OrderItem extends Component {
         style={styles.container}
         button
         onPress={this.props.onPress}
-      > 
+      >
         <View style={styles.item}>
           <View style={{ justifyContent: 'flex-start', flex: 4 }}>
             <Text>Order-{order.id}</Text>
@@ -100,14 +100,11 @@ export default class OrderItem extends Component {
                 {formatDate(order.created_at)}
               </Text>
             <View style={ styles.viewText }>
-              <Text style={styles.text}>Rp. {Intl.NumberFormat('id').format(amount)}</Text>
-              <View style={{ flex: 1 }}>
-                {status ?
-                  <Text note style={ [styles.statusText, { backgroundColor: color }] }>
-                    {status.toUpperCase()}
-                  </Text> : <View />
-                }
-              </View>
+              {status ?
+                <Text note style={ [styles.statusText, { backgroundColor: color }] }>
+                  {status.toUpperCase()}
+                </Text> : <View />
+              }
             </View>
           </View>
           <View style={styles.buttonSection}>

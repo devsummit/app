@@ -62,6 +62,20 @@ export function updateIsDisabled(status) {
 
 export function updateDataStorage(resp) {
   getProfileData().then(() => {
+    console.log('landing here update data storage 1', resp)
+    const newData = JSON.stringify(resp.data);
+    AsyncStorage.removeItem('profile_data', () => {
+      try {
+        AsyncStorage.setItem('profile_data', newData);
+      } catch (e) {
+        console.log('error save profile data');
+      }
+    });
+  });
+}
+
+export function updateDataStorage2(resp) {
+  getProfileData().then(() => {
     const newData = JSON.stringify(resp.data);
     AsyncStorage.removeItem('profile_data', () => {
       try {
@@ -78,7 +92,7 @@ export function changeProfile() {
     const { fields } = getState()
       .get('profile')
       .toJS();
-    const { username, firstName, lastName, profilePic, boothInfo, job, summary } = fields;
+    const { username, firstName, lastName, profilePic, boothInfo, job, summary, points } = fields;
 
     getAccessToken().then((token) => {
       DevSummitAxios.patch(
@@ -103,7 +117,7 @@ export function changeProfile() {
             response.data.meta.success &&
             response.data.meta.message === 'Data retrieved succesfully'
           ) {
-            updateDataStorage(response.data);
+            updateDataStorage1(response.data);
             dispatch(updateIsProfileUpdated(true));
           } else {
             Alert.alert('Failed', 'Payload is invalid');
@@ -143,19 +157,19 @@ export function updateImage(image) {
 
       DevSummitAxios.post(
         '/api/v1/user/photo',
-        {
-          form
-        },
+          form,
         {
           headers: {
             Authorization: token
           }
         }
       )
-        .then(resp => resp.json())
-        .then((resp) => {
-          updateDataStorage(resp);
-          dispatch(updateAvatar(resp.data.photos[0].url), updateIsAvatarUpdated(true));
+        .then(resp => {
+          // resp.json();
+          console.log('landing here updateImage resp', resp);
+          console.log('landing here resp', resp);
+          updateDataStorage2(resp.data);
+          dispatch(updateAvatar(resp.data.data.photos[0].url), updateIsAvatarUpdated(true));
         })
         .catch(err => console.log('error upload image', err));
     });

@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -43,10 +44,12 @@ const styles = StyleSheet.create({
     margin: 20
   },
   errorContent: {
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 0
   },
   errorText: {
-    fontSize: 14
+    fontSize: 14,
+    textAlign: 'center'
   },
   card: {
     position: 'relative',
@@ -63,10 +66,35 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   redeem: {
+    borderWidth: 5,
     margin: 20,
+    marginTop: 0,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  viewredeem: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
-    backgroundColor: 'whitesmoke',
     borderRadius: 2
+  },
+  free: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 12,
+    color: 'grey',
+    fontWeight: 'bold',
+    marginTop: 5
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    color: '#FFFFFF',
+    fontSize: 20
   }
 });
 

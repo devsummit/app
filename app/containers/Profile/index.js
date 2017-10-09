@@ -29,24 +29,31 @@ import { PRIMARYCOLOR } from '../../constants';
 class Profile extends Component {
   state = {
     id: null,
-    isLoading: true
+    isLoading: true,
+    points: null
   }
   componentWillMount() {
+
     getProfileData().then((profileData) => {
       if (profileData) {
-        this.handleInputChange('username', profileData.data.username);
-        this.handleInputChange('firstName', profileData.data.first_name);
-        this.handleInputChange('lastName', profileData.data.last_name);
-        if (profileData.data.role_id === 3) {
-          this.handleInputChange('boothInfo', profileData.data.booth.summary);
+        if (profileData.points === null) {
+          this.props.updateFields('points', 0);
+        } else {
+            this.props.updateFields('points', profileData.points);
+          }
+        this.handleInputChange('username', profileData.username);
+        this.handleInputChange('firstName', profileData.first_name);
+        this.handleInputChange('lastName', profileData.last_name);
+        if (profileData.role_id === 3) {
+          this.handleInputChange('boothInfo', profileData.booth.summary);
         }
-        if (profileData.data.role_id === 4) {
-          this.handleInputChange('job', profileData.data.speaker.job);
-          this.handleInputChange('summary', profileData.data.speaker.summary);
+        if (profileData.role_id === 4) {
+          this.handleInputChange('job', profileData.speaker.job);
+          this.handleInputChange('summary', profileData.speaker.summary);
         }
       }
       this.setState({
-        isLoading: false
+        isLoading: false,
       });
     });
     AsyncStorage.getItem('role_id')
@@ -105,15 +112,15 @@ class Profile extends Component {
       boothInfo,
       job,
       summary,
-      profilePic
+      profilePic,
+      points
     } = fields || '';
-
     return (
       <Container>
         <ScrollView>
           <Content>
             <View style={styles.pointsSection}>
-              <Text style={styles.points}><Icon name="gift" style={styles.coin} />1000 pts</Text>
+              <Text style={styles.points}><Icon name="gift" style={styles.coin} /> {points} pts</Text>
             </View>
             <TouchableOpacity style={styles.imageProfile} onPress={() => this.uploadImage(this)}>
               <Image
@@ -127,6 +134,7 @@ class Profile extends Component {
             </TouchableOpacity>
             <View style={styles.section2}>
               <InputItem
+                itemStyle={styles.item}
                 style={styles.input}
                 title={strings.profile.firstName}
                 placeholder={strings.profile.firstName}
@@ -135,6 +143,7 @@ class Profile extends Component {
                 value={firstName}
               />
               <InputItem
+                itemStyle={styles.item}
                 style={styles.input}
                 title={strings.profile.lastName}
                 placeholder={strings.profile.lastName}
@@ -143,6 +152,7 @@ class Profile extends Component {
                 value={lastName}
               />
               {speaker ? <InputItem
+                itemStyle={styles.item}
                 style={styles.inputJob}
                 title={strings.profile.job}
                 placeholder={strings.profile.job}
@@ -155,6 +165,7 @@ class Profile extends Component {
               />
               : <View />}
               {speaker ? <InputItem
+                itemStyle={styles.item}
                 style={styles.inputInfo}
                 title={strings.profile.summary}
                 placeholder={strings.profile.summary}
@@ -167,6 +178,7 @@ class Profile extends Component {
               />
               : <View />}
               {booth ? <InputItem
+                itemStyle={styles.item}
                 style={styles.inputInfo}
                 title={strings.profile.boothInfo}
                 placeholder={strings.profile.boothInfo}
@@ -188,9 +200,9 @@ class Profile extends Component {
                 <Text>{strings.global.save}</Text>
               </Button>
             </View>
-        </Content>
-      </ScrollView>
-    </Container>
+          </Content>
+        </ScrollView>
+      </Container>
     );
   }
 }

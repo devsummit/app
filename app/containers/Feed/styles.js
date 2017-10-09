@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +64,8 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '500',
     color: '#FFF'
   },
   tabBarSelectedItemStyle: {
@@ -75,7 +80,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 8,
     textAlign: 'center',
-    color: '#000'
+    color: '#000',
+    opacity: 0.5
   },
   textOption: {
     fontSize: 18,
@@ -92,6 +98,16 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginLeft: 10
+  },
+  images: {
+    height: 200,
+    width: width * 0.7
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
   }
 });
 

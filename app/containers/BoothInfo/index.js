@@ -8,7 +8,10 @@ import {
   List,
   ListItem,
   CategoryCard,
-  Fab
+  Fab,
+  Tabs,
+  Tab,
+  TabHeading
 } from 'native-base';
 import { View, Alert, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -25,6 +28,9 @@ import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
+
+const background = require('./../../../assets/images/background.png');
+const noImage = require('./../../../assets/images/noimage.png');
 
 
 class BoothInfo extends Component {
@@ -108,13 +114,11 @@ class BoothInfo extends Component {
     const images = boothGalleries.data;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
         <ScrollView>
-          <Content>
-            <LinearGradient
-              colors={[ '#f72d48', '#f39e21' ]}
-            >
-              <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }}>
+            <Image source={background} style={styles.background}>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
                   disabled={!booth}
                   onPress={() => this.changeLogo(this)}
@@ -124,24 +128,35 @@ class BoothInfo extends Component {
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>
-                <View style={styles.info}>
+                <View>
                   <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
-                  <Text style={styles.summary}>{summary}</Text>
                 </View>
               </View>
-            </LinearGradient>
-            <View style={styles.imageWrapper}>
-              { images ?
-                <PhotoGrid
-                  data={images}
-                  itemsPerRow={2}
-                  renderItem={this.renderItem}
-                />
-                :
-                <View />
-              }
-            </View>
-          </Content>
+            </Image>
+            <Tabs initialPage={0} style={{ marginTop: 20, backgroundColor: '#E0E0E0' }}>
+              <Tab style={{ backgroundColor: '#E0E0E0' }} heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Profile</Text></TabHeading>}>
+                <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#FFFFFF' }}>
+                  <Text style={styles.summary}>{summary}</Text>
+                </View>
+              </Tab>
+              <Tab style={{ backgroundColor: '#E0E0E0' }} heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Gallery</Text></TabHeading>}>
+                { images && images.length > 0 ?
+                  <View style={styles.imageWrapper}>
+                    <PhotoGrid
+                      data={images}
+                      itemsPerRow={2}
+                      renderItem={this.renderItem}
+                    />
+                  </View>
+                  :
+                  <View style={{ flex: 1, marginTop: 30, justifyContent: 'center', alignItems: 'center' }}>
+                    <Image source={noImage} />
+                    <Text style={styles.artworkText}>No picture available</Text>
+                  </View>
+                }
+              </Tab>
+            </Tabs>
+          </View>
         </ScrollView>
         {
           booth && logged_uid === user.id ?

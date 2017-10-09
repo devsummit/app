@@ -7,7 +7,8 @@ import {
   SET_ORDER_LIST,
   IS_FETCHING_ORDERS,
   IS_CONFIRMING_PAYMENT,
-  SET_CONFIRM_PAYMENT
+  SET_CONFIRM_PAYMENT,
+  PENDING_ORDERS
 } from './constants';
 
 // update fetch transaction status
@@ -18,25 +19,45 @@ export function updateIsFetchingOrders(status) {
   };
 }
 
+export function pendingOrder(value) {
+  return {
+    type: PENDING_ORDERS,
+    value
+  };
+}
+
 export function getOrderList() {
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.get('/api/v1/orders', {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
-        if (response.data && response.data.meta.success) {
-          dispatch({
-            type: SET_ORDER_LIST,
-            data: response.data.data
+    getAccessToken()
+      .then((accessToken) => {
+        DevSummitAxios.get('/api/v1/orders', {
+          headers: { Authorization: accessToken }
+        })
+          .then((response) => {
+            if (response.data && response.data.meta.success) {
+              dispatch({
+                type: SET_ORDER_LIST,
+                data: response.data.data
+              });
+              let pendingCounter = 0;
+              response.data.data.map((order) => {
+                if (!order.payment || order.payment.transaction_status !== 'capture') {
+                  pendingCounter += 1;
+                }
+              });
+              dispatch(pendingOrder(pendingCounter));
+              dispatch(updateIsFetchingOrders(false));
+            }
+          })
+          .catch((err) => {
+            dispatch(updateIsFetchingOrders(false));
+            console.log(err.response);
           });
-          dispatch(updateIsFetchingOrders(false));
-        }
-      }).catch((err) => {
-        dispatch(updateIsFetchingOrders(false));
-        console.log(err.response);
+      })
+      .catch(() => {
+        console.log('fail get access token');
       });
-    }).catch(() => { console.log('fail get access token'); });
   };
 }
 
@@ -51,18 +72,26 @@ export function confirmPayment(id, idx) {
   return (dispatch) => {
     dispatch(updateIsConfirmingPayment(true));
     getAccessToken().then((accessToken) => {
-      DevSummitAxios.patch(`/api/v1/payments/status/${id}`, {}, {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
-        if (response.data && response.data.data) {
-          dispatch({
-            type: SET_CONFIRM_PAYMENT,
-            payload: response.data.data,
-            idx
-          });
+      DevSummitAxios.patch(
+        `/api/v1/payments/status/${id}`,
+        {},
+        {
+          headers: { Authorization: accessToken }
         }
-        dispatch(updateIsConfirmingPayment(false));
-      }).catch((err) => { console.log(err); });
+      )
+        .then((response) => {
+          if (response.data && response.data.data) {
+            dispatch({
+              type: SET_CONFIRM_PAYMENT,
+              payload: response.data.data,
+              idx
+            });
+          }
+          dispatch(updateIsConfirmingPayment(false));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   };
 }

@@ -8,21 +8,20 @@ const styles = StyleSheet.create({
     flex: 3
   },
   pickerWrapper: {
-    borderColor: '#FFD740',
-    borderWidth: 2,
+    borderColor: '#000',
+    borderWidth: 1,
     padding: 3,
     margin: 10,
-    borderRadius: 50,
     width: '70%',
     marginBottom: 'auto',
     marginLeft: 'auto',
     marginRight: 'auto'
   },
   littleText: {
-    color: '#FFD740',
+    color: '#000',
     width: '70%',
     fontWeight: "bold",
-    fontSize: 13,
+    fontSize: 16,
     marginTop: 20,
     marginLeft: 'auto',
     marginRight: 'auto'
@@ -30,11 +29,10 @@ const styles = StyleSheet.create({
   button: {
     flex: 0.4,
     justifyContent: 'center',
-    borderRadius: 30,
     width: '70%',
     marginTop: 20,
     marginLeft: 'auto',
-    marginRight: 'auto',
+    marginRight: 'auto'
   },
   roundButton: {
     borderRadius: 90,

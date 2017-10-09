@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import {
   Container,
   Header,
@@ -29,7 +29,9 @@ import styles from './styles';
 import { PRIMARYCOLOR } from '../../constants';
 
 import * as actions from './actions';
-import * as selectors from './selectors'
+import * as selectors from './selectors';
+
+const noSchedule = require('./../../../assets/images/noschedule.png');
 
 export const orderByDay = '';
 
@@ -56,47 +58,68 @@ class Schedule extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <Content>
+        <View style={{ flex: 1 }}>
           <HeaderPoint title={strings.schedule.title} />
           <Tabs style={styles.tabs}>
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name= "calendar"/><Text style={styles.tabTitle}>21 Nov</Text></TabHeading> }>
-              <Content style={styles.content}>
+              <View style={styles.content}>
                 <View style={styles.cards}>
-                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[0]} />) : (
-                    <View style={styles.loading}>
+                  { !(this.state.isLoading) ?
+                    this.props.userSchedule[0].length > 0 ?
+                      (<ScheduleList events={this.props.userSchedule[0]} />) :
+                      (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image source={noSchedule} />
+                        <Text style={styles.artworkText}>There is no event schedule today</Text>
+                      </View>) :
+                    (<View style={styles.loading}>
                       <Spinner color={PRIMARYCOLOR} />
                       <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
                     </View>
-                  )}
+                    )
+                  }
                 </View>
-              </Content>
+              </View>
             </Tab>
             <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>22 Nov</Text></TabHeading> }>
-              <Content style={styles.content}>
+              <View style={styles.content}>
                 <View style={styles.cards}>
-                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[1]} />) : (
-                    <View style={styles.loading}>
+                  { !(this.state.isLoading) ?
+                    this.props.userSchedule[1].length > 0 ?
+                      (<ScheduleList events={this.props.userSchedule[1]} />) :
+                      (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image source={noSchedule} />
+                        <Text style={styles.artworkText}>There is no event schedule today</Text>
+                      </View>) :
+                    (<View style={styles.loading}>
                       <Spinner color={PRIMARYCOLOR} />
                       <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
                     </View>
-                  )}
+                    )
+                  }
                 </View>
-              </Content>
+              </View>
             </Tab>
-            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>Nov 23</Text></TabHeading> }>
-              <Content style={styles.content}>
+            <Tab heading={ <TabHeading style={styles.tabHeading}><Icon style={styles.icon} name="calendar"/><Text style={styles.tabTitle}>23 Nov</Text></TabHeading> }>
+              <View style={styles.content}>
                 <View style={styles.cards}>
-                  { !(this.state.isLoading) ? (<ScheduleList events={this.props.userSchedule[2]} />) : (
-                    <View style={styles.loading}>
+                  { !(this.state.isLoading) ?
+                    this.props.userSchedule[2].length > 0 ?
+                      (<ScheduleList events={this.props.userSchedule[2]} />) :
+                      (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <Image source={noSchedule} />
+                        <Text style={styles.artworkText}>There is no event schedule today</Text>
+                      </View>) :
+                    (<View style={styles.loading}>
                       <Spinner color={PRIMARYCOLOR} />
                       <Text style={{ color: '#3a3a3a' }}>{strings.schedule.loading}</Text>
                     </View>
-                  )}
+                    )
+                  }
                 </View>
-              </Content>
+              </View>
             </Tab>
           </Tabs>
-        </Content>
+        </View>
       </Container>
     );
   }

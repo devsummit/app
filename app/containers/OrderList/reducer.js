@@ -7,7 +7,8 @@ import {
   SET_ORDER_LIST,
   IS_FETCHING_ORDERS,
   SET_CONFIRM_PAYMENT,
-  IS_CONFIRMING_PAYMENT
+  IS_CONFIRMING_PAYMENT,
+  PENDING_ORDERS
 } from './constants';
 
 /*
@@ -16,7 +17,8 @@ import {
 const initialState = fromJS({
   orders: [],
   isFetchingOrders: false,
-  isConfirmingPayment: false
+  isConfirmingPayment: false,
+  pendingOrder: 0
 });
 
 function orderListReducer(state = initialState, action) {
@@ -26,9 +28,14 @@ function orderListReducer(state = initialState, action) {
     case IS_FETCHING_ORDERS:
       return state.set('isFetchingOrders', action.status);
     case SET_CONFIRM_PAYMENT:
-      return state.setIn([ 'orders', action.idx, 'payment', 'transaction_status' ], action.payload.transaction_status);
+      return state.setIn(
+        [ 'orders', action.idx, 'payment', 'transaction_status' ],
+        action.payload.transaction_status
+      );
     case IS_CONFIRMING_PAYMENT:
       return state.set('isConfirmingPayment', action.status);
+    case PENDING_ORDERS:
+      return state.set('pendingOrder', action.value);
     default:
       return state;
   }
