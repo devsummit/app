@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   formSection: {
     flex: 2,
-    marginTop: 8,
+    marginTop: 2,
     marginRight: 18,
     marginLeft: 16
   },
@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FFD740',
-    marginLeft: -24
+    color: '#FFD740'
   },
   buttonText: {
     textAlign: 'center',

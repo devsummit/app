@@ -16,7 +16,8 @@ export default class MainTabs extends Component {
     super(props);
     this.state = {
       currentTab: 0,
-      roleId: null
+      roleId: null,
+      token: null
     };
   }
 
@@ -24,12 +25,13 @@ export default class MainTabs extends Component {
     AsyncStorage.getItem('role_id')
       .then((id) => {
         this.setState({ roleId: JSON.parse(id) });
-      }).catch(e => Toast.show('Error getting role id', e));
+      })
+      .catch(e => Toast.show('Error getting role id', e));
   }
 
   handleCurrentTab = (number) => {
     this.setState({ currentTab: number });
-  }
+  };
 
   /**
     role_id 2 = attende
@@ -39,41 +41,51 @@ export default class MainTabs extends Component {
   changeIcon() {
     const role = this.state.roleId;
     if (role === 4) {
-      return (<IconSimpleLine
-        name="speech"
-        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-      />);
+      return (
+        <IconSimpleLine
+          name="speech"
+          style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+        />
+      );
     }
-    return (<IconSimpleLine
-      name="flag"
-      style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
-    />);
+    return (
+      <IconSimpleLine
+        name="flag"
+        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+      />
+    );
   }
 
   viewCurrentUser() {
     const role = this.state.roleId;
     if (role === 4) {
-      return (<MaterialList />);
+      return <MaterialList />;
     }
-    return (<BoothList />);
+    return <BoothList />;
   }
 
   render() {
     return (
       <Container>
-        <PushNotification
-          onChangeToken={token => this.setState({ token: token || '' })}
-        />
+        <PushNotification />
         <View style={{ flex: 1 }}>
-          <Tabs onChangeTab={(i, ref) => this.handleCurrentTab(i.i)} tabBarPosition="bottom" initialPage={0}>
+          <Tabs
+            onChangeTab={(i, ref) => this.handleCurrentTab(i.i)}
+            tabBarPosition="bottom"
+            initialPage={0}
+          >
             <Tab
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="home"
-                    style={[ this.state.currentTab === 0 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                    style={[
+                      this.state.currentTab === 0 ? { color: '#f39e21' } : null,
+                      { fontSize: 18 }
+                    ]}
                   />
-                </TabHeading>}
+                </TabHeading>
+              }
             >
               <Feed />
             </Tab>
@@ -82,17 +94,20 @@ export default class MainTabs extends Component {
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="calendar"
-                    style={[ this.state.currentTab === 1 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                    style={[
+                      this.state.currentTab === 1 ? { color: '#f39e21' } : null,
+                      { fontSize: 18 }
+                    ]}
                   />
-                </TabHeading>}
+                </TabHeading>
+              }
             >
               <Schedule />
             </Tab>
             <Tab
               heading={
-                <TabHeading style={{ backgroundColor: 'white' }}>
-                  {this.changeIcon()}
-                </TabHeading>}
+                <TabHeading style={{ backgroundColor: 'white' }}>{this.changeIcon()}</TabHeading>
+              }
             >
               {this.viewCurrentUser()}
             </Tab>
@@ -101,9 +116,13 @@ export default class MainTabs extends Component {
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
                     name="settings"
-                    style={[ this.state.currentTab === 3 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+                    style={[
+                      this.state.currentTab === 3 ? { color: '#f39e21' } : null,
+                      { fontSize: 18 }
+                    ]}
                   />
-                </TabHeading>}
+                </TabHeading>
+              }
             >
               <Settings />
             </Tab>

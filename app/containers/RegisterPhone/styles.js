@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
-    marginLeft: -24,
     color: '#FFD740'
   },
   item: {
