@@ -312,13 +312,7 @@ class Feed extends Component {
                   alignSelf: 'center',
                   color: '#FFF',
                   fontSize: 20,
-                  marginRight: 20,
-                  shadowOffset: {
-                    width: 0,
-                    height: 3
-                  },
-                  shadowRadius: 5,
-                  shadowOpacity: 1.0
+                  marginRight: 20
                 }}
               />
             </View>
