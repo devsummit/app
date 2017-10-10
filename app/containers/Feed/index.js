@@ -150,7 +150,11 @@ class Feed extends Component {
       report: '',
       shareOptions: {
         message: '',
-        url: ''
+        url: null
+      },
+      shareTwitter: {
+        message: '',
+        url: null
       }
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
@@ -235,17 +239,21 @@ class Feed extends Component {
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
 
-    this.setState({
-      shareOptions: Object.assign({}, this.state.shareOptions, { message: _message })
-    });
+    var urlTwitter = '';
+    let share = Object.assign({}, this.state.shareOptions);
+    let shareTwitter = Object.assign({}, this.state.shareTwitter);
 
-    if (_url) {
-      this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+    if (_url === null) {
+      urlTwitter = '';
+    } else {
+        urlTwitter = _url;
     }
-  };
-
-  onCancelOption = () => {
-    this.setState({ optionVisible: false });
+    
+    shareTwitter.message = _message;
+    shareTwitter.url = urlTwitter;
+    share.message = _message;
+    share.url = _url;
+    this.setState({ shareOptions: share, shareTwitter: shareTwitter });
   };
 
   alertRemoveFeed = (postId) => {
@@ -680,7 +688,7 @@ class Feed extends Component {
             onPress={() => {
               this.onCancel();
               setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'twitter' }));
+                Share.shareSingle(Object.assign(this.state.shareTwitter, { social: 'twitter' }));
               }, 300);
             }}
           >
