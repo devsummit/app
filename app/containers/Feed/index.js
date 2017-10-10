@@ -150,7 +150,7 @@ class Feed extends Component {
       report: '',
       shareOptions: {
         message: '',
-        url: ''
+        url: null
       }
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
@@ -234,18 +234,18 @@ class Feed extends Component {
 
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
+    let shareL = Object.assign({}, this.state.shareOptions);
+    shareL.message = _message;
+    shareL.url = _url;
+    this.setState({ shareOptions: shareL, shareOptions: shareL });
 
-    this.setState({
-      shareOptions: Object.assign({}, this.state.shareOptions, { message: _message })
-    });
+    // this.setState({
+    //   shareOptions: Object.assign({}, this.state.shareOptions, { message: _message })
+    // });
 
-    if (_url) {
-      this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
-    }
-  };
-
-  onCancelOption = () => {
-    this.setState({ optionVisible: false });
+    // if (_url) {
+    //   this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+    // }
   };
 
   alertRemoveFeed = (postId) => {
@@ -681,17 +681,19 @@ class Feed extends Component {
         </Modal>
         {/* Sheet For Share */}
         <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
-          <Button
-            iconSrc={{ uri: TWITTER_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'twitter' }));
-              }, 300);
-            }}
-          >
-            {strings.global.twitter}
-          </Button>
+          { this.state.shareOptions.url === !null ? 
+            <Button
+              iconSrc={{ uri: TWITTER_ICON }}
+              onPress={() => {
+                this.onCancel();
+                setTimeout(() => {
+                  Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'twitter' }));
+                }, 300);
+              }}
+            >
+              {strings.global.twitter}
+            </Button> : <View/>
+          }
           <Button
             iconSrc={{ uri: FACEBOOK_ICON }}
             onPress={() => {
