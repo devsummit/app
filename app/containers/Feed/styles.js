@@ -99,15 +99,43 @@ const styles = StyleSheet.create({
   modalText: {
     marginLeft: 10
   },
+  touchImage: {
+    alignSelf: 'center',
+    paddingLeft: 20,
+    marginBottom: 10
+  },
   images: {
     height: 200,
-    width: width * 0.7
+    width: width * 0.9
   },
   artworkText: {
     fontSize: 16,
     color: PRIMARYCOLOR,
     fontWeight: 'bold',
     marginTop: 20
+  },
+  redeem: {
+    borderWidth: 5,
+    margin: 20,
+    marginTop: 0,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  viewredeem: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    color: '#FFFFFF',
+    fontSize: 20
   }
 });
 

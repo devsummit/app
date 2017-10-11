@@ -28,7 +28,7 @@ class BoothList extends Component {
     modalVisible: false,
     boothFilter: this.props.booth
   }
-  
+
 
   componentWillMount() {
     this.props.fetchBoothList();
@@ -65,25 +65,27 @@ class BoothList extends Component {
       <Container style={styles.container}>
         <Content>
           <HeaderPoint title={strings.booth.title} />
-          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
-            <Item>
-              <Icon name="ios-search" />
-              <Input
-                placeholder={strings.booth.search}
-                onChangeText={text => this.handleFilter(text)}
-              />
-              <Icon name="ios-calendar" />
-            </Item>
-          </Header>
-          <Button
-            style={styles.btnBooth}
-            onPress={() => {
-              this.setModalVisible(true);
-            }}
-          >
-            <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
-          </Button>
-          <View style={{ marginTop: 22 }}>
+          <View style={{ backgroundColor: '#E0E0E0' }}>
+            <Button
+              style={styles.btnBooth}
+              onPress={() => {
+                this.setModalVisible(true);
+              }}
+            >
+              <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
+            </Button>
+            <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
+              <Item>
+                <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
+                <Input
+                  style={{ fontSize: 16, alignSelf: 'center' }}
+                  placeholder={strings.booth.search}
+                  onChangeText={text => this.handleFilter(text)}
+                />
+              </Item>
+            </Header>
+          </View>
+          <View>
             <Modal
               animationType="fade"
               transparent={false}
@@ -91,7 +93,7 @@ class BoothList extends Component {
               onRequestClose={() => { this.setModalVisible(!this.state.modalVisible); }}
             >
               <ScrollView>
-                <View style={{ marginTop: 22, marginLeft: 22, marginRight: 22, marginBottom: 22 }}>
+                <View style={{ margin: 20 }}>
                   <View>
                     <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>{strings.booth.howto}</Text>
                     <View style={{ alignItems: 'center', marginTop: 20 }}>
@@ -124,8 +126,9 @@ class BoothList extends Component {
             </Modal>
           </View>
           <View style={styles.content}>
-            {this.state.boothFilter.map(data => (
+            {this.state.boothFilter.map((data, index) => (
               <TouchableOpacity
+                key={index}
                 onPress={() => {
                   Actions.boothInfo({
                     title: 'Booth Info',
