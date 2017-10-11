@@ -20,7 +20,7 @@ import styles from './styles';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
-import feedback from './constants';
+import { FEEDBACK_URL } from '../../constants';
 
 class Settings extends Component {
   constructor(props) {
@@ -146,7 +146,7 @@ class Settings extends Component {
               </View>
               <WebView
                 automaticallyAdjustContentInsets={false}
-                source={{ uri: feedback }}
+                source={{ uri: FEEDBACK_URL }}
                 style={{ marginTop: 20 }}
                 scalesPageToFit={true}
                 ref={'webview'}

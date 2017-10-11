@@ -126,8 +126,9 @@ class BoothList extends Component {
             </Modal>
           </View>
           <View style={styles.content}>
-            {this.state.boothFilter.map(data => (
+            {this.state.boothFilter.map((data, index) => (
               <TouchableOpacity
+                key={index}
                 onPress={() => {
                   Actions.boothInfo({
                     title: 'Booth Info',
