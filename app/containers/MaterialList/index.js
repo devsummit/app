@@ -13,9 +13,10 @@ import {
   Body,
   Fab
 } from 'native-base';
-import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal } from 'react-native';
+import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal, WebView } from 'react-native';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icons from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import Toast from 'react-native-simple-toast';
@@ -34,7 +35,8 @@ class MaterialList extends Component {
     this.state = {
       fileName: '',
       invisible: false,
-      isLoading: true
+      isLoading: true,
+      modalVisible: false
     };
   }
 
@@ -50,13 +52,17 @@ class MaterialList extends Component {
     }
   }
 
+  setModalVisible(visible){
+    this.setState({ modalVisible: visible })
+  }
+
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
   }
 
   openPicker = () => {
     DocumentPicker.show({
-      filetype: [DocumentPickerUtil.allFiles()]
+      filetype: [ DocumentPickerUtil.allFiles() ]
     }, (error, res) => {
       this.setState({ fileName: res.fileName });
       this.handleInputChange('file', res);
@@ -73,10 +79,10 @@ class MaterialList extends Component {
   showAlert = (id) => {
     Alert.alert(strings.material.confirm, strings.material.remove,
       [
-        {text: strings.global.cancel},
-        {text: strings.global.ok, onPress: () => this.removeItem(id)}
+        { text: strings.global.cancel },
+        { text: strings.global.ok, onPress: () => this.removeItem(id) }
       ],
-      {cancelable: false}
+      { cancelable: false }
     );
   }
 
@@ -89,18 +95,19 @@ class MaterialList extends Component {
 
 
   render() {
+    console.log('DJKNINSIUA', this.props.material);
     const { material, inputFields } = this.props;
-
+    const WEBVIEW_REF = 'webview';
     return (
       <Container>
         <Content>
           <HeaderPoint title={strings.material.title} />
           {
             this.props.isFetching
-              ? <ActivityIndicator size="large" color="#f39e21" style={styles.loader}/>
+              ? <ActivityIndicator size="large" color="#f39e21" style={styles.loader} />
               : (
-                  material && material.length > 0 ?
-                    <Content>
+                material && material.length > 0 ?
+                  <Content>
                     {material.map((data, key) => (
                       <Card key={data.id}>
                         <CardItem>
@@ -108,7 +115,7 @@ class MaterialList extends Component {
                             <View style={styles.bodySection}>
                               <View style={styles.profileSection}>
                                 <Image
-                                  source={{ uri: data.user.photos[0].url || ''}}
+                                  source={{ uri: data.user.photos[0].url || '' }}
                                   style={styles.photo}
                                 />
                               </View>
@@ -119,8 +126,8 @@ class MaterialList extends Component {
                                     <Icon name="remove" color="red" style={styles.icon} />
                                   </TouchableOpacity>
                                 </View>
-                                <View style={{flex: 1, flexDirection: 'row' }}>
-                                  <View style={{flex: 1}}>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                  <View style={{ flex: 1 }}>
                                     <Text style={styles.title}>{data.title}</Text>
                                     <Text numberOfLines={3} style={styles.summary}>
                                       {data.summary}
@@ -135,6 +142,9 @@ class MaterialList extends Component {
                                 <View style={styles.materialUrl}>
                                   <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
                                 </View>
+                                <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+                                  <Text>Download</Text>
+                                </TouchableOpacity>
                               </View>
                             </View>
                           </Body>
@@ -150,7 +160,7 @@ class MaterialList extends Component {
                   >
                     <Text style={styles.buttonText}>{strings.material.upload}</Text>
                   </Button>
-                )
+              )
           }
           <ModalComponent
             visible={this.state.invisible}
@@ -164,12 +174,44 @@ class MaterialList extends Component {
             onModalPress={this.setModal}
             fileName={this.state.fileName}
           />
+          {/* Webview modal */}
+          { material && material.length > 0 ?
+            material.map((data, key) => (
+              <Modal
+                animationType={'slide'}
+                visible={this.state.modalVisible}
+                onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+              >
+                <View style={{ flex: 1 }}>
+                  <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
+                    <TouchableOpacity onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}
+                    >
+                      <Icons name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
+                    </TouchableOpacity>
+                  </View>
+                  <WebView
+                    automaticallyAdjustContentInsets={false}
+                    source={{ uri: data.material }}
+                    style={{ marginTop: 20 }}
+                    scalesPageToFit={this.state.scalesPageToFit}
+                    ref={WEBVIEW_REF}
+                    decelerationRate="normal"
+                    javaScriptEnabled
+                    domStorageEnabled
+                    startInLoadingState
+                  />
+                </View>
+              </Modal>
+            )) : <View />}
         </Content>
         <Fab
           active={this.state.invisible}
           style={{ backgroundColor: '#FFA726' }}
           position="bottomRight"
-          onPress={() => this.setModal()}>
+          onPress={() => this.setModal()}
+        >
           <Icon name="plus" />
         </Fab>
       </Container>
