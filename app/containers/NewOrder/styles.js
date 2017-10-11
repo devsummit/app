@@ -15,7 +15,8 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   btnGroup: {
-    alignSelf: 'center',
+    flex: 1,
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center'
@@ -54,15 +55,17 @@ export default StyleSheet.create({
     height: 27
   },
   iconWrapper: {
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   title: {
-    backgroundColor: 'orange',
-    color: 'white',
-    padding: 8,
-    fontSize: 20,
+    backgroundColor: '#FF6F00',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    fontSize: 15,
+    color: '#FFF',
     fontWeight: 'bold',
-    textAlign: 'center',
+    borderRadius: 4,
+    marginBottom: 8
   },
   inputStyle: {
     width: '90%',

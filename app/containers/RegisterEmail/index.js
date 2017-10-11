@@ -3,8 +3,7 @@ import {
   Container,
   Content,
   Button,
-  Text,
-  Item
+  Text
 } from 'native-base';
 import { Alert, Image, View, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -15,6 +14,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import CheckBox from 'react-native-icon-checkbox';
+import { getProfileEmail } from '../../helpers'
 
 import InputItem from '../../components/InputItem';
 import strings from '../../localization';
