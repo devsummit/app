@@ -20,6 +20,7 @@ import styles from './styles';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
+import feedback from './constants';
 
 class Settings extends Component {
   constructor(props) {
@@ -30,8 +31,7 @@ class Settings extends Component {
       modalVisible: false,
       firstName: '',
       lastName: '',
-      photo: null,
-      scalesPageToFit: true
+      photo: null
     }
   }
   componentWillMount() {
@@ -82,8 +82,6 @@ class Settings extends Component {
       summary,
       profilePic
     } = fields || '';
-    const WEBVIEW_REF = 'webview';
-    const feedback = 'https://devsummit.io/feedback.html'
     return (
       <Container>
         <Content>
@@ -150,8 +148,8 @@ class Settings extends Component {
                 automaticallyAdjustContentInsets={false}
                 source={{ uri: feedback }}
                 style={{ marginTop: 20 }}
-                scalesPageToFit={this.state.scalesPageToFit}
-                ref={WEBVIEW_REF}
+                scalesPageToFit={true}
+                ref={'webview'}
                 decelerationRate="normal"
                 javaScriptEnabled
                 domStorageEnabled
