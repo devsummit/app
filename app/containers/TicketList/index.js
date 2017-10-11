@@ -133,7 +133,7 @@ class TicketList extends Component {
   }
 
   transferTicket = () => {
-    this.props.transferTicket(this.state.receiver, this.state.user_ticket_id, this.state.password);
+    this.props.transferTicket(this.state.receiver, this.state.user_ticket_id, this.state.password,() => this.setModalTransfer(false));
   }
 
   render() {
