@@ -409,75 +409,77 @@ class Feed extends Component {
                                     <Text style={{ color: '#000', margin: 10 }}>
                                       {item.message}
                                     </Text>
-                                    <TouchableOpacity
-                                      style={{ alignSelf: 'center', marginLeft: 8 }}
-                                      onPress={() => this.setModalVisible(true, item.attachment)}
-                                    >
-                                      <Image
-                                        source={{ uri: item.attachment }}
-                                        style={styles.images}
-                                      />
-                                    </TouchableOpacity>
                                   </View>
                                 </View>
                               </View>
-                              <View
-                                style={{
-                                  borderBottomColor: '#BDBDBD',
-                                  borderWidth: 0.5,
-                                  marginRight: -20
-                                }}
-                              />
-                              <View
-                                style={{
-                                  flex: 1,
-                                  flexDirection: 'row',
-                                  justifyContent: 'space-around'
-                                }}
-                              >
-                                {this.state.userId === item.user_id ? (
-                                  <TouchableWithoutFeedback
-                                    onPress={() => this.alertRemoveFeed(item.id)}
-                                  >
-                                    <View
-                                      style={{
-                                        flex: 1,
-                                        backgroundColor: 'transparent',
-                                        borderRadius: 8
-                                      }}
-                                    >
-                                      <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
-                                ) : (
-                                  <TouchableWithoutFeedback
-                                    onPress={() => this.alertReportFeed(item.id)}
-                                  >
-                                    <View
-                                      style={{
-                                        flex: 1,
-                                        backgroundColor: 'transparent',
-                                        borderRadius: 8
-                                      }}
-                                    >
-                                      <Text style={styles.buttonReport}>{strings.feed.report}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
-                                )}
-                                <TouchableWithoutFeedback
-                                  onPress={() => this.onOpen(item.message, item.attachment)}
+                              <View style={{ flex: 1 }}>
+                                <TouchableOpacity
+                                  style={styles.touchImage}
+                                  onPress={() => this.setModalVisible(true, item.attachment)}
                                 >
-                                  <View
-                                    style={{
-                                      flex: 1,
-                                      marginLeft: 10,
-                                      backgroundColor: 'transparent',
-                                      borderRadius: 8
-                                    }}
+                                  <Image
+                                    source={{ uri: item.attachment }}
+                                    resizeMode="contain"
+                                    style={styles.images}
+                                  />
+                                </TouchableOpacity>
+                                <View
+                                  style={{
+                                    borderBottomColor: '#BDBDBD',
+                                    borderWidth: 0.5,
+                                    marginRight: -20
+                                  }}
+                                />
+                                <View
+                                  style={{
+                                    flex: 1,
+                                    flexDirection: 'row'
+                                  }}
+                                >
+                                  {this.state.userId === item.user_id ? (
+                                    <TouchableWithoutFeedback
+                                      onPress={() => this.alertRemoveFeed(item.id)}
+                                    >
+                                      <View
+                                        style={{
+                                          flex: 1,
+                                          backgroundColor: 'transparent',
+                                          borderRadius: 8
+                                        }}
+                                      >
+                                        <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                      </View>
+                                    </TouchableWithoutFeedback>
+                                  ) : (
+                                    <TouchableWithoutFeedback
+                                      onPress={() => this.alertReportFeed(item.id)}
+                                    >
+                                      <View
+                                        style={{
+                                          flex: 1,
+                                          backgroundColor: 'transparent',
+                                          borderRadius: 8
+                                        }}
+                                      >
+                                        <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                      </View>
+                                    </TouchableWithoutFeedback>
+                                  )}
+                                  <TouchableWithoutFeedback
+                                    onPress={() => this.onOpen(item.message, item.attachment)}
                                   >
-                                    <Text style={styles.buttonReport}>{strings.feed.share}</Text>
-                                  </View>
-                                </TouchableWithoutFeedback>
+                                    <View
+                                      style={{
+                                        flex: 1,
+                                        marginLeft: 10,
+                                        backgroundColor: 'transparent',
+                                        borderRadius: 8
+                                      }}
+                                    >
+                                      <Text style={styles.buttonReport}>{strings.feed.share}</Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                </View>
                               </View>
                             </Card>
                           ))}
@@ -578,9 +580,9 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                      <TouchableOpacity onPress={() => this.postFeed()}>
-                          <View
-                          style={{
+                        <TouchableOpacity onPress={() => this.postFeed()}>
+                        <View
+                            style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -589,12 +591,12 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                        >
-                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                          >
+                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                        </View>
-                        </TouchableOpacity>
+                          </View>
+                      </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
                           <View
