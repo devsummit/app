@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, List, ListItem, Button, Text, Spinner } from 'native-base';
+import { Container, Content, List, ListItem, Button, Text, Spinner, Form, Item, Label, Input } from 'native-base';
 import PropTypes from 'prop-types';
 import {
   RefreshControl,
@@ -29,7 +29,11 @@ class TicketList extends Component {
     this.state = {
       isLoading: true,
       modalVisible: false,
-      counter: 0
+      modalTransfer: false,
+      counter: 0,
+      receiver: '',
+      user_ticket_id: null,
+      password: ''
     };
   }
 
@@ -50,6 +54,10 @@ class TicketList extends Component {
     this.setState({ modalVisible: visible });
   };
 
+  setModalTransfer = (visible, id) => {
+    this.setState({ modalTransfer: visible, user_ticket_id: id });
+  }
+
   renderTicketList() {
     return (
       <List
@@ -69,22 +77,24 @@ class TicketList extends Component {
                 }
               ]}
             >
-              <Text style={styles.text}>
-                {strings.order.ticketNumber} {item.id}
-              </Text>
-              {/* <Button
-                small
-                style={styles.button}
-                onPress={() => {
-                  Actions.attendeesList({ ticketId: item.id });
-                }}
-              >
-                <Text style={styles.buttonText}>Transfer</Text>
-                <Icons
-                  name="exchange"
-                  color="white"
-                />
-              </Button> */}
+              <View style={ styles.transferSection }>
+                <Text style={styles.text}>
+                  {strings.order.ticketNumber} {item.id}
+                </Text>
+                <Button
+                  small
+                  style={styles.button}
+                  onPress={() => this.setModalTransfer(true, item.id)}
+                >
+                  <Text style={styles.buttonText}>Transfer</Text>
+                  <Icons
+                    name="exchange"
+                    color="white"
+                    style={styles.iconTransfer}
+                  />
+                </Button> 
+              </View>
+              
             </ListItem>
           );
         }}
@@ -112,6 +122,18 @@ class TicketList extends Component {
 
   updateCounter() {
     this.setState({ counter: this.state.counter + 1 });
+  }
+
+  handleChangeInputReceiver = (value) => {
+    this.setState({ receiver: value });
+  }
+
+  handleChangeInputPassword = (value) => {
+    this.setState({ password: value });
+  }
+
+  transferTicket = () => {
+    this.props.transferTicket(this.state.receiver, this.state.user_ticket_id, this.state.password);
   }
 
   render() {
@@ -241,6 +263,53 @@ class TicketList extends Component {
               </View>
               <Redeem />
             </View>
+          </View>
+        </Modal>
+
+        {/* Authenticate Modal */}
+        <Modal
+          animationType='fade'
+          visible={ this.state.modalTransfer }
+          onRequestClose={() => this.setModalTransfer(!this.state.modalTransfer) }
+          transparent
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalComponent}>
+              <TouchableOpacity onPress={() => this.setModalTransfer(!this.state.modalTransfer)}>
+                <Icons name='close' style={{ alignSelf: 'flex-end', fontSize: 14 }}/>
+              </TouchableOpacity>
+              <Text style={styles.modalTitle}>Transfer Ticket</Text>
+              <View style={styles.inputItem}>
+                <Form>
+                  <Item floatingLabel >
+                    <Label>
+                      username receiver
+                    </Label>
+                    <Input
+                      onChangeText={text => this.handleChangeInputReceiver(text)}
+                    />
+                  </Item>
+                </Form>
+                <Form>
+                  <Item floatingLabel >
+                    <Label>
+                      your password
+                    </Label>
+                    <Input
+                      secureTextEntry
+                      onChangeText={text => this.handleChangeInputPassword(text)}
+                    />
+                  </Item>
+                </Form>
+                <Button
+                  style={styles.buttonUpload}
+                  onPress={() => this.transferTicket()}
+                >
+                  <Text style={styles.buttonText1}>Transfer</Text>
+                </Button>
+              </View>
+            </View>
+            <View style={{ flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
           </View>
         </Modal>
       </ScrollView>
