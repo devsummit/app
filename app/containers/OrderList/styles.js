@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
+
+const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +30,19 @@ const styles = StyleSheet.create({
   right: {
     flex: 1,
     alignSelf: 'flex-end',
+  },
+  artwork: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height,
+    marginTop: '-25%'
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
   }
 });
 

@@ -3,11 +3,10 @@ import {
   Container,
   Content,
   List,
-  Fab,
   Spinner
 } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert } from 'react-native';
+import { RefreshControl, Alert, View, Text, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -19,6 +18,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
 
+const noTicket = require('./../../../assets/images/noticket.png');
 
 class OrderList extends Component {
   state = {
@@ -65,29 +65,37 @@ class OrderList extends Component {
     }
     return (
       <Container style={styles.container}>
-        <Content refreshControl={
-          <RefreshControl
-            refreshing={this.props.isFetching}
-            onRefresh={() => this.props.getOrderList()}
-          />
-        }
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.isFetching}
+              onRefresh={() => this.props.getOrderList()}
+            />
+          }
         >
-          <List>
-            {this.props.orders.map((order) => {
-              return (
-                <OrderItem
-                  key={order.id}
-                  order={order}
-                  confirmPayment={this.confirmPayment}
-                  onPress={() => {
-                    Actions.orderDetail({
-                      orderId: order.id
-                    });
-                  }}
-                />
-              );
-            })}
-          </List>
+          { this.props.orders.length > 0 ? (
+            <List>
+              {this.props.orders.map((order) => {
+                return (
+                  <OrderItem
+                    key={order.id}
+                    order={order}
+                    confirmPayment={this.confirmPayment}
+                    onPress={() => {
+                      Actions.orderDetail({
+                        orderId: order.id
+                      });
+                    }}
+                  />
+                );
+              })}
+            </List>
+          ) : (
+            <View style={styles.artwork}>
+              <Image source={noTicket} style={{ opacity: 0.7 }} />
+              <Text style={styles.artworkText}>{strings.order.noTicket}</Text>
+            </View>
+          )}
         </Content>
       </Container>
     );
