@@ -100,19 +100,8 @@ export default class OrderItem extends Component {
             </View>
           </View>
           <View style={styles.buttonSection}>
-            {/* { !(status && status === 'paid') ?
-              <TouchableOpacity onPress={() => this.onEditPressed()} >
-                <Icon
-                  name="md-create"
-                  style={styles.icon}
-                />
-              </TouchableOpacity> : <View />
-            } */}
             {status && status === 'not paid' ? (
               <View>
-                <TouchableOpacity onPress={() => this.onEditPressed()}>
-                  <Icon name="md-create" style={styles.icon} />
-                </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => Actions.payment({ order })}
                   style={styles.btnCheckOut}
@@ -123,17 +112,6 @@ export default class OrderItem extends Component {
             ) : (
               <View />
             )}
-            {/* {status && status === 'need authorization' ? <View /> : <View />}
-            {status && status === 'pending' ? (
-              <TouchableOpacity
-                onPress={() => this.handleConfirmPayment()}
-                style={styles.btnCheckOut}
-              >
-                <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
-              </TouchableOpacity>
-            ) : (
-              <View />
-            )} */}
           </View>
         </View>
       </CardItem>
