@@ -113,7 +113,7 @@ export function register() {
       DevSummitAxios.post('/auth/register', data)
         .then(async (response) => {
           if (response && response.data.data && response.data.meta.success) {
-            await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.included.email));
+            await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));
             await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
           } else if (response.data.data !== null && !response.data.meta.success) {
             await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));

@@ -88,24 +88,37 @@ class NewOrder extends Component {
               if (index === 0) {
                 return (
                   <Card key={ticket.id}>
-                    <CardItem style={{ flex: 1, flexDirection: 'column' }}>
-                      <Body style={styles.summary}>
-                        <Text style={styles.title}>{ticket.ticket_type.toUpperCase()}</Text>
-                        <Text style={{ color: 'orange', fontWeight: 'bold' }}>
-                          Rp {Intl.NumberFormat('id').format(ticket.price)}
-                        </Text>
-                        <Text note style={{ marginLeft: 'auto', marginRight: 'auto', width: 210, textAlign: 'center' }}>{ticket.information}</Text>
-                      </Body>
-                      <View style={styles.btnGroup}>
-                        <Text style={styles.plusMinus} onPress={() => { this.decrease(ticket.id); }}>
-                          <Icon name="minus" />
-                        </Text>
-                        <Text style={styles.ticketCount}>
-                          {order[ticket.id] ? order[ticket.id].count : 0}
-                        </Text>
-                        <Text style={styles.plusMinus} onPress={() => { this.increase(ticket.id); }}>
-                          <Icon name="plus" />
-                        </Text>
+                    <CardItem>
+                      <View style={{ flex: 1 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                          <Icon name="ticket" style={{ alignSelf: 'center', fontSize: 60, marginRight: 20 }} />
+                          <View>
+                            <Body>
+                              <Text style={styles.title}>{ticket.ticket_type.toUpperCase()}</Text>
+                            </Body>
+                            <Text style={{ color: 'orange', fontWeight: 'bold' }}>
+                              Rp {Intl.NumberFormat('id').format(ticket.price)}
+                            </Text>
+                            <Text note>{ticket.information}</Text>
+                          </View>
+                        </View>
+                        <View style={styles.btnGroup}>
+                          <Text
+                            style={styles.plusMinus}
+                            onPress={() => { this.decrease(ticket.id); }}
+                          >
+                            <Icon name="minus" />
+                          </Text>
+                          <Text style={styles.ticketCount}>
+                            {order[ticket.id] ? order[ticket.id].count : 0}
+                          </Text>
+                          <Text
+                            style={styles.plusMinus}
+                            onPress={() => { this.increase(ticket.id); }}
+                          >
+                            <Icon name="plus" />
+                          </Text>
+                        </View>
                       </View>
                     </CardItem>
                   </Card>
@@ -132,7 +145,7 @@ class NewOrder extends Component {
                     <Icon name={'check-square-o'} size={24} color={inputFields.isUsingReferal ? '#3F51B5' : '#BDBDBD'} />
                   </TouchableOpacity>
                 </View>
-              </View> 
+              </View>
               <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
                 {inputFields.isUsingReferal && inputFields.isUsingReferal === true ?
                   <View style={{ flexDirection: 'column', flex: 1, alignSelf: 'stretch', marginTop: 10 }}>

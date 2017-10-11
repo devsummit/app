@@ -3,8 +3,7 @@ import {
   Container,
   Content,
   Button,
-  Text,
-  Item
+  Text
 } from 'native-base';
 import { Alert, Image, View, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
