@@ -282,7 +282,7 @@ class PaymentDetail extends Component {
               />
               <InputItem
                 itemStyle={styles.item}
-                value={'Enter this number for token : '.concat(input3)}
+                value={'APPLI 3: '.concat(input3)}
                 title="random"
                 placeholder="5 Random Number"
                 disabled
