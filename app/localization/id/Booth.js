@@ -7,5 +7,6 @@ export default {
   alreadyRegister: 'Apabila Anda sudah terdaftar, silahkan masukkan kode booth.',
   more: 'Lihat detail',
   imageChanged: 'Foto booth telah diperbaharui',
-  errorImage: 'Gagal mengambil gambar'
+  errorImage: 'Gagal mengambil gambar',
+  search: 'Cari booth',
 };
