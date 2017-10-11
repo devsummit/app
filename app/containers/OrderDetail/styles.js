@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 12,
     fontSize: 30
   },
   buttonText: {
-    marginRight: 10,
+    marginRight: 12,
     fontWeight: 'bold'
   },
   orderId: {
@@ -46,22 +46,15 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   btnCheckOut: {
-    width: '100%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 6,
-    marginBottom: 6,
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: 'transparent',
-    flexDirection: 'row',
-    elevation: 0,
-    flex: 1
+    borderRadius: 4,
+    alignSelf: 'center',
+    marginVertical: 6,
+    marginHorizontal: 20
   },
   statusText: {
     flex: 1,
-    fontSize: 8,
-    borderRadius: 90,
+    fontSize: 12,
+    borderRadius: 4,
     padding: 5,
     color: 'white',
     fontWeight: 'bold',

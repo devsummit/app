@@ -3,5 +3,6 @@ export default {
   editProfile: 'Edit profile',
   codeConduct: 'Code of conduct',
   privacyPolicy: 'Privacy policy',
-  logout: 'Log out'
+  logout: 'Log out',
+  feedback: 'Feedback'
 };

@@ -243,13 +243,13 @@ class OrderDetail extends Component {
           {order.included.payment && order.included.payment.payment_type !== 'cstore' && this.state.status !== 'paid' ?
             <Card>
               <CardItem>
-                <Body>
+                <View style={{ alignItems: 'center' }}>
                   <Text>{strings.order.instruction1} Rp {Intl.NumberFormat('id').format(this.getTotal())} {strings.order.instruction2} { this.capitalizeEachWord(order.included.payment.payment_type.split('_').join(' ')) } {strings.order.instruction3} </Text>
 
                   {this.checkPaymentType()}
 
                   <Text>{strings.order.attention}</Text>
-                </Body>
+                </View>
               </CardItem>
             </Card> : <View />
           }

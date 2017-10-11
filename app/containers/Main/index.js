@@ -32,6 +32,7 @@ import AccountKit, { LoginButton } from 'react-native-facebook-account-kit';
 
 import { createTransition, Fade } from 'react-native-transition';
 import ImageSlider from 'react-native-image-slider';
+import { getProfileEmail } from '../../helpers';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -76,6 +77,13 @@ class Main extends Component {
 
   componentWillMount() {
     this.configureAccountKit();
+    getProfileEmail().then((profileEmail) => {
+      if (profileEmail) {
+        this.handleInputChange('username', profileEmail);
+      } else {
+        this.handleInputChange('username', '');
+      }
+    });
   }
 
   componentWillReceiveProps(prevProps) {
@@ -169,7 +177,7 @@ class Main extends Component {
                   <Item regular style={styles.item}>
                     <Input
                       style={styles.formInput}
-                      placeholder="Username"
+                      placeholder="Username or Email"
                       placeholderTextColor={'#BDBDBD'}
                       keyboardType={'email-address'}
                       autoCapitalize={'none'}

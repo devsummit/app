@@ -22,6 +22,7 @@ import { getOrders, getPendingOrders } from '../OrderList/selectors';
 import { getOrderList } from '../OrderList/actions';
 import { PRIMARYCOLOR } from '../../constants';
 import Redeem from '../Redeem';
+import OrderList from '../OrderList';
 
 class TicketList extends Component {
   constructor(props) {
@@ -126,6 +127,10 @@ class TicketList extends Component {
     }
 
     const { orders } = this.props;
+
+    return (
+      <OrderList />
+    );
 
     return (
       <ScrollView style={styles.container}>

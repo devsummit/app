@@ -92,6 +92,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     marginRight: 20
+  },
+  modal: {
+    width: '100%',
+    height: 'auto',
+    backgroundColor: 'whitesmoke'
   }
 });
 
