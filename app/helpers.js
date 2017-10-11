@@ -66,6 +66,11 @@ export const getProfileData = async () => {
   return JSON.parse(profileData);
 };
 
+export const getProfileEmail = async () => {
+  const profileEmail = await AsyncStorage.getItem('profile_email');
+  return JSON.parse(profileEmail);
+};
+
 export const getBoothData = async () => {
   const boothData = await AsyncStorage.getItem('booth_data');
   return JSON.parse(boothData);
