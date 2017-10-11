@@ -5,7 +5,11 @@ import {
   Button,
   Card,
   CardItem,
-  Body
+  Body,
+  Header,
+  Item,
+  Icon,
+  Input
 } from 'native-base';
 import { View, Image, Text, Alert, Modal, TouchableOpacity, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -21,15 +25,39 @@ import Redeem from '../Redeem';
 
 class BoothList extends Component {
   state = {
-    modalVisible: false
+    modalVisible: false,
+    boothFilter: this.props.booth
   }
+  
 
   componentWillMount() {
     this.props.fetchBoothList();
   }
 
+  componentWillReceiveProps(prevProps) {
+    console.log('landing here prevprops booth list : ', prevProps);
+    if (prevProps && prevProps.booth && this.props.booth !== prevProps.booth) {
+      this.setState({
+        boothFilter: prevProps.booth
+      });
+    }
+  }
+
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  }
+
+  handleFilter = (param) => {
+    const filteredBooth = [];
+    this.props.booth.map((data) => {
+      if (data.user.first_name.toLowerCase().includes(param.toLowerCase())
+      || data.user.last_name.toLowerCase().includes(param.toLowerCase())) {
+        filteredBooth.push(data);
+      }
+    });
+    this.setState({
+      boothFilter: filteredBooth
+    });
   }
 
   render() {
@@ -38,6 +66,16 @@ class BoothList extends Component {
       <Container style={styles.container}>
         <Content>
           <HeaderPoint title={strings.booth.title} />
+          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
+            <Item>
+              <Icon name="ios-search" />
+              <Input
+                placeholder={strings.booth.search}
+                onChangeText={text => this.handleFilter(text)}
+              />
+              <Icon name="ios-calendar" />
+            </Item>
+          </Header>
           <Button
             style={styles.btnBooth}
             onPress={() => {
@@ -87,7 +125,7 @@ class BoothList extends Component {
             </Modal>
           </View>
           <View style={styles.content}>
-            {booth.map(data => (
+            {this.state.boothFilter.map(data => (
               <TouchableOpacity
                 onPress={() => {
                   Actions.boothInfo({
