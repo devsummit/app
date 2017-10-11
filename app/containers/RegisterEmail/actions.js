@@ -112,7 +112,6 @@ export function register() {
     if (firstName && email && password && username) {
       DevSummitAxios.post('/auth/register', data)
         .then(async (response) => {
-          console.log('RESSS', response);
           if (response && response.data.data && response.data.meta.success) {
             await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));
             await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
