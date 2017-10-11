@@ -3,5 +3,6 @@ export default {
   editProfile: 'Edit profil',
   codeConduct: 'Kode etik',
   privacyPolicy: 'Kebijakan pribadi',
-  logout: 'Keluar'
+  logout: 'Keluar',
+  feedback: 'Umpan Balik'
 };
