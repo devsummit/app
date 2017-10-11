@@ -4,8 +4,9 @@ import {
   Content,
   Text
 } from 'native-base';
-import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback, Modal, WebView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -19,16 +20,20 @@ import styles from './styles';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
+import feedback from './constants';
 
 class Settings extends Component {
-  state = {
-    id: null,
-    modalVisible: false,
-    firstName: '',
-    lastName: '',
-    photo: null
+  constructor(props) {
+    super(props);
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.state = {
+      id: null,
+      modalVisible: false,
+      firstName: '',
+      lastName: '',
+      photo: null
+    }
   }
-
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
@@ -113,6 +118,13 @@ class Settings extends Component {
                 </Button>
                 <Button
                   block
+                  style={styles.button}
+                  onPress={() => this.setModalVisible(true)}
+                >
+                  <Text>{strings.settings.feedback}</Text>
+                </Button>
+                <Button
+                  block
                   style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
                   onPress={() => { this.props.logOut(); }}
                 >
@@ -121,6 +133,30 @@ class Settings extends Component {
               </View>
             </Content>
           </ScrollView>
+          <Modal
+            animationType={'slide'}
+            visible={this.state.modalVisible}
+            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+          >
+            <View style={{ flex: 1 }}>
+              <View style={ styles.modal }>
+                <TouchableOpacity onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                  <Icon name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
+                </TouchableOpacity>
+              </View>
+              <WebView
+                automaticallyAdjustContentInsets={false}
+                source={{ uri: feedback }}
+                style={{ marginTop: 20 }}
+                scalesPageToFit={true}
+                ref={'webview'}
+                decelerationRate="normal"
+                javaScriptEnabled
+                domStorageEnabled
+                startInLoadingState
+              />
+            </View>
+          </Modal>
         </Content>
       </Container>
     );
