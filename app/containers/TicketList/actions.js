@@ -5,8 +5,12 @@ import { DevSummitAxios, getAccessToken } from '../../helpers';
 import {
   FETCH_USER_TICKET,
   IS_FETCHING_USER_TICKET,
-  FETCHING_USER_TICKET_STATUS
+  FETCHING_USER_TICKET_STATUS,
+  UPDATE_INPUT_FIELDS,
+  IS_TRANSFER_TICKET
 } from './constants';
+
+import { Alert } from 'react-native';
 
 /*
  * Get user ticket data
@@ -21,6 +25,21 @@ export function isFetchingUserTicket(status) {
 export function fetchUserTicketStatus(status) {
   return {
     type: FETCHING_USER_TICKET_STATUS,
+    status
+  };
+}
+
+export function updateInputFields(fields, value) {
+  return {
+    type: UPDATE_INPUT_FIELDS,
+    fields,
+    value
+  };
+}
+
+export function isTransferTicket(status) {
+  return {
+    type: IS_TRANSFER_TICKET,
     status
   };
 }
@@ -57,5 +76,35 @@ export function fetchUserTicket() {
       .catch((err) => {
         console.log(err);
       });
+  };
+}
+
+export function transferTicket(receiver, id, password) {
+  return (dispatch) => {
+    dispatch(isFetchingUserTicket(true));
+    const payloads = {
+      receiver: receiver,
+      user_ticket_id: id,
+      password: password
+    };
+
+    getAccessToken().then((token) => {
+      DevSummitAxios.post('api/v1/tickets/transfer', payloads, { headers: { Authorization: token } })
+        .then((res) => {
+          Alert.alert(
+            'Information',
+            res.data.meta.message,
+            [
+              { text: 'OK', onPress: () => dispatch(fetchUserTicket()) }
+            ],
+            { cancelable: false }
+          );
+          dispatch(isTransferTicket(res.data.meta.success));
+        })
+        .catch((err) => {
+          dispatch(isFetchingUserTicket(false));          
+          console.log('ERROR', err);
+        })
+    });
   };
 }
