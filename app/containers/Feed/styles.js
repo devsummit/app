@@ -99,9 +99,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginLeft: 10
   },
+  touchImage: {
+    alignSelf: 'center',
+    paddingLeft: 20,
+    marginBottom: 10
+  },
   images: {
     height: 200,
-    width: width * 0.7
+    width: width * 0.9
   },
   artworkText: {
     fontSize: 16,
