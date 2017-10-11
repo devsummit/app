@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   searchHeader: {
-    marginTop: -30,
+    margin: 10,
     backgroundColor: 'rgb(255,255,255)',
     borderRadius: 50
   },
