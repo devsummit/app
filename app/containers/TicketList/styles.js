@@ -17,9 +17,8 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 3,
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-    borderRadius: 90
+    borderRadius: 2,
+    backgroundColor: PRIMARYCOLOR
   },
   refreshButton: {
     flex: 1,
@@ -28,11 +27,9 @@ const styles = StyleSheet.create({
     borderRadius: 90
   },
   buttonText: {
-    textAlign: 'left',
-    paddingRight: 5,
-    flex: 7,
+    flex: 3.5,
     fontSize: 12,
-    alignSelf: 'center',
+    marginTop: -4,
     fontWeight: 'bold'
   },
   btnOrder: {
@@ -95,6 +92,50 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#FFFFFF',
     fontSize: 20
+  },
+  transferSection: {
+    flexDirection: 'row'
+  },
+  iconTransfer: {
+    flex: 1
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  modalComponent: {
+    margin: 18,
+    padding: 10,
+    backgroundColor: 'white',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    elevation: 10,
+    borderRadius: 2
+  },
+  modalTitle: {
+    marginLeft: 15,
+    marginTop: 10,
+    fontWeight: 'bold',
+    fontSize: 18
+  },
+  inputItem: {
+    marginRight: 15
+  },
+  buttonsSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  button1: {
+    margin: 6
+  },
+  buttonText1: {
+    fontSize: 15
+  },
+  buttonUpload: {
+    marginVertical: 12,
+    alignSelf: 'center',
+    borderRadius: 2,
+    backgroundColor: '#FB8C00'
   }
 });
 
