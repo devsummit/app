@@ -50,6 +50,8 @@ import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketList from '../TicketList';
+import Redeem from '../Redeem';
+import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 
@@ -141,6 +143,8 @@ class Feed extends Component {
       firstName: '',
       lastName: '',
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
+      fabActive: false,
+      modalRedeem: false,
       modalVisible: false,
       postToFeeds: false,
       imagePreview: '',
@@ -150,7 +154,11 @@ class Feed extends Component {
       report: '',
       shareOptions: {
         message: '',
-        url: ''
+        url: null
+      },
+      shareTwitter: {
+        message: '',
+        url: null
       }
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
@@ -172,6 +180,10 @@ class Feed extends Component {
 
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
+  };
+
+  setModalRedeem = (visible) => {
+    this.setState({ modalRedeem: visible });
   };
 
   setModalPost = (visible) => {
@@ -235,17 +247,21 @@ class Feed extends Component {
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
 
-    this.setState({
-      shareOptions: Object.assign({}, this.state.shareOptions, { message: _message })
-    });
+    var urlTwitter = '';
+    let share = Object.assign({}, this.state.shareOptions);
+    let shareTwitter = Object.assign({}, this.state.shareTwitter);
 
-    if (_url) {
-      this.setState({ shareOptions: Object.assign({}, this.state.shareOptions, { url: _url }) });
+    if (_url === null) {
+      urlTwitter = '';
+    } else {
+        urlTwitter = _url;
     }
-  };
-
-  onCancelOption = () => {
-    this.setState({ optionVisible: false });
+    
+    shareTwitter.message = _message;
+    shareTwitter.url = urlTwitter;
+    share.message = _message;
+    share.url = _url;
+    this.setState({ shareOptions: share, shareTwitter: shareTwitter });
   };
 
   alertRemoveFeed = (postId) => {
@@ -524,8 +540,46 @@ class Feed extends Component {
             }
           >
             <TicketList />
+            <Fab
+              active={this.state.fabActive}
+              style={{ backgroundColor: '#FF8B00' }}
+              position="bottomRight"
+              onPress={() => this.setState({ fabActive: !this.state.fabActive })}
+            >
+              <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
+              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => Actions.newOrder()}>
+                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              </Button>
+              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => this.setModalRedeem(true)}>
+                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              </Button>
+            </Fab>
           </Tab>
         </Tabs>
+        {/* Redeem Modal */}
+        <Modal
+          animationType="fade"
+          visible={this.state.modalRedeem}
+          onRequestClose={() => this.setModalRedeem(!this.state.modalRedeem)}
+          transparent
+        >
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View style={styles.redeem}>
+              <TouchableWithoutFeedback
+                onPress={() => this.setModalRedeem(!this.state.modalRedeem)}
+              >
+                <CameraIcon style={styles.iconClose} name="times" />
+              </TouchableWithoutFeedback>
+              <View style={styles.viewredeem}>
+                <CameraIcon name="gift" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                  {strings.redeem.redeem}
+                </Text>
+              </View>
+              <Redeem />
+            </View>
+          </View>
+        </Modal>
         {/* Modal for create new feeds post */}
         <Modal
           animationType={'fade'}
@@ -682,7 +736,7 @@ class Feed extends Component {
             onPress={() => {
               this.onCancel();
               setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'twitter' }));
+                Share.shareSingle(Object.assign(this.state.shareTwitter, { social: 'twitter' }));
               }, 300);
             }}
           >

@@ -88,20 +88,19 @@ export default class OrderItem extends Component {
       <CardItem
         style={styles.container}
         button
-        onPress={this.props.onPress}
       >
         <View style={styles.item}>
           <View style={{ justifyContent: 'flex-start', flex: 4 }}>
             <Text>Order-{order.id}</Text>
-              <Text
-                note
-                style={styles.orderId}
-              >
-                {formatDate(order.created_at)}
-              </Text>
-            <View style={ styles.viewText }>
+            <Text
+              note
+              style={styles.orderId}
+            >
+              {formatDate(order.created_at)}
+            </Text>
+            <View style={styles.viewText}>
               {status ?
-                <Text note style={ [styles.statusText, { backgroundColor: color }] }>
+                <Text note style={[ styles.statusText, { backgroundColor: color } ]}>
                   {status.toUpperCase()}
                 </Text> : <View />
               }
@@ -110,10 +109,10 @@ export default class OrderItem extends Component {
           <View style={styles.buttonSection}>
             { !(status && status === 'paid') ?
               <TouchableOpacity onPress={() => this.onEditPressed()} >
-                  <Icon
-                    name="md-create"
-                    style={styles.icon}
-                  />
+                <Icon
+                  name="md-create"
+                  style={styles.icon}
+                />
               </TouchableOpacity> : <View />
             }
             {(status && status === 'not paid') ?
@@ -121,14 +120,17 @@ export default class OrderItem extends Component {
                 onPress={() => Actions.payment({ order })}
                 style={styles.btnCheckOut}
               >
-              <Icon name="md-cart" color="white" style={styles.icon} />
+                <Icon name="md-cart" color="white" style={styles.icon} />
               </TouchableOpacity> : <View />
             }
             {(status && status === 'need authorization') ?
               <View /> : <View />
             }
             {(status && status === 'pending') ?
-              <TouchableOpacity onPress={() => this.handleConfirmPayment()} style={ styles.btnCheckOut }>
+              <TouchableOpacity
+                onPress={() => this.handleConfirmPayment()}
+                style={styles.btnCheckOut}
+              >
                 <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
               </TouchableOpacity> : <View />
             }
