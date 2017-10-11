@@ -7,5 +7,6 @@ export default {
   alreadyRegister: 'Already registered? Please insert you redeem code.',
   more: 'See more',
   imageChanged: 'Booth photo has been changed',
-  errorImage: 'Failed to get image from library'
+  errorImage: 'Failed to get image from library',
+  search: 'Find booth',
 };
