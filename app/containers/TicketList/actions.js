@@ -11,6 +11,7 @@ import {
 } from './constants';
 
 import { Alert } from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 /*
  * Get user ticket data
@@ -79,7 +80,7 @@ export function fetchUserTicket() {
   };
 }
 
-export function transferTicket(receiver, id, password) {
+export function transferTicket(receiver, id, password, callback) {
   return (dispatch) => {
     dispatch(isFetchingUserTicket(true));
     const payloads = {
@@ -91,15 +92,21 @@ export function transferTicket(receiver, id, password) {
     getAccessToken().then((token) => {
       DevSummitAxios.post('api/v1/tickets/transfer', payloads, { headers: { Authorization: token } })
         .then((res) => {
-          Alert.alert(
-            'Information',
-            res.data.meta.message,
-            [
-              { text: 'OK', onPress: () => dispatch(fetchUserTicket()) }
-            ],
-            { cancelable: false }
-          );
-          dispatch(isTransferTicket(res.data.meta.success));
+          if (res.data.meta.success) {
+            Toast.show(res.data.meta.message, Toast.LONG);
+            callback();
+            dispatch(isFetchingUserTicket(false));
+            dispatch(fetchUserTicket());
+          } else {
+              Alert.alert(
+                'Information',
+                res.data.meta.message,
+                [
+                  { text: 'OK', onPress: () => dispatch(fetchUserTicket()) }
+                ],
+                { cancelable: false }
+              );
+          }
         })
         .catch((err) => {
           dispatch(isFetchingUserTicket(false));          
