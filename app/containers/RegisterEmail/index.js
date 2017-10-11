@@ -38,12 +38,6 @@ class RegisterEmail extends Component {
     };
   }
   componentWillMount() {
-    getProfileEmail().then((profileEmail) => {
-      console.log(profileEmail);
-      if (profileEmail){
-        // this.props.updateInputFields('email' profileEmail.)
-      }
-    });
     this.props.updateInputFields('role', '');
     this.props.updateInputFields('referer', '');
     if (this.props.prefilledData) {
