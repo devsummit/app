@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import CheckBox from 'react-native-icon-checkbox';
+import { getProfileEmail } from '../../helpers'
 
 import InputItem from '../../components/InputItem';
 import strings from '../../localization';
@@ -37,6 +38,12 @@ class RegisterEmail extends Component {
     };
   }
   componentWillMount() {
+    getProfileEmail().then((profileEmail) => {
+      console.log(profileEmail);
+      if (profileEmail){
+        // this.props.updateInputFields('email' profileEmail.)
+      }
+    });
     this.props.updateInputFields('role', '');
     this.props.updateInputFields('referer', '');
     if (this.props.prefilledData) {
