@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
+import Moment from 'moment';
 import base from 'base-64';
 import { API_BASE_URL, CLIENT_SECRET, PRIMARYCOLOR } from './constants';
 
@@ -24,7 +25,8 @@ export const getAccessToken = async () => {
   // if not send refresh token to backend
   // if back end response invalid token logout user
 
-  if (!token) { // if token does not exist
+  if (!token) {
+    // if token does not exist
     return token;
   }
 
@@ -46,10 +48,7 @@ export const getAccessToken = async () => {
         return Actions.main();
       }
       const { access_token: accessToken, refresh_token: refreshtoken } = response.data.data;
-      await AsyncStorage.multiSet([
-        [ 'access_token', accessToken ],
-        [ 'refresh_token', refreshtoken ]
-      ]);
+      await AsyncStorage.multiSet([ [ 'access_token', accessToken ], [ 'refresh_token', refreshtoken ] ]);
       token = accessToken;
     })
     .catch(err => err);
@@ -79,6 +78,19 @@ export const getBoothData = async () => {
 export const formatDate = (source) => {
   const dt = source.split(' ');
   return `${dt[0]} ${dt[1]}`;
+};
+
+export const localeDate = (date) => {
+  return Moment(date)
+    .local()
+    .format('YYYY-MM-DD HH:mm:ss');
+};
+
+export const expiryDate = (date) => {
+  return Moment(date)
+    .add(1, 'hours')
+    .local()
+    .format('YYYY-MM-DD HH:mm:ss');
 };
 
 export const transactionStatus = (payment) => {
