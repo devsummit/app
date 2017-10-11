@@ -35,7 +35,6 @@ class BoothList extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    console.log('landing here prevprops booth list : ', prevProps);
     if (prevProps && prevProps.booth && this.props.booth !== prevProps.booth) {
       this.setState({
         boothFilter: prevProps.booth
