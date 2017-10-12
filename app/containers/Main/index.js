@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Text, Spinner, Item, Input, Header } from 'native-base';
+import { Container, Content, Text, Spinner, Item, Input, Header, Card, CardItem, Left, Thumbnail, Body } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
@@ -8,10 +8,13 @@ import {
   StatusBar,
   ActivityIndicator,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  Modal,
+  TouchableHighlight
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, { LoginButton } from 'react-native-facebook-account-kit';
+import {PagerTabIndicator, IndicatorViewPager, PagerTitleIndicator, PagerDotIndicator} from 'rn-viewpager';
 
 import { createTransition, Fade } from 'react-native-transition';
 import { getProfileEmail } from '../../helpers';
@@ -34,7 +37,7 @@ const background = require('./../../../assets/images/background.png');
 
 class Main extends Component {
   state = {
-    modalVisible: false
+    modalVisible: true
   };
 
   componentWillMount() {
@@ -110,6 +113,124 @@ class Main extends Component {
           <Content>
             <KeyboardAvoidingView>
               <ScrollView>
+                <View style={{marginTop: 22}}>
+                  <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {this.setModalVisible(!this.state.modalVisible)}}
+                    >
+                    <ScrollView>
+                    <View style={{flex:1}}>
+                    <IndicatorViewPager
+                        style={{height:600}}
+                        indicator={this._renderDotIndicator()}
+                    >
+                        <View style={{
+                          backgroundColor:'black',
+                          flex: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center'}}>
+                            <Image source={{uri: 'http://media.nationalgeographic.co.id/daily/300/1:1/201609291242819/b/foto-planet-merkurius-kian-menyusut.jpg'}}
+                               style={{width: 400, height: 400}} />
+                            <Text style={{color: 'white', margin: 3, textAlign: 'center'}}>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            </Text>
+                            {/* <Text style={{color: 'white', textAlign: 'right'}}>#swipeable</Text> */}
+                            <View style={{
+                            flex: 0,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'flex-end',
+                            }}>
+                              {/* <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> PREV </Text></Button>
+                              <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> NEXT </Text></Button> */}
+                              <Button 
+                              full 
+                              bordered 
+                              primary 
+                              style={{width: 350/3, height: 50}}
+                              onPress={() => {
+                                  this.setModalVisible(!this.state.modalVisible)
+                                }}
+                              ><Text style={{textAlign: 'center'}}> SKIP </Text></Button>
+                            </View>
+                        </View>
+                        <View style={{
+                          backgroundColor:'black',
+                          flex: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center'}}>
+                            <Image source={{uri: 'https://www.astronomiskungdom.se/wp-content/uploads/2017/01/venus-11022_960_720-300x300.jpg'}}
+                               style={{width: 400, height: 400}} />
+                               <Text style={{color: 'white', margin: 3, textAlign: 'center'}}>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            </Text>
+                            {/* <Text style={{color: 'white', textAlign: 'right'}}>#swipeable</Text> */}
+                            <View style={{
+                            flex: 0,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            alignItems: 'flex-end',
+                            }}>
+                              {/* <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> PREV </Text></Button>
+                              <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> NEXT </Text></Button> */}
+                              <Button 
+                                full 
+                                bordered 
+                                primary 
+                                style={{width: 350/3, height: 50}}
+                                onPress={() => {
+                                  this.setModalVisible(!this.state.modalVisible)
+                                }}
+                              ><Text style={{textAlign: 'center'}}> SKIP </Text></Button>
+                            </View>
+                        </View>
+                        <View style={{
+                          backgroundColor:'black',
+                          flex: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center'}}>
+                            <Image source={{uri: 'http://www.commongroundgroup.net/wp-content/uploads/2011/10/earth-from-space-western-400x400.jpg'}}
+                               style={{width: 400, height: 400}} />
+                               <Text style={{color: 'white', margin: 3, textAlign: 'center'}}>
+                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            </Text>
+                            {/* <Text style={{color: 'white', textAlign: 'right'}}>#swipeable</Text> */}
+                            <View style={{
+                            flex: 0,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            alignItems: 'flex-end',
+                            }}>
+                              {/* <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> PREV </Text></Button>
+                              <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> NEXT </Text></Button> */}
+                              <Button 
+                              full 
+                              bordered 
+                              primary 
+                              style={{width: 350/3, height: 50}}
+                              onPress={() => {
+                                  this.setModalVisible(!this.state.modalVisible)
+                                }}
+                              ><Text style={{color: 'white', textAlign: 'center'}}> SKIP </Text></Button>
+                            </View>
+                        </View>
+                    </IndicatorViewPager>
+                  </View>
+                  </ScrollView>
+                  </Modal>
+
+                  {/* <TouchableHighlight onPress={() => {
+                    this.setModalVisible(true)
+                  }}>
+                    <Text>Show Modal</Text>
+                  </TouchableHighlight> */}
+                  
+                </View>
                 <View style={styles.formSection}>
                   <Item regular style={styles.item}>
                     <Input
@@ -217,6 +338,11 @@ class Main extends Component {
       </Image>
     );
   }
+
+_renderDotIndicator() {
+    return <PagerDotIndicator pageCount={3} />;
+}
+
 }
 
 Main.propTypes = {
