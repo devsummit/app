@@ -137,15 +137,12 @@ class Main extends Component {
                             <Text style={{color: 'white', margin: 3, textAlign: 'center'}}>
                               Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                             </Text>
-                            {/* <Text style={{color: 'white', textAlign: 'right'}}>#swipeable</Text> */}
                             <View style={{
                             flex: 0,
                             flexDirection: 'row',
                             justifyContent: 'center',
                             alignItems: 'flex-end',
                             }}>
-                              {/* <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> PREV </Text></Button>
-                              <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> NEXT </Text></Button> */}
                               <Button 
                               full 
                               bordered 
@@ -168,15 +165,12 @@ class Main extends Component {
                                <Text style={{color: 'white', margin: 3, textAlign: 'center'}}>
                               Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </Text>
-                            {/* <Text style={{color: 'white', textAlign: 'right'}}>#swipeable</Text> */}
                             <View style={{
                             flex: 0,
                             flexDirection: 'row',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-end',
                             }}>
-                              {/* <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> PREV </Text></Button>
-                              <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> NEXT </Text></Button> */}
                               <Button 
                                 full 
                                 bordered 
@@ -199,15 +193,12 @@ class Main extends Component {
                                <Text style={{color: 'white', margin: 3, textAlign: 'center'}}>
                               Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                             </Text>
-                            {/* <Text style={{color: 'white', textAlign: 'right'}}>#swipeable</Text> */}
                             <View style={{
                             flex: 0,
                             flexDirection: 'row',
                             justifyContent: 'flex-end',
                             alignItems: 'flex-end',
                             }}>
-                              {/* <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> PREV </Text></Button>
-                              <Button bordered primary style={{width: 350/3, height: 50}}><Text style={{textAlign: 'center'}}> NEXT </Text></Button> */}
                               <Button 
                               full 
                               bordered 
@@ -223,13 +214,6 @@ class Main extends Component {
                   </View>
                   </ScrollView>
                   </Modal>
-
-                  {/* <TouchableHighlight onPress={() => {
-                    this.setModalVisible(true)
-                  }}>
-                    <Text>Show Modal</Text>
-                  </TouchableHighlight> */}
-                  
                 </View>
                 <View style={styles.formSection}>
                   <Item regular style={styles.item}>
