@@ -30,7 +30,8 @@ import {
   BackHandler,
   KeyboardAvoidingView,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  WebView
 } from 'react-native';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -160,7 +161,9 @@ class Feed extends Component {
       shareTwitter: {
         message: '',
         url: null
-      }
+      },
+      modalWebView: false,
+      link: ''
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -195,6 +198,11 @@ class Feed extends Component {
 
   setModalReport = (visible) => {
     this.setState({ modalReport: visible });
+  };
+
+  setModalWebView = (visible, link) => {
+    this.setState({ modalWebView: visible});
+    this.state.link = link;
   };
 
   postFeed = (callback) => {
@@ -304,6 +312,7 @@ class Feed extends Component {
   };
 
   render() {
+    console.log('landing here this.props', this.props);
     return (
       <Container style={styles.container}>
         <View
@@ -364,13 +373,13 @@ class Feed extends Component {
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
-                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                  <Thumbnail source={{ uri: item.user.attachment || '' }} />
                                   <Body>
                                     <Text>
-                                      {item.user.first_name} {item.user.last_name}
+                                      {item.user.name}
                                     </Text>
                                     <Text note>
-                                      <IconSimpleLine name="globe" />sponsored
+                                      <IconSimpleLine name="globe" /> sponsored
                                     </Text>
                                   </Body>
                                 </Left>
@@ -380,7 +389,7 @@ class Feed extends Component {
                                   <Text style={{ marginBottom: 8 }}>{item.message}</Text>
                                   <TouchableOpacity
                                     style={{ alignSelf: 'center' }}
-                                    onPress={() => this.setModalVisible(true, item.attachment)}
+                                    onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
                                     <Image
                                       source={{ uri: item.attachment }}
@@ -584,6 +593,26 @@ class Feed extends Component {
             </View>
           </View>
         </Modal>
+        {/* Modal WebView */}
+        <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalWebView}
+              onRequestClose={() => {this.setModalWebView(!this.state.modalWebView, null)}}
+              >
+              <View style={{flex:1}}>
+              <WebView
+                ref={'webview'}
+                automaticallyAdjustContentInsets={false}
+                source={{uri: this.state.link}}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                decelerationRate="normal"
+                startInLoadingState={true}
+                scalesPageToFit={this.state.scalesPageToFit}
+              />
+              </View>
+            </Modal>
         {/* Modal for create new feeds post */}
         <Modal
           animationType={'fade'}
