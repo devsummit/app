@@ -156,7 +156,7 @@ type ShareObject = {
 };
 
 type State = {
-  userId: string,
+  userId: Array<number>,
   userPostID: string,
   postId: string,
   firstName: string,
@@ -177,34 +177,34 @@ type State = {
 class Feed extends Component<Props, State> {
   constructor(props) {
     super(props);
-    this.state = {
-      userId: '',
-      userPostID: '',
-      postId: '',
-      firstName: '',
-      lastName: '',
-      profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
-      fabActive: false,
-      modalRedeem: false,
-      modalVisible: false,
-      postToFeeds: false,
-      imagePreview: '',
-      visible: false,
-      modalReport: false,
-      optionVisible: false,
-      report: '',
-      shareOptions: {
-        message: '',
-        url: null
-      },
-      shareTwitter: {
-        message: '',
-        url: null
-      }
-    };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
   }
+  state = {
+    userId: '',
+    userPostID: '',
+    postId: '',
+    firstName: '',
+    lastName: '',
+    profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
+    fabActive: false,
+    modalRedeem: false,
+    modalVisible: false,
+    postToFeeds: false,
+    imagePreview: '',
+    visible: false,
+    modalReport: false,
+    optionVisible: false,
+    report: '',
+    shareOptions: {
+      message: '',
+      url: null
+    },
+    shareTwitter: {
+      message: '',
+      url: null
+    }
+  };
 
   componentWillMount() {
     this.props.fetchFeeds(this.props.currentPage);
