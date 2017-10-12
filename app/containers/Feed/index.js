@@ -304,7 +304,6 @@ class Feed extends Component {
   };
 
   render() {
-    console.log('landing here to check', this.props.isFetchingMore, this.props.isFetching);
     return (
       <Container style={styles.container}>
         <View

@@ -61,7 +61,6 @@ class BoothList extends Component {
   }
 
   render() {
-    console.log('landing here', this.props.isFetching);
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
