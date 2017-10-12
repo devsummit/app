@@ -23,6 +23,8 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import Redeem from '../Redeem';
 
+const bgBooth1 = require('./../../../assets/images/bgbooth_1.png');
+const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
 
 class BoothList extends Component {
   state = {
@@ -65,7 +67,7 @@ class BoothList extends Component {
     return (
       <Container style={styles.container}>
         <HeaderPoint title={strings.booth.title} />
-        <View style={{ backgroundColor: '#E0E0E0' }}>
+        <Image source={bgBooth2} resizeMode="cover" style={{ flex: 0.21, width: '100%' }}>
           <Button
             style={styles.btnBooth}
             onPress={() => {
@@ -74,17 +76,17 @@ class BoothList extends Component {
           >
             <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
           </Button>
-          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
-            <Item>
-              <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
-              <Input
-                style={{ fontSize: 16, alignSelf: 'center' }}
-                placeholder={strings.booth.search}
-                onChangeText={text => this.handleFilter(text)}
-              />
-            </Item>
-          </Header>
-        </View>
+        </Image>
+        <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
+          <Item>
+            <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
+            <Input
+              style={{ fontSize: 16, alignSelf: 'center' }}
+              placeholder={strings.booth.search}
+              onChangeText={text => this.handleFilter(text)}
+            />
+          </Item>
+        </Header>
         <View>
           <Modal
             animationType="fade"
