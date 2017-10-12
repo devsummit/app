@@ -9,6 +9,11 @@ export const getIsFetchingFeeds = () => createSelector(
   state => state.get('isFetching')
 );
 
+export const getIsFetchingMore = () => createSelector(
+  selectFeedReducer(),
+  state => state.get('isFetchingMore')
+);
+
 export const getFetchFeeds = () => createSelector(
   selectFeedReducer(),
   state => state.get('feeds').toJS()

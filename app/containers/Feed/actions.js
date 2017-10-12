@@ -6,6 +6,7 @@ import {
   FETCH_FEEDS,
   SET_LINKS,
   IS_FETCHING_FEEDS,
+  IS_FETCHING_MORE_FEEDS,
   IS_POST_FEEDS,
   UPDATE_IMAGE,
   UPDATE_TEXT,
@@ -50,6 +51,13 @@ export function isFetchingFeeds(status) {
   };
 }
 
+export function isFetchingMoreFeeds(status) {
+  return {
+    type: IS_FETCHING_MORE_FEEDS,
+    status
+  };
+}
+
 export function fetchFeeds(currentpage) {
   return (dispatch) => {
     dispatch(isFetchingFeeds(true));
@@ -78,6 +86,8 @@ export function fetchFeeds(currentpage) {
 
 export function fetchPageWithPaginate(page) {
   return (dispatch) => {
+    dispatch(isFetchingMoreFeeds(true));
+
     getAccessToken()
       .then((token) => {
         DevSummitAxios.get(`/api/v1/feeds?page=${page}`, { headers: { Authorization: token } })
@@ -89,9 +99,11 @@ export function fetchPageWithPaginate(page) {
             dispatch({ type: SET_LINKS, links });
 
             dispatch(updateCurrentPage(page + 1));
+            dispatch(isFetchingMoreFeeds(false));
           })
           .catch((err) => {
             console.log(err);
+            dispatch(isFetchingMoreFeeds(false));
           });
       });
   }

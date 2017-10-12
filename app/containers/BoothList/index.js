@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardItem,
+  Spinner,
   Body,
   Header,
   Item,
@@ -63,96 +64,99 @@ class BoothList extends Component {
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
+        <HeaderPoint title={strings.booth.title} />
+        <View style={{ backgroundColor: '#E0E0E0' }}>
+          <Button
+            style={styles.btnBooth}
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+          >
+            <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
+          </Button>
+          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
+            <Item>
+              <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
+              <Input
+                style={{ fontSize: 16, alignSelf: 'center' }}
+                placeholder={strings.booth.search}
+                onChangeText={text => this.handleFilter(text)}
+              />
+            </Item>
+          </Header>
+        </View>
+        <View>
+          <Modal
+            animationType="fade"
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => { this.setModalVisible(!this.state.modalVisible); }}
+          >
+            <ScrollView>
+              <View style={{ margin: 20 }}>
+                <View>
+                  <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>{strings.booth.howto}</Text>
+                  <View style={{ alignItems: 'center', marginTop: 20 }}>
+                    <Text style={{ fontSize: 16 }}>
+                      {strings.booth.info}{'\n'}{strings.booth.find}
+                    </Text>
+                    <View style={{ margin: 20 }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Fajar Adityo</Text>
+                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
+                    </View>
+                    <Text style={{ fontSize: 16 }}>
+                      {strings.booth.alreadyRegister}
+                    </Text>
+                  </View>
+                  <View style={styles.redeem}>
+                    <Redeem />
+                  </View>
+                  <Button
+                    primary
+                    style={styles.btnModal}
+                    onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}
+                  >
+                    <Text style={{ color: '#FFF' }}>{strings.global.back}</Text>
+                  </Button>
+                </View>
+              </View>
+            </ScrollView>
+          </Modal>
+        </View>
         <Content>
-          <HeaderPoint title={strings.booth.title} />
-          <View style={{ backgroundColor: '#E0E0E0' }}>
-            <Button
-              style={styles.btnBooth}
-              onPress={() => {
-                this.setModalVisible(true);
-              }}
-            >
-              <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
-            </Button>
-            <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
-              <Item>
-                <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
-                <Input
-                  style={{ fontSize: 16, alignSelf: 'center' }}
-                  placeholder={strings.booth.search}
-                  onChangeText={text => this.handleFilter(text)}
-                />
-              </Item>
-            </Header>
-          </View>
-          <View>
-            <Modal
-              animationType="fade"
-              transparent={false}
-              visible={this.state.modalVisible}
-              onRequestClose={() => { this.setModalVisible(!this.state.modalVisible); }}
-            >
-              <ScrollView>
-                <View style={{ margin: 20 }}>
-                  <View>
-                    <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>{strings.booth.howto}</Text>
-                    <View style={{ alignItems: 'center', marginTop: 20 }}>
-                      <Text style={{ fontSize: 16 }}>
-                        {strings.booth.info}{'\n'}{strings.booth.find}
-                      </Text>
-                      <View style={{ margin: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Fajar Adityo</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
+          {this.props.isFetching ?
+            <Spinner color="#FF8B00" /> :
+            <View style={styles.content}>
+              {this.state.boothFilter.map((data, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    Actions.boothInfo({
+                      title: 'Booth Info',
+                      summary: data.summary,
+                      user: data.user,
+                      booth_photo: data.logo_url,
+                      booth_id: data.id
+                    });
+                  }}
+                >
+                  <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
+                    <View style={styles.profileSection}>
+                      <Image
+                        style={styles.profilePic}
+                        source={{ uri: data.logo_url }}
+                      />
+                      <View style={styles.nameSection}>
+                        <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
                       </View>
-                      <Text style={{ fontSize: 16 }}>
-                        {strings.booth.alreadyRegister}
-                      </Text>
-                    </View>
-                    <View style={styles.redeem}>
-                      <Redeem />
-                    </View>
-                    <Button
-                      primary
-                      style={styles.btnModal}
-                      onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}
-                    >
-                      <Text style={{ color: '#FFF' }}>{strings.global.back}</Text>
-                    </Button>
-                  </View>
-                </View>
-              </ScrollView>
-            </Modal>
-          </View>
-          <View style={styles.content}>
-            {this.state.boothFilter.map((data, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  Actions.boothInfo({
-                    title: 'Booth Info',
-                    summary: data.summary,
-                    user: data.user,
-                    booth_photo: data.logo_url,
-                    booth_id: data.id
-                  });
-                }}
-              >
-                <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
-                  <View style={styles.profileSection}>
-                    <Image
-                      style={styles.profilePic}
-                      source={{ uri: data.logo_url }}
-                    />
-                    <View style={styles.nameSection}>
-                      <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+          }
         </Content>
       </Container>
     );
@@ -160,6 +164,7 @@ class BoothList extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  booth: selectors.getListBooth()
+  booth: selectors.getListBooth(),
+  isFetching: selectors.getIsFetchingBooths()
 });
 export default connect(mapStateToProps, actions)(BoothList);

@@ -3,6 +3,7 @@ import {
   FETCH_FEEDS,
   SET_LINKS,
   IS_FETCHING_FEEDS,
+  IS_FETCHING_MORE_FEEDS,
   UPDATE_FEEDS,
   IS_POST_FEEDS,
   UPDATE_IMAGE,
@@ -22,6 +23,7 @@ const initialState = fromJS({
   image: {},
   message: '',
   isFetching: false,
+  isFetchingMore: false,
   isPosting: false,
   isRemoving: false,
   currentPage: 1
@@ -30,9 +32,11 @@ const initialState = fromJS({
 function feedReducer(state = initialState, action) {
 
   switch (action.type) {
-
     case IS_FETCHING_FEEDS:
       return state.set('isFetching', action.status);
+
+    case IS_FETCHING_MORE_FEEDS:
+      return state.set('isFetchingMore', action.status);
 
     case FETCH_FEEDS:
       return state.set('feeds', fromJS(action.payloads));
@@ -75,9 +79,7 @@ function feedReducer(state = initialState, action) {
 
     default:
       return state;
-
   }
-
 }
 
 export default feedReducer;
