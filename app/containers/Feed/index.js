@@ -49,7 +49,7 @@ import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
-import TicketList from '../TicketList';
+import OrderList from '../OrderList';
 import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
@@ -539,7 +539,7 @@ class Feed extends Component {
               </TabHeading>
             }
           >
-            <TicketList />
+            <OrderList />
             <Fab
               active={this.state.fabActive}
               style={{ backgroundColor: '#FF8B00' }}
@@ -548,10 +548,13 @@ class Feed extends Component {
             >
               <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
               <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => Actions.newOrder()}>
-                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+                <CameraIcon name="ticket" style={styles.iconFab} />
               </Button>
               <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => this.setModalRedeem(true)}>
-                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+                <CameraIcon name="gift" style={styles.iconFab} />
+              </Button>
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                <CameraIcon name='list-ol' style={ styles.iconFab } />
               </Button>
             </Fab>
           </Tab>
