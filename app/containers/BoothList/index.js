@@ -63,68 +63,68 @@ class BoothList extends Component {
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
-        <Content>
-          <HeaderPoint title={strings.booth.title} />
-          <View style={{ backgroundColor: '#E0E0E0' }}>
-            <Button
-              style={styles.btnBooth}
-              onPress={() => {
-                this.setModalVisible(true);
-              }}
-            >
-              <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
-            </Button>
-            <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
-              <Item>
-                <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
-                <Input
-                  style={{ fontSize: 16, alignSelf: 'center' }}
-                  placeholder={strings.booth.search}
-                  onChangeText={text => this.handleFilter(text)}
-                />
-              </Item>
-            </Header>
-          </View>
-          <View>
-            <Modal
-              animationType="fade"
-              transparent={false}
-              visible={this.state.modalVisible}
-              onRequestClose={() => { this.setModalVisible(!this.state.modalVisible); }}
-            >
-              <ScrollView>
-                <View style={{ margin: 20 }}>
-                  <View>
-                    <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>{strings.booth.howto}</Text>
-                    <View style={{ alignItems: 'center', marginTop: 20 }}>
-                      <Text style={{ fontSize: 16 }}>
-                        {strings.booth.info}{'\n'}{strings.booth.find}
-                      </Text>
-                      <View style={{ margin: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Fajar Adityo</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
-                      </View>
-                      <Text style={{ fontSize: 16 }}>
-                        {strings.booth.alreadyRegister}
-                      </Text>
+        <HeaderPoint title={strings.booth.title} />
+        <View style={{ backgroundColor: '#E0E0E0' }}>
+          <Button
+            style={styles.btnBooth}
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+          >
+            <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.booth.register}</Text>
+          </Button>
+          <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
+            <Item>
+              <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
+              <Input
+                style={{ fontSize: 16, alignSelf: 'center' }}
+                placeholder={strings.booth.search}
+                onChangeText={text => this.handleFilter(text)}
+              />
+            </Item>
+          </Header>
+        </View>
+        <View>
+          <Modal
+            animationType="fade"
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => { this.setModalVisible(!this.state.modalVisible); }}
+          >
+            <ScrollView>
+              <View style={{ margin: 20 }}>
+                <View>
+                  <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>{strings.booth.howto}</Text>
+                  <View style={{ alignItems: 'center', marginTop: 20 }}>
+                    <Text style={{ fontSize: 16 }}>
+                      {strings.booth.info}{'\n'}{strings.booth.find}
+                    </Text>
+                    <View style={{ margin: 20 }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Fajar Adityo</Text>
+                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
                     </View>
-                    <View style={styles.redeem}>
-                      <Redeem />
-                    </View>
-                    <Button
-                      primary
-                      style={styles.btnModal}
-                      onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}
-                    >
-                      <Text style={{ color: '#FFF' }}>{strings.global.back}</Text>
-                    </Button>
+                    <Text style={{ fontSize: 16 }}>
+                      {strings.booth.alreadyRegister}
+                    </Text>
                   </View>
+                  <View style={styles.redeem}>
+                    <Redeem />
+                  </View>
+                  <Button
+                    primary
+                    style={styles.btnModal}
+                    onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}
+                  >
+                    <Text style={{ color: '#FFF' }}>{strings.global.back}</Text>
+                  </Button>
                 </View>
-              </ScrollView>
-            </Modal>
-          </View>
+              </View>
+            </ScrollView>
+          </Modal>
+        </View>
+        <Content>
           <View style={styles.content}>
             {this.state.boothFilter.map((data, index) => (
               <TouchableOpacity
