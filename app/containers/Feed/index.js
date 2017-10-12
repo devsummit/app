@@ -27,12 +27,10 @@ import {
   AsyncStorage,
   Modal,
   Alert,
-  BackHandler,
   KeyboardAvoidingView,
   ScrollView,
   TouchableHighlight
 } from 'react-native';
-import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -51,8 +49,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketList from '../TicketList';
 import Redeem from '../Redeem';
-import { PRIMARYCOLOR } from '../../constants';
-import { API_BASE_URL } from '../../constants';
+import { PRIMARYCOLOR, API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 
 const socket = openSocket(API_BASE_URL);
@@ -61,7 +58,7 @@ const noFeeds = require('./../../../assets/images/nofeed.png');
 function subscribeToFeeds(cb) {
   socket.on('feeds', data => cb(null, data));
 }
-
+// @flow
 const today = new Date();
 const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
@@ -133,7 +130,51 @@ const mapStateToProps = () =>
     isRemoving: selectors.getIsRemoveFeed()
   });
 
-class Feed extends Component {
+type Links = {
+  attachment: string
+};
+
+type ImageObject = {
+  path?: string,
+  sourceURL?: string,
+  mime: string
+};
+
+type Props = {
+  isFetching: boolean,
+  feeds?: Array<mixed>,
+  links?: Links,
+  isPosting: boolean,
+  imagesData?: ImageObject,
+  textData: string,
+  isRemoving: boolean
+};
+
+type ShareObject = {
+  message: string,
+  url: string
+};
+
+type State = {
+  userId: string,
+  userPostID: string,
+  postId: string,
+  firstName: string,
+  lastName: string,
+  profileUrl: string,
+  imagePreview: string,
+  report: string,
+  fabActive: boolean,
+  modalRedeem: boolean,
+  modalVisible: boolean,
+  postToFeeds: boolean,
+  modalReport: boolean,
+  optionVisible: boolean,
+  shareOptions: ShareObject,
+  shareTwitter: ShareObject
+};
+
+class Feed extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -178,25 +219,49 @@ class Feed extends Component {
     });
   }
 
-  setModalVisible = (visible, image) => {
+  onCancel = () => {
+    this.setState({ visible: false });
+  };
+
+  onOpen = (_message, _url) => {
+    this.setState({ visible: true });
+
+    let urlTwitter = '';
+    const share = Object.assign({}, this.state.shareOptions);
+    const shareTwitter = Object.assign({}, this.state.shareTwitter);
+
+    if (_url === null) {
+      urlTwitter = '';
+    } else {
+      urlTwitter = _url;
+    }
+
+    shareTwitter.message = _message;
+    shareTwitter.url = urlTwitter;
+    share.message = _message;
+    share.url = _url;
+    this.setState({ shareOptions: share, shareTwitter });
+  };
+
+  setModalVisible = (visible: boolean, image: string) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   };
 
-  setModalRedeem = (visible) => {
+  setModalRedeem = (visible: boolean) => {
     this.setState({ modalRedeem: visible });
   };
 
-  setModalPost = (visible) => {
+  setModalPost = (visible: boolean) => {
     this.setState({ postToFeeds: visible });
     this.props.clearImage();
     this.props.clearTextField();
   };
 
-  setModalReport = (visible) => {
+  setModalReport = (visible: boolean) => {
     this.setState({ modalReport: visible });
   };
 
-  postFeed = (callback) => {
+  postFeed = () => {
     this.props.postFeeds(this.props.imagesData, this.props.textData);
     this.setModalPost(false);
   };
@@ -230,7 +295,7 @@ class Feed extends Component {
       });
   };
 
-  handleChange = (value) => {
+  handleChange = (value: string) => {
     this.props.updateText(value);
   };
 
@@ -240,31 +305,7 @@ class Feed extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
-  onCancel = () => {
-    this.setState({ visible: false });
-  };
-
-  onOpen = (_message, _url) => {
-    this.setState({ visible: true });
-
-    var urlTwitter = '';
-    let share = Object.assign({}, this.state.shareOptions);
-    let shareTwitter = Object.assign({}, this.state.shareTwitter);
-
-    if (_url === null) {
-      urlTwitter = '';
-    } else {
-        urlTwitter = _url;
-    }
-    
-    shareTwitter.message = _message;
-    shareTwitter.url = urlTwitter;
-    share.message = _message;
-    share.url = _url;
-    this.setState({ shareOptions: share, shareTwitter: shareTwitter });
-  };
-
-  alertRemoveFeed = (postId) => {
+  alertRemoveFeed = (postId: number) => {
     Alert.alert(
       '',
       'Are you sure you want to delete this post?',
@@ -276,12 +317,12 @@ class Feed extends Component {
     );
   };
 
-  removeFeed = (postId) => {
+  removeFeed = (postId: number) => {
     this.props.removeFeed(postId);
     this.setState({ optionVisible: false });
   };
 
-  alertReportFeed = (postId) => {
+  alertReportFeed = (postId: number) => {
     Alert.alert(
       '',
       'Are you sure you want to report this post?',
@@ -293,7 +334,7 @@ class Feed extends Component {
     );
   };
 
-  reportFeed = (postId) => {
+  reportFeed = (postId: number) => {
     this.props.reportFeed(postId);
     this.setState({ optionVisible: false });
   };
@@ -463,7 +504,9 @@ class Feed extends Component {
                                           borderRadius: 8
                                         }}
                                       >
-                                        <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.delete}
+                                        </Text>
                                       </View>
                                     </TouchableWithoutFeedback>
                                   ) : (
@@ -477,7 +520,9 @@ class Feed extends Component {
                                           borderRadius: 8
                                         }}
                                       >
-                                        <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.report}
+                                        </Text>
                                       </View>
                                     </TouchableWithoutFeedback>
                                   )}
@@ -547,11 +592,22 @@ class Feed extends Component {
               onPress={() => this.setState({ fabActive: !this.state.fabActive })}
             >
               <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => Actions.newOrder()}>
-                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+                <CameraIcon
+                  name="ticket"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => this.setModalRedeem(true)}>
-                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button
+                style={{ backgroundColor: '#FF8B00' }}
+                onPress={() => this.setModalRedeem(true)}
+              >
+                <CameraIcon
+                  name="gift"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
             </Fab>
           </Tab>
@@ -634,9 +690,9 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                        <TouchableOpacity onPress={() => this.postFeed()}>
-                        <View
-                            style={{
+                      <TouchableOpacity onPress={() => this.postFeed()}>
+                          <View
+                          style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -645,12 +701,12 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                          >
-                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                        >
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                          </View>
-                      </TouchableOpacity>
+                        </View>
+                        </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
                           <View
@@ -730,7 +786,7 @@ class Feed extends Component {
           </View>
         </Modal>
         {/* Sheet For Share */}
-        <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
+        <ShareSheet visible={this.state.visible} onCancel={this.onCancel}>
           <Button
             iconSrc={{ uri: TWITTER_ICON }}
             onPress={() => {
@@ -791,20 +847,5 @@ class CustomInput extends Component {
     );
   }
 }
-
-Feed.PropTypes = {
-  updateFeeds: func,
-  fetchFeeds: func,
-  updateText: func,
-  postFeeds: func,
-  isFetching: bool,
-  imagesData: object,
-  feeds: array,
-  textData: string,
-  isRemoving: bool,
-  removeFeed: func,
-  reportFeed: func,
-  link: string
-};
 
 export default connect(mapStateToProps, actions)(Feed);
