@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
-import { Container, Content, Text, Spinner, Item, Input, Header } from 'native-base';
+import { 
+  Body,
+  Container, 
+  Content,
+  Card,
+  CardItem,
+  DeckSwiper, 
+  Left,
+  Text, 
+  Thumbnail,
+  Spinner, 
+  Item, 
+  Input, 
+  Header,
+  Right 
+} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Image,
@@ -8,12 +23,15 @@ import {
   StatusBar,
   ActivityIndicator,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  Modal,
+  TouchableHighlight
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, { LoginButton } from 'react-native-facebook-account-kit';
 
 import { createTransition, Fade } from 'react-native-transition';
+import ImageSlider from 'react-native-image-slider';
 import { getProfileEmail } from '../../helpers';
 
 // import redux componens
@@ -29,12 +47,32 @@ import styles from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+var TopScreen = require('./topScreen');
+var BottomScreen = require('./bottomScreen');
+
 const Transition = createTransition(Fade);
 const background = require('./../../../assets/images/background.png');
+const cards = [
+  {
+    text: 'Card One',
+    name: 'One',
+    image: require('./../../../assets/images/background.png'),
+  },
+  {
+    text: 'Card Two',
+    name: 'One',
+    image: require('./../../../assets/images/background.png'),
+  },
+  {
+    text: 'Card Three',
+    name: 'One',
+    image: require('./../../../assets/images/background.png'),
+  }
+];
 
 class Main extends Component {
   state = {
-    modalVisible: false
+    modalVisible: true,
   };
 
   componentWillMount() {
@@ -110,6 +148,31 @@ class Main extends Component {
           <Content>
             <KeyboardAvoidingView>
               <ScrollView>
+                <View style={{marginTop: 22}}>
+                  <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {alert("Modal has been closed.")}}
+                    >
+                    <View style={styles.container}>
+                      <TopScreen style={styles.viewpager}/>
+                      <BottomScreen style={styles.viewpager}/>
+                    </View>
+                      <Button full onPress={() => {
+                                this.setModalVisible(!this.state.modalVisible)
+                      }}>
+                        <Text>Skip</Text>
+                      </Button>
+                  </Modal>
+
+                  {/* <TouchableHighlight onPress={() => {
+                    this.setModalVisible(true)
+                  }}>
+                    <Text>Show Modal</Text>
+                  </TouchableHighlight> */}
+
+                </View>
                 <View style={styles.formSection}>
                   <Item regular style={styles.item}>
                     <Input
