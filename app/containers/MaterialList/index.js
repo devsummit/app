@@ -36,7 +36,8 @@ class MaterialList extends Component {
       fileName: '',
       invisible: false,
       isLoading: true,
-      modalVisible: false
+      modalVisible: false,
+      url: ''
     };
   }
 
@@ -52,8 +53,13 @@ class MaterialList extends Component {
     }
   }
 
-  setModalVisible(visible){
-    this.setState({ modalVisible: visible })
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  getSingleLink(url) {
+    this.setState({ url });
+    this.setModalVisible(true);
   }
 
   handleInputChange = (field, value) => {
@@ -95,7 +101,6 @@ class MaterialList extends Component {
 
 
   render() {
-    console.log('DJKNINSIUA', this.props.material);
     const { material, inputFields } = this.props;
     const WEBVIEW_REF = 'webview';
     return (
@@ -142,7 +147,7 @@ class MaterialList extends Component {
                                 <View style={styles.materialUrl}>
                                   <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => this.setModalVisible(true)}>
+                                <TouchableOpacity onPress={() => (this.getSingleLink(data.material))}>
                                   <Text>Download</Text>
                                 </TouchableOpacity>
                               </View>
@@ -174,37 +179,34 @@ class MaterialList extends Component {
             onModalPress={this.setModal}
             fileName={this.state.fileName}
           />
-          {/* Webview modal */}
-          { material && material.length > 0 ?
-            material.map((data, key) => (
-              <Modal
-                animationType={'slide'}
-                visible={this.state.modalVisible}
-                onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
-              >
-                <View style={{ flex: 1 }}>
-                  <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
-                    <TouchableOpacity onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}
-                    >
-                      <Icons name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
-                    </TouchableOpacity>
-                  </View>
-                  <WebView
-                    automaticallyAdjustContentInsets={false}
-                    source={{ uri: data.material }}
-                    style={{ marginTop: 20 }}
-                    scalesPageToFit={this.state.scalesPageToFit}
-                    ref={WEBVIEW_REF}
-                    decelerationRate="normal"
-                    javaScriptEnabled
-                    domStorageEnabled
-                    startInLoadingState
-                  />
-                </View>
-              </Modal>
-            )) : <View />}
+          {/* Vebview Modal */}
+          <Modal
+            animationType={'slide'}
+            visible={this.state.modalVisible}
+            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+          >
+            <View style={{ flex: 1 }}>
+              <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
+                <TouchableOpacity onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+                >
+                  <Icons name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
+                </TouchableOpacity>
+              </View>
+              <WebView
+                automaticallyAdjustContentInsets={false}
+                source={{ uri: this.state.url }}
+                style={{ marginTop: 20 }}
+                scalesPageToFit={this.state.scalesPageToFit}
+                ref={WEBVIEW_REF}
+                decelerationRate="normal"
+                javaScriptEnabled
+                domStorageEnabled
+                startInLoadingState
+              />
+            </View>
+          </Modal>
         </Content>
         <Fab
           active={this.state.invisible}
