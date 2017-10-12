@@ -150,14 +150,14 @@ class TicketList extends Component {
 
     const { orders } = this.props;
 
-    return (
-      <OrderList />
-    );
+    // return (
+    //   <OrderList />
+    // );
 
     return (
       <ScrollView style={styles.container}>
         {/* My order and redeem code */}
-        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
               <Icons
@@ -191,10 +191,10 @@ class TicketList extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* Ticket Orders */}
-        <TouchableOpacity onPress={() => Actions.newOrder()}>
+        {/* <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
             <Icons
               name="ticket"
@@ -205,10 +205,10 @@ class TicketList extends Component {
               {strings.order.ticketOrder}
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* Free pass */}
-        <Text style={styles.free}> Or get free past by completing our partner offers </Text>
+        {/* <Text style={styles.free}> Or get free past by completing our partner offers </Text>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => this.setModalVisible(true)}>
             <View style={styles.card}>
@@ -230,7 +230,7 @@ class TicketList extends Component {
               <Text style={{ textAlign: 'center', fontSize: 12 }}>Register our free trial</Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {/* Ticket List */}
         <Content
@@ -247,7 +247,7 @@ class TicketList extends Component {
         </Content>
 
         {/* Redeem Modal */}
-        <Modal
+        {/* <Modal
           animationType="fade"
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
@@ -269,7 +269,7 @@ class TicketList extends Component {
               <Redeem />
             </View>
           </View>
-        </Modal>
+        </Modal> */}
 
         {/* Authenticate Modal */}
         <Modal
