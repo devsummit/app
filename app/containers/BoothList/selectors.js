@@ -6,3 +6,8 @@ export const getListBooth = () => createSelector(
   selectListBoothReducer(),
   state => state.get('booth')
 );
+
+export const getIsFetchingBooths = () => createSelector(
+  selectListBoothReducer(),
+  state => state.get('isFetching')
+);

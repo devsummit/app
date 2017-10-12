@@ -124,6 +124,7 @@ String.prototype.toDateFromDatetime = function() {
 const mapStateToProps = () =>
   createStructuredSelector({
     isFetching: selectors.getIsFetchingFeeds(),
+    isFetchingMore: selectors.getIsFetchingMore(),
     feeds: selectors.getFetchFeeds(),
     links: selectors.getFeedsLinks(),
     isPosting: selectors.getIsPostingFeed(),
@@ -256,7 +257,7 @@ class Feed extends Component {
     } else {
         urlTwitter = _url;
     }
-    
+
     shareTwitter.message = _message;
     shareTwitter.url = urlTwitter;
     share.message = _message;
@@ -344,7 +345,7 @@ class Feed extends Component {
           >
             <Content style={{ backgroundColor: '#E0E0E0' }}>
               {this.props.isFetching ? (
-                <Spinner color="yellow" />
+                <Spinner color="#FF8B00" />
               ) : (
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
@@ -502,7 +503,9 @@ class Feed extends Component {
                       />
                     )}
                     {this.props.links.next && this.props.feeds.length > 0 ? (
-                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                      this.props.isFetchingMore ? (
+                        <Spinner color="#FF8B00" />
+                      ) :
                         <Card>
                           <CardItem>
                             <Body
@@ -512,11 +515,12 @@ class Feed extends Component {
                                 justifyContent: 'space-around'
                               }}
                             >
-                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              <TouchableOpacity onPress={this.fetchNextFeeds}>
+                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              </TouchableOpacity>
                             </Body>
                           </CardItem>
                         </Card>
-                      </TouchableOpacity>
                     ) : (
                       <View />
                     )}
@@ -798,6 +802,7 @@ Feed.PropTypes = {
   updateText: func,
   postFeeds: func,
   isFetching: bool,
+  isFetchingMore: bool,
   imagesData: object,
   feeds: array,
   textData: string,
