@@ -363,10 +363,10 @@ class Feed extends Component {
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
-                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                  <Thumbnail source={{ uri: item.user.attachment || '' }} />
                                   <Body>
                                     <Text>
-                                      {item.user.first_name} {item.user.last_name}
+                                      {item.user.name}
                                     </Text>
                                     <Text note>
                                       <IconSimpleLine name="globe" />sponsored
