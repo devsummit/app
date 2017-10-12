@@ -23,6 +23,7 @@ import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
 import strings from '../../localization';
 import FlagMaterial from './FlagMaterial';
+import { getRoleId } from '../../helpers';
 import HeaderPoint from '../../components/Header';
 import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
@@ -37,12 +38,16 @@ class MaterialList extends Component {
       invisible: false,
       isLoading: true,
       modalVisible: false,
-      url: ''
+      url: '',
+      roleId: null
     };
   }
 
   componentWillMount() {
     this.props.fetchMaterialList();
+    getRoleId().then((roleId) => {
+      this.setState({ roleId });
+    });
   }
 
   componentWillReceiveProps(prevProps) {
@@ -61,6 +66,7 @@ class MaterialList extends Component {
     this.setState({ url });
     this.setModalVisible(true);
   }
+
 
   handleInputChange = (field, value) => {
     this.props.updateInputFields(field, value);
@@ -99,9 +105,26 @@ class MaterialList extends Component {
 
   setModal = () => this.setState({ invisible: !this.state.invisible });
 
+  checkButtonBasedOnRole() {
+    if (this.state.roleId === 4) {
+      return (
+        <Button
+          block
+          rounded
+          style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
+          onPress={() => this.setState({ invisible: !this.state.invisible })}
+        >
+          <Text style={styles.buttonText}>{strings.material.upload}</Text>
+        </Button>);
+    }
+    return (
+      <Text style={{ alignSelf: 'center' }}>There are no materials</Text>
+    );
+  }
 
   render() {
-    const { material, inputFields } = this.props;
+    const { material, inputFields, id } = this.props;
+    console.log("MATERIALLL", material);
     const WEBVIEW_REF = 'webview';
     return (
       <Container>
@@ -157,14 +180,7 @@ class MaterialList extends Component {
                       </Card>
                     ))}
                   </Content> :
-                  <Button
-                    block
-                    rounded
-                    style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
-                    onPress={() => this.setState({ invisible: !this.state.invisible })}
-                  >
-                    <Text style={styles.buttonText}>{strings.material.upload}</Text>
-                  </Button>
+                  this.checkButtonBasedOnRole()
               )
           }
           <ModalComponent
@@ -208,14 +224,16 @@ class MaterialList extends Component {
             </View>
           </Modal>
         </Content>
-        <Fab
-          active={this.state.invisible}
-          style={{ backgroundColor: '#FFA726' }}
-          position="bottomRight"
-          onPress={() => this.setModal()}
-        >
-          <Icon name="plus" />
-        </Fab>
+        {this.state.roleId === 4 ?
+          <Fab
+            active={this.state.invisible}
+            style={{ backgroundColor: '#FFA726' }}
+            position="bottomRight"
+            onPress={() => this.setModal()}
+          >
+            <Icon name="plus" />
+          </Fab>
+          : <View />}
       </Container>
     );
   }
