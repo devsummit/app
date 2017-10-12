@@ -3,6 +3,8 @@ import {
   getAccessToken
 } from '../../helpers';
 
+import Toast from 'react-native-simple-toast'
+
 import local from '../../../config/local';
 import {
   FETCH_MATERIAL_LIST,
@@ -60,6 +62,7 @@ export function fetchMaterialList() {
         const headers = { Authorization: token };
         DevSummitAxios.get('api/v1/documents', { headers })
           .then((response) => {
+            console.log("RESSSSS", response);
             dispatch({
               type: FETCH_MATERIAL_LIST,
               payloads: response.data.data
@@ -67,7 +70,9 @@ export function fetchMaterialList() {
             dispatch(isFetchingMaterial(false));
           })
           .catch((err) => {
-            // maybe we can put toast here later
+            console.log("ERRRRRR", err)
+            Toast.show("error speaker not found");
+            dispatch(isFetchingMaterial(false));
           });
       });
   };
