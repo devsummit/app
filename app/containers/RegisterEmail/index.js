@@ -232,6 +232,32 @@ class RegisterEmail extends Component {
                 />
               </View>
 
+              <View style={{ flex: 1 }}>
+                <CheckBox
+                  color={'#FFF'}
+                  iconStyle={{ color: '#FFF', marginLeft: 16 }}
+                  labelStyle={{ color: '#FFF' }}
+                  label={strings.register.useReferer}
+                  size={30}
+                  checked={this.state.isChecked}
+                  onPress={this.handlePressCheckedBox}
+                />
+                {this.state.isChecked ? (
+                  <View style={{ marginHorizontal: 20 }}>
+                    <InputItem
+                      itemStyle={styles.item}
+                      style={styles.formInput}
+                      placeholder={strings.register.refererName}
+                      placeholderTextColor={'#BDBDBD'}
+                      onChangeText={text => this.handleInputChange('referer', text)}
+                      value={referer}
+                    />
+                  </View>
+                ) : null}
+                {/* You can use other Icon */}
+                {/* Here is the example of Radio Icon */}
+              </View>
+
               {(username && username.length < 4) ||
               password.length < 4 ||
               firstName === '' ||
@@ -261,6 +287,7 @@ class RegisterEmail extends Component {
                     )}
                   </Button>
                 )}
+
               <Button
                 onBlur="register()"
                 transparent
@@ -274,32 +301,6 @@ class RegisterEmail extends Component {
                   <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>
                 </View>
               </Button>
-
-              <View style={{ flex: 1 }}>
-                <CheckBox
-                  color={'#FFF'}
-                  iconStyle={{ color: '#FFF', marginLeft: 16 }}
-                  labelStyle={{ color: '#FFF' }}
-                  label={strings.register.useReferer}
-                  size={30}
-                  checked={this.state.isChecked}
-                  onPress={this.handlePressCheckedBox}
-                />
-                {this.state.isChecked ? (
-                  <View style={{ marginHorizontal: 20 }}>
-                    <InputItem
-                      itemStyle={styles.item}
-                      style={styles.formInput}
-                      placeholder={strings.register.refererName}
-                      placeholderTextColor={'#BDBDBD'}
-                      onChangeText={text => this.handleInputChange('referer', text)}
-                      value={referer}
-                    />
-                  </View>
-                ) : null}
-                {/* You can use other Icon */}
-                {/* Here is the example of Radio Icon */}
-              </View>
             </View>
           </ScrollView>
         </Image>
