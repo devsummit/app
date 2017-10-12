@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardItem,
+  Spinner,
   Body,
   Header,
   Item,
@@ -60,6 +61,7 @@ class BoothList extends Component {
   }
 
   render() {
+    console.log('landing here', this.props.isFetching);
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
@@ -125,34 +127,37 @@ class BoothList extends Component {
           </Modal>
         </View>
         <Content>
-          <View style={styles.content}>
-            {this.state.boothFilter.map((data, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  Actions.boothInfo({
-                    title: 'Booth Info',
-                    summary: data.summary,
-                    user: data.user,
-                    booth_photo: data.logo_url,
-                    booth_id: data.id
-                  });
-                }}
-              >
-                <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
-                  <View style={styles.profileSection}>
-                    <Image
-                      style={styles.profilePic}
-                      source={{ uri: data.logo_url }}
-                    />
-                    <View style={styles.nameSection}>
-                      <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+          {this.props.isFetching ?
+            <Spinner color="#FF8B00" /> :
+            <View style={styles.content}>
+              {this.state.boothFilter.map((data, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    Actions.boothInfo({
+                      title: 'Booth Info',
+                      summary: data.summary,
+                      user: data.user,
+                      booth_photo: data.logo_url,
+                      booth_id: data.id
+                    });
+                  }}
+                >
+                  <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
+                    <View style={styles.profileSection}>
+                      <Image
+                        style={styles.profilePic}
+                        source={{ uri: data.logo_url }}
+                      />
+                      <View style={styles.nameSection}>
+                        <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+          }
         </Content>
       </Container>
     );
@@ -160,6 +165,7 @@ class BoothList extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  booth: selectors.getListBooth()
+  booth: selectors.getListBooth(),
+  isFetching: selectors.getIsFetchingBooths()
 });
 export default connect(mapStateToProps, actions)(BoothList);
