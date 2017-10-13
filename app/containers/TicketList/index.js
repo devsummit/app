@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, List, ListItem, Button, Text, Spinner, Form, Item, Label, Input } from 'native-base';
+import { Container, Content, List, ListItem, Button, Text, Spinner } from 'native-base';
 import PropTypes from 'prop-types';
 import {
   RefreshControl,
@@ -30,7 +30,6 @@ class TicketList extends Component {
     this.state = {
       isLoading: true,
       modalVisible: false,
-      modalTransfer: false,
       counter: 0
     };
   }
@@ -52,9 +51,26 @@ class TicketList extends Component {
     this.setState({ modalVisible: visible });
   };
 
-  setModalTransfer = (visible, id) => {
-    this.setState({ modalTransfer: visible });
-    this.handleChangeInput('user_ticket_id', id);
+  updateCounter() {
+    this.setState({ counter: this.state.counter + 1 });
+  }
+
+  renderError() {
+    return (
+      <View style={[ styles.errorContent, styles.card, { width: '95%', height: 100 } ]}>
+        <Text style={styles.errorText}>{strings.order.noTicket}</Text>
+        <Button
+          small
+          transparent
+          style={styles.refreshButton}
+          onPress={() => {
+            this.props.fetchUserTicket();
+          }}
+        >
+          <Text>{strings.order.refresh}</Text>
+        </Button>
+      </View>
+    );
   }
 
   renderTicketList() {
@@ -76,59 +92,27 @@ class TicketList extends Component {
                 }
               ]}
             >
-              <View style={ styles.transferSection }>
-                <Text style={styles.text}>
-                  {strings.order.ticketNumber} {item.id}
-                </Text>
-                <Button
-                  small
-                  style={styles.button}
-                  onPress={() => this.setModalTransfer(true, item.id)}
-                >
-                  <Text style={styles.buttonText}>Transfer</Text>
-                  <Icons
-                    name="exchange"
-                    color="white"
-                    style={styles.iconTransfer}
-                  />
-                </Button> 
-              </View>
-              
+              <Text style={styles.text}>
+                {strings.order.ticketNumber} {item.id}
+              </Text>
+              {/* <Button
+                small
+                style={styles.button}
+                onPress={() => {
+                  Actions.attendeesList({ ticketId: item.id });
+                }}
+              >
+                <Text style={styles.buttonText}>Transfer</Text>
+                <Icons
+                  name="exchange"
+                  color="white"
+                />
+              </Button> */}
             </ListItem>
           );
         }}
       />
     );
-  }
-
-  renderError() {
-    return (
-      <View style={[ styles.errorContent, styles.card, { width: '95%', height: 100 } ]}>
-        <Text style={styles.errorText}>{strings.order.noTicket}</Text>
-        <Button
-          small
-          transparent
-          style={styles.refreshButton}
-          onPress={() => {
-            this.props.fetchUserTicket();
-          }}
-        >
-          <Text>{strings.order.refresh}</Text>
-        </Button>
-      </View>
-    );
-  }
-
-  updateCounter() {
-    this.setState({ counter: this.state.counter + 1 });
-  }
-
-  handleChangeInput = (field, value) => {
-    this.props.updateInputFields(field, value);
-  }
-
-  transferTicket = () => {
-    this.props.transferTicket(this.props.fields.receiver, this.props.fields.user_ticket_id, this.props.fields.password,() => this.setModalTransfer(false));
   }
 
   render() {
@@ -144,14 +128,12 @@ class TicketList extends Component {
 
     const { orders } = this.props;
 
-    // return (
-    //   <OrderList />
-    // );
+    return <OrderList />;
 
+    /*
     return (
       <ScrollView style={styles.container}>
-        {/* My order and redeem code */}
-        {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
               <Icons
@@ -185,10 +167,8 @@ class TicketList extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-        </View> */}
-
-        {/* Ticket Orders */}
-        {/* <TouchableOpacity onPress={() => Actions.newOrder()}>
+        </View>
+        <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
             <Icons
               name="ticket"
@@ -199,10 +179,8 @@ class TicketList extends Component {
               {strings.order.ticketOrder}
             </Text>
           </View>
-        </TouchableOpacity> */}
-
-        {/* Free pass */}
-        {/* <Text style={styles.free}> Or get free past by completing our partner offers </Text>
+        </TouchableOpacity>
+        <Text style={styles.free}> Or get free past by completing our partner offers </Text>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => this.setModalVisible(true)}>
             <View style={styles.card}>
@@ -224,10 +202,7 @@ class TicketList extends Component {
               <Text style={{ textAlign: 'center', fontSize: 12 }}>Register our free trial</Text>
             </View>
           </TouchableOpacity>
-        </View> */}
-
-        {/* Ticket List */}
-        <Content
+        </View>
           refreshControl={
             <RefreshControl
               refreshing={this.props.isGettingUserTicket}
@@ -239,9 +214,7 @@ class TicketList extends Component {
         >
           {this.props.fetchTicketStatus ? this.renderTicketList() : this.renderError()}
         </Content>
-
-        {/* Redeem Modal */}
-        {/* <Modal
+        <Modal
           animationType="fade"
           visible={this.state.modalVisible}
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
@@ -263,56 +236,9 @@ class TicketList extends Component {
               <Redeem />
             </View>
           </View>
-        </Modal> */}
-
-        {/* Authenticate Modal */}
-        <Modal
-          animationType='fade'
-          visible={ this.state.modalTransfer }
-          onRequestClose={() => this.setModalTransfer(!this.state.modalTransfer) }
-          transparent
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalComponent}>
-              <TouchableOpacity onPress={() => this.setModalTransfer(!this.state.modalTransfer)}>
-                <Icons name='close' style={{ alignSelf: 'flex-end', fontSize: 14 }}/>
-              </TouchableOpacity>
-              <Text style={styles.modalTitle}>Transfer Ticket</Text>
-              <View style={styles.inputItem}>
-                <Form>
-                  <Item floatingLabel >
-                    <Label>
-                      username receiver
-                    </Label>
-                    <Input
-                      onChangeText={text => this.handleChangeInput('receiver', text)}
-                    />
-                  </Item>
-                </Form>
-                <Form>
-                  <Item floatingLabel >
-                    <Label>
-                      your password
-                    </Label>
-                    <Input
-                      secureTextEntry
-                      onChangeText={text => this.handleChangeInput('password', text)}
-                    />
-                  </Item>
-                </Form>
-                <Button
-                  style={styles.buttonUpload}
-                  onPress={() => this.transferTicket()}
-                >
-                  <Text style={styles.buttonText1}>Transfer</Text>
-                </Button>
-              </View>
-            </View>
-            <View style={{ flex: this.state.onKeyboardShow ? 0.15 : 0.325 }} />
-          </View>
         </Modal>
       </ScrollView>
-    );
+    ); */
   }
 }
 
@@ -328,8 +254,7 @@ const mapStateToProps = createStructuredSelector({
   isGettingUserTicket: selectors.getIsFetchingTicket(),
   fetchTicketStatus: selectors.getFetchingUserTicketStatus(),
   orders: getOrders(),
-  pendingOrders: getPendingOrders(),
-  fields: selectors.getFields()
+  pendingOrders: getPendingOrders()
 });
 
 function mapDispatchToProps(dispatch) {

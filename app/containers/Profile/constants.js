@@ -4,3 +4,6 @@ export const UPDATE_AVATAR = 'app/containers/Profile/UPDATE_AVATAR';
 export const UPDATE_IS_AVATAR_UPDATED = 'app/containers/Profile/UPDATE_IS_AVATAR_UPDATED';
 export const UPDATE_IS_LOG_OUT = 'app/containers/Profile/UPDATE_IS_LOG_OUT';
 export const UPDATE_IS_DISABLED = 'app/containers/Profile/UPDATE_IS_DISABLED';
+export const UPDATE_REFERAL_CODE = 'app/containers/Profile/UPDATE_REFERAL_CODE';
+export const UPDATE_IS_CODE_CONFIRMED = 'app/containers/Profile/UPDATE_IS_CODE_CONFIRMED';
+export const UPDATE_HAVE_REFERED = 'app/containers/Profile/UPDATE_HAVE_REFERED';
