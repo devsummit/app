@@ -5,7 +5,7 @@ import {
   Text,
   Spinner
 } from 'native-base';
-import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Alert, Image, ScrollView, TouchableOpacity, AsyncStorage, TextInput, Form } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -30,17 +30,20 @@ class Profile extends Component {
   state = {
     id: null,
     isLoading: true,
-    points: null
+    points: null,
+    referal: null,
+    disabled: null
   }
   componentWillMount() {
-
     getProfileData().then((profileData) => {
+      console.log('PROFILEDTATATATATA', profileData);
       if (profileData) {
         if (profileData.points === null) {
           this.props.updateFields('points', 0);
         } else {
-            this.props.updateFields('points', profileData.points);
-          }
+          this.props.updateFields('points', profileData.points);
+        }
+        this.setHaveRefered('haveRefered', profileData.have_refered);
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
@@ -54,6 +57,7 @@ class Profile extends Component {
       }
       this.setState({
         isLoading: false,
+        referal: profileData.referal
       });
     });
     AsyncStorage.getItem('role_id')
@@ -64,7 +68,6 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-
     if (prevProps.isProfileUpdated !== this.props.isProfileUpdated) {
       Alert.alert('Success', 'Profile has been changed');
       this.props.updateIsProfileUpdated(false);
@@ -75,10 +78,19 @@ class Profile extends Component {
       this.props.updateIsAvatarUpdated(false);
     }
 
+    if (prevProps.isCodeConfirmed !== this.props.isCodeConfirmed) {
+      Alert.alert('Your code is confirmed', 'You can not redeem referal code again ');
+      this.props.updateIsCodeConfirmed(false);
+    }
+
     if (prevProps.isLogOut !== this.props.isLogOut) {
       Actions.main();
       this.props.updateIsLogOut(false);
     }
+  }
+
+  setHaveRefered = (value) => {
+    this.props.updateHaveRefered(value);
   }
 
   handleInputChange = (field, value) => {
@@ -87,6 +99,20 @@ class Profile extends Component {
 
   handleUpdateAvatar = (value) => {
     this.props.updateAvatar(value);
+  }
+
+  handleInputReferal = (value) => {
+    if (value === this.state.referal) {
+      Toast.show("You can't refer your own code");
+      this.setState({ disabled: true })
+    } else {
+      this.setState({ disabled: false })
+      this.props.updateReferalCode(value);
+    }
+  }
+
+  confirmReferal = () => {
+    this.props.confirmReferalCode(this.props.codeReferal);
   }
 
   uploadImage = () => {
@@ -104,7 +130,8 @@ class Profile extends Component {
     // destructure state
     const booth = this.state.id === 3;
     const speaker = this.state.id === 4;
-    const { fields, isDisabled, avatar, errorFields } = this.props || {};
+    const { fields, isDisabled, avatar, errorFields, codeReferal, haveRefered } = this.props || {};
+    //console.log("PROPSSSS", this.props);
     const {
       firstName,
       lastName,
@@ -129,10 +156,25 @@ class Profile extends Component {
               />
             </TouchableOpacity>
             <Text style={styles.username}>{username}</Text>
+            <Text style={[ styles.username, { fontSize: 13 } ]}> Your code : {this.state.referal} </Text>
             <TouchableOpacity style={styles.iconWrapper} onPress={() => { this.props.disabled(); }}>
               <Icon name={'edit'} size={24} color={isDisabled ? '#3F51B5' : '#BDBDBD'} />
             </TouchableOpacity>
             <View style={styles.section2}>
+              {/* Referal Input */}
+              { true ? <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', marginBottom: 10 }}>
+                <InputItem
+                  style={[ styles.inputReferal, { flex: 1 } ]}
+                  title={strings.profile.lastName}
+                  placeholder="Referal Code"
+                  disabled={!!isDisabled}
+                  onChangeText={(text) => { this.handleInputReferal(text); }}
+                  underlineColorAndroid="transparent"
+                />
+                <TouchableOpacity style={styles.buttonReferal} onPress={() => this.confirmReferal()} disabled={this.state.disabled}>
+                  <Text style={styles.textReferal}>CONFIRM</Text>
+                </TouchableOpacity>
+              </View> : <View />}
               <InputItem
                 itemStyle={styles.item}
                 style={styles.input}
@@ -163,7 +205,7 @@ class Profile extends Component {
                 maxLength={255}
                 multiline
               />
-              : <View />}
+                : <View />}
               {speaker ? <InputItem
                 itemStyle={styles.item}
                 style={styles.inputInfo}
@@ -176,7 +218,7 @@ class Profile extends Component {
                 maxLength={255}
                 multiline
               />
-              : <View />}
+                : <View />}
               {booth ? <InputItem
                 itemStyle={styles.item}
                 style={styles.inputInfo}
@@ -211,6 +253,8 @@ class Profile extends Component {
  *  Map redux state to component props
  */
 const mapStateToProps = createStructuredSelector({
+  haveRefered: selectors.getHaveRefered(),
+  codeReferal: selectors.getReferal(),
   fields: selectors.getFields(),
   isProfileUpdated: selectors.getIsProfileUpdated(),
   avatar: selectors.getAvatar(),
