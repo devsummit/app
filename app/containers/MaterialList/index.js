@@ -13,7 +13,7 @@ import {
   Body,
   Fab
 } from 'native-base';
-import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal, WebView } from 'react-native';
+import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal, WebView, Linking } from 'react-native';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -23,7 +23,7 @@ import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
 import strings from '../../localization';
 import FlagMaterial from './FlagMaterial';
-import { getRoleId } from '../../helpers';
+import { getRoleId, getProfileData } from '../../helpers';
 import HeaderPoint from '../../components/Header';
 import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
@@ -38,16 +38,23 @@ class MaterialList extends Component {
       invisible: false,
       isLoading: true,
       modalVisible: false,
-      url: '',
       roleId: null
     };
   }
 
   componentWillMount() {
-    this.props.fetchMaterialList();
-    getRoleId().then((roleId) => {
-      this.setState({ roleId });
-    });
+    if (typeof this.props.speakerId === 'undefined'){
+      getProfileData()
+        .then((profileData) => {
+          console.log("profiulenjdfsnakjno", profileData)
+          this.props.fetchMaterialList(profileData.speaker.id);
+        });
+    }
+    this.props.fetchMaterialList(this.props.speakerId);
+    getRoleId()
+      .then((roleId) => {
+        this.setState({ roleId });
+      });
   }
 
   componentWillReceiveProps(prevProps) {
@@ -63,8 +70,8 @@ class MaterialList extends Component {
   }
 
   getSingleLink(url) {
-    this.setState({ url });
     this.setModalVisible(true);
+    Linking.openURL(url);
   }
 
 
@@ -123,8 +130,7 @@ class MaterialList extends Component {
   }
 
   render() {
-    const { material, inputFields, id } = this.props;
-    console.log("MATERIALLL", material);
+    const { material, inputFields, speakerId } = this.props;
     const WEBVIEW_REF = 'webview';
     return (
       <Container>
@@ -170,7 +176,7 @@ class MaterialList extends Component {
                                 <View style={styles.materialUrl}>
                                   <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => (this.getSingleLink(data.material))}>
+                                <TouchableOpacity onPress={() => this.getSingleLink(data.material)}>
                                   <Text>Download</Text>
                                 </TouchableOpacity>
                               </View>
@@ -195,34 +201,6 @@ class MaterialList extends Component {
             onModalPress={this.setModal}
             fileName={this.state.fileName}
           />
-          {/* Vebview Modal */}
-          <Modal
-            animationType={'slide'}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
-          >
-            <View style={{ flex: 1 }}>
-              <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
-                <TouchableOpacity onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}
-                >
-                  <Icons name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
-                </TouchableOpacity>
-              </View>
-              <WebView
-                automaticallyAdjustContentInsets={false}
-                source={{ uri: this.state.url }}
-                style={{ marginTop: 20 }}
-                scalesPageToFit={this.state.scalesPageToFit}
-                ref={WEBVIEW_REF}
-                decelerationRate="normal"
-                javaScriptEnabled
-                domStorageEnabled
-                startInLoadingState
-              />
-            </View>
-          </Modal>
         </Content>
         {this.state.roleId === 4 ?
           <Fab
