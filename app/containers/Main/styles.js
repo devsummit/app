@@ -1,8 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-const styles = StyleSheet.create({
+const window = Dimensions.get('window');
+
+export const IMAGE_HEIGHT = window.width / 2;
+export const IMAGE_HEIGHT_SMALL = window.width / 5;
+
+export default StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   background: {
     flex: 1,
@@ -12,13 +19,15 @@ const styles = StyleSheet.create({
   logo: {
     flex: 0.7,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   formSection: {
-    flex: 2,
     marginTop: 2,
-    marginRight: 18,
-    marginLeft: 16
+    marginHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 5,
+    width: window.width - 30
   },
   formInput: {
     paddingLeft: 20,
@@ -35,8 +44,8 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 4,
+    marginBottom: 4,
     borderWidth: 1,
     backgroundColor: '#FFA726',
     borderColor: 'transparent',
@@ -48,8 +57,8 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 4,
+    marginBottom: 4,
     flexDirection: 'row',
     flex: 1,
     height: 50
@@ -71,19 +80,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginRight: 24,
     alignSelf: 'center',
-    flex: 7
+    flex: 7,
+    fontSize: 12
   },
   lineSection: {
     position: 'relative',
     flex: 1,
     flexDirection: 'row',
-    margin: 12
+    margin: 8,
+    backgroundColor: 'transparent'
   },
   lineTextThree: {
     flex: 2,
     backgroundColor: '#FFFFFF',
     height: 1.5,
-    marginTop: 12
+    marginTop: 8
   },
   lineTextFour: {
     textAlign: 'center',
@@ -91,10 +102,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF'
   },
   item: {
-    marginBottom: 10,
+    marginBottom: 8,
     borderColor: '#FFD740',
     borderWidth: 2
   }
 });
-
-export default styles;

@@ -30,7 +30,8 @@ import {
   BackHandler,
   KeyboardAvoidingView,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  WebView
 } from 'react-native';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -124,6 +125,7 @@ String.prototype.toDateFromDatetime = function() {
 const mapStateToProps = () =>
   createStructuredSelector({
     isFetching: selectors.getIsFetchingFeeds(),
+    isFetchingMore: selectors.getIsFetchingMore(),
     feeds: selectors.getFetchFeeds(),
     links: selectors.getFeedsLinks(),
     isPosting: selectors.getIsPostingFeed(),
@@ -159,7 +161,9 @@ class Feed extends Component {
       shareTwitter: {
         message: '',
         url: null
-      }
+      },
+      modalWebView: false,
+      link: ''
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -194,6 +198,11 @@ class Feed extends Component {
 
   setModalReport = (visible) => {
     this.setState({ modalReport: visible });
+  };
+
+  setModalWebView = (visible, link) => {
+    this.setState({ modalWebView: visible});
+    this.state.link = link;
   };
 
   postFeed = (callback) => {
@@ -256,7 +265,7 @@ class Feed extends Component {
     } else {
         urlTwitter = _url;
     }
-    
+
     shareTwitter.message = _message;
     shareTwitter.url = urlTwitter;
     share.message = _message;
@@ -303,6 +312,7 @@ class Feed extends Component {
   };
 
   render() {
+    console.log('landing here this.props', this.props);
     return (
       <Container style={styles.container}>
         <View
@@ -344,7 +354,7 @@ class Feed extends Component {
           >
             <Content style={{ backgroundColor: '#E0E0E0' }}>
               {this.props.isFetching ? (
-                <Spinner color="yellow" />
+                <Spinner color="#FF8B00" />
               ) : (
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
@@ -363,13 +373,13 @@ class Feed extends Component {
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
-                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                  <Thumbnail source={{ uri: item.user.attachment || '' }} />
                                   <Body>
                                     <Text>
-                                      {item.user.first_name} {item.user.last_name}
+                                      {item.user.name}
                                     </Text>
                                     <Text note>
-                                      <IconSimpleLine name="globe" />sponsored
+                                      <IconSimpleLine name="globe" /> sponsored
                                     </Text>
                                   </Body>
                                 </Left>
@@ -379,7 +389,7 @@ class Feed extends Component {
                                   <Text style={{ marginBottom: 8 }}>{item.message}</Text>
                                   <TouchableOpacity
                                     style={{ alignSelf: 'center' }}
-                                    onPress={() => this.setModalVisible(true, item.attachment)}
+                                    onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
                                     <Image
                                       source={{ uri: item.attachment }}
@@ -502,7 +512,9 @@ class Feed extends Component {
                       />
                     )}
                     {this.props.links.next && this.props.feeds.length > 0 ? (
-                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                      this.props.isFetchingMore ? (
+                        <Spinner color="#FF8B00" />
+                      ) :
                         <Card>
                           <CardItem>
                             <Body
@@ -512,11 +524,12 @@ class Feed extends Component {
                                 justifyContent: 'space-around'
                               }}
                             >
-                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              <TouchableOpacity onPress={this.fetchNextFeeds}>
+                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              </TouchableOpacity>
                             </Body>
                           </CardItem>
                         </Card>
-                      </TouchableOpacity>
                     ) : (
                       <View />
                     )}
@@ -583,6 +596,26 @@ class Feed extends Component {
             </View>
           </View>
         </Modal>
+        {/* Modal WebView */}
+        <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalWebView}
+              onRequestClose={() => {this.setModalWebView(!this.state.modalWebView, null)}}
+              >
+              <View style={{flex:1}}>
+              <WebView
+                ref={'webview'}
+                automaticallyAdjustContentInsets={false}
+                source={{uri: this.state.link}}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                decelerationRate="normal"
+                startInLoadingState={true}
+                scalesPageToFit={this.state.scalesPageToFit}
+              />
+              </View>
+            </Modal>
         {/* Modal for create new feeds post */}
         <Modal
           animationType={'fade'}
@@ -801,6 +834,7 @@ Feed.PropTypes = {
   updateText: func,
   postFeeds: func,
   isFetching: bool,
+  isFetchingMore: bool,
   imagesData: object,
   feeds: array,
   textData: string,

@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   searchHeader: {
-    marginTop: 20,
     backgroundColor: 'rgb(255,255,255)',
     marginBottom: 8,
     elevation: 5

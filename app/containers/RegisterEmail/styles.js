@@ -1,6 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-const styles = StyleSheet.create({
+const window = Dimensions.get('window');
+
+export const IMAGE_HEIGHT = window.width / 2;
+export const IMAGE_HEIGHT_SMALL = window.width / 5;
+
+export default StyleSheet.create({
   container: {
     flex: 1
   },
@@ -10,7 +15,7 @@ const styles = StyleSheet.create({
     height: undefined
   },
   logo: {
-    flex: 0.7,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -35,9 +40,11 @@ const styles = StyleSheet.create({
     flex: 9
   },
   formSection: {
-    marginTop: 8,
-    marginRight: 18,
-    marginLeft: 16
+    marginTop: 2,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 5,
+    width: window.width - 30
   },
   formInput: {
     paddingLeft: 20,
@@ -77,5 +84,3 @@ const styles = StyleSheet.create({
     fontSize: 18
   }
 });
-
-export default styles;
