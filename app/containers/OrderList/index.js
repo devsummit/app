@@ -80,7 +80,7 @@ class OrderList extends Component {
 
     Share.open({
       title: "Devsummit invitation",
-      message: `${firstName} ${lastName} has invited you to Devsummit. Please download https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${referal} as referal code on register.`,
+      message: `Check out the biggest event for programmer in 21-23 November 2017. Download the apps https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${referal} as referal code to collect points for free ticket. Cheers!`,
       subject: "Devsummit invitation"
     });
   }
