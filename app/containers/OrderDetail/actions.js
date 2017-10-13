@@ -1,5 +1,5 @@
-import { Actions } from 'react-native-router-flux';
 import { Platform } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 /*

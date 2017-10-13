@@ -197,6 +197,7 @@ class OrderDetail extends Component {
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+
     const WEBVIEW_REF = 'webview';
     if (
       isUpdating ||
