@@ -35,7 +35,7 @@ import * as Progress from 'react-native-progress';
 import Bounceable from "react-native-bounceable";
 import PulseLoader from 'react-native-pulse-loader';
 
-
+import LoadingScreen from '../../components/LoadingScreen';
 import AuthLogo from '../../components/AuthLogo';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
@@ -227,28 +227,7 @@ class Main extends Component {
                     visible={isLoading}
                     onRequestClose={() => {this.setModalVisibleAnimation(false)}}
                     >
-                    <Image source={background} style={styles.background}>
-                    <View style={{margin: 150}}>
-                      <View style={{
-                          flex: 0,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <Bounceable
-                          onPress={()=>{this.onPress}}
-                          level={1.5}>
-                          <Animated.Image
-                            source={Aiken}
-                            style={{ 
-                              height: this.imageHeight,
-                            }}
-                            resizeMode="contain"
-                          />
-                        </Bounceable>
-                        <Progress.Bar indeterminate={true} width={200} />
-                      </View>
-                    </View>
-                  </Image>
+                    <LoadingScreen/>
                   </Modal>
 
                 <View style={styles.lineSection}>
