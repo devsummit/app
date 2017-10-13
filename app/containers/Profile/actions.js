@@ -8,7 +8,10 @@ import {
   UPDATE_AVATAR,
   UPDATE_IS_AVATAR_UPDATED,
   UPDATE_IS_LOG_OUT,
-  UPDATE_IS_DISABLED
+  UPDATE_IS_DISABLED,
+  UPDATE_REFERAL_CODE,
+  UPDATE_IS_CODE_CONFIRMED,
+  UPDATE_HAVE_REFERED
 } from './constants';
 import local from '../../../config/local';
 
@@ -60,6 +63,27 @@ export function updateIsDisabled(status) {
   };
 }
 
+export function updateReferalCode(value) {
+  return {
+    type: UPDATE_REFERAL_CODE,
+    value
+  };
+}
+
+export function updateIsCodeConfirmed(status) {
+  return {
+    type: UPDATE_IS_CODE_CONFIRMED,
+    status
+  };
+}
+
+export function updateHaveRefered(value) {
+  return {
+    type: UPDATE_HAVE_REFERED,
+    value
+  };
+}
+
 export function updateDataStorage(resp) {
   getProfileData().then(() => {
     const newData = JSON.stringify(resp.data);
@@ -86,11 +110,49 @@ export function updateDataStorage2(resp) {
   });
 }
 
+export function confirmReferalCode(value) {
+  console.log("VALLLL", value);
+  return (dispatch) => {
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.post(
+          '/api/v1/referals/submit',
+          {
+            referal: value
+          },
+          {
+            headers: {
+              Authorization: token
+            }
+          }
+        )
+          .then((response) => {
+            console.log("REOSKPS", response.data);
+            if (
+              response &&
+              response.data &&
+              response.data.meta.success &&
+              response.data.meta.message === 'Data retrieved succesfully'
+            ) {
+              dispatch(updateHaveRefered(response.data.have_refered))
+              Alert.alert('Your code is confirmed', 'You can refer another code');
+            } else {
+              Alert.alert('Failed', 'Payload is invalid');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+  };
+}
+
 export function changeProfile() {
   return (dispatch, getState) => {
     const { fields } = getState()
       .get('profile')
       .toJS();
+    console.log('FIELDSSSSS', fields);
     const { username, firstName, lastName, profilePic, boothInfo, job, summary, points } = fields;
 
     getAccessToken().then((token) => {
@@ -156,14 +218,14 @@ export function updateImage(image) {
 
       DevSummitAxios.post(
         '/api/v1/user/photo',
-          form,
+        form,
         {
           headers: {
             Authorization: token
           }
         }
       )
-        .then(resp => {
+        .then((resp) => {
           // resp.json();
           console.log('landing here updateImage resp', resp);
           console.log('landing here resp', resp);
