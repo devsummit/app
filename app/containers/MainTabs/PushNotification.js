@@ -103,9 +103,6 @@ export default class PushNotification extends Component {
     });
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
       // do some component related stuff
-      if (this.state.appState === 'active') {
-        Alert.alert(notif.fcm.body);
-      }
     });
   }
 
