@@ -136,6 +136,12 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#FFFFFF',
     fontSize: 20
+  },
+  iconFab: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#FFFFFF'
   }
 });
 
