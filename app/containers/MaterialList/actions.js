@@ -54,15 +54,14 @@ export function isFetchingMaterial(status) {
   };
 }
 
-export function fetchMaterialList() {
+export function fetchMaterialList(id) {
   return (dispatch) => {
     dispatch(isFetchingMaterial(true));
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/documents', { headers })
+        DevSummitAxios.get(`api/v1/speaker/${id}/documents`, { headers })
           .then((response) => {
-            console.log("RESSSSS", response);
             dispatch({
               type: FETCH_MATERIAL_LIST,
               payloads: response.data.data
@@ -70,7 +69,6 @@ export function fetchMaterialList() {
             dispatch(isFetchingMaterial(false));
           })
           .catch((err) => {
-            console.log("ERRRRRR", err)
             Toast.show("error speaker not found");
             dispatch(isFetchingMaterial(false));
           });
