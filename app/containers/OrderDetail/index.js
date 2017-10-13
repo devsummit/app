@@ -440,8 +440,9 @@ class OrderDetail extends Component {
               />
             </View>
           </Modal>
-          {this.state.imagePreview !== ''
-            ?
+          {/* Button Upload Image Verification */}
+          {included.payment.payment_type !== 'paypal' && included.payment ? 
+            this.state.imagePreview !== '' ?
             <View>
               <Image
                 source={{ uri: this.state.imagePreview }}
@@ -451,11 +452,10 @@ class OrderDetail extends Component {
               <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
                 <Text>Reupload Image Verification</Text>
               </Button>
-            </View>  
-            :
+            </View> :
             <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
               <Text>Update Image Verification</Text>
-            </Button>}
+            </Button> : <View />}
         </Content>
       </Container>
     );
