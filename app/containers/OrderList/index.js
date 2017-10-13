@@ -117,7 +117,7 @@ class OrderList extends Component {
                 </TouchableOpacity>
                 <View style={{ flex: 8, alignItems: 'center' }}>
                   <Text style={{ fontSize: 15, color: '#000000', marginBottom:8 }}>Invite friends to get free pass!</Text>
-                  <Text style={{ fontSize: 12, marginBottom: 4 }}>{this.state.referalCount} of 10</Text>
+                  <Text style={{ fontSize: 12, marginBottom: 4 }}>{this.props.redeemCount} of 10</Text>
                   <ProgressBar borderRadius={0} progress={this.props.redeemCount / 10} width={width * 0.5} />
                   <Text onPress={() => this.invite()} style={{ color: '#FFFFFF', marginTop: 8, paddingVertical: 4, paddingHorizontal: 8, backgroundColor: 'skyblue', fontWeight: 'bold' }}>Invite</Text>
                 </View>
