@@ -1,5 +1,6 @@
 import Toast from 'react-native-simple-toast';
-import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
+import { DevSummitAxios, getAccessToken } from '../../helpers';
+import { updateDataStorage } from '../Profile/actions';
 /*
  * import constants
  */
@@ -9,29 +10,42 @@ import {
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
   PENDING_ORDERS,
-  REDEEM_COUNTER,
-  SUBMIT_REFERAL
+  REDEEM_COUNTER
 } from './constants';
 
 export function redeemCounter() {
-  // getProfileData().then((value) => {
-  const value = 3;
-  return {
-    type: REDEEM_COUNTER,
-    value: 10 - value
+  return (dispatch) => {
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.get('/api/v1/me', {
+        headers: { Authorization: accessToken }
+      }).then((profile) => {
+        const value = profile.data.data.referal_count;
+        dispatch({
+          type: REDEEM_COUNTER,
+          value
+        });
+        dispatch(updateDataStorage(profile.data));
+      });
+    });
   };
-  // });
 }
 
 export function submitReferal() {
   return (dispatch) => {
     getAccessToken().then((accessToken) => {
-      DevSummitAxios.post('/api/v1/freepass', { headers: { Authorization: accessToken } })
+      DevSummitAxios.post(
+        '/api/v1/referals/reward',
+        {},
+        {
+          headers: { Authorization: accessToken }
+        }
+      )
         .then((response) => {
-          const status = response.data.meta.success;
+          // console.log('RS', response);
+          const value = response.data.meta.success ? 11 : 0;
           dispatch({
-            type: SUBMIT_REFERAL,
-            status
+            type: REDEEM_COUNTER,
+            value
           });
           Toast.show(response.data.meta.message, Toast.LONG);
         })
