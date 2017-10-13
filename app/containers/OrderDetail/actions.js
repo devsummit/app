@@ -1,4 +1,6 @@
+import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 /*
  * import constants
@@ -24,6 +26,47 @@ export function updateIsUpdatingOrder(status) {
   };
 }
 
+export function orderVerification(user, order, image) {
+  console.log("USERID", user);
+  console.log("ORDERID", order);
+  console.log("IMAGEPATH", image);
+  return (dispatch) => {
+    getAccessToken().then((token) => {
+      const form = new FormData();
+
+      if (Platform.OS === 'ios' && image.sourceURL) {
+        form.append('payment_proof', {
+          uri: image.sourceURL,
+          type: image.mime,
+          name: image.filename
+        });
+      }
+
+      if (image.path) {
+        form.append('payment_proof', {
+          uri: image.path,
+          type: image.mime,
+          name: 'image.jpg'
+        });
+      }
+      form.append('user_id', user);
+      form.append('order_id', order);
+
+      const headers = { Authorization: token };
+
+      DevSummitAxios.post('/api/v1/order-verification', form, { headers })
+        .then((response) => {
+          console.log("RESPONSE", response);
+          Toast.show('Your order has been sent');
+        })
+        .catch((err) => {
+          Toast.show('Sorry, something went wrong');
+          console.log("ERROR", err);
+        });
+    });
+  };
+}
+
 export function getOrderDetail(orderId) {
   return (dispatch) => {
     dispatch(updateIsUpdatingOrder(true));
@@ -31,7 +74,7 @@ export function getOrderDetail(orderId) {
       DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
         headers: { Authorization: accessToken }
       }).then((response) => {
-        const data = response.data
+        const data = response.data;
         dispatch({ type: SET_ORDER, data });
         dispatch(updateIsUpdatingOrder(false));
       }).catch((err) => { console.log(err.response); });
