@@ -114,13 +114,12 @@ class BoothList extends Component {
                     <Redeem />
                   </View>
                   <Button
-                    primary
                     style={styles.btnModal}
                     onPress={() => {
                       this.setModalVisible(!this.state.modalVisible);
                     }}
                   >
-                    <Text style={{ color: '#FFF' }}>{strings.global.back}</Text>
+                    <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.global.back}</Text>
                   </Button>
                 </View>
               </View>
