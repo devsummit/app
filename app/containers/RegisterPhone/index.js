@@ -66,11 +66,15 @@ class RegisterPhone extends Component {
     }
     if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
       if (this.props.isRegistered.message.length > 0) {
+        const isFailed = this.props.isRegistered.title === 'Failed';
         Alert.alert(
           this.props.isRegistered.title,
           this.props.isRegistered.message,
           [
-            { text: strings.global.ok, onPress: this.props.isRegistered.title === 'Failed' ? () => { } : this.onAlertOk }
+            {
+              text: isFailed ? strings.global.ok : 'Login',
+              onPress: isFailed ? () => { } : this.onAlertOk
+            }
           ],
           { cancelable: false }
         );
