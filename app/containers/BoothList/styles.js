@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   btnModal: {
+    backgroundColor: '#9E9E9E',
     alignSelf: 'center',
-    borderRadius: 20,
-    width: '70%',
+    width: '50%',
     marginLeft: 'auto',
     marginRight: 'auto',
     justifyContent: 'center',
-    marginTop: 10
+    marginTop: 20
   },
   content: {
     flex: 1,
