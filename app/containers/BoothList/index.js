@@ -12,7 +12,7 @@ import {
   Icon,
   Input
 } from 'native-base';
-import { View, Image, Text, Alert, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Image, Text, Alert, Modal, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -29,7 +29,8 @@ const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
 class BoothList extends Component {
   state = {
     modalVisible: false,
-    boothFilter: this.props.booth
+    boothFilter: this.props.booth,
+    url: 'https://api.devsummit.io/static/prospectous.pdf'
   }
 
 
@@ -60,6 +61,10 @@ class BoothList extends Component {
     this.setState({
       boothFilter: filteredBooth
     });
+  }
+
+  getProspectusFile = () => {
+    Linking.openURL(this.state.url);
   }
 
   render() {
@@ -102,9 +107,18 @@ class BoothList extends Component {
                     <Text style={{ fontSize: 16 }}>
                       {strings.booth.info}{'\n'}{strings.booth.find}
                     </Text>
-                    <View style={{ margin: 20 }}>
-                      <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}>Fajar Adityo</Text>
+                    <View style={{ margin: 20, alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Fajar Adityo</Text>
                       <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
+                      <Text style={{ marginVertical: 12}}>OR</Text>
+                      <TouchableOpacity
+                        style={styles.btnDownload}
+                        onPress={() => {
+                          this.getProspectusFile();
+                        }}
+                      >
+                        <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.global.download}</Text>
+                      </TouchableOpacity>
                     </View>
                     <Text style={{ fontSize: 16 }}>
                       {strings.booth.alreadyRegister}
