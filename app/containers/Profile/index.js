@@ -36,8 +36,7 @@ class Profile extends Component {
   }
   componentWillMount() {
     getProfileData().then((profileData) => {
-      console.log('PROFILEDTATATATATA', profileData);
-      if (profileData) {
+       if (profileData) {
         if (profileData.points === null) {
           this.props.updateFields('points', 0);
         } else {
@@ -131,7 +130,6 @@ class Profile extends Component {
     const booth = this.state.id === 3;
     const speaker = this.state.id === 4;
     const { fields, isDisabled, avatar, errorFields, codeReferal, haveRefered } = this.props || {};
-    //console.log("PROPSSSS", this.props);
     const {
       firstName,
       lastName,
@@ -162,7 +160,7 @@ class Profile extends Component {
             </TouchableOpacity>
             <View style={styles.section2}>
               {/* Referal Input */}
-              { true ? <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', marginBottom: 10 }}>
+              { haveRefered === 0 ? <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', marginBottom: 10 }}>
                 <InputItem
                   style={[ styles.inputReferal, { flex: 1 } ]}
                   title={strings.profile.lastName}
