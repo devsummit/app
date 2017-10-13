@@ -15,14 +15,16 @@ import {
   Col,
   List,
   ListItem,
+  Fab,
   Spinner
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal } from 'react-native';
+import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
 import strings from '../../localization';
 import { PRIMARYCOLOR, MERCHANT_CODE } from '../../constants';
@@ -30,7 +32,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDate, expiryDate, transactionStatus } from '../../helpers';
+import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
 
 let total = 0;
 class OrderDetail extends Component {
@@ -42,11 +44,16 @@ class OrderDetail extends Component {
       orderStatus: '',
       color: '',
       modalVisible: false,
-      scalesPageToFit: true
+      scalesPageToFit: true,
+      imagePreview: '',
+      userId: ''
     };
   }
 
   componentWillMount = () => {
+    getProfileData().then((profileData) => {
+      this.setState({ userId: profileData.id });
+    });
     this.props.getOrderDetail(this.props.orderId);
   };
 
@@ -170,6 +177,23 @@ class OrderDetail extends Component {
     });
   };
 
+  uploadImage = () => {
+    ImagePicker.openPicker({
+      height: 1000,
+      width: 700,
+      cropping: true,
+      includeBase64: true
+    })
+      .then((image) => {
+        const path = image.path
+        this.setState({ imagePreview: path });
+        this.props.orderVerification(this.state.userId, this.props.orderId, path);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
@@ -263,13 +287,15 @@ class OrderDetail extends Component {
                 renderRow={item => (
                   <View>
                     {this.state.status === 'not paid' ? (
-                      <TicketType
-                        key={item.id}
-                        count={item.count}
-                        ticket={item.ticket}
-                        onAdd={() => this.increase(item.id)}
-                        onReduce={() => this.decrease(item.id)}
-                      />
+                      <View>
+                        <TicketType
+                          key={item.id}
+                          count={item.count}
+                          ticket={item.ticket}
+                          onAdd={() => this.increase(item.id)}
+                          onReduce={() => this.decrease(item.id)}
+                        />
+                      </View>
                     ) : (
                       <TicketDetail key={item.id} count={item.count} ticket={item.ticket} />
                     )}
@@ -278,6 +304,16 @@ class OrderDetail extends Component {
               />
             </Content>
           }
+          <Card>
+            <CardItem>
+              <Body>
+                <Text>{strings.order.total}</Text>
+              </Body>
+              <Right>
+                <Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
+              </Right>
+            </CardItem>
+          </Card>
           {order.included.payment &&
           order.included.payment.payment_type === 'cstore' &&
           order.included.payment.fraud_status ? (
@@ -295,17 +331,6 @@ class OrderDetail extends Component {
               <View />
             )}
 
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>{strings.order.total}</Text>
-              </Body>
-              <Right>
-                <Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
-              </Right>
-            </CardItem>
-          </Card>
-
           {order.included.payment &&
           order.included.payment.payment_type !== 'cstore' &&
           this.state.status !== 'paid' ? (
@@ -313,13 +338,13 @@ class OrderDetail extends Component {
                 <CardItem>
                 <View style={{ alignItems: 'center' }}>
                     <Text>
-                    {strings.order.instruction1} Rp{' '}
-                    {Intl.NumberFormat('id').format(this.getTotal())} {strings.order.instruction2}{' '}
-                    {this.capitalizeEachWord(
+                      {strings.order.instruction1} Rp{' '}
+                      {Intl.NumberFormat('id').format(this.getTotal())} {strings.order.instruction2}{' '}
+                      {this.capitalizeEachWord(
                         order.included.payment.payment_type.split('_').join(' ')
                       )}{' '}
-                    {strings.order.instruction3}{' '}
-                  </Text>
+                      {strings.order.instruction3}{' '}
+                    </Text>
 
                     {this.checkPaymentType()}
 
@@ -381,6 +406,7 @@ class OrderDetail extends Component {
             ) : (
               <View />
             )}
+          {/* Modal webview */}
           <Modal
             animationType={'slide'}
             visible={this.state.modalVisible}
@@ -414,6 +440,22 @@ class OrderDetail extends Component {
               />
             </View>
           </Modal>
+          {this.state.imagePreview !== ''
+            ?
+            <View>
+              <Image
+                source={{ uri: this.state.imagePreview }}
+                resizeMode={'contain'}
+                style={styles.image}
+              />
+              <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                <Text>Reupload Image Verification</Text>
+              </Button>
+            </View>  
+            :
+            <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+              <Text>Update Image Verification</Text>
+            </Button>}
         </Content>
       </Container>
     );
