@@ -49,9 +49,8 @@ class Payment extends Component {
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
   payWithPaypal() {
-    const {order} = this.props;
-    console.log('order', order);
-    this.props.payWithPaypal(order);
+    const {order, payWithPaypal} = this.props;
+    payWithPaypal(order);
   }
 
   render() {
@@ -70,6 +69,7 @@ class Payment extends Component {
       <Container style={styles.container}>
         <Content>
           <Text style={styles.littleText}>{strings.payment.method}</Text>
+          {/* @Deprecated: Remove this soon */}
           {/* <View style={styles.pickerWrapper}>
             <Picker
               style={styles.picker}

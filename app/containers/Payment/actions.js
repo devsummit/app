@@ -1,12 +1,16 @@
+import PayPal from 'react-native-paypal';
+
 /*
  * import constants
  */
-
 import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD
 } from './constants';
-import PayPal from 'react-native-paypal';
+
+/*
+ * import Paypal Constants
+ */
 import {
   PAYPAL_CLIENT_ID,
   PAYPAL_CURRENCY,
@@ -39,8 +43,11 @@ export function updateErrorFields(field, value) {
   };
 }
 
+/*
+ * Initiate payment with PayPal
+ * @param {order: order data}
+ */
 export function payWithPaypal(order) {
-  console.log({order, PAYPAL_RATE});
   return (dispatch) => {
       PayPal.paymentRequest({
         clientId: PAYPAL_CLIENT_ID,
