@@ -78,6 +78,7 @@ export function updateIsCodeConfirmed(status) {
 }
 
 export function updateHaveRefered(value) {
+  console.log("JSFE$", value)
   return {
     type: UPDATE_HAVE_REFERED,
     value
@@ -111,7 +112,6 @@ export function updateDataStorage2(resp) {
 }
 
 export function confirmReferalCode(value) {
-  console.log("VALLLL", value);
   return (dispatch) => {
     getAccessToken()
       .then((token) => {
@@ -127,7 +127,6 @@ export function confirmReferalCode(value) {
           }
         )
           .then((response) => {
-            console.log("REOSKPS", response.data);
             if (
               response &&
               response.data &&
@@ -135,6 +134,7 @@ export function confirmReferalCode(value) {
               response.data.meta.message === 'Data retrieved succesfully'
             ) {
               dispatch(updateHaveRefered(response.data.have_refered))
+              dispatch(updateDataStorage(response.data));
               Alert.alert('Your code is confirmed', 'You can refer another code');
             } else {
               Alert.alert('Failed', 'Payload is invalid');
