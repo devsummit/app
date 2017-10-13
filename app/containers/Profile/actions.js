@@ -1,5 +1,5 @@
 import { AsyncStorage, Platform, Alert } from 'react-native';
-
+import Toast from 'react-native-simple-toast';
 import FormData from 'FormData';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import {
@@ -78,7 +78,7 @@ export function updateIsCodeConfirmed(status) {
 }
 
 export function updateHaveRefered(value) {
-  console.log("JSFE$", value)
+  console.log('JSFE$', value);
   return {
     type: UPDATE_HAVE_REFERED,
     value
@@ -113,37 +113,36 @@ export function updateDataStorage2(resp) {
 
 export function confirmReferalCode(value) {
   return (dispatch) => {
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.post(
-          '/api/v1/referals/submit',
-          {
-            referal: value
-          },
-          {
-            headers: {
-              Authorization: token
-            }
+    getAccessToken().then((token) => {
+      DevSummitAxios.post(
+        '/api/v1/referals/submit',
+        {
+          referal: value
+        },
+        {
+          headers: {
+            Authorization: token
           }
-        )
-          .then((response) => {
-            if (
-              response &&
-              response.data &&
-              response.data.meta.success &&
-              response.data.meta.message === 'Data retrieved succesfully'
-            ) {
-              dispatch(updateHaveRefered(response.data.have_refered))
-              dispatch(updateDataStorage(response.data));
-              Alert.alert('Your code is confirmed', 'You can refer another code');
-            } else {
-              Alert.alert('Failed', 'Payload is invalid');
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
+        }
+      )
+        .then((response) => {
+          if (
+            response &&
+            response.data &&
+            response.data.meta.success &&
+            response.data.meta.message === 'Data retrieved succesfully'
+          ) {
+            dispatch(updateHaveRefered(response.data.have_refered));
+            dispatch(updateDataStorage(response.data));
+            Toast.show('Your code is confirmed, you can not refer another code');
+          } else {
+            Alert.alert('Failed', 'Payload is invalid');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   };
 }
 
