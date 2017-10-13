@@ -78,7 +78,6 @@ export function fetchMaterialList(id) {
 
 export function updateStatus(data, key) {
   return (dispatch) => {
-
     getAccessToken()
       .then((token) => {
         DevSummitAxios.patch(`/api/v1/documents/${data.id}`, {
@@ -93,7 +92,7 @@ export function updateStatus(data, key) {
           if (response && response.data && response.data.meta.success) {
             dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
           }
-        }).catch((error) => { console.log(error); });
+        }).catch((error) => { Toast.show("Error", error); });
       });
   };
 }
@@ -123,7 +122,7 @@ export function saveMaterialList(data) {
 
           }).catch((err) => {
 
-              console.log(err);
+            Toast.show("Error", err);
 
           });
       });
@@ -145,7 +144,7 @@ export function deleteMaterialList(id) {
 
           })
           .catch((err) => {
-            console.log(err);
+            Toast.show("Error", err);
           });
       });
   };
