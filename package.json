@@ -15,6 +15,7 @@
     "moment": "^2.18.1",
     "native-base": "^2.3.1",
     "prop-types": "^15.5.10",
+    "qs": "^6.5.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.4",
     "react-native-code-push": "^5.1.0-beta",
