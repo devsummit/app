@@ -50,6 +50,7 @@ class ScheduleDetail extends Component {
     const hasSpeaker = !(Object.keys(speaker).length === 0 && speaker.constructor === Object);
     const hasUser = user.length > 0;
     const type = this.props.event.type;
+    const speakerId = speaker.id;
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -114,7 +115,7 @@ class ScheduleDetail extends Component {
           {type === 'speaker' ?
             <Card>
               <CardItem>
-                <MaterialList />
+                <MaterialList speakerId={speakerId}/>
               </CardItem>
             </Card>
             : <View />}
