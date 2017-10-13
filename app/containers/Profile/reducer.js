@@ -9,6 +9,7 @@ import {
   UPDATE_IS_PROFILE_UPDATED,
   UPDATE_AVATAR,
   UPDATE_IS_AVATAR_UPDATED,
+  IS_LOADING_LOGOUT,
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED,
   UPDATE_REFERAL_CODE,
@@ -36,6 +37,7 @@ const initialState = fromJS({
   isAvatarUpdated: false,
   isDisabled: true,
   isProfileUpdated: false,
+  isLoading: false,
   isLogOut: false,
   isCodeConfirmed: false
 });
@@ -56,6 +58,8 @@ function profileReducer(state = initialState, action) {
       return state.set('avatar', action.value);
     case UPDATE_IS_AVATAR_UPDATED:
       return state.set('isAvatarUpdated', action.status);
+    case IS_LOADING_LOGOUT:
+      return state.set('isLoading', action.status);
     case UPDATE_IS_LOG_OUT:
       return state.set('isLogOut', action.status);
     case UPDATE_IS_DISABLED:

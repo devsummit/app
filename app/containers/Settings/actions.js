@@ -7,6 +7,7 @@ import {
   UPDATE_IS_PROFILE_UPDATED,
   UPDATE_AVATAR,
   UPDATE_IS_AVATAR_UPDATED,
+  IS_LOADING_LOGOUT,
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED
 } from './constants';
@@ -43,6 +44,13 @@ export function updateAvatar(value) {
 export function updateIsAvatarUpdated(status) {
   return {
     type: UPDATE_IS_AVATAR_UPDATED,
+    status
+  };
+}
+
+export function isLoadingLogout(status) {
+  return {
+    type: IS_LOADING_LOGOUT,
     status
   };
 }
@@ -150,9 +158,12 @@ export function disabled() {
 
 export function logOut() {
   return async (dispatch, getState) => {
+    dispatch(isLoadingLogout(true));
+
     const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
     await AsyncStorage.multiRemove(keys);
     dispatch(restoreCurrentPage());
+    dispatch(isLoadingLogout(false));
     dispatch(updateIsLogOut(true));
   };
 }
