@@ -1,6 +1,8 @@
 import { Component } from 'react';
 
-import { Platform, AppState, AsyncStorage, Alert } from 'react-native';
+import { Platform, AppState, AsyncStorage } from 'react-native';
+
+import Toast from 'react-native-simple-toast';
 
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
 
@@ -103,6 +105,9 @@ export default class PushNotification extends Component {
     });
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
       // do some component related stuff
+      if (this.state.appState === 'active') {
+        Toast.show(notif.fcm.body);
+      }
     });
   }
 
