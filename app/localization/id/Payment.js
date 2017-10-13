@@ -18,5 +18,6 @@ export default {
   digitsNumber: '16 digit nomor kartu',
   lastDigitsNumber: '10 digit terakhir',
   totalAmount: 'Jumlah total',
-  submitPayment: 'Bayar'
+  submitPayment: 'Bayar',
+  payWithPaypal: 'Bayar dengan PayPal'
 };

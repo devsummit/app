@@ -18,5 +18,6 @@ export default {
   digitsNumber: '16 digits card number',
   lastDigitsNumber: 'Last 10 digits',
   totalAmount: 'Total amount',
-  submitPayment: 'Submit payment'
+  submitPayment: 'Submit payment',
+  payWithPaypal: 'Pay with PayPal'
 };

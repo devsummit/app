@@ -5,6 +5,10 @@ const config = require('../config/local').default;
 
 export const API_BASE_URL = config.API_BASE_URL;
 export const MIDTRANS_CLIENT_KEY = config.MIDTRANS_CLIENT_KEY;
+export const PAYPAL_CLIENT_ID = config.PAYPAL_CLIENT_ID;
+export const PAYPAL_CURRENCY = config.PAYPAL_CURRENCY;
+export const PAYPAL_RATE = config.PAYPAL_RATE;
+
 
 // TODO MERCHANT CODE FOR DEVELOPMENT
 export const MERCHANT_CODE = config.MIDTRANS_MERCHANT_ID;

@@ -11,5 +11,9 @@ export default {
 
   GOOGLE_CALLBACK_URL: 'http://localhost/google',
   GOOGLE_CLIENT_ID: '1091376735288-sgpfaq0suha3qakagrsig7bee58enkqr.apps.googleusercontent.com',
-  GOOGLE_CLIENT_SECRET: 'ZdbNXvmMTy9dcAK8oW-3QPOj'
+  GOOGLE_CLIENT_SECRET: 'ZdbNXvmMTy9dcAK8oW-3QPOj',
+
+  PAYPAL_CLIENT_ID: 'Ac-Ikn76GlVB5tFLwMoFYEl9FGumrB7NYdkicE5bd7Q_QfWmnKDyK_ZlZ7mFB-MlENIQR1fTvcj1Ivdv',
+  PAYPAL_CURRENCY: 'USD',
+  PAYPAL_RATE: Math.pow(10, 4),
 };

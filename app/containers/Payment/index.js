@@ -20,7 +20,6 @@ import strings from '../../localization';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
-import PayPal from 'react-native-paypal';
 
 
 let bankList = [];
@@ -46,18 +45,13 @@ class Payment extends Component {
         return data.payment_type === value;
       });
       this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
-    }
+    };
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }
   payWithPaypal() {
-    PayPal.paymentRequest({
-      clientId: 'Ac-Ikn76GlVB5tFLwMoFYEl9FGumrB7NYdkicE5bd7Q_QfWmnKDyK_ZlZ7mFB-MlENIQR1fTvcj1Ivdv',
-      environment: 'Sandbox',
-      price: '40',
-      currency: 'USD',
-      description: 'Paypal Test'
-    }).then(response => console.log(response))
-    .catch(error => console.log(error))
+    const {order} = this.props;
+    console.log('order', order);
+    this.props.payWithPaypal(order);
   }
 
   render() {
@@ -76,49 +70,6 @@ class Payment extends Component {
       <Container style={styles.container}>
         <Content>
           <Text style={styles.littleText}>{strings.payment.method}</Text>
-          <View style={styles.pickerWrapper}>
-            <Picker
-              style={styles.picker}
-              mode="dropdown"
-              selectedValue={paymentType}
-              onValueChange={value => this.handleInputChange('paymentType', value)}
-            >
-              {PAYMENT_METHODS.map(component => (
-                <Item key={component.value} label={component.label} value={component.payment_type} />
-              ))}
-            </Picker>
-          </View>
-          {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
-            <View>
-              <Text style={styles.littleText}>{strings.payment.bank}</Text>
-              <View style={styles.pickerWrapper}>
-                <Picker
-                  style={styles.picker}
-                  placeholder="Bank"
-                  mode="dropdown"
-                  selectedValue={bankDestination}
-                  onValueChange={value => this.handleInputChange('bankDestination', value)}
-                >
-                  {bankList.map(component => (
-                    <Item
-                      key={component.value}
-                      label={component.label}
-                      value={component.bankDestination}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            </View> : <View />}
-          <Button
-            style={styles.button}
-            onPress={() => {
-              Actions.paymentDetail({ order });
-            }}
-          >
-            <Text>
-              {strings.payment.goToPaymentDetail}
-            </Text>
-          </Button>
           <Button
             style={styles.button}
             onPress={() => {
@@ -126,7 +77,7 @@ class Payment extends Component {
             }}
           >
             <Text>
-              Pay using Paypal
+              {strings.payment.payWithPaypal}
             </Text>
           </Button>
         </Content>
