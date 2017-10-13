@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     justifyContent: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   roundButton: {
     borderRadius: 90,
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   artwork: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     height,
-    marginTop: '-25%'
+    marginTop: '-50%'
   },
   artworkText: {
     fontSize: 16,

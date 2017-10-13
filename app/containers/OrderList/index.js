@@ -1,28 +1,50 @@
 import React, { Component } from 'react';
-import { Container, Content, List, Spinner, Button } from 'native-base';
+import { Container, Content, List, Spinner, Button, Card } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, Text, Image } from 'react-native';
+import { RefreshControl, Alert, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import ProgressBar from 'react-native-progress/Bar';
 import { connect } from 'react-redux';
+import Share from 'react-native-share';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import strings from '../../localization';
+import { getProfileData } from './../../helpers';
 import OrderItem from '../../components/OrderItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
+
+const { width } = Dimensions.get('window');
 
 const noTicket = require('./../../../assets/images/noticket.png');
 
 class OrderList extends Component {
   state = {
     selectedOrder: '',
-    isLoading: true
-  };
+    isLoading: true,
+    referal: '',
+    haveRefered: 0,
+    referalCount: 0,
+    firstName: '',
+    lastName: ''
+  }
 
   componentWillMount() {
     this.props.getOrderList();
+
+    getProfileData()
+      .then((data) => {
+        this.setState({
+          firstName: data.first_name,
+          lastName: data.last_name,
+          referal: data.referal,
+          haveRefered: data.have_refered,
+          referalCount: data.referal_count
+        })
+      })
+      .catch(err => console.log('Error getting data'));
   }
 
   componentWillReceiveProps(prevState) {
@@ -53,7 +75,19 @@ class OrderList extends Component {
     );
   };
 
+  invite = () => {
+    const { firstName, lastName, referal } = this.state;
+
+    Share.open({
+      title: "Devsummit invitation",
+      message: `${firstName} ${lastName} has invited you to Devsummit. Please download https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${referal} as referal code on register.`,
+      subject: "Devsummit invitation"
+    });
+  }
+
   render() {
+    const count = this.state.referalCount === 10;
+
     if (this.state.isLoading) {
       return (
         <Container>
@@ -65,40 +99,6 @@ class OrderList extends Component {
     }
     return (
       <Container style={styles.container}>
-        <View style={{ marginBottom: 10 }}>
-          {this.props.redeemCount > 10 ? null : (
-            <View>
-              <Button
-                disabled={!(this.props.redeemCount === 10)}
-                style={{
-                  width: '90%',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  marginTop: 6,
-                  marginBottom: 6,
-                  justifyContent: 'center'
-                }}
-                onPress={() => this.props.submitReferal()}
-              >
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    color: 'white'
-                  }}
-                >
-                  Redeem free pass
-                </Text>
-              </Button>
-              <Text style={{ textAlign: 'center', color: 'grey' }}>
-                {10 - this.props.redeemCount === 0
-                  ? 'You can redeem your free pass now!'
-                  : `${this.props.redeemCount < 0
-                    ? 0
-                    : this.props.redeemCount} referals left to get free pass on devsummit`}
-              </Text>
-            </View>
-          )}
-        </View>
         <Content
           refreshControl={
             <RefreshControl
@@ -107,7 +107,23 @@ class OrderList extends Component {
             />
           }
         >
-          {this.props.orders.length > 0 ? (
+          <View style={{ marginTop: 10, marginHorizontal: 10 }}>
+            <Card>
+              <View style={{ flex: 1, backgroundColor: '#CFD8DC', padding: 10, alignItems: 'center', flexDirection: 'row' }}>
+                <TouchableOpacity style={{ flex: 2, alignItems: 'center' }} disabled={!count} onPress={() => this.props.submitReferal()}>
+                  <Icon name="gift" style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }} />
+                  <Text style={{ fontSize: 20, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>CLAIM</Text>
+                </TouchableOpacity>
+                <View style={{ flex: 8, alignItems: 'center' }}>
+                  <Text style={{ fontSize: 15, color: '#000000', marginBottom:8 }}>Invite friends to get free pass!</Text>
+                  <Text style={{ fontSize: 12, marginBottom: 4 }}>{this.state.referalCount} of 10</Text>
+                  <ProgressBar borderRadius={0} progress={this.state.referalCount / 10} width={width * 0.5} />
+                  <Text onPress={() => this.invite()} style={{ color: '#FFFFFF', marginTop: 8, paddingVertical: 4, paddingHorizontal: 8, backgroundColor: 'skyblue', fontWeight: 'bold' }}>Invite</Text>
+                </View>
+              </View>
+            </Card>
+          </View>
+          { this.props.orders.length > 0 ? (
             <List>
               {this.props.orders.map((order) => {
                 return (
