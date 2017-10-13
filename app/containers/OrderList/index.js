@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Content,
-  List,
-  Spinner
-} from 'native-base';
+import { Container, Content, List, Spinner, Button } from 'native-base';
 import PropTypes from 'prop-types';
 import { RefreshControl, Alert, View, Text, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -24,7 +19,7 @@ class OrderList extends Component {
   state = {
     selectedOrder: '',
     isLoading: true
-  }
+  };
 
   componentWillMount() {
     this.props.getOrderList();
@@ -33,7 +28,7 @@ class OrderList extends Component {
   componentWillReceiveProps(prevState) {
     const { isConfirming, isFetching } = this.props;
     this.setState({ isLoading: isConfirming || isFetching });
-    if ((prevState.orders !== this.props.orders)) {
+    if (prevState.orders !== this.props.orders) {
       this.setState({
         isLoading: false
       });
@@ -47,11 +42,16 @@ class OrderList extends Component {
       'Confirm payment Order : '.concat(props.id),
       [
         { text: strings.global.cancel },
-        { text: strings.global.confirm, onPress: () => { this.props.confirmPayment(props.payment.id, idx); } }
+        {
+          text: strings.global.confirm,
+          onPress: () => {
+            this.props.confirmPayment(props.payment.id, idx);
+          }
+        }
       ],
       { cancelable: false }
     );
-  }
+  };
 
   render() {
     if (this.state.isLoading) {
@@ -65,6 +65,36 @@ class OrderList extends Component {
     }
     return (
       <Container style={styles.container}>
+        <View style={{ marginBottom: 10 }}>
+          {!this.props.redeemstatus ? (
+            <View>
+              <Button
+                disabled={!(this.props.redeemCount === 10)}
+                style={{
+                  width: '90%',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  marginTop: 6,
+                  marginBottom: 6,
+                  justifyContent: 'center'
+                }}
+                onPress={() => this.props.submitReferal()}
+              >
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    color: 'white'
+                  }}
+                >
+                  Redeem free pass
+                </Text>
+              </Button>
+              <Text style={{ textAlign: 'center', color: 'grey' }}>
+                {`${this.props.redeemCount} referals left to get free pass on devsummit`}
+              </Text>
+            </View>
+          ) : null}
+        </View>
         <Content
           refreshControl={
             <RefreshControl
@@ -73,7 +103,7 @@ class OrderList extends Component {
             />
           }
         >
-          { this.props.orders.length > 0 ? (
+          {this.props.orders.length > 0 ? (
             <List>
               {this.props.orders.map((order) => {
                 return (
@@ -113,7 +143,9 @@ OrderList.propTypes = {
 const mapStateToProps = createStructuredSelector({
   orders: selectors.getOrders(),
   isFetching: selectors.getIsFetchingOrders(),
-  isConfirming: selectors.getIsConfirmingPayment()
+  isConfirming: selectors.getIsConfirmingPayment(),
+  redeemCount: selectors.getRedeemCode(),
+  redeemstatus: selectors.getReedemStatus()
 });
 
 export default connect(mapStateToProps, actions)(OrderList);

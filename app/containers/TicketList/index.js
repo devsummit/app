@@ -51,6 +51,28 @@ class TicketList extends Component {
     this.setState({ modalVisible: visible });
   };
 
+  updateCounter() {
+    this.setState({ counter: this.state.counter + 1 });
+  }
+
+  renderError() {
+    return (
+      <View style={[ styles.errorContent, styles.card, { width: '95%', height: 100 } ]}>
+        <Text style={styles.errorText}>{strings.order.noTicket}</Text>
+        <Button
+          small
+          transparent
+          style={styles.refreshButton}
+          onPress={() => {
+            this.props.fetchUserTicket();
+          }}
+        >
+          <Text>{strings.order.refresh}</Text>
+        </Button>
+      </View>
+    );
+  }
+
   renderTicketList() {
     return (
       <List
@@ -93,28 +115,6 @@ class TicketList extends Component {
     );
   }
 
-  renderError() {
-    return (
-      <View style={[ styles.errorContent, styles.card, { width: '95%', height: 100 } ]}>
-        <Text style={styles.errorText}>{strings.order.noTicket}</Text>
-        <Button
-          small
-          transparent
-          style={styles.refreshButton}
-          onPress={() => {
-            this.props.fetchUserTicket();
-          }}
-        >
-          <Text>{strings.order.refresh}</Text>
-        </Button>
-      </View>
-    );
-  }
-
-  updateCounter() {
-    this.setState({ counter: this.state.counter + 1 });
-  }
-
   render() {
     if (this.state.isLoading) {
       return (
@@ -128,13 +128,11 @@ class TicketList extends Component {
 
     const { orders } = this.props;
 
-    return (
-      <OrderList />
-    );
+    return <OrderList />;
 
+    /*
     return (
       <ScrollView style={styles.container}>
-        {/* My order and redeem code */}
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
@@ -171,7 +169,6 @@ class TicketList extends Component {
           </TouchableOpacity>
         </View>
 
-        {/* Ticket Orders */}
         <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
             <Icons
@@ -185,7 +182,6 @@ class TicketList extends Component {
           </View>
         </TouchableOpacity>
 
-        {/* Free pass */}
         <Text style={styles.free}> Or get free past by completing our partner offers </Text>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => this.setModalVisible(true)}>
@@ -210,8 +206,6 @@ class TicketList extends Component {
           </TouchableOpacity>
         </View>
 
-        {/* Ticket List */}
-        <Content
           refreshControl={
             <RefreshControl
               refreshing={this.props.isGettingUserTicket}
@@ -224,7 +218,6 @@ class TicketList extends Component {
           {this.props.fetchTicketStatus ? this.renderTicketList() : this.renderError()}
         </Content>
 
-        {/* Redeem Modal */}
         <Modal
           animationType="fade"
           visible={this.state.modalVisible}
@@ -249,7 +242,7 @@ class TicketList extends Component {
           </View>
         </Modal>
       </ScrollView>
-    );
+    ); */
   }
 }
 
