@@ -1,5 +1,6 @@
 package io.devsummit.app.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
@@ -21,5 +22,12 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       Fabric.with(this, new Crashlytics());
+    }
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainApplication.PAY_PAL_REQUEST_ID) {
+            MainApplication.getPaypalPackage().handleActivityResult(requestCode, resultCode, data); // <--
+        }
     }
 }

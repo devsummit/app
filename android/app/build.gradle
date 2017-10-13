@@ -175,6 +175,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-paypal')
     compile project(':react-native-localization')
     compile project(':react-native-vector-icons')
     compile project(':react-native-share')
