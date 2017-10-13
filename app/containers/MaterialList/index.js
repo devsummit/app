@@ -28,6 +28,8 @@ import styles from './styles';
 import * as selectors from './selectors';
 import * as actions from './actions';
 
+const noMaterial = require('./../../../assets/images/nomaterial.png');
+
 class MaterialList extends Component {
   constructor(props) {
     super(props);
@@ -141,16 +143,22 @@ class MaterialList extends Component {
                         </CardItem>
                       </Card>
                     ))}
-                  </Content> :
-                  <Button
-                    block
-                    rounded
-                    style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
-                    onPress={() => this.setState({ invisible: !this.state.invisible })}
-                  >
-                    <Text style={styles.buttonText}>{strings.material.upload}</Text>
-                  </Button>
-                )
+                    </Content> :
+                    <View style={{ marginTop: '40%', justifyContent: 'center', alignItems: 'center' }}>
+                      <Image
+                        source={noMaterial}
+                        style={styles.artworkImage}
+                      />
+                      <Text style={styles.artworkText}>You do not have any material item</Text>
+                      <Button
+                        block
+                        style={{ marginVertical: 20, alignSelf: 'center', backgroundColor: '#FFA726' }}
+                        onPress={() => this.setState({ invisible: !this.state.invisible })}
+                        >
+                          <Text style={styles.buttonText}>{strings.material.upload}</Text>
+                        </Button>
+                    </View>
+              )
           }
           <ModalComponent
             visible={this.state.invisible}

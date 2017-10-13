@@ -30,7 +30,8 @@ import {
   BackHandler,
   KeyboardAvoidingView,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  WebView
 } from 'react-native';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -49,7 +50,7 @@ import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
-import TicketList from '../TicketList';
+import OrderList from '../OrderList';
 import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
@@ -124,6 +125,7 @@ String.prototype.toDateFromDatetime = function() {
 const mapStateToProps = () =>
   createStructuredSelector({
     isFetching: selectors.getIsFetchingFeeds(),
+    isFetchingMore: selectors.getIsFetchingMore(),
     feeds: selectors.getFetchFeeds(),
     links: selectors.getFeedsLinks(),
     isPosting: selectors.getIsPostingFeed(),
@@ -159,14 +161,16 @@ class Feed extends Component {
       shareTwitter: {
         message: '',
         url: null
-      }
+      },
+      modalWebView: false,
+      link: ''
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
   }
 
   componentWillMount() {
-    this.props.fetchFeeds(this.props.currentPage);
+    this.props.setTokenHeader(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data').then((profile) => {
       const data = JSON.parse(profile);
@@ -194,6 +198,11 @@ class Feed extends Component {
 
   setModalReport = (visible) => {
     this.setState({ modalReport: visible });
+  };
+
+  setModalWebView = (visible, link) => {
+    this.setState({ modalWebView: visible });
+    this.state.link = link;
   };
 
   postFeed = (callback) => {
@@ -247,21 +256,21 @@ class Feed extends Component {
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
 
-    var urlTwitter = '';
-    let share = Object.assign({}, this.state.shareOptions);
-    let shareTwitter = Object.assign({}, this.state.shareTwitter);
+    let urlTwitter = '';
+    const share = Object.assign({}, this.state.shareOptions);
+    const shareTwitter = Object.assign({}, this.state.shareTwitter);
 
     if (_url === null) {
       urlTwitter = '';
     } else {
-        urlTwitter = _url;
+      urlTwitter = _url;
     }
-    
+
     shareTwitter.message = _message;
     shareTwitter.url = urlTwitter;
     share.message = _message;
     share.url = _url;
-    this.setState({ shareOptions: share, shareTwitter: shareTwitter });
+    this.setState({ shareOptions: share, shareTwitter });
   };
 
   alertRemoveFeed = (postId) => {
@@ -344,7 +353,7 @@ class Feed extends Component {
           >
             <Content style={{ backgroundColor: '#E0E0E0' }}>
               {this.props.isFetching ? (
-                <Spinner color="yellow" />
+                <Spinner color="#FF8B00" />
               ) : (
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
@@ -363,13 +372,11 @@ class Feed extends Component {
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
-                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                  <Thumbnail source={{ uri: item.user.attachment || '' }} />
                                   <Body>
-                                    <Text>
-                                      {item.user.first_name} {item.user.last_name}
-                                    </Text>
+                                    <Text>{item.user.name}</Text>
                                     <Text note>
-                                      <IconSimpleLine name="globe" />sponsored
+                                      <IconSimpleLine name="globe" /> sponsored
                                     </Text>
                                   </Body>
                                 </Left>
@@ -379,7 +386,7 @@ class Feed extends Component {
                                   <Text style={{ marginBottom: 8 }}>{item.message}</Text>
                                   <TouchableOpacity
                                     style={{ alignSelf: 'center' }}
-                                    onPress={() => this.setModalVisible(true, item.attachment)}
+                                    onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
                                     <Image
                                       source={{ uri: item.attachment }}
@@ -463,7 +470,9 @@ class Feed extends Component {
                                           borderRadius: 8
                                         }}
                                       >
-                                        <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.delete}
+                                        </Text>
                                       </View>
                                     </TouchableWithoutFeedback>
                                   ) : (
@@ -477,7 +486,9 @@ class Feed extends Component {
                                           borderRadius: 8
                                         }}
                                       >
-                                        <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.report}
+                                        </Text>
                                       </View>
                                     </TouchableWithoutFeedback>
                                   )}
@@ -502,7 +513,9 @@ class Feed extends Component {
                       />
                     )}
                     {this.props.links.next && this.props.feeds.length > 0 ? (
-                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                      this.props.isFetchingMore ? (
+                        <Spinner color="#FF8B00" />
+                      ) : (
                         <Card>
                           <CardItem>
                             <Body
@@ -512,11 +525,13 @@ class Feed extends Component {
                                 justifyContent: 'space-around'
                               }}
                             >
-                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              <TouchableOpacity onPress={this.fetchNextFeeds}>
+                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              </TouchableOpacity>
                             </Body>
                           </CardItem>
                         </Card>
-                      </TouchableOpacity>
+                      )
                     ) : (
                       <View />
                     )}
@@ -539,7 +554,7 @@ class Feed extends Component {
               </TabHeading>
             }
           >
-            <TicketList />
+            <OrderList />
             <Fab
               active={this.state.fabActive}
               style={{ backgroundColor: '#FF8B00' }}
@@ -547,11 +562,22 @@ class Feed extends Component {
               onPress={() => this.setState({ fabActive: !this.state.fabActive })}
             >
               <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => Actions.newOrder()}>
-                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+                <CameraIcon
+                  name="ticket"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => this.setModalRedeem(true)}>
-                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button
+                style={{ backgroundColor: '#FF8B00' }}
+                onPress={() => this.setModalRedeem(true)}
+              >
+                <CameraIcon
+                  name="gift"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
             </Fab>
           </Tab>
@@ -578,6 +604,28 @@ class Feed extends Component {
               </View>
               <Redeem />
             </View>
+          </View>
+        </Modal>
+        {/* Modal WebView */}
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalWebView}
+          onRequestClose={() => {
+            this.setModalWebView(!this.state.modalWebView, null);
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <WebView
+              ref={'webview'}
+              automaticallyAdjustContentInsets={false}
+              source={{ uri: this.state.link }}
+              javaScriptEnabled
+              domStorageEnabled
+              decelerationRate="normal"
+              startInLoadingState
+              scalesPageToFit={this.state.scalesPageToFit}
+            />
           </View>
         </Modal>
         {/* Modal for create new feeds post */}
@@ -634,9 +682,9 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                        <TouchableOpacity onPress={() => this.postFeed()}>
-                        <View
-                            style={{
+                      <TouchableOpacity onPress={() => this.postFeed()}>
+                          <View
+                          style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -645,12 +693,12 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                          >
-                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                        >
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                          </View>
-                      </TouchableOpacity>
+                        </View>
+                        </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
                           <View
@@ -798,6 +846,7 @@ Feed.PropTypes = {
   updateText: func,
   postFeeds: func,
   isFetching: bool,
+  isFetchingMore: bool,
   imagesData: object,
   feeds: array,
   textData: string,

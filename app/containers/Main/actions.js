@@ -160,18 +160,38 @@ export function loginMobile(mobileToken) {
           } catch (error) {
             console.log(error, 'error caught');
           }
-          dispatch(updateIsLogIn(true));
+          await dispatch(updateIsLogIn(true));
+          await dispatch(updateisLoading(false));
         } else if (
           !response.data.meta.success &&
           response.data.meta.message === 'username not found'
         ) {
-          Alert.alert('Login Failed', response.data.meta.message);
+          Alert.alert('Login Failed', response.data.meta.message, [
+            { text: 'Register',
+              onPress: () => {
+                Actions.registerPhone();
+                dispatch(updateisLoading(false));
+              }
+            },
+            { text: 'Cancel' }
+          ]);
         } else {
-          Alert.alert('Login Failed', response.data.meta.message);
+          Alert.alert('Login Failed', response.data.meta.message, [
+            { text: 'Cancel',
+              onPress: () => {
+                dispatch(updateisLoading(false));
+              }
+            },
+            { text: 'Register',
+              onPress: () => {
+                Actions.registerPhone();
+                dispatch(updateisLoading(false));
+              }
+            }
+          ]);
         }
       })
       .catch(err => console.log(err));
-    dispatch(updateisLoading(false));
   };
 }
 

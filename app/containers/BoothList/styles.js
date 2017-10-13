@@ -15,10 +15,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20
   },
-  btnModal: {
+  btnDownload: {
+    backgroundColor: '#F44336',
     alignSelf: 'center',
-    borderRadius: 20,
-    width: '70%',
+    padding: 15,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    justifyContent: 'center'
+  },
+  btnModal: {
+    backgroundColor: '#9E9E9E',
+    alignSelf: 'center',
+    width: '37%',
     marginLeft: 'auto',
     marginRight: 'auto',
     justifyContent: 'center',
@@ -30,7 +38,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   searchHeader: {
-    marginTop: 20,
     backgroundColor: 'rgb(255,255,255)',
     marginBottom: 8,
     elevation: 5
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
     height: 35,
     padding: 7,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   itemNameSection: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)'

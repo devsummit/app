@@ -113,7 +113,7 @@ export function register() {
       };
       DevSummitAxios.post('/auth/register', data).then((response) => {
         if (response && response.data.data && response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+          dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login.'));
         } else if (response.data.data !== null && !response.data.meta.success) {
           dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
         } else if (response.data.data === null && !response.data.meta.success) {
