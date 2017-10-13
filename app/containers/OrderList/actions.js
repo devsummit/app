@@ -41,7 +41,6 @@ export function submitReferal() {
         }
       )
         .then((response) => {
-          // console.log('RS', response);
           const value = response.data.meta.success ? 11 : 0;
           dispatch({
             type: REDEEM_COUNTER,
