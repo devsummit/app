@@ -41,7 +41,6 @@ class Profile extends Component {
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
-        console.log('profile data==', profileData);
         if (profileData.points === null) {
           this.props.updateFields('points', 0);
         } else {
