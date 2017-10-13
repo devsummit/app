@@ -6,7 +6,8 @@ import { fromJS } from 'immutable';
 
 import {
   UPDATE_SINGLE_INPUT_FIELD,
-  UPDATE_SINGLE_ERROR_FIELD
+  UPDATE_SINGLE_ERROR_FIELD,
+  IS_PAYING_WITH_PAYPAL
 } from './constants';
 
 
@@ -20,7 +21,8 @@ const initialState = fromJS({
   },
   errorFields: {
 
-  }
+  },
+  isPayingWithPaypal: false,
 });
 
 function registerPaymentReducer(state = initialState, action) {
@@ -30,6 +32,8 @@ function registerPaymentReducer(state = initialState, action) {
 
     case UPDATE_SINGLE_INPUT_FIELD:
       return state.setIn([ 'inputFields', action.field ], action.value);
+    case IS_PAYING_WITH_PAYPAL:
+      return state.set('isPayingWithPaypal', action.value);
 
     default:
       return state;

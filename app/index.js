@@ -7,6 +7,7 @@ import { Container, Content, Spinner } from 'native-base';
 import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
+import logger from 'redux-logger'
 import reducers from './reducers';
 
 // Style imports

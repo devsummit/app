@@ -7,7 +7,7 @@ import {
   Button,
   Text
 } from 'native-base';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 
@@ -36,6 +36,7 @@ class Payment extends Component {
       handleIconTouch:
       this.handleIconTouch
     });
+    this.props.resetState();
   }
 
   handleInputChange = (field, value) => {
@@ -54,7 +55,7 @@ class Payment extends Component {
   }
 
   render() {
-    const { inputFields, order } = this.props;
+    const { inputFields, order, paypalChecking } = this.props;
     const {
       paymentType,
       bankDestination
@@ -118,9 +119,11 @@ class Payment extends Component {
             onPress={() => {
               this.payWithPaypal();
             }}
+            disabled={paypalChecking}
           >
+            {paypalChecking && <ActivityIndicator color={'white'} />}
             <Text>
-              {strings.payment.payWithPaypal}
+              {paypalChecking ? strings.payment.checkingPayment : strings.payment.payWithPaypal}
             </Text>
           </Button>
         </Content>
@@ -135,7 +138,8 @@ Payment.propTypes = {
   updateInputFields: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   inputFields: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired
+  order: PropTypes.object.isRequired,
+  paypalChecking: PropTypes.bool.isRequired
 };
 
 /**
@@ -143,7 +147,8 @@ Payment.propTypes = {
  */
 const mapStateToProps = createStructuredSelector({
   inputFields: selectors.getInputFields(),
-  errorFields: selectors.getErrorFields()
+  errorFields: selectors.getErrorFields(),
+  paypalChecking: selectors.isPayingWithPaypal(),
 });
 
 export default connect(mapStateToProps, actions)(Payment);

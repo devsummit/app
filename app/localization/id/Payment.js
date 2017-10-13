@@ -19,5 +19,6 @@ export default {
   lastDigitsNumber: '10 digit terakhir',
   totalAmount: 'Jumlah total',
   submitPayment: 'Bayar',
-  payWithPaypal: 'Bayar dengan PayPal'
+  payWithPaypal: 'Bayar dengan PayPal',
+  checkingPayment: 'Checking Payment'
 };
