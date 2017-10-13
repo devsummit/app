@@ -66,7 +66,7 @@ class OrderList extends Component {
     return (
       <Container style={styles.container}>
         <View style={{ marginBottom: 10 }}>
-          {!this.props.redeemstatus ? (
+          {this.props.redeemCount > 10 ? null : (
             <View>
               <Button
                 disabled={!(this.props.redeemCount === 10)}
@@ -90,10 +90,14 @@ class OrderList extends Component {
                 </Text>
               </Button>
               <Text style={{ textAlign: 'center', color: 'grey' }}>
-                {`${this.props.redeemCount} referals left to get free pass on devsummit`}
+                {10 - this.props.redeemCount === 0
+                  ? 'You can redeem your free pass now!'
+                  : `${this.props.redeemCount < 0
+                    ? 0
+                    : this.props.redeemCount} referals left to get free pass on devsummit`}
               </Text>
             </View>
-          ) : null}
+          )}
         </View>
         <Content
           refreshControl={
