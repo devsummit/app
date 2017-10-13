@@ -17,6 +17,21 @@ export const getFields = () => createSelector(
   state => state.get('fields').toJS()
 );
 
+export const getHaveRefered = () => createSelector(
+  selectMainReducer(),
+  state => state.get('haveRefered')
+)
+
+export const getReferal = () => createSelector(
+  selectMainReducer(),
+  state => state.get('codeReferal')
+);
+
+export const getIsCodeUpdated = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isCodeUpdated')
+)
+
 export const getIsProfileUpdated = () => createSelector(
   selectMainReducer(),
   state => state.get('isProfileUpdated')
