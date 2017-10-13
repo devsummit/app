@@ -32,6 +32,11 @@ export const getIsAvatarUpdated = () => createSelector(
   state => state.get('isAvatarUpdated')
 );
 
+export const getIsLoading = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isLoading')
+);
+
 export const getIsLogOut = () => createSelector(
   selectMainReducer(),
   state => state.get('isLogOut')

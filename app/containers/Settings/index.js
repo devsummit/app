@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
 import { View, ScrollView, Image, TouchableWithoutFeedback, Modal, WebView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -72,7 +73,7 @@ class Settings extends Component {
   }
 
   render() {
-    const { fields, isDisabled, avatar, errorFields } = this.props || {};
+    const { fields, isDisabled, avatar, errorFields, isLoading } = this.props || {};
     const {
       firstName,
       lastName,
@@ -82,6 +83,7 @@ class Settings extends Component {
       summary,
       profilePic
     } = fields || '';
+    console.log('hahahaa', this.props);
     return (
       <Container>
         <Content>
@@ -128,7 +130,10 @@ class Settings extends Component {
                   style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
                   onPress={() => { this.props.logOut(); }}
                 >
-                  <Text>{strings.settings.logout}</Text>
+                  {isLoading ?
+                    <Spinner color="#FFFFFF" /> :
+                    <Text>{strings.settings.logout}</Text>
+                  }
                 </Button>
               </View>
             </Content>
@@ -172,6 +177,7 @@ const mapStateToProps = createStructuredSelector({
   avatar: selectors.getAvatar(),
   isAvatarUpdated: selectors.getIsAvatarUpdated(),
   isDisabled: selectors.getIsDisabled(),
+  isLoading: selectors.getIsLoading(),
   isLogOut: selectors.getIsLogOut()
 });
 
