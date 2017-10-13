@@ -50,10 +50,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
+
+      MainApplication.paypalPackage = new PayPalPackage(PAY_PAL_REQUEST_ID);
       return Arrays.asList(
           new MainReactPackage(),
-            MainApplication.getPaypalPackage(),
           new ReactNativeLocalizationPackage(),
+              MainApplication.getPaypalPackage(),
           new VectorIconsPackage(),
           new RNSharePackage(),
           new OAuthManagerPackage(),
@@ -75,7 +77,6 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-      MainApplication.paypalPackage = new PayPalPackage(getApplicationContext(), PAY_PAL_REQUEST_ID);
     SoLoader.init(this, /* native exopackage */ false);
   }
 }

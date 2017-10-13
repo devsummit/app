@@ -1,5 +1,4 @@
 PODS:
-  - CardIO (5.4.1)
   - Crashlytics (3.8.6):
     - Fabric (~> 1.6.3)
   - DCTAuth (3.0)
@@ -32,12 +31,6 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - PayPal-iOS-SDK (2.18.0):
-    - PayPal-iOS-SDK/CardIO (= 2.18.0)
-    - PayPal-iOS-SDK/Core (= 2.18.0)
-  - PayPal-iOS-SDK/CardIO (2.18.0):
-    - CardIO (~> 5.4.1)
-  - PayPal-iOS-SDK/Core (2.18.0)
   - Protobuf (3.4.0)
 
 DEPENDENCIES:
@@ -46,7 +39,6 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Core
   - FirebaseMessaging
-  - PayPal-iOS-SDK
 
 EXTERNAL SOURCES:
   DCTAuth:
@@ -58,7 +50,6 @@ CHECKOUT OPTIONS:
     :git: https://github.com/danielctull/DCTAuth.git
 
 SPEC CHECKSUMS:
-  CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
   DCTAuth: 8add154decd00335d62917828896bba790ce47fd
   Fabric: 2fb5676bc811af011a04513451f463dac6803206
@@ -69,9 +60,8 @@ SPEC CHECKSUMS:
   FirebaseMessaging: eaf1bfff0193170c04ea3ba3bfe983f68f893118
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  PayPal-iOS-SDK: 3fc74982a68d54eeaf39e09f507f279dc2291860
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
 
-PODFILE CHECKSUM: 2c13cdb4c3aeaa8faca06fcb907246709e2d6589
+PODFILE CHECKSUM: '08dec9b9451d37c82f7681752c081a2ab0a03dd7'
 
 COCOAPODS: 1.2.1

@@ -20,6 +20,7 @@ import strings from '../../localization';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
+import PayPal from 'react-native-paypal';
 
 
 let bankList = [];
@@ -47,6 +48,16 @@ class Payment extends Component {
       this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
     }
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
+  }
+  payWithPaypal() {
+    PayPal.paymentRequest({
+      clientId: 'Ac-Ikn76GlVB5tFLwMoFYEl9FGumrB7NYdkicE5bd7Q_QfWmnKDyK_ZlZ7mFB-MlENIQR1fTvcj1Ivdv',
+      environment: 'Sandbox',
+      price: '40',
+      currency: 'USD',
+      description: 'Paypal Test'
+    }).then(response => console.log(response))
+    .catch(error => console.log(error))
   }
 
   render() {
@@ -108,12 +119,16 @@ class Payment extends Component {
               {strings.payment.goToPaymentDetail}
             </Text>
           </Button>
-          {/* {
-            (this.props.inputFields.first_name.length !== 0 &&
-              this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?
-              this.renderLoginButton() :
-              this.renderErrorButton()
-          } */}
+          <Button
+            style={styles.button}
+            onPress={() => {
+              this.payWithPaypal();
+            }}
+          >
+            <Text>
+              Pay using Paypal
+            </Text>
+          </Button>
         </Content>
       </Container>
     );

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "mkdir -p $(pwd)/node_modules/react-native-paypal/ios/lib/Paypal && curl -L --progress https://github.com/paypal/PayPal-iOS-SDK/archive/2.18.0.tar.gz | tar -xz - -C $(pwd)/node_modules/react-native-paypal/ios/lib/Paypal --strip-components=1"
   },
   "dependencies": {
     "FormData": "^0.10.1",
@@ -28,7 +29,7 @@
     "react-native-linear-gradient": "^2.2.0",
     "react-native-localization": "^0.1.32",
     "react-native-oauth": "^2.2.0",
-    "react-native-paypal": "git+https://github.com/MattFoley/react-native-paypal",
+    "react-native-paypal": "git+https://github.com/refactory-id/react-native-paypal",
     "react-native-photo-grid": "0.0.2",
     "react-native-router-flux": "^4.0.0-beta.15",
     "react-native-share": "^1.0.21",

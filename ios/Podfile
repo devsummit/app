@@ -11,7 +11,6 @@ target 'app' do
     pod 'DCTAuth', :git => 'https://github.com/danielctull/DCTAuth.git'
     pod 'Fabric'
     pod 'Firebase/Core'
-    pod 'PayPal-iOS-SDK'
     pod 'FirebaseMessaging'
     pod 'Crashlytics'
     
