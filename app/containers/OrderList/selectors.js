@@ -23,3 +23,9 @@ export const getIsConfirmingPayment = () =>
 
 export const getPendingOrders = () =>
   createSelector(selectMainReducer(), state => state.get('pendingOrder'));
+
+export const getRedeemCode = () =>
+  createSelector(selectMainReducer(), state => state.get('redeemCounter'));
+
+export const getReedemStatus = () =>
+  createSelector(selectMainReducer(), state => state.get('redeemStatus'));
