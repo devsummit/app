@@ -154,19 +154,13 @@ export function updateImage(image) {
         });
       }
 
-      DevSummitAxios.post(
-        '/api/v1/user/photo',
-          form,
-        {
-          headers: {
-            Authorization: token
-          }
+      DevSummitAxios.post('/api/v1/user/photo', form, {
+        headers: {
+          Authorization: token
         }
-      )
-        .then(resp => {
+      })
+        .then((resp) => {
           // resp.json();
-          console.log('landing here updateImage resp', resp);
-          console.log('landing here resp', resp);
           updateDataStorage2(resp.data);
           dispatch(updateAvatar(resp.data.data.photos[0].url), updateIsAvatarUpdated(true));
         })
