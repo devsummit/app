@@ -86,7 +86,6 @@ class OrderList extends Component {
   }
 
   render() {
-    console.log('landing here', this.props);
     const count = this.props.redeemCount === 10;
 
     if (this.state.isLoading) {
@@ -110,16 +109,16 @@ class OrderList extends Component {
         >
           <View style={{ marginTop: 10, marginHorizontal: 10 }}>
             <Card>
-              <View style={{ flex: 1, backgroundColor: '#CFD8DC', padding: 10, alignItems: 'center', flexDirection: 'row' }}>
-                <TouchableOpacity style={{ flex: 2, alignItems: 'center' }} disabled={!count} onPress={() => this.props.submitReferal()}>
+              <View style={styles.card}>
+                <TouchableOpacity style={styles.buttonClaim} disabled={!count} onPress={() => this.props.submitReferal()}>
                   <Icon name="gift" style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }} />
                   <Text style={{ fontSize: 20, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>CLAIM</Text>
                 </TouchableOpacity>
-                <View style={{ flex: 8, alignItems: 'center' }}>
-                  <Text style={{ fontSize: 15, color: '#000000', marginBottom:8 }}>Invite friends to get free pass!</Text>
-                  <Text style={{ fontSize: 12, marginBottom: 4 }}>{this.props.redeemCount} of 10</Text>
+                <View style={styles.inviteField}>
+                  <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
+                  <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
                   <ProgressBar borderRadius={0} progress={this.props.redeemCount / 10} width={width * 0.5} />
-                  <Text onPress={() => this.invite()} style={{ color: '#FFFFFF', marginTop: 8, paddingVertical: 4, paddingHorizontal: 8, backgroundColor: 'skyblue', fontWeight: 'bold' }}>Invite</Text>
+                  <Text onPress={() => this.invite()} style={styles.invite}>Invite</Text>
                 </View>
               </View>
             </Card>

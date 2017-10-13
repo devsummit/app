@@ -44,6 +44,38 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center'
+  },
+  card: {
+    flex: 1,
+    backgroundColor: '#CFD8DC',
+    padding: 10,
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  buttonClaim: {
+    flex: 2,
+    alignItems: 'center'
+  },
+  inviteField: {
+    flex: 8,
+    alignItems: 'center'
+  },
+  inviteDesc: {
+    fontSize: 15,
+    color: '#000000',
+    marginBottom: 8
+  },
+  counterText: {
+    fontSize: 12,
+    marginBottom: 4
+  },
+  invite: {
+    color: '#FFFFFF',
+    marginTop: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: 'skyblue',
+    fontWeight: 'bold'
   }
 });
 
