@@ -16,7 +16,8 @@ import {
 import {
   PAYPAL_CLIENT_ID,
   PAYPAL_CURRENCY,
-  PAYPAL_RATE
+  PAYPAL_RATE,
+  PAYPAL_ENV
 } from '../../constants'
 
 /*
@@ -67,7 +68,7 @@ export function payWithPaypal(order) {
       dispatch(isPayingWithPaypal(true));
       PayPal.paymentRequest({
         clientId: PAYPAL_CLIENT_ID,
-        environment: PayPal.SANDBOX,
+        environment: PAYPAL_ENV,
         price: (order.amount / PAYPAL_RATE).toFixed(2).toString(),
         currency: PAYPAL_CURRENCY,
         description: 'Ticket for full 3-day event'

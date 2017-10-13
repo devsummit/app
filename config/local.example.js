@@ -1,3 +1,4 @@
+import PayPal from 'react-native-paypal';
 export default {
   API_BASE_URL: '',
   CLIENT_SECRET: 'supersecret',
@@ -16,4 +17,5 @@ export default {
   PAYPAL_CLIENT_ID: 'Ac-Ikn76GlVB5tFLwMoFYEl9FGumrB7NYdkicE5bd7Q_QfWmnKDyK_ZlZ7mFB-MlENIQR1fTvcj1Ivdv',
   PAYPAL_CURRENCY: 'USD',
   PAYPAL_RATE: Math.pow(10, 4),
+  PAYPAL_ENV: PayPal.SANDBOX,
 };
