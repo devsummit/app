@@ -135,7 +135,7 @@ class BoothList extends Component {
                   key={index}
                   onPress={() => {
                     Actions.boothInfo({
-                      title: 'Booth Info',
+                      title: data.name,
                       summary: data.summary,
                       user: data.user,
                       booth_photo: data.logo_url,

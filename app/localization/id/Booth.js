@@ -1,12 +1,12 @@
 export default {
-  title: 'Booth',
-  register: 'Mendaftar booth',
-  howto: 'Bagaimana cara mendaftarkan booth?',
+  title: 'Exhibitors',
+  register: 'Menjadi exhibitors',
+  howto: 'Bagaimana cara menjadi exhibitors?',
   info: 'Dengan mendaftar, Anda berhak mendapat satu petak eksekutif untuk menampilkan layanan Anda pada 4000 pengunjung Devsummit.',
-  find: 'Temukan cara mendaftar sebagai booth di narahubung:',
-  alreadyRegister: 'Apabila Anda sudah terdaftar, silahkan masukkan kode booth.',
+  find: 'Temukan cara mendaftar sebagai exhibitors di narahubung:',
+  alreadyRegister: 'Apabila Anda sudah terdaftar, silahkan masukkan kode.',
   more: 'Lihat detail',
-  imageChanged: 'Foto booth telah diperbaharui',
+  imageChanged: 'Foto exhibitors telah diperbaharui',
   errorImage: 'Gagal mengambil gambar',
-  search: 'Cari booth',
+  search: 'Cari exhibitors'
 };
