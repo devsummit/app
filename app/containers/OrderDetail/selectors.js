@@ -8,28 +8,20 @@ import { createSelector } from 'reselect';
  */
 const selectMainReducer = () => state => state.get('orderDetail');
 
+export const getTicketTypes = () =>
+  createSelector(selectMainReducer(), state => state.get('ticketTypes'));
 
-export const getTicketTypes = () => createSelector(
-  selectMainReducer(),
-  state => state.get('ticketTypes')
-);
+export const getOrder = () =>
+  createSelector(selectMainReducer(), state => state.get('order').toJS());
 
-export const getOrder = () => createSelector(
-  selectMainReducer(),
-  state => state.get('order').toJS()
-);
+export const getIsUpdatingOrder = () =>
+  createSelector(selectMainReducer(), state => state.get('isUpdatingOrder'));
 
-export const getIsUpdatingOrder = () => createSelector(
-  selectMainReducer(),
-  state => state.get('isUpdatingOrder')
-);
+export const getUpdateOrderStatus = () =>
+  createSelector(selectMainReducer(), state => state.get('updateOrderStatus'));
 
-export const getUpdateOrderStatus = () => createSelector(
-  selectMainReducer(),
-  state => state.get('updateOrderStatus')
-);
+export const getIsConfirmingPayment = () =>
+  createSelector(selectMainReducer(), state => state.get('isConfirmingPayment'));
 
-export const getIsConfirmingPayment = () => createSelector(
-  selectMainReducer(),
-  state => state.get('isConfirmingPayment')
-);
+export const getPaymentProof = () =>
+  createSelector(selectMainReducer(), state => state.get('imageUrl'));

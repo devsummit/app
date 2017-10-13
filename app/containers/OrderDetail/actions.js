@@ -1,4 +1,6 @@
 import { Actions } from 'react-native-router-flux';
+import { Platform } from 'react-native';
+import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 /*
  * import constants
@@ -10,7 +12,8 @@ import {
   IS_UPDATING_ORDER,
   UPDATE_ORDER_STATUS,
   IS_CONFIRMING_PAYMENT,
-  SET_CONFIRM_PAYMENT
+  SET_CONFIRM_PAYMENT,
+  SET_PAYMENT_PROOF
   // RESET_STATE
 } from './constants';
 
@@ -24,20 +27,68 @@ export function updateIsUpdatingOrder(status) {
   };
 }
 
+export function orderVerification(user, order, image) {
+  return (dispatch) => {
+    getAccessToken().then((token) => {
+      const form = new FormData();
+
+      if (Platform.OS === 'ios' && image.sourceURL) {
+        form.append('payment_proof', {
+          uri: image.sourceURL,
+          type: image.mime,
+          name: image.filename
+        });
+      }
+
+      if (image.path) {
+        form.append('payment_proof', {
+          uri: image.path,
+          type: image.mime,
+          name: 'image.jpg'
+        });
+      }
+      form.append('user_id', user);
+      form.append('order_id', order);
+
+      const headers = { Authorization: token };
+
+      DevSummitAxios.post('/api/v1/order-verification', form, { headers })
+        .then((response) => {
+          Toast.show(response.data.meta.message);
+        })
+        .catch((err) => {
+          Toast.show('Sorry, something went wrong');
+          console.log('ERROR', err);
+        });
+    });
+  };
+}
+
+export function setPaymentProof(value) {
+  return { type: SET_PAYMENT_PROOF, value };
+}
+
 export function getOrderDetail(orderId) {
   return (dispatch) => {
     dispatch(updateIsUpdatingOrder(true));
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
-        const data = response.data
-        dispatch({ type: SET_ORDER, data });
-        dispatch(updateIsUpdatingOrder(false));
-      }).catch((err) => { console.log(err.response); });
-    }).catch((error) => {
-      console.log(error);
-    });
+    getAccessToken()
+      .then((accessToken) => {
+        DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
+          headers: { Authorization: accessToken }
+        })
+          .then((response) => {
+            const data = response.data;
+            dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+            dispatch({ type: SET_ORDER, data });
+            dispatch(updateIsUpdatingOrder(false));
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 }
 
@@ -53,14 +104,25 @@ export function submitUpdateOrder(orders) {
     // dispatch(updateIsUpdatingOrder(true));
     orders.forEach((item, i) => {
       if (orders[i] !== undefined) {
-        getAccessToken().then((token) => {
-          DevSummitAxios.patch(`/api/v1/orders/${orders[i].order_id}/details/${orders[i].id}`, {
-            count: orders[i].count
-          }, {
-            headers: { Authorization: token }
-          }).then((response) => {
-          }).catch((err) => { console.log(err.response); });
-        }).catch((error) => { console.log(error); });
+        getAccessToken()
+          .then((token) => {
+            DevSummitAxios.patch(
+              `/api/v1/orders/${orders[i].order_id}/details/${orders[i].id}`,
+              {
+                count: orders[i].count
+              },
+              {
+                headers: { Authorization: token }
+              }
+            )
+              .then((response) => {})
+              .catch((err) => {
+                console.log(err.response);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     });
     // not working yet, need asynchronous loop
@@ -71,10 +133,11 @@ export function submitUpdateOrder(orders) {
   };
 }
 
-
 export function updateOrder(action, detaild) {
   return (dispatch, getState) => {
-    const { data } = getState().getIn([ 'orderDetail', 'order' ]).toJS();
+    const { data } = getState()
+      .getIn([ 'orderDetail', 'order' ])
+      .toJS();
     const ord = data.filter((item) => {
       return item.id === detaild;
     });
@@ -109,17 +172,25 @@ export function confirmPayment(id) {
   return (dispatch) => {
     dispatch(updateIsConfirmingPayment(true));
     getAccessToken().then((accessToken) => {
-      DevSummitAxios.patch(`/api/v1/payments/status/${id}`, {}, {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
-        if (response.data && response.data.data) {
-          dispatch({
-            type: SET_CONFIRM_PAYMENT,
-            payload: response.data.data
-          });
+      DevSummitAxios.patch(
+        `/api/v1/payments/status/${id}`,
+        {},
+        {
+          headers: { Authorization: accessToken }
         }
-        dispatch(updateIsConfirmingPayment(false));
-      }).catch((err) => { console.log('error here', err); });
+      )
+        .then((response) => {
+          if (response.data && response.data.data) {
+            dispatch({
+              type: SET_CONFIRM_PAYMENT,
+              payload: response.data.data
+            });
+          }
+          dispatch(updateIsConfirmingPayment(false));
+        })
+        .catch((err) => {
+          console.log('error here', err);
+        });
     });
   };
 }

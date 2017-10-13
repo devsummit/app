@@ -11,7 +11,8 @@ import {
   UPDATE_ORDER_STATUS,
   RESET_STATE,
   SET_CONFIRM_PAYMENT,
-  IS_CONFIRMING_PAYMENT
+  IS_CONFIRMING_PAYMENT,
+  SET_PAYMENT_PROOF
 } from './constants';
 
 /*
@@ -22,7 +23,8 @@ const initialState = fromJS({
   order: {},
   isUpdatingOrder: false,
   updateOrderStatus: '',
-  isConfirmingPayment: false
+  isConfirmingPayment: false,
+  imageUrl: ''
 });
 
 function orderDetailReducer(state = initialState, action) {
@@ -38,9 +40,14 @@ function orderDetailReducer(state = initialState, action) {
     case UPDATE_ORDER_STATUS:
       return state.set('updateOrderStatus', action.status);
     case SET_CONFIRM_PAYMENT:
-      return state.setIn([ 'order', 0, 'payment', 'transaction_status' ], action.payload.transaction_status);
+      return state.setIn(
+        [ 'order', 0, 'payment', 'transaction_status' ],
+        action.payload.transaction_status
+      );
     case IS_CONFIRMING_PAYMENT:
       return state.set('isConfirmingPayment', action.status);
+    case SET_PAYMENT_PROOF:
+      return state.set('imageUrl', action.value);
     case RESET_STATE:
       return initialState;
     default:

@@ -81,9 +81,10 @@ export function getOrderList() {
         })
           .then((response) => {
             if (response.data && response.data.meta.success) {
+              const validOrder = response.data.data.filter(item => item.payment);
               dispatch({
                 type: SET_ORDER_LIST,
-                data: response.data.data
+                data: validOrder
               });
               let pendingCounter = 0;
               response.data.data.map((order) => {
