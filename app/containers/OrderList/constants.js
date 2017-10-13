@@ -4,4 +4,3 @@ export const SET_CONFIRM_PAYMENT = 'app/containers/OrderList/SET_CONFIRM_PAYMENT
 export const IS_CONFIRMING_PAYMENT = 'app/containers/OrderList/IS_CONFIRMING_PAYMENT';
 export const PENDING_ORDERS = 'app/containers/OrderList/PENDING_ORDERS';
 export const REDEEM_COUNTER = 'app/containers/OrderList/REDEEM_COUNTER';
-export const SUBMIT_REFERAL = 'app/containers/OrderListSUBMIT_REFERAL';

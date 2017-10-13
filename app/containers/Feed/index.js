@@ -201,7 +201,7 @@ class Feed extends Component {
   };
 
   setModalWebView = (visible, link) => {
-    this.setState({ modalWebView: visible});
+    this.setState({ modalWebView: visible });
     this.state.link = link;
   };
 
@@ -256,21 +256,21 @@ class Feed extends Component {
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
 
-    var urlTwitter = '';
-    let share = Object.assign({}, this.state.shareOptions);
-    let shareTwitter = Object.assign({}, this.state.shareTwitter);
+    let urlTwitter = '';
+    const share = Object.assign({}, this.state.shareOptions);
+    const shareTwitter = Object.assign({}, this.state.shareTwitter);
 
     if (_url === null) {
       urlTwitter = '';
     } else {
-        urlTwitter = _url;
+      urlTwitter = _url;
     }
 
     shareTwitter.message = _message;
     shareTwitter.url = urlTwitter;
     share.message = _message;
     share.url = _url;
-    this.setState({ shareOptions: share, shareTwitter: shareTwitter });
+    this.setState({ shareOptions: share, shareTwitter });
   };
 
   alertRemoveFeed = (postId) => {
@@ -312,7 +312,6 @@ class Feed extends Component {
   };
 
   render() {
-    console.log('landing here this.props', this.props);
     return (
       <Container style={styles.container}>
         <View
@@ -375,9 +374,7 @@ class Feed extends Component {
                                 <Left>
                                   <Thumbnail source={{ uri: item.user.attachment || '' }} />
                                   <Body>
-                                    <Text>
-                                      {item.user.name}
-                                    </Text>
+                                    <Text>{item.user.name}</Text>
                                     <Text note>
                                       <IconSimpleLine name="globe" /> sponsored
                                     </Text>
@@ -473,7 +470,9 @@ class Feed extends Component {
                                           borderRadius: 8
                                         }}
                                       >
-                                        <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.delete}
+                                        </Text>
                                       </View>
                                     </TouchableWithoutFeedback>
                                   ) : (
@@ -487,7 +486,9 @@ class Feed extends Component {
                                           borderRadius: 8
                                         }}
                                       >
-                                        <Text style={styles.buttonReport}>{strings.feed.report}</Text>
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.report}
+                                        </Text>
                                       </View>
                                     </TouchableWithoutFeedback>
                                   )}
@@ -514,7 +515,7 @@ class Feed extends Component {
                     {this.props.links.next && this.props.feeds.length > 0 ? (
                       this.props.isFetchingMore ? (
                         <Spinner color="#FF8B00" />
-                      ) :
+                      ) : (
                         <Card>
                           <CardItem>
                             <Body
@@ -530,6 +531,7 @@ class Feed extends Component {
                             </Body>
                           </CardItem>
                         </Card>
+                      )
                     ) : (
                       <View />
                     )}
@@ -560,11 +562,22 @@ class Feed extends Component {
               onPress={() => this.setState({ fabActive: !this.state.fabActive })}
             >
               <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => Actions.newOrder()}>
-                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+                <CameraIcon
+                  name="ticket"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => this.setModalRedeem(true)}>
-                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button
+                style={{ backgroundColor: '#FF8B00' }}
+                onPress={() => this.setModalRedeem(true)}
+              >
+                <CameraIcon
+                  name="gift"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
             </Fab>
           </Tab>
@@ -595,24 +608,26 @@ class Feed extends Component {
         </Modal>
         {/* Modal WebView */}
         <Modal
-              animationType="slide"
-              transparent={false}
-              visible={this.state.modalWebView}
-              onRequestClose={() => {this.setModalWebView(!this.state.modalWebView, null)}}
-              >
-              <View style={{flex:1}}>
-              <WebView
-                ref={'webview'}
-                automaticallyAdjustContentInsets={false}
-                source={{uri: this.state.link}}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                decelerationRate="normal"
-                startInLoadingState={true}
-                scalesPageToFit={this.state.scalesPageToFit}
-              />
-              </View>
-            </Modal>
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalWebView}
+          onRequestClose={() => {
+            this.setModalWebView(!this.state.modalWebView, null);
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <WebView
+              ref={'webview'}
+              automaticallyAdjustContentInsets={false}
+              source={{ uri: this.state.link }}
+              javaScriptEnabled
+              domStorageEnabled
+              decelerationRate="normal"
+              startInLoadingState
+              scalesPageToFit={this.state.scalesPageToFit}
+            />
+          </View>
+        </Modal>
         {/* Modal for create new feeds post */}
         <Modal
           animationType={'fade'}
@@ -667,9 +682,9 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                        <TouchableOpacity onPress={() => this.postFeed()}>
-                        <View
-                            style={{
+                      <TouchableOpacity onPress={() => this.postFeed()}>
+                          <View
+                          style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -678,12 +693,12 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                          >
-                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                        >
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                          </View>
-                      </TouchableOpacity>
+                        </View>
+                        </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
                           <View
