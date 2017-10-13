@@ -26,8 +26,6 @@ class ScheduleDetail extends Component {
     super(props);
     this.state = {
       users: this.props.user,
-      jobState : '',
-      summaryState : '',
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM
     }
   }
