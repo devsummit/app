@@ -31,10 +31,7 @@ class TicketList extends Component {
       isLoading: true,
       modalVisible: false,
       modalTransfer: false,
-      counter: 0,
-      receiver: '',
-      user_ticket_id: null,
-      password: ''
+      counter: 0
     };
   }
 
@@ -56,7 +53,8 @@ class TicketList extends Component {
   };
 
   setModalTransfer = (visible, id) => {
-    this.setState({ modalTransfer: visible, user_ticket_id: id });
+    this.setState({ modalTransfer: visible });
+    this.handleChangeInput('user_ticket_id', id);
   }
 
   renderTicketList() {
@@ -125,16 +123,12 @@ class TicketList extends Component {
     this.setState({ counter: this.state.counter + 1 });
   }
 
-  handleChangeInputReceiver = (value) => {
-    this.setState({ receiver: value });
-  }
-
-  handleChangeInputPassword = (value) => {
-    this.setState({ password: value });
+  handleChangeInput = (field, value) => {
+    this.props.updateInputFields(field, value);
   }
 
   transferTicket = () => {
-    this.props.transferTicket(this.state.receiver, this.state.user_ticket_id, this.state.password,() => this.setModalTransfer(false));
+    this.props.transferTicket(this.props.fields.receiver, this.props.fields.user_ticket_id, this.props.fields.password,() => this.setModalTransfer(false));
   }
 
   render() {
@@ -291,7 +285,7 @@ class TicketList extends Component {
                       username receiver
                     </Label>
                     <Input
-                      onChangeText={text => this.handleChangeInputReceiver(text)}
+                      onChangeText={text => this.handleChangeInput('receiver', text)}
                     />
                   </Item>
                 </Form>
@@ -302,7 +296,7 @@ class TicketList extends Component {
                     </Label>
                     <Input
                       secureTextEntry
-                      onChangeText={text => this.handleChangeInputPassword(text)}
+                      onChangeText={text => this.handleChangeInput('password', text)}
                     />
                   </Item>
                 </Form>
@@ -334,7 +328,8 @@ const mapStateToProps = createStructuredSelector({
   isGettingUserTicket: selectors.getIsFetchingTicket(),
   fetchTicketStatus: selectors.getFetchingUserTicketStatus(),
   orders: getOrders(),
-  pendingOrders: getPendingOrders()
+  pendingOrders: getPendingOrders(),
+  fields: selectors.getFields()
 });
 
 function mapDispatchToProps(dispatch) {
