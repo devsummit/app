@@ -64,7 +64,7 @@ class BoothList extends Component {
   }
 
   getProspectusFile = () => {
-    Linking.openURL(this.state.urlDev);
+    Linking.openURL(this.state.url);
   }
 
   render() {
