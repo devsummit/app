@@ -86,7 +86,8 @@ class OrderList extends Component {
   }
 
   render() {
-    const count = this.state.referalCount === 10;
+    console.log('landing here', this.props);
+    const count = this.props.redeemCount === 10;
 
     if (this.state.isLoading) {
       return (
@@ -117,7 +118,7 @@ class OrderList extends Component {
                 <View style={{ flex: 8, alignItems: 'center' }}>
                   <Text style={{ fontSize: 15, color: '#000000', marginBottom:8 }}>Invite friends to get free pass!</Text>
                   <Text style={{ fontSize: 12, marginBottom: 4 }}>{this.state.referalCount} of 10</Text>
-                  <ProgressBar borderRadius={0} progress={this.state.referalCount / 10} width={width * 0.5} />
+                  <ProgressBar borderRadius={0} progress={this.props.redeemCount / 10} width={width * 0.5} />
                   <Text onPress={() => this.invite()} style={{ color: '#FFFFFF', marginTop: 8, paddingVertical: 4, paddingHorizontal: 8, backgroundColor: 'skyblue', fontWeight: 'bold' }}>Invite</Text>
                 </View>
               </View>
