@@ -9,7 +9,7 @@ import { createSelector } from 'reselect';
 const selectMainReducer = () => state => state.get('orderDetail');
 
 export const getTicketTypes = () =>
-  createSelector(selectMainReducer(), state => state.get('ticketTypes'));
+  createSelector(selectMainReducer(), state => state.get('ticketTypes').toJS());
 
 export const getOrder = () =>
   createSelector(selectMainReducer(), state => state.get('order').toJS());
