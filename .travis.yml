@@ -3,8 +3,7 @@ osx_image: xcode8.3
 cache:
 - bundler
 before_install:
-- sudo brew install docker
-- sudo usermod -aG docker $(whoami)
+- brew install docker
 before_script:
 - gem install fastlane cocoapods
 - pod repo update
