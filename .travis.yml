@@ -1,28 +1,29 @@
 language: swift
 osx_image: xcode8.3
 cache:
-  - bundler
+- bundler
 before_install:
-  - sudo brew install docker
-  - sudo usermod -aG docker $(whoami) 
+- sudo brew install docker
+- sudo usermod -aG docker $(whoami)
 before_script:
-  - gem install fastlane cocoapods
-  - pod repo update
-  - cd ios && pod install
-  - pwd
-  - cd ../
+- gem install fastlane cocoapods
+- pod repo update
+- cd ios && pod install
+- pwd
+- cd ../
 script:
 - cp config/development.js config/local.js
 - docker run --rm -v $(pwd):/opt/workspace refactoryid/jenkins-android yarn
 after_script:
 - pwd
-- if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then
-  docker run --rm -v $(pwd):/opt/workspace -e TRAVIS_COMMIT_RANGE=$TRAVIS_COMMIT_RANGE -e FASTLANE_API_TOKEN=$FASTLANE_API_TOKEN -e FASTLANE_BUILD_SECRET=$FASTLANE_BUILD_SECRET refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta"
-  ;fi
-- if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then
-  cd ios && fastlane ios beta
-  ;fi
+- if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then docker
+  run --rm -v $(pwd):/opt/workspace -e TRAVIS_COMMIT_RANGE=$TRAVIS_COMMIT_RANGE -e
+  FASTLANE_API_TOKEN=$FASTLANE_API_TOKEN -e FASTLANE_BUILD_SECRET=$FASTLANE_BUILD_SECRET
+  refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta" ;fi
+- if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
+  ios && fastlane ios beta ;fi
 env:
   global:
   - secure: LJu98WWycfWmZg1YXvbSSzk8qMbpw3rarBi/0aur8yWeDcUZWzJX9uRvhJRw39wJ0nT0cLn9XBJEajVpI1+tE1DVKXhKtcosbchJ8kIByNldTIZrxLtgVYWgxd3TfcAibZwo/dqyC5ab1QDWjYayHZ8udOJHExf8ZhBpzM3w6SrsOwmiUYQrSP5mWJHjqy+0PalhhnRaej+0U+4T4eawIg8GvZTxtT1O1ckwmPUHMHBhzZhpldq6pUR2LL0Q3FGOIIDNcPXLFfQd90rJRvNwIhufYS49J//V2nNIvXh0w4SEIo+LMQur9+6sav6ESlBvZHi0NlN4Jpd5NDmOEYSN7lPpwxCDUA6C7ARJXJdk1Plw6q0IbiVlK1RBaPA+TFDTuyHzd7Vcrv+T9eG5CyQ6GJeKA/aWehtZd95GaSjJYKFY1YnHVAPR0rwKjM/G1250QxDH1Rq+hvBf33kNpbIzQMGEs3a/gXlbai0pTTKXI4WyUoSxVaMDMebTWwr5AkxAwe2oKkS+CkqhzxyaiNj8EGk32Ida7dnK0uDOOtJP5Y9nKMDEGiGCQivdY97iOE4r9o5uc33Xttm+rCUSXiGnwIcFPTJW9RJh2NXGyRDjmifwaqn+t9pV85ucYYEDqdF2VA0ekmploj6EyOt2wjGqeU6tney2YLQVfIPbxVfYkc0=
   - secure: AZ5+FJ7IrA5YpZe5E8XeV6FPHx5K2cEVHnHzxqjaXOfHhQ9LammxZg55Lde1nGks3FnfLRIsYkb/f0exYCa+u8wVykm7NeO9SMqeMxKh6iZMFKfm1neY6to15Qyc8MjngXpt81ykyRGfjneOkbQBr5614ibh3nfKHk6ECbklzDjklIkeLYHto+mXAElXxA/tCO82K7Tfu8fsVcWqsVJ6JIVMrRp7bkj4VDuRPTKxG+o+q0T/Cwd3J4f62czEU2pcp5NcAwmJIYBDxflF9qD3NGj5zSMOO20RLuARDhuivUT4hyKp4dbXvLUNGCSfbJ4JYucdCfVw64dmATcqPRsJgaLzoibb3KQg8MQatdfGsxkCFmJ83mgZ4ZbMu17Uqb/mjac5G8rr0zCMqhDPAPHX4m/b2tJH16q6j8bO5t0n3KjfMjH2w7dzeeiYh4CZ9WtJGhI/U0dGz1JFFr7AZISa/opCJCvBFfSIpEa2sx0+2oK9HNfQljMbiC8htGKltrFPjJCBAGEyujIR0DQJ9xgCubRgKbpD8MRy0cLHcf9xlStTDbVuzY2W4aEAHWC+mcFJUnGK6WdVJEEPj9mQn9IEJpKa5q3fAyGZll4Ouh8O9cL1tWZIIoJWd+UYlIAb2fvlsXJeAlnLJTp9FFB/1+ebb84ojJY6/TFQokbGjP/sO5M=
+  - secure: h1hOBrp2XSuB25B35Ik9yVKSczWua/b+7M1NSra6jCkt5ZsU0PVbKRscgVVf7Gr4MKFbNSUuqn5I9hDFFVMtLihfrv+JBnry4zKotlqVBvWSOKSQAZXQgyDs2yRncQAmQKBLTe5LFD8MOm05G0SJ8xskDWZFaxEc+LyEWuiCQR5i4n/11ylGZJnWJ+TrniLpkynq+7hX4R6YvbB4Cf2d2/p4wgKl844q+dFFIXz/VoXL5btV8e3+s4oVVklmD5ivuwm3mFGzSwiBw6pb2pFYdA9OHv+p2+cuSoiIDPLjHq5EpAPKxAKGY2GAUDmx8rYDbe3mgoXpRYYdmR3LzZ+Q2PMLFMv7sJyFkzI1FUSRIczmnfY26J/76E+/FOn10FtDLGuAe/YsxzXCTxBEGgE0ToZ4HCK3EXuKmtsU8tqLckuCfdpisZvjJSPGcLwRBfsAku9tbbhR0XamTD/sXXsliEyGiJ1kqI2h8VRIJwncb0KelHOEUTP+5DJ7Z/YswuPWgZaC8V/Uk3ROBtneXZxfMfnxjuT33/OmyAF0PNz39jNykGShdEELo62xAhBt+8qMdr0KKlXOKg6QNT/aVZvt8RR1BRSwagZrP1KTv9/no409mfeFoPzXYb1R4LR11MY53l00S3rFGqhVVKn8od/jQijFLVgZiGThMa/JDpwR9yM=
