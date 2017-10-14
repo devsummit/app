@@ -3,9 +3,13 @@ osx_image: xcode8.3
 cache:
 - bundler
 before_install:
+- brew cask install virtualbox
 - brew install docker
-- sudo dseditgroup -o create docker 
+- brew install boot2docker
+- sudo dseditgroup -o create docker
 - sudo dseditgroup -o edit -a $USER -t user docker
+- boot2docker init
+- boot2docker up &
 before_script:
 - gem install fastlane cocoapods
 - pod repo update
@@ -19,7 +23,7 @@ after_script:
   FASTLANE_API_TOKEN=$FASTLANE_API_TOKEN -e FASTLANE_BUILD_SECRET=$FASTLANE_BUILD_SECRET
   refactoryid/jenkins-android bash -l -c "cd android && fastlane android beta" ;fi
 - if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
-  ios && fastlane ios beta --force ;fi
+  ios && fastlane ios beta ;fi
 env:
   global:
   - secure: LJu98WWycfWmZg1YXvbSSzk8qMbpw3rarBi/0aur8yWeDcUZWzJX9uRvhJRw39wJ0nT0cLn9XBJEajVpI1+tE1DVKXhKtcosbchJ8kIByNldTIZrxLtgVYWgxd3TfcAibZwo/dqyC5ab1QDWjYayHZ8udOJHExf8ZhBpzM3w6SrsOwmiUYQrSP5mWJHjqy+0PalhhnRaej+0U+4T4eawIg8GvZTxtT1O1ckwmPUHMHBhzZhpldq6pUR2LL0Q3FGOIIDNcPXLFfQd90rJRvNwIhufYS49J//V2nNIvXh0w4SEIo+LMQur9+6sav6ESlBvZHi0NlN4Jpd5NDmOEYSN7lPpwxCDUA6C7ARJXJdk1Plw6q0IbiVlK1RBaPA+TFDTuyHzd7Vcrv+T9eG5CyQ6GJeKA/aWehtZd95GaSjJYKFY1YnHVAPR0rwKjM/G1250QxDH1Rq+hvBf33kNpbIzQMGEs3a/gXlbai0pTTKXI4WyUoSxVaMDMebTWwr5AkxAwe2oKkS+CkqhzxyaiNj8EGk32Ida7dnK0uDOOtJP5Y9nKMDEGiGCQivdY97iOE4r9o5uc33Xttm+rCUSXiGnwIcFPTJW9RJh2NXGyRDjmifwaqn+t9pV85ucYYEDqdF2VA0ekmploj6EyOt2wjGqeU6tney2YLQVfIPbxVfYkc0=
