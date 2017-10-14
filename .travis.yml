@@ -4,7 +4,8 @@ cache:
 - bundler
 before_install:
 - brew install docker
-- sudo dseditgroup -o edit -a $USER -t user docker 
+- sudo groupadd docker
+- sudo dseditgroup -o edit -a $USER -t user docker
 before_script:
 - gem install fastlane cocoapods
 - pod repo update
