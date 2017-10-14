@@ -77,7 +77,6 @@ export function getOrderDetail(orderId) {
         })
           .then((response) => {
             const data = response.data;
-            console.log('data', data);
             dispatch(setPaymentProof(data.included.verification.payment_proof));
             dispatch({ type: SET_ORDER, data });
             dispatch(updateIsUpdatingOrder(false));
