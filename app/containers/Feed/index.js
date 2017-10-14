@@ -561,7 +561,7 @@ class Feed extends Component {
               position="bottomRight"
               onPress={() => this.setState({ fabActive: !this.state.fabActive })}
             >
-              <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
+              <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
               <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
                 <CameraIcon
                   name="ticket"
