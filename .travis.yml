@@ -6,10 +6,11 @@ before_install:
 - brew cask install virtualbox
 - brew install docker
 - brew install boot2docker
+- sudo curl -L https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-`uname -s`-`uname -m` >/usr/local/bin/docker-machine && \
+  sudo chmod +x /usr/local/bin/docker-machine
 - sudo dseditgroup -o create docker
 - sudo dseditgroup -o edit -a $USER -t user docker
-- boot2docker init
-- boot2docker up &
+- docker-machine create --driver virtualbox default
 before_script:
 - gem install fastlane cocoapods
 - pod repo update
