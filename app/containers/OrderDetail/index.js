@@ -354,21 +354,22 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' ? (
               this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>Reupload Payment Proof</Text>
+                  </Button>
                   <Image
                     style={{
                       flex: 1,
                       height: 200,
-                      width: '80%'
+                      margin: 10
                     }}
+                    resizeMode={'cover'}
                     source={{ uri: this.props.paymentProof }}
                   />
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text>Reupload Image Verification</Text>
-                  </Button>
                 </View>
               ) : (
                 <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                  <Text>Update Image Verification</Text>
+                  <Text style={{ flex: 1, textAlign: 'center' }}>Update Payment Proof</Text>
                 </Button>
               )
             ) : null}
