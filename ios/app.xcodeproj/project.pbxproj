@@ -51,6 +51,7 @@
 		8BEDE56CF94A4E0F8D8CDBA4 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BEF2C468AE954B31BE665903 /* SimpleLineIcons.ttf */; };
 		8FA8D064EA9EF7285024547B /* libPods-app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B39658C1ED6D54145A5C517C /* libPods-app.a */; };
 		9230EC26655A46DF9A12D2B6 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62E9A2DFDFE24AB8A340C32D /* FontAwesome.ttf */; };
+		9C32F2841F91AFDC00C01B4F /* LaunchImage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C32F2591F91AFDC00C01B4F /* LaunchImage.storyboard */; };
 		9C98CD991F7B67F700139C4B /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */; };
 		9C98CD9E1F7B681100139C4B /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF18CE51F711578009E4D56 /* libdouble-conversion.a */; };
 		9C98CD9F1F7B681500139C4B /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */; };
@@ -278,6 +279,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		9C32F2151F91AD4C00C01B4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 129992539D9941998159B487 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
+		};
 		9C9131BE1F7B285A000D018E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56489A250B984A028B94D923 /* ReactNativeLocalization.xcodeproj */;
@@ -460,6 +468,7 @@
 		880BEB3476B04B7A8CC761D0 /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		8BE9449B0BDF4B96A62EA71B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		8C2789ECD5A3467992136260 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		9C32F2591F91AFDC00C01B4F /* LaunchImage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchImage.storyboard; path = app/LaunchImage.storyboard; sourceTree = "<group>"; };
 		9C98CD981F7B617800139C4B /* app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = app.entitlements; path = app/app.entitlements; sourceTree = "<group>"; };
 		9CBF8E471F75678700AFFF12 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9CBF93F31F7D1C9C001A8393 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
@@ -647,6 +656,7 @@
 		13B07FAE1A68108700A75B9A /* app */ = {
 			isa = PBXGroup;
 			children = (
+				9C32F2591F91AFDC00C01B4F /* LaunchImage.storyboard */,
 				0E7850051F8C8D2B00B58A47 /* AccountKit.framework */,
 				0E78502F1F8C8D2B00B58A47 /* AccountKitStrings.bundle */,
 				9C98CD981F7B617800139C4B /* app.entitlements */,
@@ -823,6 +833,7 @@
 			isa = PBXGroup;
 			children = (
 				9CF18CBF1F711578009E4D56 /* libBVLinearGradient.a */,
+				9C32F2161F91AD4C00C01B4F /* libBVLinearGradient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1335,6 +1346,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9C32F2161F91AD4C00C01B4F /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 9C32F2151F91AD4C00C01B4F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		9C9131BF1F7B285A000D018E /* libReactNativeLocalization.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1485,6 +1503,7 @@
 				398D9E48E2614E329A990917 /* MaterialCommunityIcons.ttf in Resources */,
 				AF8AFC3E32D14A4E978B2AC0 /* MaterialIcons.ttf in Resources */,
 				B10D2D5068674A32BD9C2450 /* Octicons.ttf in Resources */,
+				9C32F2841F91AFDC00C01B4F /* LaunchImage.storyboard in Resources */,
 				8BEDE56CF94A4E0F8D8CDBA4 /* SimpleLineIcons.ttf in Resources */,
 				D9CBC0D3B503499D8C87D873 /* Zocial.ttf in Resources */,
 				BBE92D83419C4C17BF4B63F9 /* Montserrat-Bold.ttf in Resources */,
@@ -1988,8 +2007,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.devsummit.app.ios;
 				PRODUCT_NAME = app;
-				PROVISIONING_PROFILE = "cb425292-217b-4808-a607-bbccc4bf3549";
-				PROVISIONING_PROFILE_SPECIFIER = "DevSummit provisioning-prod";
+				PROVISIONING_PROFILE = "9e2211a1-464e-4381-8859-9aa30841df9f";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore io.devsummit.app.ios";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

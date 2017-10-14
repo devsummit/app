@@ -34,9 +34,7 @@ export function orderVerification(user, order, image) {
 
       if (Platform.OS === 'ios' && image.sourceURL) {
         form.append('payment_proof', {
-          uri: image.sourceURL,
-          type: image.mime,
-          name: image.filename
+          uri: image.sourceURL
         });
       }
 
@@ -54,6 +52,7 @@ export function orderVerification(user, order, image) {
 
       DevSummitAxios.post('/api/v1/order-verification', form, { headers })
         .then((response) => {
+          dispatch(setPaymentProof(response.data.data.payment_proof));
           Toast.show(response.data.meta.message);
         })
         .catch((err) => {
@@ -78,7 +77,8 @@ export function getOrderDetail(orderId) {
         })
           .then((response) => {
             const data = response.data;
-            dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+            console.log('data', data);
+            dispatch(setPaymentProof(data.included.verification.payment_proof));
             dispatch({ type: SET_ORDER, data });
             dispatch(updateIsUpdatingOrder(false));
           })

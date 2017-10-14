@@ -127,7 +127,7 @@ class OrderList extends Component {
                     name="gift"
                     style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
                   />
-                  <Text style={{ fontSize: 20, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
+                  <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
                     CLAIM
                   </Text>
                 </TouchableOpacity>
@@ -154,7 +154,11 @@ class OrderList extends Component {
                     key={order.id}
                     order={order}
                     confirmPayment={this.confirmPayment}
-                    onPress={() => {}}
+                    onPress={() => {
+                      Actions.orderDetail({
+                        orderId: order.id
+                      });
+                    }}
                   />
                 );
               })}
