@@ -30,7 +30,7 @@ const initialState = fromJS({
 function orderDetailReducer(state = initialState, action) {
   switch (action.type) {
     case SET_TICKET_TYPE:
-      return state.set('ticketTypes', action.data);
+      return state.set('ticketTypes', fromJS(action.data));
     case SET_ORDER:
       return state.set('order', fromJS(action.data));
     case UPDATE_ORDER:
