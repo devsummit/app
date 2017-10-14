@@ -278,6 +278,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		9C32F2151F91AD4C00C01B4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 129992539D9941998159B487 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
+		};
 		9C9131BE1F7B285A000D018E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 56489A250B984A028B94D923 /* ReactNativeLocalization.xcodeproj */;
@@ -823,6 +830,7 @@
 			isa = PBXGroup;
 			children = (
 				9CF18CBF1F711578009E4D56 /* libBVLinearGradient.a */,
+				9C32F2161F91AD4C00C01B4F /* libBVLinearGradient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1333,6 +1341,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9C32F2161F91AD4C00C01B4F /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 9C32F2151F91AD4C00C01B4F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9C9131BF1F7B285A000D018E /* libReactNativeLocalization.a */ = {
