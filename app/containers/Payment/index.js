@@ -36,7 +36,6 @@ class Payment extends Component {
       handleIconTouch:
       this.handleIconTouch
     });
-    this.props.resetState();
   }
 
   handleInputChange = (field, value) => {

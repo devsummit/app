@@ -46,16 +46,14 @@ export function updateErrorFields(field, value) {
   };
 }
 
+/*
+ * Change the state of paying with PayPal
+ * @param {value: set if paying with paypal in progress}
+ */
 export function isPayingWithPaypal(value) {
   return {
     type: IS_PAYING_WITH_PAYPAL,
     value
-  }
-}
-
-export function resetState() {
-  return (dispatch) => {
-    dispatch({type: 'RESET_STATE'})
   }
 }
 
