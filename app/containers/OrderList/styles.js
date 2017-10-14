@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     justifyContent: 'center',
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   roundButton: {
     borderRadius: 90,
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   artwork: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     height,
-    marginTop: '-25%'
+    marginTop: '-50%'
   },
   artworkText: {
     fontSize: 16,
@@ -44,6 +44,38 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center'
+  },
+  card: {
+    flex: 1,
+    backgroundColor: '#CFD8DC',
+    padding: 10,
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  buttonClaim: {
+    flex: 2,
+    alignItems: 'center'
+  },
+  inviteField: {
+    flex: 8,
+    alignItems: 'center'
+  },
+  inviteDesc: {
+    fontSize: 15,
+    color: '#000000',
+    marginBottom: 8
+  },
+  counterText: {
+    fontSize: 12,
+    marginBottom: 4
+  },
+  invite: {
+    color: '#FFFFFF',
+    marginTop: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: 'skyblue',
+    fontWeight: 'bold'
   }
 });
 

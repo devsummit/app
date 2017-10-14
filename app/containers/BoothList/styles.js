@@ -15,14 +15,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20
   },
+  btnDownload: {
+    backgroundColor: '#F44336',
+    alignSelf: 'center',
+    padding: 15,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    justifyContent: 'center'
+  },
   btnModal: {
     backgroundColor: '#9E9E9E',
     alignSelf: 'center',
-    width: '50%',
+    width: '37%',
     marginLeft: 'auto',
     marginRight: 'auto',
     justifyContent: 'center',
-    marginTop: 20
+    marginTop: 10
   },
   content: {
     flex: 1,
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
     height: 35,
     padding: 7,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   itemNameSection: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)'

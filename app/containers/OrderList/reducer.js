@@ -8,7 +8,8 @@ import {
   IS_FETCHING_ORDERS,
   SET_CONFIRM_PAYMENT,
   IS_CONFIRMING_PAYMENT,
-  PENDING_ORDERS
+  PENDING_ORDERS,
+  REDEEM_COUNTER
 } from './constants';
 
 /*
@@ -18,7 +19,8 @@ const initialState = fromJS({
   orders: [],
   isFetchingOrders: false,
   isConfirmingPayment: false,
-  pendingOrder: 0
+  pendingOrder: 0,
+  redeemCounter: 0
 });
 
 function orderListReducer(state = initialState, action) {
@@ -36,6 +38,8 @@ function orderListReducer(state = initialState, action) {
       return state.set('isConfirmingPayment', action.status);
     case PENDING_ORDERS:
       return state.set('pendingOrder', action.value);
+    case REDEEM_COUNTER:
+      return state.set('redeemCounter', action.value);
     default:
       return state;
   }

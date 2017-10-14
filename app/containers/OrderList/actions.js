@@ -1,5 +1,6 @@
+import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
-
+import { updateDataStorage } from '../Profile/actions';
 /*
  * import constants
  */
@@ -8,8 +9,51 @@ import {
   IS_FETCHING_ORDERS,
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
-  PENDING_ORDERS
+  PENDING_ORDERS,
+  REDEEM_COUNTER
 } from './constants';
+
+export function redeemCounter() {
+  return (dispatch) => {
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.get('/api/v1/me', {
+        headers: { Authorization: accessToken }
+      }).then((profile) => {
+        const value = profile.data.data.referal_count;
+        dispatch({
+          type: REDEEM_COUNTER,
+          value
+        });
+        dispatch(updateDataStorage(profile.data));
+      });
+    });
+  };
+}
+
+export function submitReferal() {
+  return (dispatch) => {
+    getAccessToken().then((accessToken) => {
+      DevSummitAxios.post(
+        '/api/v1/referals/reward',
+        {},
+        {
+          headers: { Authorization: accessToken }
+        }
+      )
+        .then((response) => {
+          const value = response.data.meta.success ? 11 : 0;
+          dispatch({
+            type: REDEEM_COUNTER,
+            value
+          });
+          Toast.show(response.data.meta.message, Toast.LONG);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  };
+}
 
 // update fetch transaction status
 export function updateIsFetchingOrders(status) {
@@ -29,6 +73,7 @@ export function pendingOrder(value) {
 export function getOrderList() {
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
+    dispatch(redeemCounter());
     getAccessToken()
       .then((accessToken) => {
         DevSummitAxios.get('/api/v1/orders', {
