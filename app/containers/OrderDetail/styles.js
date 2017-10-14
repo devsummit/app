@@ -1,5 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -59,6 +60,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  buttonSubmit: {
+    width: '90%',
+    alignSelf: 'center'
+  },
+  image: {
+    width: width * 0.8,
+    height: 400,
+    alignSelf: 'center'
   }
 });
 

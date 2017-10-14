@@ -92,26 +92,12 @@ export default class OrderItem extends Component {
             <View style={styles.viewText}>
               {status ? (
                 <Text note style={[ styles.statusText, { backgroundColor: color } ]}>
-                  {status.toUpperCase()}
+                  {order.payment && order.payment.payment_type}
                 </Text>
               ) : (
                 <View />
               )}
             </View>
-          </View>
-          <View style={styles.buttonSection}>
-            {status && status === 'not paid' ? (
-              <View>
-                <TouchableOpacity
-                  onPress={() => Actions.payment({ order })}
-                  style={styles.btnCheckOut}
-                >
-                  <Icon name="md-cart" color="white" style={styles.icon} />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View />
-            )}
           </View>
         </View>
       </CardItem>
