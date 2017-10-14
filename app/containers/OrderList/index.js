@@ -116,35 +116,37 @@ class OrderList extends Component {
           }
         >
           <View style={{ marginTop: 10, marginHorizontal: 10 }}>
-            <Card>
-              <View style={styles.card}>
-                <TouchableOpacity
-                  style={styles.buttonClaim}
-                  disabled={!count}
-                  onPress={() => this.props.submitReferal()}
-                >
-                  <Icon
-                    name="gift"
-                    style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
-                  />
-                  <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
-                    CLAIM
-                  </Text>
-                </TouchableOpacity>
-                <View style={styles.inviteField}>
-                  <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                  <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
-                  <ProgressBar
-                    borderRadius={0}
-                    progress={this.props.redeemCount / 10}
-                    width={width * 0.5}
-                  />
-                  <Text onPress={() => this.invite()} style={styles.invite}>
-                    Invite
-                  </Text>
+            {this.props.redeemCount > 10 ? null : (
+              <Card>
+                <View style={styles.card}>
+                  <TouchableOpacity
+                    style={styles.buttonClaim}
+                    disabled={!count}
+                    onPress={() => this.props.submitReferal()}
+                  >
+                    <Icon
+                      name="gift"
+                      style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
+                    />
+                    <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
+                      CLAIM
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.inviteField}>
+                    <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
+                    <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
+                    <ProgressBar
+                      borderRadius={0}
+                      progress={this.props.redeemCount / 10}
+                      width={width * 0.5}
+                    />
+                    <Text onPress={() => this.invite()} style={styles.invite}>
+                      Invite
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </Card>
+              </Card>
+            )}
           </View>
           {this.props.orders.length > 0 ? (
             <List>
