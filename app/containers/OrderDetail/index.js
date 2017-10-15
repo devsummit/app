@@ -184,7 +184,7 @@ class OrderDetail extends Component {
       includeBase64: true
     })
       .then((image) => {
-        this.props.orderVerification(this.state.userId, this.props.orderId, image);
+        this.props.orderVerification(this.props.orderId, image);
       })
       .catch((err) => {
         console.log(err);
