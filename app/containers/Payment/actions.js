@@ -64,7 +64,6 @@ export function isPayingWithPaypal(value) {
 export function payWithPaypal(order) {
   return (dispatch) => {
     dispatch(isPayingWithPaypal(true));
-    console.log('order', order, order.price * order.count)
     PayPal.paymentRequest({
       clientId: PAYPAL_CLIENT_ID,
       environment: PAYPAL_ENV,
@@ -76,7 +75,7 @@ export function payWithPaypal(order) {
       getAccessToken()
         .then((accessToken) => {
           const data = {
-            order_id: order.id,
+            order_id: order.order_id,
             transaction_id: response.id,
             payment_type: 'paypal'
           };
