@@ -10,7 +10,7 @@ import {
   Input
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { View, TouchableOpacity } from 'react-native';
+import { Alert, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 // import redux components
@@ -39,7 +39,21 @@ class NewOrder extends Component {
   };
 
   placeOrder = () => {
-    this.props.placeOrder(() => Actions.orderList());
+    Alert.alert(
+      strings.order.proceedPaymentTitle,
+      strings.order.proceedPaymentMessage,
+      [
+        {
+          text: strings.order.proceedNo
+        },
+        {
+          text: strings.order.proceedYes,
+          onPress: () => {
+            this.props.placeOrder(order => Actions.payment({ order }));
+          }
+        }
+      ]
+    );
   }
 
   toggleReferal = () => {
