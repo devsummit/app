@@ -1,4 +1,5 @@
 import PayPal from 'react-native-paypal';
+import { Platform } from 'react-native';
 
 export default {
   API_BASE_URL: 'http://api.devsummit.io:8081',
@@ -18,5 +19,5 @@ export default {
   PAYPAL_CLIENT_ID: 'Ac-Ikn76GlVB5tFLwMoFYEl9FGumrB7NYdkicE5bd7Q_QfWmnKDyK_ZlZ7mFB-MlENIQR1fTvcj1Ivdv',
   PAYPAL_CURRENCY: 'USD',
   PAYPAL_RATE: Math.pow(10, 4),
-  PAYPAL_ENV: PayPal.SANDBOX
+  PAYPAL_ENV: Platform.OS === 'android' ? 'sandbox' : 0,
 };
