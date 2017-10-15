@@ -15,14 +15,16 @@ import {
   Col,
   List,
   ListItem,
+  Fab,
   Spinner
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal } from 'react-native';
+import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
 import strings from '../../localization';
 import { PRIMARYCOLOR, MERCHANT_CODE } from '../../constants';
@@ -30,7 +32,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDate, expiryDate, transactionStatus } from '../../helpers';
+import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
 
 let total = 0;
 class OrderDetail extends Component {
@@ -42,11 +44,15 @@ class OrderDetail extends Component {
       orderStatus: '',
       color: '',
       modalVisible: false,
-      scalesPageToFit: true
+      scalesPageToFit: true,
+      userId: ''
     };
   }
 
   componentWillMount = () => {
+    getProfileData().then((profileData) => {
+      this.setState({ userId: profileData.id });
+    });
     this.props.getOrderDetail(this.props.orderId);
   };
 
@@ -170,12 +176,28 @@ class OrderDetail extends Component {
     });
   };
 
+  uploadImage = () => {
+    ImagePicker.openPicker({
+      height: 1000,
+      width: 700,
+      cropping: true,
+      includeBase64: true
+    })
+      .then((image) => {
+        this.props.orderVerification(this.state.userId, this.props.orderId, image);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+
     const WEBVIEW_REF = 'webview';
     if (
       isUpdating ||
@@ -263,13 +285,15 @@ class OrderDetail extends Component {
                 renderRow={item => (
                   <View>
                     {this.state.status === 'not paid' ? (
-                      <TicketType
-                        key={item.id}
-                        count={item.count}
-                        ticket={item.ticket}
-                        onAdd={() => this.increase(item.id)}
-                        onReduce={() => this.decrease(item.id)}
-                      />
+                      <View>
+                        <TicketType
+                          key={item.id}
+                          count={item.count}
+                          ticket={item.ticket}
+                          onAdd={() => this.increase(item.id)}
+                          onReduce={() => this.decrease(item.id)}
+                        />
+                      </View>
                     ) : (
                       <TicketDetail key={item.id} count={item.count} ticket={item.ticket} />
                     )}
@@ -278,23 +302,6 @@ class OrderDetail extends Component {
               />
             </Content>
           }
-          {order.included.payment &&
-          order.included.payment.payment_type === 'cstore' &&
-          order.included.payment.fraud_status ? (
-            <Card>
-                <CardItem>
-                <Body>
-                    <Text>{strings.order.paymentCode}</Text>
-                  </Body>
-                <Right>
-                    <Text>{order.included.payment.fraud_status}</Text>
-                  </Right>
-              </CardItem>
-              </Card>
-            ) : (
-              <View />
-            )}
-
           <Card>
             <CardItem>
               <Body>
@@ -306,30 +313,6 @@ class OrderDetail extends Component {
             </CardItem>
           </Card>
 
-          {order.included.payment &&
-          order.included.payment.payment_type !== 'cstore' &&
-          this.state.status !== 'paid' ? (
-            <Card>
-                <CardItem>
-                <View style={{ alignItems: 'center' }}>
-                    <Text>
-                    {strings.order.instruction1} Rp{' '}
-                    {Intl.NumberFormat('id').format(this.getTotal())} {strings.order.instruction2}{' '}
-                    {this.capitalizeEachWord(
-                        order.included.payment.payment_type.split('_').join(' ')
-                      )}{' '}
-                    {strings.order.instruction3}{' '}
-                  </Text>
-
-                    {this.checkPaymentType()}
-
-                    <Text>{strings.order.attention}</Text>
-                  </View>
-              </CardItem>
-              </Card>
-            ) : (
-              <View />
-            )}
           {order.included.referal && order.included.referal.owner ? (
             <View>
               <Card>
@@ -367,53 +350,30 @@ class OrderDetail extends Component {
           ) : (
             <View />
           )}
-          {this.state.status && this.state.status === 'need authorization' ? <View /> : <View />}
-          {this.state.status &&
-          this.state.status === 'pending' &&
-          this.state.orderStatus !== 'expired' ? (
-            <Button
-                onPress={() => this.handleConfirm()}
-                style={[ styles.btnCheckOut, { backgroundColor: 'green' } ]}
-              >
-                <Icon name="md-checkmark-circle-outline" color="white" style={styles.icon} />
-                <Text style={styles.buttonText}>{strings.global.confirm}</Text>
-              </Button>
-            ) : (
-              <View />
-            )}
-          <Modal
-            animationType={'slide'}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
-          >
-            <View style={{ flex: 1 }}>
-              <View style={{ width: '100%', height: 'auto', backgroundColor: 'whitesmoke' }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}
-                >
-                  <Icon
-                    name={'ios-arrow-dropleft'}
-                    size={24}
-                    color={'black'}
-                    style={{ padding: 10 }}
+          <View>
+            {payment.payment_type === 'offline' ? (
+              this.props.paymentProof !== '' ? (
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>Reupload Payment Proof</Text>
+                  </Button>
+                  <Image
+                    style={{
+                      flex: 1,
+                      height: 200,
+                      margin: 10
+                    }}
+                    resizeMode={'cover'}
+                    source={{ uri: this.props.paymentProof }}
                   />
-                </TouchableOpacity>
-              </View>
-              <WebView
-                automaticallyAdjustContentInsets={false}
-                source={{ uri: payment ? payment.va_number : '' }}
-                style={{ marginTop: 20 }}
-                scalesPageToFit={this.state.scalesPageToFit}
-                ref={WEBVIEW_REF}
-                decelerationRate="normal"
-                javaScriptEnabled
-                domStorageEnabled
-                startInLoadingState
-              />
-            </View>
-          </Modal>
+                </View>
+              ) : (
+                <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                  <Text style={{ flex: 1, textAlign: 'center' }}>Update Payment Proof</Text>
+                </Button>
+              )
+            ) : null}
+          </View>
         </Content>
       </Container>
     );
@@ -436,7 +396,8 @@ const mapStateToProps = createStructuredSelector({
   order: selectors.getOrder(),
   isUpdating: selectors.getIsUpdatingOrder(),
   updateStatus: selectors.getUpdateOrderStatus(),
-  isConfirming: selectors.getIsConfirmingPayment()
+  isConfirming: selectors.getIsConfirmingPayment(),
+  paymentProof: selectors.getPaymentProof()
 });
 
 export default connect(mapStateToProps, actions)(OrderDetail);

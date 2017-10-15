@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { Container, Content, List, Spinner, Button, Card } from 'native-base';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  RefreshControl,
+  Alert,
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ProgressBar from 'react-native-progress/Bar';
 import { connect } from 'react-redux';
@@ -29,7 +37,7 @@ class OrderList extends Component {
     referalCount: 0,
     firstName: '',
     lastName: ''
-  }
+  };
 
   componentWillMount() {
     this.props.getOrderList();
@@ -42,7 +50,7 @@ class OrderList extends Component {
           referal: data.referal,
           haveRefered: data.have_refered,
           referalCount: data.referal_count
-        })
+        });
       })
       .catch(err => console.log('Error getting data'));
   }
@@ -79,11 +87,11 @@ class OrderList extends Component {
     const { firstName, lastName, referal } = this.state;
 
     Share.open({
-      title: "Devsummit invitation",
+      title: 'Devsummit invitation',
       message: `Check out the biggest event for programmer in 21-23 November 2017. Download the apps https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${referal} as referal code to collect points for free ticket. Cheers!`,
-      subject: "Devsummit invitation"
+      subject: 'Devsummit invitation'
     });
-  }
+  };
 
   render() {
     const count = this.props.redeemCount === 10;
@@ -108,22 +116,39 @@ class OrderList extends Component {
           }
         >
           <View style={{ marginTop: 10, marginHorizontal: 10 }}>
-            <Card>
-              <View style={styles.card}>
-                <TouchableOpacity style={styles.buttonClaim} disabled={!count} onPress={() => this.props.submitReferal()}>
-                  <Icon name="gift" style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }} />
-                  <Text style={{ fontSize: 20, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>CLAIM</Text>
-                </TouchableOpacity>
-                <View style={styles.inviteField}>
-                  <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                  <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
-                  <ProgressBar borderRadius={0} progress={this.props.redeemCount / 10} width={width * 0.5} />
-                  <Text onPress={() => this.invite()} style={styles.invite}>Invite</Text>
+            {this.props.redeemCount > 10 ? null : (
+              <Card>
+                <View style={styles.card}>
+                  <TouchableOpacity
+                    style={styles.buttonClaim}
+                    disabled={!count}
+                    onPress={() => this.props.submitReferal()}
+                  >
+                    <Icon
+                      name="gift"
+                      style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
+                    />
+                    <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
+                      CLAIM
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.inviteField}>
+                    <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
+                    <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
+                    <ProgressBar
+                      borderRadius={0}
+                      progress={this.props.redeemCount / 10}
+                      width={width * 0.5}
+                    />
+                    <Text onPress={() => this.invite()} style={styles.invite}>
+                      Invite
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </Card>
+              </Card>
+            )}
           </View>
-          { this.props.orders.length > 0 ? (
+          {this.props.orders.length > 0 ? (
             <List>
               {this.props.orders.map((order) => {
                 return (

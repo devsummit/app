@@ -30,7 +30,6 @@ const initialState = fromJS({
 });
 
 function feedReducer(state = initialState, action) {
-
   switch (action.type) {
     case IS_FETCHING_FEEDS:
       return state.set('isFetching', action.status);
@@ -51,7 +50,15 @@ function feedReducer(state = initialState, action) {
       return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]));
 
     case LOAD_MORE_FEEDS:
-      return state.set('feeds', fromJS(state.get('feeds').toJS().concat(action.payloads)));
+      return state.set(
+        'feeds',
+        fromJS(
+          state
+            .get('feeds')
+            .toJS()
+            .concat(action.payloads)
+        )
+      );
 
     case UPDATE_IMAGE:
       return state.set('image', fromJS(action.image));
@@ -69,7 +76,15 @@ function feedReducer(state = initialState, action) {
       return state.set('currentPage', action.value);
 
     case REMOVE_FEED:
-      return state.set('feeds', fromJS([ ...state.get('feeds').toJS().filter(item => item.id !== action.id) ]));
+      return state.set(
+        'feeds',
+        fromJS([
+          ...state
+            .get('feeds')
+            .toJS()
+            .filter(item => item.id !== action.id)
+        ])
+      );
 
     case IS_REMOVE_FEED:
       return state.set('isRemoving', action.status);
