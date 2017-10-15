@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import {
   Container,
   Content,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
-import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback, Modal, WebView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -19,16 +21,20 @@ import styles from './styles';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { FEEDBACK_URL } from '../../constants';
 
 class Settings extends Component {
-  state = {
-    id: null,
-    modalVisible: false,
-    firstName: '',
-    lastName: '',
-    photo: null
+  constructor(props) {
+    super(props);
+    this.setModalVisible = this.setModalVisible.bind(this);
+    this.state = {
+      id: null,
+      modalVisible: false,
+      firstName: '',
+      lastName: '',
+      photo: null
+    }
   }
-
   componentWillMount() {
     getProfileData().then((profileData) => {
       if (profileData) {
@@ -67,8 +73,7 @@ class Settings extends Component {
   }
 
   render() {
-    console.log('landing here', this.props);
-    const { fields, isDisabled, avatar, errorFields } = this.props || {};
+    const { fields, isDisabled, avatar, errorFields, isLoading } = this.props || {};
     const {
       firstName,
       lastName,
@@ -78,6 +83,7 @@ class Settings extends Component {
       summary,
       profilePic
     } = fields || '';
+    console.log('hahahaa', this.props);
     return (
       <Container>
         <Content>
@@ -85,13 +91,6 @@ class Settings extends Component {
             <Header title={strings.settings.title} />
             <Content>
               <View style={styles.section2}>
-                {/* <Button
-                  block
-                  style={styles.button}
-                  onPress={() => Actions.profile()}
-                >
-                  <Text>{strings.settings.editProfile}</Text>
-                </Button> */}
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
                   <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                     <Image
@@ -121,14 +120,48 @@ class Settings extends Component {
                 </Button>
                 <Button
                   block
+                  style={styles.button}
+                  onPress={() => this.setModalVisible(true)}
+                >
+                  <Text>{strings.settings.feedback}</Text>
+                </Button>
+                <Button
+                  block
                   style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
                   onPress={() => { this.props.logOut(); }}
                 >
-                  <Text>{strings.settings.logout}</Text>
+                  {isLoading ?
+                    <Spinner color="#FFFFFF" /> :
+                    <Text>{strings.settings.logout}</Text>
+                  }
                 </Button>
               </View>
             </Content>
           </ScrollView>
+          <Modal
+            animationType={'slide'}
+            visible={this.state.modalVisible}
+            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+          >
+            <View style={{ flex: 1 }}>
+              <View style={ styles.modal }>
+                <TouchableOpacity onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                  <Icon name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
+                </TouchableOpacity>
+              </View>
+              <WebView
+                automaticallyAdjustContentInsets={false}
+                source={{ uri: FEEDBACK_URL }}
+                style={{ marginTop: 20 }}
+                scalesPageToFit={true}
+                ref={'webview'}
+                decelerationRate="normal"
+                javaScriptEnabled
+                domStorageEnabled
+                startInLoadingState
+              />
+            </View>
+          </Modal>
         </Content>
       </Container>
     );
@@ -144,6 +177,7 @@ const mapStateToProps = createStructuredSelector({
   avatar: selectors.getAvatar(),
   isAvatarUpdated: selectors.getIsAvatarUpdated(),
   isDisabled: selectors.getIsDisabled(),
+  isLoading: selectors.getIsLoading(),
   isLogOut: selectors.getIsLogOut()
 });
 

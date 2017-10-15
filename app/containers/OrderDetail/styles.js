@@ -1,6 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   item: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -23,11 +27,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 12,
     fontSize: 30
   },
   buttonText: {
-    marginRight: 10,
+    marginRight: 12,
     fontWeight: 'bold'
   },
   orderId: {
@@ -43,28 +47,29 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   btnCheckOut: {
-    width: '100%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 6,
-    marginBottom: 6,
-    borderWidth: 1,
-    borderRadius: 30,
-    borderColor: 'transparent',
-    flexDirection: 'row',
-    elevation: 0,
-    flex: 1
+    borderRadius: 4,
+    alignSelf: 'center',
+    marginVertical: 6,
+    marginHorizontal: 20
   },
   statusText: {
     flex: 1,
-    fontSize: 8,
-    borderRadius: 90,
+    fontSize: 12,
+    borderRadius: 4,
     padding: 5,
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  buttonSubmit: {
+    width: '90%',
+    alignSelf: 'center'
+  },
+  image: {
+    width: width * 0.8,
+    height: 400,
+    alignSelf: 'center'
   }
 });
 
 export default styles;
-

@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width } = Dimensions.get('window');
 
@@ -63,6 +64,8 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '500',
     color: '#FFF'
   },
   tabBarSelectedItemStyle: {
@@ -77,7 +80,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     padding: 8,
     textAlign: 'center',
-    color: '#000'
+    color: '#000',
+    opacity: 0.5
   },
   textOption: {
     fontSize: 18,
@@ -95,9 +99,49 @@ const styles = StyleSheet.create({
   modalText: {
     marginLeft: 10
   },
+  touchImage: {
+    alignSelf: 'center',
+    paddingLeft: 20,
+    marginBottom: 10
+  },
   images: {
     height: 200,
-    width: width * 0.7
+    width: width * 0.9
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
+  },
+  redeem: {
+    borderWidth: 5,
+    margin: 20,
+    marginTop: 0,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  viewredeem: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    color: '#FFFFFF',
+    fontSize: 20
+  },
+  iconFab: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#FFFFFF'
   }
 });
 

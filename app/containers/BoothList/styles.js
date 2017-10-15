@@ -15,23 +15,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20
   },
-  btnModal: {
+  btnDownload: {
+    backgroundColor: '#F44336',
     alignSelf: 'center',
-    borderRadius: 20,
-    width: '70%',
+    padding: 15,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    justifyContent: 'center'
+  },
+  btnModal: {
+    backgroundColor: '#9E9E9E',
+    alignSelf: 'center',
+    width: '37%',
     marginLeft: 'auto',
     marginRight: 'auto',
     justifyContent: 'center',
     marginTop: 10
   },
   content: {
-    marginTop: 20,
+    flex: 1,
+    marginTop: 12,
     marginHorizontal: 10
   },
   searchHeader: {
-    marginTop: -30,
     backgroundColor: 'rgb(255,255,255)',
-    borderRadius: 50
+    marginBottom: 8,
+    elevation: 5
   },
   bodySection: {
     flex: 1,
@@ -39,20 +48,23 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   profileSection: {
-    flex: 2
+    flex: 1,
+    flexDirection: 'row'
   },
   nameSection: {
-    marginLeft: 2,
-    flex: 8
+    marginLeft: 16,
+    flex: 8,
+    justifyContent: 'center'
   },
   profilePic: {
-    height: 200,
-    width
+    height: 50,
+    width: 50,
+    borderRadius: 25
   },
   name: {
     color: '#333',
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize: 16,
+    fontWeight: '300'
   },
   job: {
     color: '#333',
@@ -61,7 +73,7 @@ const styles = StyleSheet.create({
   },
   summary: {
     color: '#333',
-    paddingTop: 10
+    marginTop: 8
   },
   footerSection: {
     width: '100%',
@@ -81,9 +93,8 @@ const styles = StyleSheet.create({
     height: 35,
     padding: 7,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-
   itemNameSection: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)'
   }

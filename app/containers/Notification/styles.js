@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 import { PRIMARYCOLOR } from '../../constants';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF'
+  },
   view: {
     flex: 1,
     justifyContent: 'center',
@@ -66,11 +70,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginRight: 8
   },
-  icon: {
-    fontSize: 30,
-    textAlign: 'right',
-    margin: 20
-  },
   materialUrl: {
     flexDirection: 'row',
     paddingRight: 8
@@ -86,9 +85,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  container: {
+  artwork: {
     flex: 1,
-    backgroundColor: 'white'
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
   }
 });
 

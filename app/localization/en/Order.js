@@ -12,7 +12,7 @@ export default {
 
   // Order detail
   confirmUpdate: 'Are you sure to update this order',
-  orderNumber: ' Order number',
+  orderNumber: 'Order ID',
   orderDate: 'Order date',
   expiredDate: 'Expired time',
   confirmPayment: 'Payment confirmation',

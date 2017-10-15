@@ -12,7 +12,7 @@ export default {
 
   // Order detail
   confirmUpdate: 'Anda yakin untuk memperbaharui pesanan ini',
-  orderNumber: 'No. order',
+  orderNumber: 'Order ID',
   orderDate: 'Tanggal order',
   expiredDate: 'Tanggal kadaluarsa',
   confirmPayment: 'Konfirmasi pembayaran',

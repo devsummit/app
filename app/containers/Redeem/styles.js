@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -22,7 +23,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   inputItem: {
-    marginRight: 15
+    marginRight: 15,
+    marginTop: 12
   },
   buttonsSection: {
     flexDirection: 'row',
@@ -32,7 +34,10 @@ const styles = StyleSheet.create({
     margin: 6
   },
   buttonText: {
-    fontSize: 15
+    fontSize: 15,
+    backgroundColor: PRIMARYCOLOR,
+    padding: 20,
+    color: '#FFFFFF'
   }
 });
 

@@ -33,4 +33,6 @@ export const ROLES = {
   5: 'hackaton'
 };
 
+export const FEEDBACK_URL = 'https://devsummit.io/feedback.html';
+
 export const PRIMARYCOLOR = '#f39e21';

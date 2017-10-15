@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   orderId: {
     alignSelf: 'flex-start',
+    fontSize: 10
   },
   text: {
     alignSelf: 'flex-end',
@@ -50,8 +51,7 @@ const styles = StyleSheet.create({
   viewText: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end'
+    marginTop: 12
   },
   buttonSection: {
     flex: 1,
@@ -66,8 +66,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 3,
-    marginLeft: 10
+    padding: 8
   }
 });
 

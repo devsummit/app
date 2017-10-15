@@ -8,7 +8,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f39e21'
   },
   navBarTitle: {
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat'
   },
   barButtonTextStyle: {
     color: '#FFFFFF'

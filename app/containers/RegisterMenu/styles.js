@@ -32,17 +32,16 @@ const styles = StyleSheet.create({
   },
   buttonRegister: {
     marginLeft: 'auto',
-    marginRight: 'auto',
+    marginRight: 'auto'
   },
   registerText: {
     textAlign: 'center',
-    color: '#FFFFFF',
+    color: '#FFFFFF'
   },
   registerTextBold: {
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#FFD740',
-    marginLeft: -24
+    color: '#FFD740'
   },
   icon: {
     textAlign: 'center',

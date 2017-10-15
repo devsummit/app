@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
-import {
-  Container,
-  Content,
-  Text
-} from 'native-base';
+import { Container, Content, Text } from 'native-base';
 import { View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { twitter } from 'react-native-simple-auth';
-
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -27,11 +22,11 @@ const background = require('../../../assets/images/background.png');
 class RegisterMenu extends Component {
   registerFacebook = () => {
     this.props.registerFacebook();
-  }
+  };
 
   registerTwitter = () => {
     this.props.registerTwitter();
-  }
+  };
 
   render() {
     return (
@@ -43,22 +38,33 @@ class RegisterMenu extends Component {
               warning
               block
               style={styles.button}
-              onPress={() => { Actions.registerEmail(); }}
+              onPress={() => {
+                Actions.registerEmail();
+              }}
             >
               <Icon name="envelope" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>{strings.register.withEmail}</Text>
             </Button>
-            <Button style={[ styles.button, { backgroundColor: '#FFD740' } ]} onPress={() => { Actions.registerPhone(); }}>
+            <Button
+              style={[ styles.button, { backgroundColor: '#FFD740' } ]}
+              onPress={() => {
+                Actions.registerPhone();
+              }}
+            >
               <Icon name="phone" color="white" style={styles.icon} />
               <Text style={styles.buttonText}>{strings.register.withPhone}</Text>
             </Button>
             <Button
               transparent
               style={styles.buttonRegister}
-              onPress={() => { Actions.main(); }}
+              onPress={() => {
+                Actions.main();
+              }}
             >
-              <Text style={styles.registerText}>{strings.register.alreadyHave}</Text>
-              <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>
+              <View>
+                <Text style={styles.registerText}>{strings.register.alreadyHave}</Text>
+                <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>
+              </View>
             </Button>
           </Content>
         </Container>
