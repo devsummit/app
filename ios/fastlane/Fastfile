@@ -30,8 +30,8 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    cert
-    sigh(development: true)
+    cert(development: true, readonly: true)
+    sigh(development: true, readonly: true)
     gym(scheme: "app") # Build your app - more options available
     # pilot
     crashlytics(
