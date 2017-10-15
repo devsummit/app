@@ -64,10 +64,11 @@ export function isPayingWithPaypal(value) {
 export function payWithPaypal(order) {
   return (dispatch) => {
     dispatch(isPayingWithPaypal(true));
+    console.log('order', order, order.price * order.count)
     PayPal.paymentRequest({
       clientId: PAYPAL_CLIENT_ID,
       environment: PAYPAL_ENV,
-      price: (order.amount / PAYPAL_RATE).toFixed(2).toString(),
+      price: (order.price * order.count).toFixed(2).toString(),
       currency: PAYPAL_CURRENCY,
       description: 'Ticket for full 3-day event'
     }).then(({ confirmation }) => {

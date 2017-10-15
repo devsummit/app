@@ -92,7 +92,10 @@ export function placeOrder(redirect = () => {}) {
         }
       }).then((response) => {
         if (response.data && response.data.meta) {
-          redirect(response.data.data);
+          redirect({
+            ...response.data.data,
+            ...response.data.included[0]
+          });
         }
       })
         .catch((err) => { console.log(err); });
