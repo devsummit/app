@@ -7,6 +7,7 @@ before_install:
 before_script:
 - gem install fastlane cocoapods
 - pod repo update
+- export FASTLANE_PASSWORD=$CERT_KEYCHAIN_PASSWORD
 script:
 - cp config/development.js config/local.js
 - yarn install
