@@ -30,7 +30,7 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    match(type: "development", readonly: true) # more information: https://codesigning.guide
+    match(type: "development", readonly: true, verbose: true, force: true, skip_confirmation: true) # more information: https://codesigning.guide
     gym(scheme: "app") # Build your app - more options available
     # pilot
     crashlytics(
