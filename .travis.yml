@@ -9,7 +9,6 @@ before_script:
 - pod repo update
 script:
 - cp config/development.js config/local.js
-after_script:
 - if [[ $TRAVIS_BRANCH == "develop" && $TRAVIS_PULL_REQUEST == "false" ]]; then cd
   ios && fastlane ios beta ;fi
 env:
