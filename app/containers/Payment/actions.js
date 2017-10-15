@@ -18,7 +18,7 @@ import {
   PAYPAL_CURRENCY,
   PAYPAL_RATE,
   PAYPAL_ENV
-} from '../../constants'
+} from '../../constants';
 
 /*
  * Update the input fields
@@ -54,7 +54,7 @@ export function isPayingWithPaypal(value) {
   return {
     type: IS_PAYING_WITH_PAYPAL,
     value
-  }
+  };
 }
 
 /*
@@ -63,35 +63,36 @@ export function isPayingWithPaypal(value) {
  */
 export function payWithPaypal(order) {
   return (dispatch) => {
-      dispatch(isPayingWithPaypal(true));
-      PayPal.paymentRequest({
-        clientId: PAYPAL_CLIENT_ID,
-        environment: PAYPAL_ENV,
-        price: (order.amount / PAYPAL_RATE).toFixed(2).toString(),
-        currency: PAYPAL_CURRENCY,
-        description: 'Ticket for full 3-day event'
-      }).then(({ status, confirmation }) => {
-        const { response } = confirmation;
-        getAccessToken()
+    dispatch(isPayingWithPaypal(true));
+    PayPal.paymentRequest({
+      clientId: PAYPAL_CLIENT_ID,
+      environment: PAYPAL_ENV,
+      price: (order.amount / PAYPAL_RATE).toFixed(2).toString(),
+      currency: PAYPAL_CURRENCY,
+      description: 'Ticket for full 3-day event'
+    }).then(({ confirmation }) => {
+      const { response } = confirmation;
+      getAccessToken()
         .then((accessToken) => {
           const data = {
             order_id: order.id,
             transaction_id: response.id,
-            payment_type: 'paypal',
-          }
+            payment_type: 'paypal'
+          };
           return DevSummitAxios.post('/api/v1/payments/confirm', data, {
             headers: { Authorization: accessToken }
           });
         }).then((result) => {
-          console.log('response', result)
-          dispatch(isPayingWithPaypal(false))
+          console.log('response', result);
+          dispatch(isPayingWithPaypal(false));
         }).catch((error) => {
-          console.log('error', error)
-          dispatch(isPayingWithPaypal(false))
-        })
-      })
+          console.log('error', error);
+          dispatch(isPayingWithPaypal(false));
+        });
+    })
       .catch((error) => {
-        dispatch(isPayingWithPaypal(false))
-      })
-  }
+        console.log(error);
+        dispatch(isPayingWithPaypal(false));
+      });
+  };
 }

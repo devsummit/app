@@ -4299,9 +4299,9 @@ react-native-oauth@^2.2.0:
     invariant "^2.2.1"
     valib "^2.0.0"
 
-"react-native-paypal@git+https://github.com/refactory-id/react-native-paypal":
+"react-native-paypal@git+https://github.com/refactory-id/react-native-paypal#master":
   version "1.0.4"
-  resolved "git+https://github.com/refactory-id/react-native-paypal#5b55fe9600aa11374156c324c10132dfe032ff36"
+  resolved "git+https://github.com/refactory-id/react-native-paypal#4e8fd12c0630bbd2296d585fe98ae2dac28bd4bc"
 
 react-native-photo-grid@0.0.2:
   version "0.0.2"

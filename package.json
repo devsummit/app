@@ -30,7 +30,7 @@
     "react-native-linear-gradient": "^2.2.0",
     "react-native-localization": "^0.1.32",
     "react-native-oauth": "^2.2.0",
-    "react-native-paypal": "git+https://github.com/refactory-id/react-native-paypal",
+    "react-native-paypal": "git+https://github.com/refactory-id/react-native-paypal#master",
     "react-native-photo-grid": "0.0.2",
     "react-native-progress": "^3.4.0",
     "react-native-router-flux": "^4.0.0-beta.15",
