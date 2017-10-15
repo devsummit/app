@@ -31,7 +31,7 @@ platform :ios do
   desc "This will also make sure the profile is up to date"
   lane :beta do
     cert(development: true)
-    sigh(development: true, readonly: true)
+    sigh(development: true)
     gym(scheme: "app") # Build your app - more options available
     # pilot
     crashlytics(
