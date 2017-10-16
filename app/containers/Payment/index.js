@@ -21,11 +21,12 @@ class Payment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardStatus: false
+      cardStatus: true
     };
   }
 
   componentWillMount() {
+    this.props.getTickets();
     this.props.navigation.setParams({
       handleIconTouch: this.handleIconTouch
     });
@@ -60,11 +61,13 @@ class Payment extends Component {
   }
 
   payWithBankTransfer = () => {
-    this.setState({ cardStatus: !this.state.cardStatus });
+    const { ticketTypes, orderedTicketType } = this.props;
+    const ticket = ticketTypes.filter(ticketType => ticketType.ticket_type === orderedTicketType);
+    this.props.createOrderExhibitor(ticket[0].id, () => Actions.orderDetail());
   };
 
   render() {
-    const { inputFields, order, paypalChecking } = this.props;
+    const { inputFields, paypalChecking } = this.props;
     const { paymentType, bankDestination } = inputFields || '';
 
     if (paymentType === 'bank_transfer') {
@@ -194,7 +197,6 @@ Payment.propTypes = {
   updateInputFields: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   inputFields: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired,
   paypalChecking: PropTypes.bool.isRequired
 };
 
@@ -204,7 +206,8 @@ Payment.propTypes = {
 const mapStateToProps = createStructuredSelector({
   inputFields: selectors.getInputFields(),
   errorFields: selectors.getErrorFields(),
-  paypalChecking: selectors.isPayingWithPaypal()
+  paypalChecking: selectors.isPayingWithPaypal(),
+  ticketTypes: selectors.getTicketTypes()
 });
 
 export default connect(mapStateToProps, actions)(Payment);
