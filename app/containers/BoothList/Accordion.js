@@ -3,27 +3,8 @@ import { View, Text } from 'react-native';
 import { Button, Card } from 'native-base';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
+import { SECTIONS } from '../../constants';
 
-const SECTIONS = [
-  {
-    ticket_type: 'Package Small',
-    title: 'Small',
-    price: '5.000.000',
-    gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
-  },
-  {
-    ticket_type: 'Package Medium',
-    title: 'Medium',
-    price: '10.000.000',
-    gifts: [ '1 x-banner', 'free 5 tickets', 'stiker' ]
-  },
-  {
-    ticket_type: 'Package Big',
-    title: 'Large',
-    price: '15.000.000',
-    gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
-  }
-];
 class AccordionView extends Component {
   state = {
     accordion: false
