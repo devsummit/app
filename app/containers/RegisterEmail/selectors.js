@@ -52,3 +52,8 @@ export const getRegisterStatus = () => createSelector(
   selectRegisterReducer(),
   state => state.get('isRegistered').toJS()
 );
+
+export const getIsLoggedIn = () => createSelector(
+  selectRegisterReducer(),
+  state => state.get('isLoggedIn')
+);
