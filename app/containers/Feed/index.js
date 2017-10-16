@@ -170,7 +170,6 @@ class Feed extends Component {
   }
 
   componentWillMount() {
-    this.props.setTokenHeader(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data').then((profile) => {
       const data = JSON.parse(profile);

@@ -43,3 +43,12 @@ export const getIsLoading = () => createSelector(
   selectMainReducer(),
   state => state.get('isLoading')
 );
+
+/**
+ *  Get is loading status
+ *  Returns boolean
+ */
+export const getAccessToken = () => createSelector(
+  selectMainReducer(),
+  state => state.get('accessToken')
+);

@@ -23,7 +23,8 @@ import {
   GOOGLE_CLIENT_SECRET,
   TWITTER_CALLBACK,
   TWITTER_CONSUMER_KEY,
-  TWITTER_CONSUMER_KEY_SECRET
+  TWITTER_CONSUMER_KEY_SECRET,
+  SET_TOKEN
 } from './constants';
 
 /*
@@ -422,4 +423,11 @@ export function subscribeNewsletter() {
       }
     });
   };
+}
+
+export function setToken(token) {
+  return {
+    type: SET_TOKEN,
+    token
+  }
 }

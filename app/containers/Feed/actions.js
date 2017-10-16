@@ -56,15 +56,6 @@ export function isFetchingMoreFeeds(status) {
   };
 }
 
-export function setTokenHeader(currentpage) {
-  return (dispatch) => {
-    getAccessToken().then((accessToken) => {
-      Api.setAuthorizationToken(accessToken);
-      dispatch(fetchFeeds(currentpage));
-    });
-  };
-}
-
 export function fetchFeeds(currentpage) {
   return (dispatch) => {
     dispatch(isFetchingFeeds(true));
