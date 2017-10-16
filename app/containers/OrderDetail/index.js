@@ -53,7 +53,7 @@ class OrderDetail extends Component {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
-    this.props.getOrderDetail(this.props.orderId);
+    this.props.getOrderDetail(this.props.id);
   };
 
   componentWillReceiveProps() {
@@ -197,7 +197,6 @@ class OrderDetail extends Component {
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-
     const WEBVIEW_REF = 'webview';
     if (
       isUpdating ||
@@ -392,6 +391,7 @@ OrderDetail.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  orderId: selectors.getOrderId(),
   ticketTypes: selectors.getTicketTypes(),
   order: selectors.getOrder(),
   isUpdating: selectors.getIsUpdatingOrder(),
