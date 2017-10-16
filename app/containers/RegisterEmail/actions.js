@@ -11,7 +11,8 @@ import {
   UPDATE_REGISTER_METHOD,
   TOGGLE_IS_REGISTERING,
   UPDATE_REGISTER_STATUS,
-  RESET_STATE
+  RESET_STATE,
+  UPDATE_IS_LOGGED_IN
 } from './constants';
 
 /*
@@ -77,12 +78,16 @@ export function resetState() {
   };
 }
 
+export function updateIsLoggedIn(status) {
+  return {
+    type: UPDATE_IS_LOGGED_IN,
+    status
+  };
+}
+
 /*
  * Register user
  */
-/*
-  * Register user
-  */
 export function register(callBack) {
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
@@ -118,19 +123,22 @@ export function register(callBack) {
                 [ 'role_id', roleId ],
                 [ 'profile_data', profileData ]
               ]);
-              // await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));
               callBack();
-              // await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              await dispatch(
+                updateRegisterStatus(
+                  true,
+                  'Failed',
+                  response.data.meta.message.concat(' please login using your existing account')
+                )
+              );
             }
           } catch (err) {
             console.log(err, 'error cought');
           }
 
-          // else if (response.data.data !== null && !response.data.meta.success) {
-          //   await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-          // } else if (response.data.data === null && !response.data.meta.success) {
-          //   await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
-          // }
           dispatch(toggleIsRegistering(false));
         })
         .catch((error) => {
