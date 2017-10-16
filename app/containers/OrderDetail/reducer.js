@@ -12,7 +12,8 @@ import {
   RESET_STATE,
   SET_CONFIRM_PAYMENT,
   IS_CONFIRMING_PAYMENT,
-  SET_PAYMENT_PROOF
+  SET_PAYMENT_PROOF,
+  SET_ORDER_ID
 } from './constants';
 
 /*
@@ -24,11 +25,14 @@ const initialState = fromJS({
   isUpdatingOrder: false,
   updateOrderStatus: '',
   isConfirmingPayment: false,
-  imageUrl: ''
+  imageUrl: '',
+  orderId: ''
 });
 
 function orderDetailReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_ORDER_ID:
+      return state.set('orderId', action.value)
     case SET_TICKET_TYPE:
       return state.set('ticketTypes', fromJS(action.data));
     case SET_ORDER:
