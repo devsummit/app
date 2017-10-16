@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { View, AsyncStorage } from 'react-native';
+import { View, AsyncStorage, NetInfo } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import BusyIndicator from 'react-native-busy-indicator';
 
@@ -24,6 +24,7 @@ import Schedule from './containers/Schedule';
 import ScheduleDetail from './containers/ScheduleDetail';
 import Main from './containers/Main';
 import {setToken} from './containers/Main/actions';
+import {setIsOnline} from './modules/net/actions';
 import ChangePassword from './containers/ChangePassword';
 import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
@@ -60,6 +61,7 @@ switch (lang) {
 }
 strings.setLanguage(setlang);
 
+
 /**
 *  Apply middlewares
 */
@@ -71,6 +73,14 @@ const store = createStore(
     autoRehydrate(),
   )
 );
+
+function handleConnectivityChange (status) {
+  console.log('trigger me');
+  store.dispatch(setIsOnline(status))
+  NetInfo.removeEventListener('connectionChange', handleConnectivityChange);
+};
+NetInfo.addEventListener('connectionChange', handleConnectivityChange);
+
 const persistingStore = (callback = () => {}) => {
   persistStore(store, {storage: AsyncStorage}, () => {
     AsyncStorage

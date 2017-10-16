@@ -3,6 +3,7 @@ package io.devsummit.app.android;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import br.com.vizir.rn.paypal.PayPalPackage;
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -54,6 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
       MainApplication.paypalPackage = new PayPalPackage(PAY_PAL_REQUEST_ID);
       return Arrays.asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
           new ReactNativeLocalizationPackage(),
               MainApplication.getPaypalPackage(),
           new VectorIconsPackage(),
