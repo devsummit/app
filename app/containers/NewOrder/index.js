@@ -12,6 +12,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { Alert, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 
 // import redux components
 import { connect } from 'react-redux';
@@ -49,7 +50,11 @@ class NewOrder extends Component {
         {
           text: strings.order.proceedYes,
           onPress: () => {
-            this.props.placeOrder(order => Actions.payment({ order }));
+            LoaderHandler.showLoader('Processing your Order');
+            this.props.placeOrder(order => {
+              LoaderHandler.hideLoader();
+              Actions.payment({ order })
+            });
           }
         }
       ]

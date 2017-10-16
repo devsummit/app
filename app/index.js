@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 import { View, AsyncStorage } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
+import BusyIndicator from 'react-native-busy-indicator';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
@@ -79,6 +80,7 @@ export default class App extends Component {
 
   render() {
     return (
+      <View style={{flex: 1}}>
       <Provider store={store}>
         <RouterWithRedux
           navigationBarStyle={styles.navBar}
@@ -115,6 +117,8 @@ export default class App extends Component {
           </Scene>
         </RouterWithRedux>
       </Provider>
+      <BusyIndicator />
+    </View>
     );
   }
 }

@@ -7,8 +7,9 @@ import {
   Button,
   Text
 } from 'native-base';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 import PropTypes from 'prop-types';
 
 // import redux components
@@ -33,8 +34,7 @@ class Payment extends Component {
 
   componentWillMount() {
     this.props.navigation.setParams({
-      handleIconTouch:
-      this.handleIconTouch
+      handleIconTouch: this.handleIconTouch
     });
   }
 
@@ -50,7 +50,20 @@ class Payment extends Component {
   }
   payWithPaypal() {
     const {order, payWithPaypal} = this.props;
-    payWithPaypal(order);
+    LoaderHandler.showLoader('Confirming your payment');
+    payWithPaypal(order, (result) => {
+      LoaderHandler.hideLoader();
+      Alert.alert(
+        strings.payment.thanksForTheOrderTitle,
+        strings.payment.thanksForTheOrderMessage,
+        [
+          {
+            text: strings.payment.okButton,
+            onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
+          }
+        ]
+      );
+    });
   }
 
   render() {

@@ -61,7 +61,7 @@ export function isPayingWithPaypal(value) {
  * Initiate payment with PayPal
  * @param {order: order data}
  */
-export function payWithPaypal(order) {
+export function payWithPaypal(order, callback = () => {}) {
   return (dispatch) => {
     dispatch(isPayingWithPaypal(true));
     PayPal.paymentRequest({
@@ -72,7 +72,7 @@ export function payWithPaypal(order) {
       description: 'Ticket for full 3-day event'
     }).then(({ confirmation }) => {
       const { response } = confirmation;
-      getAccessToken()
+      return getAccessToken()
         .then((accessToken) => {
           const data = {
             order_id: order.order_id,
@@ -83,10 +83,11 @@ export function payWithPaypal(order) {
             headers: { Authorization: accessToken }
           });
         }).then((result) => {
-          console.log('response', result);
+          console.log('result', result);
           dispatch(isPayingWithPaypal(false));
+          callback(result)
         }).catch((error) => {
-          console.log('error', error);
+          console.log('error', error)
           dispatch(isPayingWithPaypal(false));
         });
     })

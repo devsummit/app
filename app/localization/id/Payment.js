@@ -20,5 +20,8 @@ export default {
   totalAmount: 'Jumlah total',
   submitPayment: 'Bayar',
   payWithPaypal: 'Bayar dengan PayPal',
-  checkingPayment: 'Checking Payment'
+  checkingPayment: 'Checking Payment',
+  thanksForTheOrderTitle: 'Terima Kasih!',
+  thanksForTheOrderMessage: 'Order anda sudah diproses. Kami akan membawa pada halaman daftar pembelian. Sampai ketemu pada event akbar!',
+  okButton: 'OK'
 };

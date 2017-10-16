@@ -343,7 +343,7 @@ class Feed extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <Tabs style={styles.tabs} initialPage={0}>
+        <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
             heading={
               <TabHeading style={styles.tabHeading}>
