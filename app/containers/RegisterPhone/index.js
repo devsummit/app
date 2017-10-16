@@ -78,7 +78,7 @@ class RegisterPhone extends Component {
   }
 
   onAlertOk = () => {
-    Actions.main();
+    Actions.mainTabs();
   };
 
   onLogin(token) {
@@ -118,7 +118,7 @@ class RegisterPhone extends Component {
     if (this.isFieldError()) {
       Alert.alert(strings.global.warning, strings.register.fieldNotComplete);
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
       this.props.inputFields.email = '';
       this.props.inputFields.firstName = '';
       this.props.inputFields.lastName = '';
