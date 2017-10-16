@@ -1,0 +1,107 @@
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { Button, Card } from 'native-base';
+import Accordion from 'react-native-collapsible/Accordion';
+import * as Animatable from 'react-native-animatable';
+
+const SECTIONS = [
+  {
+    ticket_type: 'Package Small',
+    title: 'Small',
+    price: '5.000.000',
+    gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
+  },
+  {
+    ticket_type: 'Package Medium',
+    title: 'Medium',
+    price: '10.000.000',
+    gifts: [ '1 x-banner', 'free 5 tickets', 'stiker' ]
+  },
+  {
+    ticket_type: 'Package Big',
+    title: 'Large',
+    price: '15.000.000',
+    gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
+  }
+];
+class AccordionView extends Component {
+  state = {
+    accordion: false
+  };
+
+  renderHeader = (section, index, isActive) => {
+    return (
+      <Animatable.View
+        duration={300}
+        transition="backgroundColor"
+        style={{
+          backgroundColor: isActive ? 'rgba(255,255,255,1)' : 'grey'
+        }}
+      >
+        <Card>
+          <View
+            style={{
+              flex: 1,
+              padding: 30,
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}
+          >
+            <Text style={{ fontSize: 30, textAlign: 'center' }}>{section.title}</Text>
+          </View>
+        </Card>
+      </Animatable.View>
+    );
+  };
+
+  renderContent = (section, i, isActive) => {
+    const type = section.ticket_type;
+    return (
+      <Animatable.View
+        duration={300}
+        transition="backgroundColor"
+        style={{ backgroundColor: isActive ? 'rgba(255,255,255,1)' : 'rgba(245,252,255,1)' }}
+      >
+        <Animatable.View
+          duration={300}
+          easing="ease-out"
+          animation={isActive ? 'zoomIn' : 'zoomInUp'}
+        >
+          <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Price: {section.price}</Text>
+          {section.gifts &&
+            section.gifts.map((item, idx) => (
+              <View key={idx}>
+                <Text>{item}</Text>
+              </View>
+            ))}
+          <Button
+            style={{
+              width: '70%',
+              backgroundColor: '#FF6F00',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              justifyContent: 'center',
+              marginTop: 10,
+              marginBottom: 10
+            }}
+            onPress={() => this.props.setPaymentMethod(type)}
+          >
+            <Text style={{ color: '#FFF', fontSize: 16 }}>Order</Text>
+          </Button>
+        </Animatable.View>
+      </Animatable.View>
+    );
+  };
+
+  render() {
+    return (
+      <Accordion
+        sections={SECTIONS}
+        renderHeader={this.renderHeader}
+        renderContent={this.renderContent}
+      />
+    );
+  }
+}
+
+export default AccordionView;
