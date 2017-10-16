@@ -71,6 +71,9 @@ function registerEmailReducer(state = initialState, action) {
     case UPDATE_IS_LOGGED_IN:
       return state.set('isLoggedIn', action.status);
 
+    case UPDATE_IS_LOGGED_IN:
+      return state.set('isLoggedIn', action.status);
+
     case RESET_STATE:
       return initialState;
 
