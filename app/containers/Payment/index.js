@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Content,
-  Picker,
-  Item,
-  Button,
-  Text
-} from 'native-base';
-import { View } from 'react-native';
+import { Container, Content, Picker, Item, Button, Text, Card } from 'native-base';
+import { View, ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 import PropTypes from 'prop-types';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 // import redux components
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -21,20 +15,19 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
 
-
 let bankList = [];
-
 
 class Payment extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      cardStatus: false
+    };
   }
 
   componentWillMount() {
     this.props.navigation.setParams({
-      handleIconTouch:
-      this.handleIconTouch
+      handleIconTouch: this.handleIconTouch
     });
   }
 
@@ -46,15 +39,33 @@ class Payment extends Component {
       });
       this.props.updateErrorFields('bankDestination', selectedMethod[0].bankDestination);
     }
-    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
+    this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
+  };
+  payWithPaypal() {
+    const { order, payWithPaypal } = this.props;
+    LoaderHandler.showLoader('Confirming your payment');
+    payWithPaypal(order, (result) => {
+      LoaderHandler.hideLoader();
+      Alert.alert(
+        strings.payment.thanksForTheOrderTitle,
+        strings.payment.thanksForTheOrderMessage,
+        [
+          {
+            text: strings.payment.okButton,
+            onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
+          }
+        ]
+      );
+    });
   }
 
+  payWithBankTransfer = () => {
+    this.setState({ cardStatus: !this.state.cardStatus });
+  };
+
   render() {
-    const { inputFields, order } = this.props;
-    const {
-      paymentType,
-      bankDestination
-    } = inputFields || '';
+    const { inputFields, order, paypalChecking } = this.props;
+    const { paymentType, bankDestination } = inputFields || '';
 
     if (paymentType === 'bank_transfer') {
       bankList = BANK_TRANSFERS;
@@ -65,7 +76,8 @@ class Payment extends Component {
       <Container style={styles.container}>
         <Content>
           <Text style={styles.littleText}>{strings.payment.method}</Text>
-          <View style={styles.pickerWrapper}>
+          {/* @Deprecated: Remove this soon */}
+          {/* <View style={styles.pickerWrapper}>
             <Picker
               style={styles.picker}
               mode="dropdown"
@@ -107,13 +119,69 @@ class Payment extends Component {
             <Text>
               {strings.payment.goToPaymentDetail}
             </Text>
+          </Button> */}
+          <Button
+            style={styles.button}
+            onPress={() => {
+              this.payWithPaypal();
+            }}
+            disabled
+          >
+            {paypalChecking && <ActivityIndicator color={'white'} />}
+            <Text>
+              {paypalChecking ? strings.payment.checkingPayment : strings.payment.payWithPaypal}
+            </Text>
           </Button>
-          {/* {
-            (this.props.inputFields.first_name.length !== 0 &&
-              this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?
-              this.renderLoginButton() :
-              this.renderErrorButton()
-          } */}
+
+          <Button
+            style={styles.button}
+            onPress={() => {
+              this.payWithBankTransfer();
+            }}
+            disabled={false}
+          >
+            <Text>{'Bank Transfers'}</Text>
+          </Button>
+          {this.state.cardStatus ? (
+            <Card>
+              <View style={styles.card}>
+                <Icon name="gift" style={{ fontSize: 30, color: '#BDBDBD' }} />
+                <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                <Text style={styles.textTitle}>OR</Text>
+                <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                <View
+                  style={{
+                    flex: 8,
+                    alignItems: 'center'
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#000000',
+                      marginBottom: 8,
+                      marginTop: 16
+                    }}
+                  >
+                    Nomer Rekening:
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#000000',
+                      marginBottom: 8,
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    130-0016066782
+                  </Text>
+                </View>
+              </View>
+            </Card>
+          ) : null}
         </Content>
       </Container>
     );
@@ -126,7 +194,8 @@ Payment.propTypes = {
   updateInputFields: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   inputFields: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired
+  order: PropTypes.object.isRequired,
+  paypalChecking: PropTypes.bool.isRequired
 };
 
 /**
@@ -134,7 +203,8 @@ Payment.propTypes = {
  */
 const mapStateToProps = createStructuredSelector({
   inputFields: selectors.getInputFields(),
-  errorFields: selectors.getErrorFields()
+  errorFields: selectors.getErrorFields(),
+  paypalChecking: selectors.isPayingWithPaypal()
 });
 
 export default connect(mapStateToProps, actions)(Payment);

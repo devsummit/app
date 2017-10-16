@@ -1,5 +1,6 @@
 export const UPDATE_SINGLE_INPUT_FIELD = 'app/containers/Payment/UPDATE_SINGLE_INPUT_FIELD';
 export const UPDATE_SINGLE_ERROR_FIELD = 'app/containers/Payment/UPDATE_SINGLE_ERROR_FIELD';
+export const IS_PAYING_WITH_PAYPAL = 'app/containers/Payment/IS_PAYING_WITH_PAYPAL';
 export const PAYMENT_METHODS = [
   {
     value: 'key0',

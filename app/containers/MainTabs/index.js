@@ -87,7 +87,7 @@ export default class MainTabs extends Component {
                 </TabHeading>
               }
             >
-              <Feed />
+              <Feed {...this.props} />
             </Tab>
             <Tab
               heading={

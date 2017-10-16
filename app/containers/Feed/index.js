@@ -343,7 +343,7 @@ class Feed extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <Tabs style={styles.tabs} initialPage={0}>
+        <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
             heading={
               <TabHeading style={styles.tabHeading}>
@@ -388,10 +388,10 @@ class Feed extends Component {
                                     style={{ alignSelf: 'center' }}
                                     onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
-                                    <Image
+                                    {item.attachment && <Image
                                       source={{ uri: item.attachment }}
                                       style={styles.images}
-                                    />
+                                    />}
                                   </TouchableOpacity>
                                 </Body>
                               </CardItem>
@@ -440,11 +440,11 @@ class Feed extends Component {
                                   style={styles.touchImage}
                                   onPress={() => this.setModalVisible(true, item.attachment)}
                                 >
-                                  <Image
+                                  {item.attachment && <Image
                                     source={{ uri: item.attachment }}
                                     resizeMode="contain"
                                     style={styles.images}
-                                  />
+                                  />}
                                 </TouchableOpacity>
                                 <View
                                   style={{

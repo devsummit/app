@@ -25,3 +25,8 @@ export const getErrorFields = () => createSelector(
   selectPaymentMethodReducer(),
   state => state.get('errorFields').toJS()
 );
+
+export const isPayingWithPaypal = () => createSelector(
+  selectPaymentMethodReducer(),
+  state => state.get('isPayingWithPaypal')
+);
