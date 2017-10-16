@@ -17,3 +17,4 @@ export const UPDATE_IS_SUBSCRIBED = 'app/containers/Main/UPDATE_IS_SUBSCRIBED';
 export const UPDATE_IS_LOADING = 'app/containers/Main/UPDATE_IS_LOADING';
 
 export const SET_TOKEN = 'app/containers/Main/SET_TOKEN';
+export const RESET_TOKEN = 'app/containers/Main/RESET_TOKEN';

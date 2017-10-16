@@ -50,6 +50,7 @@ import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { getProfileData } from '../Main/selectors';
 import OrderList from '../OrderList';
 import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
@@ -132,7 +133,8 @@ const mapStateToProps = () =>
     imagesData: selectors.getUpdateImage(),
     textData: selectors.getUpdateText(),
     currentPage: selectors.getCurrentPage(),
-    isRemoving: selectors.getIsRemoveFeed()
+    isRemoving: selectors.getIsRemoveFeed(),
+    profileData: getProfileData(),
   });
 
 class Feed extends Component {
@@ -170,15 +172,12 @@ class Feed extends Component {
   }
 
   componentWillMount() {
-
-    AsyncStorage.getItem('profile_data').then((profile) => {
-      const data = JSON.parse(profile);
-      const firstName = data.first_name;
-      const lastName = data.last_name;
-      const url = data.photos[0].url;
-      const id = data.id;
-      this.setState({ firstName, lastName, profileUrl: url, userId: id });
-    });
+    // const data = this.props.profileData;
+    // const firstName = data.first_name;
+    // const lastName = data.last_name;
+    // const url = data.photos[0].url;
+    // const id = data.id;
+    // this.setState({ firstName, lastName, profileUrl: url, userId: id });
   }
 
   setModalVisible = (visible, image) => {

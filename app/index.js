@@ -71,27 +71,35 @@ const store = createStore(
     autoRehydrate(),
   )
 );
-
-persistStore(store, {storage: AsyncStorage}, () => {
-  AsyncStorage
-  .multiGet(['access_token', 'refresh_token', 'role_id', 'profile_data'])
-  .then(([accessToken, refreshToken, roleId, profileData]) => {
-    const savedToken = store.getState().getIn(['main', 'accessToken']);
-    if (!savedToken || savedToken === '') {
-      store.dispatch(setToken({
-        accessToken,
-        refreshToken,
-        roleId,
-        profileData
-      }))
-    }
-  }).catch(err => console.log(err));
-})
+const persistingStore = (callback = () => {}) => {
+  persistStore(store, {storage: AsyncStorage}, () => {
+    AsyncStorage
+    .multiGet(['access_token', 'refresh_token', 'role_id', 'profile_data'])
+    .then(([accessToken, refreshToken, roleId, profileData]) => {
+      const savedToken = store.getState().getIn(['main', 'accessToken']);
+      if (!savedToken || savedToken === '') {
+        store.dispatch(setToken({
+          accessToken,
+          refreshToken,
+          roleId: roleId,
+          profileData: JSON.parse(profileData)
+        }))
+      }
+        callback();
+    }).catch(err => console.log(err));
+  })
+};
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      rehydrated: false
+    };
+  }
+
+  componentWillMount() {
+    persistingStore(() => this.setState({rehydrated: true}));
   }
 
   onBackPress = () => {
@@ -105,7 +113,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-      <Provider store={store}>
+      {this.state.rehydrated && <Provider store={store}>
         <RouterWithRedux
           navigationBarStyle={styles.navBar}
           titleStyle={styles.navBarTitle}
@@ -140,7 +148,7 @@ export default class App extends Component {
             <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
           </Scene>
         </RouterWithRedux>
-      </Provider>
+      </Provider>}
       <BusyIndicator />
     </View>
     );

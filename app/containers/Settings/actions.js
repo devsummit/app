@@ -12,6 +12,7 @@ import {
   UPDATE_IS_DISABLED
 } from './constants';
 import { restoreCurrentPage } from '../Feed/actions';
+import { resetToken } from '../Main/actions';
 import local from '../../../config/local';
 
 /*
@@ -162,6 +163,7 @@ export function logOut() {
 
     const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
     await AsyncStorage.multiRemove(keys);
+    dispatch(resetToken());
     dispatch(restoreCurrentPage());
     dispatch(isLoadingLogout(false));
     dispatch(updateIsLogOut(true));

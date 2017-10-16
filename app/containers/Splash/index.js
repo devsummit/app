@@ -19,11 +19,12 @@ class Splash extends Component {
   }
 
   componentDidMount() {
+    console.log('token', this.props.accessToken);
     if (this.props.accessToken && this.props.accessToken !== '') {
       Api.setAuthorizationToken(this.props.accessToken);
-      Actions.main({ type: 'replace' });
-    } else {
       Actions.mainTabs({ type: 'replace' });
+    } else {
+      Actions.main({ type: 'replace' });
     }
   }
 

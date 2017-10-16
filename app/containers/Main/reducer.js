@@ -11,7 +11,8 @@ import {
   UPDATE_IS_NOT_REGISTERED,
   UPDATE_IS_LOADING,
   FETCH_PROFILE_DATA,
-  SET_TOKEN
+  SET_TOKEN,
+  RESET_TOKEN
 } from './constants';
 
 /*
@@ -28,8 +29,8 @@ const initialState = fromJS({
   isSubscribed: false,
   accessToken: '',
   refreshToken: '',
-  roleId: '',
-  profileData: '',
+  roleId: null,
+  profileData: null,
 });
 
 function mainReducer(state = initialState, action) {
@@ -48,6 +49,11 @@ function mainReducer(state = initialState, action) {
         .set('refreshToken', token.refreshToken)
         .set('roleId', token.roleId)
         .set('profileData', token.profileData)
+    case RESET_TOKEN:
+      return state.set('accessToken', '')
+        .set('refreshToken', '')
+        .set('roleId', null)
+        .set('profileData', null)
     default:
       return state;
   }

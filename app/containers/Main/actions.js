@@ -24,7 +24,8 @@ import {
   TWITTER_CALLBACK,
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_KEY_SECRET,
-  SET_TOKEN
+  SET_TOKEN,
+  RESET_TOKEN
 } from './constants';
 
 /*
@@ -94,17 +95,18 @@ export function login() {
       .then(async (response) => {
         if (response && response.data && response.data.meta.success) {
           const resData = response.data.data;
-          const roleId = JSON.stringify(response.data.included.role_id);
-          const profileData = JSON.stringify(response.data.included);
-          const boothData = JSON.stringify(response.data.included.booth);
+          const roleId = response.data.included.role_id;
+          const profileData = response.data.included;
+          const boothData = response.data.included.booth;
           try {
             if (profileData || boothData) {
-              await AsyncStorage.multiSet([
-                [ 'access_token', resData.access_token ],
-                [ 'refresh_token', resData.refresh_token ],
-                [ 'role_id', roleId ],
-                [ 'profile_data', profileData ]
-              ]);
+              dispatch(setToken({
+                accessToken: resData.access_token,
+                refreshToken: resData.refresh_token,
+                roleId,
+                profileData,
+                boothData
+              }))
             }
           } catch (error) {
             console.log(error, 'error caught');
@@ -226,15 +228,13 @@ export function loginGoogle() {
             .then(async (response) => {
               if (response && response.data && response.data.meta.success) {
                 const resData = response.data.data;
-                const roleId = JSON.stringify(response.data.included.role_id);
-                const profileData = JSON.stringify(response.data.included);
                 try {
-                  await AsyncStorage.multiSet([
-                    [ 'access_token', resData.access_token ],
-                    [ 'refresh_token', resData.refresh_token ],
-                    [ 'role_id', roleId ],
-                    [ 'profile_data', profileData ]
-                  ]);
+                  await dispatch(setToken({
+                    accessToken: resData.access_token,
+                    refreshToken: resData.refresh_token,
+                    roleId: response.data.included.role_id,
+                    profileData: response.data.included,
+                  }))
                 } catch (error) {
                   console.log(error, 'error caught');
                 }
@@ -429,5 +429,11 @@ export function setToken(token) {
   return {
     type: SET_TOKEN,
     token
+  }
+}
+
+export function resetToken() {
+  return {
+    type: RESET_TOKEN
   }
 }

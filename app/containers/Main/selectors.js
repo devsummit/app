@@ -45,10 +45,19 @@ export const getIsLoading = () => createSelector(
 );
 
 /**
- *  Get is loading status
- *  Returns boolean
+ *  Get access token
+ *  @return boolean
  */
 export const getAccessToken = () => createSelector(
   selectMainReducer(),
   state => state.get('accessToken')
+);
+
+/**
+ * Get profile data
+ *  @return boolean
+ */
+export const getProfileData = () => createSelector(
+  selectMainReducer(),
+  state => state.get('profileData')
 );
