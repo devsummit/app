@@ -214,7 +214,6 @@ class OrderDetail extends Component {
         </Container>
       );
     }
-    console.log('NEW', localeDate(order.data[0].created_at));
     return (
       <Container style={styles.container}>
         <Content
