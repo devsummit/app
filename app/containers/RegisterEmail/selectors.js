@@ -40,20 +40,8 @@ export const getRegisterMethod = () =>
  *  get the register status
  *  Returns boolean value
  */
-<<<<<<< HEAD
 export const getRegisterStatus = () =>
   createSelector(selectRegisterReducer(), state => state.get('isRegistered').toJS());
 
 export const getIsLoggedIn = () =>
   createSelector(selectRegisterReducer(), state => state.get('isLoggedIn'));
-=======
-export const getRegisterStatus = () => createSelector(
-  selectRegisterReducer(),
-  state => state.get('isRegistered').toJS()
-);
-
-export const getIsLoggedIn = () => createSelector(
-  selectRegisterReducer(),
-  state => state.get('isLoggedIn')
-);
->>>>>>> add selector
