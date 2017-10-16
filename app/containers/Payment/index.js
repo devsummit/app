@@ -21,7 +21,8 @@ class Payment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardStatus: false
+      cardStatus: false,
+      visible: false
     };
   }
 
@@ -63,6 +64,10 @@ class Payment extends Component {
     this.setState({ cardStatus: !this.state.cardStatus });
   };
 
+  makeMidtransViewVisible = (status) => {
+    this.setState({ visible: status });
+  }
+
   render() {
     const { inputFields, order, paypalChecking } = this.props;
     const { paymentType, bankDestination } = inputFields || '';
@@ -76,8 +81,8 @@ class Payment extends Component {
       <Container style={styles.container}>
         <Content>
           <Text style={styles.littleText}>{strings.payment.method}</Text>
-          {/* @Deprecated: Remove this soon */}
-          {/* <View style={styles.pickerWrapper}>
+          {/* View Midtrans Payment */}
+          <View style={styles.pickerWrapper}>
             <Picker
               style={styles.picker}
               mode="dropdown"
@@ -119,7 +124,7 @@ class Payment extends Component {
             <Text>
               {strings.payment.goToPaymentDetail}
             </Text>
-          </Button> */}
+          </Button>
           <Button
             style={styles.button}
             onPress={() => {
@@ -142,6 +147,17 @@ class Payment extends Component {
           >
             <Text>{'Bank Transfers'}</Text>
           </Button>
+
+          <Button
+            style={styles.button}
+            onPress={() => {
+              this.makeMidtransViewVisible(true);
+            }}
+            disabled={false}
+          >
+            <Text>{'Midtrans Payment'}</Text>
+          </Button>
+
           {this.state.cardStatus ? (
             <Card>
               <View style={styles.card}>
