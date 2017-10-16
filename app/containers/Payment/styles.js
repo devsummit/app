@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   littleText: {
     color: '#000',
     width: '70%',
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 16,
     marginTop: 20,
     marginLeft: 'auto',
@@ -48,7 +48,23 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
+  },
+  card: {
+    flex: 1,
+    backgroundColor: '#CFD8DC',
+    padding: 10,
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  textTitle: {
+    fontSize: 18,
+    color: '#000000'
+  },
+  textTitleBold: {
+    fontSize: 18,
+    color: '#000000',
+    fontWeight: 'bold'
   }
 });
 
