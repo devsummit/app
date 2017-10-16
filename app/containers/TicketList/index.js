@@ -126,9 +126,7 @@ class TicketList extends Component {
       );
     }
 
-    const { orders } = this.props;
-
-    return <OrderList />;
+    return this.renderTicketList();
 
     /*
     return (
