@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Content, List, ListItem, Button, Text, Spinner } from 'native-base';
 import PropTypes from 'prop-types';
+
+import QRCode from 'react-native-qrcode';
 import {
   RefreshControl,
   View,
@@ -92,6 +94,15 @@ class TicketList extends Component {
                 }
               ]}
             >
+              <Text style={styles.text}>{strings.order.ticketNumber} {item.id + '\n'}
+                {strings.order.QRInstruction}
+              </Text>
+              <QRCode
+                value={item.ticket_code}
+                size={100}
+                bgColor='black'
+                fgColor='white'
+                />
               <Text style={styles.text}>
                 {strings.order.ticketNumber} {item.id}
               </Text>

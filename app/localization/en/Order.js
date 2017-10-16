@@ -27,6 +27,7 @@ export default {
   // Ticket list
   ticketNumber: 'Ticket No.',
   noTicket: 'You have no tickets, please order or try to refresh',
+  QRInstruction: 'You can checkin using this QR code',
   refresh: 'Refresh',
   myOrder: 'My orders',
   pending: 'orders is pending',
