@@ -30,3 +30,15 @@ export const isPayingWithPaypal = () => createSelector(
   selectPaymentMethodReducer(),
   state => state.get('isPayingWithPaypal')
 );
+
+// select user id
+export const getUserId = () => createSelector(
+  selectPaymentMethodReducer(),
+  state => state.get('userId')
+)
+
+// // select order
+// export const getOrder = () => createSelector(
+//   selectPaymentMethodReducer(),
+//   state => state.get('orders').toJS()
+// )
