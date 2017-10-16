@@ -57,19 +57,24 @@ class RegisterEmail extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-      if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
-        Toast.show(
-          this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
-        );
-      }
+    // if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+    //   Actions.mainTabs();
+    //   this.props.isLoggedIn(false);
+    // }
 
-      setTimeout(() => {
-        this.onAlertOk();
-      }, 3000);
+    // if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+    //   if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
+    //     Toast.show(
+    //       this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
+    //     );
+    //   }
 
-      this.props.updateRegisterStatus(false, '', '');
-    }
+    //   // setTimeout(() => {
+    //   //   this.onAlertOk();
+    //   // }, 3000);
+
+    //   this.props.updateRegisterStatus(false, '', '');
+    // }
   }
 
   componentWillUnmount() {
@@ -92,9 +97,9 @@ class RegisterEmail extends Component {
     }).start();
   };
 
-  onAlertOk = () => {
-    Actions.main();
-  };
+  // onAlertOk = () => {
+  //   Actions.main();
+  // };
   /*
     * validate all fields before submission
     */
@@ -109,7 +114,7 @@ class RegisterEmail extends Component {
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
     }
   };
 
@@ -265,14 +270,14 @@ class RegisterEmail extends Component {
               (this.checkEmail(email) === false && email !== '') ||
               verifyPassword !== password ? (
                 <View>
-                    <Button
+                  <Button
                     block
                     style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
                     onPress={() => this.submitRegistration()}
                   >
                     <Text style={styles.buttomText}>{strings.register.register}</Text>
                   </Button>
-                  </View>
+                </View>
                 ) : (
                   <Button
                     block
@@ -318,7 +323,9 @@ RegisterEmail.propTypes = {
   errorFields: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   updateRegisterMethod: PropTypes.func.isRequired,
-  updateErrorFields: PropTypes.func.isRequired
+  updateErrorFields: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isRegistering: PropTypes.bool.isRequired
 };
 
 /**
@@ -329,7 +336,8 @@ const mapStateToProps = createStructuredSelector({
   errorFields: selectors.getErrorFields(),
   registerMethod: selectors.getRegisterMethod(),
   isRegistering: selectors.getIsRegistering(),
-  isRegistered: selectors.getRegisterStatus()
+  isRegistered: selectors.getRegisterStatus(),
+  isLoggedIn: selectors.getIsLoggedIn()
 });
 
 export default connect(mapStateToProps, actions)(RegisterEmail);
