@@ -13,7 +13,8 @@ import {
   UPDATE_ORDER_STATUS,
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
-  SET_PAYMENT_PROOF
+  SET_PAYMENT_PROOF,
+  SET_ORDER_ID
   // RESET_STATE
 } from './constants';
 
@@ -29,6 +30,10 @@ export function updateIsUpdatingOrder(status) {
 
 export function setPaymentProof(value) {
   return { type: SET_PAYMENT_PROOF, value };
+}
+
+export function setOrderId(value) {
+  return { type: SET_ORDER_ID, value };
 }
 
 export function orderVerification(order, image) {
@@ -76,7 +81,9 @@ export function getOrderDetail(orderId) {
           headers: { Authorization: accessToken }
         })
           .then((response) => {
-            dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+            if (response.data.included.verification){
+              dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+            }
             dispatch({ type: SET_ORDER, data: response.data });
             dispatch(updateIsUpdatingOrder(false));
           })
