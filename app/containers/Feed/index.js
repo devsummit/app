@@ -571,6 +571,16 @@ class Feed extends Component {
               </Button>
               <Button
                 style={{ backgroundColor: '#FF8B00' }}
+                onPress={() => Actions.ticketList()}
+              >
+                <CameraIcon
+                  name="archive"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
+              </Button>
+              <Button
+                style={{ backgroundColor: '#FF8B00' }}
                 onPress={() => this.setModalRedeem(true)}
               >
                 <CameraIcon
