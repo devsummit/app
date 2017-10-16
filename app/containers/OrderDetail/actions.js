@@ -70,7 +70,6 @@ export function getOrderDetail(orderId) {
     orderdetail
       .get(orderId)
       .then((response) => {
-        console.log('created_at', response.data.data[0]);
         if (response.data.included.verification) {
           dispatch(setPaymentProof(response.data.included.verification.payment_proof));
         }
