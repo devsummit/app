@@ -27,7 +27,11 @@ export function updateIsUpdatingOrder(status) {
   };
 }
 
-export function orderVerification(user, order, image) {
+export function setPaymentProof(value) {
+  return { type: SET_PAYMENT_PROOF, value };
+}
+
+export function orderVerification(order, image) {
   return (dispatch) => {
     getAccessToken().then((token) => {
       const form = new FormData();
@@ -45,7 +49,6 @@ export function orderVerification(user, order, image) {
           name: 'image.jpg'
         });
       }
-      form.append('user_id', user);
       form.append('order_id', order);
 
       const headers = { Authorization: token };
@@ -63,9 +66,6 @@ export function orderVerification(user, order, image) {
   };
 }
 
-export function setPaymentProof(value) {
-  return { type: SET_PAYMENT_PROOF, value };
-}
 
 export function getOrderDetail(orderId) {
   return (dispatch) => {
@@ -76,9 +76,8 @@ export function getOrderDetail(orderId) {
           headers: { Authorization: accessToken }
         })
           .then((response) => {
-            const data = response.data;
-            dispatch(setPaymentProof(data.included.verification.payment_proof));
-            dispatch({ type: SET_ORDER, data });
+            dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+            dispatch({ type: SET_ORDER, data: response.data });
             dispatch(updateIsUpdatingOrder(false));
           })
           .catch((err) => {
