@@ -56,24 +56,6 @@ class RegisterEmail extends Component {
     this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
 
-  componentWillReceiveProps(prevProps) {
-    // if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
-    //   Actions.mainTabs();
-    //   this.props.isLoggedIn(false);
-    // }
-    // if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-    //   if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
-    //     Toast.show(
-    //       this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
-    //     );
-    //   }
-    //   // setTimeout(() => {
-    //   //   this.onAlertOk();
-    //   // }, 3000);
-    //   this.props.updateRegisterStatus(false, '', '');
-    // }
-  }
-
   componentWillUnmount() {
     this.props.resetState();
     this.keyboardWillShowSub.remove();
