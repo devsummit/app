@@ -86,7 +86,7 @@ class TicketList extends Component {
                 styles.card,
                 {
                   alignSelf: 'center',
-                  height: 50,
+                  height: 110,
                   width: '95%',
                   marginLeft: 'auto',
                   marginRight: 'auto',
@@ -94,18 +94,15 @@ class TicketList extends Component {
                 }
               ]}
             >
-              <Text style={styles.text}>{strings.order.ticketNumber} {item.id + '\n'}
+              <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>{strings.order.ticketNumber} {`${item.id  }\n`}</Text>
                 {strings.order.QRInstruction}
               </Text>
               <QRCode
                 value={item.ticket_code}
                 size={100}
-                bgColor='black'
-                fgColor='white'
-                />
-              <Text style={styles.text}>
-                {strings.order.ticketNumber} {item.id}
-              </Text>
+                bgColor="black"
+                fgColor="white"
+              />
               {/* <Button
                 small
                 style={styles.button}
