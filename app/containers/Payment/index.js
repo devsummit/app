@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Content, Picker, Item, Button, Text, Card } from 'native-base';
-import { View, ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
+import { Container, Content, Picker, Item, Button, Text, Card, CardItem } from 'native-base';
+import { View, ActivityIndicator, Alert, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 // import redux components
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
+import { getProfileData } from '../../helpers';
 import styles from './styles';
 import strings from '../../localization';
 import * as actions from './actions';
@@ -16,17 +16,14 @@ import * as selectors from './selectors';
 import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
 
 let bankList = [];
+const logo = require('../../../assets/images/bankmandiri.png');
 
 class Payment extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cardStatus: false,
-      visible: false
-    };
-  }
-
   componentWillMount() {
+    getProfileData()
+      .then((profileData) => {
+        this.props.updateUserId(profileData.id);
+      });
     this.props.navigation.setParams({
       handleIconTouch: this.handleIconTouch
     });
@@ -42,6 +39,20 @@ class Payment extends Component {
     }
     this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
   };
+
+  payWithPaypalAlert() {
+    Alert.alert(
+      'Important',
+      'Your transaction will be converted from IDR to USD',
+      [
+        {
+          text: 'OK',
+          onPress: () => this.payWithPaypal()
+        }
+      ]
+    );
+  }
+
   payWithPaypal() {
     const { order, payWithPaypal } = this.props;
     LoaderHandler.showLoader('Confirming your payment');
@@ -61,15 +72,78 @@ class Payment extends Component {
   }
 
   payWithBankTransfer = () => {
-    this.setState({ cardStatus: !this.state.cardStatus });
+    const userId = this.props.userId;
+    const order = this.props.order;
+    // still static referal code
+    const referalCode = 'supercode';
+    // this.props.updateOrder(order);
+    Alert.alert(strings.order.proceedPaymentTitle, strings.order.proceedPaymentMessage, [
+      {
+        text: strings.order.proceedNo
+      },
+      {
+        text: strings.order.proceedYes,
+        onPress: () => {
+          LoaderHandler.showLoader('Processing your Order');
+          this.props.payWithBankTransfer(userId, order, referalCode, ((data) => {
+            const id = data.order_id
+            LoaderHandler.hideLoader();
+            Actions.orderDetail({ id });
+          }));
+        }
+      }
+    ]);
   };
 
-  makeMidtransViewVisible = (status) => {
-    this.setState({ visible: status });
-  }
+  // returnMidtransView = () => {
+  //   const { inputFields, order } = this.props;
+  //   const { paymentType, bankDestination } = inputFields || '';
+  //   return (
+  //     <View>
+  //       {/* View Midtrans Payment */}
+  //       <View style={styles.pickerWrapper}>
+  //         <Picker
+  //           style={styles.picker}
+  //           mode="dropdown"
+  //           selectedValue={paymentType}
+  //           onValueChange={value => this.handleInputChange('paymentType', value)}
+  //         >
+  //           {PAYMENT_METHODS.map(component => (
+  //             <Item key={component.value} label={component.label} value={component.payment_type} />
+  //           ))}
+  //         </Picker>
+  //       </View>
+  //       {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
+  //         <View>
+  //           <Text style={styles.littleText}>{strings.payment.bank}</Text>
+  //           {bankList.map(component => (
+  //             <Card
+  //               key={component.value}
+  //               label={component.label}
+  //               value={component.bankDestination}
+  //               button
+  //               onPress={() => Actions.paymentDetail({order,  component})}          
+  //             >
+  //               <Text>{component.label}</Text>
+  //             </Card>
+  //           ))}
+  //         </View> : <View />}
+  //       <Button
+  //         style={styles.button}
+  //         onPress={() => {
+  //           Actions.paymentDetail({ order });
+  //         }}
+  //       >
+  //         <Text>
+  //           {strings.payment.goToPaymentDetail}
+  //         </Text>
+  //       </Button>
+  //     </View>
+  //   );
+  // }
 
   render() {
-    const { inputFields, order, paypalChecking } = this.props;
+    const { inputFields, paypalChecking, order } = this.props;
     const { paymentType, bankDestination } = inputFields || '';
 
     if (paymentType === 'bank_transfer') {
@@ -77,58 +151,15 @@ class Payment extends Component {
     } else if (paymentType === 'credit_card') {
       bankList = CREDIT_CARD_LIST;
     }
+
     return (
       <Container style={styles.container}>
         <Content>
           <Text style={styles.littleText}>{strings.payment.method}</Text>
-          {/* View Midtrans Payment */}
-          <View style={styles.pickerWrapper}>
-            <Picker
-              style={styles.picker}
-              mode="dropdown"
-              selectedValue={paymentType}
-              onValueChange={value => this.handleInputChange('paymentType', value)}
-            >
-              {PAYMENT_METHODS.map(component => (
-                <Item key={component.value} label={component.label} value={component.payment_type} />
-              ))}
-            </Picker>
-          </View>
-          {(paymentType === 'bank_transfer' || paymentType === 'credit_card') ?
-            <View>
-              <Text style={styles.littleText}>{strings.payment.bank}</Text>
-              <View style={styles.pickerWrapper}>
-                <Picker
-                  style={styles.picker}
-                  placeholder="Bank"
-                  mode="dropdown"
-                  selectedValue={bankDestination}
-                  onValueChange={value => this.handleInputChange('bankDestination', value)}
-                >
-                  {bankList.map(component => (
-                    <Item
-                      key={component.value}
-                      label={component.label}
-                      value={component.bankDestination}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            </View> : <View />}
           <Button
             style={styles.button}
             onPress={() => {
-              Actions.paymentDetail({ order });
-            }}
-          >
-            <Text>
-              {strings.payment.goToPaymentDetail}
-            </Text>
-          </Button>
-          <Button
-            style={styles.button}
-            onPress={() => {
-              this.payWithPaypal();
+              this.payWithPaypalAlert();
             }}
             disabled
           >
@@ -148,56 +179,45 @@ class Payment extends Component {
             <Text>{'Bank Transfers'}</Text>
           </Button>
 
-          <Button
-            style={styles.button}
-            onPress={() => {
-              this.makeMidtransViewVisible(true);
-            }}
-            disabled={false}
-          >
-            <Text>{'Midtrans Payment'}</Text>
-          </Button>
-
-          {this.state.cardStatus ? (
-            <Card>
-              <View style={styles.card}>
-                <Icon name="gift" style={{ fontSize: 30, color: '#BDBDBD' }} />
-                <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
-                <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-                <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
-                <Text style={styles.textTitleBold}>Taufan Aditya</Text>
-                <Text style={styles.textTitle}>OR</Text>
-                <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
-                <View
+          {/* Bank Transfer Card */}
+          <Card>
+            <View style={styles.card}>
+              <Image source={logo} style={{ height: 50, width: 200 }} />
+              <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+              <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+              <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+              <Text style={styles.textTitle}>OR</Text>
+              <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+              <View
+                style={{
+                  flex: 8,
+                  alignItems: 'center'
+                }}
+              >
+                <Text
                   style={{
-                    flex: 8,
-                    alignItems: 'center'
+                    fontSize: 18,
+                    color: '#000000',
+                    marginBottom: 8,
+                    marginTop: 16
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: '#000000',
-                      marginBottom: 8,
-                      marginTop: 16
-                    }}
-                  >
                     Nomer Rekening:
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: '#000000',
-                      marginBottom: 8,
-                      fontWeight: 'bold'
-                    }}
-                  >
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: '#000000',
+                    marginBottom: 8,
+                    fontWeight: 'bold'
+                  }}
+                >
                     130-0016066782
-                  </Text>
-                </View>
+                </Text>
               </View>
-            </Card>
-          ) : null}
+            </View>
+          </Card>
+
         </Content>
       </Container>
     );
@@ -218,6 +238,8 @@ Payment.propTypes = {
  *  Map redux state to component props
  */
 const mapStateToProps = createStructuredSelector({
+  // order: selectors.getOrder(),
+  userId: selectors.getUserId(),
   inputFields: selectors.getInputFields(),
   errorFields: selectors.getErrorFields(),
   paypalChecking: selectors.isPayingWithPaypal()
