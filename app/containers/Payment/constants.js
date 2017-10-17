@@ -1,6 +1,8 @@
 export const UPDATE_SINGLE_INPUT_FIELD = 'app/containers/Payment/UPDATE_SINGLE_INPUT_FIELD';
 export const UPDATE_SINGLE_ERROR_FIELD = 'app/containers/Payment/UPDATE_SINGLE_ERROR_FIELD';
 export const IS_PAYING_WITH_PAYPAL = 'app/containers/Payment/IS_PAYING_WITH_PAYPAL';
+export const GET_TICKET_TYPES = 'app/containers/Payment/GET_TICKET_TYPES';
+export const CREATE_ORDER = 'app/containers/CREATE_ORDER';
 export const PAYMENT_METHODS = [
   {
     value: 'key0',
@@ -11,7 +13,6 @@ export const PAYMENT_METHODS = [
     value: 'key1',
     label: 'Bank Transfer',
     payment_type: 'bank_transfer'
-
   },
   {
     value: 'key2',

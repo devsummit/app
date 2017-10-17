@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
+import orderdetail from '../../services/orderdetail';
 /*
  * import constants
  */
@@ -33,59 +34,50 @@ export function setPaymentProof(value) {
 
 export function orderVerification(order, image) {
   return (dispatch) => {
-    getAccessToken().then((token) => {
-      const form = new FormData();
+    const form = new FormData();
 
-      if (Platform.OS === 'ios' && image.sourceURL) {
-        form.append('payment_proof', {
-          uri: image.sourceURL
-        });
-      }
+    if (Platform.OS === 'ios' && image.sourceURL) {
+      form.append('payment_proof', {
+        uri: image.sourceURL
+      });
+    }
 
-      if (image.path) {
-        form.append('payment_proof', {
-          uri: image.path,
-          type: image.mime,
-          name: 'image.jpg'
-        });
-      }
-      form.append('order_id', order);
-
-      const headers = { Authorization: token };
-
-      DevSummitAxios.post('/api/v1/order-verification', form, { headers })
-        .then((response) => {
-          dispatch(setPaymentProof(response.data.data.payment_proof));
-          Toast.show(response.data.meta.message);
-        })
-        .catch((err) => {
-          Toast.show('Sorry, something went wrong');
-          console.log('ERROR', err);
-        });
-    });
+    if (image.path) {
+      form.append('payment_proof', {
+        uri: image.path,
+        type: image.mime,
+        name: 'image.jpg'
+      });
+    }
+    form.append('order_id', order);
+    orderdetail
+      .postPaymentProof(form)
+      .then((response) => {
+        dispatch(setPaymentProof(response.data.data.payment_proof));
+        Toast.show(response.data.meta.message);
+      })
+      .catch((err) => {
+        Toast.show('Sorry, something went wrong');
+        console.log('ERROR', err);
+      });
   };
 }
-
 
 export function getOrderDetail(orderId) {
   return (dispatch) => {
     dispatch(updateIsUpdatingOrder(true));
-    getAccessToken()
-      .then((accessToken) => {
-        DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
-          headers: { Authorization: accessToken }
-        })
-          .then((response) => {
-            dispatch(setPaymentProof(response.data.included.verification.payment_proof));
-            dispatch({ type: SET_ORDER, data: response.data });
-            dispatch(updateIsUpdatingOrder(false));
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+
+    orderdetail
+      .get(orderId)
+      .then((response) => {
+        if (response.data.included.verification) {
+          dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+        }
+        dispatch({ type: SET_ORDER, data: response.data });
+        dispatch(updateIsUpdatingOrder(false));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err.response);
       });
   };
 }

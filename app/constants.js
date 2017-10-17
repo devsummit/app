@@ -10,7 +10,6 @@ export const PAYPAL_CURRENCY = config.PAYPAL_CURRENCY;
 export const PAYPAL_RATE = config.PAYPAL_RATE;
 export const PAYPAL_ENV = config.PAYPAL_ENV;
 
-
 // TODO MERCHANT CODE FOR DEVELOPMENT
 export const MERCHANT_CODE = config.MIDTRANS_MERCHANT_ID;
 
@@ -41,3 +40,24 @@ export const ROLES = {
 export const FEEDBACK_URL = 'https://devsummit.io/feedback.html';
 
 export const PRIMARYCOLOR = '#f39e21';
+
+export const SECTIONS = [
+  {
+    ticket_type: 'Package Small',
+    title: 'Small',
+    price: '5.000.000',
+    gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
+  },
+  {
+    ticket_type: 'Package Medium',
+    title: 'Medium',
+    price: '10.000.000',
+    gifts: [ '1 x-banner', 'free 5 tickets', 'stiker' ]
+  },
+  {
+    ticket_type: 'Package Big',
+    title: 'Large',
+    price: '15.000.000',
+    gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
+  }
+];

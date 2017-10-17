@@ -53,7 +53,9 @@ class OrderDetail extends Component {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
-    this.props.getOrderDetail(this.props.orderId);
+    if (this.props.orderId) {
+      this.props.getOrderDetail(this.props.orderId);
+    }
   };
 
   componentWillReceiveProps() {
@@ -253,9 +255,18 @@ class OrderDetail extends Component {
                         <Text>{expiryDate(order.data[0].created_at)}</Text>
                       ) : (
                         <Text style={{ fontWeight: 'bold' }}>
-                          {this.state.status === 'paid'
+                          {this.state.status === 'paid' || this.state.status === 'capture'
                             ? null
-                            : this.state.orderStatus.toUpperCase()}
+                            : Moment()
+                              .utc()
+                              .local()
+                              .isBefore(
+                                Moment.utc(order.data[0].created_at)
+                                  .add(1, 'hours')
+                                  .local()
+                              )
+                              ? expiryDate(order.data[0].created_at)
+                              : 'Expired'}
                         </Text>
                       )}
                     </Col>
@@ -273,7 +284,7 @@ class OrderDetail extends Component {
                 <Text
                   style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
                 >
-                  {this.state.status.toUpperCase()}
+                  {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
                 </Text>
               )}
             </CardItem>
@@ -382,7 +393,6 @@ class OrderDetail extends Component {
 
 OrderDetail.propTypes = {
   getOrderDetail: PropTypes.func.isRequired,
-  orderId: PropTypes.string.isRequired,
   order: PropTypes.object.isRequired,
   updateOrder: PropTypes.func.isRequired,
   submitUpdateOrder: PropTypes.func.isRequired,
