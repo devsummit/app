@@ -129,39 +129,40 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
 export function payWithPaypal(order, callback = () => {}) {
   return (dispatch) => {
     dispatch(isPayingWithPaypal(true));
-    PayPal.paymentRequest({
-      clientId: PAYPAL_CLIENT_ID,
-      environment: PAYPAL_ENV,
-      price: (order.price * order.count).toFixed(2).toString(),
-      currency: PAYPAL_CURRENCY,
-      description: 'Ticket for full 3-day event'
-    })
-      .then(({ confirmation }) => {
-        const { response } = confirmation;
-        return getAccessToken()
-          .then((accessToken) => {
-            const data = {
-              order_id: order.order_id,
-              transaction_id: response.id,
-              payment_type: 'paypal'
-            };
-            return DevSummitAxios.post('/api/v1/payments/confirm', data, {
-              headers: { Authorization: accessToken }
-            });
+    const orderItems = Object.keys(order).map((key) => { return order[key]; });
+    const data = {
+      order_details: orderItems,
+      payment_type: 'paypal'
+    };
+    payment
+      .post(data)
+      .then((response) => {
+        console.log('order', response.data.data, response.data.included)
+        return Promise.all([
+          Promise.resolve(response.data.data),
+          PayPal.paymentRequest({
+            clientId: PAYPAL_CLIENT_ID,
+            environment: PAYPAL_ENV,
+            price: response.data.included.reduce((sum, item) => sum + (item.price * item.count), 0).toString(),
+            currency: PAYPAL_CURRENCY,
+            description: 'Ticket for full 3-day event'
           })
-          .then((result) => {
-            console.log('result', result);
-            dispatch(isPayingWithPaypal(false));
-            callback(result);
-          })
-          .catch((error) => {
-            console.log('error', error);
-            dispatch(isPayingWithPaypal(false));
-          });
+        ])
+      })
+      .then(([order, { confirmation }]) => payment.confirm({
+        order_id: order.order_id,
+        transaction_id: confirmation.response.id,
+        payment_type: 'paypal'
+      }))
+      .then((result) => {
+        console.log('result', result);
+        dispatch(isPayingWithPaypal(false));
+        callback(result);
       })
       .catch((error) => {
-        console.log(error);
+        console.log('error', error);
         dispatch(isPayingWithPaypal(false));
+        callback(false);
       });
   };
 }

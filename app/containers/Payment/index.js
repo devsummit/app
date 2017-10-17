@@ -62,16 +62,18 @@ class Payment extends Component {
     LoaderHandler.showLoader('Confirming your payment');
     payWithPaypal(order, (result) => {
       LoaderHandler.hideLoader();
-      Alert.alert(
-        strings.payment.thanksForTheOrderTitle,
-        strings.payment.thanksForTheOrderMessage,
-        [
-          {
-            text: strings.payment.okButton,
-            onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
-          }
-        ]
-      );
+      if (result) {
+        Alert.alert(
+          strings.payment.thanksForTheOrderTitle,
+          strings.payment.thanksForTheOrderMessage,
+          [
+            {
+              text: strings.payment.okButton,
+              onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
+            }
+          ]
+        );
+      }
     });
   }
 
@@ -176,7 +178,6 @@ class Payment extends Component {
             onPress={() => {
               this.payWithPaypalAlert();
             }}
-            disabled
           >
             {paypalChecking && <ActivityIndicator color={'white'} />}
             <Text>
