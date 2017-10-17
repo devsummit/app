@@ -14,15 +14,15 @@ import {
   Row,
   Col,
   List,
-  ListItem,
-  Fab,
   Spinner
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal, Image } from 'react-native';
+import { RefreshControl, Alert, View, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Actions } from 'react-native-router-flux';
+import HeaderPoint from '../../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
@@ -51,13 +51,12 @@ class OrderDetail extends Component {
     };
   }
 
-  componentWillMount () {
+  componentWillMount() {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
-    console.log('navigation', this.props.navigation)
     this.getOrderDetail();
-  };
+  }
 
   componentWillReceiveProps() {
     if (this.props.order && this.props.order.included) {
@@ -204,8 +203,6 @@ class OrderDetail extends Component {
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-    const WEBVIEW_REF = 'webview';
-    console.log('order', order, this.props)
     if (
       isUpdating ||
       isConfirming ||
