@@ -18,7 +18,7 @@ import {
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, TouchableOpacity, Image } from 'react-native';
+import { RefreshControl, Alert, View, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Actions } from 'react-native-router-flux';
@@ -34,7 +34,10 @@ import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
 import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
 
+const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
+
+const { width, height } = Dimensions.get('window');
 
 let total = 0;
 class OrderDetail extends Component {
@@ -218,6 +221,19 @@ class OrderDetail extends Component {
     }
     return (
       <Container style={styles.container}>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#FF8B00',
+            justifyContent: 'flex-start',
+            alignItems: 'center'
+          }}
+        >
+          <TouchableWithoutFeedback onPress={() => Actions.orderList()}>
+            <Image source={Back} style={{ width: 20, height: 20, marginLeft: 10 }} />
+          </TouchableWithoutFeedback>
+          <HeaderPoint title={'Order Detail'} />
+        </View>
         <Content
           refreshControl={
             <RefreshControl
