@@ -61,8 +61,9 @@ class Payment extends Component {
   }
 
   payWithBankTransfer = () => {
-    const { ticketTypes, orderedTicketType } = this.props;
-    const ticket = ticketTypes.filter(ticketType => ticketType.ticket_type === orderedTicketType);
+    const { ticketTypes, ticketPrice } = this.props;
+    const price = ticketPrice.replace(/[.]/gi, '');
+    const ticket = ticketTypes.filter(ticketType => ticketType.price == price);
     this.props.createOrderExhibitor(ticket[0].id, () => Actions.orderDetail());
   };
 
