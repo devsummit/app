@@ -61,17 +61,17 @@ class RegisterEmail extends Component {
     //   Actions.mainTabs();
     //   this.props.isLoggedIn(false);
     // }
-    // if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-    //   if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
-    //     Toast.show(
-    //       this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
-    //     );
-    //   }
-    //   // setTimeout(() => {
-    //   //   this.onAlertOk();
-    //   // }, 3000);
-    //   this.props.updateRegisterStatus(false, '', '');
-    // }
+    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+      if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
+        Toast.show(
+          this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
+        );
+      }
+      this.props.updateRegisterStatus(false, '', '');
+      // setTimeout(() => {
+      //   this.onAlertOk();
+      // }, 3000);
+    }
   }
 
   componentWillUnmount() {
@@ -260,21 +260,21 @@ class RegisterEmail extends Component {
                 {/* Here is the example of Radio Icon */}
               </View>
 
-              {(username && username.length < 4) ||
+              {(username === '' || username.length < 4) ||
               password.length < 4 ||
               firstName === '' ||
               lastName === '' ||
               (this.checkEmail(email) === false && email !== '') ||
               verifyPassword !== password ? (
                 <View>
-                    <Button
+                  <Button
                     block
                     style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
                     onPress={() => this.submitRegistration()}
                   >
                     <Text style={styles.buttomText}>{strings.register.register}</Text>
                   </Button>
-                  </View>
+                </View>
                 ) : (
                   <Button
                     block
