@@ -82,7 +82,7 @@ export function resetState() {
 /*
  * Register user
  */
-export function register(callBack) {
+export function register(callBack = () => {}) {
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
     const { inputFields } = getState()
@@ -108,7 +108,7 @@ export function register(callBack) {
         referer
       };
       DevSummitAxios.post('/auth/register', data)
-        .then((response) => {
+        .then(async (response) => {
           const resData = response.data.data;
           const roleId = JSON.stringify(response.data.included.role_id);
           const profileData = JSON.stringify(response.data.included);
@@ -120,19 +120,16 @@ export function register(callBack) {
                 [ 'role_id', roleId ],
                 [ 'profile_data', profileData ]
               ]);
-              // await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));
               callBack();
-              // await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
             }
           } catch (err) {
             console.log(err, 'error cought');
           }
-
-          // else if (response.data.data !== null && !response.data.meta.success) {
-          //   await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-          // } else if (response.data.data === null && !response.data.meta.success) {
-          //   await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
-          // }
           dispatch(toggleIsRegistering(false));
         })
         .catch((error) => {
