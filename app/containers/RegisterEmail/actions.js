@@ -123,11 +123,12 @@ export function register(callBack) {
                 [ 'role_id', roleId ],
                 [ 'profile_data', profileData ]
               ]);
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
               callBack();
             } else if (response.data.data !== null && !response.data.meta.success) {
-              await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
             } else if (response.data.data === null && !response.data.meta.success) {
-              await dispatch(
+              dispatch(
                 updateRegisterStatus(
                   true,
                   'Failed',
@@ -138,7 +139,6 @@ export function register(callBack) {
           } catch (err) {
             console.log(err, 'error cought');
           }
-
           dispatch(toggleIsRegistering(false));
         })
         .catch((error) => {
