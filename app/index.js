@@ -8,7 +8,7 @@ import BusyIndicator from 'react-native-busy-indicator';
 import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import logger from 'redux-logger'
+import logger from 'redux-logger';
 import reducers from './reducers';
 
 // Style imports
@@ -76,49 +76,65 @@ export default class App extends Component {
     }
     Actions.pop();
     return true;
-  }
+  };
 
   render() {
     return (
-      <View style={{flex: 1}}>
-      <Provider store={store}>
-        <RouterWithRedux
-          navigationBarStyle={styles.navBar}
-          titleStyle={styles.navBarTitle}
-          barButtonTextStyle={styles.barButtonTextStyle}
-          barButtonIconStyle={styles.barButtonIconStyle}
-          leftButtonIconStyle={styles.leftButtonIconStyle}
-          backAndroidHandler={this.onBackPress}
-        >
-          <Scene key="root" backButtonImage={BackButtonImg}>
-            <Scene key="splash" component={Splash} hideNavBar initial />
-            <Scene key="main" component={Main} hideNavBar type="replace" />
-            <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace" />
-            <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
-            <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" />
-            <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" />
-            <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
-            <Scene key="changePassword" component={ChangePassword} title="Change Password" />
-            <Scene key="ticketList" component={TicketList} title="List Ticket" />
-            <Scene key="orderList" component={OrderList} title="Order List" />
-            <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
-            <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
-            <Scene key="schedule" component={Schedule} hideNavBar title="Schedule" />
-            <Scene key="scheduleDetail" component={ScheduleDetail} title={this.props.title} />
-            <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
-            <Scene key="payment" component={Payment} title="Choose Payment Method" />
-            <Scene key="paymentDetail" component={PaymentDetail} title="Complete Payment Detail" />
-            <Scene key="boothList" component={BoothList} title="Booth List" />
-            <Scene key="boothInfo" component={BoothInfo} title={this.props.title} />
-            <Scene key="profile" component={Profile} title="Profile" />
-            <Scene key="notification" component={Notification} title="Notification" />
-            <Scene key="codeConduct" component={CodeConduct} title="Code of Conduct" />
-            <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
-          </Scene>
-        </RouterWithRedux>
-      </Provider>
-      <BusyIndicator />
-    </View>
+      <View style={{ flex: 1 }}>
+        <Provider store={store}>
+          <RouterWithRedux
+            navigationBarStyle={styles.navBar}
+            titleStyle={styles.navBarTitle}
+            barButtonTextStyle={styles.barButtonTextStyle}
+            barButtonIconStyle={styles.barButtonIconStyle}
+            leftButtonIconStyle={styles.leftButtonIconStyle}
+            backAndroidHandler={this.onBackPress}
+          >
+            <Scene key="root" backButtonImage={BackButtonImg}>
+              <Scene key="splash" component={Splash} hideNavBar initial />
+              <Scene key="main" component={Main} hideNavBar type="replace" />
+              <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace" />
+              <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
+              <Scene
+                key="registerEmail"
+                component={RegisterEmail}
+                hideNavBar
+                title="Register"
+                type="reset"
+              />
+              <Scene
+                key="registerPhone"
+                component={RegisterPhone}
+                hideNavBar
+                title="Register Phone"
+                type="reset"
+              />
+              <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
+              <Scene key="changePassword" component={ChangePassword} title="Change Password" />
+              <Scene key="ticketList" component={TicketList} title="List Ticket" />
+              <Scene key="orderList" component={OrderList} title="Order List" />
+              <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
+              <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
+              <Scene key="schedule" component={Schedule} hideNavBar title="Schedule" />
+              <Scene key="scheduleDetail" component={ScheduleDetail} title={this.props.title} />
+              <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
+              <Scene key="payment" component={Payment} title="Choose Payment Method" />
+              <Scene
+                key="paymentDetail"
+                component={PaymentDetail}
+                title="Complete Payment Detail"
+              />
+              <Scene key="boothList" component={BoothList} title="Booth List" />
+              <Scene key="boothInfo" component={BoothInfo} title={this.props.title} />
+              <Scene key="profile" component={Profile} title="Profile" />
+              <Scene key="notification" component={Notification} title="Notification" />
+              <Scene key="codeConduct" component={CodeConduct} title="Code of Conduct" />
+              <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
+            </Scene>
+          </RouterWithRedux>
+        </Provider>
+        <BusyIndicator />
+      </View>
     );
   }
 }
