@@ -367,7 +367,7 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' &&
             <Card>
               <View style={styles.card} resizeMode={'cover'}>
-                <Image source={logo} />
+              <Image source={logo} style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }} />
                 <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
                 <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
                 <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
