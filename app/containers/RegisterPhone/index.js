@@ -63,7 +63,7 @@ class RegisterPhone extends Component {
           [
             {
               text: isFailed ? strings.global.ok : 'Login',
-              onPress: isFailed ? () => { } : this.onAlertOk
+              onPress: isFailed ? () => {} : this.onAlertOk
             }
           ],
           { cancelable: false }
@@ -118,7 +118,7 @@ class RegisterPhone extends Component {
     if (this.isFieldError()) {
       Alert.alert(strings.global.warning, strings.register.fieldNotComplete);
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
       this.props.inputFields.email = '';
       this.props.inputFields.firstName = '';
       this.props.inputFields.lastName = '';
