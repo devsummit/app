@@ -9,7 +9,8 @@ import {
   UPDATE_REGISTER_METHOD,
   TOGGLE_IS_REGISTERING,
   UPDATE_REGISTER_STATUS,
-  RESET_STATE
+  RESET_STATE,
+  UPDATE_IS_LOGGED_IN
 } from './constants';
 
 /*
@@ -39,6 +40,7 @@ const initialState = fromJS({
   },
   registerMethod: 'undefined',
   isRegistering: false,
+  isLoggedIn: false,
   isRegistered: {
     status: false,
     title: '',
@@ -59,10 +61,15 @@ function registerEmailReducer(state = initialState, action) {
 
     case TOGGLE_IS_REGISTERING:
       return state.set('isRegistering', action.status);
+
     case UPDATE_REGISTER_STATUS:
-      return (state.setIn([ 'isRegistered', 'status' ], action.status)
+      return state
+        .setIn([ 'isRegistered', 'status' ], action.status)
         .setIn([ 'isRegistered', 'title' ], action.title)
-        .setIn([ 'isRegistered', 'message' ], action.message));
+        .setIn([ 'isRegistered', 'message' ], action.message);
+
+    case UPDATE_IS_LOGGED_IN:
+      return state.set('isLoggedIn', action.status);
 
     case RESET_STATE:
       return initialState;

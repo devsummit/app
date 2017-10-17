@@ -4,3 +4,4 @@ export const UPDATE_REGISTER_METHOD = 'app/containers/RegisterEmail/UPDATE_REGIS
 export const TOGGLE_IS_REGISTERING = 'app/containers/RegisterEmail/TOGGLE_IS_REGISTERING';
 export const UPDATE_REGISTER_STATUS = 'app/containers/RegisterEmail/UPDATE_REGISTER_STATUS';
 export const RESET_STATE = 'app/containers/RegisterEmail/RESET_STATE';
+export const UPDATE_IS_LOGGED_IN = 'app/containers/RegisterEmail/UPDATE_IS_LOGGED_IN';

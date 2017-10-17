@@ -57,19 +57,21 @@ class RegisterEmail extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-      if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
-        Toast.show(
-          this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
-        );
-      }
-
-      setTimeout(() => {
-        this.onAlertOk();
-      }, 3000);
-
-      this.props.updateRegisterStatus(false, '', '');
-    }
+    // if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+    //   Actions.mainTabs();
+    //   this.props.isLoggedIn(false);
+    // }
+    // if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+    //   if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
+    //     Toast.show(
+    //       this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
+    //     );
+    //   }
+    //   // setTimeout(() => {
+    //   //   this.onAlertOk();
+    //   // }, 3000);
+    //   this.props.updateRegisterStatus(false, '', '');
+    // }
   }
 
   componentWillUnmount() {
@@ -92,9 +94,9 @@ class RegisterEmail extends Component {
     }).start();
   };
 
-  onAlertOk = () => {
-    Actions.main();
-  };
+  // onAlertOk = () => {
+  //   Actions.main();
+  // };
   /*
     * validate all fields before submission
     */
@@ -109,7 +111,7 @@ class RegisterEmail extends Component {
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
     }
   };
 
@@ -318,7 +320,9 @@ RegisterEmail.propTypes = {
   errorFields: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   updateRegisterMethod: PropTypes.func.isRequired,
-  updateErrorFields: PropTypes.func.isRequired
+  updateErrorFields: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isRegistering: PropTypes.bool.isRequired
 };
 
 /**
@@ -329,7 +333,8 @@ const mapStateToProps = createStructuredSelector({
   errorFields: selectors.getErrorFields(),
   registerMethod: selectors.getRegisterMethod(),
   isRegistering: selectors.getIsRegistering(),
-  isRegistered: selectors.getRegisterStatus()
+  isRegistered: selectors.getRegisterStatus(),
+  isLoggedIn: selectors.getIsLoggedIn()
 });
 
 export default connect(mapStateToProps, actions)(RegisterEmail);
