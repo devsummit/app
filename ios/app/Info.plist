@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.4</string>
+	<string>1.1.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>28</string>
+	<string>29</string>
 	<key>CodePushDeploymentKey</key>
 	<string>ylzfrzWtmLZGySDLgXJ8O_OPqhmx7a0e3200-cc3f-42bd-b1e8-a65dc8c238a7</string>
 	<key>Fabric</key>
