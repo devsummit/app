@@ -226,11 +226,12 @@ class OrderDetail extends Component {
             flexDirection: 'row',
             backgroundColor: '#FF8B00',
             justifyContent: 'flex-start',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: 5
           }}
         >
           <TouchableWithoutFeedback onPress={() => Actions.orderList()}>
-            <Image source={Back} style={{ width: 20, height: 20, marginLeft: 10 }} />
+            <Image source={Back} style={{ width: 20, height: 20 }} />
           </TouchableWithoutFeedback>
           <HeaderPoint title={'Order Detail'} />
         </View>
