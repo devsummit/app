@@ -1,8 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { DevSummitAxios } from '../../helpers';
 
-import { AsyncStorage } from 'react-native';
-
 /*
  * import constants
  */
