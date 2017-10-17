@@ -82,7 +82,7 @@ export default class OrderItem extends Component {
     const { status, color } = this.state;
     const { order } = this.props;
     return (
-      <CardItem style={styles.container} button onPress={() => this.onEditPressed()}>
+      <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
           <View style={{ justifyContent: 'flex-start', flex: 4 }}>
             <Text>Order-{order.id}</Text>

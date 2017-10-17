@@ -86,9 +86,9 @@ class Payment extends Component {
         onPress: () => {
           LoaderHandler.showLoader('Processing your Order');
           this.props.payWithBankTransfer(userId, order, referalCode, ((data) => {
-            const id = data.order_id
+            const orderId = data.order_id
             LoaderHandler.hideLoader();
-            Actions.orderDetail({ id });
+            Actions.orderDetail({ orderId, id: orderId, order: data });
           }));
         }
       }
@@ -122,7 +122,7 @@ class Payment extends Component {
   //               label={component.label}
   //               value={component.bankDestination}
   //               button
-  //               onPress={() => Actions.paymentDetail({order,  component})}          
+  //               onPress={() => Actions.paymentDetail({order,  component})}
   //             >
   //               <Text>{component.label}</Text>
   //             </Card>
@@ -180,43 +180,6 @@ class Payment extends Component {
           </Button>
 
           {/* Bank Transfer Card */}
-          <Card>
-            <View style={styles.card}>
-              <Image source={logo} style={{ height: 50, width: 200 }} />
-              <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-              <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
-              <Text style={styles.textTitleBold}>Taufan Aditya</Text>
-              <Text style={styles.textTitle}>OR</Text>
-              <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
-              <View
-                style={{
-                  flex: 8,
-                  alignItems: 'center'
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#000000',
-                    marginBottom: 8,
-                    marginTop: 16
-                  }}
-                >
-                    Nomer Rekening:
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: '#000000',
-                    marginBottom: 8,
-                    fontWeight: 'bold'
-                  }}
-                >
-                    130-0016066782
-                </Text>
-              </View>
-            </View>
-          </Card>
 
         </Content>
       </Container>

@@ -74,22 +74,20 @@ export function orderVerification(order, image) {
 
 export function getOrderDetail(orderId) {
   return (dispatch) => {
+    console.log('orderId', orderId);
     dispatch(updateIsUpdatingOrder(true));
     getAccessToken()
       .then((accessToken) => {
-        DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
+        return DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
           headers: { Authorization: accessToken }
         })
-          .then((response) => {
-            if (response.data.included.verification){
-              dispatch(setPaymentProof(response.data.included.verification.payment_proof));
-            }
-            dispatch({ type: SET_ORDER, data: response.data });
-            dispatch(updateIsUpdatingOrder(false));
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+      })
+      .then((response) => {
+        if (response.data.included.verification){
+          dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+        }
+        dispatch({ type: SET_ORDER, data: response.data });
+        dispatch(updateIsUpdatingOrder(false));
       })
       .catch((error) => {
         console.log(error);

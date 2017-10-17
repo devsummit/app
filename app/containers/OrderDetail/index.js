@@ -34,6 +34,8 @@ import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
 import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
 
+const logo = require('../../../assets/images/bankmandiri.png');
+
 let total = 0;
 class OrderDetail extends Component {
   constructor(props) {
@@ -49,10 +51,11 @@ class OrderDetail extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentWillMount () {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
+    console.log('fetching data', this.props);
     this.props.getOrderDetail(this.props.id);
   };
 
@@ -201,7 +204,7 @@ class OrderDetail extends Component {
     if (
       isUpdating ||
       isConfirming ||
-      (Object.keys(order).length === 0 && order.constructor === Object)
+      Object.keys(order).length === 0
     ) {
       return (
         <Container>
@@ -218,7 +221,7 @@ class OrderDetail extends Component {
             <RefreshControl
               refreshing={this.props.isUpdating}
               onRefresh={() => {
-                this.props.getOrderDetail(orderId);
+                this.props.getOrderDetail(this.props.id);
               }}
             />
           }
@@ -350,6 +353,45 @@ class OrderDetail extends Component {
             <View />
           )}
           <View>
+            {payment.payment_type === 'offline' &&
+            <Card>
+              <View style={styles.card} resizeMode={'cover'}>
+                <Image source={logo} />
+                <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                <Text style={styles.textTitle}>OR</Text>
+                <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                <View
+                  style={{
+                    flex: 8,
+                    alignItems: 'center'
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#000000',
+                      marginBottom: 8,
+                      marginTop: 16
+                    }}
+                  >
+                    Nomer Rekening:
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#000000',
+                      marginBottom: 8,
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    130-0016066782
+                  </Text>
+                </View>
+              </View>
+            </Card>}
             {payment.payment_type === 'offline' ? (
               this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
