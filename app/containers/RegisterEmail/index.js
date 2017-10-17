@@ -56,6 +56,24 @@ class RegisterEmail extends Component {
     this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
 
+  componentWillReceiveProps(prevProps) {
+    // if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
+    //   Actions.mainTabs();
+    //   this.props.isLoggedIn(false);
+    // }
+    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+      if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
+        Toast.show(
+          this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
+        );
+      }
+      this.props.updateRegisterStatus(false, '', '');
+      // setTimeout(() => {
+      //   this.onAlertOk();
+      // }, 3000);
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetState();
     this.keyboardWillShowSub.remove();
@@ -242,7 +260,8 @@ class RegisterEmail extends Component {
                 {/* Here is the example of Radio Icon */}
               </View>
 
-              {(username && username.length < 4) ||
+              {username === '' ||
+              username.length < 4 ||
               password.length < 4 ||
               firstName === '' ||
               lastName === '' ||
