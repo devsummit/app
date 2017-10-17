@@ -157,9 +157,6 @@ class BoothList extends Component {
                     </View>
                     <Text style={{ fontSize: 16 }}>{strings.booth.alreadyRegister}</Text>
                   </View>
-                  {/* <View style={styles.redeem}>
-                    <Redeem />
-                  </View> */}
                   <Button
                     style={styles.btnModal}
                     onPress={() => {
