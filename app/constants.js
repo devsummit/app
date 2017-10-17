@@ -44,19 +44,19 @@ export const PRIMARYCOLOR = '#f39e21';
 export const SECTIONS = [
   {
     ticket_type: 'Package Small',
-    title: 'Small',
+    title: 'STARTUP',
     price: '5.000.000',
     gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
   },
   {
     ticket_type: 'Package Medium',
-    title: 'Medium',
+    title: 'FAST-GROWTH',
     price: '10.000.000',
     gifts: [ '1 x-banner', 'free 5 tickets', 'stiker' ]
   },
   {
     ticket_type: 'Package Big',
-    title: 'Large',
+    title: 'ENTERPRISE',
     price: '15.000.000',
     gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
   }
