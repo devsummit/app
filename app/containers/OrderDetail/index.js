@@ -257,7 +257,16 @@ class OrderDetail extends Component {
                         <Text style={{ fontWeight: 'bold' }}>
                           {this.state.status === 'paid' || this.state.status === 'capture'
                             ? null
-                            : this.state.orderStatus.toUpperCase()}
+                            : Moment()
+                              .utc()
+                              .local()
+                              .isBefore(
+                                Moment.utc(order.data[0].created_at)
+                                  .add(1, 'hours')
+                                  .local()
+                              )
+                              ? expiryDate(order.data[0].created_at)
+                              : 'Expired'}
                         </Text>
                       )}
                     </Col>

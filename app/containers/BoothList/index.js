@@ -84,8 +84,8 @@ class BoothList extends Component {
     });
   };
 
-  setPaymentMethod = (orderedTicketType) => {
-    Actions.payment({ orderedTicketType });
+  setPaymentMethod = (ticketPrice) => {
+    Actions.payment({ ticketPrice });
   };
 
   render() {
