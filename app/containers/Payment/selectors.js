@@ -22,6 +22,11 @@ export const getInputFields = () =>
 export const getErrorFields = () =>
   createSelector(selectPaymentMethodReducer(), state => state.get('errorFields').toJS());
 
+export const getUserId = () => createSelector(
+  selectPaymentMethodReducer(),
+  state => state.get('userId')
+);
+
 export const isPayingWithPaypal = () =>
   createSelector(selectPaymentMethodReducer(), state => state.get('isPayingWithPaypal'));
 

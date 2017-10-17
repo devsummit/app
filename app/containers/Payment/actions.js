@@ -1,4 +1,5 @@
 import PayPal from 'react-native-paypal';
+import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 import payment from '../../services/payment';
 import { getOrderDetail } from '../OrderDetail/actions';
@@ -9,6 +10,8 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   UPDATE_SINGLE_ERROR_FIELD,
   IS_PAYING_WITH_PAYPAL,
+  UPDATE_USER_ID,
+  UPDATE_ORDER,
   GET_TICKET_TYPES,
   CREATE_ORDER
 } from './constants';
@@ -17,6 +20,14 @@ import {
  * import Paypal Constants
  */
 import { PAYPAL_CLIENT_ID, PAYPAL_CURRENCY, PAYPAL_RATE, PAYPAL_ENV } from '../../constants';
+
+// update user id
+export function updateUserId(value) {
+  return {
+    type: UPDATE_USER_ID,
+    value
+  };
+}
 
 /*
  * Update the input fields
@@ -89,7 +100,32 @@ export function getTickets() {
 /*
  * Initiate payment with PayPal
  * @param {order: order data}
- */
+*/
+
+export function payWithBankTransfer(userId, order, referalCode, callback = () => ({})) {
+  return (dispatch) => {
+    const orderItems = Object.keys(order).map((key) => { return order[key]; });
+    const data = {
+      order_details: orderItems,
+      payment_type: 'offline'
+    };
+    payment
+      .post(data)
+      .then((response) => {
+        if (response.data && response.data.meta.success) {
+          callback({
+            ...response.data.data,
+            ...response.data.included[0]
+          });
+        }
+      })
+      .catch((error) => {
+        Toast.show('Sorry, something went wrong');
+        console.log('ERROR', error);
+      });
+  };
+}
+
 export function payWithPaypal(order, callback = () => {}) {
   return (dispatch) => {
     dispatch(isPayingWithPaypal(true));

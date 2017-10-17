@@ -14,7 +14,8 @@ import {
   UPDATE_ORDER_STATUS,
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
-  SET_PAYMENT_PROOF
+  SET_PAYMENT_PROOF,
+  SET_ORDER_ID
   // RESET_STATE
 } from './constants';
 
@@ -30,6 +31,10 @@ export function updateIsUpdatingOrder(status) {
 
 export function setPaymentProof(value) {
   return { type: SET_PAYMENT_PROOF, value };
+}
+
+export function setOrderId(value) {
+  return { type: SET_ORDER_ID, value };
 }
 
 export function orderVerification(order, image) {
@@ -65,6 +70,7 @@ export function orderVerification(order, image) {
 
 export function getOrderDetail(orderId) {
   return (dispatch) => {
+    console.log('orderId', orderId);
     dispatch(updateIsUpdatingOrder(true));
 
     orderdetail
