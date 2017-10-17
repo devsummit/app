@@ -1,3 +1,4 @@
+import {Platform} from 'react-native'
 import PayPal from 'react-native-paypal';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
@@ -149,11 +150,20 @@ export function payWithPaypal(order, callback = () => {}) {
           })
         ])
       })
-      .then(([order, { confirmation }]) => payment.confirm({
-        order_id: order.order_id,
-        transaction_id: confirmation.response.id,
-        payment_type: 'paypal'
-      }))
+      .then(([order, result]) => {
+        console.log(result, order);
+        let response
+        if (Platform.OS === 'android') {
+          response = JSON.parse(result).response;
+        } else {
+          response = result.confirmation.response
+        }
+        return payment.confirm({
+          order_id: order.id,
+          transaction_id: response.id,
+          payment_type: 'paypal'
+        })
+      })
       .then((result) => {
         console.log('result', result);
         dispatch(isPayingWithPaypal(false));
