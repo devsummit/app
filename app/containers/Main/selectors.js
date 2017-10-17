@@ -43,3 +43,21 @@ export const getIsLoading = () => createSelector(
   selectMainReducer(),
   state => state.get('isLoading')
 );
+
+/**
+ *  Get access token
+ *  @return boolean
+ */
+export const getAccessToken = () => createSelector(
+  selectMainReducer(),
+  state => state.get('accessToken')
+);
+
+/**
+ * Get profile data
+ *  @return boolean
+ */
+export const getProfileData = () => createSelector(
+  selectMainReducer(),
+  state => state.get('profileData')
+);

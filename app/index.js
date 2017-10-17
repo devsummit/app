@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { View, AsyncStorage } from 'react-native';
+import { View, AsyncStorage, NetInfo } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import BusyIndicator from 'react-native-busy-indicator';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import {persistStore, autoRehydrate} from 'redux-persist-immutable';
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger'
 import reducers from './reducers';
@@ -22,6 +23,8 @@ import RegisterPhone from './containers/RegisterPhone';
 import Schedule from './containers/Schedule';
 import ScheduleDetail from './containers/ScheduleDetail';
 import Main from './containers/Main';
+import {setToken} from './containers/Main/actions';
+import {setIsOnline} from './modules/net/actions';
 import ChangePassword from './containers/ChangePassword';
 import OrderList from './containers/OrderList';
 import TicketList from './containers/TicketList';
@@ -30,7 +33,7 @@ import MainTabs from './containers/MainTabs';
 import SpeakerDetail from './containers/SpeakerDetail';
 import NewOrder from './containers/NewOrder';
 import AttendeesList from './containers/AttendeesList';
-import Splash from './components/Splash';
+import Splash from './containers/Splash';
 import Payment from './containers/Payment';
 import PaymentDetail from './containers/PaymentDetail';
 import BoothList from './containers/BoothList';
@@ -58,16 +61,55 @@ switch (lang) {
 }
 strings.setLanguage(setlang);
 
+
 /**
 *  Apply middlewares
 */
-export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers);
+const store = createStore(
+  reducers,
+  undefined,
+  compose(
+    applyMiddleware(ReduxThunk),
+    autoRehydrate(),
+  )
+);
+
+function handleConnectivityChange (status) {
+  console.log('trigger me');
+  store.dispatch(setIsOnline(status))
+  NetInfo.removeEventListener('connectionChange', handleConnectivityChange);
+};
+NetInfo.addEventListener('connectionChange', handleConnectivityChange);
+
+const persistingStore = (callback = () => {}) => {
+  persistStore(store, {storage: AsyncStorage}, () => {
+    AsyncStorage
+    .multiGet(['access_token', 'refresh_token', 'role_id', 'profile_data'])
+    .then(([accessToken, refreshToken, roleId, profileData]) => {
+      const savedToken = store.getState().getIn(['main', 'accessToken']);
+      if (!savedToken || savedToken === '') {
+        store.dispatch(setToken({
+          accessToken,
+          refreshToken,
+          roleId: roleId,
+          profileData: JSON.parse(profileData)
+        }))
+      }
+        callback();
+    }).catch(err => console.log(err));
+  })
+};
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      rehydrated: false
+    };
+  }
+
+  componentWillMount() {
+    persistingStore(() => this.setState({rehydrated: true}));
   }
 
   onBackPress = () => {
@@ -81,7 +123,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-      <Provider store={store}>
+      {this.state.rehydrated && <Provider store={store}>
         <RouterWithRedux
           navigationBarStyle={styles.navBar}
           titleStyle={styles.navBarTitle}
@@ -116,7 +158,7 @@ export default class App extends Component {
             <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
           </Scene>
         </RouterWithRedux>
-      </Provider>
+      </Provider>}
       <BusyIndicator />
     </View>
     );
