@@ -11,7 +11,7 @@ import {
   UPDATE_SINGLE_ERROR_FIELD,
   IS_PAYING_WITH_PAYPAL,
   UPDATE_USER_ID,
-  UPDATE_ORDER
+  UPDATE_ORDER,
   GET_TICKET_TYPES,
   CREATE_ORDER
 } from './constants';
@@ -106,31 +106,22 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
   return (dispatch) => {
     const orderItems = Object.keys(order).map((key) => { return order[key]; });
     const data = {
-      user_id: userId,
       order_details: orderItems,
-      referal_code: referalCode,
-      payment_type: 'bank_transfer'
+      payment_type: 'offline'
     };
-    getAccessToken()
-      .then((accessToken) => {
-        DevSummitAxios.post('api/v1/orders', data, {
-          headers: {
-            Authorization: accessToken,
-            'content-type': 'application/json'
-          }
-        })
-          .then((response) => {
-            if (response.data && response.data.meta.success) {
-              callback({
-                ...response.data.data,
-                ...response.data.included[0]
-              });
-            }
-          })
-          .catch((error) => {
-            Toast.show('Sorry, something went wrong');
-            console.log('ERROR', error);
+    payment
+      .post(data)
+      .then((response) => {
+        if (response.data && response.data.meta.success) {
+          callback({
+            ...response.data.data,
+            ...response.data.included[0]
           });
+        }
+      })
+      .catch((error) => {
+        Toast.show('Sorry, something went wrong');
+        console.log('ERROR', error);
       });
   };
 }

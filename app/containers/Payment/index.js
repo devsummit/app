@@ -19,13 +19,6 @@ let bankList = [];
 const logo = require('../../../assets/images/bankmandiri.png');
 
 class Payment extends Component {
-<<<<<<< HEAD
-  componentWillMount() {
-    getProfileData()
-      .then((profileData) => {
-        this.props.updateUserId(profileData.id);
-      });
-=======
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +28,6 @@ class Payment extends Component {
 
   componentWillMount() {
     this.props.getTickets();
->>>>>>> develop
     this.props.navigation.setParams({
       handleIconTouch: this.handleIconTouch
     });

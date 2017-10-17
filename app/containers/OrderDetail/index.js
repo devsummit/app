@@ -55,9 +55,8 @@ class OrderDetail extends Component {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
-    if (this.props.orderId) {
-      this.props.getOrderDetail(this.props.orderId);
-    }
+    console.log('navigation', this.props.navigation)
+    this.getOrderDetail();
   };
 
   componentWillReceiveProps() {
@@ -195,6 +194,10 @@ class OrderDetail extends Component {
       });
   };
 
+  getOrderDetail() {
+    this.props.getOrderDetail(this.props.id || this.props.navigation.state.params.id);
+  }
+
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
@@ -202,6 +205,7 @@ class OrderDetail extends Component {
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
     const WEBVIEW_REF = 'webview';
+    console.log('order', order, this.props)
     if (
       isUpdating ||
       isConfirming ||
@@ -222,7 +226,7 @@ class OrderDetail extends Component {
             <RefreshControl
               refreshing={this.props.isUpdating}
               onRefresh={() => {
-                this.props.getOrderDetail(this.props.id);
+                this.getOrderDetail();
               }}
             />
           }
