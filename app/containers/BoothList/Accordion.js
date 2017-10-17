@@ -36,7 +36,7 @@ class AccordionView extends Component {
   };
 
   renderContent = (section, i, isActive) => {
-    const type = section.ticket_type;
+    const price = section.price;
     return (
       <Animatable.View
         duration={300}
@@ -66,7 +66,7 @@ class AccordionView extends Component {
               marginTop: 10,
               marginBottom: 10
             }}
-            onPress={() => this.props.setPaymentMethod(type)}
+            onPress={() => this.props.setPaymentMethod(price)}
           >
             <Text style={{ color: '#FFF', fontSize: 16 }}>Order</Text>
           </Button>
