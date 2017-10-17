@@ -25,6 +25,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
 import strings from '../../localization';
@@ -92,7 +93,34 @@ class BoothList extends Component {
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
-        <HeaderPoint title={strings.booth.title} />
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#FF8B00',
+            justifyContent: 'space-between'
+          }}
+        >
+          <HeaderPoint title={strings.booth.title} />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <IconFA
+              name="question-circle"
+              onPress={() => this.setModalVisible(true)}
+              style={{
+                elevation: 2,
+                alignSelf: 'center',
+                color: '#FFF',
+                fontSize: 25,
+                marginRight: 20
+              }}
+            />
+          </View>
+        </View>
         <Image source={bgBooth2} resizeMode="cover" style={{ flex: 0.21, width: '100%' }}>
           <Button
             style={styles.btnBooth}
@@ -155,7 +183,7 @@ class BoothList extends Component {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                    <Text style={{ fontSize: 16 }}>{strings.booth.alreadyRegister}</Text>
+                    {/* <Text style={{ fontSize: 16 }}>{strings.booth.alreadyRegister}</Text> */}
                   </View>
                   {/* <View style={styles.redeem}>
                     <Redeem />
