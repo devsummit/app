@@ -1,6 +1,5 @@
-import {
-  DevSummitAxios
-} from '../../helpers';
+import { AsyncStorage } from 'react-native';
+import { DevSummitAxios } from '../../helpers';
 
 import { AsyncStorage } from 'react-native';
 
@@ -32,7 +31,6 @@ export function updateInputFields(field, value) {
   };
 }
 
-
 /*
  * Update register method
  * @param {value: value to be set}
@@ -43,7 +41,6 @@ export function updateRegisterMethod(payload) {
     payload
   };
 }
-
 
 /*
  * Update the error of input fields
@@ -58,7 +55,6 @@ export function updateErrorFields(field, value) {
   };
 }
 
-
 /*
  * update the is registering status
  * @param {value: value to be set (boolean)}
@@ -69,7 +65,6 @@ export function toggleIsRegistering(status) {
     status
   };
 }
-
 
 export function updateRegisterStatus(status, title, message) {
   return {
@@ -92,10 +87,11 @@ export function resetState() {
 export function register(callBack = () => {}) {
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
-    const { inputFields } = getState().get('registerPhone').toJS();
-    const {
-      firstName, email, password, userName, socialId, provider, token, referer
-    } = inputFields || null;
+    const { inputFields } = getState()
+      .get('registerPhone')
+      .toJS();
+    const { firstName, email, password, userName, socialId, provider, token, referer } =
+      inputFields || null;
     let { role } = inputFields || null;
     const { lastName } = inputFields || '';
 
@@ -113,35 +109,34 @@ export function register(callBack = () => {}) {
         token,
         referer
       };
-      DevSummitAxios.post('/auth/register', data).then(async (response) => {
-        const resData = response.data.data;
-        const roleId = JSON.stringify(response.data.included.role_id);
-        const profileData = JSON.stringify(response.data.included);
-        try {
-          if (response && response.data.data && response.data.meta.success) {
-            AsyncStorage.multiSet([
-              [ 'access_token', resData.access_token ],
-              [ 'refresh_token', resData.refresh_token ],
-              [ 'role_id', roleId ],
-              [ 'profile_data', profileData ]
-            ]);
-            callBack();
+      DevSummitAxios.post('/auth/register', data)
+        .then(async (response) => {
+          const resData = response.data.data;
+          const roleId = JSON.stringify(response.data.included.role_id);
+          const profileData = JSON.stringify(response.data.included);
+          try {
+            if (response && response.data.data && response.data.meta.success) {
+              AsyncStorage.multiSet([
+                [ 'access_token', resData.access_token ],
+                [ 'refresh_token', resData.refresh_token ],
+                [ 'role_id', roleId ],
+                [ 'profile_data', profileData ]
+              ]);
+              callBack();
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
+            }
+          } catch (err) {
+            console.log(err, 'error cought');
           }
-        } catch (err) {
-          console.log(err, 'error cought');
-        }
-        // if (response && response.data.data && response.data.meta.success) {
-        //   dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login.'));
-        // } else if (response.data.data !== null && !response.data.meta.success) {
-        //   dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-        // } else if (response.data.data === null && !response.data.meta.success) {
-        //   dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
-        // }
-        dispatch(toggleIsRegistering(false));
-      }).catch((error) => {
-        dispatch(toggleIsRegistering(false));
-        console.log(error, 'error caught');
-      });
+          dispatch(toggleIsRegistering(false));
+        })
+        .catch((error) => {
+          console.log(error, 'error caught');
+        });
     }
   };
 }

@@ -63,9 +63,13 @@ function registerEmailReducer(state = initialState, action) {
       return state.set('isRegistering', action.status);
 
     case UPDATE_REGISTER_STATUS:
-      return (state.setIn([ 'isRegistered', 'status' ], action.status)
+      return state
+        .setIn([ 'isRegistered', 'status' ], action.status)
         .setIn([ 'isRegistered', 'title' ], action.title)
-        .setIn([ 'isRegistered', 'message' ], action.message));
+        .setIn([ 'isRegistered', 'message' ], action.message);
+
+    case UPDATE_IS_LOGGED_IN:
+      return state.set('isLoggedIn', action.status);
 
     case UPDATE_IS_LOGGED_IN:
       return state.set('isLoggedIn', action.status);

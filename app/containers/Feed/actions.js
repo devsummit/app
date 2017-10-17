@@ -77,7 +77,7 @@ export function fetchFeeds(currentpage) {
         dispatch({ type: FETCH_FEEDS, payloads });
         dispatch({ type: SET_LINKS, links });
 
-        dispatch(updateCurrentPage(currentpage + 1));
+        dispatch(updateCurrentPage(currentpage));
 
         dispatch(isFetchingFeeds(false));
       })

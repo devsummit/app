@@ -144,10 +144,8 @@ class Main extends Component {
                 />
               </View>
               {isLoading ? (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                  <Text style={{ fontSize: 30, color: 'white'}}>
-                    Logging in...
-                  </Text>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ fontSize: 30, color: 'white' }}>Logging in...</Text>
                   <Spinner color="#f39e21" />
                 </View>
               ) : (
@@ -160,7 +158,8 @@ class Main extends Component {
                         placeholderTextColor={'#BDBDBD'}
                         keyboardType={'email-address'}
                         autoCapitalize={'none'}
-                        onChangeText={usernameText => this.handleInputChange('username', usernameText)}
+                        onChangeText={usernameText =>
+                          this.handleInputChange('username', usernameText)}
                         value={username}
                       />
                     </Item>
@@ -170,7 +169,8 @@ class Main extends Component {
                         placeholder="Password"
                         placeholderTextColor={'#BDBDBD'}
                         secureTextEntry
-                        onChangeText={passwordText => this.handleInputChange('password', passwordText)}
+                        onChangeText={passwordText =>
+                          this.handleInputChange('password', passwordText)}
                         value={password}
                       />
                     </Item>
@@ -206,13 +206,17 @@ class Main extends Component {
                       <View style={styles.lineTextThree} />
                     </View>
                     <Button
-                      style={[ styles.button, { backgroundColor: '#FFD740', margin: 12, justifyContent: 'center' } ]}
+                      style={[
+                        styles.button,
+                        { backgroundColor: '#FFD740', margin: 12, justifyContent: 'center' }
+                      ]}
                       onPress={() => {
                         this.props.loginTwitter();
                       }}
                     >
-                      { isLoading ?
-                        <ActivityIndicator size={'large'} color={'#FFFFFF'} /> :
+                      {isLoading ? (
+                        <ActivityIndicator size={'large'} color={'#FFFFFF'} />
+                      ) : (
                         <LoginButton
                           style={styles.buttonLoggin}
                           type="phone"
@@ -224,7 +228,7 @@ class Main extends Component {
                           <Icon name="phone" color="white" style={styles.icon} />
                           <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
                         </LoginButton>
-                      }
+                      )}
                     </Button>
                     <Button
                       transparent

@@ -57,24 +57,14 @@ class RegisterEmail extends Component {
   }
 
   componentWillReceiveProps(prevProps) {
-    // if (prevProps.isLoggedIn !== this.props.isLoggedIn) {
-    //   Actions.mainTabs();
-    //   this.props.isLoggedIn(false);
-    // }
-
-    // if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
-    //   if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
-    //     Toast.show(
-    //       this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
-    //     );
-    //   }
-
-    //   // setTimeout(() => {
-    //   //   this.onAlertOk();
-    //   // }, 3000);
-
-    //   this.props.updateRegisterStatus(false, '', '');
-    // }
+    if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
+      if (this.props.isRegistered.message !== '' && this.props.isRegistered.title !== ' ') {
+        Toast.show(
+          this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
+        );
+      }
+      this.props.updateRegisterStatus(false, '', '');
+    }
   }
 
   componentWillUnmount() {
@@ -97,9 +87,6 @@ class RegisterEmail extends Component {
     }).start();
   };
 
-  // onAlertOk = () => {
-  //   Actions.main();
-  // };
   /*
     * validate all fields before submission
     */
@@ -263,7 +250,7 @@ class RegisterEmail extends Component {
                 {/* Here is the example of Radio Icon */}
               </View>
 
-              {(username && username.length < 4) ||
+              {(username === '' || username.length < 4) ||
               password.length < 4 ||
               firstName === '' ||
               lastName === '' ||

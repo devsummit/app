@@ -1,8 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-import {
-  DevSummitAxios
-} from '../../helpers';
+import { DevSummitAxios } from '../../helpers';
 /*
  * import constants
  */
@@ -17,7 +15,6 @@ import {
   UPDATE_IS_LOGGED_IN
 } from './constants';
 
-
 /*
  * Update the input fields
  * @param {field: name of the field}
@@ -31,7 +28,6 @@ export function updateInputFields(field, value) {
   };
 }
 
-
 /*
  * Update register method
  * @param {value: value to be set}
@@ -42,7 +38,6 @@ export function updateRegisterMethod(payload) {
     payload
   };
 }
-
 
 /*
  * Update the error of input fields
@@ -57,7 +52,6 @@ export function updateErrorFields(field, value) {
   };
 }
 
-
 /*
  * update the is registering status
  * @param {value: value to be set (boolean)}
@@ -68,7 +62,6 @@ export function toggleIsRegistering(status) {
     status
   };
 }
-
 
 export function updateRegisterStatus(status, title, message) {
   return {
@@ -98,11 +91,11 @@ export function updateIsLoggedIn(status) {
 export function register(callBack = () => {}) {
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
-    const { inputFields } = getState().get('registerEmail').toJS();
+    const { inputFields } = getState()
+      .get('registerEmail')
+      .toJS();
 
-    const {
-      firstName, email, password, username
-    } = inputFields || null;
+    const { firstName, email, password, username } = inputFields || null;
 
     const { lastName, referer } = inputFields || '';
 
@@ -114,7 +107,7 @@ export function register(callBack = () => {}) {
       password,
       username,
       referer
-    }
+    };
 
     if (firstName && email && password && username) {
       DevSummitAxios.post('/auth/register', data)
@@ -130,21 +123,19 @@ export function register(callBack = () => {}) {
                 [ 'role_id', roleId ],
                 [ 'profile_data', profileData ]
               ]);
-              // await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
               callBack();
-              // await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
             }
           } catch (err) {
             console.log(err, 'error cought');
           }
-
-          // else if (response.data.data !== null && !response.data.meta.success) {
-          //   await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-          // } else if (response.data.data === null && !response.data.meta.success) {
-          //   await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
-          // }
           dispatch(toggleIsRegistering(false));
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.log(error, 'error caught');
         });
     }

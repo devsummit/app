@@ -182,6 +182,10 @@ class Feed extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.updateCurrentPage(0);
+  }
+
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   };
@@ -388,10 +392,12 @@ class Feed extends Component {
                                     style={{ alignSelf: 'center' }}
                                     onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
-                                    {item.attachment && <Image
-                                      source={{ uri: item.attachment }}
-                                      style={styles.images}
-                                    />}
+                                    {item.attachment && (
+                                      <Image
+                                        source={{ uri: item.attachment }}
+                                        style={styles.images}
+                                      />
+                                    )}
                                   </TouchableOpacity>
                                 </Body>
                               </CardItem>
@@ -440,11 +446,13 @@ class Feed extends Component {
                                   style={styles.touchImage}
                                   onPress={() => this.setModalVisible(true, item.attachment)}
                                 >
-                                  {item.attachment && <Image
-                                    source={{ uri: item.attachment }}
-                                    resizeMode="contain"
-                                    style={styles.images}
-                                  />}
+                                  {item.attachment && (
+                                    <Image
+                                      source={{ uri: item.attachment }}
+                                      resizeMode="contain"
+                                      style={styles.images}
+                                    />
+                                  )}
                                 </TouchableOpacity>
                                 <View
                                   style={{
@@ -569,10 +577,7 @@ class Feed extends Component {
                   style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
                 />
               </Button>
-              <Button
-                style={{ backgroundColor: '#FF8B00' }}
-                onPress={() => Actions.ticketList()}
-              >
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
                 <CameraIcon
                   name="archive"
                   color="#FFFFFF"

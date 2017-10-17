@@ -63,7 +63,7 @@ class RegisterPhone extends Component {
           [
             {
               text: isFailed ? strings.global.ok : 'Login',
-              onPress: isFailed ? () => { } : this.onAlertOk
+              onPress: isFailed ? () => {} : this.onAlertOk
             }
           ],
           { cancelable: false }
