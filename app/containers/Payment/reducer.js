@@ -9,9 +9,9 @@ import {
   UPDATE_SINGLE_ERROR_FIELD,
   IS_PAYING_WITH_PAYPAL,
   UPDATE_USER_ID,
-  UPDATE_ORDER
+  UPDATE_ORDER,
+  GET_TICKET_TYPES
 } from './constants';
-
 
 /*
 * initial state of reducers
@@ -27,6 +27,7 @@ const initialState = fromJS({
     referalCode: false
   },
   isPayingWithPaypal: false,
+  ticketTypes: []
 });
 
 function registerPaymentReducer(state = initialState, action) {
@@ -41,6 +42,9 @@ function registerPaymentReducer(state = initialState, action) {
       return state.setIn([ 'inputFields', action.field ], action.value);
     case IS_PAYING_WITH_PAYPAL:
       return state.set('isPayingWithPaypal', action.value);
+
+    case GET_TICKET_TYPES:
+      return state.set('ticketTypes', fromJS(action.payload));
 
     default:
       return state;

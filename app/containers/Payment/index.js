@@ -19,11 +19,23 @@ let bankList = [];
 const logo = require('../../../assets/images/bankmandiri.png');
 
 class Payment extends Component {
+<<<<<<< HEAD
   componentWillMount() {
     getProfileData()
       .then((profileData) => {
         this.props.updateUserId(profileData.id);
       });
+=======
+  constructor(props) {
+    super(props);
+    this.state = {
+      cardStatus: true
+    };
+  }
+
+  componentWillMount() {
+    this.props.getTickets();
+>>>>>>> develop
     this.props.navigation.setParams({
       handleIconTouch: this.handleIconTouch
     });
@@ -85,11 +97,22 @@ class Payment extends Component {
         text: strings.order.proceedYes,
         onPress: () => {
           LoaderHandler.showLoader('Processing your Order');
-          this.props.payWithBankTransfer(userId, order, referalCode, ((data) => {
-            const orderId = data.order_id
-            LoaderHandler.hideLoader();
-            Actions.orderDetail({ orderId, id: orderId, order: data });
-          }));
+          const { ticketTypes, ticketPrice } = this.props;
+          if (ticketPrice) {
+            const price = ticketPrice.replace(/[.]/gi, '');
+            const ticket = ticketTypes.filter(ticketType => ticketType.price == price);
+            this.props.createOrderExhibitor(ticket[0].id, () => {
+              LoaderHandler.hideLoader();
+              Actions.orderDetail()
+            });
+          }
+          else {
+            this.props.payWithBankTransfer(userId, order, referalCode, ((data) => {
+              const orderId = data.order_id
+              LoaderHandler.hideLoader();
+              Actions.orderDetail({ orderId, id: orderId, order: data });
+            }));
+          }
         }
       }
     ]);
@@ -193,7 +216,6 @@ Payment.propTypes = {
   updateInputFields: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
   inputFields: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired,
   paypalChecking: PropTypes.bool.isRequired
 };
 
@@ -205,7 +227,8 @@ const mapStateToProps = createStructuredSelector({
   userId: selectors.getUserId(),
   inputFields: selectors.getInputFields(),
   errorFields: selectors.getErrorFields(),
-  paypalChecking: selectors.isPayingWithPaypal()
+  paypalChecking: selectors.isPayingWithPaypal(),
+  ticketTypes: selectors.getTicketTypes()
 });
 
 export default connect(mapStateToProps, actions)(Payment);

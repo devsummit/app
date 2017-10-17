@@ -81,13 +81,13 @@ export const formatDate = (source) => {
 };
 
 export const localeDate = (date) => {
-  return Moment(date)
+  return Moment.utc(date)
     .local()
     .format('YYYY-MM-DD HH:mm:ss');
 };
 
 export const expiryDate = (date) => {
-  return Moment(date)
+  return Moment.utc(date)
     .add(1, 'hours')
     .local()
     .format('YYYY-MM-DD HH:mm:ss');

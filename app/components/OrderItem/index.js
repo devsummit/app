@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { formatDate, transactionStatus } from '../../helpers';
+import { formatDate, transactionStatus, localeDate } from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
 let amount = 0;
 export default class OrderItem extends Component {
@@ -87,7 +87,7 @@ export default class OrderItem extends Component {
           <View style={{ justifyContent: 'flex-start', flex: 4 }}>
             <Text>Order-{order.id}</Text>
             <Text note style={styles.orderId}>
-              {formatDate(order.created_at)}
+              {localeDate(order.created_at)}
             </Text>
             <View style={styles.viewText}>
               {status ? (

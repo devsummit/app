@@ -38,7 +38,7 @@ class NewOrder extends Component {
       {
         text: strings.order.proceedYes,
         onPress: () => {
-          LoaderHandler.showLoader('Processing your Order');
+          LoaderHandler.showLoader('Processing...');
           this.props.placeOrder((order) => {
             LoaderHandler.hideLoader();
             Actions.payment({ order });
