@@ -47,6 +47,7 @@ class AccordionView extends Component {
           duration={300}
           easing="ease-out"
           animation={isActive ? 'zoomIn' : 'zoomInUp'}
+          style={{ margin: 16 }}
         >
           <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Price: {section.price}</Text>
           {section.gifts &&
