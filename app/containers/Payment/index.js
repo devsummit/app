@@ -45,36 +45,58 @@ class Payment extends Component {
   };
 
   payWithPaypalAlert() {
-    Alert.alert(
-      'Important',
-      'Your transaction will be converted from IDR to USD',
-      [
-        {
-          text: 'OK',
-          onPress: () => this.payWithPaypal()
-        }
-      ]
-    );
+    Alert.alert('Important', 'Your transaction will be converted from IDR to USD', [
+      {
+        text: 'OK',
+        onPress: () => this.payWithPaypal()
+      }
+    ]);
   }
 
   payWithPaypal() {
-    const { order, payWithPaypal } = this.props;
-    LoaderHandler.showLoader('Confirming your payment');
-    payWithPaypal(order, (result) => {
-      LoaderHandler.hideLoader();
-      if (result) {
-        Alert.alert(
-          strings.payment.thanksForTheOrderTitle,
-          strings.payment.thanksForTheOrderMessage,
-          [
-            {
-              text: strings.payment.okButton,
-              onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
-            }
-          ]
-        );
-      }
-    });
+    const { ticketTypes, ticketPrice } = this.props;
+    if (ticketPrice) {
+      const price = ticketPrice.replace(/[.]/gi, '');
+      const ticket = ticketTypes.filter(ticketType => ticketType.price == price);
+      LoaderHandler.showLoader('Confirming your payment');
+      this.props.payWithPaypal(
+        null,
+        (result) => {
+          LoaderHandler.hideLoader();
+          if (result) {
+            Alert.alert(
+              strings.payment.thanksForTheOrderTitle,
+              strings.payment.thanksForTheOrderMessage,
+              [
+                {
+                  text: strings.payment.okButton,
+                  onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
+                }
+              ]
+            );
+          }
+        },
+        ticket[0].id
+      );
+    } else {
+      const { order, payWithPaypal } = this.props;
+      LoaderHandler.showLoader('Confirming your payment');
+      payWithPaypal(order, (result) => {
+        LoaderHandler.hideLoader();
+        if (result) {
+          Alert.alert(
+            strings.payment.thanksForTheOrderTitle,
+            strings.payment.thanksForTheOrderMessage,
+            [
+              {
+                text: strings.payment.okButton,
+                onPress: () => Actions.mainTabs({ type: 'reset', activePage: 1 })
+              }
+            ]
+          );
+        }
+      });
+    }
   }
 
   payWithBankTransfer = () => {
@@ -97,15 +119,14 @@ class Payment extends Component {
             const ticket = ticketTypes.filter(ticketType => ticketType.price == price);
             this.props.createOrderExhibitor(ticket[0].id, () => {
               LoaderHandler.hideLoader();
-              Actions.orderDetail()
+              Actions.orderDetail();
             });
-          }
-          else {
-            this.props.payWithBankTransfer(userId, order, referalCode, ((data) => {
-              const orderId = data.order_id
+          } else {
+            this.props.payWithBankTransfer(userId, order, referalCode, (data) => {
+              const orderId = data.order_id;
               LoaderHandler.hideLoader();
               Actions.orderDetail({ orderId, id: orderId, order: data });
-            }));
+            });
           }
         }
       }
@@ -196,7 +217,6 @@ class Payment extends Component {
           </Button>
 
           {/* Bank Transfer Card */}
-
         </Content>
       </Container>
     );

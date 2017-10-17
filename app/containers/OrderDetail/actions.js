@@ -70,7 +70,6 @@ export function orderVerification(order, image) {
 
 export function getOrderDetail(orderId) {
   return (dispatch) => {
-    console.log('orderId', orderId);
     dispatch(updateIsUpdatingOrder(true));
 
     orderdetail

@@ -1,4 +1,4 @@
-import {Platform} from 'react-native'
+import { Platform } from 'react-native';
 import PayPal from 'react-native-paypal';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
@@ -105,7 +105,9 @@ export function getTickets() {
 
 export function payWithBankTransfer(userId, order, referalCode, callback = () => ({})) {
   return (dispatch) => {
-    const orderItems = Object.keys(order).map((key) => { return order[key]; });
+    const orderItems = Object.keys(order).map((key) => {
+      return order[key];
+    });
     const data = {
       order_details: orderItems,
       payment_type: 'offline'
@@ -127,10 +129,13 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
   };
 }
 
-export function payWithPaypal(order, callback = () => {}) {
+export function payWithPaypal(order, callback = () => {}, ticketId) {
   return (dispatch) => {
     dispatch(isPayingWithPaypal(true));
-    const orderItems = Object.keys(order).map((key) => { return order[key]; });
+    const orderItems = ticketId
+      ? [ { count: 1, ticket_id: ticketId } ]
+      : Object.keys(order).map(key => order[key]);
+
     const data = {
       order_details: orderItems,
       payment_type: 'paypal'
@@ -138,39 +143,37 @@ export function payWithPaypal(order, callback = () => {}) {
     payment
       .post(data)
       .then((response) => {
-        console.log('order', response.data.data, response.data.included)
         return Promise.all([
           Promise.resolve(response.data.data),
           PayPal.paymentRequest({
             clientId: PAYPAL_CLIENT_ID,
             environment: PAYPAL_ENV,
-            price: response.data.included.reduce((sum, item) => sum + (item.price * item.count), 0).toString(),
+            price: response.data.included
+              .reduce((sum, item) => sum + item.price * item.count, 0)
+              .toString(),
             currency: PAYPAL_CURRENCY,
             description: 'Ticket for full 3-day event'
           })
-        ])
+        ]);
       })
-      .then(([order, result]) => {
-        console.log(result, order);
-        let response
+      .then(([ order, result ]) => {
+        let response;
         if (Platform.OS === 'android') {
           response = JSON.parse(result).response;
         } else {
-          response = result.confirmation.response
+          response = result.confirmation.response;
         }
         return payment.confirm({
           order_id: order.id,
           transaction_id: response.id,
           payment_type: 'paypal'
-        })
+        });
       })
       .then((result) => {
-        console.log('result', result);
         dispatch(isPayingWithPaypal(false));
         callback(result);
       })
       .catch((error) => {
-        console.log('error', error);
         dispatch(isPayingWithPaypal(false));
         callback(false);
       });
