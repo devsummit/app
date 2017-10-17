@@ -84,7 +84,7 @@ export function resetState() {
 /*
  * Register user
  */
-export function register(callBack) {
+export function register(callBack = () => {}) {
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
     const { inputFields } = getState()
@@ -123,6 +123,7 @@ export function register(callBack) {
                 [ 'profile_data', profileData ]
               ]);
               callBack();
+<<<<<<< HEAD
             }
             if (response && response.data.data && response.data.meta.success) {
               dispatch(
@@ -132,6 +133,13 @@ export function register(callBack) {
               dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
             } else if (response.data.data === null && !response.data.meta.success) {
               dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
+=======
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
+>>>>>>> change flow after register
             }
           } catch (err) {
             console.log(err, 'error cought');
