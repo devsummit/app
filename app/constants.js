@@ -64,16 +64,10 @@ export const SECTIONS = [
 
 export const SECTIONS2 = [
   {
-    ticket_type: 'Package Small',
+    ticket_type: 'hackaton',
     title: 'REGISTER',
-    price: '5.000.000',
-    gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
-  },
-  {
-    ticket_type: 'Package Big',
-    title: 'INFORMATION',
-    price: '15.000.000',
-    gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
+    price: '1.600.000',
+    gifts: [ 'ABC', 'free 3 redeem codes', 'free mineral water' ]
   }
 ];
 
