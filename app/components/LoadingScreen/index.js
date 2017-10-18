@@ -17,7 +17,7 @@ const LoadingScreen = () => {
     return (
         <ScrollView>
             <Image source={background} style={styles.background}>
-            <View style={{margin: 110}}>
+            <View style={{margin: 150}}>
                 <View style={{
                     flex: 0,
                     justifyContent: 'center',
@@ -36,7 +36,7 @@ const LoadingScreen = () => {
                 <Progress.Bar indeterminate width={200} />
                 {/* <Progress.Pie animated indeterminate size={50} /> */}
                 </View>
-                <Text style={{fontSize: 25, color : 'white', margin: 10, textAlign: 'center' }}>logging in.....</Text>
+                <Text style={{fontSize: 12, color : 'white', margin: 10, textAlign: 'center' }}>logging in...</Text>
             </View>
             </Image>
         </ScrollView>
