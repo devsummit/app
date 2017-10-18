@@ -291,7 +291,7 @@ class RegisterPhone extends Component {
             </View>
             {this.props.inputFields.firstName.length !== 0 &&
             this.props.inputFields.email.length !== 0 &&
-            this.state.isEmailValid
+            !checkEmail
               ? this.renderLoginButton()
               : this.renderErrorButton()}
           </Content>
