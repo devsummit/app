@@ -225,7 +225,56 @@ class BoothList extends Component {
           ) : this.state.accordion ? (
             <AccordionView setPaymentMethod={this.setPaymentMethod} />
           ) : this.state.accordion2 ? (
-            <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
+            <View style={styles.formSection}>
+              <Item regular style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Hackaton Team Name"
+                  placeholderTextColor={'#BDBDBD'}
+                  keyboardType={'email-address'}
+                  autoCapitalize={'none'}
+                />
+              </Item>
+              <Item regular style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Hackaton Team Member 1"
+                  placeholderTextColor={'#BDBDBD'}
+                />
+              </Item>
+              <Item regular style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Hackaton Team Member 2"
+                  placeholderTextColor={'#BDBDBD'}
+                />
+              </Item>
+              <Item regular style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Hackaton Team Member 3"
+                  placeholderTextColor={'#BDBDBD'}
+                />
+              </Item>
+              <Item regular style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Hackaton Team Member 4"
+                  placeholderTextColor={'#BDBDBD'}
+                />
+              </Item>
+              <Item regular style={styles.item}>
+                <Input
+                  style={styles.formInput}
+                  placeholder="Hackaton Team Member"
+                  placeholderTextColor={'#BDBDBD'}
+                  secureTextEntry
+                />
+              </Item>
+              <Button block style={styles.button} onPress={() => this.props.setPaymentMethod(10000)}>
+                <Text style={{color: 'white'}}>register</Text>
+              </Button>
+            </View>
           ) : (
             <View style={styles.content}>
               {this.state.boothFilter.map((data, index) => (
