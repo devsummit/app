@@ -20,7 +20,8 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
-  Linking
+  Linking,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
@@ -147,57 +148,50 @@ class BoothList extends Component {
             </Item>
           </Header>
         )}
-        <View>
-          <Modal
-            animationType="fade"
-            transparent={false}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {
-              this.setModalVisible(!this.state.modalVisible);
-            }}
-          >
-            <ScrollView>
-              <View style={{ margin: 20 }}>
-                <View>
-                  <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
-                    {strings.booth.howto}
-                  </Text>
-                  <View style={{ alignItems: 'center', marginTop: 20 }}>
-                    <Text style={{ fontSize: 16 }}>
-                      {strings.booth.info}
-                      {'\n'}
-                      {strings.booth.find}
-                    </Text>
-                    <View style={{ margin: 20, alignItems: 'center' }}>
-                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Fajar Adityo</Text>
-                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
-                      <Text style={{ marginVertical: 12 }}>OR</Text>
-                      <TouchableOpacity
-                        style={styles.btnDownload}
-                        onPress={() => {
-                          this.getProspectusFile();
-                        }}
-                      >
-                        <Text style={{ color: '#FFF', fontSize: 16 }}>
-                          {strings.global.download}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                    {/* <Text style={{ fontSize: 16 }}>{strings.booth.alreadyRegister}</Text> */}
-                  </View>
-                  <Button
-                    style={styles.btnModal}
+        <Modal
+          animationType="fade"
+          transparent
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalVisible);
+          }}
+        >
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View style={styles.modalInfo}>
+              <TouchableWithoutFeedback
+                onPress={() => this.setModalVisible(!this.state.modalVisible)}
+              >
+                <IconFA style={styles.iconClose} name="times" />
+              </TouchableWithoutFeedback>
+              <Text style={{ fontSize: 20, textAlign: 'center', color: '#000' }}>
+                {strings.booth.howto}
+              </Text>
+              <View style={{ alignItems: 'center', marginTop: 20 }}>
+                <Text style={{ fontSize: 16 }}>
+                  {strings.booth.info}
+                  {'\n'}
+                  {strings.booth.find}
+                </Text>
+                <View style={{ margin: 20, alignItems: 'center' }}>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Fajar Adityo</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>081252700655</Text>
+                  <Text style={{ marginVertical: 12 }}>OR</Text>
+                  <TouchableOpacity
+                    style={styles.btnDownload}
                     onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
+                      this.getProspectusFile();
                     }}
                   >
-                    <Text style={{ color: '#FFF', fontSize: 16 }}>{strings.global.back}</Text>
-                  </Button>
+                    <Text style={{ color: '#FFF', fontSize: 16 }}>
+                      {strings.global.download}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
+                {/* <Text style={{ fontSize: 16 }}>{strings.booth.alreadyRegister}</Text> */}
               </View>
-            </ScrollView>
-          </Modal>
-        </View>
+            </View>
+          </View>
+        </Modal>
         <Content>
           {this.props.isFetching ? (
             <Spinner color="#FF8B00" />
