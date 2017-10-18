@@ -18,5 +18,10 @@ export default {
   digitsNumber: '16 digit nomor kartu',
   lastDigitsNumber: '10 digit terakhir',
   totalAmount: 'Jumlah total',
-  submitPayment: 'Bayar'
+  submitPayment: 'Bayar',
+  payWithPaypal: 'Bayar dengan PayPal',
+  checkingPayment: 'Checking Payment',
+  thanksForTheOrderTitle: 'Terima Kasih!',
+  thanksForTheOrderMessage: 'Order anda sudah diproses. Kami akan membawa pada halaman daftar pembelian. Sampai ketemu pada event akbar!',
+  okButton: 'OK'
 };

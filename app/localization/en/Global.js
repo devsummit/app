@@ -7,6 +7,7 @@ export default {
   failed: 'Failed',
   warning: 'Warning',
   confirm: 'Confirm',
+  download: 'Download prospectus info',
   twitter: 'Twitter',
   facebook: 'Facebook',
   whatsapp: 'Whatsapp'

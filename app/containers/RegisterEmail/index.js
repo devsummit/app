@@ -63,11 +63,6 @@ class RegisterEmail extends Component {
           this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
         );
       }
-
-      setTimeout(() => {
-        this.onAlertOk();
-      }, 3000);
-
       this.props.updateRegisterStatus(false, '', '');
     }
   }
@@ -92,9 +87,6 @@ class RegisterEmail extends Component {
     }).start();
   };
 
-  onAlertOk = () => {
-    Actions.main();
-  };
   /*
     * validate all fields before submission
     */
@@ -109,7 +101,7 @@ class RegisterEmail extends Component {
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
     }
   };
 
@@ -258,7 +250,8 @@ class RegisterEmail extends Component {
                 {/* Here is the example of Radio Icon */}
               </View>
 
-              {(username && username.length < 4) ||
+              {username === '' ||
+              username.length < 4 ||
               password.length < 4 ||
               firstName === '' ||
               lastName === '' ||
@@ -318,7 +311,9 @@ RegisterEmail.propTypes = {
   errorFields: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   updateRegisterMethod: PropTypes.func.isRequired,
-  updateErrorFields: PropTypes.func.isRequired
+  updateErrorFields: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isRegistering: PropTypes.bool.isRequired
 };
 
 /**
@@ -329,7 +324,8 @@ const mapStateToProps = createStructuredSelector({
   errorFields: selectors.getErrorFields(),
   registerMethod: selectors.getRegisterMethod(),
   isRegistering: selectors.getIsRegistering(),
-  isRegistered: selectors.getRegisterStatus()
+  isRegistered: selectors.getRegisterStatus(),
+  isLoggedIn: selectors.getIsLoggedIn()
 });
 
 export default connect(mapStateToProps, actions)(RegisterEmail);

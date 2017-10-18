@@ -109,6 +109,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginTop: 20
+  },
+  inputReferal: {
+    width: '80%',
+    borderWidth: 1,
+    borderColor: 'black',
+    fontSize: 16,
+    paddingLeft: 12,
+  },
+  buttonReferal: {
+    backgroundColor: '#FF8B00',
+    marginLeft: 5
+  },
+  textReferal: {
+    color: 'white',
+    fontWeight: 'bold',
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
+    fontSize: 14
   }
 });
 

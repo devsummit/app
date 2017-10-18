@@ -20,12 +20,12 @@ export function isGetTicketType(status) {
   return {
     type: IS_GET_TICKET_TYPE,
     status
-  }
+  };
 }
 
 export function getTicketType() {
   return (dispatch) => {
-    dispatch(isGetTicketType(true))
+    dispatch(isGetTicketType(true));
     getAccessToken().then((accessToken) => {
       DevSummitAxios.get('/api/v1/tickets', {
         headers: { Authorization: accessToken }
@@ -35,7 +35,7 @@ export function getTicketType() {
             type: SET_TICKET_TYPE,
             data: response.data.data
           });
-          dispatch(isGetTicketType(false))
+          dispatch(isGetTicketType(false));
         }
       })
         .catch((err) => { console.log('error', err); });
@@ -92,7 +92,10 @@ export function placeOrder(redirect = () => {}) {
         }
       }).then((response) => {
         if (response.data && response.data.meta) {
-          redirect()
+          redirect({
+            ...response.data.data,
+            ...response.data.included[0]
+          });
         }
       })
         .catch((err) => { console.log(err); });

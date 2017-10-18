@@ -27,10 +27,15 @@ export default {
   // Ticket list
   ticketNumber: 'Ticket No.',
   noTicket: 'You have no tickets, please order or try to refresh',
+  QRInstruction: 'You can checkin using this QR code',
   refresh: 'Refresh',
   myOrder: 'My orders',
   pending: 'orders is pending',
   allTicket: 'All your ticket orders shows up here',
   ticketOrder: 'Ticket orders',
-  redeem: 'Redeem code'
+  redeem: 'Redeem code',
+  proceedPaymentTitle: 'Proceed to pay this ticket?',
+  proceedPaymentMessage: 'We are about to take you to the payment page. Click yes if you\'re ready to get your ticket',
+  proceedYes: 'Yes',
+  proceedNo: 'No'
 };

@@ -6,3 +6,5 @@ export const UPDATE_ORDER_STATUS = 'app/containers/OrderDetail/UPDATE_ORDER_STAT
 export const RESET_STATE = 'app/containers/OrderDetail/UPDATE_ORDER_DETAIL';
 export const SET_CONFIRM_PAYMENT = 'app/containers/OrderDetail/SET_CONFIRM_PAYMENT';
 export const IS_CONFIRMING_PAYMENT = 'app/containers/OrderDetail/IS_CONFIRMING_PAYMENT';
+export const SET_PAYMENT_PROOF = 'app/containers/OrderDetail/SET_PAYMENT_PROOF';
+export const SET_ORDER_ID = 'app/containers/OrderDetail/SET_ORDER_ID';
