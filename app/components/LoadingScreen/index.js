@@ -36,7 +36,7 @@ const LoadingScreen = () => {
                 <Progress.Bar indeterminate width={200} />
                 {/* <Progress.Pie animated indeterminate size={50} /> */}
                 </View>
-                <Text style={{fontSize: 25, color : 'white', margin: 10 }}>logging in.....</Text>
+                <Text style={{fontSize: 25, color : 'white', margin: 10, textAlign: 'center' }}>logging in.....</Text>
             </View>
             </Image>
         </ScrollView>
