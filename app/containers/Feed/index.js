@@ -326,26 +326,25 @@ class Feed extends Component {
           }}
         >
           <HeaderPoint title={strings.feed.title} />
-          <TouchableWithoutFeedback onPress={() => Actions.notification()}>
-            <View
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <CameraIcon
+              name="bell"
+              onPress={() => Actions.notification()}
               style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end'
+                elevation: 2,
+                alignSelf: 'center',
+                color: '#FFF',
+                fontSize: 20,
+                marginRight: 20
               }}
-            >
-              <CameraIcon
-                name="bell"
-                style={{
-                  elevation: 2,
-                  alignSelf: 'center',
-                  color: '#FFF',
-                  fontSize: 20,
-                  marginRight: 20
-                }}
-              />
-            </View>
-          </TouchableWithoutFeedback>
+            />
+          </View>
         </View>
         <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
