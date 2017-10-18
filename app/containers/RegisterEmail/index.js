@@ -121,6 +121,13 @@ class RegisterEmail extends Component {
     return false;
   };
 
+  // name validation
+  checkName = (value) => {
+    const pattern = /([^a-zA-Z0-9_-])/g;
+    if (pattern.test(value)) return false;
+    return true;
+  };
+
   handlePressCheckedBox = (checked) => {
     this.setState({
       isChecked: checked
@@ -133,9 +140,9 @@ class RegisterEmail extends Component {
     const { firstName, lastName, username, email, password, referer, verifyPassword } =
       inputFields || '';
 
-    const { errorFirstName, errorLastName } = errorFields || false;
-
     const checkEmail = this.checkEmail(email) === false && email !== '';
+    const checkFirstName = this.checkName(firstName) === false && firstName !== '';
+    const checkLastName = this.checkName(lastName) === false && lastName !== '';
     const checkUsername = typeof username !== 'undefined' && username.length < 4 && username !== '';
     const checkPassword = password.length < 4 && password !== '';
     const checkVerifyPassword = verifyPassword !== '' && verifyPassword !== password;
@@ -154,18 +161,24 @@ class RegisterEmail extends Component {
               </View>
 
               <View style={styles.formSection}>
+                {checkFirstName ? (
+                  <Text style={styles.errorInput}>{strings.register.errorFirstName}</Text>
+                ) : null}
                 <InputItem
                   itemStyle={styles.item}
-                  error={errorFirstName}
+                  error={checkFirstName}
                   style={styles.formInput}
                   placeholder={strings.register.firstName}
                   placeholderTextColor={'#BDBDBD'}
                   onChangeText={text => this.handleInputChange('firstName', text)}
                   value={firstName}
                 />
+                {checkLastName ? (
+                  <Text style={styles.errorInput}>{strings.register.errorLastName}</Text>
+                ) : null}
                 <InputItem
                   itemStyle={styles.item}
-                  error={errorLastName}
+                  error={checkLastName}
                   style={styles.formInput}
                   placeholder={strings.register.lastName}
                   placeholderTextColor={'#BDBDBD'}
@@ -257,8 +270,8 @@ class RegisterEmail extends Component {
               lastName === '' ||
               (this.checkEmail(email) === false && email !== '') ||
               verifyPassword !== password ? (
-                <View>
-                    <Button
+                  <View>
+                  <Button
                     block
                     style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
                     onPress={() => this.submitRegistration()}
