@@ -27,7 +27,6 @@ export function isGetTicketType(status) {
 export function getTicketType() {
   return (dispatch) => {
     dispatch(isGetTicketType(true));
-
     newOrder.get()
       .then((response) => {
         if (response && response.data && response.data.meta.success) {
@@ -85,7 +84,10 @@ export function placeOrder(redirect = () => {}) {
     newOrder.post(data)
       .then((response) => {
         if (response.data && response.data.meta) {
-          redirect();
+          redirect({
+            ...response.data.data,
+            ...response.data.included[0]
+          });
         }
       })
       .catch((err) => { console.log(err); });

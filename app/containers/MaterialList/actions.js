@@ -1,7 +1,9 @@
+import Toast from 'react-native-simple-toast';
 import {
   DevSummitAxios,
   getAccessToken
 } from '../../helpers';
+
 
 import local from '../../../config/local';
 import {
@@ -53,32 +55,33 @@ export function isFetchingMaterial(status) {
   };
 }
 
-export function fetchMaterialList() {
+export function fetchMaterialList(id) {
   return (dispatch) => {
     dispatch(isFetchingMaterial(true));
 
-    materialList.get()
-      .then((response) => {
-        dispatch({
-          type: FETCH_MATERIAL_LIST,
-          payloads: response.data.data
-        });
-        dispatch(isFetchingMaterial(false));
-      })
+    materialList.then((response) => {
+      dispatch({
+        type: FETCH_MATERIAL_LIST,
+        payloads: response.data.data
+      });
+      dispatch(isFetchingMaterial(false));
+    })
       .catch((err) => {
-      // maybe we can put toast here later
+        Toast.show('error speaker not found');
+        dispatch(isFetchingMaterial(false));
       });
   };
 }
 
 export function updateStatus(data, key) {
   return (dispatch) => {
-    materialList.patch()
-      .then((response) => {
-        if (response && response.data && response.data.meta.success) {
-          dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
-        }
-      }).catch((error) => { console.log(error); });
+    materialList.patch({ title: data.title,
+      summary: data.summary,
+      is_used: !data.is_used }).then((response) => {
+      if (response && response.data && response.data.meta.success) {
+        dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
+      }
+    }).catch((error) => { Toast.show('Error', error); });
   };
 }
 
@@ -103,7 +106,7 @@ export function saveMaterialList(data) {
           .then((resp) => {
             dispatch(addMaterialItem(resp.data));
           }).catch((err) => {
-            console.log(err);
+            Toast.show('Error', err);
           });
       });
   };
@@ -111,12 +114,12 @@ export function saveMaterialList(data) {
 
 export function deleteMaterialList(id) {
   return (dispatch) => {
+    dispatch({ type: DELETE_MATERIAL_LIST, id });
     materialList.delete(id)
       .then((response) => {
-
       })
       .catch((err) => {
-        console.log(err);
+        Toast.show('Error', err);
       });
   };
 }

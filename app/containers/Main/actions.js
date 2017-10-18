@@ -119,6 +119,13 @@ export function login() {
             { text: 'Register', onPress: () => Actions.registerEmail() },
             { text: 'Cancel' }
           ]);
+        } else if (
+          !response.data.meta.success &&
+          response.data.meta.message === 'you have not confirmed your email'
+        ) {
+          Alert.alert('Login Failed', 'Please verify your email first', [
+            { text: 'OK' }
+          ]);
         } else {
           Alert.alert('Login Failed', response.data.meta.message);
         }

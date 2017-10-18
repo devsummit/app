@@ -25,3 +25,7 @@ export const getIsConfirmingPayment = () =>
 
 export const getPaymentProof = () =>
   createSelector(selectMainReducer(), state => state.get('imageUrl'));
+
+export const getOrderId = () =>
+  createSelector(selectMainReducer(), state => state.get('orderId'));
+  

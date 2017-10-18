@@ -1,8 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-import {
-  DevSummitAxios
-} from '../../helpers';
+import { DevSummitAxios } from '../../helpers';
 /*
  * import constants
  */
@@ -13,12 +11,11 @@ import {
   UPDATE_REGISTER_METHOD,
   TOGGLE_IS_REGISTERING,
   UPDATE_REGISTER_STATUS,
-  RESET_STATE
+  RESET_STATE,
+  UPDATE_IS_LOGGED_IN
 } from './constants';
 
 import regEmail from '../../services/regEmail';
-
-
 /*
  * Update the input fields
  * @param {field: name of the field}
@@ -32,7 +29,6 @@ export function updateInputFields(field, value) {
   };
 }
 
-
 /*
  * Update register method
  * @param {value: value to be set}
@@ -43,7 +39,6 @@ export function updateRegisterMethod(payload) {
     payload
   };
 }
-
 
 /*
  * Update the error of input fields
@@ -58,7 +53,6 @@ export function updateErrorFields(field, value) {
   };
 }
 
-
 /*
  * update the is registering status
  * @param {value: value to be set (boolean)}
@@ -69,7 +63,6 @@ export function toggleIsRegistering(status) {
     status
   };
 }
-
 
 export function updateRegisterStatus(status, title, message) {
   return {
@@ -86,18 +79,24 @@ export function resetState() {
   };
 }
 
+export function updateIsLoggedIn(status) {
+  return {
+    type: UPDATE_IS_LOGGED_IN,
+    status
+  };
+}
 
 /*
  * Register user
  */
-export function register() {
+export function register(callBack) {
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
-    const { inputFields } = getState().get('registerEmail').toJS();
+    const { inputFields } = getState()
+      .get('registerEmail')
+      .toJS();
 
-    const {
-      firstName, email, password, username
-    } = inputFields || null;
+    const { firstName, email, password, username } = inputFields || null;
 
     const { lastName, referer } = inputFields || '';
 
@@ -109,21 +108,41 @@ export function register() {
       password,
       username,
       referer
-    }
+    };
 
     if (firstName && email && password && username) {
       regEmail.post(data)
         .then(async (response) => {
-          if (response && response.data.data && response.data.meta.success) {
-            await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));
-            await dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login to continue'));
-          } else if (response.data.data !== null && !response.data.meta.success) {
-            await dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-          } else if (response.data.data === null && !response.data.meta.success) {
-            await dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
+          const resData = response.data.data;
+          const roleId = JSON.stringify(response.data.included.role_id);
+          const profileData = JSON.stringify(response.data.included);
+          try {
+            if (response && response.data.data && response.data.meta.success) {
+              AsyncStorage.multiSet([
+                [ 'access_token', resData.access_token ],
+                [ 'refresh_token', resData.refresh_token ],
+                [ 'role_id', roleId ],
+                [ 'profile_data', profileData ]
+              ]);
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+              callBack();
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              dispatch(
+                updateRegisterStatus(
+                  true,
+                  'Failed',
+                  response.data.meta.message.concat(' please login using your existing account')
+                )
+              );
+            }
+          } catch (err) {
+            console.log(err, 'error cought');
           }
           dispatch(toggleIsRegistering(false));
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.log(error, 'error caught');
         });
     }

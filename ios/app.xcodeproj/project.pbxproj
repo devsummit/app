@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -41,6 +40,7 @@
 		398D9E48E2614E329A990917 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEEEAA9EB0DC4AE7A826E6B0 /* MaterialCommunityIcons.ttf */; };
 		3BB32D9A56494D3995A23A0E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C2789ECD5A3467992136260 /* Ionicons.ttf */; };
 		422C32BD3FD54F24BC08BACE /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDC5EDE7757A40A6AB78B20A /* Roboto_medium.ttf */; };
+		491D5A81B8B942F5B8D7FA66 /* libMFLReactNativePayPal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FDE8F0E7E4833A7F9E237 /* libMFLReactNativePayPal.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		5F9A20DE3C9D4A63A450E90A /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F8F343BFD69408E9B2202AD /* Entypo.ttf */; };
 		6776F4E05F464D0596EB3A65 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE94A86567B240ADB7F9F558 /* Montserrat-Regular.ttf */; };
@@ -87,6 +87,7 @@
 		E7B98CB1D3D2EB1F41E21698 /* libPods-appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E22D7CC99A97DCDD8638412D /* libPods-appTests.a */; };
 		FA7880A1FE1E430E88CA2246 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B75C39FCFE264690B58A1E19 /* EvilIcons.ttf */; };
 		FCB4ADC44407464C96661C1D /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FE471EA53B245B08626FB55 /* MaterialIcons.ttf */; };
+		025271070675414FA733FA2E /* libRNVersionNumber.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D012E5F64E1A4D2CB608719C /* libRNVersionNumber.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,12 +280,19 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		9C32F2151F91AD4C00C01B4F /* PBXContainerItemProxy */ = {
+		9C32F1721F90DA3B00C01B4F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 129992539D9941998159B487 /* BVLinearGradient.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 64AA15081EF7F30100718508;
 			remoteInfo = "BVLinearGradient-tvOS";
+		};
+		9C32F19F1F90DA3C00C01B4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A34C580BD5764A3D8364D74B /* MFLReactNativePayPal.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64D7A2381C46907F008FCDA3;
+			remoteInfo = MFLReactNativePayPal;
 		};
 		9C9131BE1F7B285A000D018E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -464,6 +472,7 @@
 		73BBB37B8FE2FED38B70AAF7 /* Pods-app-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-app-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-app-tvOSTests/Pods-app-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7C77BA90E20947609A548199 /* RNAccountKit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAccountKit.xcodeproj; path = "../node_modules/react-native-facebook-account-kit/ios/RNAccountKit.xcodeproj"; sourceTree = "<group>"; };
+		7E4FDE8F0E7E4833A7F9E237 /* libMFLReactNativePayPal.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libMFLReactNativePayPal.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		880BEB3476B04B7A8CC761D0 /* CodePush.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		8BE9449B0BDF4B96A62EA71B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -479,6 +488,7 @@
 		9CE394EE1F7A283A0021C0F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "app/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9CFFFF151F7BF2FE00AAF527 /* libDCTAuth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDCTAuth.a; path = "Build/Products/Debug-iphonesimulator/DCTAuth/libDCTAuth.a"; sourceTree = "<group>"; };
 		9FE471EA53B245B08626FB55 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		A34C580BD5764A3D8364D74B /* MFLReactNativePayPal.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = MFLReactNativePayPal.xcodeproj; path = "../node_modules/react-native-paypal/ios/MFLReactNativePayPal.xcodeproj"; sourceTree = "<group>"; };
 		AE94A86567B240ADB7F9F558 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		AFAACC682E66D31E75FEF706 /* Pods-appTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-appTests/Pods-appTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B39658C1ED6D54145A5C517C /* libPods-app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -500,6 +510,8 @@
 		F6EC7A164CC54E27B1EEDA3A /* RNShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		F9158C7ADB69431396924190 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		FEEEAA9EB0DC4AE7A826E6B0 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		A9BB81872BB14660AE30630F /* RNVersionNumber.xcodeproj */ = {isa = PBXFileReference; name = "RNVersionNumber.xcodeproj"; path = "../node_modules/react-native-version-number/ios/RNVersionNumber.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		D012E5F64E1A4D2CB608719C /* libRNVersionNumber.a */ = {isa = PBXFileReference; name = "libRNVersionNumber.a"; path = "libRNVersionNumber.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -546,6 +558,8 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D19B7C61AB204D4C9B1D0C7E /* libz.tbd in Frameworks */,
 				8FA8D064EA9EF7285024547B /* libPods-app.a in Frameworks */,
+				491D5A81B8B942F5B8D7FA66 /* libMFLReactNativePayPal.a in Frameworks */,
+				025271070675414FA733FA2E /* libRNVersionNumber.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,6 +762,8 @@
 				BD0BC10FCDDF45309B5A4E07 /* RNDocumentPicker.xcodeproj */,
 				F6EC7A164CC54E27B1EEDA3A /* RNShare.xcodeproj */,
 				56489A250B984A028B94D923 /* ReactNativeLocalization.xcodeproj */,
+				A34C580BD5764A3D8364D74B /* MFLReactNativePayPal.xcodeproj */,
+				A9BB81872BB14660AE30630F /* RNVersionNumber.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -789,6 +805,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9C32F19C1F90DA3C00C01B4F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C32F1A01F90DA3C00C01B4F /* libMFLReactNativePayPal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		9C9131971F7B285A000D018E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -801,6 +825,7 @@
 			isa = PBXGroup;
 			children = (
 				4EC68CDBCC424FECBACF47F1 /* libz.tbd */,
+				7E4FDE8F0E7E4833A7F9E237 /* libMFLReactNativePayPal.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -833,7 +858,7 @@
 			isa = PBXGroup;
 			children = (
 				9CF18CBF1F711578009E4D56 /* libBVLinearGradient.a */,
-				9C32F2161F91AD4C00C01B4F /* libBVLinearGradient.a */,
+				9C32F1731F90DA3B00C01B4F /* libBVLinearGradient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1086,6 +1111,10 @@
 				{
 					ProductGroup = 9CF18CED1F711578009E4D56 /* Products */;
 					ProjectRef = CCFC7D14F69E4DC5A3A6DDFA /* LRDRCTSimpleToast.xcodeproj */;
+				},
+				{
+					ProductGroup = 9C32F19C1F90DA3C00C01B4F /* Products */;
+					ProjectRef = A34C580BD5764A3D8364D74B /* MFLReactNativePayPal.xcodeproj */;
 				},
 				{
 					ProductGroup = 9CF18CB71F711578009E4D56 /* Products */;
@@ -1346,11 +1375,18 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9C32F2161F91AD4C00C01B4F /* libBVLinearGradient.a */ = {
+		9C32F1731F90DA3B00C01B4F /* libBVLinearGradient.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libBVLinearGradient.a;
-			remoteRef = 9C32F2151F91AD4C00C01B4F /* PBXContainerItemProxy */;
+			remoteRef = 9C32F1721F90DA3B00C01B4F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9C32F1A01F90DA3C00C01B4F /* libMFLReactNativePayPal.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMFLReactNativePayPal.a;
+			remoteRef = 9C32F19F1F90DA3C00C01B4F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9C9131BF1F7B285A000D018E /* libReactNativeLocalization.a */ = {
@@ -1836,12 +1872,16 @@
 					"$(SRCROOT)/../node_modules/react-native-document-picker/ios/RNDocumentPicker",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-localization",
+					"$(SRCROOT)/../node_modules/react-native-paypal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-version-number/ios",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1881,12 +1921,16 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-localization",
+					"$(SRCROOT)/../node_modules/react-native-paypal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-version-number/ios",
 				);
 				INFOPLIST_FILE = appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1935,6 +1979,8 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-localization",
+					"$(SRCROOT)/../node_modules/react-native-paypal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-version-number/ios",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1988,6 +2034,8 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios",
 					"$(SRCROOT)/../node_modules/react-native-localization",
+					"$(SRCROOT)/../node_modules/react-native-paypal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-version-number/ios",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2038,11 +2086,15 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-localization",
+					"$(SRCROOT)/../node_modules/react-native-paypal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-version-number/ios",
 				);
 				INFOPLIST_FILE = "app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2090,11 +2142,15 @@
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-localization",
+					"$(SRCROOT)/../node_modules/react-native-paypal/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-version-number/ios",
 				);
 				INFOPLIST_FILE = "app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2142,6 +2198,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.app-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2167,6 +2225,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

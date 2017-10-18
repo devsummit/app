@@ -182,6 +182,14 @@ class Feed extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.updateCurrentPage(1);
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  };
+
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   };
@@ -248,10 +256,6 @@ class Feed extends Component {
   };
 
   _keyExtractor = (item, index) => item.id;
-
-  onCancel = () => {
-    this.setState({ visible: false });
-  };
 
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
@@ -322,28 +326,27 @@ class Feed extends Component {
           }}
         >
           <HeaderPoint title={strings.feed.title} />
-          <TouchableWithoutFeedback onPress={() => Actions.notification()}>
-            <View
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <CameraIcon
+              name="bell"
+              onPress={() => Actions.notification()}
               style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end'
+                elevation: 2,
+                alignSelf: 'center',
+                color: '#FFF',
+                fontSize: 20,
+                marginRight: 20
               }}
-            >
-              <CameraIcon
-                name="bell"
-                style={{
-                  elevation: 2,
-                  alignSelf: 'center',
-                  color: '#FFF',
-                  fontSize: 20,
-                  marginRight: 20
-                }}
-              />
-            </View>
-          </TouchableWithoutFeedback>
+            />
+          </View>
         </View>
-        <Tabs style={styles.tabs} initialPage={0}>
+        <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
             heading={
               <TabHeading style={styles.tabHeading}>
@@ -388,10 +391,12 @@ class Feed extends Component {
                                     style={{ alignSelf: 'center' }}
                                     onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
-                                    <Image
-                                      source={{ uri: item.attachment }}
-                                      style={styles.images}
-                                    />
+                                    {item.attachment && (
+                                      <Image
+                                        source={{ uri: item.attachment }}
+                                        style={styles.images}
+                                      />
+                                    )}
                                   </TouchableOpacity>
                                 </Body>
                               </CardItem>
@@ -440,11 +445,13 @@ class Feed extends Component {
                                   style={styles.touchImage}
                                   onPress={() => this.setModalVisible(true, item.attachment)}
                                 >
-                                  <Image
-                                    source={{ uri: item.attachment }}
-                                    resizeMode="contain"
-                                    style={styles.images}
-                                  />
+                                  {item.attachment && (
+                                    <Image
+                                      source={{ uri: item.attachment }}
+                                      resizeMode="contain"
+                                      style={styles.images}
+                                    />
+                                  )}
                                 </TouchableOpacity>
                                 <View
                                   style={{
@@ -569,10 +576,7 @@ class Feed extends Component {
                   style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
                 />
               </Button>
-              <Button
-                style={{ backgroundColor: '#FF8B00' }}
-                onPress={() => Actions.ticketList()}
-              >
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
                 <CameraIcon
                   name="archive"
                   color="#FFFFFF"

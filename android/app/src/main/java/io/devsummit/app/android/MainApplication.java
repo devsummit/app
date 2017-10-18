@@ -3,6 +3,8 @@ package io.devsummit.app.android;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.apsl.versionnumber.RNVersionNumberPackage;
+import br.com.vizir.rn.paypal.PayPalPackage;
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import cl.json.RNSharePackage;
@@ -27,12 +29,20 @@ import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
 
+  public static final int PAY_PAL_REQUEST_ID = 212223;
+  public static PayPalPackage paypalPackage;
+
+  public static PayPalPackage getPaypalPackage() {
+    return paypalPackage;
+  }
+
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
     @Override
     protected String getJSBundleFile() {
       return CodePush.getJSBundleFile();
     }
+
 
     @Override
     public boolean getUseDeveloperSupport() {
@@ -41,9 +51,13 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
+
+      MainApplication.paypalPackage = new PayPalPackage(PAY_PAL_REQUEST_ID);
+      return Arrays.asList(
           new MainReactPackage(),
+            new RNVersionNumberPackage(),
           new ReactNativeLocalizationPackage(),
+              MainApplication.getPaypalPackage(),
           new VectorIconsPackage(),
           new RNSharePackage(),
           new OAuthManagerPackage(),

@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>io.devsummit.app.ios</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.1.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>23</string>
+	<string>29</string>
 	<key>CodePushDeploymentKey</key>
 	<string>ylzfrzWtmLZGySDLgXJ8O_OPqhmx7a0e3200-cc3f-42bd-b1e8-a65dc8c238a7</string>
 	<key>Fabric</key>
@@ -51,6 +51,12 @@
 	</dict>
 	<key>FacebookAppID</key>
 	<string>1429376450515465</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>com.paypal.ppclient.touch.v1</string>
+		<string>com.paypal.ppclient.touch.v2</string>
+		<string>org-appextension-feature-password-management</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -66,6 +72,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>DevSummit requires access to the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>DevSummit requires access to the location library when in use</string>
 	<key>NSPhotoLibraryUsageDescription</key>

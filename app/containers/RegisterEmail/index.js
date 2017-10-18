@@ -63,11 +63,6 @@ class RegisterEmail extends Component {
           this.props.isRegistered.title.concat(', ').concat(this.props.isRegistered.message)
         );
       }
-
-      setTimeout(() => {
-        this.onAlertOk();
-      }, 3000);
-
       this.props.updateRegisterStatus(false, '', '');
     }
   }
@@ -92,9 +87,6 @@ class RegisterEmail extends Component {
     }).start();
   };
 
-  onAlertOk = () => {
-    Actions.main();
-  };
   /*
     * validate all fields before submission
     */
@@ -109,7 +101,7 @@ class RegisterEmail extends Component {
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
     }
   };
 
@@ -129,6 +121,13 @@ class RegisterEmail extends Component {
     return false;
   };
 
+  // name validation
+  checkName = (value) => {
+    const pattern = /([^a-zA-Z0-9_-])/g;
+    if (pattern.test(value)) return false;
+    return true;
+  };
+
   handlePressCheckedBox = (checked) => {
     this.setState({
       isChecked: checked
@@ -137,14 +136,16 @@ class RegisterEmail extends Component {
 
   render() {
     // destructure state
-    const { inputFields, errorFields, isRegistering } = this.props || {};
+    const { inputFields, isRegistering } = this.props || {};
     const { firstName, lastName, username, email, password, referer, verifyPassword } =
       inputFields || '';
 
-    const { errorFirstName, errorLastName } = errorFields || false;
-
+    // form checker
     const checkEmail = this.checkEmail(email) === false && email !== '';
+    const checkFirstName = this.checkName(firstName) === false && firstName !== '';
+    const checkLastName = this.checkName(lastName) === false && lastName !== '';
     const checkUsername = typeof username !== 'undefined' && username.length < 4 && username !== '';
+    const validateUsername = this.checkName(username) === false && username !== '';
     const checkPassword = password.length < 4 && password !== '';
     const checkVerifyPassword = verifyPassword !== '' && verifyPassword !== password;
 
@@ -162,18 +163,24 @@ class RegisterEmail extends Component {
               </View>
 
               <View style={styles.formSection}>
+                {checkFirstName ? (
+                  <Text style={styles.errorInput}>{strings.register.errorFirstName}</Text>
+                ) : null}
                 <InputItem
                   itemStyle={styles.item}
-                  error={errorFirstName}
+                  error={checkFirstName}
                   style={styles.formInput}
                   placeholder={strings.register.firstName}
                   placeholderTextColor={'#BDBDBD'}
                   onChangeText={text => this.handleInputChange('firstName', text)}
                   value={firstName}
                 />
+                {checkLastName ? (
+                  <Text style={styles.errorInput}>{strings.register.errorLastName}</Text>
+                ) : null}
                 <InputItem
                   itemStyle={styles.item}
-                  error={errorLastName}
+                  error={checkLastName}
                   style={styles.formInput}
                   placeholder={strings.register.lastName}
                   placeholderTextColor={'#BDBDBD'}
@@ -195,6 +202,9 @@ class RegisterEmail extends Component {
                 {checkUsername ? (
                   <Text style={styles.errorInput}>{strings.register.errorUsernameLenght}</Text>
                 ) : null}
+                { validateUsername ? (
+                  <Text style={styles.errorInput}>{strings.register.errorUsername}</Text>
+                ) : null}
                 <InputItem
                   itemStyle={styles.item}
                   error={checkUsername}
@@ -206,7 +216,7 @@ class RegisterEmail extends Component {
                 />
                 {checkPassword ? (
                   <Text style={styles.errorInput}>{strings.register.errorPasswordLenght}</Text>
-                ) : null}
+                ) : null }
                 <InputItem
                   itemStyle={styles.item}
                   error={checkPassword}
@@ -258,14 +268,15 @@ class RegisterEmail extends Component {
                 {/* Here is the example of Radio Icon */}
               </View>
 
-              {(username && username.length < 4) ||
+              {username === '' ||
+              username.length < 4 ||
               password.length < 4 ||
               firstName === '' ||
               lastName === '' ||
               (this.checkEmail(email) === false && email !== '') ||
               verifyPassword !== password ? (
-                <View>
-                    <Button
+                  <View>
+                  <Button
                     block
                     style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
                     onPress={() => this.submitRegistration()}
@@ -318,7 +329,9 @@ RegisterEmail.propTypes = {
   errorFields: PropTypes.object.isRequired,
   register: PropTypes.func.isRequired,
   updateRegisterMethod: PropTypes.func.isRequired,
-  updateErrorFields: PropTypes.func.isRequired
+  updateErrorFields: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  isRegistering: PropTypes.bool.isRequired
 };
 
 /**
@@ -329,7 +342,8 @@ const mapStateToProps = createStructuredSelector({
   errorFields: selectors.getErrorFields(),
   registerMethod: selectors.getRegisterMethod(),
   isRegistering: selectors.getIsRegistering(),
-  isRegistered: selectors.getRegisterStatus()
+  isRegistered: selectors.getRegisterStatus(),
+  isLoggedIn: selectors.getIsLoggedIn()
 });
 
 export default connect(mapStateToProps, actions)(RegisterEmail);

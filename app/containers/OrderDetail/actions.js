@@ -2,7 +2,8 @@ import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
-import orderDetail from '../../services/orderDetail';
+
+import orderdetail from '../../services/orderdetail';
 /*
  * import constants
  */
@@ -14,7 +15,8 @@ import {
   UPDATE_ORDER_STATUS,
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
-  SET_PAYMENT_PROOF
+  SET_PAYMENT_PROOF,
+  SET_ORDER_ID
   // RESET_STATE
 } from './constants';
 
@@ -32,55 +34,67 @@ export function setPaymentProof(value) {
   return { type: SET_PAYMENT_PROOF, value };
 }
 
-export function orderVerification(order, image) {
-  return (dispatch) => {
-    getAccessToken().then((token) => {
-      const form = new FormData();
-
-      if (Platform.OS === 'ios' && image.sourceURL) {
-        form.append('payment_proof', {
-          uri: image.sourceURL
-        });
-      }
-
-      if (image.path) {
-        form.append('payment_proof', {
-          uri: image.path,
-          type: image.mime,
-          name: 'image.jpg'
-        });
-      }
-      form.append('order_id', order);
-
-      const headers = { Authorization: token };
-
-      DevSummitAxios.post('/order-verification', form, { headers })
-        .then((response) => {
-          dispatch(setPaymentProof(response.data.data.payment_proof));
-          Toast.show(response.data.meta.message);
-        })
-        .catch((err) => {
-          Toast.show('Sorry, something went wrong');
-          console.log('ERROR', err);
-        });
-    });
-  };
+export function setOrderId(value) {
+  return { type: SET_ORDER_ID, value };
 }
 
+export function orderVerification(order, image) {
+  return (dispatch) => {
+    const form = new FormData();
+
+    if (Platform.OS === 'ios' && image.sourceURL) {
+      form.append('payment_proof', {
+        uri: image.sourceURL
+      });
+    }
+
+    if (image.path) {
+      form.append('payment_proof', {
+        uri: image.path,
+        type: image.mime,
+        name: 'image.jpg'
+      });
+    }
+    form.append('order_id', order);
+    orderdetail
+      .postPaymentProof(form)
+      .then((response) => {
+        dispatch(setPaymentProof(response.data.data.payment_proof));
+        Toast.show(response.data.meta.message);
+      })
+      .catch((err) => {
+        Toast.show('Sorry, something went wrong');
+        console.log('ERROR', err);
+      });
+  };
+}
 
 export function getOrderDetail(orderId) {
   return (dispatch) => {
     dispatch(updateIsUpdatingOrder(true));
 
+<<<<<<< HEAD
     orderDetail
       .get(orderId)
       .then((response) => {
         dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+=======
+    orderdetail
+      .get(orderId)
+      .then((response) => {
+        if (response.data.included.verification) {
+          dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+        }
+>>>>>>> origin/develop
         dispatch({ type: SET_ORDER, data: response.data });
         dispatch(updateIsUpdatingOrder(false));
       })
       .catch((err) => {
+<<<<<<< HEAD
         console.log('kudazebra', err.response);
+=======
+        console.log(err.response);
+>>>>>>> origin/develop
       });
   };
 }

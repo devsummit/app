@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { Container, Content, Text, Spinner } from 'native-base';
 import {
-  Container,
-  Content,
-  Text,
-  Spinner
-} from 'native-base';
-import { View, ScrollView, Image, TouchableWithoutFeedback, Modal, WebView, TouchableOpacity } from 'react-native';
+  View,
+  ScrollView,
+  Image,
+  TouchableWithoutFeedback,
+  Modal,
+  WebView,
+  TouchableOpacity
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import VersionNumber from 'react-native-version-number';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -32,8 +36,10 @@ class Settings extends Component {
       modalVisible: false,
       firstName: '',
       lastName: '',
-      photo: null
-    }
+      photo: null,
+      version: VersionNumber.appVersion,
+      versionCode: VersionNumber.buildVersion
+    };
   }
   componentWillMount() {
     getProfileData().then((profileData) => {
@@ -66,24 +72,15 @@ class Settings extends Component {
 
   handleInputChange = (field, value) => {
     this.props.updateFields(field, value);
-  }
+  };
 
   handleUpdateAvatar = (value) => {
     this.props.updateAvatar(value);
-  }
+  };
 
   render() {
     const { fields, isDisabled, avatar, errorFields, isLoading } = this.props || {};
-    const {
-      firstName,
-      lastName,
-      username,
-      boothInfo,
-      job,
-      summary,
-      profilePic
-    } = fields || '';
-    console.log('hahahaa', this.props);
+    const { firstName, lastName, username, boothInfo, job, summary, profilePic } = fields || '';
     return (
       <Container>
         <Content>
@@ -94,47 +91,37 @@ class Settings extends Component {
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
                   <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                     <Image
-                      source={{ uri: avatar  }}
+                      source={{ uri: avatar }}
                       style={{ width: 70, height: 70, borderRadius: 35 }}
                     />
                     <View style={{ marginLeft: 8, justifyContent: 'center' }}>
-                      <Text>{firstName} {lastName}</Text>
+                      <Text>
+                        {firstName} {lastName}
+                      </Text>
                       <Text style={{ color: '#BDBDBD' }}>{username}</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
                 <View style={{ borderColor: '#BDBDBD', borderWidth: 0.5, marginBottom: 20 }} />
-                <Button
-                  block
-                  style={styles.button}
-                  onPress={() => Actions.codeConduct()}
-                >
+                <Button block style={styles.button} onPress={() => Actions.codeConduct()}>
                   <Text>{strings.settings.codeConduct}</Text>
                 </Button>
-                <Button
-                  block
-                  style={styles.button}
-                  onPress={() => Actions.privacyPolicy()}
-                >
+                <Button block style={styles.button} onPress={() => Actions.privacyPolicy()}>
                   <Text>{strings.settings.privacyPolicy}</Text>
                 </Button>
-                <Button
-                  block
-                  style={styles.button}
-                  onPress={() => this.setModalVisible(true)}
-                >
+                <Button block style={styles.button} onPress={() => this.setModalVisible(true)}>
                   <Text>{strings.settings.feedback}</Text>
                 </Button>
                 <Button
                   block
                   style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
-                  onPress={() => { this.props.logOut(); }}
+                  onPress={() => {
+                    this.props.logOut();
+                  }}
                 >
-                  {isLoading ?
-                    <Spinner color="#FFFFFF" /> :
-                    <Text>{strings.settings.logout}</Text>
-                  }
+                  {isLoading ? <Spinner color="#FFFFFF" /> : <Text>{strings.settings.logout}</Text>}
                 </Button>
+                <Text note style={styles.version}>v{this.state.version}({this.state.versionCode})</Text>
               </View>
             </Content>
           </ScrollView>
@@ -144,16 +131,21 @@ class Settings extends Component {
             onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
           >
             <View style={{ flex: 1 }}>
-              <View style={ styles.modal }>
+              <View style={styles.modal}>
                 <TouchableOpacity onPress={() => this.setModalVisible(!this.state.modalVisible)}>
-                  <Icon name={'ios-arrow-dropleft'} size={24} color={'black'} style={{ padding: 10 }} />
+                  <Icon
+                    name={'ios-arrow-dropleft'}
+                    size={24}
+                    color={'black'}
+                    style={{ padding: 10 }}
+                  />
                 </TouchableOpacity>
               </View>
               <WebView
                 automaticallyAdjustContentInsets={false}
                 source={{ uri: FEEDBACK_URL }}
                 style={{ marginTop: 20 }}
-                scalesPageToFit={true}
+                scalesPageToFit
                 ref={'webview'}
                 decelerationRate="normal"
                 javaScriptEnabled

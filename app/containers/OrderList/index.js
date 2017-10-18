@@ -158,7 +158,8 @@ class OrderList extends Component {
                     confirmPayment={this.confirmPayment}
                     onPress={() => {
                       Actions.orderDetail({
-                        orderId: order.id
+                        orderId: order.id,
+                        id: order.id
                       });
                     }}
                   />

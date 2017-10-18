@@ -32,5 +32,9 @@ export default {
   pending: 'Menunggu pembayaran',
   allTicket: 'Seluruh pesanan anda ada disini',
   ticketOrder: 'Pemesanan tiket',
-  redeem: 'Tukar kode'
+  redeem: 'Tukar kode',
+  proceedPaymentTitle: 'Lanjut ke halaman pembayaran?',
+  proceedPaymentMessage: 'Kami akan mengarahkan anda pada halaman pembayaran. Sentuh tombol Iya untuk melanjutkan',
+  proceedYes: 'Iya',
+  proceedNo: 'Tidak'
 };

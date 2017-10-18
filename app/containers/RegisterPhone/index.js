@@ -63,7 +63,7 @@ class RegisterPhone extends Component {
           [
             {
               text: isFailed ? strings.global.ok : 'Login',
-              onPress: isFailed ? () => { } : this.onAlertOk
+              onPress: isFailed ? () => {} : this.onAlertOk
             }
           ],
           { cancelable: false }
@@ -78,7 +78,7 @@ class RegisterPhone extends Component {
   }
 
   onAlertOk = () => {
-    Actions.main();
+    Actions.mainTabs();
   };
 
   onLogin(token) {
@@ -118,7 +118,7 @@ class RegisterPhone extends Component {
     if (this.isFieldError()) {
       Alert.alert(strings.global.warning, strings.register.fieldNotComplete);
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
       this.props.inputFields.email = '';
       this.props.inputFields.firstName = '';
       this.props.inputFields.lastName = '';
@@ -165,6 +165,20 @@ class RegisterPhone extends Component {
     });
   };
 
+  // email validation
+  checkEmail = (inputvalue) => {
+    const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if (pattern.test(inputvalue)) return true;
+    return false;
+  };
+
+  // name validation
+  checkName = (value) => {
+    const pattern = /([^a-zA-Z0-9_-])/g;
+    if (pattern.test(value)) return false;
+    return true;
+  };
+
   renderLoginButton() {
     return (
       <Button style={styles.button}>
@@ -189,7 +203,7 @@ class RegisterPhone extends Component {
       </Button>
     );
   };
-
+  
   render() {
     if (this.props.isRegistering) {
       return (
@@ -201,38 +215,48 @@ class RegisterPhone extends Component {
       );
     }
     // destructure state
-    const { inputFields, errorFields } = this.props || {};
+    const { inputFields } = this.props || {};
     const { firstName, lastName, email, role, referer } = inputFields || '';
-
-    const { errorFirstName, errorLastName, errorEmail } = errorFields || false;
-
+    // form checker
+    const checkEmail = this.checkEmail(email) === false && email !== '';
+    const checkFirstName = this.checkName(firstName) === false && firstName !== '';
+    const checkLastName = this.checkName(lastName) === false && lastName !== '';
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
           <AuthLogo style={styles.logo} />
           <Content>
             <View style={styles.formSection}>
+              {checkFirstName ?
+                <Text style={styles.errorInput}>{strings.register.errorFirstName}</Text>
+                : null }
               <InputItem
                 itemStyle={styles.item}
-                error={errorFirstName}
+                error={checkFirstName}
                 style={styles.formInput}
                 placeholder={strings.register.firstName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('firstName', text)}
                 value={firstName}
               />
+              {checkLastName ?
+                <Text style={styles.errorInput}>{strings.register.errorLastName}</Text>
+                : null }
               <InputItem
                 itemStyle={styles.item}
-                error={errorLastName}
+                error={checkLastName}
                 style={styles.formInput}
                 placeholder={strings.register.lastName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('lastName', text)}
                 value={lastName}
               />
+              {checkEmail ?
+                <Text style={styles.errorInput}>{strings.register.errorInvalidEmail}</Text>
+                : null }
               <InputItem
                 itemStyle={styles.item}
-                error={errorEmail}
+                error={checkEmail}
                 style={styles.formInput}
                 placeholder={strings.register.email}
                 placeholderTextColor={'#BDBDBD'}

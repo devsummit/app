@@ -14,15 +14,15 @@ import {
   Row,
   Col,
   List,
-  ListItem,
-  Fab,
   Spinner
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal, Image } from 'react-native';
+import { RefreshControl, Alert, View, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Actions } from 'react-native-router-flux';
+import HeaderPoint from '../../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
@@ -33,6 +33,11 @@ import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
 import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
+
+const Back = require('../../../assets/images/back.png');
+const logo = require('../../../assets/images/bankmandiri.png');
+
+const { width, height } = Dimensions.get('window');
 
 let total = 0;
 class OrderDetail extends Component {
@@ -49,12 +54,12 @@ class OrderDetail extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
-    this.props.getOrderDetail(this.props.orderId);
-  };
+    this.getOrderDetail();
+  }
 
   componentWillReceiveProps() {
     if (this.props.order && this.props.order.included) {
@@ -191,18 +196,20 @@ class OrderDetail extends Component {
       });
   };
 
+  getOrderDetail() {
+    this.props.getOrderDetail(this.props.id || this.props.navigation.state.params.id);
+  }
+
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-
-    const WEBVIEW_REF = 'webview';
     if (
       isUpdating ||
       isConfirming ||
-      (Object.keys(order).length === 0 && order.constructor === Object)
+      Object.keys(order).length === 0
     ) {
       return (
         <Container>
@@ -214,12 +221,26 @@ class OrderDetail extends Component {
     }
     return (
       <Container style={styles.container}>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#FF8B00',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            padding: 5
+          }}
+        >
+          <TouchableWithoutFeedback onPress={() => Actions.mainTabs({ activePage: 1 })}>
+            <Image source={Back} style={{ width: 20, height: 20 }} />
+          </TouchableWithoutFeedback>
+          <HeaderPoint title={'Order Detail'} />
+        </View>
         <Content
           refreshControl={
             <RefreshControl
               refreshing={this.props.isUpdating}
               onRefresh={() => {
-                this.props.getOrderDetail(orderId);
+                this.getOrderDetail();
               }}
             />
           }
@@ -253,9 +274,18 @@ class OrderDetail extends Component {
                         <Text>{expiryDate(order.data[0].created_at)}</Text>
                       ) : (
                         <Text style={{ fontWeight: 'bold' }}>
-                          {this.state.status === 'paid'
+                          {this.state.status === 'paid' || this.state.status === 'capture'
                             ? null
-                            : this.state.orderStatus.toUpperCase()}
+                            : Moment()
+                              .utc()
+                              .local()
+                              .isBefore(
+                                Moment.utc(order.data[0].created_at)
+                                  .add(1, 'hours')
+                                  .local()
+                              )
+                              ? expiryDate(order.data[0].created_at)
+                              : 'Expired'}
                         </Text>
                       )}
                     </Col>
@@ -273,7 +303,7 @@ class OrderDetail extends Component {
                 <Text
                   style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
                 >
-                  {this.state.status.toUpperCase()}
+                  {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
                 </Text>
               )}
             </CardItem>
@@ -351,6 +381,45 @@ class OrderDetail extends Component {
             <View />
           )}
           <View>
+            {payment.payment_type === 'offline' &&
+            <Card>
+              <View style={styles.card} resizeMode={'cover'}>
+                <Image source={logo} style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }} />
+                <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                <Text style={styles.textTitle}>OR</Text>
+                <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                <View
+                  style={{
+                    flex: 8,
+                    alignItems: 'center'
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#000000',
+                      marginBottom: 8,
+                      marginTop: 16
+                    }}
+                  >
+                    Nomer Rekening:
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#000000',
+                      marginBottom: 8,
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    130-0016066782
+                  </Text>
+                </View>
+              </View>
+            </Card>}
             {payment.payment_type === 'offline' ? (
               this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
@@ -382,7 +451,6 @@ class OrderDetail extends Component {
 
 OrderDetail.propTypes = {
   getOrderDetail: PropTypes.func.isRequired,
-  orderId: PropTypes.string.isRequired,
   order: PropTypes.object.isRequired,
   updateOrder: PropTypes.func.isRequired,
   submitUpdateOrder: PropTypes.func.isRequired,
@@ -392,6 +460,7 @@ OrderDetail.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  orderId: selectors.getOrderId(),
   ticketTypes: selectors.getTicketTypes(),
   order: selectors.getOrder(),
   isUpdating: selectors.getIsUpdatingOrder(),

@@ -21,7 +21,7 @@ import {
   RESTORE_CURRENT_PAGE
 } from './constants';
 
-import { DevSummitAxios, getAccessToken } from '../../helpers';
+import { getAccessToken } from '../../helpers';
 
 /**
  * Receiver callback from container and send it to reducer
@@ -56,15 +56,6 @@ export function isFetchingMoreFeeds(status) {
   };
 }
 
-export function setTokenHeader(currentpage) {
-  return (dispatch) => {
-    getAccessToken().then((accessToken) => {
-      Api.setAuthorizationToken(accessToken);
-      dispatch(fetchFeeds(currentpage));
-    });
-  };
-}
-
 export function fetchFeeds(currentpage) {
   return (dispatch) => {
     dispatch(isFetchingFeeds(true));
@@ -77,7 +68,7 @@ export function fetchFeeds(currentpage) {
         dispatch({ type: FETCH_FEEDS, payloads });
         dispatch({ type: SET_LINKS, links });
 
-        dispatch(updateCurrentPage(currentpage + 1));
+        dispatch(updateCurrentPage(currentpage));
 
         dispatch(isFetchingFeeds(false));
       })
@@ -88,12 +79,21 @@ export function fetchFeeds(currentpage) {
   };
 }
 
+export function setTokenHeader(currentpage) {
+  return (dispatch) => {
+    getAccessToken().then((accessToken) => {
+      Api.setAuthorizationToken(accessToken);
+      dispatch(fetchFeeds(currentpage));
+    });
+  };
+}
+
 export function fetchPageWithPaginate(page) {
   return (dispatch) => {
     dispatch(isFetchingMoreFeeds(true));
 
     feeds
-      .get(page)
+      .get(page + 1)
       .then((response) => {
         const payloads = response.data.data;
         const links = response.data.links;
