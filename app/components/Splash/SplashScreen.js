@@ -1,17 +1,21 @@
 import React from 'react';
-import { StyleSheet, Image, View, StatusBar } from 'react-native';
+import { StyleSheet, Image, View, StatusBar, Text } from 'react-native';
 import { createTransition, Fade } from 'react-native-transition';
+import VersionNumber from 'react-native-version-number';
+import strings from '../../localization';
 
 const Transition = createTransition(Fade);
 
 const Logo = require('../../../assets/images/devsummit.png');
 
+const version = VersionNumber.appVersion;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     alignItems: 'center'
   },
   logo: {
@@ -24,8 +28,12 @@ const SplashScreen = () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={'white'} />
+      <View />
       <View>
         <Image source={Logo} style={styles.logo} />
+      </View>
+      <View>
+        <Text>{strings.settings.version} {version}</Text>
       </View>
     </View>
   );
