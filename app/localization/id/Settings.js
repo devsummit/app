@@ -4,6 +4,5 @@ export default {
   codeConduct: 'Kode etik',
   privacyPolicy: 'Kebijakan pribadi',
   logout: 'Keluar',
-  feedback: 'Kritik dan Saran',
-  version: 'Versi'
+  feedback: 'Kritik dan Saran'
 };
