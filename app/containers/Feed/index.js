@@ -183,8 +183,12 @@ class Feed extends Component {
   }
 
   componentWillUnmount() {
-    this.props.updateCurrentPage(0);
+    this.props.updateCurrentPage(1);
   }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  };
 
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
@@ -252,10 +256,6 @@ class Feed extends Component {
   };
 
   _keyExtractor = (item, index) => item.id;
-
-  onCancel = () => {
-    this.setState({ visible: false });
-  };
 
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
