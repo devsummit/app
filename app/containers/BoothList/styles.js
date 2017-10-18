@@ -8,12 +8,10 @@ const styles = StyleSheet.create({
   },
   btnBooth: {
     alignSelf: 'center',
-    width: '70%',
+    width: '40%',
+    margin: 20,
     backgroundColor: '#FF6F00',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     justifyContent: 'center',
-    marginTop: 20
   },
   btnDownload: {
     backgroundColor: '#F44336',
