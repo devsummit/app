@@ -3,6 +3,8 @@ import {
   getAccessToken
 } from '../../helpers';
 
+import Toast from 'react-native-simple-toast'
+
 import local from '../../../config/local';
 import {
   FETCH_MATERIAL_LIST,
@@ -52,13 +54,13 @@ export function isFetchingMaterial(status) {
   };
 }
 
-export function fetchMaterialList() {
+export function fetchMaterialList(id) {
   return (dispatch) => {
     dispatch(isFetchingMaterial(true));
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/documents', { headers })
+        DevSummitAxios.get(`api/v1/speaker/${id}/documents`, { headers })
           .then((response) => {
             dispatch({
               type: FETCH_MATERIAL_LIST,
@@ -67,7 +69,8 @@ export function fetchMaterialList() {
             dispatch(isFetchingMaterial(false));
           })
           .catch((err) => {
-            // maybe we can put toast here later
+            Toast.show("error speaker not found");
+            dispatch(isFetchingMaterial(false));
           });
       });
   };
@@ -75,7 +78,6 @@ export function fetchMaterialList() {
 
 export function updateStatus(data, key) {
   return (dispatch) => {
-
     getAccessToken()
       .then((token) => {
         DevSummitAxios.patch(`/api/v1/documents/${data.id}`, {
@@ -90,7 +92,7 @@ export function updateStatus(data, key) {
           if (response && response.data && response.data.meta.success) {
             dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
           }
-        }).catch((error) => { console.log(error); });
+        }).catch((error) => { Toast.show("Error", error); });
       });
   };
 }
@@ -120,7 +122,7 @@ export function saveMaterialList(data) {
 
           }).catch((err) => {
 
-              console.log(err);
+            Toast.show("Error", err);
 
           });
       });
@@ -142,7 +144,7 @@ export function deleteMaterialList(id) {
 
           })
           .catch((err) => {
-            console.log(err);
+            Toast.show("Error", err);
           });
       });
   };
