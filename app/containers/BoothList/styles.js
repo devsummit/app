@@ -30,6 +30,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10
   },
+  formSection: {
+    marginTop: 2,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 5,
+    width: window.width - 30
+  },
+  formInput: {
+    paddingLeft: 20,
+    height: 45,
+    color: 'black'
+  },
+  item: {
+    marginBottom: 8,
+    borderColor: '#FFD740',
+    borderWidth: 2
+  },
   content: {
     flex: 1,
     marginTop: 12,
