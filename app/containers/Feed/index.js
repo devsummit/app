@@ -30,7 +30,8 @@ import {
   BackHandler,
   KeyboardAvoidingView,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  WebView
 } from 'react-native';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -49,7 +50,7 @@ import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
-import TicketList from '../TicketList';
+import OrderList from '../OrderList';
 import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
@@ -124,6 +125,7 @@ String.prototype.toDateFromDatetime = function() {
 const mapStateToProps = () =>
   createStructuredSelector({
     isFetching: selectors.getIsFetchingFeeds(),
+    isFetchingMore: selectors.getIsFetchingMore(),
     feeds: selectors.getFetchFeeds(),
     links: selectors.getFeedsLinks(),
     isPosting: selectors.getIsPostingFeed(),
@@ -159,14 +161,16 @@ class Feed extends Component {
       shareTwitter: {
         message: '',
         url: null
-      }
+      },
+      modalWebView: false,
+      link: ''
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
   }
 
   componentWillMount() {
-    this.props.fetchFeeds(this.props.currentPage);
+    this.props.setTokenHeader(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data').then((profile) => {
       const data = JSON.parse(profile);
@@ -177,6 +181,14 @@ class Feed extends Component {
       this.setState({ firstName, lastName, profileUrl: url, userId: id });
     });
   }
+
+  componentWillUnmount() {
+    this.props.updateCurrentPage(1);
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+  };
 
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
@@ -194,6 +206,11 @@ class Feed extends Component {
 
   setModalReport = (visible) => {
     this.setState({ modalReport: visible });
+  };
+
+  setModalWebView = (visible, link) => {
+    this.setState({ modalWebView: visible });
+    this.state.link = link;
   };
 
   postFeed = (callback) => {
@@ -240,28 +257,24 @@ class Feed extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
-  onCancel = () => {
-    this.setState({ visible: false });
-  };
-
   onOpen = (_message, _url) => {
     this.setState({ visible: true });
 
-    var urlTwitter = '';
-    let share = Object.assign({}, this.state.shareOptions);
-    let shareTwitter = Object.assign({}, this.state.shareTwitter);
+    let urlTwitter = '';
+    const share = Object.assign({}, this.state.shareOptions);
+    const shareTwitter = Object.assign({}, this.state.shareTwitter);
 
     if (_url === null) {
       urlTwitter = '';
     } else {
-        urlTwitter = _url;
+      urlTwitter = _url;
     }
-    
+
     shareTwitter.message = _message;
     shareTwitter.url = urlTwitter;
     share.message = _message;
     share.url = _url;
-    this.setState({ shareOptions: share, shareTwitter: shareTwitter });
+    this.setState({ shareOptions: share, shareTwitter });
   };
 
   alertRemoveFeed = (postId) => {
@@ -313,28 +326,27 @@ class Feed extends Component {
           }}
         >
           <HeaderPoint title={strings.feed.title} />
-          <TouchableWithoutFeedback onPress={() => Actions.notification()}>
-            <View
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <CameraIcon
+              name="bell"
+              onPress={() => Actions.notification()}
               style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end'
+                elevation: 2,
+                alignSelf: 'center',
+                color: '#FFF',
+                fontSize: 20,
+                marginRight: 20
               }}
-            >
-              <CameraIcon
-                name="bell"
-                style={{
-                  elevation: 2,
-                  alignSelf: 'center',
-                  color: '#FFF',
-                  fontSize: 20,
-                  marginRight: 20
-                }}
-              />
-            </View>
-          </TouchableWithoutFeedback>
+            />
+          </View>
         </View>
-        <Tabs style={styles.tabs} initialPage={0}>
+        <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
             heading={
               <TabHeading style={styles.tabHeading}>
@@ -344,7 +356,7 @@ class Feed extends Component {
           >
             <Content style={{ backgroundColor: '#E0E0E0' }}>
               {this.props.isFetching ? (
-                <Spinner color="yellow" />
+                <Spinner color="#FF8B00" />
               ) : (
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
@@ -363,13 +375,11 @@ class Feed extends Component {
                             <Card style={{ flex: 0 }}>
                               <CardItem>
                                 <Left>
-                                  <Thumbnail source={{ uri: item.user.photos[0].url || '' }} />
+                                  <Thumbnail source={{ uri: item.user.attachment || '' }} />
                                   <Body>
-                                    <Text>
-                                      {item.user.first_name} {item.user.last_name}
-                                    </Text>
+                                    <Text>{item.user.name}</Text>
                                     <Text note>
-                                      <IconSimpleLine name="globe" />sponsored
+                                      <IconSimpleLine name="globe" /> sponsored
                                     </Text>
                                   </Body>
                                 </Left>
@@ -379,12 +389,14 @@ class Feed extends Component {
                                   <Text style={{ marginBottom: 8 }}>{item.message}</Text>
                                   <TouchableOpacity
                                     style={{ alignSelf: 'center' }}
-                                    onPress={() => this.setModalVisible(true, item.attachment)}
+                                    onPress={() => this.setModalWebView(true, item.redirect_url)}
                                   >
-                                    <Image
-                                      source={{ uri: item.attachment }}
-                                      style={styles.images}
-                                    />
+                                    {item.attachment && (
+                                      <Image
+                                        source={{ uri: item.attachment }}
+                                        style={styles.images}
+                                      />
+                                    )}
                                   </TouchableOpacity>
                                 </Body>
                               </CardItem>
@@ -425,82 +437,92 @@ class Feed extends Component {
                                     <Text style={{ color: '#000', margin: 10 }}>
                                       {item.message}
                                     </Text>
-                                    <TouchableOpacity
-                                      style={{ alignSelf: 'center', marginLeft: 8 }}
-                                      onPress={() => this.setModalVisible(true, item.attachment)}
-                                    >
-                                      <Image
-                                        source={{ uri: item.attachment }}
-                                        style={styles.images}
-                                      />
-                                    </TouchableOpacity>
                                   </View>
                                 </View>
                               </View>
-                              <View
-                                style={{
-                                  borderBottomColor: '#BDBDBD',
-                                  borderWidth: 0.5,
-                                  marginRight: -20
-                                }}
-                              />
-                              <View
-                                style={{
-                                  flex: 1,
-                                  flexDirection: 'row',
-                                  justifyContent: 'space-around'
-                                }}
-                              >
-                                {this.state.userId === item.user_id ? (
-                                  <TouchableWithoutFeedback
-                                    onPress={() => this.alertRemoveFeed(item.id)}
-                                  >
-                                    <View
-                                      style={{
-                                        flex: 1,
-                                        backgroundColor: 'transparent',
-                                        borderRadius: 8
-                                      }}
-                                    >
-                                      <Text style={styles.buttonReport}>{strings.feed.delete}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
-                                ) : (
-                                  <TouchableWithoutFeedback
-                                    onPress={() => this.alertReportFeed(item.id)}
-                                  >
-                                    <View
-                                      style={{
-                                        flex: 1,
-                                        backgroundColor: 'transparent',
-                                        borderRadius: 8
-                                      }}
-                                    >
-                                      <Text style={styles.buttonReport}>{strings.feed.report}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
-                                )}
-                                <TouchableWithoutFeedback
-                                  onPress={() => this.onOpen(item.message, item.attachment)}
+                              <View style={{ flex: 1 }}>
+                                <TouchableOpacity
+                                  style={styles.touchImage}
+                                  onPress={() => this.setModalVisible(true, item.attachment)}
                                 >
-                                  <View
-                                    style={{
-                                      flex: 1,
-                                      marginLeft: 10,
-                                      backgroundColor: 'transparent',
-                                      borderRadius: 8
-                                    }}
+                                  {item.attachment && (
+                                    <Image
+                                      source={{ uri: item.attachment }}
+                                      resizeMode="contain"
+                                      style={styles.images}
+                                    />
+                                  )}
+                                </TouchableOpacity>
+                                <View
+                                  style={{
+                                    borderBottomColor: '#BDBDBD',
+                                    borderWidth: 0.5,
+                                    marginRight: -20
+                                  }}
+                                />
+                                <View
+                                  style={{
+                                    flex: 1,
+                                    flexDirection: 'row'
+                                  }}
+                                >
+                                  {this.state.userId === item.user_id ? (
+                                    <TouchableWithoutFeedback
+                                      onPress={() => this.alertRemoveFeed(item.id)}
+                                    >
+                                      <View
+                                        style={{
+                                          flex: 1,
+                                          backgroundColor: 'transparent',
+                                          borderRadius: 8
+                                        }}
+                                      >
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.delete}
+                                        </Text>
+                                      </View>
+                                    </TouchableWithoutFeedback>
+                                  ) : (
+                                    <TouchableWithoutFeedback
+                                      onPress={() => this.alertReportFeed(item.id)}
+                                    >
+                                      <View
+                                        style={{
+                                          flex: 1,
+                                          backgroundColor: 'transparent',
+                                          borderRadius: 8
+                                        }}
+                                      >
+                                        <Text style={styles.buttonReport}>
+                                          {strings.feed.report}
+                                        </Text>
+                                      </View>
+                                    </TouchableWithoutFeedback>
+                                  )}
+                                  <TouchableWithoutFeedback
+                                    onPress={() => this.onOpen(item.message, item.attachment)}
                                   >
-                                    <Text style={styles.buttonReport}>{strings.feed.share}</Text>
-                                  </View>
-                                </TouchableWithoutFeedback>
+                                    <View
+                                      style={{
+                                        flex: 1,
+                                        marginLeft: 10,
+                                        backgroundColor: 'transparent',
+                                        borderRadius: 8
+                                      }}
+                                    >
+                                      <Text style={styles.buttonReport}>{strings.feed.share}</Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                </View>
                               </View>
                             </Card>
                           ))}
                       />
                     )}
                     {this.props.links.next && this.props.feeds.length > 0 ? (
-                      <TouchableOpacity onPress={this.fetchNextFeeds}>
+                      this.props.isFetchingMore ? (
+                        <Spinner color="#FF8B00" />
+                      ) : (
                         <Card>
                           <CardItem>
                             <Body
@@ -510,11 +532,13 @@ class Feed extends Component {
                                 justifyContent: 'space-around'
                               }}
                             >
-                              <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              <TouchableOpacity onPress={this.fetchNextFeeds}>
+                                <Text style={{ color: '#42A5F5' }}>{strings.feed.showMore}</Text>
+                              </TouchableOpacity>
                             </Body>
                           </CardItem>
                         </Card>
-                      </TouchableOpacity>
+                      )
                     ) : (
                       <View />
                     )}
@@ -537,19 +561,37 @@ class Feed extends Component {
               </TabHeading>
             }
           >
-            <TicketList />
+            <OrderList />
             <Fab
               active={this.state.fabActive}
               style={{ backgroundColor: '#FF8B00' }}
               position="bottomRight"
               onPress={() => this.setState({ fabActive: !this.state.fabActive })}
             >
-              <CameraIcon name="plus-circle" style={{ fontSize: 40 }} />
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => Actions.newOrder()}>
-                <CameraIcon name="ticket" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+                <CameraIcon
+                  name="ticket"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
-              <Button style={{ backgroundColor: '#FF8B00'}} onPress={() => this.setModalRedeem(true)}>
-                <CameraIcon name="gift" color="#FFFFFF" style={{ flex: 1, textAlign: 'center', fontSize: 30 }} />
+              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                <CameraIcon
+                  name="archive"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
+              </Button>
+              <Button
+                style={{ backgroundColor: '#FF8B00' }}
+                onPress={() => this.setModalRedeem(true)}
+              >
+                <CameraIcon
+                  name="gift"
+                  color="#FFFFFF"
+                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                />
               </Button>
             </Fab>
           </Tab>
@@ -576,6 +618,28 @@ class Feed extends Component {
               </View>
               <Redeem />
             </View>
+          </View>
+        </Modal>
+        {/* Modal WebView */}
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalWebView}
+          onRequestClose={() => {
+            this.setModalWebView(!this.state.modalWebView, null);
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <WebView
+              ref={'webview'}
+              automaticallyAdjustContentInsets={false}
+              source={{ uri: this.state.link }}
+              javaScriptEnabled
+              domStorageEnabled
+              decelerationRate="normal"
+              startInLoadingState
+              scalesPageToFit={this.state.scalesPageToFit}
+            />
           </View>
         </Modal>
         {/* Modal for create new feeds post */}
@@ -796,6 +860,7 @@ Feed.PropTypes = {
   updateText: func,
   postFeeds: func,
   isFetching: bool,
+  isFetchingMore: bool,
   imagesData: object,
   feeds: array,
   textData: string,

@@ -120,8 +120,8 @@ android {
         applicationId "io.devsummit.app.android"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 8
-        versionName "1.0.4"
+        versionCode 15
+        versionName "1.1.5"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -175,6 +175,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-paypal')
     compile project(':react-native-localization')
     compile project(':react-native-vector-icons')
     compile project(':react-native-share')

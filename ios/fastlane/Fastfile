@@ -30,7 +30,8 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
+    cert(development: true)
+    sigh(development: true)
     gym(scheme: "app") # Build your app - more options available
     # pilot
     crashlytics(
@@ -45,7 +46,8 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :release do
-    # match(type: "appstore")
+    cert
+    sigh
     # snapshot
     gym(scheme: "app") # Build your app - more options available
     deliver(force: true)

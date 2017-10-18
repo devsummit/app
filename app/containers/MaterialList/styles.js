@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { PRIMARYCOLOR } from './../../constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,6 +70,15 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  artworkText: {
+    fontSize: 16,
+    color: PRIMARYCOLOR,
+    fontWeight: 'bold',
+    marginTop: 20
+  },
+  artworkImage: {
+    opacity: 0.7
   }
 });
 

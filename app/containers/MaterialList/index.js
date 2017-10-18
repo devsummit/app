@@ -30,6 +30,8 @@ import styles from './styles';
 import * as selectors from './selectors';
 import * as actions from './actions';
 
+const noMaterial = require('./../../../assets/images/nomaterial.png');
+
 class MaterialList extends Component {
   constructor(props) {
     super(props);
@@ -185,8 +187,7 @@ class MaterialList extends Component {
                         </CardItem>
                       </Card>
                     ))}
-                  </Content> :
-                  this.checkButtonBasedOnRole()
+                  </Content> : this.checkButtonBasedOnRole()
               )
           }
           <ModalComponent

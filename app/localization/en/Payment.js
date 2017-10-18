@@ -18,5 +18,10 @@ export default {
   digitsNumber: '16 digits card number',
   lastDigitsNumber: 'Last 10 digits',
   totalAmount: 'Total amount',
-  submitPayment: 'Submit payment'
+  submitPayment: 'Submit payment',
+  payWithPaypal: 'Pay with PayPal',
+  checkingPayment: 'Checking Payment',
+  thanksForTheOrderTitle: 'Thank You!',
+  thanksForTheOrderMessage: 'Your order has been processed. We will bring you to the order list you have been made. See you at the event.',
+  okButton: 'OK'
 };
