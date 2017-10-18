@@ -1,6 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 import * as actions from '../OrderList/actions';
+import newOrder from '../../services/newOrder';
 
 /*
  * import constants
@@ -20,26 +21,24 @@ export function isGetTicketType(status) {
   return {
     type: IS_GET_TICKET_TYPE,
     status
-  }
+  };
 }
 
 export function getTicketType() {
   return (dispatch) => {
-    dispatch(isGetTicketType(true))
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.get('/api/v1/tickets', {
-        headers: { Authorization: accessToken }
-      }).then((response) => {
+    dispatch(isGetTicketType(true));
+
+    newOrder.get()
+      .then((response) => {
         if (response && response.data && response.data.meta.success) {
           dispatch({
             type: SET_TICKET_TYPE,
             data: response.data.data
           });
-          dispatch(isGetTicketType(false))
+          dispatch(isGetTicketType(false));
         }
       })
-        .catch((err) => { console.log('error', err); });
-    });
+      .catch((err) => { console.log('error', err); });
   };
 }
 
@@ -83,20 +82,13 @@ export function placeOrder(redirect = () => {}) {
     } else {
       data = { order_details: orderItems };
     }
-
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.post('api/v1/orders', data, {
-        headers: {
-          Authorization: accessToken,
-          'Content-Type': 'application/json'
-        }
-      }).then((response) => {
+    newOrder.post(data)
+      .then((response) => {
         if (response.data && response.data.meta) {
-          redirect()
+          redirect();
         }
       })
-        .catch((err) => { console.log(err); });
-    });
+      .catch((err) => { console.log(err); });
   };
 }
 
@@ -133,13 +125,8 @@ export function GetReferal() {
   return (dispatch, getState) => {
     dispatch(updateIsGettingReferal(true));
     const { referalCode } = getState().getIn([ 'newOrder', 'inputFields' ]).toJS();
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.post('api/v1/referals/check', { referal_code: referalCode }, {
-        headers: {
-          Authorization: accessToken,
-          'Content-Type': 'application/json'
-        }
-      }).then((response) => {
+    newOrder.postReferal()
+      .then((response) => {
         if (response.data && response.data.data) {
           dispatch({
             type: GET_REFERAL,
@@ -151,6 +138,5 @@ export function GetReferal() {
         console.log(err);
         dispatch(updateIsGettingReferal(false));
       });
-    });
   };
 }

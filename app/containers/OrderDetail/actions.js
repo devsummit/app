@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
+import orderDetail from '../../services/orderDetail';
 /*
  * import constants
  */
@@ -53,7 +54,7 @@ export function orderVerification(order, image) {
 
       const headers = { Authorization: token };
 
-      DevSummitAxios.post('/api/v1/order-verification', form, { headers })
+      DevSummitAxios.post('/order-verification', form, { headers })
         .then((response) => {
           dispatch(setPaymentProof(response.data.data.payment_proof));
           Toast.show(response.data.meta.message);
@@ -70,22 +71,16 @@ export function orderVerification(order, image) {
 export function getOrderDetail(orderId) {
   return (dispatch) => {
     dispatch(updateIsUpdatingOrder(true));
-    getAccessToken()
-      .then((accessToken) => {
-        DevSummitAxios.get(`/api/v1/orders/${orderId}/details`, {
-          headers: { Authorization: accessToken }
-        })
-          .then((response) => {
-            dispatch(setPaymentProof(response.data.included.verification.payment_proof));
-            dispatch({ type: SET_ORDER, data: response.data });
-            dispatch(updateIsUpdatingOrder(false));
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+
+    orderDetail
+      .get(orderId)
+      .then((response) => {
+        dispatch(setPaymentProof(response.data.included.verification.payment_proof));
+        dispatch({ type: SET_ORDER, data: response.data });
+        dispatch(updateIsUpdatingOrder(false));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log('kudazebra', err.response);
       });
   };
 }
@@ -105,7 +100,7 @@ export function submitUpdateOrder(orders) {
         getAccessToken()
           .then((token) => {
             DevSummitAxios.patch(
-              `/api/v1/orders/${orders[i].order_id}/details/${orders[i].id}`,
+              `/orders/${orders[i].order_id}/details/${orders[i].id}`,
               {
                 count: orders[i].count
               },
@@ -115,11 +110,11 @@ export function submitUpdateOrder(orders) {
             )
               .then((response) => {})
               .catch((err) => {
-                console.log(err.response);
+                console.log('kuda merah', err.response);
               });
           })
           .catch((error) => {
-            console.log(error);
+            console.log('kuda jingkrak', error);
           });
       }
     });
@@ -169,26 +164,18 @@ export function updateIsConfirmingPayment(status) {
 export function confirmPayment(id) {
   return (dispatch) => {
     dispatch(updateIsConfirmingPayment(true));
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.patch(
-        `/api/v1/payments/status/${id}`,
-        {},
-        {
-          headers: { Authorization: accessToken }
+    orderDetail.patch(id)
+      .then((response) => {
+        if (response.data && response.data.data) {
+          dispatch({
+            type: SET_CONFIRM_PAYMENT,
+            payload: response.data.data
+          });
         }
-      )
-        .then((response) => {
-          if (response.data && response.data.data) {
-            dispatch({
-              type: SET_CONFIRM_PAYMENT,
-              payload: response.data.data
-            });
-          }
-          dispatch(updateIsConfirmingPayment(false));
-        })
-        .catch((err) => {
-          console.log('error here', err);
-        });
-    });
+        dispatch(updateIsConfirmingPayment(false));
+      })
+      .catch((err) => {
+        console.log('error here', err);
+      });
   };
 }

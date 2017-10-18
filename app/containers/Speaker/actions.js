@@ -7,22 +7,20 @@ import {
   FETCH_SPEAKER_LIST
 } from './constants';
 
+import speaker from '../../services/speaker';
+
 /*
  * Get speaker data
 */
 
-export function fetchSpeakerList() {
+export default function fetchSpeakerList() {
   return (dispatch) => {
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/speakers', { headers })
-          .then((response) => {
-            dispatch({
-              type: FETCH_SPEAKER_LIST,
-              payloads: response.data.data
-            });
-          });
+    speaker.get()
+      .then((response) => {
+        dispatch({
+          type: FETCH_SPEAKER_LIST,
+          payloads: response.data.data
+        });
       });
   };
 }

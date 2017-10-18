@@ -16,6 +16,8 @@ import {
   RESET_STATE
 } from './constants';
 
+import regEmail from '../../services/regEmail';
+
 
 /*
  * Update the input fields
@@ -110,7 +112,7 @@ export function register() {
     }
 
     if (firstName && email && password && username) {
-      DevSummitAxios.post('/auth/register', data)
+      regEmail.post(data)
         .then(async (response) => {
           if (response && response.data.data && response.data.meta.success) {
             await AsyncStorage.setItem('profile_email', JSON.stringify(response.data.data.email));

@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+import Toast from 'react-native-simple-toast';
 import * as actions from '../AttendeesList/actions';
 
 import { DevSummitAxios, getAccessToken } from '../../helpers';
@@ -10,8 +12,7 @@ import {
   IS_TRANSFER_TICKET
 } from './constants';
 
-import { Alert } from 'react-native';
-import Toast from 'react-native-simple-toast';
+import ticketList from '../../services/ticketList';
 
 /*
  * Get user ticket data
@@ -48,34 +49,28 @@ export function isTransferTicket(status) {
 export function fetchUserTicket() {
   return (dispatch) => {
     dispatch(isFetchingUserTicket(true));
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/user/tickets', { headers })
-          .then((response) => {
-            if ('data' in response.data) {
-              if (!('message' in response.data.data)) {
-                if (response.data.data.length === 0) {
-                  dispatch(fetchUserTicketStatus(false));
-                } else {
-                  dispatch(fetchUserTicketStatus(response.data.meta.success));
-                }
-              }
-              dispatch(isFetchingUserTicket(false));
-              dispatch(actions.isTransferringTicket(false));
-              dispatch({
-                type: FETCH_USER_TICKET,
-                payloads: response.data.data
-              });
+
+    ticketList.get()
+      .then((response) => {
+        if ('data' in response.data) {
+          if (!('message' in response.data.data)) {
+            if (response.data.data.length === 0) {
+              dispatch(fetchUserTicketStatus(false));
+            } else {
+              dispatch(fetchUserTicketStatus(response.data.meta.success));
             }
-          })
-          .catch((error) => {
-            dispatch(actions.isTransferringTicket(false));
-            console.log(error.response);
+          }
+          dispatch(isFetchingUserTicket(false));
+          dispatch(actions.isTransferringTicket(false));
+          dispatch({
+            type: FETCH_USER_TICKET,
+            payloads: response.data.data
           });
+        }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        dispatch(actions.isTransferringTicket(false));
+        console.log(error.response);
       });
   };
 }
@@ -84,34 +79,31 @@ export function transferTicket(receiver, id, password, callback) {
   return (dispatch) => {
     dispatch(isFetchingUserTicket(true));
     const payloads = {
-      receiver: receiver,
+      receiver,
       user_ticket_id: id,
-      password: password
+      password
     };
-
-    getAccessToken().then((token) => {
-      DevSummitAxios.post('api/v1/tickets/transfer', payloads, { headers: { Authorization: token } })
-        .then((res) => {
-          if (res.data.meta.success) {
-            Toast.show(res.data.meta.message, Toast.LONG);
-            callback();
-            dispatch(isFetchingUserTicket(false));
-            dispatch(fetchUserTicket());
-          } else {
-              Alert.alert(
-                'Information',
-                res.data.meta.message,
-                [
-                  { text: 'OK', onPress: () => dispatch(fetchUserTicket()) }
-                ],
-                { cancelable: false }
-              );
-          }
-        })
-        .catch((err) => {
-          dispatch(isFetchingUserTicket(false));          
-          console.log('ERROR', err);
-        })
-    });
+    ticketList.post(payloads)
+      .then((res) => {
+        if (res.data.meta.success) {
+          Toast.show(res.data.meta.message, Toast.LONG);
+          callback();
+          dispatch(isFetchingUserTicket(false));
+          dispatch(fetchUserTicket());
+        } else {
+          Alert.alert(
+            'Information',
+            res.data.meta.message,
+            [
+              { text: 'OK', onPress: () => dispatch(fetchUserTicket()) }
+            ],
+            { cancelable: false }
+          );
+        }
+      })
+      .catch((err) => {
+        dispatch(isFetchingUserTicket(false));
+        console.log('ERROR', err);
+      });
   };
 }

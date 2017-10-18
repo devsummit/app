@@ -17,6 +17,8 @@ import {
 
 import { ROLES } from '../../constants';
 
+import registerPhone from '../../services/registerPhone';
+
 /*
  * Update the input fields
  * @param {field: name of the field}
@@ -111,19 +113,20 @@ export function register() {
         token,
         referer
       };
-      DevSummitAxios.post('/auth/register', data).then((response) => {
-        if (response && response.data.data && response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login.'));
-        } else if (response.data.data !== null && !response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-        } else if (response.data.data === null && !response.data.meta.success) {
-          dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
-        }
-        dispatch(toggleIsRegistering(false));
-      }).catch((error) => {
-        dispatch(toggleIsRegistering(false));
-        console.log(error, 'error caught');
-      });
+      registerPhone.post(data)
+        .then((response) => {
+          if (response && response.data.data && response.data.meta.success) {
+            dispatch(updateRegisterStatus(true, 'Success', 'You have been registered, please login.'));
+          } else if (response.data.data !== null && !response.data.meta.success) {
+            dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+          } else if (response.data.data === null && !response.data.meta.success) {
+            dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
+          }
+          dispatch(toggleIsRegistering(false));
+        }).catch((error) => {
+          dispatch(toggleIsRegistering(false));
+          console.log(error, 'error caught');
+        });
     }
   };
 }

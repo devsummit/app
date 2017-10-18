@@ -1,9 +1,10 @@
-import { DevSummitAxios, getAccessToken, getProfileData, getBoothData, getRoleId } from '../../helpers';
 import { Alert, AsyncStorage } from 'react-native';
 import Toast from 'react-native-simple-toast';
+import { DevSummitAxios, getAccessToken, getProfileData, getBoothData, getRoleId } from '../../helpers';
 
 import local from '../../../config/local';
 import { UPDATE_SINGLE_INPUT_FIELD } from './constants';
+import redeem from '../../services/redeem';
 
 export function updateInputFields(field, value) {
   return {
@@ -47,16 +48,12 @@ export function placeRedeem() {
       .get('code')
       .toJS();
     const { code } = inputFields;
-
-    getAccessToken().then((token) => {
-      DevSummitAxios.patch('api/v1/redeemcodes', { code }, { headers: { Authorization: token } })
-        .then((res) => {
-          updateDataStorage(res);
-          Alert.alert('Information', res.data.meta.message);
-        })
-        .catch((error) => {
-          console.log('ERROR', error);
-        });
-    });
+    redeem.patch(code).then((res) => {
+      updateDataStorage(res);
+      Alert.alert('Information', res.data.meta.message);
+    })
+      .catch((error) => {
+        console.log('ERROR', error);
+      });
   };
 }

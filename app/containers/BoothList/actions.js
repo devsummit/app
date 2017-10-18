@@ -8,6 +8,7 @@ import {
   IS_FETCHING_BOOTHS
 } from './constants';
 
+import boothList from '../../services/boothList';
 /*
  * Get speaker data
 */
@@ -23,17 +24,14 @@ export function fetchBoothList() {
   return (dispatch) => {
     dispatch(isFetchingBooths(true));
 
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/booths', { headers })
-          .then(async (response) => {
-            await dispatch({
-              type: FETCH_BOOTH_LIST,
-              payloads: response.data.data
-            });
-            dispatch(isFetchingBooths(false))
-          });
+    boothList
+      .get()
+      .then((response) => {
+        dispatch({
+          type: FETCH_BOOTH_LIST,
+          payloads: response.data.data
+        });
+        dispatch(isFetchingBooths(false));
       });
   };
 }

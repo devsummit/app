@@ -12,6 +12,7 @@ import {
   IS_TRANSFERRING_TICKET
 } from './constants';
 
+import attendees from '../../services/attendees';
 
 /*
  * Get attendees data
@@ -34,29 +35,25 @@ export function fetchingAttendeesStatus(status) {
 export function fetchAttendees() {
   return (dispatch) => {
     dispatch(isFetchingAttendees(true));
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/attendees', { headers })
-          .then((response) => {
-            if ('data' in response.data) {
-              if (!('message' in response.data.data)) {
-                dispatch(isFetchingAttendees(false));
-                if (response.data.data.length === 0) {
-                  dispatch(fetchingAttendeesStatus(false));
-                } else {
-                  dispatch(fetchingAttendeesStatus(response.data.meta.success));
-                }
-              }
-              dispatch({
-                type: FETCH_ATTENDEES,
-                payloads: response.data.data
-              });
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+
+    attendees.get().then((response) => {
+      if ('data' in response.data) {
+        if (!('message' in response.data.data)) {
+          dispatch(isFetchingAttendees(false));
+          if (response.data.data.length === 0) {
+            dispatch(fetchingAttendeesStatus(false));
+          } else {
+            dispatch(fetchingAttendeesStatus(response.data.meta.success));
+          }
+        }
+        dispatch({
+          type: FETCH_ATTENDEES,
+          payloads: response.data.data
+        });
+      }
+    })
+      .catch((err) => {
+        console.log(err);
       });
   };
 }
@@ -77,7 +74,7 @@ export function transferTicket(ticketId, receiverId) {
           Authorization: token,
           'Content-Type': 'application/json'
         };
-        DevSummitAxios.put('api/v1/user/tickets',
+        DevSummitAxios.put('/user/tickets',
           {
             ticket_id: ticketId,
             receiver_id: receiverId

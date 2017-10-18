@@ -3,6 +3,7 @@ import OAuthManager from 'react-native-oauth';
 import { twitter } from 'react-native-simple-auth';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
+import auth from '../../services/auth';
 
 import { DevSummitAxios } from '../../helpers';
 
@@ -25,6 +26,10 @@ import {
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_KEY_SECRET
 } from './constants';
+
+const Auth = axios.create({
+  baseURL: 'http://api.devsummit.io:8081'
+});
 
 /*
  * Update the input fields
@@ -86,10 +91,7 @@ export function login() {
     const { username, password } = fields;
 
     dispatch(updateisLoading(true));
-    DevSummitAxios.post('/auth/login', {
-      username,
-      password
-    })
+    auth.post(username, password, Auth)
       .then(async (response) => {
         if (response && response.data && response.data.meta.success) {
           const resData = response.data.data;
@@ -416,7 +418,7 @@ export function subscribeNewsletter() {
     const { email } = fields;
 
     const headers = { 'Content-Type': 'application/json' };
-    DevSummitAxios.post('/api/v1/newsletters', { email }, { headers }).then((response) => {
+    DevSummitAxios.post('/newsletters', { email }, { headers }).then((response) => {
       if (response && response.data && response.data.meta.success) {
         dispatch(updateIsSubscribed(true));
       }
