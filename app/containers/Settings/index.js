@@ -118,6 +118,7 @@ class Settings extends Component {
                 >
                   {isLoading ? <Spinner color="#FFFFFF" /> : <Text>{strings.settings.logout}</Text>}
                 </Button>
+                <Text note style={{ marginTop: 10, textAlign: 'center' }}>Version 1.1.5</Text>
               </View>
             </Content>
           </ScrollView>
