@@ -48,6 +48,7 @@
     "react-native-touchable-bounce": "^1.0.3",
     "react-native-transition": "^1.1.7",
     "react-native-vector-icons": "^4.3.0",
+    "react-native-version-number": "^0.2.0",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
     "redux-immutable": "^4.0.0",

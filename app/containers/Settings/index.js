@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import VersionNumber from 'react-native-version-number';
 
 // import redux componens
 import { connect } from 'react-redux';
@@ -35,7 +36,9 @@ class Settings extends Component {
       modalVisible: false,
       firstName: '',
       lastName: '',
-      photo: null
+      photo: null,
+      version: VersionNumber.appVersion,
+      versionCode: VersionNumber.buildVersion
     };
   }
   componentWillMount() {
@@ -118,6 +121,7 @@ class Settings extends Component {
                 >
                   {isLoading ? <Spinner color="#FFFFFF" /> : <Text>{strings.settings.logout}</Text>}
                 </Button>
+                <Text note style={styles.version}>v{this.state.version}({this.state.versionCode})</Text>
               </View>
             </Content>
           </ScrollView>

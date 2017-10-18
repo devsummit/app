@@ -4398,6 +4398,10 @@ react-native-vector-icons@^4.3.0, react-native-vector-icons@~4.4.2:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
+react-native-version-number@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-version-number/-/react-native-version-number-0.2.0.tgz#a91085a0d9f92ec156ed7f749a071faf56137599"
+
 react-native@0.46.4:
   version "0.46.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.46.4.tgz#281bbcc165e5c36b4c8eaa868e6768543e811bcb"
