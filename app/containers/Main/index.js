@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Content, Text, Spinner, Item, Input, Header } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
+  AppRegistry,
+  StyleSheet,
   Image,
   View,
   Alert,
@@ -10,7 +12,11 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Animated,
-  Keyboard
+  Keyboard,
+  Easing,
+  Modal,
+  TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AccountKit, { LoginButton } from 'react-native-facebook-account-kit';
@@ -23,6 +29,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
+import * as Animatable from 'react-native-animatable';
+import * as Progress from 'react-native-progress';
+// import * as TouchableBounce from 'react-native-touchable-bounce';
+import Bounceable from "react-native-bounceable";
+import PulseLoader from 'react-native-pulse-loader';
+
+import LoadingScreen from '../../components/LoadingScreen';
 import AuthLogo from '../../components/AuthLogo';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
@@ -31,18 +44,24 @@ import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from './styles';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+const Pulse = require('react-native-pulse');
+
 const Transition = createTransition(Fade);
 const background = require('./../../../assets/images/background.png');
 const Logo = require('../../../assets/images/logo.png');
+const Aiken = require('../../../assets/images/icon.png');
+const timing = 4000;
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
+
   }
 
   state = {
-    modalVisible: false
+    modalVisible: false,
+    modalVisibleAnimation: false,
   };
 
   componentWillMount() {
@@ -74,6 +93,7 @@ class Main extends Component {
     this.keyboardWillHideSub.remove();
   }
 
+
   onLoginMobile(token) {
     if (!token) {
       this.setState({});
@@ -90,6 +110,10 @@ class Main extends Component {
 
   setModalVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
+  };
+
+  setModalVisibleAnimation = () => {
+    this.setState({ modalVisibleAnimation: !this.state.modalVisibleAnimation});
   };
 
   configureAccountKit = () => {
@@ -128,6 +152,7 @@ class Main extends Component {
   };
 
   render() {
+
     const { fields, isLoading } = this.props;
     const { username, password, email } = fields || '';
     const visible = false;
@@ -143,122 +168,118 @@ class Main extends Component {
                   resizeMode="contain"
                 />
               </View>
-              {isLoading ? (
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                  <Text style={{ fontSize: 30, color: 'white' }}>Logging in...</Text>
-                  <Spinner color="#f39e21" />
-                </View>
-              ) : (
-                <View>
-                  <View style={styles.formSection}>
-                    <Item regular style={styles.item}>
-                      <Input
-                        style={styles.formInput}
-                        placeholder="Username or Email"
-                        placeholderTextColor={'#BDBDBD'}
-                        keyboardType={'email-address'}
-                        autoCapitalize={'none'}
-                        onChangeText={usernameText =>
-                          this.handleInputChange('username', usernameText)}
-                        value={username}
-                      />
-                    </Item>
-                    <Item regular style={styles.item}>
-                      <Input
-                        style={styles.formInput}
-                        placeholder="Password"
-                        placeholderTextColor={'#BDBDBD'}
-                        secureTextEntry
-                        onChangeText={passwordText =>
-                          this.handleInputChange('password', passwordText)}
-                        value={password}
-                      />
-                    </Item>
-                  </View>
-                  <View>
-                    {username.length < 4 || password.length < 4 ? (
-                      <Button
-                        disabled
-                        block
-                        style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
-                      >
-                        <Text>Log In</Text>
-                      </Button>
-                    ) : (
-                      <Button
-                        primary
-                        block
-                        style={styles.button}
-                        onPress={() => {
-                          this.onLogin();
-                        }}
-                      >
-                        {isLoading ? (
-                          <ActivityIndicator size={'large'} color={'#FFFFFF'} />
-                        ) : (
-                          <Text>Log In</Text>
-                        )}
-                      </Button>
-                    )}
-                    <View style={styles.lineSection}>
-                      <View style={styles.lineTextThree} />
-                      <Text style={styles.lineTextFour}> or </Text>
-                      <View style={styles.lineTextThree} />
-                    </View>
-                    <Button
-                      style={[
-                        styles.button,
-                        { backgroundColor: '#FFD740', margin: 12, justifyContent: 'center' }
-                      ]}
-                      onPress={() => {
-                        this.props.loginTwitter();
-                      }}
-                    >
-                      {isLoading ? (
-                        <ActivityIndicator size={'large'} color={'#FFFFFF'} />
-                      ) : (
-                        <LoginButton
-                          style={styles.buttonLoggin}
-                          type="phone"
-                          onLogin={token => this.onLoginMobile(token)}
-                          onError={e => this.onLoginMobile(e)}
-                          primary
-                          block
-                        >
-                          <Icon name="phone" color="white" style={styles.icon} />
-                          <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
-                        </LoginButton>
-                      )}
-                    </Button>
-                    <Button
-                      transparent
-                      style={styles.buttonRegister}
-                      onPress={() => {
-                        Actions.registerMenu();
-                      }}
-                    >
+              <View style={styles.formSection}>
+                <Item regular style={styles.item}>
+                  <Input
+                    style={styles.formInput}
+                    placeholder="Username or Email"
+                    placeholderTextColor={'#BDBDBD'}
+                    keyboardType={'email-address'}
+                    autoCapitalize={'none'}
+                    onChangeText={usernameText => this.handleInputChange('username', usernameText)}
+                    value={username}
+                  />
+                </Item>
+                <Item regular style={styles.item}>
+                  <Input
+                    style={styles.formInput}
+                    placeholder="Password"
+                    placeholderTextColor={'#BDBDBD'}
+                    secureTextEntry
+                    onChangeText={passwordText => this.handleInputChange('password', passwordText)}
+                    value={password}
+                  />
+                </Item>
+              </View>
+              <View>
+                {username.length < 4 || password.length < 4 ? (
+                  <Button
+                    disabled
+                    block
+                    style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
+                  >
+                    <Text>Log In</Text>
+                  </Button>
+                ) : (
+                  <Button
+                    primary
+                    block
+                    style={styles.button}
+                    onPress={() => {
+                      this.onLogin();
+                    }}
+                  >
+                    {isLoading ? (
                       <View>
-                        <Text style={styles.registerText}>{"Don't have an account?"}</Text>
-                        <Text style={styles.registerTextBold}>Register</Text>
+                        <ActivityIndicator size={'large'} color={'#FFFFFF'} />
                       </View>
-                    </Button>
-                    {visible ? (
-                      <Button
-                        hidden
-                        transparent
-                        style={styles.buttonRegister}
-                        onPress={() => {
-                          this.setModalVisible();
-                        }}
-                      >
-                        <Text style={styles.registerText}>Subscribe to Newsletter</Text>
-                      </Button>
                     ) : (
-                      <View />
+                      <View>
+                        <Text>Log In</Text>
+                      </View>
                     )}
-                  </View>
+                  </Button>
+                )}
+
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={isLoading}
+                  onRequestClose={() => {this.setModalVisibleAnimation(false)}}
+                  >
+                  <LoadingScreen />
+                </Modal>
+
+                <View style={styles.lineSection}>
+                  <View style={styles.lineTextThree} />
+                  <Text style={styles.lineTextFour}> or </Text>
+                  <View style={styles.lineTextThree} />
                 </View>
-              )}
+                <Button
+                  style={[ styles.button, { backgroundColor: '#FFD740', margin: 12 } ]}
+                  onPress={() => {
+                    this.props.loginTwitter();
+                  }}
+                >
+                  <LoginButton
+                    style={styles.buttonLoggin}
+                    type="phone"
+                    onLogin={token => this.onLoginMobile(token)}
+                    onError={e => this.onLoginMobile(e)}
+                    primary
+                    block
+                  >
+                    <Icon name="phone" color="white" style={styles.icon} />
+                    <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+                  </LoginButton>
+                </Button>
+                <Button
+                  transparent
+                  style={styles.buttonRegister}
+                  onPress={() => {
+                    Actions.registerMenu();
+                  }}
+                >
+                  <View>
+                    <Text style={styles.registerText}>{"Don't have an account?"}</Text>
+                    <Text style={styles.registerTextBold}>Register</Text>
+                  </View>
+                </Button>
+                {visible ? (
+                  <Button
+                    hidden
+                    transparent
+                    style={styles.buttonRegister}
+                    onPress={() => {
+                      this.setModalVisible();
+                    }}
+                  >
+                    <Text style={styles.registerText}>Subscribe to Newsletter</Text>
+                  </Button>
+                ) : (
+                  <View />
+                )}
+              </View>
             </View>
           </ScrollView>
         </Image>

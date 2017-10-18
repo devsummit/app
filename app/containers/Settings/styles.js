@@ -97,6 +97,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     backgroundColor: 'whitesmoke'
+  },
+  version: {
+    textAlign: 'center',
+    marginTop: 10
   }
 });
 

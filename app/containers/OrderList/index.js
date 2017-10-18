@@ -8,7 +8,8 @@ import {
   Text,
   Image,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ProgressBar from 'react-native-progress/Bar';
@@ -140,9 +141,13 @@ class OrderList extends Component {
                       progress={this.props.redeemCount / 10}
                       width={width * 0.5}
                     />
-                    <Text onPress={() => this.invite()} style={styles.invite}>
-                      Invite
-                    </Text>
+                    <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
+                      <View>
+                        <Text style={count ? styles.inviteDisable : styles.invite}>
+                          Invite
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
                   </View>
                 </View>
               </Card>
