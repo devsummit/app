@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -36,6 +37,24 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 12,
     marginHorizontal: 10
+  },
+  modalInfo: {
+    borderWidth: 5,
+    margin: 20,
+    marginTop: 0,
+    padding: 16,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    margin: -20,
+    marginBottom: 10,
+    color: '#FFFFFF',
+    fontSize: 20
   },
   searchHeader: {
     backgroundColor: 'rgb(255,255,255)',
