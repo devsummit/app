@@ -17,6 +17,7 @@ export default {
   errorNotMatch: 'Kata sandi tidak cocok',
   errorFirstName: 'Nama hanya bisa menggunakan simbol _ dan - ',
   errorLastName: 'Nama hanya bisa menggunakan simbol _ dan - ',
+  errorUsername: 'Nama user hanya bisa menggunakan simbol _ dan -',
 
   // Register menu
   withEmail: 'Daftar dengan email',
