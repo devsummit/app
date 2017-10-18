@@ -61,3 +61,14 @@ export const SECTIONS = [
     gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
   }
 ];
+
+export const SECTIONS2 = [
+  {
+    ticket_type: 'hackaton',
+    title: 'REGISTER',
+    price: '1.600.000',
+    gifts: [ 'ABC', 'free 3 redeem codes', 'free mineral water' ]
+  }
+];
+
+

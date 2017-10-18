@@ -9,12 +9,10 @@ const styles = StyleSheet.create({
   },
   btnBooth: {
     alignSelf: 'center',
-    width: '70%',
+    width: '40%',
+    margin: 20,
     backgroundColor: '#FF6F00',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     justifyContent: 'center',
-    marginTop: 20
   },
   btnDownload: {
     backgroundColor: '#F44336',
@@ -32,6 +30,23 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     justifyContent: 'center',
     marginTop: 10
+  },
+  formSection: {
+    marginTop: 2,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 5,
+    width: window.width - 30
+  },
+  formInput: {
+    paddingLeft: 20,
+    height: 45,
+    color: 'black'
+  },
+  item: {
+    marginBottom: 8,
+    borderColor: '#FFD740',
+    borderWidth: 2
   },
   content: {
     flex: 1,
