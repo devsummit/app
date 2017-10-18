@@ -37,8 +37,7 @@ class OrderList extends Component {
     haveRefered: 0,
     referalCount: 0,
     firstName: '',
-    lastName: '',
-    disabled: false
+    lastName: ''
   };
 
   componentWillMount() {
@@ -136,14 +135,18 @@ class OrderList extends Component {
                   </TouchableOpacity>
                   <View style={styles.inviteField}>
                     <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                    <Text style={styles.counterText}>{this.props.redeemCount === null ? 0 : this.props.redeemCount} of 10</Text>
+                    <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
                     <ProgressBar
                       borderRadius={0}
                       progress={this.props.redeemCount / 10}
                       width={width * 0.5}
                     />
-                    <TouchableWithoutFeedback onPress={() => this.invite()} disabled={!count} style={styles.invite}>
-                      Invite
+                    <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
+                      <View>
+                        <Text style={count ? styles.inviteDisable : styles.invite}>
+                          Invite
+                        </Text>
+                      </View>
                     </TouchableWithoutFeedback>
                   </View>
                 </View>
