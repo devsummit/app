@@ -15,6 +15,9 @@ export default {
   errorUsernameLenght: 'Username should be 4 at minimum',
   errorPasswordLenght: 'Password should be 4 at minimum',
   errorNotMatch: 'Password do not match',
+  errorFirstName: 'First name can only contain _ and - symbol',
+  errorLastName: 'Last name can only contain _ and - symbol',
+  errorUsername: 'User name can only contain _ and - symbol',
 
   // Register menu
   withEmail: 'Register with email',
