@@ -88,7 +88,11 @@ export function updateIsLoggedIn(status) {
 /*
  * Register user
  */
+<<<<<<< HEAD
 export function register(callBack) {
+=======
+export function register(callBack = () => {}) {
+>>>>>>> fe306611b2e27395906d6650bd7b01d0310eea8f
   return (dispatch, getState) => {
     dispatch(toggleIsRegistering(true));
     const { inputFields } = getState()

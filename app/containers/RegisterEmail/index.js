@@ -87,9 +87,6 @@ class RegisterEmail extends Component {
     }).start();
   };
 
-  // onAlertOk = () => {
-  //   Actions.main();
-  // };
   /*
     * validate all fields before submission
     */
