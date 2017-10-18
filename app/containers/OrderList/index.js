@@ -136,7 +136,7 @@ class OrderList extends Component {
                   </TouchableOpacity>
                   <View style={styles.inviteField}>
                     <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                    <Text style={styles.counterText}>{this.props.redeemCount === null ? 0 : this.props.redee} of 10</Text>
+                    <Text style={styles.counterText}>{this.props.redeemCount === null ? 0 : this.props.redeemCount} of 10</Text>
                     <ProgressBar
                       borderRadius={0}
                       progress={this.props.redeemCount / 10}
