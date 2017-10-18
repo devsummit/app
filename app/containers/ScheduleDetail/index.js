@@ -19,11 +19,14 @@ const sliderWidth = Dimensions.get('window').width;
 const itemWidth = slideWidth + horizontalMargin * 2;
 const itemHeight = 200;
 
+const SLIDER_1_FIRST_ITEM = 0;
+
 class ScheduleDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: this.props.user
+      users: this.props.user,
+      slider1ActiveSlide: SLIDER_1_FIRST_ITEM
     }
   }
 
@@ -90,10 +93,26 @@ class ScheduleDetail extends Component {
                   inactiveSlideScale={0.3}
                   autoplayDelay={3000}
                   autoplayInterval={3000}
+                  onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
                 />
               </View>
             </Image> : <View />
           }
+          {hasUser ? 
+          <Card>
+            <CardItem>
+                <View style={styles.speakerDetail}>
+                  <Text style={styles.title}>{strings.schedule.job}</Text>
+                  <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.job}</Text>
+                  <Text style={styles.title}>{strings.schedule.summary}</Text>
+                  <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.summary}</Text>
+                </View>
+            </CardItem>
+            <View style={{ marginHorizontal: 8 }}>
+              <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
+              <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
+            </View>
+          </Card> :
           <Card>
             <CardItem>
               <View style={styles.info}>
@@ -109,6 +128,7 @@ class ScheduleDetail extends Component {
               <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
             </View>
           </Card>
+          }
         </View>
       </ScrollView>
     );
