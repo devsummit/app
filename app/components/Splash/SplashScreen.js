@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, Image, View, StatusBar, Text } from 'react-native';
 import { createTransition, Fade } from 'react-native-transition';
 import VersionNumber from 'react-native-version-number';
-import strings from '../../localization';
 
 const Transition = createTransition(Fade);
 
 const Logo = require('../../../assets/images/devsummit.png');
 
 const version = VersionNumber.appVersion;
+
+const versionCode = VersionNumber.buildVersion;
 
 const styles = StyleSheet.create({
   container: {
@@ -32,8 +33,8 @@ const SplashScreen = () => {
       <View>
         <Image source={Logo} style={styles.logo} />
       </View>
-      <View>
-        <Text>{strings.settings.version} {version}</Text>
+      <View style={{alignItems: 'center'}}>
+        <Text>v{version}({versionCode})</Text>
       </View>
     </View>
   );

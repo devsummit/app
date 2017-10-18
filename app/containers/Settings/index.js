@@ -37,7 +37,8 @@ class Settings extends Component {
       firstName: '',
       lastName: '',
       photo: null,
-      version: VersionNumber.appVersion
+      version: VersionNumber.appVersion,
+      versionCode: VersionNumber.buildVersion
     };
   }
   componentWillMount() {
@@ -120,7 +121,7 @@ class Settings extends Component {
                 >
                   {isLoading ? <Spinner color="#FFFFFF" /> : <Text>{strings.settings.logout}</Text>}
                 </Button>
-                <Text note style={styles.version}>{strings.settings.version} {this.state.version}</Text>
+                <Text note style={styles.version}>v{this.state.version}({this.state.versionCode})</Text>
               </View>
             </Content>
           </ScrollView>
