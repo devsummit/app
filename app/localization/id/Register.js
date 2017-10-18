@@ -15,9 +15,11 @@ export default {
   errorUsernameLenght: 'Nama pengguna minimal 4 karakter',
   errorPasswordLenght: 'Kata sandi minimal 4 karakter',
   errorNotMatch: 'Kata sandi tidak cocok',
+  errorFirstName: 'Nama hanya bisa menggunakan simbol _ dan - ',
+  errorLastName: 'Nama hanya bisa menggunakan simbol _ dan - ',
 
   // Register menu
-  withEmail: 'Dafter dengan email',
+  withEmail: 'Daftar dengan email',
   withPhone: 'Daftar dengan nomor telepon',
 
   // Register phone
