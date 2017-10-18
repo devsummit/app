@@ -4209,6 +4209,10 @@ react-native-animatable@^1.2.4:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-bounceable@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-bounceable/-/react-native-bounceable-0.2.1.tgz#1d033d8daf151390c11b085c57191e673afeba2c"
+
 react-native-busy-indicator@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-busy-indicator/-/react-native-busy-indicator-1.1.0.tgz#bdbd938980c81e6a5bba095c70228497e3011378"
@@ -4333,6 +4337,14 @@ react-native-progress@^3.4.0:
   dependencies:
     prop-types "^15.5.8"
 
+react-native-pulse-loader@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-pulse-loader/-/react-native-pulse-loader-1.0.2.tgz#a7180c60fcdf3ac8115e305353710dba102869d5"
+
+react-native-pulse@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-pulse/-/react-native-pulse-1.0.5.tgz#26c020641e55fd47c3d80f9bda6bab24e9fefbb5"
+
 react-native-qrcode@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/react-native-qrcode/-/react-native-qrcode-0.2.6.tgz#dd92f151c118860092af9fa5bc0995f2f9dddb16"
@@ -4383,6 +4395,10 @@ react-native-tab-view@^0.0.69:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.69.tgz#f52d4354a98a382f10eb5fcf61db5216c91dc7e7"
   dependencies:
     prop-types "^15.5.8"
+
+react-native-touchable-bounce@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-touchable-bounce/-/react-native-touchable-bounce-1.0.3.tgz#3f549c3ba75964eab19b9aed57d65e70a50270ae"
 
 react-native-transition@^1.1.7:
   version "1.1.8"
