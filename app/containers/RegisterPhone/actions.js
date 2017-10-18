@@ -121,23 +121,17 @@ export function register(callBack = () => {}) {
                 [ 'profile_data', profileData ]
               ]);
               callBack();
-<<<<<<< HEAD
-            }
-            if (response && response.data.data && response.data.meta.success) {
-              dispatch(
-                updateRegisterStatus(true, 'Success', 'You have been registered, please login.')
-              );
-            } else if (response.data.data !== null && !response.data.meta.success) {
-              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
-            } else if (response.data.data === null && !response.data.meta.success) {
-              dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message[0]));
-=======
               dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
             } else if (response.data.data !== null && !response.data.meta.success) {
               dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
             } else if (response.data.data === null && !response.data.meta.success) {
-              dispatch(updateRegisterStatus(true, 'Failed', response.data.meta.message.concat(' please login using your existing account')));
->>>>>>> change flow after register
+              dispatch(
+                updateRegisterStatus(
+                  true,
+                  'Failed',
+                  response.data.meta.message.concat(' please login using your existing account')
+                )
+              );
             }
           } catch (err) {
             console.log(err, 'error cought');
