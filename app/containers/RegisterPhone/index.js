@@ -78,7 +78,7 @@ class RegisterPhone extends Component {
   }
 
   onAlertOk = () => {
-    Actions.main();
+    Actions.mainTabs();
   };
 
   onLogin(token) {
