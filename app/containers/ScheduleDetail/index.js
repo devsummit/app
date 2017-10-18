@@ -101,36 +101,37 @@ class ScheduleDetail extends Component {
               </View>
             </Image> : <View />
           }
-          {hasUser ? 
-          <Card>
-            <CardItem>
-                <View style={styles.speakerDetail}>
-                  <Text style={styles.title}>{strings.schedule.job}</Text>
-                  <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.job}</Text>
-                  <Text style={styles.title}>{strings.schedule.summary}</Text>
-                  <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.summary}</Text>
-                </View>
-            </CardItem>
-            <View style={{ marginHorizontal: 8 }}>
-              <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
-              <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
-            </View>
-          </Card> :
-          <Card>
-            <CardItem>
-              <View style={styles.info}>
-                <View style={styles.detail}>
-                  <Text style={styles.title}>{event.title}</Text>
-                  <Text style={styles.description}>{event.information}</Text>
-                </View>
-                <View style={{ flex: 1, borderWidth: 1, borderColor: '#E0E0E0', marginVertical: 20 }} />
+          {hasUser ?
+            <Card>
+              <CardItem>
+                  <View style={styles.speakerDetail}>
+                    <Text style={styles.title}>{strings.schedule.job}</Text>
+                    <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.job}</Text>
+                    <Text style={styles.title}>{strings.schedule.summary}</Text>
+                    <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.summary}</Text>
+                  </View>
+              </CardItem>
+              <View style={{ marginHorizontal: 8 }}>
+                <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
+                <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
               </View>
-            </CardItem>
-            <View style={{ marginHorizontal: 8 }}>
-              <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
-              <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
-            </View>
-          </Card>
+            </Card> :
+            <Card>
+              <CardItem>
+                <View style={styles.info}>
+                  <View style={styles.detail}>
+                    <Text style={styles.title}>{event.title}</Text>
+                    <Text style={styles.description}>{event.information}</Text>
+                  </View>
+                  <View style={{ flex: 1, borderWidth: 1, borderColor: '#E0E0E0', marginVertical: 20 }} />
+                </View>
+              </CardItem>
+              <View style={{ marginHorizontal: 8 }}>
+                <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
+                <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
+              </View>
+            </Card>
+          }
           {type === 'speaker' ?
             <Card>
               <CardItem>
@@ -138,7 +139,6 @@ class ScheduleDetail extends Component {
               </CardItem>
             </Card>
             : <View />}
-          }
         </View>
       </ScrollView>
     );
