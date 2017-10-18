@@ -221,14 +221,14 @@ class Main extends Component {
                   </Button>
                 )}
 
-                  <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={isLoading}
-                    onRequestClose={() => {this.setModalVisibleAnimation(false)}}
-                    >
-                    <LoadingScreen/>
-                  </Modal>
+                <Modal
+                  animationType="slide"
+                  transparent={false}
+                  visible={isLoading}
+                  onRequestClose={() => {this.setModalVisibleAnimation(false)}}
+                  >
+                  <LoadingScreen />
+                </Modal>
 
                 <View style={styles.lineSection}>
                   <View style={styles.lineTextThree} />

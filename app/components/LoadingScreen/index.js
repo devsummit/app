@@ -14,33 +14,33 @@ const Aiken = require('../../../assets/images/icon.png');
 
 const LoadingScreen = () => {
 
-    return (
-        <ScrollView>
-            <Image source={background} style={styles.background}>
-            <View style={{margin: 150}}>
-                <View style={{
-                    flex: 0,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                <Bounceable
-                    onPress={()=>{this.onPress}}
-                    level={1.5}>
-                    <Image
-                    source={Aiken}
-                    style={{ 
-                        height: 100, margin: 20
-                    }}
-                    />
-                </Bounceable>
-                <Progress.Bar indeterminate width={200} />
-                {/* <Progress.Pie animated indeterminate size={50} /> */}
-                </View>
-                <Text style={{fontSize: 12, color : 'white', margin: 10, textAlign: 'center' }}>logging in...</Text>
-            </View>
-            </Image>
-        </ScrollView>
-    );
+  return (
+    <ScrollView>
+      <Image source={background} style={styles.background}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: '-50%' }}>
+          <View style={{
+            flex: 0,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          >
+            <Bounceable
+              onPress={()=>{this.onPress}}
+              level={1.5}>
+              <Image
+                source={Aiken}
+                style={{
+                  height: 100, margin: 20
+                }}
+              />
+            </Bounceable>
+            <Progress.Bar indeterminate width={200} />
+          </View>
+          <Text style={{ fontSize: 20, color: 'white', marginTop: 12, textAlign: 'center' }}>Logging in...</Text>
+        </View>
+      </Image>
+    </ScrollView>
+  );
 };
 
 export default LoadingScreen;
