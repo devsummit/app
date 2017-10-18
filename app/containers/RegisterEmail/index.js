@@ -136,14 +136,16 @@ class RegisterEmail extends Component {
 
   render() {
     // destructure state
-    const { inputFields, errorFields, isRegistering } = this.props || {};
+    const { inputFields, isRegistering } = this.props || {};
     const { firstName, lastName, username, email, password, referer, verifyPassword } =
       inputFields || '';
 
+    // form checker
     const checkEmail = this.checkEmail(email) === false && email !== '';
     const checkFirstName = this.checkName(firstName) === false && firstName !== '';
     const checkLastName = this.checkName(lastName) === false && lastName !== '';
     const checkUsername = typeof username !== 'undefined' && username.length < 4 && username !== '';
+    const validateUsername = this.checkName(username) === false && username !== '';
     const checkPassword = password.length < 4 && password !== '';
     const checkVerifyPassword = verifyPassword !== '' && verifyPassword !== password;
 
@@ -200,6 +202,9 @@ class RegisterEmail extends Component {
                 {checkUsername ? (
                   <Text style={styles.errorInput}>{strings.register.errorUsernameLenght}</Text>
                 ) : null}
+                { validateUsername ? (
+                  <Text style={styles.errorInput}>{strings.register.errorUsername}</Text>
+                ) : null}
                 <InputItem
                   itemStyle={styles.item}
                   error={checkUsername}
@@ -211,7 +216,7 @@ class RegisterEmail extends Component {
                 />
                 {checkPassword ? (
                   <Text style={styles.errorInput}>{strings.register.errorPasswordLenght}</Text>
-                ) : null}
+                ) : null }
                 <InputItem
                   itemStyle={styles.item}
                   error={checkPassword}
