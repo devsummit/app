@@ -61,3 +61,20 @@ export const SECTIONS = [
     gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
   }
 ];
+
+export const SECTIONS2 = [
+  {
+    ticket_type: 'Package Small',
+    title: 'REGISTER',
+    price: '5.000.000',
+    gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
+  },
+  {
+    ticket_type: 'Package Big',
+    title: 'INFORMATION',
+    price: '15.000.000',
+    gifts: [ '1 x-banner', 'free 10 tickets', 'stiker' ]
+  }
+];
+
+
