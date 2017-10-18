@@ -230,7 +230,7 @@ class OrderDetail extends Component {
             padding: 5
           }}
         >
-          <TouchableWithoutFeedback onPress={() => Actions.orderList()}>
+          <TouchableWithoutFeedback onPress={() => Actions.mainTabs({ activePage: 1 })}>
             <Image source={Back} style={{ width: 20, height: 20 }} />
           </TouchableWithoutFeedback>
           <HeaderPoint title={'Order Detail'} />
