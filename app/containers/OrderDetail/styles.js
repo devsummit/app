@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   buttonSubmit: {
-    width: '90%',
+    width: '97%',
     alignSelf: 'center'
   },
   image: {

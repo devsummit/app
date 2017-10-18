@@ -14,15 +14,15 @@ import {
   Row,
   Col,
   List,
-  ListItem,
-  Fab,
   Spinner
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, WebView, TouchableOpacity, Modal, Image } from 'react-native';
+import { RefreshControl, Alert, View, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Actions } from 'react-native-router-flux';
+import HeaderPoint from '../../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from './styles';
@@ -34,7 +34,10 @@ import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
 import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
 
+const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
+
+const { width, height } = Dimensions.get('window');
 
 let total = 0;
 class OrderDetail extends Component {
@@ -51,13 +54,12 @@ class OrderDetail extends Component {
     };
   }
 
-  componentWillMount () {
+  componentWillMount() {
     getProfileData().then((profileData) => {
       this.setState({ userId: profileData.id });
     });
-    console.log('navigation', this.props.navigation)
     this.getOrderDetail();
-  };
+  }
 
   componentWillReceiveProps() {
     if (this.props.order && this.props.order.included) {
@@ -204,8 +206,6 @@ class OrderDetail extends Component {
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-    const WEBVIEW_REF = 'webview';
-    console.log('order', order, this.props)
     if (
       isUpdating ||
       isConfirming ||
@@ -221,6 +221,20 @@ class OrderDetail extends Component {
     }
     return (
       <Container style={styles.container}>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#FF8B00',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            padding: 5
+          }}
+        >
+          <TouchableWithoutFeedback onPress={() => Actions.mainTabs({ activePage: 1 })}>
+            <Image source={Back} style={{ width: 20, height: 20 }} />
+          </TouchableWithoutFeedback>
+          <HeaderPoint title={'Order Detail'} />
+        </View>
         <Content
           refreshControl={
             <RefreshControl
@@ -370,7 +384,7 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' &&
             <Card>
               <View style={styles.card} resizeMode={'cover'}>
-                <Image source={logo} />
+                <Image source={logo} style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }} />
                 <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
                 <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
                 <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
