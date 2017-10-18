@@ -6,6 +6,7 @@ import {
 } from 'native-base';
 import { Image, View, ScrollView, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import MaterialList from '../MaterialList';
 import strings from '../../localization';
 import Moment from 'moment';
 import styles from './style';
@@ -27,7 +28,7 @@ class ScheduleDetail extends Component {
     this.state = {
       users: this.props.user,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM
-    }
+    };
   }
 
   componentDidMount() {
@@ -51,6 +52,8 @@ class ScheduleDetail extends Component {
     const timeEnd = end.format('hh:mm A');
     const hasSpeaker = !(Object.keys(speaker).length === 0 && speaker.constructor === Object);
     const hasUser = user.length > 0;
+    const type = this.props.event.type;
+    const speakerId = speaker.id;
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -128,6 +131,13 @@ class ScheduleDetail extends Component {
               <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
             </View>
           </Card>
+          {type === 'speaker' ?
+            <Card>
+              <CardItem>
+                <MaterialList speakerId={speakerId}/>
+              </CardItem>
+            </Card>
+            : <View />}
           }
         </View>
       </ScrollView>
