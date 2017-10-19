@@ -95,7 +95,6 @@ export function updateDataStorage(resp) {
 export function addFeedback() {
   return (dispatch, getState) => {
     const { feedBack } = getState().get('settings').toJS();
-    console.log("GFEEDBACK", feedBack);
 
     getAccessToken()
       .then((token) => {
@@ -112,7 +111,6 @@ export function addFeedback() {
         )
           .then((response) => {
             if (response && response.data && response.data.meta.success === true && response.data.meta.message === 'Feedback created') {
-              console.log("RESSSS", response.data.data.content);
               dispatch({
                 type: UPDATE_FEEDBACK_POSTED,
                 status: true
