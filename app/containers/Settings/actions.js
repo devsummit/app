@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-
+import Toast from 'react-native-simple-toast';
 import FormData from 'FormData';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import {
@@ -9,7 +9,9 @@ import {
   UPDATE_IS_AVATAR_UPDATED,
   IS_LOADING_LOGOUT,
   UPDATE_IS_LOG_OUT,
-  UPDATE_IS_DISABLED
+  UPDATE_IS_DISABLED,
+  UPDATE_FEEDBACK_POSTED,
+  UPDATE_FEEDBACK
 } from './constants';
 import { restoreCurrentPage } from '../Feed/actions';
 import local from '../../../config/local';
@@ -23,6 +25,13 @@ export function updateFields(field, value) {
   return {
     type: UPDATE_SINGLE_FIELD,
     field,
+    value
+  };
+}
+
+export function updateFeedback(value) {
+  return {
+    type: UPDATE_FEEDBACK,
     value
   };
 }
@@ -81,6 +90,45 @@ export function updateDataStorage(resp) {
         }
       });
     });
+}
+
+export function addFeedback() {
+  return (dispatch, getState) => {
+    const { feedBack } = getState().get('settings').toJS();
+    console.log("GFEEDBACK", feedBack);
+
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.post(
+          '/api/v1/user-feedback',
+          {
+            content: feedBack
+          },
+          {
+            headers: {
+              Authorization: token
+            }
+          }
+        )
+          .then((response) => {
+            if (response && response.data && response.data.meta.success === true && response.data.meta.message === 'Feedback created') {
+              console.log("RESSSS", response.data.data.content);
+              dispatch({
+                type: UPDATE_FEEDBACK_POSTED,
+                status: true
+              });
+              dispatch(updateFeedback(response.data.data.content));
+              Toast.show(response.data.meta.message);
+            } else {
+              Toast.show('Wrong payload');
+            }
+          })
+          .catch((error) => {
+            Toast.show('Sorry, something went wrong');
+            console.log("Error", error);
+          });
+      });
+  };
 }
 
 export function changeProfile() {
