@@ -439,22 +439,34 @@ export function subscribeNewsletter() {
   };
 }
 
-export function resetPassword() {
+export function resetPassword(callback = () => {}) {
   return (dispatch, getState) => {
     const { fields } = getState()
       .get('main')
       .toJS();
     const { email } = fields;
-    console.log('email', email);
 
     dispatch(updateIsReseted(true));
 
-    // DevSummitAxios.post('', { email })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err, 'error caught');
-    //   })
+    DevSummitAxios.post('/api/v1/mail/reset-password', { email })
+      .then((res) => {
+        if (res.data.meta.success) {
+          Alert.alert(
+            'Success',
+            res.data.meta.message,
+            [
+              { text: 'LOGIN', onPress: () => callback() }
+            ],
+            { cancelable: false }
+          );
+        } else {
+          Alert.alert('Fail', res.data.meta.message);
+        }
+        dispatch(updateIsReseted(false));
+      })
+      .catch((err) => {
+        console.log(err, 'error caught');
+        dispatch(updateIsReseted(false));
+      });
   };
 }
