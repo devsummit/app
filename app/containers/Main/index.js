@@ -40,6 +40,7 @@ import AuthLogo from '../../components/AuthLogo';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from './styles';
+import strings from '../../localization';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -155,7 +156,7 @@ class Main extends Component {
   };
 
   resetPassword = () => {
-    this.props.resetPassword();
+    this.props.resetPassword(() => this.setInvisible(false));
   }
 
   render() {
@@ -227,7 +228,7 @@ class Main extends Component {
                 <TouchableOpacity
                   onPress={() => this.setInvisible(true)}
                 >
-                  <Text style={styles.forgotText}>Forgotten Password?</Text>
+                  <Text style={styles.forgotText}>{strings.main.textResetPassword}</Text>
                 </TouchableOpacity>
 
                 {/* Modal Loading Screen */}
@@ -268,7 +269,7 @@ class Main extends Component {
                         />
                       </Item>
                       {!email ? (
-                        <Text style={{ textAlign: 'center'}}>Please enter your email address to reset your password</Text>
+                        <Text style={{ textAlign: 'center'}}>{strings.main.textInfoReset}</Text>
                       ) : (
                         <Button
                           primary
@@ -284,7 +285,7 @@ class Main extends Component {
                             </View>
                           ) : (
                             <View>
-                              <Text>RESET YOUR PASSOWORD</Text>
+                              <Text>{strings.main.btnReset}</Text>
                             </View>
                           )}
                         </Button>
@@ -312,7 +313,7 @@ class Main extends Component {
                     block
                   >
                     <Icon name="phone" color="white" style={styles.icon} />
-                    <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+                    <Text style={styles.buttonText}>{strings.main.btnLoginPhone}</Text>
                   </LoginButton>
                 </Button>
                 <Button
@@ -323,7 +324,7 @@ class Main extends Component {
                   }}
                 >
                   <View>
-                    <Text style={styles.registerText}>{"Don't have an account?"}</Text>
+                    <Text style={styles.registerText}>{strings.main.textRegister}</Text>
                     <Text style={styles.registerTextBold}>Register</Text>
                   </View>
                 </Button>
