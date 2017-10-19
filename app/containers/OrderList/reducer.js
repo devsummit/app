@@ -26,7 +26,7 @@ const initialState = fromJS({
   inputFields: {
     email: ''
   },
-  isConfirmEmail : false
+  isConfirmEmail: false
 });
 
 function orderListReducer(state = initialState, action) {
@@ -48,6 +48,8 @@ function orderListReducer(state = initialState, action) {
       return state.set('pendingOrder', action.value);
     case REDEEM_COUNTER:
       return state.set('redeemCounter', action.value);
+    case IS_CONFIRM_EMAIL:
+      return state.set('isConfirmEmail', action.value);
     default:
       return state;
   }

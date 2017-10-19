@@ -33,3 +33,5 @@ export const getReedemStatus = () =>
 export const getInputFields = () =>
   createSelector(selectMainReducer(), state => state.get('inputFields').toJS());
 
+export const getIsConfirmEmail = () =>
+  createSelector(selectMainReducer(), state => state.get('isConfirmEmail'));

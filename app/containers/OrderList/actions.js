@@ -14,9 +14,17 @@ import {
   PENDING_ORDERS,
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
-  IS_CONFIRM_EMAIL
+  IS_CONFIRM_EMAIL,
+  SET_CONFIRM_EMAIL
 } from './constants';
 
+export function setConfirmEmail() {
+  return (dispatch) => {
+    orderlist.postConfirmEmail().then((response) => {
+      Toast.show('please check your email', Toast.SHORT);
+    });
+  };
+}
 export function updateInputFields(field, value) {
   return {
     type: UPDATE_SINGLE_INPUT_FIELD,
@@ -72,27 +80,17 @@ export function pendingOrder(value) {
 }
 
 export function emailConfirm() {
-
   return (dispatch) => {
-    getProfileData().then((profileData) => {
-      orderlist.countRedeem().then(response => {
-        console.log('landing here orderlist count redeem response', response);
-      })
-      if (profileData) {
-
-        console.log('landing here profiledata isconfirm', profileData);
-
+    orderlist.countRedeem().then((response) => {
+      if (response.data.data.confirmed === 1) {
+        dispatch({
+          type: IS_CONFIRM_EMAIL,
+          value: true
+        });
       }
     });
-    dispatch({
-      type: IS_CONFIRM_EMAIL,
-      value :  true
-    });
-  }
-  
-  // console.log('landing here konfirm outside', konfirm);
-  // return konfirm;
-};
+  };
+}
 
 export function getOrderList() {
   return (dispatch) => {
