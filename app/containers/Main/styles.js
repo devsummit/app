@@ -61,7 +61,7 @@ export default StyleSheet.create({
     marginBottom: 4,
     flexDirection: 'row',
     flex: 1,
-    height: 50
+    height: 50,
   },
   buttonRegister: {
     marginLeft: 'auto',
@@ -105,5 +105,37 @@ export default StyleSheet.create({
     marginBottom: 8,
     borderColor: '#FFD740',
     borderWidth: 2
+  },
+  forgotText: {
+    fontSize: 14,
+    textAlign: 'center',
+    color: 'white'
+  },
+  modal: {
+    width: '100%',
+    height: 'auto',
+    backgroundColor: '#f39e21'
+  },
+  sectionModal: {
+    flex: 1,
+    paddingRight: 20,
+    paddingLeft: 20,
+    alignItems: 'center'
+  },
+  inputForgetPass: {
+    height: 45
+  },
+  buttonResetPassword: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 4,
+    marginBottom: 4,
+    borderWidth: 1,
+    backgroundColor: '#FFA726',
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    elevation: 0,
+    // flex: 1
   }
 });

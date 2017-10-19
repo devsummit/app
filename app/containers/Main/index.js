@@ -40,6 +40,7 @@ import AuthLogo from '../../components/AuthLogo';
 import Button from '../../components/Button';
 import ModalComponent from '../../components/ModalComponent';
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from './styles';
+import strings from '../../localization';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -56,13 +57,12 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
-
+    this.state = {
+      modalVisible: false,
+      modalVisibleAnimation: false,
+      invisible: false
+    };
   }
-
-  state = {
-    modalVisible: false,
-    modalVisibleAnimation: false,
-  };
 
   componentWillMount() {
     this.configureAccountKit();
@@ -116,6 +116,10 @@ class Main extends Component {
     this.setState({ modalVisibleAnimation: !this.state.modalVisibleAnimation});
   };
 
+  setInvisible = () => {
+    this.setState({ invisible: !this.state.invisible });
+  }
+
   configureAccountKit = () => {
     AccountKit.configure({
       countryWhitelist: [ 'ID' ],
@@ -151,9 +155,12 @@ class Main extends Component {
     Alert.alert('lala');
   };
 
-  render() {
+  resetPassword = () => {
+    this.props.resetPassword(() => this.setInvisible(false));
+  }
 
-    const { fields, isLoading } = this.props;
+  render() {
+    const { fields, isLoading, isReseted } = this.props;
     const { username, password, email } = fields || '';
     const visible = false;
     return (
@@ -218,16 +225,74 @@ class Main extends Component {
                     )}
                   </Button>
                 )}
+                <TouchableOpacity
+                  onPress={() => this.setInvisible(true)}
+                >
+                  <Text style={styles.forgotText}>{strings.main.textResetPassword}</Text>
+                </TouchableOpacity>
 
+                {/* Modal Loading Screen */}
                 <Modal
                   animationType="slide"
                   transparent={false}
                   visible={isLoading}
-                  onRequestClose={() => {this.setModalVisibleAnimation(false)}}
-                  >
+                  onRequestClose={() => this.setModalVisibleAnimation(false)}
+                >
                   <LoadingScreen />
                 </Modal>
 
+                {/* Modal Reset Password */}
+                <Modal
+                  animationType="fade"
+                  visible={this.state.invisible}
+                  onRequestClose={() => this.setInvisible(false)}
+                >
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.modal}>
+                      <TouchableOpacity onPress={() => this.setInvisible(false)}>
+                        <Icon
+                          name="chevron-left"
+                          size={22}
+                          style={{padding: 10}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.sectionModal}>
+                      <Item style={{ marginBottom: 20 }}>
+                        <Input
+                          style={styles.inputForgetPass}
+                          placeholder="Email"
+                          placeholderTextColor={'#BDBDBD'}
+                          keyboardType={'email-address'}
+                          autoCapitalize={'none'}
+                          onChangeText={emailText => this.handleInputChange('email', emailText)}
+                        />
+                      </Item>
+                      {!email ? (
+                        <Text style={{ textAlign: 'center'}}>{strings.main.textInfoReset}</Text>
+                      ) : (
+                        <Button
+                          primary
+                          block
+                          style={styles.buttonResetPassword}
+                          onPress={() => {
+                            this.resetPassword();
+                          }}
+                        >
+                          {isReseted ? (
+                            <View>
+                              <ActivityIndicator size={'large'} color={'#FFFFFF'} />
+                            </View>
+                          ) : (
+                            <View>
+                              <Text>{strings.main.btnReset}</Text>
+                            </View>
+                          )}
+                        </Button>
+                      )}
+                    </View>
+                  </View>
+                </Modal>
                 <View style={styles.lineSection}>
                   <View style={styles.lineTextThree} />
                   <Text style={styles.lineTextFour}> or </Text>
@@ -248,7 +313,7 @@ class Main extends Component {
                     block
                   >
                     <Icon name="phone" color="white" style={styles.icon} />
-                    <Text style={styles.buttonText}>LOGIN WITH PHONE NUMBER</Text>
+                    <Text style={styles.buttonText}>{strings.main.btnLoginPhone}</Text>
                   </LoginButton>
                 </Button>
                 <Button
@@ -259,7 +324,7 @@ class Main extends Component {
                   }}
                 >
                   <View>
-                    <Text style={styles.registerText}>{"Don't have an account?"}</Text>
+                    <Text style={styles.registerText}>{strings.main.textRegister}</Text>
                     <Text style={styles.registerTextBold}>Register</Text>
                   </View>
                 </Button>
@@ -299,7 +364,9 @@ Main.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   subscribeNewsletter: PropTypes.func.isRequired,
   loginGoogle: PropTypes.func.isRequired,
-  loginTwitter: PropTypes.func.isRequired
+  loginTwitter: PropTypes.func.isRequired,
+  resetPassword: PropTypes.func.isRequired,
+  isReseted: PropTypes.bool.isRequired
 };
 
 /**
@@ -309,7 +376,8 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isLoading: selectors.getIsLoading()
+  isLoading: selectors.getIsLoading(),
+  isReseted: selectors.getIsReseted()
   // @TODO please create the selectors function
   // profileData: selectors.getProfileData()
 });

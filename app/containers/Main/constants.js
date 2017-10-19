@@ -15,3 +15,4 @@ export const UPDATE_SINGLE_FIELD = 'app/containers/Main/UPDATE_FIELD';
 export const UPDATE_IS_LOGGED_IN = 'app/containers/Main/CHECK_IS_LOGGED_IN';
 export const UPDATE_IS_SUBSCRIBED = 'app/containers/Main/UPDATE_IS_SUBSCRIBED';
 export const UPDATE_IS_LOADING = 'app/containers/Main/UPDATE_IS_LOADING';
+export const UPDATE_IS_RESETED = 'app/containers/Main/UPDATE_IS_RESETED';
