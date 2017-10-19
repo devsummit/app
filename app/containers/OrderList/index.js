@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, List, Spinner, Button, Card } from 'native-base';
+import { Container, Content, List, Spinner, Button, Card, Form, Item, Input } from 'native-base';
 import PropTypes from 'prop-types';
 import {
   RefreshControl,
@@ -9,7 +9,9 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  Modal
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import ProgressBar from 'react-native-progress/Bar';
@@ -24,6 +26,7 @@ import OrderItem from '../../components/OrderItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
+import InputItem from '../../components/InputItem';
 
 const { width } = Dimensions.get('window');
 
@@ -37,7 +40,8 @@ class OrderList extends Component {
     haveRefered: 0,
     referalCount: 0,
     firstName: '',
-    lastName: ''
+    lastName: '',
+    modalVisibleConfirmation: false
   };
 
   componentWillMount() {
@@ -65,6 +69,20 @@ class OrderList extends Component {
       });
     }
   }
+
+  submitRegistration = () => {
+    this.props.register(() => Actions.mainTabs());
+  };
+
+  checkEmail = (inputvalue) => {
+    const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if (pattern.test(inputvalue)) return true;
+    return false;
+  };
+
+  handleInputChange = (field, value) => {
+    this.props.updateInputFields(field, value);
+  };
 
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
@@ -94,7 +112,12 @@ class OrderList extends Component {
     });
   };
 
+  setModalVisibleConfirmation(visible) {
+    this.setState({ modalVisibleConfirmation: visible });
+  }
+
   render() {
+    console.log('apa aja', this.props.isConfirmEmail);
     const count = this.props.redeemCount === 10;
 
     if (this.state.isLoading) {
@@ -106,6 +129,7 @@ class OrderList extends Component {
         </Container>
       );
     }
+    const { isConfirmEmail } = this.props;
     return (
       <Container style={styles.container}>
         <Content
@@ -133,22 +157,24 @@ class OrderList extends Component {
                       CLAIM
                     </Text>
                   </TouchableOpacity>
-                  <View style={styles.inviteField}>
-                    <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                    <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
-                    <ProgressBar
-                      borderRadius={0}
-                      progress={this.props.redeemCount / 10}
-                      width={width * 0.5}
-                    />
-                    <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
-                      <View>
-                        <Text style={count ? styles.inviteDisable : styles.invite}>
-                          Invite
-                        </Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  </View>
+                  {!isConfirmEmail ? (
+                    <View />
+                  ) : (
+                    <View style={styles.inviteField}>
+                      <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
+                      <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
+                      <ProgressBar
+                        borderRadius={0}
+                        progress={this.props.redeemCount / 10}
+                        width={width * 0.5}
+                      />
+                      <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
+                        <View>
+                          <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  )}
                 </View>
               </Card>
             )}
@@ -174,7 +200,94 @@ class OrderList extends Component {
           ) : (
             <View style={styles.artwork}>
               <Image source={noTicket} style={{ opacity: 0.7 }} />
-              <Text style={styles.artworkText}>{strings.order.noTicket}</Text>
+              {!isConfirmEmail ? (
+                <View>
+                  <Text style={styles.artworkText}>Please Confirm Your Email First</Text>
+                  <Button
+                    block
+                    style={{ textAlign: 'center', margin: 10 }}
+                    onPress={() =>
+                      this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
+                  >
+                    <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
+                      Resend Confirmation
+                    </Text>
+                  </Button>
+                  {/* <Button block style={{textAlign: 'center', margin: 10}} onPress={() => Actions.codeConduct()}>
+                    <Text style={{fontWeight: 'bold', color: 'white', textAlign: 'center'}}>Resend Confirmation</Text>
+                  </Button> */}
+                  <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.modalVisibleConfirmation}
+                    onRequestClose={() => {
+                      this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
+                    }}
+                  >
+                    <View style={{ marginTop: 22 }}>
+                      <View>
+                        {/* <Text>Hello World!</Text>
+
+                      <TouchableHighlight onPress={() => {
+                        this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)
+                      }}>
+                        <Text>Hide Modal</Text>
+                      </TouchableHighlight> */}
+
+                        {/* <InputItem
+                        itemStyle={styles.item}
+                        error={this.checkEmail}
+                        style={styles.formInput}
+                        placeholder={strings.register.email}
+                        placeholderTextColor={'#BDBDBD'}
+                        onChangeText={text => this.handleInputChange('email', text)}
+                        value={this.props.inputFields.email}
+                      /> */}
+
+                        {/* <InputItem
+                        itemStyle={styles.item}
+                        style={styles.input}
+                        title={strings.profile.firstName}
+                        placeholder={strings.profile.firstName}
+                        onChangeText={(text) => {
+                          this.handleInputChange('firstName', text);
+                        }}
+                        value={this.props.inputFields.email}
+                      /> */}
+
+                        <Form>
+                          <Item>
+                            <Input placeholder="E-Mail" />
+                          </Item>
+                        </Form>
+
+                        <Button
+                          block
+                          style={{ margin: 10 }}
+                          onPress={() => this.props.setConfirmEmail()}
+                        >
+                          <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
+                            Resend Confirmation
+                          </Text>
+                        </Button>
+                        <Button
+                          block
+                          style={{ margin: 10 }}
+                          onPress={() => {
+                            this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
+                          }}
+                        >
+                          <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
+                            Close
+                          </Text>
+                        </Button>
+                      </View>
+                    </View>
+                  </Modal>
+                </View>
+              ) : (
+                <Text style={styles.artworkText}>{strings.order.noTicket}</Text>
+              )}
             </View>
           )}
         </Content>
@@ -196,7 +309,9 @@ const mapStateToProps = createStructuredSelector({
   isFetching: selectors.getIsFetchingOrders(),
   isConfirming: selectors.getIsConfirmingPayment(),
   redeemCount: selectors.getRedeemCode(),
-  redeemstatus: selectors.getReedemStatus()
+  redeemstatus: selectors.getReedemStatus(),
+  inputFields: selectors.getInputFields(),
+  isConfirmEmail: selectors.getIsConfirmEmail()
 });
 
 export default connect(mapStateToProps, actions)(OrderList);

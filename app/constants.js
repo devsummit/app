@@ -71,4 +71,7 @@ export const SECTIONS2 = [
   }
 ];
 
+// export const isConfirm = false;
+
+
 

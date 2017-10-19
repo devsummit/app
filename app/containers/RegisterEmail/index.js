@@ -25,6 +25,7 @@ import strings from '../../localization';
 import AuthLogo from '../../components/AuthLogo';
 import * as actions from './actions';
 import * as selectors from './selectors';
+import { isConfirm } from '../../helpers';
 
 const background = require('../../../assets/images/background.png');
 const Logo = require('../../../assets/images/logo.png');
@@ -279,7 +280,12 @@ class RegisterEmail extends Component {
                   <Button
                     block
                     style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}
-                    onPress={() => this.submitRegistration()}
+                    onPress={
+                      () => {
+                        this.submitRegistration();
+                        console.log('this');
+                      }
+                    }
                   >
                     <Text style={styles.buttomText}>{strings.register.register}</Text>
                   </Button>

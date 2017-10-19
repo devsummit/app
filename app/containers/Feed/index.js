@@ -55,6 +55,8 @@ import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
+import { isConfirm } from '../../helpers';
+import { getIsConfirmEmail } from '../OrderList/selectors';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -132,7 +134,8 @@ const mapStateToProps = () =>
     imagesData: selectors.getUpdateImage(),
     textData: selectors.getUpdateText(),
     currentPage: selectors.getCurrentPage(),
-    isRemoving: selectors.getIsRemoveFeed()
+    isRemoving: selectors.getIsRemoveFeed(),
+    isConfirmEmail: getIsConfirmEmail()
   });
 
 class Feed extends Component {
@@ -316,7 +319,6 @@ class Feed extends Component {
   };
 
   render() {
-    console.log('landing here feed', this.props);
     return (
       <Container style={styles.container}>
         <View
@@ -362,7 +364,15 @@ class Feed extends Component {
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
                     {!this.props.feeds.length > 0 ? (
-                      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 100 }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          margin: 100
+                        }}
+                      >
                         <Image source={noFeeds} style={{ opacity: 0.5 }} />
                         <Text style={styles.artworkText}>Your feeds is empty</Text>
                       </View>
@@ -563,38 +573,42 @@ class Feed extends Component {
             }
           >
             <OrderList />
-            <Fab
-              active={this.state.fabActive}
-              style={{ backgroundColor: '#FF8B00' }}
-              position="bottomRight"
-              onPress={() => this.setState({ fabActive: !this.state.fabActive })}
-            >
-              <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
-              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
-                <CameraIcon
-                  name="ticket"
-                  color="#FFFFFF"
-                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
-                />
-              </Button>
-              <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
-                <CameraIcon
-                  name="archive"
-                  color="#FFFFFF"
-                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
-                />
-              </Button>
-              <Button
+            {!this.props.isConfirmEmail ? (
+              <View />
+            ) : (
+              <Fab
+                active={this.state.fabActive}
                 style={{ backgroundColor: '#FF8B00' }}
-                onPress={() => this.setModalRedeem(true)}
+                position="bottomRight"
+                onPress={() => this.setState({ fabActive: !this.state.fabActive })}
               >
-                <CameraIcon
-                  name="gift"
-                  color="#FFFFFF"
-                  style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
-                />
-              </Button>
-            </Fab>
+                <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
+                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+                  <CameraIcon
+                    name="ticket"
+                    color="#FFFFFF"
+                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                  />
+                </Button>
+                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                  <CameraIcon
+                    name="archive"
+                    color="#FFFFFF"
+                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                  />
+                </Button>
+                <Button
+                  style={{ backgroundColor: '#FF8B00' }}
+                  onPress={() => this.setModalRedeem(true)}
+                >
+                  <CameraIcon
+                    name="gift"
+                    color="#FFFFFF"
+                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                  />
+                </Button>
+              </Fab>
+            )}
           </Tab>
         </Tabs>
         {/* Redeem Modal */}
