@@ -56,3 +56,13 @@ export const getIsFeedbackPosted = () => createSelector(
   selectMainReducer(),
   state => state.get('isFeedbackPosted')
 );
+
+export const getIsLoadingFeedback = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isLoadingFeedback')
+);
+
+export const getModalVisible = () => createSelector(
+  selectMainReducer(),
+  state => state.get('modalVisible')
+);
