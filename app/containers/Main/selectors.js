@@ -43,3 +43,8 @@ export const getIsLoading = () => createSelector(
   selectMainReducer(),
   state => state.get('isLoading')
 );
+
+export const getIsReseted = () => createSelector(
+  selectMainReducer(),
+  state => state.get('isReseted')
+);
