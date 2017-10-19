@@ -4,5 +4,7 @@ export default {
   codeConduct: 'Kode etik',
   privacyPolicy: 'Kebijakan pribadi',
   logout: 'Keluar',
-  feedback: 'Kritik dan Saran'
+  feedback: 'Kritik dan Saran',
+  yourFeedback: 'Masukkan Anda',
+  submit: 'Kirim'
 };

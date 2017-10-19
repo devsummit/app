@@ -5,3 +5,7 @@ export const UPDATE_IS_AVATAR_UPDATED = 'app/containers/Profile/UPDATE_IS_AVATAR
 export const IS_LOADING_LOGOUT = 'app/containers/Profile/IS_LOADING_LOGOUT';
 export const UPDATE_IS_LOG_OUT = 'app/containers/Profile/UPDATE_IS_LOG_OUT';
 export const UPDATE_IS_DISABLED = 'app/containers/Profile/UPDATE_IS_DISABLED';
+export const UPDATE_FEEDBACK = 'app/containers/Profile/UPDATE_FEEDBACK';
+export const UPDATE_FEEDBACK_POSTED = 'app/containers/Profile/UPDATE_FEEDBACK_POSTED';
+export const IS_LOADING_FEEDBACK = 'app/containers/Profile/IS_LOADING_FEEDBACK';
+export const UPDATE_MODAL_VISIBILITY = 'app/containers/Profile/UPDATE_MODAL_VISIBILITY';
