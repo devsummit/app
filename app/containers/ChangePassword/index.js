@@ -95,9 +95,10 @@ class ChangePassword extends Component {
       }
       return (
         <Container style={styles.container}>
-          <Content>
+          <Content style={{ marginHorizontal: 20 }}>
             <InputItem
               error={error_current_password}
+              itemStyle={styles.item}
               style={styles.input}
               title={strings.changePassword.currentPassword}
               secureTextEntry
@@ -118,6 +119,7 @@ class ChangePassword extends Component {
             }
             <InputItem
               error={error_new_password}
+              itemStyle={styles.item}
               style={styles.input}
               title={strings.changePassword.newPassword}
               secureTextEntry
@@ -145,6 +147,7 @@ class ChangePassword extends Component {
             }
             <InputItem
               error={error_confirm_password}
+              itemStyle={styles.item}
               style={styles.input}
               title={strings.changePassword.confirmPassword}
               secureTextEntry
@@ -156,7 +159,6 @@ class ChangePassword extends Component {
             {(current_password === '' || new_password === '' || confirm_password === '' || new_password !== confirm_password || new_password.length < 4 || confirm_password < 4 || current_password < 4 || current_password === new_password) ?
               <View>
                 <Button
-                  rounded
                   disabled
                   block
                   style={[ styles.button, { elevation: 0 } ]}
@@ -168,7 +170,6 @@ class ChangePassword extends Component {
               :
               <Button
                 primary
-                rounded
                 block
                 style={styles.button}
                 onPress={() => this.submitChangePassword()}
