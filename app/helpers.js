@@ -121,3 +121,5 @@ export const transactionStatus = (payment) => {
     color: PRIMARYCOLOR
   };
 };
+
+export var isConfirm = false;
