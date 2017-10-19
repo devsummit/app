@@ -56,13 +56,12 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
-
+    this.state = {
+      modalVisible: false,
+      modalVisibleAnimation: false,
+      invisible: false
+    };
   }
-
-  state = {
-    modalVisible: false,
-    modalVisibleAnimation: false,
-  };
 
   componentWillMount() {
     this.configureAccountKit();
@@ -116,6 +115,10 @@ class Main extends Component {
     this.setState({ modalVisibleAnimation: !this.state.modalVisibleAnimation});
   };
 
+  setInvisible = () => {
+    this.setState({ invisible: !this.state.invisible });
+  }
+
   configureAccountKit = () => {
     AccountKit.configure({
       countryWhitelist: [ 'ID' ],
@@ -152,7 +155,6 @@ class Main extends Component {
   };
 
   render() {
-
     const { fields, isLoading } = this.props;
     const { username, password, email } = fields || '';
     const visible = false;
@@ -220,16 +222,68 @@ class Main extends Component {
                     )}
                   </Button>
                 )}
+                <TouchableOpacity
+                  onPress={() => this.setInvisible(true)}
+                >
+                  <Text style={styles.forgotText}>Forgotten Password?</Text>
+                </TouchableOpacity>
 
+                {/* Modal Loading Screen */}
                 <Modal
                   animationType="slide"
                   transparent={false}
                   visible={isLoading}
-                  onRequestClose={() => {this.setModalVisibleAnimation(false)}}
-                  >
+                  onRequestClose={() => this.setModalVisibleAnimation(false)}
+                >
                   <LoadingScreen />
                 </Modal>
 
+                {/* Modal Reset Password */}
+                <Modal
+                  animationType="fade"
+                  visible={this.state.invisible}
+                  onRequestClose={() => this.setInvisible(false)}
+                >
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.modal}>
+                      <TouchableOpacity onPress={() => this.setInvisible(false)}>
+                        <Icon
+                          name="chevron-left"
+                          size={22}
+                          style={{padding: 10}}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.sectionModal}>
+                      <Item style={{ marginBottom: 20 }}>
+                        <Input
+                          style={styles.inputForgetPass}
+                          placeholder="Email"
+                          placeholderTextColor={'#BDBDBD'}
+                          keyboardType={'email-address'}
+                          autoCapitalize={'none'}
+                          onChangeText={emailText => this.handleInputChange('email', emailText)}
+                        />
+                      </Item>
+                      {!email ? (
+                        <Text style={{ textAlign: 'center'}}>Please enter your email address to reset your password</Text>
+                      ) : (
+                        <Button
+                          primary
+                          block
+                          style={styles.buttonResetPassword}
+                          onPress={() => {
+                            this.onLogin();
+                          }}
+                        >
+                          <View>
+                            <Text>RESET YOUR PASSOWORD</Text>
+                          </View>
+                        </Button>
+                      )}
+                    </View>
+                  </View>
+                </Modal>
                 <View style={styles.lineSection}>
                   <View style={styles.lineTextThree} />
                   <Text style={styles.lineTextFour}> or </Text>
