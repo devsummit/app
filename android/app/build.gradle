@@ -120,8 +120,8 @@ android {
         applicationId "io.devsummit.app.android"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 15
-        versionName "1.1.5"
+        versionCode 18
+        versionName "1.2.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
