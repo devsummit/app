@@ -11,7 +11,9 @@ import {
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED,
   UPDATE_FEEDBACK_POSTED,
-  UPDATE_FEEDBACK
+  UPDATE_FEEDBACK,
+  IS_LOADING_FEEDBACK,
+  UPDATE_MODAL_VISIBILITY
 } from './constants';
 import { restoreCurrentPage } from '../Feed/actions';
 import local from '../../../config/local';
@@ -64,6 +66,20 @@ export function isLoadingLogout(status) {
   };
 }
 
+export function updateModalVisibility(status) {
+  return {
+    type: UPDATE_MODAL_VISIBILITY,
+    status
+  };
+}
+
+export function updateIsLoadingFeedback(status) {
+  return {
+    type: IS_LOADING_FEEDBACK,
+    status
+  };
+}
+
 export function updateIsLogOut(status) {
   return {
     type: UPDATE_IS_LOG_OUT,
@@ -95,6 +111,7 @@ export function updateDataStorage(resp) {
 export function addFeedback() {
   return (dispatch, getState) => {
     const { feedBack } = getState().get('settings').toJS();
+    dispatch(updateIsLoadingFeedback(true));
 
     getAccessToken()
       .then((token) => {
@@ -116,6 +133,8 @@ export function addFeedback() {
                 status: true
               });
               dispatch(updateFeedback(response.data.data.content));
+              dispatch(updateIsLoadingFeedback(false));
+              dispatch(updateModalVisibility(false));
               Toast.show(response.data.meta.message);
             } else {
               Toast.show('Wrong payload');
