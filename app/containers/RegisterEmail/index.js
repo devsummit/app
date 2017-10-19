@@ -102,7 +102,6 @@ class RegisterEmail extends Component {
     if (this.isFieldError()) {
       Alert.alert('Warning', 'Field is not complete');
     } else {
-      console.log('landing here isConfirm', isConfirm);
       this.props.register(() => Actions.mainTabs());
     }
   };
