@@ -123,5 +123,21 @@ export const transactionStatus = (payment) => {
 };
 
 export const isConfirm = () => {
-  return true;
+  // getAccessToken()
+  // .then((token) => {
+  //   DevSummitAxios.get('api/v1/emailverification', { Authorization: token })
+  //   .then((response) => {
+  //       console.log('landing here response isConfirm helpers', response);
+  //       return true;
+  //   });
+  // });
+  getProfileData().then((profileData) => {
+    if (profileData) {
+      // updateInputFields('firstName', profileData.first_name);
+      // updateInputFields('lastName', profileData.last_name);
+      // updateInputFields('emailDetail', profileData.email);
+      console.log('landing here profiledata isconfirm', profileData);
+    }
+  });
+  return false;
 };
