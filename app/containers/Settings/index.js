@@ -10,6 +10,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import VersionNumber from 'react-native-version-number';
 
@@ -22,10 +23,11 @@ import strings from '../../localization';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import styles from './styles';
+import InputItem from '../../components/InputItem';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
-import { FEEDBACK_URL } from '../../constants';
+import { FEEDBACK_URL, PRIMARYCOLOR } from '../../constants';
 
 class Settings extends Component {
   constructor(props) {
@@ -74,13 +76,17 @@ class Settings extends Component {
     this.props.updateFields(field, value);
   };
 
+  handleChangeFeedback = (value) => {
+    this.props.updateFeedback(value);
+  }
+
   handleUpdateAvatar = (value) => {
     this.props.updateAvatar(value);
   };
 
   render() {
-    const { fields, isDisabled, avatar, errorFields, isLoading } = this.props || {};
-    const { firstName, lastName, username, boothInfo, job, summary, profilePic } = fields || '';
+    const { fields, avatar, isLoading, feedBack } = this.props || {};
+    const { firstName, lastName, username } = fields || '';
     return (
       <Container>
         <Content>
@@ -125,33 +131,41 @@ class Settings extends Component {
               </View>
             </Content>
           </ScrollView>
+          {/* Modal Feedback */}
           <Modal
-            animationType={'slide'}
+            animationType={'fade'}
             visible={this.state.modalVisible}
             onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+            transparent
           >
-            <View style={{ flex: 1 }}>
-              <View style={styles.modal}>
-                <TouchableOpacity onPress={() => this.setModalVisible(!this.state.modalVisible)}>
-                  <Icon
-                    name={'ios-arrow-dropleft'}
-                    size={24}
-                    color={'black'}
-                    style={{ padding: 10 }}
-                  />
-                </TouchableOpacity>
+            <View style={styles.parentView}>
+              <View style={styles.viewHeader}>
+                <Text style={styles.textFeedback}>Feedback</Text>
+                <TouchableWithoutFeedback
+                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                >
+                  <CameraIcon style={styles.iconClose} name="times" />
+                </TouchableWithoutFeedback>
               </View>
-              <WebView
-                automaticallyAdjustContentInsets={false}
-                source={{ uri: FEEDBACK_URL }}
-                style={{ marginTop: 20 }}
-                scalesPageToFit
-                ref={'webview'}
-                decelerationRate="normal"
-                javaScriptEnabled
-                domStorageEnabled
-                startInLoadingState
-              />
+              <View style={styles.viewInput}>
+                <InputItem
+                  itemStyle={styles.item}
+                  style={styles.inputItem}
+                  placeholder={'Your Feedback'}
+                  placeholderTextColor={'#BDBDBD'}
+                  onChangeText={(text) => { this.handleChangeFeedback(text); }}
+                  value={feedBack}
+                />
+                <TouchableWithoutFeedback onPress={() => {
+                  this.props.addFeedback()
+                  this.setModalVisible(!this.state.modalVisible)
+                }}
+                >
+                  <View>
+                    <Text style={styles.textStyle}>SUBMIT</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>  
             </View>
           </Modal>
         </Content>
@@ -170,7 +184,9 @@ const mapStateToProps = createStructuredSelector({
   isAvatarUpdated: selectors.getIsAvatarUpdated(),
   isDisabled: selectors.getIsDisabled(),
   isLoading: selectors.getIsLoading(),
-  isLogOut: selectors.getIsLogOut()
+  isLogOut: selectors.getIsLogOut(),
+  feedBack: selectors.getFeedback(),
+  isFeedbackPosted: selectors.getIsFeedbackPosted()
 });
 
 export default connect(mapStateToProps, actions)(Settings);
