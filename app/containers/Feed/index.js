@@ -316,6 +316,7 @@ class Feed extends Component {
   };
 
   render() {
+    console.log('landing here feed', this.props);
     return (
       <Container style={styles.container}>
         <View
@@ -361,7 +362,7 @@ class Feed extends Component {
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
                     {!this.props.feeds.length > 0 ? (
-                      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 100 }}>
                         <Image source={noFeeds} style={{ opacity: 0.5 }} />
                         <Text style={styles.artworkText}>Your feeds is empty</Text>
                       </View>

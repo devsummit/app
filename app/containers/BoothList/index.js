@@ -36,6 +36,7 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import Redeem from '../Redeem';
 import AccordionView from './Accordion';
+import AccordionView2 from './Accordion2';
 
 const bgBooth1 = require('./../../../assets/images/bgbooth_1.png');
 const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
@@ -62,6 +63,10 @@ class BoothList extends Component {
   setAccordion = (visible) => {
     this.setState({ accordion: visible });
   };
+
+  setAccordion2 = (visible) => {
+    this.setState({ accordion2: visible});
+  }
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
@@ -122,19 +127,35 @@ class BoothList extends Component {
             />
           </View>
         </View>
-        <Image source={bgBooth2} resizeMode="cover" style={{ flex: 0.21, width: '100%' }}>
+        <Image source={bgBooth2} resizeMode="cover" style={{ 
+          flex: 0.21, 
+          width: '100%', 
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
+         }}>
           <Button
             style={styles.btnBooth}
             onPress={() => {
               this.setAccordion(!this.state.accordion);
             }}
           >
-            <Text style={{ color: '#FFF', fontSize: 16 }}>
+            <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
               {this.state.accordion ? 'Please select one of options' : strings.booth.register}
             </Text>
           </Button>
+          <Button
+            style={styles.btnBooth}
+            onPress={() => {
+              this.setAccordion2(!this.state.accordion2);
+            }}
+          >
+            <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
+              Hackaton
+            </Text>
+          </Button>
         </Image>
-        {this.state.accordion ? (
+        {this.state.accordion || this.state.accordion2 ? (
           <View style={styles.searchHeader} />
         ) : (
           <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
@@ -197,6 +218,8 @@ class BoothList extends Component {
             <Spinner color="#FF8B00" />
           ) : this.state.accordion ? (
             <AccordionView setPaymentMethod={this.setPaymentMethod} />
+          ) : this.state.accordion2 ? (
+            <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
           ) : (
             <View style={styles.content}>
               {this.state.boothFilter.map((data, index) => (

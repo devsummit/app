@@ -76,6 +76,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: 'skyblue',
     fontWeight: 'bold'
+  },
+  inviteDisable: {
+    color: '#FFFFFF',
+    marginTop: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: 'grey',
+    fontWeight: 'bold'
   }
 });
 
