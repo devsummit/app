@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingLeft: 20
+  },
+  item: {
+    marginBottom: 10,
+    borderColor: '#000000',
+    borderWidth: 1
   }
 });
 
