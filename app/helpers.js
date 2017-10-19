@@ -122,6 +122,7 @@ export const transactionStatus = (payment) => {
   };
 };
 
+
 export const isConfirm = () => {
   // getAccessToken()
   // .then((token) => {
@@ -131,13 +132,21 @@ export const isConfirm = () => {
   //       return true;
   //   });
   // });
+  let konfirm;
   getProfileData().then((profileData) => {
     if (profileData) {
       // updateInputFields('firstName', profileData.first_name);
       // updateInputFields('lastName', profileData.last_name);
       // updateInputFields('emailDetail', profileData.email);
       console.log('landing here profiledata isconfirm', profileData);
+      if (profileData.confirmed === 1) {
+        konfirm = false;
+        console.log('landing here konfirm', konfirm);
+      } else {
+        konfirm = false;
+      }
     }
   });
-  return false;
+  console.log('landing here konfirm outside', konfirm);
+  return konfirm;
 };
