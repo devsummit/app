@@ -257,7 +257,7 @@ class RegisterEmail extends Component {
                     <InputItem
                       itemStyle={styles.item}
                       style={styles.formInput}
-                      placeholder={strings.register.refererName}
+                      placeholder={strings.register.referalCode}
                       placeholderTextColor={'#BDBDBD'}
                       onChangeText={text => this.handleInputChange('referer', text)}
                       value={referer}

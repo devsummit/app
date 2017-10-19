@@ -7,7 +7,7 @@ export default {
   password: 'Kata sandi',
   verifyPassword: 'Konfirmasi kata sandi',
   useReferer: 'Gunakan referer',
-  refererName: 'Nama referer',
+  referalCode: 'Kode referal',
   register: 'Daftar',
   alreadyHave: 'Sudah memiliki akun?',
   signIn: 'Masuk',

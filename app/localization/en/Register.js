@@ -7,7 +7,7 @@ export default {
   password: 'Password',
   verifyPassword: 'Verify password',
   useReferer: 'Use referrer',
-  refererName: 'Referrer name',
+  referalCode: 'Referal code',
   register: 'Register',
   alreadyHave: 'Already have account?',
   signIn: 'Sign in',
