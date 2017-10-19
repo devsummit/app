@@ -134,7 +134,7 @@ class OrderList extends Component {
                       CLAIM
                     </Text>
                   </TouchableOpacity>
-                  { (!isConfirm) ? <View /> : 
+                  { (!isConfirm()) ? <View /> : 
                   <View style={styles.inviteField}>
                     <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
                     <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
@@ -177,7 +177,7 @@ class OrderList extends Component {
           ) : (
             <View style={styles.artwork}>
               <Image source={noTicket} style={{ opacity: 0.7 }} />
-              {(!isConfirm) ?
+              {(!isConfirm()) ?
                 <View>
                   <Text style={styles.artworkText}>Please Confirm Your Email First</Text>
                   <Button block style={{textAlign: 'center', margin: 10}}>

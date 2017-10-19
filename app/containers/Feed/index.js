@@ -317,6 +317,7 @@ class Feed extends Component {
   };
 
   render() {
+    console.log('landing here isConfirm feed', isConfirm());
     return (
       <Container style={styles.container}>
         <View
@@ -563,7 +564,7 @@ class Feed extends Component {
             }
           >
             <OrderList />
-            { !isConfirm ? <View /> : 
+            { !isConfirm() ? <View /> : 
             <Fab
               active={this.state.fabActive}
               style={{ backgroundColor: '#FF8B00' }}

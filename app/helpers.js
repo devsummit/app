@@ -122,4 +122,6 @@ export const transactionStatus = (payment) => {
   };
 };
 
-export var isConfirm = true;
+export const isConfirm = () => {
+  return false;
+};
