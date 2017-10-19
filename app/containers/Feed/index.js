@@ -55,6 +55,7 @@ import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
+import { isConfirm } from '../../constants';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -563,6 +564,7 @@ class Feed extends Component {
             }
           >
             <OrderList />
+            { !isConfirm ? <View /> : 
             <Fab
               active={this.state.fabActive}
               style={{ backgroundColor: '#FF8B00' }}
@@ -595,6 +597,7 @@ class Feed extends Component {
                 />
               </Button>
             </Fab>
+            }
           </Tab>
         </Tabs>
         {/* Redeem Modal */}

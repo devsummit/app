@@ -15,6 +15,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-end'
   },
+  buttonConfirm: {
+    width: '100%',
+    alignSelf: 'center',
+    marginTop: 6,
+    backgroundColor: '#FF6F00',
+    marginBottom: 6
+  },
   roundButton: {
     borderRadius: 90,
     backgroundColor: 'rgba(52, 52, 52, 0.7)',
@@ -43,6 +50,12 @@ const styles = StyleSheet.create({
     color: PRIMARYCOLOR,
     fontWeight: 'bold',
     marginTop: 20,
+    textAlign: 'center'
+  },
+  artworkTextConfirm: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
     textAlign: 'center'
   },
   card: {

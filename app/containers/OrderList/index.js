@@ -24,6 +24,7 @@ import OrderItem from '../../components/OrderItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
+import { isConfirm } from '../../helpers';
 
 const { width } = Dimensions.get('window');
 
@@ -133,6 +134,7 @@ class OrderList extends Component {
                       CLAIM
                     </Text>
                   </TouchableOpacity>
+                  { (!isConfirm) ? <View /> : 
                   <View style={styles.inviteField}>
                     <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
                     <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
@@ -149,6 +151,7 @@ class OrderList extends Component {
                       </View>
                     </TouchableWithoutFeedback>
                   </View>
+                  }
                 </View>
               </Card>
             )}
@@ -174,7 +177,20 @@ class OrderList extends Component {
           ) : (
             <View style={styles.artwork}>
               <Image source={noTicket} style={{ opacity: 0.7 }} />
-              <Text style={styles.artworkText}>{strings.order.noTicket}</Text>
+              {(!isConfirm) ?
+                <View>
+                  <Text style={styles.artworkText}>Please Confirm Your Email First</Text>
+                  <Button block style={{textAlign: 'center', margin: 10}}>
+                    <Text style={{fontWeight: 'bold', color: 'white', textAlign: 'center'}}>Resend Confirmation</Text>
+                  </Button>
+                  {/* <Button block style={{textAlign: 'center', margin: 10}} onPress={() => Actions.codeConduct()}>
+                    <Text style={{fontWeight: 'bold', color: 'white', textAlign: 'center'}}>Resend Confirmation</Text>
+                  </Button> */}
+                  
+                </View>
+                :
+                <Text style={styles.artworkText}>{strings.order.noTicket}</Text>
+              }
             </View>
           )}
         </Content>
