@@ -13,7 +13,9 @@ import {
   UPDATE_IS_LOG_OUT,
   UPDATE_IS_DISABLED,
   UPDATE_FEEDBACK,
-  UPDATE_FEEDBACK_POSTED
+  UPDATE_FEEDBACK_POSTED,
+  IS_LOADING_FEEDBACK,
+  UPDATE_MODAL_VISIBILITY
 } from './constants';
 
 /*
@@ -35,12 +37,16 @@ const initialState = fromJS({
   isDisabled: true,
   isProfileUpdated: false,
   isLoading: false,
+  isLoadingFeedback: false,
   isLogOut: false,
+  modalVisible: false,
   isFeedbackPosted: false
 });
 
 function SettingsReducer(state = initialState, action) {
   switch (action.type) {
+    case UPDATE_MODAL_VISIBILITY:
+      return state.set('modalVisible', action.status);
     case UPDATE_FEEDBACK:
       return state.set('feedBack', action.value);
     case UPDATE_FEEDBACK_POSTED:
@@ -55,6 +61,8 @@ function SettingsReducer(state = initialState, action) {
       return state.set('isAvatarUpdated', action.status);
     case IS_LOADING_LOGOUT:
       return state.set('isLoading', action.status);
+    case IS_LOADING_FEEDBACK:
+      return state.set('isLoadingFeedback', action.status);
     case UPDATE_IS_LOG_OUT:
       return state.set('isLogOut', action.status);
     case UPDATE_IS_DISABLED:
