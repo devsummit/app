@@ -214,9 +214,7 @@ class Main extends Component {
                         <ActivityIndicator size={'large'} color={'#FFFFFF'} />
                       </View>
                     ) : (
-                      <View>
-                        <Text>Log In</Text>
-                      </View>
+                      <Text>Log In</Text>
                     )}
                   </Button>
                 )}
