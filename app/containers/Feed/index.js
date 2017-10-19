@@ -317,9 +317,6 @@ class Feed extends Component {
   };
 
   render() {
-    console.log('landing here feed', this.props);
-    console.log('landing here feed isConfirm', isConfirm);
-    // isConfirm = true;
     return (
       <Container style={styles.container}>
         <View
