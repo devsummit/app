@@ -5,13 +5,10 @@ import {
   ScrollView,
   Image,
   TouchableWithoutFeedback,
-  Modal,
-  WebView,
-  TouchableOpacity
+  Modal
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
-import Icon from 'react-native-vector-icons/Ionicons';
 import VersionNumber from 'react-native-version-number';
 
 // import redux componens
@@ -27,7 +24,6 @@ import InputItem from '../../components/InputItem';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
-import { FEEDBACK_URL, PRIMARYCOLOR } from '../../constants';
 
 class Settings extends Component {
   constructor(props) {
@@ -165,7 +161,7 @@ class Settings extends Component {
                     <Text style={styles.textStyle}>{strings.settings.submit}</Text>
                   </View>
                 </TouchableWithoutFeedback>
-              </View> 
+              </View>
             </View>
           </Modal>
         </Content>
