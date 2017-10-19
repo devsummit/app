@@ -123,5 +123,5 @@ export const transactionStatus = (payment) => {
 };
 
 export const isConfirm = () => {
-  return false;
+  return true;
 };
