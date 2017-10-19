@@ -16,6 +16,7 @@ import {
   UPDATE_IS_SUBSCRIBED,
   UPDATE_IS_NOT_REGISTERED,
   UPDATE_IS_LOADING,
+  UPDATE_IS_RESETED,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -72,6 +73,13 @@ export function updateisLoading(status) {
     type: UPDATE_IS_LOADING,
     status
   };
+}
+
+export function updateIsReseted(status) {
+  return {
+    type: UPDATE_IS_RESETED,
+    status
+  }
 }
 
 /*
@@ -428,5 +436,25 @@ export function subscribeNewsletter() {
         dispatch(updateIsSubscribed(true));
       }
     });
+  };
+}
+
+export function resetPassword() {
+  return (dispatch, getState) => {
+    const { fields } = getState()
+      .get('main')
+      .toJS();
+    const { email } = fields;
+    console.log('email', email);
+
+    dispatch(updateIsReseted(true));
+
+    // DevSummitAxios.post('', { email })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, 'error caught');
+    //   })
   };
 }
