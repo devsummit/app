@@ -31,7 +31,6 @@ class Settings extends Component {
     this.setModalVisible = this.setModalVisible.bind(this);
     this.state = {
       id: null,
-      modalVisible: false,
       firstName: '',
       lastName: '',
       photo: null,
@@ -65,7 +64,7 @@ class Settings extends Component {
   }
 
   setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
+    this.props.updateModalVisibility(visible);
   }
 
   handleInputChange = (field, value) => {
@@ -81,8 +80,9 @@ class Settings extends Component {
   };
 
   render() {
-    const { fields, avatar, isLoading, feedBack } = this.props || {};
+    const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible } = this.props || {};
     const { firstName, lastName, username } = fields || '';
+    console.log("VISIBILITYMODAL", isLoadingFeedback);
     return (
       <Container>
         <Content>
@@ -130,15 +130,15 @@ class Settings extends Component {
           {/* Modal Feedback */}
           <Modal
             animationType={'fade'}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+            visible={modalVisible}
+            onRequestClose={() => this.setModalVisible(!modalVisible)}
             transparent
           >
             <View style={styles.parentView}>
               <View style={styles.viewHeader}>
                 <Text style={styles.textFeedback}>{strings.settings.feedback}</Text>
                 <TouchableWithoutFeedback
-                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                  onPress={() => this.setModalVisible(!modalVisible)}
                 >
                   <CameraIcon style={styles.iconClose} name="times" />
                 </TouchableWithoutFeedback>
@@ -154,11 +154,10 @@ class Settings extends Component {
                 />
                 <TouchableWithoutFeedback onPress={() => {
                   this.props.addFeedback()
-                  this.setModalVisible(!this.state.modalVisible)
                 }}
                 >
                   <View>
-                    <Text style={styles.textStyle}>{strings.settings.submit}</Text>
+                    {isLoadingFeedback ? <Spinner color="#f39e21" style={{ paddingTop: 40 }}/> : <Text style={styles.textStyle}>{strings.settings.submit}</Text>}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -182,7 +181,9 @@ const mapStateToProps = createStructuredSelector({
   isLoading: selectors.getIsLoading(),
   isLogOut: selectors.getIsLogOut(),
   feedBack: selectors.getFeedback(),
-  isFeedbackPosted: selectors.getIsFeedbackPosted()
+  isFeedbackPosted: selectors.getIsFeedbackPosted(),
+  isLoadingFeedback: selectors.getIsLoadingFeedback(),
+  modalVisible: selectors.getModalVisible()
 });
 
 export default connect(mapStateToProps, actions)(Settings);
