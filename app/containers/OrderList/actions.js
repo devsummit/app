@@ -1,7 +1,8 @@
 import Toast from 'react-native-simple-toast';
-import { DevSummitAxios, getAccessToken } from '../../helpers';
+import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import { updateDataStorage } from '../Profile/actions';
 import orderlist from '../../services/orderlist';
+
 /*
  * import constants
  */
@@ -11,8 +12,18 @@ import {
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
   PENDING_ORDERS,
-  REDEEM_COUNTER
+  REDEEM_COUNTER,
+  UPDATE_SINGLE_INPUT_FIELD,
+  IS_CONFIRM_EMAIL
 } from './constants';
+
+export function updateInputFields(field, value) {
+  return {
+    type: UPDATE_SINGLE_INPUT_FIELD,
+    field,
+    value
+  };
+}
 
 export function redeemCounter() {
   return (dispatch) => {
@@ -60,11 +71,34 @@ export function pendingOrder(value) {
   };
 }
 
+export function emailConfirm() {
+
+  return (dispatch) => {
+    getProfileData().then((profileData) => {
+      orderlist.countRedeem().then(response => {
+        console.log('landing here orderlist count redeem response', response);
+      })
+      if (profileData) {
+
+        console.log('landing here profiledata isconfirm', profileData);
+
+      }
+    });
+    dispatch({
+      type: IS_CONFIRM_EMAIL,
+      value :  true
+    });
+  }
+  
+  // console.log('landing here konfirm outside', konfirm);
+  // return konfirm;
+};
+
 export function getOrderList() {
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
     dispatch(redeemCounter());
-
+    dispatch(emailConfirm());
     orderlist
       .get()
       .then((response) => {
@@ -116,5 +150,59 @@ export function confirmPayment(id, idx) {
       .catch((err) => {
         console.log(err);
       });
+  };
+}
+
+export function register(callBack) {
+  return (dispatch, getState) => {
+    const { inputFields } = getState()
+      .get('registerEmail')
+      .toJS();
+
+    const { email } = inputFields || null;
+
+    // const { lastName, referer } = inputFields || '';
+
+    // const role_id = role === 'attendee' ? 2 : role === 'booth' ? 3 : 5;
+    const data = {
+      email
+    };
+
+    if (email) {
+      DevSummitAxios.post('/auth/register', data)
+        .then(async (response) => {
+          const resData = response.data.data;
+          const roleId = JSON.stringify(response.data.included.role_id);
+          const profileData = JSON.stringify(response.data.included);
+          try {
+            if (response && response.data.data && response.data.meta.success) {
+              console.log('landing here register orderlist: ', response);
+              AsyncStorage.multiSet([
+                [ 'access_token', resData.access_token ],
+                [ 'refresh_token', resData.refresh_token ],
+                [ 'role_id', roleId ],
+                [ 'profile_data', profileData ]
+              ]);
+              dispatch(updateRegisterStatus(true, 'Success', 'You have been registered'));
+              callBack();
+            } else if (response.data.data !== null && !response.data.meta.success) {
+              dispatch(updateRegisterStatus(true, 'Registered', 'You already registered'));
+            } else if (response.data.data === null && !response.data.meta.success) {
+              dispatch(
+                updateRegisterStatus(
+                  true,
+                  'Failed',
+                  response.data.meta.message.concat(' please login using your existing account')
+                )
+              );
+            }
+          } catch (err) {
+            console.log(err, 'error cought');
+          }
+        })
+        .catch((error) => {
+          console.log(error, 'error caught');
+        });
+    }
   };
 }

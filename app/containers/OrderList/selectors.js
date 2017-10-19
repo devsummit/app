@@ -29,3 +29,7 @@ export const getRedeemCode = () =>
 
 export const getReedemStatus = () =>
   createSelector(selectMainReducer(), state => state.get('redeemStatus'));
+
+export const getInputFields = () =>
+  createSelector(selectMainReducer(), state => state.get('inputFields').toJS());
+

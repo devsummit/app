@@ -7,6 +7,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff'
   },
+  item: {
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1
+  },
+  formInput: {
+    paddingLeft: 20,
+    height: 45,
+    color: '#FFFFFF'
+  },
   text: {
     flex: 3
   },
