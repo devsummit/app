@@ -140,7 +140,7 @@ class Settings extends Component {
           >
             <View style={styles.parentView}>
               <View style={styles.viewHeader}>
-                <Text style={styles.textFeedback}>Feedback</Text>
+                <Text style={styles.textFeedback}>{strings.settings.feedback}</Text>
                 <TouchableWithoutFeedback
                   onPress={() => this.setModalVisible(!this.state.modalVisible)}
                 >
@@ -151,7 +151,7 @@ class Settings extends Component {
                 <InputItem
                   itemStyle={styles.item}
                   style={styles.inputItem}
-                  placeholder={'Your Feedback'}
+                  placeholder={strings.settings.yourFeedback}
                   placeholderTextColor={'#BDBDBD'}
                   onChangeText={(text) => { this.handleChangeFeedback(text); }}
                   value={feedBack}
@@ -162,10 +162,10 @@ class Settings extends Component {
                 }}
                 >
                   <View>
-                    <Text style={styles.textStyle}>SUBMIT</Text>
+                    <Text style={styles.textStyle}>{strings.settings.submit}</Text>
                   </View>
                 </TouchableWithoutFeedback>
-              </View>  
+              </View> 
             </View>
           </Modal>
         </Content>
