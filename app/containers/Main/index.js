@@ -154,8 +154,12 @@ class Main extends Component {
     Alert.alert('lala');
   };
 
+  resetPassword = () => {
+    this.props.resetPassword();
+  }
+
   render() {
-    const { fields, isLoading } = this.props;
+    const { fields, isLoading, isReseted } = this.props;
     const { username, password, email } = fields || '';
     const visible = false;
     return (
@@ -273,12 +277,18 @@ class Main extends Component {
                           block
                           style={styles.buttonResetPassword}
                           onPress={() => {
-                            this.onLogin();
+                            this.resetPassword();
                           }}
                         >
-                          <View>
-                            <Text>RESET YOUR PASSOWORD</Text>
-                          </View>
+                          {isReseted ? (
+                            <View>
+                              <ActivityIndicator size={'large'} color={'#FFFFFF'} />
+                            </View>
+                          ) : (
+                            <View>
+                              <Text>RESET YOUR PASSOWORD</Text>
+                            </View>
+                          )}
                         </Button>
                       )}
                     </View>
@@ -355,7 +365,9 @@ Main.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   subscribeNewsletter: PropTypes.func.isRequired,
   loginGoogle: PropTypes.func.isRequired,
-  loginTwitter: PropTypes.func.isRequired
+  loginTwitter: PropTypes.func.isRequired,
+  resetPassword: PropTypes.func.isRequired,
+  isReseted: PropTypes.bool.isRequired
 };
 
 /**
@@ -365,7 +377,8 @@ const mapStateToProps = createStructuredSelector({
   fields: selectors.getFields(),
   isSubscribed: selectors.getIsSubscribed(),
   isLoggedIn: selectors.getIsLoggedIn(),
-  isLoading: selectors.getIsLoading()
+  isLoading: selectors.getIsLoading(),
+  isReseted: selectors.getIsReseted()
   // @TODO please create the selectors function
   // profileData: selectors.getProfileData()
 });
