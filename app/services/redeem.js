@@ -1,6 +1,6 @@
 import Api from './api';
 
 export default {
-  patch: code => Api.post('/redeemcodes')
+  patch: code => Api.put('/redeemcodes', code)
 }
 ;
