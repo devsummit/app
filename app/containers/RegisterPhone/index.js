@@ -203,7 +203,7 @@ class RegisterPhone extends Component {
       </Button>
     );
   };
-  
+
   render() {
     if (this.props.isRegistering) {
       return (
@@ -266,11 +266,12 @@ class RegisterPhone extends Component {
             </View>
             <View style={{ flex: 1, padding: 5 }}>
               <View style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                      alignItems: 'center',
-                    }}>
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center'
+              }}
+              >
                 <CheckBox
                   color={'#FFF'}
                   iconStyle={{ color: '#FFF', marginLeft: 16 }}
@@ -280,7 +281,7 @@ class RegisterPhone extends Component {
                   checked={this.state.isChecked}
                   onPress={this.handlePressCheckedBox}
                 />
-                <Text style={{color: 'grey', fontSize: 10, lineHeight: 22 * 0.8}}> (Optional) </Text>
+                <Text style={{ color: 'grey', fontSize: 10, lineHeight: 22 * 0.8 }}> (Optional) </Text>
               </View>
               {this.state.isChecked ? (
                 <View style={{ marginHorizontal: 20 }}>
