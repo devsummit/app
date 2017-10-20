@@ -1,7 +1,10 @@
 import Api from './api';
+import {
+  AUTH_BASE_URL
+} from '../constants';
 
 export default {
   post: value => Api.post('/referals/submit'),
-  patch: (username, firstName, lastName, profilePic, boothInfo, job, summary, points) => Api.post('/auth/me/changesetting')
+  patch: fields => Api.put(`${AUTH_BASE_URL}/auth/me/changesetting`, fields)
 }
 ;
