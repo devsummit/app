@@ -230,7 +230,7 @@ class Feed extends Component {
         this.props.updateImage(image);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Error", err);
       });
   };
 
@@ -244,7 +244,7 @@ class Feed extends Component {
         this.props.updateImage(image);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Error", err);
       });
   };
 
