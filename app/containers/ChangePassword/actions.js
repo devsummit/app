@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import {
   DevSummitAxios,
   getAccessToken
-} from '../../helpers'
+} from '../../helpers';
 
 /*
  * import constants
@@ -16,7 +16,9 @@ import {
   UPDATE_IS_PASSWORD_UPDATED,
   UPDATE_IS_PASSWORD_WRONG,
   RESET_STATE
-} from './constants'
+} from './constants';
+
+import changedPassword from '../../services/changePassword';
 
 
 /*
@@ -25,11 +27,11 @@ import {
  * @param {value: value to be set}
  */
 export function updateInputFields(field, value) {
-	return {
-		type: UPDATE_SINGLE_INPUT_FIELD,
-		field,
-		value
-	}
+  return {
+    type: UPDATE_SINGLE_INPUT_FIELD,
+    field,
+    value
+  };
 }
 
 
@@ -39,11 +41,11 @@ export function updateInputFields(field, value) {
  * @param {value: value to be set}
  */
 export function updateErrorFields(field, value) {
-	return {
-		type: UPDATE_SINGLE_ERROR_FIELD,
-		field,
-		value
-	}
+  return {
+    type: UPDATE_SINGLE_ERROR_FIELD,
+    field,
+    value
+  };
 }
 
 export function updateIsLoading(status) {
@@ -79,24 +81,16 @@ export function changePassword() {
     const { inputFields } = getState().get('changePassword').toJS();
     const { current_password, new_password, confirm_password } = inputFields;
 
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.patch('/auth/me/changepassword', {
-          old_password: current_password,
-          new_password
-        }, {
-          headers: {
-            Authorization: token
-          }
-        }).then((response) => {
-          if (response && response.data && response.data.meta.success) {
-            dispatch(updateIsPasswordUpdate(true));
-          } else {
-            dispatch(updateIsPasswordWrong(true));
-          }
+    changedPassword.patch({old_password: current_password,
+      new_password})
+      .then((response) => {
+        if (response && response.data && response.data.meta.success) {
+          dispatch(updateIsPasswordUpdate(true));
+        } else {
+          dispatch(updateIsPasswordWrong(true));
+        }
 
-          dispatch(updateIsLoading(false));
-        });
+        dispatch(updateIsLoading(false));
       });
   };
 }
