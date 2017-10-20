@@ -33,13 +33,13 @@ import {
   TouchableHighlight,
   WebView
 } from 'react-native';
-import ActionButton from 'react-native-action-button';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
+import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
@@ -56,6 +56,8 @@ import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
+import { isConfirm } from '../../helpers';
+import { getIsConfirmEmail } from '../OrderList/selectors';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -133,7 +135,8 @@ const mapStateToProps = () =>
     imagesData: selectors.getUpdateImage(),
     textData: selectors.getUpdateText(),
     currentPage: selectors.getCurrentPage(),
-    isRemoving: selectors.getIsRemoveFeed()
+    isRemoving: selectors.getIsRemoveFeed(),
+    isConfirmEmail: getIsConfirmEmail()
   });
 
 class Feed extends Component {
@@ -230,7 +233,7 @@ class Feed extends Component {
         this.props.updateImage(image);
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log(err);
       });
   };
 
@@ -244,7 +247,7 @@ class Feed extends Component {
         this.props.updateImage(image);
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log(err);
       });
   };
 
@@ -362,7 +365,15 @@ class Feed extends Component {
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
                     {!this.props.feeds.length > 0 ? (
-                      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 100 }}>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          margin: 100
+                        }}
+                      >
                         <Image source={noFeeds} style={{ opacity: 0.5 }} />
                         <Text style={styles.artworkText}>Your feeds is empty</Text>
                       </View>
@@ -692,9 +703,9 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                        <TouchableOpacity onPress={() => this.postFeed()}>
+                      <TouchableOpacity onPress={() => this.postFeed()}>
                           <View
-                            style={{
+                          style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -703,11 +714,11 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                          >
-                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                        >
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                          </View>
+                        </View>
                         </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
