@@ -8,5 +8,6 @@ export default {
   more: 'See more',
   imageChanged: 'Exhibitors photo has been changed',
   errorImage: 'Failed to get image from library',
-  search: 'Find exhibitors'
+  search: 'Find exhibitors',
+  back: 'Back'
 };
