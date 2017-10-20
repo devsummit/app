@@ -10,6 +10,8 @@ import {
   IS_FETCHING_HACKATONS
 } from './constants';
 
+import boothList from '../../services/boothList';
+
 /*
  * Get speaker data
 */
@@ -35,7 +37,7 @@ export function fetchBoothList() {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/booths', { headers })
+        boothList.getBooth()
           .then(async (response) => {
             await dispatch({
               type: FETCH_BOOTH_LIST,
@@ -54,8 +56,8 @@ export function fetchHackatonList() {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/hackaton/team', { headers })
-          .then( (response) => {
+        boothList.get()
+          .then((response) => {
             console.log('landing here fetchHackatonList', response);
             dispatch({
               type: FETCH_HACKATON_LIST,

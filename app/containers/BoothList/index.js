@@ -246,7 +246,7 @@ style={{
                   ))} */}
                   <View style={styles.content}>
                     {this.props.hackaton.user.map((data, index) => (
-                      <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10 }} key={data.id}>
+                      <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10, padding: 4, borderWidth: 5 }} key={data.id}>
                         <View style={styles.profileSection}>
                           <Image style={styles.profilePic} source={{ uri: data.photos[0].url }} />
                           <View style={styles.nameSection}>
