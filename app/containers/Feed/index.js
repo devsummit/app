@@ -563,29 +563,33 @@ class Feed extends Component {
             }
           >
             <OrderList />
-            <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
-              <ActionButton.Item title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
-                <CameraIcon
-                  name="ticket"
-                  color="#FFFFFF"
-                  style={{ textAlign: 'center', fontSize: 30 }}
-                />
-              </ActionButton.Item>
-              <ActionButton.Item title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
-                <CameraIcon
-                  name="list"
-                  color="#FFFFFF"
-                  style={{ textAlign: 'center', fontSize: 23 }}
-                />
-              </ActionButton.Item>
-              <ActionButton.Item title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
-                <CameraIcon
-                  name="gift"
-                  color="#FFFFFF"
-                  style={{ textAlign: 'center', fontSize: 30 }}
-                />
-              </ActionButton.Item>
-            </ActionButton>
+            {!this.props.isConfirmEmail ? (
+              <View />
+            ) : (
+              <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
+                <ActionButton.Item title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
+                  <CameraIcon
+                    name="ticket"
+                    color="#FFFFFF"
+                    style={{ textAlign: 'center', fontSize: 30 }}
+                  />
+                </ActionButton.Item>
+                <ActionButton.Item title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                  <CameraIcon
+                    name="list"
+                    color="#FFFFFF"
+                    style={{ textAlign: 'center', fontSize: 23 }}
+                  />
+                </ActionButton.Item>
+                <ActionButton.Item title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
+                  <CameraIcon
+                    name="gift"
+                    color="#FFFFFF"
+                    style={{ textAlign: 'center', fontSize: 30 }}
+                  />
+                </ActionButton.Item>
+              </ActionButton>
+            )}
           </Tab>
         </Tabs>
         {/* Redeem Modal */}
@@ -688,7 +692,7 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                      <TouchableOpacity onPress={() => this.postFeed()}>
+                        <TouchableOpacity onPress={() => this.postFeed()}>
                           <View
                             style={{
                               borderWidth: 1,
