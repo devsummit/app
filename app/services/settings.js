@@ -1,6 +1,3 @@
-import Api from './api';
-
 export default {
-  patch: (firstName, lastName, boothInfo, job, summary) => Api.patch('/auth/me/changesetting')
-}
-;
+  patch: (firstName, lastName, boothInfo, job, summary, Auth) => Auth.patch('/auth/me/changesetting', {firstName, lastName, boothInfo, job, summary})
+};
