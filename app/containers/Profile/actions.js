@@ -1,6 +1,7 @@
 import { AsyncStorage, Platform, Alert } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import FormData from 'FormData';
+import axios from 'axios';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import {
   UPDATE_SINGLE_FIELD,
@@ -16,6 +17,10 @@ import {
 } from './constants';
 import local from '../../../config/local';
 import profile from '../../services/profile';
+
+const Auth = axios.create({
+  baseURL: 'http://api.devsummit.io:8081'
+});
 
 /*
  * Update the input fields
@@ -150,7 +155,13 @@ export function changeProfile() {
       .toJS();
     console.log('FIELDSSSSS', fields);
     const { username, firstName, lastName, profilePic, boothInfo, job, summary, points } = fields;
-    profile.patch(username, firstName, lastName, profilePic, boothInfo, job, summary, points)
+    profile.patch({
+      first_name: firstName,
+      last_name: lastName,
+      booth_info: boothInfo,
+      speaker_job: job,
+      speaker_summary: summary
+    })
       .then((response) => {
         if (
           response &&
