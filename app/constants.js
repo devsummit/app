@@ -4,6 +4,7 @@
 const config = require('../config/local').default;
 
 export const API_BASE_URL = config.API_BASE_URL;
+export const AUTH_BASE_URL = config.AUTH_BASE_URL;
 export const MIDTRANS_CLIENT_KEY = config.MIDTRANS_CLIENT_KEY;
 export const PAYPAL_CLIENT_ID = config.PAYPAL_CLIENT_ID;
 export const PAYPAL_CURRENCY = config.PAYPAL_CURRENCY;

@@ -13,7 +13,6 @@ import {
 } from './constants';
 import { restoreCurrentPage } from '../Feed/actions';
 import local from '../../../config/local';
-import settings from '../../services/settings';
 
 /*
  * Update the input fields
@@ -89,13 +88,25 @@ export function changeProfile() {
     const { fields } = getState().get('profile').toJS();
     const { username, firstName, lastName, profilePic, boothInfo, job, summary } = fields;
 
-    settings.patch(firstName, lastName, boothInfo, job, summary)
-      .then((response) => {
-        if (response && response.data && response.data.meta.success) {
-          updateDataStorage(response);
-          dispatch(updateIsProfileUpdated(true));
-        }
-      }).catch((error) => { console.log(error); });
+    getAccessToken()
+      .then((token) => {
+        DevSummitAxios.patch('/auth/me/changesetting', {
+          first_name: firstName,
+          last_name: lastName,
+          booth_info: boothInfo,
+          speaker_job: job,
+          speaker_summary: summary
+        }, {
+          headers: {
+            Authorization: token
+          }
+        }).then((response) => {
+          if (response && response.data && response.data.meta.success) {
+            updateDataStorage(response);
+            dispatch(updateIsProfileUpdated(true));
+          }
+        }).catch((error) => { console.log(error); });
+      });
   };
 }
 
@@ -106,7 +117,7 @@ export function updateImage(image) {
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('/user/photo');
+        const url = local.API_BASE_URL.concat('api/v1/user/photo');
         const form = new FormData();
 
         form.append('image_data', {

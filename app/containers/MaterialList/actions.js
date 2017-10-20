@@ -55,11 +55,11 @@ export function isFetchingMaterial(status) {
   };
 }
 
-export function fetchMaterialList(id) {
+export function fetchMaterialList() {
   return (dispatch) => {
     dispatch(isFetchingMaterial(true));
 
-    materialList.then((response) => {
+    materialList.get().then((response) => {
       dispatch({
         type: FETCH_MATERIAL_LIST,
         payloads: response.data.data

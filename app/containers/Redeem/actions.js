@@ -4,7 +4,7 @@ import { DevSummitAxios, getAccessToken, getProfileData, getBoothData, getRoleId
 
 import local from '../../../config/local';
 import { UPDATE_SINGLE_INPUT_FIELD } from './constants';
-import redeem from '../../services/redeem';
+import redeemed from '../../services/redeem';
 
 export function updateInputFields(field, value) {
   return {
@@ -48,7 +48,8 @@ export function placeRedeem() {
       .get('code')
       .toJS();
     const { code } = inputFields;
-    redeem.patch(code).then((res) => {
+
+    redeemed.patch({ "code": code }).then((res) => {
       updateDataStorage(res);
       Alert.alert('Information', res.data.meta.message);
     })

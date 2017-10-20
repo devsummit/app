@@ -73,28 +73,17 @@ export function getOrderDetail(orderId) {
   return (dispatch) => {
     dispatch(updateIsUpdatingOrder(true));
 
-<<<<<<< HEAD
-    orderDetail
-      .get(orderId)
-      .then((response) => {
-        dispatch(setPaymentProof(response.data.included.verification.payment_proof));
-=======
     orderdetail
       .get(orderId)
       .then((response) => {
         if (response.data.included.verification) {
           dispatch(setPaymentProof(response.data.included.verification.payment_proof));
         }
->>>>>>> origin/develop
         dispatch({ type: SET_ORDER, data: response.data });
         dispatch(updateIsUpdatingOrder(false));
       })
       .catch((err) => {
-<<<<<<< HEAD
-        console.log('kudazebra', err.response);
-=======
         console.log(err.response);
->>>>>>> origin/develop
       });
   };
 }
@@ -124,11 +113,11 @@ export function submitUpdateOrder(orders) {
             )
               .then((response) => {})
               .catch((err) => {
-                console.log('kuda merah', err.response);
+                console.log(err.response);
               });
           })
           .catch((error) => {
-            console.log('kuda jingkrak', error);
+            console.log('Error', error);
           });
       }
     });
