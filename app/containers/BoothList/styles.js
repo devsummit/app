@@ -95,6 +95,11 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 25
   },
+  profilePic2: {
+    height: 150,
+    width: 150,
+    borderRadius: 25,
+  },
   name: {
     color: '#333',
     fontSize: 16,

@@ -229,7 +229,10 @@ style={{
               {this.props.isFetching2 || this.props.isFetching2 === undefined || this.props.hackaton === undefined ? (
                 <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
               ) : (
-                <View style={{ margin: 10 }}>
+                <View style={{ margin: 10}}>
+                  <View style={{ alignItems: 'center'}}>
+                    <Image style={styles.profilePic2} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3y6eXbmTc_9b224H656uKVPnTFGj453nxNZZQuBBGH7fS1jO4' }} />
+                  </View>
                   <Text/>
                   <Text><Text style={{ fontWeight: 'bold' }}>Hackaton team name    :</Text> {this.props.hackaton.name}</Text>
                   <Text/>
