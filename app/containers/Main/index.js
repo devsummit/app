@@ -32,7 +32,7 @@ import PropTypes from 'prop-types';
 import * as Animatable from 'react-native-animatable';
 import * as Progress from 'react-native-progress';
 // import * as TouchableBounce from 'react-native-touchable-bounce';
-import Bounceable from "react-native-bounceable";
+import Bounceable from 'react-native-bounceable';
 import PulseLoader from 'react-native-pulse-loader';
 
 import LoadingScreen from '../../components/LoadingScreen';
@@ -51,6 +51,7 @@ const Transition = createTransition(Fade);
 const background = require('./../../../assets/images/background.png');
 const Logo = require('../../../assets/images/logo.png');
 const Aiken = require('../../../assets/images/icon.png');
+
 const timing = 4000;
 
 class Main extends Component {
@@ -91,8 +92,8 @@ class Main extends Component {
   componentWillUnmount() {
     this.keyboardWillShowSub.remove();
     this.keyboardWillHideSub.remove();
+    this.props.resetState();
   }
-
 
   onLoginMobile(token) {
     if (!token) {
@@ -113,12 +114,12 @@ class Main extends Component {
   };
 
   setModalVisibleAnimation = () => {
-    this.setState({ modalVisibleAnimation: !this.state.modalVisibleAnimation});
+    this.setState({ modalVisibleAnimation: !this.state.modalVisibleAnimation });
   };
 
   setInvisible = () => {
     this.setState({ invisible: !this.state.invisible });
-  }
+  };
 
   configureAccountKit = () => {
     AccountKit.configure({
@@ -157,7 +158,7 @@ class Main extends Component {
 
   resetPassword = () => {
     this.props.resetPassword(() => this.setInvisible(false));
-  }
+  };
 
   render() {
     const { fields, isLoading, isReseted } = this.props;
@@ -225,21 +226,19 @@ class Main extends Component {
                     )}
                   </Button>
                 )}
-                <TouchableOpacity
-                  onPress={() => this.setInvisible(true)}
-                >
+                <TouchableOpacity onPress={() => this.setInvisible(true)}>
                   <Text style={styles.forgotText}>{strings.main.textResetPassword}</Text>
                 </TouchableOpacity>
 
                 {/* Modal Loading Screen */}
-                <Modal
+                {/* <Modal
                   animationType="slide"
                   transparent={false}
                   visible={isLoading}
                   onRequestClose={() => this.setModalVisibleAnimation(false)}
                 >
                   <LoadingScreen />
-                </Modal>
+                </Modal> */}
 
                 {/* Modal Reset Password */}
                 <Modal
@@ -250,11 +249,7 @@ class Main extends Component {
                   <View style={{ flex: 1 }}>
                     <View style={styles.modal}>
                       <TouchableOpacity onPress={() => this.setInvisible(false)}>
-                        <Icon
-                          name="chevron-left"
-                          size={22}
-                          style={{padding: 10}}
-                        />
+                        <Icon name="chevron-left" size={22} style={{ padding: 10 }} />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.sectionModal}>
@@ -269,7 +264,7 @@ class Main extends Component {
                         />
                       </Item>
                       {!email ? (
-                        <Text style={{ textAlign: 'center'}}>{strings.main.textInfoReset}</Text>
+                        <Text style={{ textAlign: 'center' }}>{strings.main.textInfoReset}</Text>
                       ) : (
                         <Button
                           primary

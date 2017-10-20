@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, Text, Spinner } from 'native-base';
-import {
-  View,
-  ScrollView,
-  Image,
-  TouchableWithoutFeedback,
-  Modal
-} from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import VersionNumber from 'react-native-version-number';
@@ -73,16 +67,17 @@ class Settings extends Component {
 
   handleChangeFeedback = (value) => {
     this.props.updateFeedback(value);
-  }
+  };
 
   handleUpdateAvatar = (value) => {
     this.props.updateAvatar(value);
   };
 
   render() {
-    const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible } = this.props || {};
+    const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible } =
+      this.props || {};
     const { firstName, lastName, username } = fields || '';
-    console.log("VISIBILITYMODAL", isLoadingFeedback);
+    console.log('VISIBILITYMODAL', isLoadingFeedback);
     return (
       <Container>
         <Content>
@@ -116,14 +111,16 @@ class Settings extends Component {
                 </Button>
                 <Button
                   block
-                  style={[ styles.button, { backgroundColor: '#BDBDBD' } ]}
+                  style={[ styles.button, { backgroundColor: 'red' } ]}
                   onPress={() => {
                     this.props.logOut();
                   }}
                 >
                   {isLoading ? <Spinner color="#FFFFFF" /> : <Text>{strings.settings.logout}</Text>}
                 </Button>
-                <Text note style={styles.version}>v{this.state.version}({this.state.versionCode})</Text>
+                <Text note style={styles.version}>
+                  v{this.state.version}({this.state.versionCode})
+                </Text>
               </View>
             </Content>
           </ScrollView>
@@ -137,9 +134,7 @@ class Settings extends Component {
             <View style={styles.parentView}>
               <View style={styles.viewHeader}>
                 <Text style={styles.textFeedback}>{strings.settings.feedback}</Text>
-                <TouchableWithoutFeedback
-                  onPress={() => this.setModalVisible(!modalVisible)}
-                >
+                <TouchableWithoutFeedback onPress={() => this.setModalVisible(!modalVisible)}>
                   <CameraIcon style={styles.iconClose} name="times" />
                 </TouchableWithoutFeedback>
               </View>
@@ -149,15 +144,22 @@ class Settings extends Component {
                   style={styles.inputItem}
                   placeholder={strings.settings.yourFeedback}
                   placeholderTextColor={'#BDBDBD'}
-                  onChangeText={(text) => { this.handleChangeFeedback(text); }}
+                  onChangeText={(text) => {
+                    this.handleChangeFeedback(text);
+                  }}
                   value={feedBack}
                 />
-                <TouchableWithoutFeedback onPress={() => {
-                  this.props.addFeedback()
-                }}
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    this.props.addFeedback();
+                  }}
                 >
                   <View>
-                    {isLoadingFeedback ? <Spinner color="#f39e21" style={{ paddingTop: 40 }}/> : <Text style={styles.textStyle}>{strings.settings.submit}</Text>}
+                    {isLoadingFeedback ? (
+                      <Spinner color="#f39e21" style={{ paddingTop: 40 }} />
+                    ) : (
+                      <Text style={styles.textStyle}>{strings.settings.submit}</Text>
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
