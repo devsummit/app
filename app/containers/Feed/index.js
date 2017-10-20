@@ -52,8 +52,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import OrderList from '../OrderList';
 import Redeem from '../Redeem';
-import { PRIMARYCOLOR } from '../../constants';
-import { AUTH_BASE_URL } from '../../constants';
+import { PRIMARYCOLOR, AUTH_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 
 const socket = openSocket(AUTH_BASE_URL);
