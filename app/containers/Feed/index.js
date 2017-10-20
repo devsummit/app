@@ -336,17 +336,14 @@ class Feed extends Component {
               justifyContent: 'flex-end'
             }}
           >
-            <CameraIcon
-              name="bell"
-              onPress={() => Actions.notification()}
-              style={{
-                elevation: 2,
-                alignSelf: 'center',
-                color: '#FFF',
-                fontSize: 20,
-                marginRight: 20
-              }}
-            />
+            <TouchableWithoutFeedback onPress={() => Actions.notification()}>
+              <View style={styles.viewNotification}>
+                <CameraIcon
+                  name="bell"
+                  style={styles.notificationIcon}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
