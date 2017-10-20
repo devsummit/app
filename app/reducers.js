@@ -22,6 +22,7 @@ import BoothInfoReducer from './containers/BoothInfo/reducer';
 import codeRedeemReducer from './containers/Redeem/reducer';
 import Notification from './containers/Notification/reducer';
 import FeedReducer from './containers/Feed/reducer';
+import SettingsReducer from './containers/Settings/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -37,6 +38,7 @@ const rootReducers = combineReducers({
   detailPayment: paymentDetailReducer,
   orderList: OrderListReducer,
   orderDetail: OrderDetailReducer,
+  settings: SettingsReducer,
   speakerList: SpeakerListReducer,
   scheduleList: ScheduleListReducer,
   materialList: MaterialListReducer,

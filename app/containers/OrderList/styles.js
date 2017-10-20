@@ -7,6 +7,16 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff'
   },
+  item: {
+    marginBottom: 10,
+    borderColor: '#FFD740',
+    borderWidth: 1
+  },
+  formInput: {
+    paddingLeft: 20,
+    height: 45,
+    color: '#FFFFFF'
+  },
   text: {
     flex: 3
   },
@@ -14,6 +24,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'flex-end'
+  },
+  buttonConfirm: {
+    width: '100%',
+    alignSelf: 'center',
+    marginTop: 6,
+    backgroundColor: '#FF6F00',
+    marginBottom: 6
   },
   roundButton: {
     borderRadius: 90,
@@ -43,6 +60,12 @@ const styles = StyleSheet.create({
     color: PRIMARYCOLOR,
     fontWeight: 'bold',
     marginTop: 20,
+    textAlign: 'center'
+  },
+  artworkTextConfirm: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
     textAlign: 'center'
   },
   card: {

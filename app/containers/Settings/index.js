@@ -5,12 +5,10 @@ import {
   ScrollView,
   Image,
   TouchableWithoutFeedback,
-  Modal,
-  WebView,
-  TouchableOpacity
+  Modal
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import VersionNumber from 'react-native-version-number';
 
 // import redux componens
@@ -22,10 +20,10 @@ import strings from '../../localization';
 import Button from '../../components/Button';
 import Header from '../../components/Header';
 import styles from './styles';
+import InputItem from '../../components/InputItem';
 
 import * as actions from './actions';
 import * as selectors from './selectors';
-import { FEEDBACK_URL } from '../../constants';
 
 class Settings extends Component {
   constructor(props) {
@@ -33,7 +31,6 @@ class Settings extends Component {
     this.setModalVisible = this.setModalVisible.bind(this);
     this.state = {
       id: null,
-      modalVisible: false,
       firstName: '',
       lastName: '',
       photo: null,
@@ -67,20 +64,25 @@ class Settings extends Component {
   }
 
   setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
+    this.props.updateModalVisibility(visible);
   }
 
   handleInputChange = (field, value) => {
     this.props.updateFields(field, value);
   };
 
+  handleChangeFeedback = (value) => {
+    this.props.updateFeedback(value);
+  }
+
   handleUpdateAvatar = (value) => {
     this.props.updateAvatar(value);
   };
 
   render() {
-    const { fields, isDisabled, avatar, errorFields, isLoading } = this.props || {};
-    const { firstName, lastName, username, boothInfo, job, summary, profilePic } = fields || '';
+    const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible } = this.props || {};
+    const { firstName, lastName, username } = fields || '';
+    console.log("VISIBILITYMODAL", isLoadingFeedback);
     return (
       <Container>
         <Content>
@@ -125,33 +127,40 @@ class Settings extends Component {
               </View>
             </Content>
           </ScrollView>
+          {/* Modal Feedback */}
           <Modal
-            animationType={'slide'}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
+            animationType={'fade'}
+            visible={modalVisible}
+            onRequestClose={() => this.setModalVisible(!modalVisible)}
+            transparent
           >
-            <View style={{ flex: 1 }}>
-              <View style={styles.modal}>
-                <TouchableOpacity onPress={() => this.setModalVisible(!this.state.modalVisible)}>
-                  <Icon
-                    name={'ios-arrow-dropleft'}
-                    size={24}
-                    color={'black'}
-                    style={{ padding: 10 }}
-                  />
-                </TouchableOpacity>
+            <View style={styles.parentView}>
+              <View style={styles.viewHeader}>
+                <Text style={styles.textFeedback}>{strings.settings.feedback}</Text>
+                <TouchableWithoutFeedback
+                  onPress={() => this.setModalVisible(!modalVisible)}
+                >
+                  <CameraIcon style={styles.iconClose} name="times" />
+                </TouchableWithoutFeedback>
               </View>
-              <WebView
-                automaticallyAdjustContentInsets={false}
-                source={{ uri: FEEDBACK_URL }}
-                style={{ marginTop: 20 }}
-                scalesPageToFit
-                ref={'webview'}
-                decelerationRate="normal"
-                javaScriptEnabled
-                domStorageEnabled
-                startInLoadingState
-              />
+              <View style={styles.viewInput}>
+                <InputItem
+                  itemStyle={styles.item}
+                  style={styles.inputItem}
+                  placeholder={strings.settings.yourFeedback}
+                  placeholderTextColor={'#BDBDBD'}
+                  onChangeText={(text) => { this.handleChangeFeedback(text); }}
+                  value={feedBack}
+                />
+                <TouchableWithoutFeedback onPress={() => {
+                  this.props.addFeedback()
+                }}
+                >
+                  <View>
+                    {isLoadingFeedback ? <Spinner color="#f39e21" style={{ paddingTop: 40 }}/> : <Text style={styles.textStyle}>{strings.settings.submit}</Text>}
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
             </View>
           </Modal>
         </Content>
@@ -170,7 +179,11 @@ const mapStateToProps = createStructuredSelector({
   isAvatarUpdated: selectors.getIsAvatarUpdated(),
   isDisabled: selectors.getIsDisabled(),
   isLoading: selectors.getIsLoading(),
-  isLogOut: selectors.getIsLogOut()
+  isLogOut: selectors.getIsLogOut(),
+  feedBack: selectors.getFeedback(),
+  isFeedbackPosted: selectors.getIsFeedbackPosted(),
+  isLoadingFeedback: selectors.getIsLoadingFeedback(),
+  modalVisible: selectors.getModalVisible()
 });
 
 export default connect(mapStateToProps, actions)(Settings);
