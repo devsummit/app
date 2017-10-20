@@ -710,7 +710,8 @@ class Feed extends Component {
                       </View>
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
-                    (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
+                    (this.props.imagesData.path || this.props.imagesData.sourceURL) ?
+                      (
                       <TouchableOpacity onPress={() => this.postFeed()}>
                           <View
                           style={{
@@ -723,9 +724,7 @@ class Feed extends Component {
                               justifyContent: 'center'
                             }}
                         >
-                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
-                            Post
-                            </Text>
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
                         </View>
                         </TouchableOpacity>
                       ) : (
