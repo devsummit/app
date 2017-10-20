@@ -33,6 +33,7 @@ import {
   TouchableHighlight,
   WebView
 } from 'react-native';
+import ActionButton from 'react-native-action-button';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { createStructuredSelector } from 'reselect';
@@ -55,8 +56,6 @@ import Redeem from '../Redeem';
 import { PRIMARYCOLOR } from '../../constants';
 import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
-import { isConfirm } from '../../helpers';
-import { getIsConfirmEmail } from '../OrderList/selectors';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -134,8 +133,7 @@ const mapStateToProps = () =>
     imagesData: selectors.getUpdateImage(),
     textData: selectors.getUpdateText(),
     currentPage: selectors.getCurrentPage(),
-    isRemoving: selectors.getIsRemoveFeed(),
-    isConfirmEmail: getIsConfirmEmail()
+    isRemoving: selectors.getIsRemoveFeed()
   });
 
 class Feed extends Component {
@@ -364,15 +362,7 @@ class Feed extends Component {
                 this.props.feeds && (
                   <View style={{ flex: 1 }}>
                     {!this.props.feeds.length > 0 ? (
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          margin: 100
-                        }}
-                      >
+                      <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: 100 }}>
                         <Image source={noFeeds} style={{ opacity: 0.5 }} />
                         <Text style={styles.artworkText}>Your feeds is empty</Text>
                       </View>
@@ -573,42 +563,29 @@ class Feed extends Component {
             }
           >
             <OrderList />
-            {!this.props.isConfirmEmail ? (
-              <View />
-            ) : (
-              <Fab
-                active={this.state.fabActive}
-                style={{ backgroundColor: '#FF8B00' }}
-                position="bottomRight"
-                onPress={() => this.setState({ fabActive: !this.state.fabActive })}
-              >
-                <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
-                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
-                  <CameraIcon
-                    name="ticket"
-                    color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
-                  />
-                </Button>
-                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
-                  <CameraIcon
-                    name="archive"
-                    color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
-                  />
-                </Button>
-                <Button
-                  style={{ backgroundColor: '#FF8B00' }}
-                  onPress={() => this.setModalRedeem(true)}
-                >
-                  <CameraIcon
-                    name="gift"
-                    color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
-                  />
-                </Button>
-              </Fab>
-            )}
+            <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius>
+              <ActionButton.Item size={45} title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
+                <CameraIcon
+                  name="ticket"
+                  color="#FFFFFF"
+                  style={{ textAlign: 'center', fontSize: 30 }}
+                />
+              </ActionButton.Item>
+              <ActionButton.Item size={45} title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                <CameraIcon
+                  name="list"
+                  color="#FFFFFF"
+                  style={{ textAlign: 'center', fontSize: 23 }}
+                />
+              </ActionButton.Item>
+              <ActionButton.Item size={45} title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
+                <CameraIcon
+                  name="gift"
+                  color="#FFFFFF"
+                  style={{ textAlign: 'center', fontSize: 30 }}
+                />
+              </ActionButton.Item>
+            </ActionButton>
           </Tab>
         </Tabs>
         {/* Redeem Modal */}
@@ -713,7 +690,7 @@ class Feed extends Component {
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
                       <TouchableOpacity onPress={() => this.postFeed()}>
                           <View
-                          style={{
+                            style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -722,11 +699,11 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                        >
-                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                          >
+                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                        </View>
+                          </View>
                         </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
