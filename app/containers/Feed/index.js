@@ -39,6 +39,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
+import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
@@ -576,38 +577,29 @@ class Feed extends Component {
             {!this.props.isConfirmEmail ? (
               <View />
             ) : (
-              <Fab
-                active={this.state.fabActive}
-                style={{ backgroundColor: '#FF8B00' }}
-                position="bottomRight"
-                onPress={() => this.setState({ fabActive: !this.state.fabActive })}
-              >
-                <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
-                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+              <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
+                <ActionButton.Item title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
                   <CameraIcon
                     name="ticket"
                     color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 30 }}
                   />
-                </Button>
-                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                </ActionButton.Item>
+                <ActionButton.Item title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
                   <CameraIcon
-                    name="archive"
+                    name="list"
                     color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 23 }}
                   />
-                </Button>
-                <Button
-                  style={{ backgroundColor: '#FF8B00' }}
-                  onPress={() => this.setModalRedeem(true)}
-                >
+                </ActionButton.Item>
+                <ActionButton.Item title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
                   <CameraIcon
                     name="gift"
                     color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 30 }}
                   />
-                </Button>
-              </Fab>
+                </ActionButton.Item>
+              </ActionButton>
             )}
           </Tab>
         </Tabs>
