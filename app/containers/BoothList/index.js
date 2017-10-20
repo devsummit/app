@@ -129,13 +129,16 @@ class BoothList extends Component {
             />
           </View>
         </View>
-        <Image source={bgBooth2} resizeMode="cover" style={{ 
-          flex: 0.21, 
-          width: '100%', 
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
+        <Image
+          source={bgBooth2}
+          resizeMode="cover"
+          style={{
+            flex: 0.21,
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
         >
           {!this.state.accordion2 ? (
             <Button
@@ -156,16 +159,22 @@ class BoothList extends Component {
                 this.setAccordion2(!this.state.accordion2);
               }}
             >
-              <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
-                Hackaton
-              </Text>
+              {!this.state.accordion2 ? (
+                <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
+                  Hackaton
+                </Text>
+              ) :
+                <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
+                  {strings.booth.back}
+                </Text>
+              }
             </Button>) : <View />
           }
         </Image>
         {this.state.accordion || this.state.accordion2 ? (
-          <View style={styles.searchHeader} />
+          <View />
         ) : (
-          // <Header searchBar style={styles.searchHeader} androidStatusBarColor="#f39e21">
+          <View style={{marginTop: 3}}>
             <Item>
               <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
               <Input
@@ -174,7 +183,7 @@ class BoothList extends Component {
                 onChangeText={text => this.handleFilter(text)}
               />
             </Item>
-          // </Header>
+          </View>
         )}
         <Modal
           animationType="fade"
