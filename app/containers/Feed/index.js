@@ -31,7 +31,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableHighlight,
-  WebView
+  WebView,
+  Platform
 } from 'react-native';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -42,6 +43,7 @@ import openSocket from 'socket.io-client';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
+import CloseO from 'react-native-vector-icons/EvilIcons';
 import Share, { ShareSheet, Button } from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 import 'moment/locale/pt-br';
@@ -772,12 +774,25 @@ class Feed extends Component {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
           <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808' }}>
-            <View style={{ flex: 1, margin: 10 }}>
+            <View style={{ flex: 1, flexDirection: 'column', margin: 10 }}>
               <Image
                 source={{ uri: this.state.imagePreview }}
                 resizeMode={'contain'}
                 style={{ flex: 1 }}
               />
+              {Platform === 'ios' ? (
+                <CloseO
+                  size={30}
+                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                  name="close-o"
+                  style={{
+                    flex: 0,
+                    flexDirection: 'column',
+                    backgroundColor: '#b8d8d8',
+                    alignItems: 'center'
+                  }}
+                />
+              ) : null}
             </View>
           </View>
         </Modal>
