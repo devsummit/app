@@ -8,5 +8,6 @@ export default {
   more: 'Lihat detail',
   imageChanged: 'Foto exhibitors telah diperbaharui',
   errorImage: 'Gagal mengambil gambar',
-  search: 'Cari exhibitors'
+  search: 'Cari exhibitors',
+  back: 'Kembali'
 };
