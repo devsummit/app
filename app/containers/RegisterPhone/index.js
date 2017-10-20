@@ -281,7 +281,7 @@ class RegisterPhone extends Component {
                   checked={this.state.isChecked}
                   onPress={this.handlePressCheckedBox}
                 />
-                <Text style={{ color: 'grey', fontSize: 10, lineHeight: 22 * 0.8 }}> (Optional) </Text>
+                <Text style={{ color: 'grey', fontSize: 10, lineHeight: 22 * 0.8, backgroundColor: 'transparent' }}> (Optional) </Text>
               </View>
               {this.state.isChecked ? (
                 <View style={{ marginHorizontal: 20 }}>
