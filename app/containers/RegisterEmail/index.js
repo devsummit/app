@@ -124,7 +124,7 @@ class RegisterEmail extends Component {
 
   // name validation
   checkName = (value) => {
-    const pattern = /([^a-zA-Z0-9_-])/g;
+    const pattern = /([^a-zA-Z0-9_\ -])/g; 
     if (pattern.test(value)) return false;
     return true;
   };
@@ -244,15 +244,23 @@ class RegisterEmail extends Component {
               </View>
 
               <View style={{ flex: 1 }}>
-                <CheckBox
-                  color={'#FFF'}
-                  iconStyle={{ color: '#FFF', marginLeft: 16 }}
-                  labelStyle={{ color: '#FFF' }}
-                  label={strings.register.useReferer}
-                  size={30}
-                  checked={this.state.isChecked}
-                  onPress={this.handlePressCheckedBox}
-                />
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                  }}>
+                  <CheckBox
+                    color={'#FFF'}
+                    iconStyle={{ color: '#FFF', marginLeft: 16 }}
+                    labelStyle={{ color: '#FFF' }}
+                    label={strings.register.useReferer} 
+                    size={30}
+                    checked={this.state.isChecked}
+                    onPress={this.handlePressCheckedBox}
+                  />
+                  <Text style={{color: 'grey', fontSize: 10,  lineHeight: 22 * 0.8}}> (Optional) </Text>
+                </View>
                 {this.state.isChecked ? (
                   <View style={{ marginHorizontal: 20 }}>
                     <InputItem
