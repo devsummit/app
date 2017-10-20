@@ -11,7 +11,8 @@ import {
   UPDATE_IS_NOT_REGISTERED,
   UPDATE_IS_LOADING,
   FETCH_PROFILE_DATA,
-  UPDATE_IS_RESETED
+  UPDATE_IS_RESETED,
+  RESET_STATE
 } from './constants';
 
 /*
@@ -41,6 +42,8 @@ function mainReducer(state = initialState, action) {
       return state.set('isLoading', action.status);
     case UPDATE_IS_RESETED:
       return state.set('isReseted', action.status);
+    case RESET_STATE:
+      return state;
     default:
       return state;
   }

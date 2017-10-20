@@ -257,7 +257,7 @@ class OrderDetail extends Component {
                     <Text>{strings.order.orderNumber}</Text>
                   </Col>
                   <Col>
-                    <Text>{orderId}</Text>
+                    <Text>{this.props.id}</Text>
                   </Col>
                 </Row>
                 <Row>
@@ -268,7 +268,7 @@ class OrderDetail extends Component {
                     <Text>{localeDate(order.data[0].created_at)}</Text>
                   </Col>
                 </Row>
-                {order.included.payment ? (
+                {/* order.included.payment ? (
                   <Row>
                     <Col>
                       <Text>{strings.order.expiredDate}</Text>
@@ -296,7 +296,7 @@ class OrderDetail extends Component {
                   </Row>
                 ) : (
                   <View />
-                )}
+                ) */}
               </Grid>
               {status === 'not paid' ? (
                 <Button style={styles.roundButton} onPress={() => this.saveOrder()}>

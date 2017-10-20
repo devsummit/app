@@ -142,6 +142,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
     color: '#FFFFFF'
+  },
+  viewNotification: {
+    justifyContent: 'center',
+    width: 75,
+    height: 50,
+    alignSelf: 'center'
+  },
+  notificationIcon: {
+    elevation: 2,
+    color: '#FFF',
+    fontSize: 20,
+    marginLeft: 15,
+    alignSelf: 'center'
   }
 });
 

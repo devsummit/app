@@ -24,7 +24,8 @@ import {
   GOOGLE_CLIENT_SECRET,
   TWITTER_CALLBACK,
   TWITTER_CONSUMER_KEY,
-  TWITTER_CONSUMER_KEY_SECRET
+  TWITTER_CONSUMER_KEY_SECRET,
+  RESET_STATE
 } from './constants';
 
 /*
@@ -79,14 +80,19 @@ export function updateIsReseted(status) {
   return {
     type: UPDATE_IS_RESETED,
     status
-  }
+  };
 }
 
+export function resetState() {
+  return {
+    type: RESET_STATE
+  };
+}
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
  */
-export function login() {
+export function login(calback) {
   return (dispatch, getState) => {
     const { fields } = getState()
       .get('main')
@@ -129,15 +135,15 @@ export function login() {
           !response.data.meta.success &&
           response.data.meta.message === 'you have not confirmed your email'
         ) {
-          Alert.alert('Login Failed', 'Please verify your email first', [
-            { text: 'OK' }
-          ]);
+          Alert.alert('Login Failed', 'Please verify your email first', [ { text: 'OK' } ]);
         } else {
           Alert.alert('Login Failed', response.data.meta.message);
         }
         dispatch(updateisLoading(false));
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 
@@ -158,7 +164,6 @@ export function loginMobile(mobileToken) {
       }
     )
       .then(async (response) => {
-        console.log('Here', response.data.data);
         if (response && response.data && response.data.meta.success) {
           const resData = response.data.data;
           const roleId = JSON.stringify(response.data.included.role_id);
@@ -182,7 +187,8 @@ export function loginMobile(mobileToken) {
           response.data.meta.message === 'username not found'
         ) {
           Alert.alert('Login Failed', response.data.meta.message, [
-            { text: 'Register',
+            {
+              text: 'Register',
               onPress: () => {
                 Actions.registerPhone();
                 dispatch(updateisLoading(false));
@@ -192,12 +198,14 @@ export function loginMobile(mobileToken) {
           ]);
         } else {
           Alert.alert('Login Failed', response.data.meta.message, [
-            { text: 'Cancel',
+            {
+              text: 'Cancel',
               onPress: () => {
                 dispatch(updateisLoading(false));
               }
             },
-            { text: 'Register',
+            {
+              text: 'Register',
               onPress: () => {
                 Actions.registerPhone();
                 dispatch(updateisLoading(false));
@@ -454,9 +462,7 @@ export function resetPassword(callback = () => {}) {
           Alert.alert(
             'Success',
             res.data.meta.message,
-            [
-              { text: 'LOGIN', onPress: () => callback() }
-            ],
+            [ { text: 'LOGIN', onPress: () => callback() } ],
             { cancelable: false }
           );
         } else {
