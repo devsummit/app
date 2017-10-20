@@ -292,7 +292,6 @@ class RegisterEmail extends Component {
                       onPress={
                         () => {
                           this.submitRegistration();
-                          console.log('this');
                         }
                       }
                     >
