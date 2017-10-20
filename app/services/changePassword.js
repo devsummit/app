@@ -1,12 +1,10 @@
 import Api from './api';
+import {
+  AUTH_BASE_URL
+} from '../constants';
 
 export default {
-  get: () => Api.get('/auth/me/changepassword', {
-    old_password: current_password,
-    new_password
-  }, {
-    headers: {
-      Authorization: token
-    }
-  })
-};
+  patch: inputFields => Api.put(`${AUTH_BASE_URL}/auth/me/changepassword`, inputFields)
+  // getNext: nextUrl => 
+}
+;
