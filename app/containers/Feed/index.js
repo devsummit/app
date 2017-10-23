@@ -914,20 +914,4 @@ class CustomInput extends Component {
   }
 }
 
-Feed.PropTypes = {
-  updateFeeds: func,
-  fetchFeeds: func,
-  updateText: func,
-  postFeeds: func,
-  isFetching: bool,
-  isFetchingMore: bool,
-  imagesData: object,
-  feeds: array,
-  textData: string,
-  isRemoving: bool,
-  removeFeed: func,
-  reportFeed: func,
-  link: string
-};
-
 export default connect(mapStateToProps, actions)(Feed);
