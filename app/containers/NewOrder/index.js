@@ -107,7 +107,7 @@ class NewOrder extends Component {
                             <Body>
                               <Text style={styles.title}>
                                 {ticket.ticket_type === 'full'
-                                  ? '3 days'
+                                  ? '3 DAYS'
                                   : ticket.ticket_type.toUpperCase()}
                               </Text>
                             </Body>
