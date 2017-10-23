@@ -166,6 +166,8 @@ class OrderList extends Component {
                         borderRadius={0}
                         progress={this.props.redeemCount / 10}
                         width={width * 0.5}
+                        color={PRIMARYCOLOR}
+                        borderColor={'black'}
                       />
                       <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
                         <View>
