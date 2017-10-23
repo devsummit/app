@@ -61,10 +61,8 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   statusText: {
-    fontSize: 12,
-    borderRadius: 5,
-    color: 'white',
     fontWeight: 'bold',
+    borderRadius: 5,
     textAlign: 'center',
     padding: 8
   }
