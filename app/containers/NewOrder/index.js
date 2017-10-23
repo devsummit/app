@@ -120,25 +120,25 @@ class NewOrder extends Component {
                           </View>
                         </View>
                         <View style={styles.btnGroup}>
-                          <Text
+                          <View
                             style={styles.plusMinus}
                             onPress={() => {
                               this.decrease(ticket.id);
                             }}
                           >
-                            <Icon name="minus" />
-                          </Text>
-                          <Text style={styles.ticketCount}>
-                            {order[ticket.id] ? order[ticket.id].count : 0}
-                          </Text>
-                          <Text
-                            style={styles.plusMinus}
+                            <Icon name="minus" style={{ fontSize: 20 }}/>
+                          </View>
+                          <View style={styles.ticketCount}>
+                            <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
+                          </View>
+                          <View
+                            style={[ styles.plusMinus, { backgroundColor: '#2ecc71', borderColor: 'green' } ]}
                             onPress={() => {
                               this.increase(ticket.id);
                             }}
                           >
-                            <Icon name="plus" />
-                          </Text>
+                            <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
+                          </View>
                         </View>
                       </View>
                     </CardItem>
