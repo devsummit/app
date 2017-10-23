@@ -73,6 +73,18 @@ export default class OrderItem extends Component {
     return color;
   };
 
+  orderTypeUpperCase = () => {
+    const types = this.props.order.payment.payment_type;
+    const offline = 'offline';
+    const paypal = 'paypal';
+
+    if (types === 'offline') {
+      return <Text style={{ color: 'white', fontSize: 11 }}>{offline.toUpperCase()}</Text>;
+    } else if (types === 'paypal') {
+      return <Text style={{ color: 'white', fontSize: 11 }}>{paypal.toUpperCase()}</Text>;
+    }
+  }
+
   formatDate = (source) => {
     const dt = source.split(' ');
     return `${dt[1]}-${dt[2]}-${dt[3]}`;
@@ -92,7 +104,7 @@ export default class OrderItem extends Component {
             <View style={styles.viewText}>
               {status ? (
                 <Text note style={[ styles.statusText, { backgroundColor: color } ]}>
-                  {order.payment && order.payment.payment_type}
+                  {order.payment && this.orderTypeUpperCase()}
                 </Text>
               ) : (
                 <View />
