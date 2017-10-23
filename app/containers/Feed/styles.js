@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
   redeem: {
     borderWidth: 5,
     margin: 20,
-    marginTop: 0,
     borderRadius: 2,
     backgroundColor: 'white',
     borderColor: PRIMARYCOLOR
