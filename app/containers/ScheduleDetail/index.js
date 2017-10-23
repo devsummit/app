@@ -6,6 +6,7 @@ import {
 } from 'native-base';
 import { Image, View, ScrollView, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import MaterialList from '../MaterialList';
 import strings from '../../localization';
 import Moment from 'moment';
 import styles from './style';
@@ -19,12 +20,15 @@ const sliderWidth = Dimensions.get('window').width;
 const itemWidth = slideWidth + horizontalMargin * 2;
 const itemHeight = 200;
 
+const SLIDER_1_FIRST_ITEM = 0;
+
 class ScheduleDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: this.props.user
-    }
+      users: this.props.user,
+      slider1ActiveSlide: SLIDER_1_FIRST_ITEM
+    };
   }
 
   componentDidMount() {
@@ -48,6 +52,8 @@ class ScheduleDetail extends Component {
     const timeEnd = end.format('hh:mm A');
     const hasSpeaker = !(Object.keys(speaker).length === 0 && speaker.constructor === Object);
     const hasUser = user.length > 0;
+    const type = this.props.event.type;
+    const speakerId = speaker.id;
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -90,25 +96,62 @@ class ScheduleDetail extends Component {
                   inactiveSlideScale={0.3}
                   autoplayDelay={3000}
                   autoplayInterval={3000}
+                  onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
                 />
               </View>
             </Image> : <View />
           }
-          <Card>
-            <CardItem>
-              <View style={styles.info}>
-                <View style={styles.detail}>
-                  <Text style={styles.title}>{event.title}</Text>
-                  <Text style={styles.description}>{event.information}</Text>
+          {hasUser ?
+            <View>
+              <Card>
+                <CardItem>
+                  <View style={styles.speakerDetail}>
+                    <Text style={styles.title}>{strings.schedule.job}</Text>
+                    <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.job}</Text>
+                    <Text style={styles.title}>{strings.schedule.summary}</Text>
+                    <Text style={styles.data}>{this.props.user[this.state.slider1ActiveSlide].speaker.summary}</Text>
+                  </View>
+                </CardItem>
+              </Card>
+              <Card>
+                <CardItem>
+                  <View style={styles.info}>
+                    <View style={styles.detail}>
+                      <Text style={styles.title}>{event.title}</Text>
+                      <Text style={styles.description}>{event.information}</Text>
+                    </View>
+                    <View style={{ flex: 1, borderWidth: 1, borderColor: '#E0E0E0', marginVertical: 20 }} />
+                  </View>
+                </CardItem>
+                <View style={{ marginHorizontal: 8 }}>
+                  <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
+                  <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
                 </View>
-                <View style={{ flex: 1, borderWidth: 1, borderColor: '#E0E0E0', marginVertical: 20 }} />
+              </Card>
+            </View> :
+            <Card>
+              <CardItem>
+                <View style={styles.info}>
+                  <View style={styles.detail}>
+                    <Text style={styles.title}>{event.title}</Text>
+                    <Text style={styles.description}>{event.information}</Text>
+                  </View>
+                  <View style={{ flex: 1, borderWidth: 1, borderColor: '#E0E0E0', marginVertical: 20 }} />
+                </View>
+              </CardItem>
+              <View style={{ marginHorizontal: 8 }}>
+                <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
+                <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
               </View>
-            </CardItem>
-            <View style={{ marginHorizontal: 8 }}>
-              <Text style={styles.data}>{strings.schedule.start} {timeStart}</Text>
-              <Text style={styles.data}>{strings.schedule.end} {timeEnd}</Text>
-            </View>
-          </Card>
+            </Card>
+          }
+          {type === 'speaker' ?
+            <Card>
+              <CardItem>
+                <MaterialList speakerId={speakerId} />
+              </CardItem>
+            </Card> : <View />
+          }
         </View>
       </ScrollView>
     );

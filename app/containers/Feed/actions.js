@@ -1,11 +1,13 @@
 import FormData from 'FormData';
 import { Platform } from 'react-native';
 import Toast from 'react-native-simple-toast';
-
+import Api from '../../services/api';
+import feeds from '../../services/feeds';
 import {
   FETCH_FEEDS,
   SET_LINKS,
   IS_FETCHING_FEEDS,
+  IS_FETCHING_MORE_FEEDS,
   IS_POST_FEEDS,
   UPDATE_IMAGE,
   UPDATE_TEXT,
@@ -19,10 +21,7 @@ import {
   RESTORE_CURRENT_PAGE
 } from './constants';
 
-import {
-  DevSummitAxios,
-  getAccessToken
-} from '../../helpers';
+import { getAccessToken } from '../../helpers';
 
 /**
  * Receiver callback from container and send it to reducer
@@ -50,51 +49,66 @@ export function isFetchingFeeds(status) {
   };
 }
 
+export function isFetchingMoreFeeds(status) {
+  return {
+    type: IS_FETCHING_MORE_FEEDS,
+    status
+  };
+}
+
 export function fetchFeeds(currentpage) {
   return (dispatch) => {
     dispatch(isFetchingFeeds(true));
+    feeds
+      .get(currentpage)
+      .then((response) => {
+        const payloads = response.data.data;
+        const links = response.data.links;
 
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.get(`/api/v1/feeds?page=${currentpage}`, { headers: { Authorization: token } })
-          .then((response) => {
-            const payloads = response.data.data;
-            const links = response.data.links;
+        dispatch({ type: FETCH_FEEDS, payloads });
+        dispatch({ type: SET_LINKS, links });
 
-            dispatch({ type: FETCH_FEEDS, payloads });
-            dispatch({ type: SET_LINKS, links });
+        dispatch(updateCurrentPage(currentpage));
 
-            dispatch(updateCurrentPage(currentpage + 1));
-
-            dispatch(isFetchingFeeds(false));
-          })
-          .catch((err) => {
-            console.log(err);
-            dispatch(isFetchingFeeds(false));
-          });
+        dispatch(isFetchingFeeds(false));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(isFetchingFeeds(false));
       });
+  };
+}
+
+export function setTokenHeader(currentpage) {
+  return (dispatch) => {
+    getAccessToken().then((accessToken) => {
+      Api.setAuthorizationToken(accessToken);
+      dispatch(fetchFeeds(currentpage));
+    });
   };
 }
 
 export function fetchPageWithPaginate(page) {
   return (dispatch) => {
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.get(`/api/v1/feeds?page=${page}`, { headers: { Authorization: token } })
-          .then((response) => {
-            const payloads = response.data.data;
-            const links = response.data.links;
+    dispatch(isFetchingMoreFeeds(true));
 
-            dispatch({ type: LOAD_MORE_FEEDS, payloads });
-            dispatch({ type: SET_LINKS, links });
+    feeds
+      .get(page + 1)
+      .then((response) => {
+        const payloads = response.data.data;
+        const links = response.data.links;
 
-            dispatch(updateCurrentPage(page + 1));
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        dispatch({ type: LOAD_MORE_FEEDS, payloads });
+        dispatch({ type: SET_LINKS, links });
+
+        dispatch(updateCurrentPage(page + 1));
+        dispatch(isFetchingMoreFeeds(false));
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(isFetchingMoreFeeds(false));
       });
-  }
+  };
 }
 
 export function isPostFeeds(status) {
@@ -119,43 +133,41 @@ export function clearTextField() {
 export function postFeeds(image, text) {
   return (dispatch) => {
     dispatch(isPostFeeds(true));
-    getAccessToken()
-      .then((token) => {
-        const form = new FormData();
 
-        if (Platform.OS === 'ios' && image.sourceURL) {
-          form.append('attachment', {
-            uri: image.sourceURL,
-            type: image.mime,
-            name: image.filename
-          });
-        }
+    const form = new FormData();
 
-        if (image.path) {
-          form.append('attachment', {
-            uri: image.path,
-            type: image.mime,
-            name: 'image.jpg'
-          });
-        }
-        form.append('message', text);
+    if (Platform.OS === 'ios' && image.sourceURL) {
+      form.append('attachment', {
+        uri: image.sourceURL,
+        type: image.mime,
+        name: image.filename
+      });
+    }
 
-        const headers = { Authorization: token };
+    if (image.path) {
+      form.append('attachment', {
+        uri: image.path,
+        type: image.mime,
+        name: 'image.jpg'
+      });
+    }
 
-        DevSummitAxios.post('api/v1/feeds', form, { headers })
-          .then((res) => {
-            dispatch(clearTextField());
-            dispatch(clearImage());
-            Toast.show('Posted succesfully!');
-            dispatch(isPostFeeds(false));
-          })
-          .catch((err) => {
-            dispatch(clearTextField());
-            dispatch(clearImage());
-            dispatch(isPostFeeds(false));
-            Toast.show('Upss, Something when wrong!', Toast.LONG);
-            console.log(err);
-          });
+    form.append('message', text);
+
+    feeds
+      .post(form)
+      .then((res) => {
+        dispatch(clearTextField());
+        dispatch(clearImage());
+        Toast.show('Posted succesfully!');
+        dispatch(isPostFeeds(false));
+      })
+      .catch((err) => {
+        dispatch(clearTextField());
+        dispatch(clearImage());
+        dispatch(isPostFeeds(false));
+        Toast.show('Upss, Something when wrong!', Toast.LONG);
+        console.log(err);
       });
   };
 }
@@ -184,36 +196,35 @@ export function isRemoveFeed(status) {
 export function removeFeed(idFeed) {
   return (dispatch) => {
     dispatch(isRemoveFeed(true));
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        dispatch({ type: REMOVE_FEED, id: idFeed });
-        DevSummitAxios.delete(`/api/v1/feeds/${idFeed}`, { headers })
-          .then((res) => {
-            Toast.show('Post has been removed');
-            dispatch(isRemoveFeed(false));
-          }).catch((err) => {
-            console.log(err);
-          });
+
+    dispatch({ type: REMOVE_FEED, id: idFeed });
+
+    feeds
+      .delete(idFeed)
+      .then((res) => {
+        Toast.show('Post has been removed');
+        dispatch(isRemoveFeed(false));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 }
 
 export function reportFeed(idFeed) {
   return () => {
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        const payloads = {
-          report_type: 'Harassment',
-          feed_id: idFeed
-        };
-        DevSummitAxios.post('/api/v1/feeds/reports', payloads, { headers })
-          .then((res) => {
-            Toast.show('Thank you for make this feed a lovely place', Toast.LONG);
-          }).catch((err) => {
-            console.log(err);
-          });
+    const payloads = {
+      report_type: 'Harassment',
+      feed_id: idFeed
+    };
+
+    feeds
+      .report(payloads)
+      .then((res) => {
+        Toast.show('Thank you for make this feed a lovely place', Toast.LONG);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 }

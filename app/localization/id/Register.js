@@ -7,7 +7,7 @@ export default {
   password: 'Kata sandi',
   verifyPassword: 'Konfirmasi kata sandi',
   useReferer: 'Gunakan referer',
-  refererName: 'Nama referer',
+  referalCode: 'Kode referal',
   register: 'Daftar',
   alreadyHave: 'Sudah memiliki akun?',
   signIn: 'Masuk',
@@ -15,9 +15,12 @@ export default {
   errorUsernameLenght: 'Nama pengguna minimal 4 karakter',
   errorPasswordLenght: 'Kata sandi minimal 4 karakter',
   errorNotMatch: 'Kata sandi tidak cocok',
+  errorFirstName: 'Nama hanya bisa menggunakan simbol _ dan - ',
+  errorLastName: 'Nama hanya bisa menggunakan simbol _ dan - ',
+  errorUsername: 'Nama user hanya bisa menggunakan simbol _ dan -',
 
   // Register menu
-  withEmail: 'Dafter dengan email',
+  withEmail: 'Daftar dengan email',
   withPhone: 'Daftar dengan nomor telepon',
 
   // Register phone

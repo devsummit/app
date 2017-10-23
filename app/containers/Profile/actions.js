@@ -1,5 +1,5 @@
 import { AsyncStorage, Platform, Alert } from 'react-native';
-
+import Toast from 'react-native-simple-toast';
 import FormData from 'FormData';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import {
@@ -7,8 +7,12 @@ import {
   UPDATE_IS_PROFILE_UPDATED,
   UPDATE_AVATAR,
   UPDATE_IS_AVATAR_UPDATED,
+  IS_LOADING_LOGOUT,
   UPDATE_IS_LOG_OUT,
-  UPDATE_IS_DISABLED
+  UPDATE_IS_DISABLED,
+  UPDATE_REFERAL_CODE,
+  UPDATE_IS_CODE_CONFIRMED,
+  UPDATE_HAVE_REFERED
 } from './constants';
 import local from '../../../config/local';
 
@@ -46,6 +50,13 @@ export function updateIsAvatarUpdated(status) {
   };
 }
 
+export function isLoadingLogout(status) {
+  return {
+    type: IS_LOADING_LOGOUT,
+    status
+  };
+}
+
 export function updateIsLogOut(status) {
   return {
     type: UPDATE_IS_LOG_OUT,
@@ -57,6 +68,28 @@ export function updateIsDisabled(status) {
   return {
     type: UPDATE_IS_DISABLED,
     status
+  };
+}
+
+export function updateReferalCode(value) {
+  return {
+    type: UPDATE_REFERAL_CODE,
+    value
+  };
+}
+
+export function updateIsCodeConfirmed(status) {
+  return {
+    type: UPDATE_IS_CODE_CONFIRMED,
+    status
+  };
+}
+
+export function updateHaveRefered(value) {
+  console.log('JSFE$', value);
+  return {
+    type: UPDATE_HAVE_REFERED,
+    value
   };
 }
 
@@ -86,11 +119,47 @@ export function updateDataStorage2(resp) {
   });
 }
 
+export function confirmReferalCode(value) {
+  return (dispatch) => {
+    getAccessToken().then((token) => {
+      DevSummitAxios.post(
+        '/api/v1/referals/submit',
+        {
+          referal: value
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+        .then((response) => {
+          if (
+            response &&
+            response.data &&
+            response.data.meta.success &&
+            response.data.meta.message === 'Data retrieved succesfully'
+          ) {
+            dispatch(updateHaveRefered(response.data.have_refered));
+            dispatch(updateDataStorage(response.data));
+            Toast.show('Your code is confirmed, you can not refer another code');
+          } else {
+            Alert.alert('Failed', 'Payload is invalid');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  };
+}
+
 export function changeProfile() {
   return (dispatch, getState) => {
     const { fields } = getState()
       .get('profile')
       .toJS();
+    console.log('FIELDSSSSS', fields);
     const { username, firstName, lastName, profilePic, boothInfo, job, summary, points } = fields;
 
     getAccessToken().then((token) => {
@@ -154,19 +223,13 @@ export function updateImage(image) {
         });
       }
 
-      DevSummitAxios.post(
-        '/api/v1/user/photo',
-          form,
-        {
-          headers: {
-            Authorization: token
-          }
+      DevSummitAxios.post('/api/v1/user/photo', form, {
+        headers: {
+          Authorization: token
         }
-      )
-        .then(resp => {
+      })
+        .then((resp) => {
           // resp.json();
-          console.log('landing here updateImage resp', resp);
-          console.log('landing here resp', resp);
           updateDataStorage2(resp.data);
           dispatch(updateAvatar(resp.data.data.photos[0].url), updateIsAvatarUpdated(true));
         })
@@ -190,8 +253,11 @@ export function disabled() {
 
 export function logOut() {
   return async (dispatch, getState) => {
+    dispatch(isLoadingLogout(true));
+
     const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
     await AsyncStorage.multiRemove(keys);
+    dispatch(isLoadingLogout(false));
     dispatch(updateIsLogOut(true));
   };
 }

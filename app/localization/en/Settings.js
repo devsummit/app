@@ -4,5 +4,7 @@ export default {
   codeConduct: 'Code of conduct',
   privacyPolicy: 'Privacy policy',
   logout: 'Log out',
-  feedback: 'Feedback'
+  feedback: 'Feedback',
+  yourFeedback: 'Your Feedback',
+  submit: 'Submit'
 };

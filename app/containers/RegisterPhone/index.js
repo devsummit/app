@@ -1,18 +1,8 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Content,
-  Picker,
-  Item,
-  Button,
-  Text,
-  Spinner
-} from 'native-base';
+import { Container, Content, Picker, Item, Button, Text, Spinner } from 'native-base';
 import { Alert, Image, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import AccountKit, {
-  LoginButton
-} from 'react-native-facebook-account-kit';
+import AccountKit, { LoginButton } from 'react-native-facebook-account-kit';
 import Toast from 'react-native-simple-toast';
 import PropTypes from 'prop-types';
 
@@ -66,11 +56,15 @@ class RegisterPhone extends Component {
     }
     if (prevProps.isRegistered.status !== this.props.isRegistered.status) {
       if (this.props.isRegistered.message.length > 0) {
+        const isFailed = this.props.isRegistered.title === 'Failed';
         Alert.alert(
           this.props.isRegistered.title,
           this.props.isRegistered.message,
           [
-            { text: strings.global.ok, onPress: this.props.isRegistered.title === 'Failed' ? () => { } : this.onAlertOk }
+            {
+              text: isFailed ? strings.global.ok : 'Login',
+              onPress: isFailed ? () => {} : this.onAlertOk
+            }
           ],
           { cancelable: false }
         );
@@ -84,8 +78,8 @@ class RegisterPhone extends Component {
   }
 
   onAlertOk = () => {
-    Actions.main();
-  }
+    Actions.mainTabs();
+  };
 
   onLogin(token) {
     if (!token) {
@@ -95,14 +89,13 @@ class RegisterPhone extends Component {
         this.props.toggleIsRegistering(true);
         this.props.updateInputFields('token', _token.token);
       });
-      AccountKit.getCurrentAccount()
-        .then((account) => {
-          const phone = account.phoneNumber.countryCode + account.phoneNumber.number;
-          this.props.updateInputFields('provider', 'mobile');
-          this.props.updateInputFields('userName', phone);
-          this.props.updateInputFields('socialId', account.id);
-          this.submitRegistration();
-        });
+      AccountKit.getCurrentAccount().then((account) => {
+        const phone = account.phoneNumber.countryCode + account.phoneNumber.number;
+        this.props.updateInputFields('provider', 'mobile');
+        this.props.updateInputFields('userName', phone);
+        this.props.updateInputFields('socialId', account.id);
+        this.submitRegistration();
+      });
     }
   }
 
@@ -113,53 +106,45 @@ class RegisterPhone extends Component {
       initialPhoneCountryPrefix: '+62',
       initialPhoneNumber: ' '
     });
-  }
+  };
 
   handleInputChange = (field, value) => {
     this.validateEmail();
     this.props.updateInputFields(field, value);
-    this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
-  }
+    this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
+  };
 
   submitRegistration = () => {
     if (this.isFieldError()) {
       Alert.alert(strings.global.warning, strings.register.fieldNotComplete);
     } else {
-      this.props.register();
+      this.props.register(() => Actions.mainTabs());
       this.props.inputFields.email = '';
       this.props.inputFields.firstName = '';
       this.props.inputFields.lastName = '';
     }
-  }
+  };
 
   /*
     * validate all fields before submission
     */
   isFieldError = () => {
     const { errorFields } = this.props;
-    const {
-      errorFirstName,
-      errorLastName,
-      errorEmail
-    } = errorFields;
+    const { errorFirstName, errorLastName, errorEmail } = errorFields;
 
-    return (
-      errorFirstName ||
-      errorLastName ||
-      errorEmail
-    );
-  }
+    return errorFirstName || errorLastName || errorEmail;
+  };
 
   validateEmail = () => {
     const email = this.props.inputFields.email;
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isValid = re.test(email);
-    (isValid) ? this.validEmail(email) : this.invalidEmail();
+    isValid ? this.validEmail(email) : this.invalidEmail();
   };
 
   validateEmailOnBlur = () => {
     if (!this.state.isEmailValid) Toast.show('Email is invalid');
-  }
+  };
 
   validEmail = (email) => {
     this.setState({
@@ -172,13 +157,27 @@ class RegisterPhone extends Component {
     this.setState({
       isEmailValid: false
     });
-  }
+  };
 
   handlePressCheckedBox = (checked) => {
     this.setState({
       isChecked: checked
     });
-  }
+  };
+
+  // email validation
+  checkEmail = (inputvalue) => {
+    const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    if (pattern.test(inputvalue)) return true;
+    return false;
+  };
+
+  // name validation
+  checkName = (value) => {
+    const pattern = /([^a-zA-Z0-9_-])/g;
+    if (pattern.test(value)) return false;
+    return true;
+  };
 
   renderLoginButton() {
     return (
@@ -200,12 +199,10 @@ class RegisterPhone extends Component {
   renderErrorButton = () => {
     return (
       <Button style={[ styles.button, { backgroundColor: 'rgba(0,0,0,0.3)' } ]}>
-        <Text style={styles.buttonText}>
-          {strings.register.fieldNotComplete}
-        </Text>
+        <Text style={styles.buttonText}>{strings.register.fieldNotComplete}</Text>
       </Button>
     );
-  }
+  };
 
   render() {
     if (this.props.isRegistering) {
@@ -218,50 +215,48 @@ class RegisterPhone extends Component {
       );
     }
     // destructure state
-    const { inputFields, errorFields } = this.props || {};
-    const {
-      firstName,
-      lastName,
-      email,
-      role,
-      referer
-    } = inputFields || '';
-
-    const {
-      errorFirstName,
-      errorLastName,
-      errorEmail
-    } = errorFields || false;
-
-    console.log('landing here registerPhone', this.props);
-
+    const { inputFields } = this.props || {};
+    const { firstName, lastName, email, role, referer } = inputFields || '';
+    // form checker
+    const checkEmail = this.checkEmail(email) === false && email !== '';
+    const checkFirstName = this.checkName(firstName) === false && firstName !== '';
+    const checkLastName = this.checkName(lastName) === false && lastName !== '';
     return (
       <Image style={styles.background} source={background}>
         <Container style={styles.container}>
           <AuthLogo style={styles.logo} />
           <Content>
             <View style={styles.formSection}>
+              {checkFirstName ?
+                <Text style={styles.errorInput}>{strings.register.errorFirstName}</Text>
+                : null }
               <InputItem
                 itemStyle={styles.item}
-                error={errorFirstName}
+                error={checkFirstName}
                 style={styles.formInput}
                 placeholder={strings.register.firstName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('firstName', text)}
                 value={firstName}
               />
+              {checkLastName ?
+                <Text style={styles.errorInput}>{strings.register.errorLastName}</Text>
+                : null }
               <InputItem
                 itemStyle={styles.item}
-                error={errorLastName}
+                error={checkLastName}
                 style={styles.formInput}
                 placeholder={strings.register.lastName}
                 placeholderTextColor={'#BDBDBD'}
                 onChangeText={text => this.handleInputChange('lastName', text)}
                 value={lastName}
               />
+              {checkEmail ?
+                <Text style={styles.errorInput}>{strings.register.errorInvalidEmail}</Text>
+                : null }
               <InputItem
                 itemStyle={styles.item}
-                error={errorEmail}
+                error={checkEmail}
                 style={styles.formInput}
                 placeholder={strings.register.email}
                 placeholderTextColor={'#BDBDBD'}
@@ -270,16 +265,25 @@ class RegisterPhone extends Component {
               />
             </View>
             <View style={{ flex: 1, padding: 5 }}>
-              <CheckBox
-                color={'#FFF'}
-                iconStyle={{ color: '#FFF', marginLeft: 16 }}
-                labelStyle={{ color: '#FFF' }}
-                label={strings.register.useReferer}
-                size={30}
-                checked={this.state.isChecked}
-                onPress={this.handlePressCheckedBox}
-              />
-              { this.state.isChecked ?
+              <View style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center'
+              }}
+              >
+                <CheckBox
+                  color={'#FFF'}
+                  iconStyle={{ color: '#FFF', marginLeft: 16 }}
+                  labelStyle={{ color: '#FFF' }}
+                  label={strings.register.useReferer}
+                  size={30}
+                  checked={this.state.isChecked}
+                  onPress={this.handlePressCheckedBox}
+                />
+                <Text style={{ color: 'grey', fontSize: 10, lineHeight: 22 * 0.8, backgroundColor: 'transparent' }}> (Optional) </Text>
+              </View>
+              {this.state.isChecked ? (
                 <View style={{ marginHorizontal: 20 }}>
                   <InputItem
                     itemStyle={styles.item}
@@ -290,24 +294,23 @@ class RegisterPhone extends Component {
                     value={referer}
                   />
                 </View>
-                :
-                null
-              }
+              ) : null}
               {/* You can use other Icon */}
               {/* Here is the example of Radio Icon */}
             </View>
-            {
-              (this.props.inputFields.firstName.length !== 0 &&
-                this.props.inputFields.email.length !== 0 && this.state.isEmailValid) ?
-                this.renderLoginButton() :
-                this.renderErrorButton()
-            }
+            {this.props.inputFields.firstName.length !== 0 &&
+            this.props.inputFields.email.length !== 0 &&
+            !checkEmail
+              ? this.renderLoginButton()
+              : this.renderErrorButton()}
           </Content>
         </Container>
         <Button
           transparent
           style={styles.buttonRegister}
-          onPress={() => { Actions.main(); }}
+          onPress={() => {
+            Actions.main();
+          }}
         >
           <Text style={styles.registerText}>{strings.register.alreadyHave}</Text>
           <Text style={styles.registerTextBold}>{strings.register.signIn}</Text>

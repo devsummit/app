@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { PRIMARYCOLOR } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 
@@ -8,29 +9,69 @@ const styles = StyleSheet.create({
   },
   btnBooth: {
     alignSelf: 'center',
-    width: '70%',
+    width: '40%',
+    margin: 20,
     backgroundColor: '#FF6F00',
+    justifyContent: 'center',
+  },
+  btnDownload: {
+    backgroundColor: '#F44336',
+    alignSelf: 'center',
+    padding: 15,
     marginLeft: 'auto',
     marginRight: 'auto',
-    justifyContent: 'center',
-    marginTop: 20
+    justifyContent: 'center'
   },
   btnModal: {
+    backgroundColor: '#9E9E9E',
     alignSelf: 'center',
-    borderRadius: 20,
-    width: '70%',
+    width: '37%',
     marginLeft: 'auto',
     marginRight: 'auto',
     justifyContent: 'center',
     marginTop: 10
+  },
+  formSection: {
+    marginTop: 2,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    paddingVertical: 5,
+    width: window.width - 30
+  },
+  formInput: {
+    paddingLeft: 20,
+    height: 45,
+    color: 'black'
+  },
+  item: {
+    marginBottom: 8,
+    borderColor: '#FFD740',
+    borderWidth: 2
   },
   content: {
     flex: 1,
     marginTop: 12,
     marginHorizontal: 10
   },
+  modalInfo: {
+    borderWidth: 5,
+    margin: 20,
+    marginTop: 0,
+    padding: 16,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    margin: -20,
+    marginBottom: 10,
+    color: '#FFFFFF',
+    fontSize: 20
+  },
   searchHeader: {
-    marginTop: 20,
     backgroundColor: 'rgb(255,255,255)',
     marginBottom: 8,
     elevation: 5
@@ -86,7 +127,7 @@ const styles = StyleSheet.create({
     height: 35,
     padding: 7,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   itemNameSection: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)'

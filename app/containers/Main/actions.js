@@ -16,6 +16,7 @@ import {
   UPDATE_IS_SUBSCRIBED,
   UPDATE_IS_NOT_REGISTERED,
   UPDATE_IS_LOADING,
+  UPDATE_IS_RESETED,
   FB_CLIENT_ID,
   FB_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL,
@@ -23,7 +24,8 @@ import {
   GOOGLE_CLIENT_SECRET,
   TWITTER_CALLBACK,
   TWITTER_CONSUMER_KEY,
-  TWITTER_CONSUMER_KEY_SECRET
+  TWITTER_CONSUMER_KEY_SECRET,
+  RESET_STATE
 } from './constants';
 
 /*
@@ -74,11 +76,23 @@ export function updateisLoading(status) {
   };
 }
 
+export function updateIsReseted(status) {
+  return {
+    type: UPDATE_IS_RESETED,
+    status
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE
+  };
+}
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
  */
-export function login() {
+export function login(calback) {
   return (dispatch, getState) => {
     const { fields } = getState()
       .get('main')
@@ -117,12 +131,19 @@ export function login() {
             { text: 'Register', onPress: () => Actions.registerEmail() },
             { text: 'Cancel' }
           ]);
+        } else if (
+          !response.data.meta.success &&
+          response.data.meta.message === 'you have not confirmed your email'
+        ) {
+          Alert.alert('Login Failed', 'Please verify your email first', [ { text: 'OK' } ]);
         } else {
           Alert.alert('Login Failed', response.data.meta.message);
         }
         dispatch(updateisLoading(false));
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 }
 
@@ -143,7 +164,6 @@ export function loginMobile(mobileToken) {
       }
     )
       .then(async (response) => {
-        console.log('Here', response.data.data);
         if (response && response.data && response.data.meta.success) {
           const resData = response.data.data;
           const roleId = JSON.stringify(response.data.included.role_id);
@@ -160,18 +180,41 @@ export function loginMobile(mobileToken) {
           } catch (error) {
             console.log(error, 'error caught');
           }
-          dispatch(updateIsLogIn(true));
+          await dispatch(updateIsLogIn(true));
+          await dispatch(updateisLoading(false));
         } else if (
           !response.data.meta.success &&
           response.data.meta.message === 'username not found'
         ) {
-          Alert.alert('Login Failed', response.data.meta.message);
+          Alert.alert('Login Failed', response.data.meta.message, [
+            {
+              text: 'Register',
+              onPress: () => {
+                Actions.registerPhone();
+                dispatch(updateisLoading(false));
+              }
+            },
+            { text: 'Cancel' }
+          ]);
         } else {
-          Alert.alert('Login Failed', response.data.meta.message);
+          Alert.alert('Login Failed', response.data.meta.message, [
+            {
+              text: 'Cancel',
+              onPress: () => {
+                dispatch(updateisLoading(false));
+              }
+            },
+            {
+              text: 'Register',
+              onPress: () => {
+                Actions.registerPhone();
+                dispatch(updateisLoading(false));
+              }
+            }
+          ]);
         }
       })
       .catch(err => console.log(err));
-    dispatch(updateisLoading(false));
   };
 }
 
@@ -401,5 +444,35 @@ export function subscribeNewsletter() {
         dispatch(updateIsSubscribed(true));
       }
     });
+  };
+}
+
+export function resetPassword(callback = () => {}) {
+  return (dispatch, getState) => {
+    const { fields } = getState()
+      .get('main')
+      .toJS();
+    const { email } = fields;
+
+    dispatch(updateIsReseted(true));
+
+    DevSummitAxios.post('/api/v1/mail/reset-password', { email })
+      .then((res) => {
+        if (res.data.meta.success) {
+          Alert.alert(
+            'Success',
+            res.data.meta.message,
+            [ { text: 'LOGIN', onPress: () => callback() } ],
+            { cancelable: false }
+          );
+        } else {
+          Alert.alert('Fail', res.data.meta.message);
+        }
+        dispatch(updateIsReseted(false));
+      })
+      .catch((err) => {
+        console.log(err, 'error caught');
+        dispatch(updateIsReseted(false));
+      });
   };
 }

@@ -18,3 +18,8 @@ export const getFetchingUserTicketStatus = () => createSelector(
   selectListTicketReducer(),
   state => state.get('fetchingTicketStatus')
 );
+
+export const getFields = () => createSelector(
+  selectListTicketReducer(),
+  state => state.get('fields').toJS()
+);

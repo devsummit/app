@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage } from 'react-native';
+import { View, AsyncStorage, BackHandler } from 'react-native';
 import { Tabs, Tab, TabHeading, Container } from 'native-base';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
 import Toast from 'react-native-simple-toast';
@@ -87,7 +87,7 @@ export default class MainTabs extends Component {
                 </TabHeading>
               }
             >
-              <Feed />
+              <Feed {...this.props} />
             </Tab>
             <Tab
               heading={

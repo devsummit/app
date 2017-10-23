@@ -27,7 +27,7 @@ export default class InputItem extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Form>
           <Item
             regular

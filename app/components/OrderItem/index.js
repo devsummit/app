@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { formatDate, transactionStatus } from '../../helpers';
+import { formatDate, transactionStatus, localeDate } from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
 let amount = 0;
 export default class OrderItem extends Component {
@@ -82,36 +82,22 @@ export default class OrderItem extends Component {
     const { status, color } = this.state;
     const { order } = this.props;
     return (
-      <CardItem style={styles.container} button onPress={() => this.onEditPressed()}>
+      <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
           <View style={{ justifyContent: 'flex-start', flex: 4 }}>
             <Text>Order-{order.id}</Text>
             <Text note style={styles.orderId}>
-              {formatDate(order.created_at)}
+              {localeDate(order.created_at)}
             </Text>
             <View style={styles.viewText}>
               {status ? (
                 <Text note style={[ styles.statusText, { backgroundColor: color } ]}>
-                  {status.toUpperCase()}
+                  {order.payment && order.payment.payment_type}
                 </Text>
               ) : (
                 <View />
               )}
             </View>
-          </View>
-          <View style={styles.buttonSection}>
-            {status && status === 'not paid' ? (
-              <View>
-                <TouchableOpacity
-                  onPress={() => Actions.payment({ order })}
-                  style={styles.btnCheckOut}
-                >
-                  <Icon name="md-cart" color="white" style={styles.icon} />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View />
-            )}
           </View>
         </View>
       </CardItem>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Content, List, ListItem, Button, Text, Spinner } from 'native-base';
 import PropTypes from 'prop-types';
+
+import QRCode from 'react-native-qrcode';
 import {
   RefreshControl,
   View,
@@ -51,46 +53,8 @@ class TicketList extends Component {
     this.setState({ modalVisible: visible });
   };
 
-  renderTicketList() {
-    return (
-      <List
-        dataArray={this.props.listTicket}
-        renderRow={(item) => {
-          return (
-            <ListItem
-              style={[
-                styles.card,
-                {
-                  alignSelf: 'center',
-                  height: 50,
-                  width: '95%',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  borderRadius: 3
-                }
-              ]}
-            >
-              <Text style={styles.text}>
-                {strings.order.ticketNumber} {item.id}
-              </Text>
-              {/* <Button
-                small
-                style={styles.button}
-                onPress={() => {
-                  Actions.attendeesList({ ticketId: item.id });
-                }}
-              >
-                <Text style={styles.buttonText}>Transfer</Text>
-                <Icons
-                  name="exchange"
-                  color="white"
-                />
-              </Button> */}
-            </ListItem>
-          );
-        }}
-      />
-    );
+  updateCounter() {
+    this.setState({ counter: this.state.counter + 1 });
   }
 
   renderError() {
@@ -111,8 +75,52 @@ class TicketList extends Component {
     );
   }
 
-  updateCounter() {
-    this.setState({ counter: this.state.counter + 1 });
+  renderTicketList() {
+    return (
+      <List
+        dataArray={this.props.listTicket}
+        renderRow={(item) => {
+          return (
+            <ListItem
+              style={[
+                styles.card,
+                {
+                  alignSelf: 'center',
+                  height: 110,
+                  width: '95%',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  borderRadius: 3
+                }
+              ]}
+            >
+              <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>{strings.order.ticketNumber} {`${item.id  }\n`}</Text>
+                {strings.order.QRInstruction}
+              </Text>
+              <QRCode
+                value={item.ticket_code}
+                size={100}
+                bgColor="black"
+                fgColor="white"
+              />
+              {/* <Button
+                small
+                style={styles.button}
+                onPress={() => {
+                  Actions.attendeesList({ ticketId: item.id });
+                }}
+              >
+                <Text style={styles.buttonText}>Transfer</Text>
+                <Icons
+                  name="exchange"
+                  color="white"
+                />
+              </Button> */}
+            </ListItem>
+          );
+        }}
+      />
+    );
   }
 
   render() {
@@ -126,15 +134,11 @@ class TicketList extends Component {
       );
     }
 
-    const { orders } = this.props;
+    return this.renderTicketList();
 
-    return (
-      <OrderList />
-    );
-
+    /*
     return (
       <ScrollView style={styles.container}>
-        {/* My order and redeem code */}
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => Actions.orderList()}>
             <View style={[ styles.card, { justifyContent: 'space-between', padding: 0 } ]}>
@@ -170,8 +174,6 @@ class TicketList extends Component {
             </View>
           </TouchableOpacity>
         </View>
-
-        {/* Ticket Orders */}
         <TouchableOpacity onPress={() => Actions.newOrder()}>
           <View style={[ styles.card, { width: '94%' } ]}>
             <Icons
@@ -184,8 +186,6 @@ class TicketList extends Component {
             </Text>
           </View>
         </TouchableOpacity>
-
-        {/* Free pass */}
         <Text style={styles.free}> Or get free past by completing our partner offers </Text>
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity onPress={() => this.setModalVisible(true)}>
@@ -209,9 +209,6 @@ class TicketList extends Component {
             </View>
           </TouchableOpacity>
         </View>
-
-        {/* Ticket List */}
-        <Content
           refreshControl={
             <RefreshControl
               refreshing={this.props.isGettingUserTicket}
@@ -223,8 +220,6 @@ class TicketList extends Component {
         >
           {this.props.fetchTicketStatus ? this.renderTicketList() : this.renderError()}
         </Content>
-
-        {/* Redeem Modal */}
         <Modal
           animationType="fade"
           visible={this.state.modalVisible}
@@ -249,7 +244,7 @@ class TicketList extends Component {
           </View>
         </Modal>
       </ScrollView>
-    );
+    ); */
   }
 }
 
