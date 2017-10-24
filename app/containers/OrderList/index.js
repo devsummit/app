@@ -42,7 +42,8 @@ class OrderList extends Component {
     firstName: '',
     lastName: '',
     modalVisibleConfirmation: false,
-    modalMyOrders: false
+    modalMyOrders: false,
+    isPaid: false
   };
 
   componentWillMount() {
@@ -239,37 +240,44 @@ class OrderList extends Component {
             </Modal>
           </View>
           {this.props.orders.length > 0 ? (
-            <List>
-              {this.props.orders.map((order) => {
-                if (order.status === 'paid') {
+            <View>
+              <List>
+                {this.props.orders.map((order) => {
+                  if (order.status === 'paid') {
+                    this.state.isPaid = true;
+                    return (
+                      <OrderItem
+                        key={order.id}
+                        order={order}
+                        confirmPayment={this.confirmPayment}
+                        onPress={() => {
+                          Actions.orderDetail({
+                            orderId: order.id,
+                            id: order.id
+                          });
+                        }}
+                      />
+                    );
+                  }
                   return (
-                    <OrderItem
-                      key={order.id}
-                      order={order}
-                      confirmPayment={this.confirmPayment}
-                      onPress={() => {
-                        Actions.orderDetail({
-                          orderId: order.id,
-                          id: order.id
-                        });
-                      }}
-                    />
+                    <View />
                   );
-                } else {
-                  return (
-                    <View style={{
-                      flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}
-                    >
-                      <Image source={noTicket} style={{ opacity: 0.7 }} />
-                      <Text>no tickets have been paid</Text>
-                    </View>
-                  );
-                }
-              })}
-            </List>
+                })}
+              </List>
+              {!this.state.isPaid ? (
+                <View style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+                >
+                  <Image source={noTicket} style={{ opacity: 0.7 }} />
+                  <Text>no tickets have been paid</Text>
+                </View>
+              ) : (
+                <View />
+              )}
+            </View>
           ) : (
             <View style={styles.artwork}>
               <Image source={noTicket} style={{ opacity: 0.7 }} />
