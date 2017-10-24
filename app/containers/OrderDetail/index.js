@@ -216,7 +216,6 @@ class OrderDetail extends Component {
     const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-    console.log("VERIF", verification);
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
@@ -263,16 +262,16 @@ class OrderDetail extends Component {
                   </Button>
                 ) : (
                   <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <Badge>
+                      <Text style={{ fontWeight: 'bold' }}>{order.data[0].count}</Text>
+                    </Badge>
                     <View>
                       <Text
-                        style={[ styles.statusText, { width: 100, backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                        style={[ styles.statusText, { width: 100, marginLeft: 5, backgroundColor: this.state.color || PRIMARYCOLOR } ]}
                       >
                         {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
                       </Text>
                     </View>
-                    <Badge>
-                      <Text style={{ fontWeight: 'bold' }}>{order.data[0].count}</Text>
-                    </Badge>
                   </View>
                 )}
                 <Row>
@@ -323,30 +322,6 @@ class OrderDetail extends Component {
               </Grid>
             </CardItem>
           </Card>
-          {
-            <Content>
-              <List
-                dataArray={order.data}
-                renderRow={item => (
-                  <View>
-                    {this.state.status === 'not paid' ? (
-                      <View>
-                        <TicketType
-                          key={item.id}
-                          count={item.count}
-                          ticket={item.ticket}
-                          onAdd={() => this.increase(item.id)}
-                          onReduce={() => this.decrease(item.id)}
-                        />
-                      </View>
-                    ) : (
-                      <TicketDetail key={item.id} count={item.count} ticket={item.ticket} />
-                    )}
-                  </View>
-                )}
-              />
-            </Content>
-          }
           <Card>
             <CardItem>
               <Body>
@@ -441,10 +416,14 @@ class OrderDetail extends Component {
                   <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
                   </Button>
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                  </Button>
                   <Image
                     style={{
                       flex: 1,
                       height: 200,
+                      marginTop: 0,
                       margin: 10
                     }}
                     resizeMode={'cover'}
@@ -459,7 +438,8 @@ class OrderDetail extends Component {
                   <Image
                     style={{
                       flex: 1,
-                      margin: 10,
+                      marginTop: 0,
+                      margin: 5,
                       alignSelf: 'center'
                     }}
                     resizeMode={'cover'}
