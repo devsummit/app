@@ -59,7 +59,9 @@ const styles = StyleSheet.create({
     padding: 5,
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    width: 70,
+    marginBottom: 7
   },
   buttonSubmit: {
     width: '97%',
