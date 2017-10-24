@@ -64,6 +64,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000000',
     fontWeight: 'bold'
+  },
+  buttonPayment: {
+    borderColor: '#BDBDBD',
+    borderBottomWidth: 1
   }
 });
 

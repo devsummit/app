@@ -194,7 +194,7 @@ class Payment extends Component {
       <Container style={styles.container}>
         <View style={{ flex: 0, marginHorizontal: 10, marginVertical: 10, elevation: 4, borderWidth: 0 }}>
           <TouchableOpacity
-            style={{borderBottomWidth: 1 }}
+            style={styles.buttonPayment}
             onPress={() => { this.payWithPaypalAlert(); }}
           >
             <CardItem header>
@@ -213,7 +213,7 @@ class Payment extends Component {
         </View>
         <View style={{ flex: 0, marginHorizontal: 10, elevation: 4, borderWidth: 0 }}>
           <TouchableOpacity
-            style={{borderBottomWidth: 1 }}
+            style={styles.buttonPayment}
             onPress={() => { this.payWithBankTransfer(); }}
             disabled={false}
           >
