@@ -144,18 +144,33 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
       .post(data)
       .then((response) => {
         // console.log('landing here paywithpaypal response', response);
-        return Promise.all([
-          Promise.resolve(response.data.data),
-          PayPal.paymentRequest({
-            clientId: PAYPAL_CLIENT_ID,
-            environment: PAYPAL_ENV,
-            price: response.data.included
-              .reduce((sum, item) => sum + item.price * item.count, 0)
-              .toString(),
-            currency: PAYPAL_CURRENCY,
-            description: `Devsummit ${  response.data.included[0].ticket.type}`
-          })
-        ]);
+        if (response.data.included[0].ticket.type === 'user') {
+          return Promise.all([
+            Promise.resolve(response.data.data),
+            PayPal.paymentRequest({
+              clientId: PAYPAL_CLIENT_ID,
+              environment: PAYPAL_ENV,
+              price: response.data.included
+                .reduce((sum, item) => sum + item.price * item.count, 0)
+                .toString(),
+              currency: PAYPAL_CURRENCY,
+              description: 'Devsummit event ticket'
+            })
+          ]);
+        } else {
+          return Promise.all([
+            Promise.resolve(response.data.data),
+            PayPal.paymentRequest({
+              clientId: PAYPAL_CLIENT_ID,
+              environment: PAYPAL_ENV,
+              price: response.data.included
+                .reduce((sum, item) => sum + item.price * item.count, 0)
+                .toString(),
+              currency: PAYPAL_CURRENCY,
+              description: `Devsummit ${response.data.included[0].ticket.type}`
+            })
+          ]);
+        }
       })
       .then(([ order, result ]) => {
         let response;
