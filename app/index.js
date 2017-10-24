@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { View, AsyncStorage, NetInfo, StatusBar } from 'react-native';
+import { View, AsyncStorage, NetInfo, StatusBar, Platform } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import BusyIndicator from 'react-native-busy-indicator';
 import { MessageBar as MessageBarAlert, MessageBarManager } from 'react-native-message-bar';
@@ -76,26 +76,31 @@ const store = createStore(
 );
 
 function handleConnectivity() {
-  const {online, connection} = store.getState().get('network').toJS();
-  console.log({online, connection});
-  if (!online || ['unknown', 'none'].indexOf(connection) >= 0) {
+  const { online, connection } = store.getState().get('network').toJS();
+  console.log({ online, connection });
+  if (!online || [ 'unknown', 'none' ].indexOf(connection) >= 0) {
     MessageBarManager.showAlert({
-      title: 'Connection problem',
-      message: 'It seems we\'re having trouble reaching out the server. Please ensure you have a working connection',
+      title: 'Looking for network',
+      message: 'It seems we can\'t reach out the server at the moment.',
       alertType: 'error',
       shouldHideAfterDelay: false,
       shouldHideOnTap: false,
+
+      titleStyle: { fontSize: 16, fontWeight: 'normal', marginTop: 10, color: 'white' },
+      messageStyle: {fontSize: 11, color: 'white'}
     });
   } else {
     MessageBarManager.hideAlert();
   }
 }
 function handleConnectivityChange(status) {
+  console.log('connection', status);
   store.dispatch(setConnectionType(status));
   // no connection at all
   NetInfo.removeEventListener('connectionChange', handleConnectivityChange);
 }
 function handleConnectivityStatusChange(status) {
+  console.log('status', status);
   store.dispatch(setIsOnline(status));
   // no connection at all
   NetInfo.isConnected.removeEventListener('connectionChange', handleConnectivityStatusChange);
@@ -104,17 +109,11 @@ const networkListener = () => {
   setInterval(() => {
     NetInfo.addEventListener('connectionChange', handleConnectivityChange);
     NetInfo.isConnected.addEventListener('connectionChange', handleConnectivityStatusChange);
+    NetInfo.isConnectionExpensive().then(status => console.log(status));
     setTimeout(() => {
       handleConnectivity();
     }, 5 * 100);
   }, 5 * 1000);
-  // give it some delay
-  setTimeout(() => {
-    NetInfo.isConnected.fetch().then(handleConnectivityStatusChange);
-    setTimeout(() => {
-      handleConnectivity();
-    }, 5 * 100);
-  }, 100);
 };
 
 const persistingStore = (callback = () => {}) => {
@@ -167,11 +166,11 @@ export default class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar
+        {Platform.OS === 'ios' && <StatusBar
           backgroundColor="orange"
           barStyle="light-content"
-        />
-        <View style={{ flex: 1}}>
+        />}
+        <View style={{ flex: 1 }}>
           {this.state.rehydrated && <Provider store={store}>
             <RouterWithRedux
               navigationBarStyle={styles.navBar}
