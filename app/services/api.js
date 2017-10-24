@@ -23,19 +23,19 @@ class Api {
     return this.id;
   }
   put(url, json, qs = {}, config) {
-    return this.sendRequest('PUT', url, { qs, json, config });
+    return this.sendRequest('PUT', url, { qs, json, ...config });
   }
   get(url, config = {}, qs) {
-    return this.sendRequest('GET', url, { qs, config });
+    return this.sendRequest('GET', url, { qs, ...config });
   }
   post(url, json, qs = {}, config = {}) {
-    return this.sendRequest('POST', url, { qs, json, config });
+    return this.sendRequest('POST', url, { qs, json, ...config });
   }
   patch(url, form, qs = {}, config = {}) {
-    return this.sendRequest('PATCH', url, { qs, form, config });
+    return this.sendRequest('PATCH', url, { qs, form, ...config });
   }
   delete(url, qs = {}, config = {}) {
-    return this.sendRequest('DELETE', url, { qs, config });
+    return this.sendRequest('DELETE', url, { qs, ...config });
   }
   setHeader(key, value) {
     this.config.headers[key] = value;
@@ -44,7 +44,7 @@ class Api {
     this.setHeader('Authorization', `${token}`);
   }
   sendRequest(requestMethod, url, data = {}) {
-    let headers = data.config ? data.config.headers || {} : {};
+    let headers = data.config ? data.headers || {} : {};
     headers = Object.assign({}, this.client.defaults.headers.common, this.config.headers, headers);
 
     return this.client

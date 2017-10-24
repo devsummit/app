@@ -22,6 +22,7 @@ import BoothInfoReducer from './containers/BoothInfo/reducer';
 import codeRedeemReducer from './containers/Redeem/reducer';
 import Notification from './containers/Notification/reducer';
 import FeedReducer from './containers/Feed/reducer';
+import network from './modules/net/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -44,7 +45,8 @@ const rootReducers = combineReducers({
   boothInfo: BoothInfoReducer,
   code: codeRedeemReducer,
   notificationList: Notification,
-  feed: FeedReducer
+  feed: FeedReducer,
+  network
 });
 
 export default rootReducers;

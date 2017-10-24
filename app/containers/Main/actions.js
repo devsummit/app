@@ -5,6 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 
 import { DevSummitAxios } from '../../helpers';
+import api from '../../services/api';
 
 /*
  * import constants
@@ -76,6 +77,13 @@ export function updateisLoading(status) {
   };
 }
 
+export function setToken(token) {
+  return {
+    type: SET_TOKEN,
+    token
+  }
+}
+
 /*
  * Log user in
  * save access_token & refresh_token to asyncstorage
@@ -107,6 +115,7 @@ export function login() {
                 profileData,
                 boothData
               }))
+              api.setAuthorizationToken(resData.access_token);
             }
           } catch (error) {
             console.log(error, 'error caught');
@@ -229,12 +238,13 @@ export function loginGoogle() {
               if (response && response.data && response.data.meta.success) {
                 const resData = response.data.data;
                 try {
-                  await dispatch(setToken({
+                  dispatch(setToken({
                     accessToken: resData.access_token,
                     refreshToken: resData.refresh_token,
                     roleId: response.data.included.role_id,
                     profileData: response.data.included,
                   }))
+                  api.setAuthorizationToken(resData.access_token);
                 } catch (error) {
                   console.log(error, 'error caught');
                 }
@@ -423,13 +433,6 @@ export function subscribeNewsletter() {
       }
     });
   };
-}
-
-export function setToken(token) {
-  return {
-    type: SET_TOKEN,
-    token
-  }
 }
 
 export function resetToken() {
