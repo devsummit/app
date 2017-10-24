@@ -23,6 +23,8 @@ export default {
   instruction2: 'to account number',
   instruction3: 'from Veritrans',
   attention: 'Important: the payment deadline is 1 (one) hour. If the deadline exceeded then your order will be automatically canceled.',
+  updateProof: 'Update Payment Proof',
+  reuploadProof: 'Re-upload Payment Proof',
 
   // Ticket list
   ticketNumber: 'Ticket No.',
