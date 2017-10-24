@@ -37,6 +37,7 @@ import * as actions from './actions';
 import Redeem from '../Redeem';
 import AccordionView from './Accordion';
 import AccordionView2 from './Accordion2';
+import { PRIMARYCOLOR } from '../../constants';
 
 const bgBooth1 = require('./../../../assets/images/bgbooth_1.png');
 const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
@@ -115,19 +116,7 @@ class BoothList extends Component {
               flexDirection: 'row',
               justifyContent: 'flex-end'
             }}
-          >
-            <IconFA
-              name="question-circle"
-              onPress={() => this.setModalVisible(true)}
-              style={{
-                elevation: 2,
-                alignSelf: 'center',
-                color: '#FFF',
-                fontSize: 25,
-                marginRight: 20
-              }}
-            />
-          </View>
+          />
         </View>
         <Image
           source={bgBooth2}
@@ -152,6 +141,17 @@ class BoothList extends Component {
               </Text>
             </Button>) : <View />
           }
+          <IconFA
+            name="question-circle-o"
+            onPress={() => this.setModalVisible(true)}
+            style={{
+              elevation: 2,
+              alignSelf: 'center',
+              // backgroundColor: 'white',
+              color: PRIMARYCOLOR,
+              fontSize: 25
+            }}
+          />
           {!this.state.accordion ? (
             <Button
               style={styles.btnBooth}
