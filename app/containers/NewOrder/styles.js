@@ -23,14 +23,10 @@ export default StyleSheet.create({
   },
   plusMinus: {
     padding: 8,
+    alignSelf: 'center',
     borderColor: '#777',
-    color: '#777',
     borderWidth: 1,
-    borderRadius: 2,
-    width: 26,
-    height: 27,
-    alignItems: 'center',
-    justifyContent: 'center'
+    borderRadius: 2
   },
   formInput: {
     paddingLeft: 20,
@@ -44,15 +40,19 @@ export default StyleSheet.create({
     alignSelf: 'flex-start'
   },
   ticketCount: {
-    minWidth: 25,
-    textAlign: 'center',
     margin: 2,
-    paddingTop: 3,
     borderRadius: 2,
     borderWidth: 1,
-    borderColor: '#777',
+    borderColor: '#777'
+  },
+  textCount: {
+    padding: 5,
+    paddingTop: 4,
+    paddingRight: 10,
+    paddingLeft: 10,
+    alignSelf: 'center',
     color: '#777',
-    height: 27
+    fontSize: 20
   },
   iconWrapper: {
     alignSelf: 'center'
