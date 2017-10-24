@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
   },
   buttonSubmit: {
     width: '97%',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 10
   },
   image: {
     width: width * 0.8,
