@@ -272,7 +272,7 @@ class OrderList extends Component {
                 }}
                 >
                   <Image source={noTicket} style={{ opacity: 0.7 }} />
-                  <Text>no tickets have been paid</Text>
+                  <Text>You do not have any ticket</Text>
                 </View>
               ) : (
                 <View />
@@ -283,7 +283,7 @@ class OrderList extends Component {
               <Image source={noTicket} style={{ opacity: 0.7 }} />
               {!isConfirmEmail ? (
                 <View>
-                  <Text style={styles.artworkText}>Please Confirm Your Email First</Text>
+                  <Text style={styles.artworkText}>Please confirm your email first</Text>
                   <Button
                     block
                     style={{ margin: 10 }}
@@ -291,7 +291,7 @@ class OrderList extends Component {
                       this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
                   >
                     <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                      Resend Confirmation
+                      Resend confirmation
                     </Text>
                   </Button>
                   <Modal
