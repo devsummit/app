@@ -591,7 +591,7 @@ class Feed extends Component {
                     style={{ textAlign: 'center', fontSize: 30 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Register Hackaton" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalHackaton(true)}>
+                <ActionButton.Item title="Register Hackaton" buttonColor={PRIMARYCOLOR} onPress={() => this.setModalHackaton(true)}>
                   <CameraIcon
                     name="code"
                     color="#FFFFFF"
