@@ -22,6 +22,8 @@ export default {
   instruction2: 'ke nomor rekening',
   instruction3: 'dari Veritrans',
   attention: 'Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka pemesanan tiket akan otomatis dibatalkan.',
+  updateProof: 'Unggah Bukti Pembayaran',
+  reuploadProof: 'Unggah Ulang Bukti Pembayaran',
 
   // Ticket list
   ticketNumber: 'No. tiket',
