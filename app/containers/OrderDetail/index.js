@@ -25,7 +25,8 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -59,7 +60,8 @@ class OrderDetail extends Component {
       color: '',
       modalVisible: false,
       scalesPageToFit: true,
-      userId: ''
+      userId: '',
+      url: 'http://api.devsummit.io:8081/static/Ref_Bank.PDF'
     };
   }
 
@@ -209,6 +211,10 @@ class OrderDetail extends Component {
     this.props.getOrderDetail(this.props.id || this.props.navigation.state.params.id);
   }
 
+  getAccountReferal = () => {
+    Linking.openURL(this.state.url);
+  };
+
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
@@ -261,7 +267,7 @@ class OrderDetail extends Component {
                   </Button>
                 ) : (
                   <Text
-                    style={[ styles.statusText, { width: 70, backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
                   >
                     {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
                   </Text>
@@ -429,7 +435,7 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' ? (
               verification ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
@@ -448,7 +454,7 @@ class OrderDetail extends Component {
                 </View>
               ) : (
                 <View>
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
