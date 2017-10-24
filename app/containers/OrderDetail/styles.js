@@ -59,11 +59,14 @@ const styles = StyleSheet.create({
     padding: 5,
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    width: 70,
+    marginBottom: 7
   },
   buttonSubmit: {
     width: '97%',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 10
   },
   image: {
     width: width * 0.8,
@@ -128,6 +131,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000000',
     fontWeight: 'bold'
+  },
+  noImageText: {
+    alignSelf: 'center',
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'grey',
+    marginBottom: 10
   }
 });
 
