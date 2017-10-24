@@ -28,6 +28,7 @@ class AccordionView2 extends Component {
             flex: 1,
             padding: 50,
             alignItems: 'center',
+            justifyContent: 'center',
             flexDirection: 'column'
           }}
         >
@@ -73,11 +74,13 @@ class AccordionView2 extends Component {
               marginTop: 10,
               marginBottom: 10
             }}
-            onPress={
-              () => this.props.setPaymentMethod(price)
+            onPress={() => {
+              this.props.setPaymentMethod(price);
+              this.props.onPress();
+            }
             }
           >
-            <Text style={{ color: '#FFF', fontSize: 16 }}>Order</Text>
+            <Text style={{ color: '#FFF', fontSize: 16 }}>Register</Text>
           </Button>
         </Animatable.View>
       </Animatable.View>
