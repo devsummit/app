@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   viewText: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
-    marginTop: 12
+    marginTop: 0
   },
   buttonSection: {
     flex: 1,
