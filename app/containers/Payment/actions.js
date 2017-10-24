@@ -153,7 +153,7 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
               .reduce((sum, item) => sum + item.price * item.count, 0)
               .toString(),
             currency: PAYPAL_CURRENCY,
-            description: response.data.included[0].ticket.ticket_type
+            description: response.data.included[0].ticket.type
           })
         ]);
       })
