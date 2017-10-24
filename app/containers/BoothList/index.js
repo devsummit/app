@@ -102,22 +102,7 @@ class BoothList extends Component {
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#FF8B00',
-            justifyContent: 'space-between'
-          }}
-        >
-          <HeaderPoint title={strings.booth.title} />
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end'
-            }}
-          />
-        </View>
+        <HeaderPoint title={strings.booth.title} />
         <Image
           source={bgBooth2}
           resizeMode="cover"
@@ -141,17 +126,18 @@ class BoothList extends Component {
               </Text>
             </Button>) : <View />
           }
-          <IconFA
-            name="question-circle-o"
-            onPress={() => this.setModalVisible(true)}
-            style={{
-              elevation: 2,
-              alignSelf: 'center',
-              // backgroundColor: 'white',
-              color: PRIMARYCOLOR,
-              fontSize: 25
-            }}
-          />
+          <View style={{backgroundColor: '#FF6F00', paddingHorizontal: 5, borderRadius: 30}}>
+            <IconFA
+              name="question"
+              onPress={() => this.setModalVisible(true)}
+              style={{
+                elevation: 2,
+                alignSelf: 'center',
+                color: 'white',
+                fontSize: 25
+              }}
+            />
+          </View>
           {!this.state.accordion ? (
             <Button
               style={styles.btnBooth}
