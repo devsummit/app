@@ -616,7 +616,7 @@ class Feed extends Component {
                 </Text>
               </View>
               <Redeem /> */}
-              <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
+              <AccordionView2 onPress={() => this.setModalHackaton(!this.state.modalHackaton)} setPaymentMethod={this.setPaymentMethod} />
             </View>
           </View>
         </Modal>
