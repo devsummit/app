@@ -128,6 +128,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000000',
     fontWeight: 'bold'
+  },
+  noImageText: {
+    alignSelf: 'center',
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'grey',
+    marginBottom: 5
   }
 });
 
