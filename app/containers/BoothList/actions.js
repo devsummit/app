@@ -58,13 +58,12 @@ export function fetchHackatonList() {
         const headers = { Authorization: token };
         boothList.get()
           .then((response) => {
-            console.log('landing here fetchHackatonList', response);
             dispatch({
               type: FETCH_HACKATON_LIST,
               payloads: response.data.data
             });
             dispatch(isFetchingHackatons(false))
-          });
+          }).catch(err => console.log('error fetch hackaton list', err));
       });
   };
 }

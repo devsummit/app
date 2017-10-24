@@ -99,7 +99,6 @@ class BoothList extends Component {
   };
 
   render() {
-    console.log('landing here this.props boothlist hackaton ', this.props);
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
