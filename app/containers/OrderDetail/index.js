@@ -232,21 +232,6 @@ class OrderDetail extends Component {
     }
     return (
       <Container style={styles.container}>
-        {/* Header View */}
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#FF8B00',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            padding: 5
-          }}
-        >
-          <TouchableWithoutFeedback onPress={() => Actions.mainTabs({ activePage: 1 })}>
-            <Image source={Back} style={{ width: 20, height: 20 }} />
-          </TouchableWithoutFeedback>
-          <HeaderPoint title={'Order Detail'} />
-        </View>
         <Content
           refreshControl={
             <RefreshControl

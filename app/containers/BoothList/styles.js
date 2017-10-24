@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   btnBooth: {
     alignSelf: 'center',
-    width: '40%',
+    width: '70%',
     margin: 20,
     backgroundColor: '#FF6F00',
     justifyContent: 'center',

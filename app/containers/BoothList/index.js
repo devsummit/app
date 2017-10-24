@@ -127,7 +127,7 @@ class BoothList extends Component {
               </Text>
             </Button>) : <View />
           }
-          <View style={{backgroundColor: '#FF6F00', paddingHorizontal: 5, borderRadius: 30}}>
+          <View style={{backgroundColor: '#FF6F00', padding: 10, paddingRight: 12 }}>
             <IconFA
               name="question"
               onPress={() => this.setModalVisible(true)}
@@ -139,31 +139,13 @@ class BoothList extends Component {
               }}
             />
           </View>
-          {!this.state.accordion ? (
-            <Button
-              style={styles.btnBooth}
-              onPress={() => {
-                this.setAccordion2(!this.state.accordion2);
-              }}
-            >
-              {!this.state.accordion2 ? (
-                <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
-                  Hackaton
-                </Text>
-              ) :
-                <Text style={{ color: '#FFF', fontSize: 16, margin: 5, textAlign: 'center' }}>
-                  {strings.booth.back}
-                </Text>
-              }
-            </Button>) : <View />
-          }
         </Image>
         {this.state.accordion || this.state.accordion2 ? (
           <View />
         ) : (
           <View style={{marginTop: 3}}>
             <Item>
-              <Icon name="ios-search" style={{ color: '#f39e21', fontSize: 30 }} />
+              <Icon name="ios-search" style={{ marginLeft: 16, color: '#f39e21', fontSize: 30 }} />
               <Input
                 style={{ fontSize: 16, alignSelf: 'center' }}
                 placeholder={strings.booth.search}
