@@ -317,31 +317,7 @@ class Feed extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#FF8B00',
-            justifyContent: 'space-between'
-          }}
-        >
-          <HeaderPoint title={strings.feed.title} />
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end'
-            }}
-          >
-            <TouchableWithoutFeedback onPress={() => Actions.notification()}>
-              <View style={styles.viewNotification}>
-                <CameraIcon
-                  name="bell"
-                  style={styles.notificationIcon}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
+        <HeaderPoint title={strings.feed.title} />
         <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
             heading={
