@@ -143,7 +143,7 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
     payment
       .post(data)
       .then((response) => {
-        console.log('landing here paywithpaypal response', response);
+        // console.log('landing here paywithpaypal response', response);
         return Promise.all([
           Promise.resolve(response.data.data),
           PayPal.paymentRequest({
@@ -153,7 +153,7 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
               .reduce((sum, item) => sum + item.price * item.count, 0)
               .toString(),
             currency: PAYPAL_CURRENCY,
-            description: 'Ticket for full 3-day abc'
+            description: response.data.included[0].ticket.ticket_type
           })
         ]);
       })
