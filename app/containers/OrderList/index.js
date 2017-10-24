@@ -123,6 +123,7 @@ class OrderList extends Component {
   }
 
   render() {
+    const { orders } = this.props.orders;
     const count = this.props.redeemCount === 10;
     if (this.state.isLoading) {
       return (
@@ -188,9 +189,7 @@ class OrderList extends Component {
             style={{ margin: 10 }}
             block
             warning
-            onPress={() => {
-              this.setModalMyOrders(!this.state.modalMyOrders);
-            }}
+            onPress={() => Actions.myOrders()}
           >
             <Text style={{ color: 'white', fontWeight: 'bold' }}>My Orders</Text>
           </Button>
