@@ -577,21 +577,21 @@ class Feed extends Component {
               <View />
             ) : (
               <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
-                <ActionButton.Item title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
+                <ActionButton.Item title="New Order" buttonColor={PRIMARYCOLOR} onPress={() => Actions.newOrder()}>
                   <CameraIcon
                     name="ticket"
                     color="#FFFFFF"
                     style={{ textAlign: 'center', fontSize: 30 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                <ActionButton.Item title="Ticket List" buttonColor={PRIMARYCOLOR} onPress={() => Actions.ticketList()}>
                   <CameraIcon
                     name="list"
                     color="#FFFFFF"
                     style={{ textAlign: 'center', fontSize: 23 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
+                <ActionButton.Item title="Redeem Code" buttonColor={'#008000'} onPress={() => this.setModalRedeem(true)}>
                   <CameraIcon
                     name="gift"
                     color="#FFFFFF"
