@@ -5,8 +5,12 @@ import {
 
 import {
   FETCH_BOOTH_LIST,
-  IS_FETCHING_BOOTHS
+  IS_FETCHING_BOOTHS,
+  FETCH_HACKATON_LIST,
+  IS_FETCHING_HACKATONS
 } from './constants';
+
+import boothList from '../../services/boothList';
 
 /*
  * Get speaker data
@@ -19,6 +23,13 @@ export function isFetchingBooths(status) {
   };
 }
 
+export function isFetchingHackatons(status) {
+  return {
+    type: IS_FETCHING_HACKATONS,
+    status
+  };
+}
+
 export function fetchBoothList() {
   return (dispatch) => {
     dispatch(isFetchingBooths(true));
@@ -26,7 +37,7 @@ export function fetchBoothList() {
     getAccessToken()
       .then((token) => {
         const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/booths', { headers })
+        boothList.getBooth()
           .then(async (response) => {
             await dispatch({
               type: FETCH_BOOTH_LIST,
@@ -34,6 +45,25 @@ export function fetchBoothList() {
             });
             dispatch(isFetchingBooths(false))
           });
+      });
+  };
+}
+
+export function fetchHackatonList() {
+  return (dispatch) => {
+    dispatch(isFetchingHackatons(true));
+
+    getAccessToken()
+      .then((token) => {
+        const headers = { Authorization: token };
+        boothList.get()
+          .then((response) => {
+            dispatch({
+              type: FETCH_HACKATON_LIST,
+              payloads: response.data.data
+            });
+            dispatch(isFetchingHackatons(false))
+          }).catch(err => console.log('error fetch hackaton list', err));
       });
   };
 }

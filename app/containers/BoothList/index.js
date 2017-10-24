@@ -52,6 +52,7 @@ class BoothList extends Component {
 
   componentWillMount() {
     this.props.fetchBoothList();
+    this.props.fetchHackatonList();
   }
 
   componentWillReceiveProps(prevProps) {
@@ -67,7 +68,7 @@ class BoothList extends Component {
   };
 
   setAccordion2 = (visible) => {
-    this.setState({ accordion2: visible});
+    this.setState({ accordion2: visible });
   }
 
   setModalVisible(visible) {
@@ -235,7 +236,43 @@ class BoothList extends Component {
           ) : this.state.accordion ? (
             <AccordionView setPaymentMethod={this.setPaymentMethod} />
           ) : this.state.accordion2 ? (
-            <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
+            <View>
+              {this.props.isFetching2 || this.props.isFetching2 === undefined || this.props.hackaton === undefined ? (
+                <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
+              ) : (
+                <View style={{ margin: 10}}>
+                  <View style={{ alignItems: 'center'}}>
+                    <Image style={styles.profilePic2} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3y6eXbmTc_9b224H656uKVPnTFGj453nxNZZQuBBGH7fS1jO4' }} />
+                  </View>
+                  <Text/>
+                  <Text><Text style={{ fontWeight: 'bold' }}>Hackaton team name    :</Text> {this.props.hackaton.name}</Text>
+                  <Text/>
+                  <Text><Text style={{ fontWeight: 'bold' }}>Hackaton project name :</Text> {this.props.hackaton.project_name}</Text>
+                  <Text/>
+                  <Text style={{ fontWeight: 'bold' }}>Member List : </Text>
+                  {/* {this.props.hackaton.user.map((item, idx) => (
+                    <View key={idx}>
+                      <Text>{idx + 1} . {item.first_name}</Text>
+                    </View>
+                  ))} */}
+                  <View style={styles.content}>
+                    {this.props.hackaton.user.map((data, index) => (
+                      <View style={{ flex: 1, marginVertical: 10, marginHorizontal: 10, padding: 4, borderWidth: 5 }} key={data.id}>
+                        <View style={styles.profileSection}>
+                          <Image style={styles.profilePic} source={{ uri: data.photos[0].url }} />
+                          <View style={styles.nameSection}>
+                            <Text style={styles.name}>
+                              {data.first_name} {data.last_name}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              )
+              }
+            </View>
           ) : (
             <View style={styles.content}>
               {this.state.boothFilter.map((data, index) => (
@@ -273,6 +310,8 @@ class BoothList extends Component {
 
 const mapStateToProps = createStructuredSelector({
   booth: selectors.getListBooth(),
-  isFetching: selectors.getIsFetchingBooths()
+  isFetching: selectors.getIsFetchingBooths(),
+  hackaton: selectors.getListHackaton(),
+  isFetching2: selectors.getIsFetchingHackatons()
 });
 export default connect(mapStateToProps, actions)(BoothList);
