@@ -573,6 +573,9 @@ class Feed extends Component {
             }
           >
             <OrderList />
+            <Button rounded dark onPress={() => Actions.newOrder()}>
+              <Text>New Order</Text>
+            </Button>
             {!this.props.isConfirmEmail ? (
               <View />
             ) : (
@@ -702,9 +705,9 @@ class Feed extends Component {
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
                     (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
-                      <TouchableOpacity onPress={() => this.postFeed()}>
-                          <View
-                          style={{
+                        <TouchableOpacity onPress={() => this.postFeed()}>
+                        <View
+                            style={{
                               borderWidth: 1,
                               borderColor: 'blue',
                               borderRadius: 20,
@@ -713,12 +716,12 @@ class Feed extends Component {
                               alignItems: 'center',
                               justifyContent: 'center'
                             }}
-                        >
-                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
+                          >
+                            <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
                             Post
                             </Text>
-                        </View>
-                        </TouchableOpacity>
+                          </View>
+                      </TouchableOpacity>
                       ) : (
                         <TouchableOpacity activeOpacity={1}>
                           <View
