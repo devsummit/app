@@ -37,6 +37,7 @@ import * as actions from './actions';
 import Redeem from '../Redeem';
 import AccordionView from './Accordion';
 import AccordionView2 from './Accordion2';
+import { PRIMARYCOLOR } from '../../constants';
 
 const bgBooth1 = require('./../../../assets/images/bgbooth_1.png');
 const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
@@ -102,34 +103,7 @@ class BoothList extends Component {
     const { booth } = this.props;
     return (
       <Container style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#FF8B00',
-            justifyContent: 'space-between'
-          }}
-        >
-          <HeaderPoint title={strings.booth.title} />
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end'
-            }}
-          >
-            <IconFA
-              name="question-circle"
-              onPress={() => this.setModalVisible(true)}
-              style={{
-                elevation: 2,
-                alignSelf: 'center',
-                color: '#FFF',
-                fontSize: 25,
-                marginRight: 20
-              }}
-            />
-          </View>
-        </View>
+        <HeaderPoint title={strings.booth.title} />
         <Image
           source={bgBooth2}
           resizeMode="cover"
@@ -153,6 +127,18 @@ class BoothList extends Component {
               </Text>
             </Button>) : <View />
           }
+          <View style={{backgroundColor: '#FF6F00', paddingHorizontal: 5, borderRadius: 30}}>
+            <IconFA
+              name="question"
+              onPress={() => this.setModalVisible(true)}
+              style={{
+                elevation: 2,
+                alignSelf: 'center',
+                color: 'white',
+                fontSize: 25
+              }}
+            />
+          </View>
           {!this.state.accordion ? (
             <Button
               style={styles.btnBooth}
