@@ -225,6 +225,7 @@ class OrderDetail extends Component {
     }
     return (
       <Container style={styles.container}>
+        {/* Header View */}
         <View
           style={{
             flexDirection: 'row',
@@ -252,6 +253,18 @@ class OrderDetail extends Component {
           <Card>
             <CardItem>
               <Grid style={{ flex: 3 }}>
+                {status === 'not paid' ? (
+                  <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
+                    <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
+                    <Text style={styles.textButton}>save</Text>
+                  </Button>
+                ) : (
+                  <Text
+                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                  >
+                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
+                  </Text>
+                )}
                 <Row>
                   <Col>
                     <Text>{strings.order.orderNumber}</Text>
@@ -298,18 +311,6 @@ class OrderDetail extends Component {
                   <View />
                 ) */}
               </Grid>
-              {status === 'not paid' ? (
-                <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
-                  <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
-                  <Text style={styles.textButton}>save</Text>
-                </Button>
-              ) : (
-                <Text
-                  style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                >
-                  {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                </Text>
-              )}
             </CardItem>
           </Card>
           {
@@ -388,10 +389,6 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' && (
               <Card>
                 <View style={styles.card} resizeMode={'cover'}>
-                  <Image
-                    source={logo}
-                    style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }}
-                  />
                   <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
                   <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
                   <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
