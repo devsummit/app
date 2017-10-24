@@ -26,7 +26,7 @@ class AccordionView2 extends Component {
             borderRadius: 5,
             borderColor: '#BDBDBD',
             flex: 1,
-            padding: 20,
+            padding: 50,
             alignItems: 'center',
             flexDirection: 'column'
           }}
@@ -73,7 +73,9 @@ class AccordionView2 extends Component {
               marginTop: 10,
               marginBottom: 10
             }}
-            onPress={() => this.props.setPaymentMethod(price)}
+            onPress={
+              () => this.props.setPaymentMethod(price)
+            }
           >
             <Text style={{ color: '#FFF', fontSize: 16 }}>Order</Text>
           </Button>

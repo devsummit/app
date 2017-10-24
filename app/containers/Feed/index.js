@@ -44,8 +44,8 @@ import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
+import Share from 'react-native-share';
 import CloseO from 'react-native-vector-icons/EvilIcons';
-import Share, { ShareSheet, Button } from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 import 'moment/locale/pt-br';
 import styles from './styles';
@@ -60,6 +60,8 @@ import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 import { isConfirm } from '../../helpers';
 import { getIsConfirmEmail } from '../OrderList/selectors';
+import { SECTIONS2 } from '../../constants';
+import AccordionView2 from '../BoothList/Accordion2';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -160,16 +162,9 @@ class Feed extends Component {
       modalReport: false,
       optionVisible: false,
       report: '',
-      shareOptions: {
-        message: '',
-        url: null
-      },
-      shareTwitter: {
-        message: '',
-        url: null
-      },
       modalWebView: false,
-      link: ''
+      link: '',
+      modalHackaton: false
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -219,6 +214,10 @@ class Feed extends Component {
     this.state.link = link;
   };
 
+  setModalHackaton = (visible) => {
+    this.setState({ modalHackaton: visible });
+  };
+
   postFeed = (callback) => {
     this.props.postFeeds(this.props.imagesData, this.props.textData);
     this.setModalPost(false);
@@ -243,6 +242,7 @@ class Feed extends Component {
     ImagePicker.openCamera({
       width: 400,
       height: 300,
+      cropping: true,
       includeBase64: true
     })
       .then((image) => {
@@ -263,24 +263,13 @@ class Feed extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
-  onOpen = (_message, _url) => {
-    this.setState({ visible: true });
-
-    let urlTwitter = '';
-    const share = Object.assign({}, this.state.shareOptions);
-    const shareTwitter = Object.assign({}, this.state.shareTwitter);
-
-    if (_url === null) {
-      urlTwitter = '';
-    } else {
-      urlTwitter = _url;
-    }
-
-    shareTwitter.message = _message;
-    shareTwitter.url = urlTwitter;
-    share.message = _message;
-    share.url = _url;
-    this.setState({ shareOptions: share, shareTwitter });
+  onOpen = (message, attachment) => {
+    Share.open({
+      title: 'Devsummit Indonesia',
+      message: message,
+      url: attachment,
+      subject: 'Devsummit Indonesia'
+    });
   };
 
   alertRemoveFeed = (postId) => {
@@ -319,6 +308,10 @@ class Feed extends Component {
 
   handleInputChange = (value) => {
     this.setState({ report: value });
+  };
+
+  setPaymentMethod = (ticketPrice) => {
+    Actions.payment({ ticketPrice });
   };
 
   render() {
@@ -598,6 +591,13 @@ class Feed extends Component {
                     style={{ textAlign: 'center', fontSize: 30 }}
                   />
                 </ActionButton.Item>
+                <ActionButton.Item title="Register Hackaton" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalHackaton(true)}>
+                  <CameraIcon
+                    name="code"
+                    color="#FFFFFF"
+                    style={{ textAlign: 'center', fontSize: 30 }}
+                  />
+                </ActionButton.Item>
               </ActionButton>
             )}
           </Tab>
@@ -623,6 +623,31 @@ class Feed extends Component {
                 </Text>
               </View>
               <Redeem />
+            </View>
+          </View>
+        </Modal>
+        {/* modal hackaton */}
+        <Modal
+          animationType="fade"
+          visible={this.state.modalHackaton}
+          onRequestClose={() => this.setModalHackaton(!this.state.modalHackaton)}
+          transparent
+        >
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View style={styles.redeem}>
+              <TouchableWithoutFeedback
+                onPress={() => this.setModalHackaton(!this.state.modalHackaton)}
+              >
+                <CameraIcon style={styles.iconClose} name="times" />
+              </TouchableWithoutFeedback>
+              {/* <View style={styles.viewredeem}>
+                <CameraIcon name="gift" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                  {strings.redeem.redeem}
+                </Text>
+              </View>
+              <Redeem /> */}
+              <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
             </View>
           </View>
         </Modal>
@@ -810,42 +835,6 @@ class Feed extends Component {
             </Picker>
           </View>
         </Modal>
-        {/* Sheet For Share */}
-        <ShareSheet visible={this.state.visible} onCancel={this.onCancel.bind(this)}>
-          <Button
-            iconSrc={{ uri: TWITTER_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareTwitter, { social: 'twitter' }));
-              }, 300);
-            }}
-          >
-            {strings.global.twitter}
-          </Button>
-          <Button
-            iconSrc={{ uri: FACEBOOK_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'facebook' }));
-              }, 300);
-            }}
-          >
-            {strings.global.facebook}
-          </Button>
-          <Button
-            iconSrc={{ uri: WHATSAPP_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'whatsapp' }));
-              }, 300);
-            }}
-          >
-            {strings.global.whatsapp}
-          </Button>
-        </ShareSheet>
       </Container>
     );
   }
