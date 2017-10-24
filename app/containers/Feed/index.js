@@ -60,6 +60,8 @@ import { API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 import { isConfirm } from '../../helpers';
 import { getIsConfirmEmail } from '../OrderList/selectors';
+import { SECTIONS2 } from '../../constants';
+import AccordionView2 from '../BoothList/Accordion2';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -161,7 +163,8 @@ class Feed extends Component {
       optionVisible: false,
       report: '',
       modalWebView: false,
-      link: ''
+      link: '',
+      modalHackaton: false
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -209,6 +212,10 @@ class Feed extends Component {
   setModalWebView = (visible, link) => {
     this.setState({ modalWebView: visible });
     this.state.link = link;
+  };
+
+  setModalHackaton = (visible) => {
+    this.setState({ modalHackaton: visible });
   };
 
   postFeed = (callback) => {
@@ -301,6 +308,10 @@ class Feed extends Component {
 
   handleInputChange = (value) => {
     this.setState({ report: value });
+  };
+
+  setPaymentMethod = (ticketPrice) => {
+    Actions.payment({ ticketPrice });
   };
 
   render() {
@@ -580,6 +591,13 @@ class Feed extends Component {
                     style={{ textAlign: 'center', fontSize: 30 }}
                   />
                 </ActionButton.Item>
+                <ActionButton.Item title="Register Hackaton" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalHackaton(true)}>
+                  <CameraIcon
+                    name="code"
+                    color="#FFFFFF"
+                    style={{ textAlign: 'center', fontSize: 30 }}
+                  />
+                </ActionButton.Item>
               </ActionButton>
             )}
           </Tab>
@@ -605,6 +623,31 @@ class Feed extends Component {
                 </Text>
               </View>
               <Redeem />
+            </View>
+          </View>
+        </Modal>
+        {/* modal hackaton */}
+        <Modal
+          animationType="fade"
+          visible={this.state.modalHackaton}
+          onRequestClose={() => this.setModalHackaton(!this.state.modalHackaton)}
+          transparent
+        >
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View style={styles.redeem}>
+              <TouchableWithoutFeedback
+                onPress={() => this.setModalHackaton(!this.state.modalHackaton)}
+              >
+                <CameraIcon style={styles.iconClose} name="times" />
+              </TouchableWithoutFeedback>
+              {/* <View style={styles.viewredeem}>
+                <CameraIcon name="gift" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                  {strings.redeem.redeem}
+                </Text>
+              </View>
+              <Redeem /> */}
+              <AccordionView2 setPaymentMethod={this.setPaymentMethod} />
             </View>
           </View>
         </Modal>
