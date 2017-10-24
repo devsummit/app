@@ -14,7 +14,8 @@ import {
   Row,
   Col,
   List,
-  Spinner
+  Spinner,
+  Badge
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
@@ -46,6 +47,7 @@ const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
+const noImage = require('./../../../assets/images/noimage.png');
 
 let total = 0;
 class OrderDetail extends Component {
@@ -211,9 +213,10 @@ class OrderDetail extends Component {
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
-    const { payment } = included || {};
+    const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+    console.log("VERIF", verification);
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
@@ -259,11 +262,18 @@ class OrderDetail extends Component {
                     <Text style={styles.textButton}>save</Text>
                   </Button>
                 ) : (
-                  <Text
-                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                  >
-                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                  </Text>
+                  <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View>
+                      <Text
+                        style={[ styles.statusText, { width: 100, backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                      >
+                        {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
+                      </Text>
+                    </View>
+                    <Badge>
+                      <Text style={{ fontWeight: 'bold' }}>{order.data[0].count}</Text>
+                    </Badge>
+                  </View>
                 )}
                 <Row>
                   <Col>
@@ -426,10 +436,10 @@ class OrderDetail extends Component {
               </Card>
             )}
             {payment.payment_type === 'offline' ? (
-              this.props.paymentProof !== '' ? (
+              verification !== null ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
                   <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
                   </Button>
                   <Image
                     style={{
@@ -442,11 +452,23 @@ class OrderDetail extends Component {
                   />
                 </View>
               ) : (
-                <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                  <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
-                </Button>
+                <View>
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                  </Button>
+                  <Image
+                    style={{
+                      flex: 1,
+                      margin: 10,
+                      alignSelf: 'center'
+                    }}
+                    resizeMode={'cover'}
+                    source={noImage}
+                  />
+                  <Text style={styles.noImageText}>{strings.order.noProof}</Text>
+                </View>
               )
-            ) : null}
+            ) : <View />}
           </View>
         </Content>
       </Container>
