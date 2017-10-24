@@ -19,6 +19,7 @@
     "qs": "^6.5.1",
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.4",
+    "react-native-action-button": "^2.8.0",
     "react-native-animatable": "^1.2.4",
     "react-native-bounceable": "^0.2.1",
     "react-native-busy-indicator": "^1.1.0",

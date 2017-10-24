@@ -31,7 +31,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TouchableHighlight,
-  WebView
+  WebView,
+  Platform
 } from 'react-native';
 import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -39,10 +40,12 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import openSocket from 'socket.io-client';
+import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
 import Share from 'react-native-share';
+import CloseO from 'react-native-vector-icons/EvilIcons';
 import Toast from 'react-native-simple-toast';
 import 'moment/locale/pt-br';
 import styles from './styles';
@@ -318,17 +321,14 @@ class Feed extends Component {
               justifyContent: 'flex-end'
             }}
           >
-            <CameraIcon
-              name="bell"
-              onPress={() => Actions.notification()}
-              style={{
-                elevation: 2,
-                alignSelf: 'center',
-                color: '#FFF',
-                fontSize: 20,
-                marginRight: 20
-              }}
-            />
+            <TouchableWithoutFeedback onPress={() => Actions.notification()}>
+              <View style={styles.viewNotification}>
+                <CameraIcon
+                  name="bell"
+                  style={styles.notificationIcon}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
@@ -558,38 +558,29 @@ class Feed extends Component {
             {!this.props.isConfirmEmail ? (
               <View />
             ) : (
-              <Fab
-                active={this.state.fabActive}
-                style={{ backgroundColor: '#FF8B00' }}
-                position="bottomRight"
-                onPress={() => this.setState({ fabActive: !this.state.fabActive })}
-              >
-                <CameraIcon name="plus-circle" style={{ fontSize: 30 }} />
-                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.newOrder()}>
+              <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
+                <ActionButton.Item title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
                   <CameraIcon
                     name="ticket"
                     color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 30 }}
                   />
-                </Button>
-                <Button style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                </ActionButton.Item>
+                <ActionButton.Item title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
                   <CameraIcon
-                    name="archive"
+                    name="list"
                     color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 23 }}
                   />
-                </Button>
-                <Button
-                  style={{ backgroundColor: '#FF8B00' }}
-                  onPress={() => this.setModalRedeem(true)}
-                >
+                </ActionButton.Item>
+                <ActionButton.Item title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
                   <CameraIcon
                     name="gift"
                     color="#FFFFFF"
-                    style={{ flex: 1, textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 30 }}
                   />
-                </Button>
-              </Fab>
+                </ActionButton.Item>
+              </ActionButton>
             )}
           </Tab>
         </Tabs>
@@ -754,12 +745,25 @@ class Feed extends Component {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
           <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808' }}>
-            <View style={{ flex: 1, margin: 10 }}>
+            <View style={{ flex: 1, flexDirection: 'column', margin: 10 }}>
               <Image
                 source={{ uri: this.state.imagePreview }}
                 resizeMode={'contain'}
                 style={{ flex: 1 }}
               />
+              {Platform === 'ios' ? (
+                <CloseO
+                  size={30}
+                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                  name="close-o"
+                  style={{
+                    flex: 0,
+                    flexDirection: 'column',
+                    backgroundColor: '#b8d8d8',
+                    alignItems: 'center'
+                  }}
+                />
+              ) : null}
             </View>
           </View>
         </Modal>

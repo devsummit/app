@@ -18,7 +18,15 @@ import {
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import { RefreshControl, Alert, View, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import {
+  RefreshControl,
+  Alert,
+  View,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  TouchableWithoutFeedback
+} from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Actions } from 'react-native-router-flux';
@@ -189,7 +197,7 @@ class OrderDetail extends Component {
       includeBase64: true
     })
       .then((image) => {
-        this.props.orderVerification(this.props.orderId, image);
+        this.props.orderVerification(this.props.id, image);
       })
       .catch((err) => {
         console.log(err);
@@ -206,11 +214,7 @@ class OrderDetail extends Component {
     const { payment } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
-    if (
-      isUpdating ||
-      isConfirming ||
-      Object.keys(order).length === 0
-    ) {
+    if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
           <Content>
@@ -253,7 +257,7 @@ class OrderDetail extends Component {
                     <Text>{strings.order.orderNumber}</Text>
                   </Col>
                   <Col>
-                    <Text>{orderId}</Text>
+                    <Text>{this.props.id}</Text>
                   </Col>
                 </Row>
                 <Row>
@@ -264,7 +268,7 @@ class OrderDetail extends Component {
                     <Text>{localeDate(order.data[0].created_at)}</Text>
                   </Col>
                 </Row>
-                {order.included.payment ? (
+                {/* order.included.payment ? (
                   <Row>
                     <Col>
                       <Text>{strings.order.expiredDate}</Text>
@@ -292,7 +296,7 @@ class OrderDetail extends Component {
                   </Row>
                 ) : (
                   <View />
-                )}
+                ) */}
               </Grid>
               {status === 'not paid' ? (
                 <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
@@ -381,45 +385,49 @@ class OrderDetail extends Component {
             <View />
           )}
           <View>
-            {payment.payment_type === 'offline' &&
-            <Card>
-              <View style={styles.card} resizeMode={'cover'}>
-                <Image source={logo} style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }} />
-                <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
-                <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-                <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
-                <Text style={styles.textTitleBold}>Taufan Aditya</Text>
-                <Text style={styles.textTitle}>OR</Text>
-                <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
-                <View
-                  style={{
-                    flex: 8,
-                    alignItems: 'center'
-                  }}
-                >
-                  <Text
+            {payment.payment_type === 'offline' && (
+              <Card>
+                <View style={styles.card} resizeMode={'cover'}>
+                  <Image
+                    source={logo}
+                    style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }}
+                  />
+                  <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                  <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                  <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                  <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                  <Text style={styles.textTitle}>OR</Text>
+                  <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                  <View
                     style={{
-                      fontSize: 18,
-                      color: '#000000',
-                      marginBottom: 8,
-                      marginTop: 16
+                      flex: 8,
+                      alignItems: 'center'
                     }}
                   >
-                    Nomer Rekening:
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: '#000000',
-                      marginBottom: 8,
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    130-0016066782
-                  </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: '#000000',
+                        marginBottom: 8,
+                        marginTop: 16
+                      }}
+                    >
+                      Nomer Rekening:
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: '#000000',
+                        marginBottom: 8,
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      130-0016066782
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </Card>}
+              </Card>
+            )}
             {payment.payment_type === 'offline' ? (
               this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>

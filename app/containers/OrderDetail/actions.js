@@ -43,11 +43,13 @@ export function orderVerification(order, image) {
 
     if (Platform.OS === 'ios' && image.sourceURL) {
       form.append('payment_proof', {
-        uri: image.sourceURL
+        uri: image.sourceURL,
+        type: image.mime,
+        name: image.filename
       });
     }
 
-    if (image.path) {
+    if (Platform.OS === 'android' && image.path) {
       form.append('payment_proof', {
         uri: image.path,
         type: image.mime,

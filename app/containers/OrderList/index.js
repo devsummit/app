@@ -117,7 +117,6 @@ class OrderList extends Component {
   }
 
   render() {
-    console.log('apa aja', this.props.isConfirmEmail);
     const count = this.props.redeemCount === 10;
 
     if (this.state.isLoading) {
@@ -205,7 +204,7 @@ class OrderList extends Component {
                   <Text style={styles.artworkText}>Please Confirm Your Email First</Text>
                   <Button
                     block
-                    style={{ textAlign: 'center', margin: 10 }}
+                    style={{ margin: 10 }}
                     onPress={() =>
                       this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
                   >
@@ -213,9 +212,6 @@ class OrderList extends Component {
                       Resend Confirmation
                     </Text>
                   </Button>
-                  {/* <Button block style={{textAlign: 'center', margin: 10}} onPress={() => Actions.codeConduct()}>
-                    <Text style={{fontWeight: 'bold', color: 'white', textAlign: 'center'}}>Resend Confirmation</Text>
-                  </Button> */}
                   <Modal
                     animationType="slide"
                     transparent={false}
@@ -226,35 +222,6 @@ class OrderList extends Component {
                   >
                     <View style={{ marginTop: 22 }}>
                       <View>
-                        {/* <Text>Hello World!</Text>
-
-                      <TouchableHighlight onPress={() => {
-                        this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)
-                      }}>
-                        <Text>Hide Modal</Text>
-                      </TouchableHighlight> */}
-
-                        {/* <InputItem
-                        itemStyle={styles.item}
-                        error={this.checkEmail}
-                        style={styles.formInput}
-                        placeholder={strings.register.email}
-                        placeholderTextColor={'#BDBDBD'}
-                        onChangeText={text => this.handleInputChange('email', text)}
-                        value={this.props.inputFields.email}
-                      /> */}
-
-                        {/* <InputItem
-                        itemStyle={styles.item}
-                        style={styles.input}
-                        title={strings.profile.firstName}
-                        placeholder={strings.profile.firstName}
-                        onChangeText={(text) => {
-                          this.handleInputChange('firstName', text);
-                        }}
-                        value={this.props.inputFields.email}
-                      /> */}
-
                         <Form>
                           <Item>
                             <Input placeholder="E-Mail" />

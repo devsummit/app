@@ -109,7 +109,8 @@ export default StyleSheet.create({
   forgotText: {
     fontSize: 14,
     textAlign: 'center',
-    color: 'white'
+    color: 'white',
+    backgroundColor: 'transparent'
   },
   modal: {
     width: '100%',
