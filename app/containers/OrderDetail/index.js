@@ -436,7 +436,7 @@ class OrderDetail extends Component {
               </Card>
             )}
             {payment.payment_type === 'offline' ? (
-              verification !== null ? (
+              verification ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
                   <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
