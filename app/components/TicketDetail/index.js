@@ -22,8 +22,8 @@ export default (props) => {
             <Text note>{ticket.information}</Text>
           </View>
           <View>
-            <Badge>
-              <Text>Amount : {props.count}</Text>
+            <Badge success>
+              <Text>Badge : {props.count}</Text>
             </Badge>
           </View>
         </View>
