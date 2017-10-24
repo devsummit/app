@@ -19,7 +19,7 @@ import OrderList from '../../containers/OrderList';
 const icon = require('./../../../assets/images/icon.png');
 
 const MyOrders = (props) => {
-  console.log('landing here this.props myOrders', props);
+  // console.log('landing here this.props myOrders', props);
   return (
     <ScrollView>
       <View style={styles.container}>
