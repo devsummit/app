@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 
 export default {
   API_BASE_URL: 'http://api.devsummit.io:8081',
+  AUTH_BASE_URL: 'http://api.devsummit.io:8081',
   CLIENT_SECRET: 'supersecret',
 
   FB_CLIENT_ID: '216608565531165',

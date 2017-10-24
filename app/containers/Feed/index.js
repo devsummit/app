@@ -55,15 +55,14 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import OrderList from '../OrderList';
 import Redeem from '../Redeem';
-import { PRIMARYCOLOR } from '../../constants';
-import { API_BASE_URL } from '../../constants';
+import { PRIMARYCOLOR, AUTH_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 import { isConfirm } from '../../helpers';
 import { getIsConfirmEmail } from '../OrderList/selectors';
 import { SECTIONS2 } from '../../constants';
 import AccordionView2 from '../BoothList/Accordion2';
 
-const socket = openSocket(API_BASE_URL);
+const socket = openSocket(AUTH_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
 
 function subscribeToFeeds(cb) {

@@ -1,6 +1,7 @@
 import { AsyncStorage, Platform, Alert } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import FormData from 'FormData';
+import axios from 'axios';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
 import {
   UPDATE_SINGLE_FIELD,
@@ -15,6 +16,11 @@ import {
   UPDATE_HAVE_REFERED
 } from './constants';
 import local from '../../../config/local';
+import profile from '../../services/profile';
+
+const Auth = axios.create({
+  baseURL: 'http://api.devsummit.io:8081'
+});
 
 /*
  * Update the input fields
@@ -121,36 +127,24 @@ export function updateDataStorage2(resp) {
 
 export function confirmReferalCode(value) {
   return (dispatch) => {
-    getAccessToken().then((token) => {
-      DevSummitAxios.post(
-        '/api/v1/referals/submit',
-        {
-          referal: value
-        },
-        {
-          headers: {
-            Authorization: token
-          }
+    profile.post(value)
+      .then((response) => {
+        if (
+          response &&
+    response.data &&
+    response.data.meta.success &&
+    response.data.meta.message === 'Data retrieved succesfully'
+        ) {
+          dispatch(updateHaveRefered(response.data.have_refered));
+          dispatch(updateDataStorage(response.data));
+          Toast.show('Your code is confirmed, you can not refer another code');
+        } else {
+          Alert.alert('Failed', 'Payload is invalid');
         }
-      )
-        .then((response) => {
-          if (
-            response &&
-            response.data &&
-            response.data.meta.success &&
-            response.data.meta.message === 'Data retrieved succesfully'
-          ) {
-            dispatch(updateHaveRefered(response.data.have_refered));
-            dispatch(updateDataStorage(response.data));
-            Toast.show('Your code is confirmed, you can not refer another code');
-          } else {
-            Alert.alert('Failed', 'Payload is invalid');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 }
 
@@ -161,40 +155,29 @@ export function changeProfile() {
       .toJS();
     console.log('FIELDSSSSS', fields);
     const { username, firstName, lastName, profilePic, boothInfo, job, summary, points } = fields;
-
-    getAccessToken().then((token) => {
-      DevSummitAxios.patch(
-        '/auth/me/changesetting',
-        {
-          first_name: firstName,
-          last_name: lastName,
-          booth_info: boothInfo,
-          speaker_job: job,
-          speaker_summary: summary
-        },
-        {
-          headers: {
-            Authorization: token
-          }
+    profile.patch({
+      first_name: firstName,
+      last_name: lastName,
+      booth_info: boothInfo,
+      speaker_job: job,
+      speaker_summary: summary
+    })
+      .then((response) => {
+        if (
+          response &&
+    response.data &&
+    response.data.meta.success &&
+    response.data.meta.message === 'Data retrieved succesfully'
+        ) {
+          updateDataStorage(response.data);
+          dispatch(updateIsProfileUpdated(true));
+        } else {
+          Alert.alert('Failed', 'Payload is invalid');
         }
-      )
-        .then((response) => {
-          if (
-            response &&
-            response.data &&
-            response.data.meta.success &&
-            response.data.meta.message === 'Data retrieved succesfully'
-          ) {
-            updateDataStorage(response.data);
-            dispatch(updateIsProfileUpdated(true));
-          } else {
-            Alert.alert('Failed', 'Payload is invalid');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 }
 
@@ -206,7 +189,7 @@ export function updateImage(image) {
 
     getAccessToken().then((token) => {
       // @TODO We need to change into dev-summit url
-      const url = local.API_BASE_URL.concat('/api/v1/user/photo');
+      const url = local.API_BASE_URL.concat('/user/photo');
       const form = new FormData();
 
       if (Platform.OS === 'ios') {
@@ -223,7 +206,7 @@ export function updateImage(image) {
         });
       }
 
-      DevSummitAxios.post('/api/v1/user/photo', form, {
+      DevSummitAxios.post('/user/photo', form, {
         headers: {
           Authorization: token
         }

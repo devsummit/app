@@ -16,6 +16,8 @@ import {
 
 import { ROLES } from '../../constants';
 
+import registerPhone from '../../services/registerPhone';
+
 /*
  * Update the input fields
  * @param {field: name of the field}

@@ -13,6 +13,8 @@ import {
 } from './constants';
 import local from '../../../config/local';
 
+import boothInfo from '../../services/boothInfo';
+
 export function updateFields(field, value) {
   return {
     type: UPDATE_FIELD,
@@ -71,16 +73,12 @@ export function updateDataStorage(response) {
 
 export function fetchBoothInfo(id) {
   return (dispatch) => {
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        DevSummitAxios.get('api/v1/booths/galleries/' + id, { headers })
-          .then(async (response) => {
-            await dispatch({
-              type: FETCH_BOOTH_INFO,
-              payloads: response.data
-            });
-          });
+    boothInfo.getPhoto(id)
+      .then((response) => {
+        dispatch({
+          type: FETCH_BOOTH_INFO,
+          payloads: response.data
+        });
       });
     dispatch(clearBoothGallery());
   };
@@ -100,14 +98,14 @@ export function uploadBoothImage(image) {
           name: 'image.jpg'
         });
 
-        DevSummitAxios.post('/api/v1/booths/galleries', form, { headers })
+        boothInfo.post()
           .then((response) => {
             dispatch(updateBoothGallery(response.data.data[0]));
             // dispatch(updateIsBoothGalleriesUpdated(true));
             dispatch({
               type: UPDATE_IS_BOOTH_GALLERY_UPDATED,
               status: true
-            })
+            });
           }).catch(err => console.log('error upload image', err));
       });
   };
@@ -118,7 +116,6 @@ export function updateImage(image) {
     dispatch(updateIsBoothPhotoUpdated(false));
     getAccessToken()
       .then((token) => {
-
         const headers = { Authorization: token };
         const form = new FormData();
 
@@ -128,7 +125,7 @@ export function updateImage(image) {
           name: 'image.jpg'
         });
 
-        DevSummitAxios.patch('/api/v1/booths/updatelogo', form, { headers })
+        boothInfo.patch()
           .then((response) => {
             updateDataStorage(response.data);
             dispatch(updateBoothPhoto(response.data.data.logo_url));

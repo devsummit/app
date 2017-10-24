@@ -15,6 +15,7 @@ import {
   UPDATE_IS_LOGGED_IN
 } from './constants';
 
+import regEmail from '../../services/regEmail';
 /*
  * Update the input fields
  * @param {field: name of the field}
@@ -110,7 +111,7 @@ export function register(callBack) {
     };
 
     if (firstName && email && password && username) {
-      DevSummitAxios.post('/auth/register', data)
+      regEmail.post(data)
         .then(async (response) => {
           const resData = response.data.data;
           const roleId = JSON.stringify(response.data.included.role_id);

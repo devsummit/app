@@ -1,9 +1,9 @@
+import Toast from 'react-native-simple-toast';
 import {
   DevSummitAxios,
   getAccessToken
 } from '../../helpers';
 
-import Toast from 'react-native-simple-toast'
 
 import local from '../../../config/local';
 import {
@@ -15,6 +15,7 @@ import {
   IS_FETCHING_MATERIAL,
   DELETE_MATERIAL_LIST
 } from './constants';
+import materialList from '../../services/materialList';
 
 export function updateInputFields(field, value) {
   return {
@@ -54,56 +55,42 @@ export function isFetchingMaterial(status) {
   };
 }
 
-export function fetchMaterialList(id) {
+export function fetchMaterialList() {
   return (dispatch) => {
     dispatch(isFetchingMaterial(true));
-    getAccessToken()
-      .then((token) => {
-        const headers = { Authorization: token };
-        DevSummitAxios.get(`api/v1/speaker/${id}/documents`, { headers })
-          .then((response) => {
-            dispatch({
-              type: FETCH_MATERIAL_LIST,
-              payloads: response.data.data
-            });
-            dispatch(isFetchingMaterial(false));
-          })
-          .catch((err) => {
-            Toast.show("error speaker not found");
-            dispatch(isFetchingMaterial(false));
-          });
+
+    materialList.get().then((response) => {
+      dispatch({
+        type: FETCH_MATERIAL_LIST,
+        payloads: response.data.data
+      });
+      dispatch(isFetchingMaterial(false));
+    })
+      .catch((err) => {
+        Toast.show('error speaker not found');
+        dispatch(isFetchingMaterial(false));
       });
   };
 }
 
 export function updateStatus(data, key) {
   return (dispatch) => {
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.patch(`/api/v1/documents/${data.id}`, {
-          title: data.title,
-          summary: data.summary,
-          is_used: !data.is_used
-        }, {
-          headers: {
-            Authorization: token
-          }
-        }).then((response) => {
-          if (response && response.data && response.data.meta.success) {
-            dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
-          }
-        }).catch((error) => { Toast.show("Error", error); });
-      });
+    materialList.patch({ title: data.title,
+      summary: data.summary,
+      is_used: !data.is_used }).then((response) => {
+      if (response && response.data && response.data.meta.success) {
+        dispatch(updateFlagMaterial(key, 'is_used', response.data.data.is_used));
+      }
+    }).catch((error) => { Toast.show('Error', error); });
   };
 }
 
 export function saveMaterialList(data) {
   return (dispatch, getState) => {
-
     getAccessToken()
       .then((token) => {
         // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('/api/v1/documents');
+        const url = local.API_BASE_URL.concat('/documents');
         const form = new FormData();
 
         form.append('title', data.title);
@@ -117,35 +104,22 @@ export function saveMaterialList(data) {
         fetch(url, { method: 'POST', headers: { Authorization: token }, body: form })
           .then(resp => resp.json())
           .then((resp) => {
-
             dispatch(addMaterialItem(resp.data));
-
           }).catch((err) => {
-
-            Toast.show("Error", err);
-
+            Toast.show('Error', err);
           });
       });
   };
 }
 
 export function deleteMaterialList(id) {
-
   return (dispatch) => {
-    getAccessToken()
-      .then((token) => {
-
-        const headers = { Authorization: token };
-
-        dispatch({ type: DELETE_MATERIAL_LIST, id });
-
-        DevSummitAxios.delete(`api/v1/documents/${id}`, { headers })
-          .then((response) => {
-
-          })
-          .catch((err) => {
-            Toast.show("Error", err);
-          });
+    dispatch({ type: DELETE_MATERIAL_LIST, id });
+    materialList.delete(id)
+      .then((response) => {
+      })
+      .catch((err) => {
+        Toast.show('Error', err);
       });
   };
 }

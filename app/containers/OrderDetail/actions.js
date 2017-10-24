@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
+
 import orderdetail from '../../services/orderdetail';
 /*
  * import constants
@@ -104,7 +105,7 @@ export function submitUpdateOrder(orders) {
         getAccessToken()
           .then((token) => {
             DevSummitAxios.patch(
-              `/api/v1/orders/${orders[i].order_id}/details/${orders[i].id}`,
+              `/orders/${orders[i].order_id}/details/${orders[i].id}`,
               {
                 count: orders[i].count
               },
@@ -118,7 +119,7 @@ export function submitUpdateOrder(orders) {
               });
           })
           .catch((error) => {
-            console.log(error);
+            console.log('Error', error);
           });
       }
     });
@@ -168,26 +169,18 @@ export function updateIsConfirmingPayment(status) {
 export function confirmPayment(id) {
   return (dispatch) => {
     dispatch(updateIsConfirmingPayment(true));
-    getAccessToken().then((accessToken) => {
-      DevSummitAxios.patch(
-        `/api/v1/payments/status/${id}`,
-        {},
-        {
-          headers: { Authorization: accessToken }
+    orderDetail.patch(id)
+      .then((response) => {
+        if (response.data && response.data.data) {
+          dispatch({
+            type: SET_CONFIRM_PAYMENT,
+            payload: response.data.data
+          });
         }
-      )
-        .then((response) => {
-          if (response.data && response.data.data) {
-            dispatch({
-              type: SET_CONFIRM_PAYMENT,
-              payload: response.data.data
-            });
-          }
-          dispatch(updateIsConfirmingPayment(false));
-        })
-        .catch((err) => {
-          console.log('error here', err);
-        });
-    });
+        dispatch(updateIsConfirmingPayment(false));
+      })
+      .catch((err) => {
+        console.log('error here', err);
+      });
   };
 }

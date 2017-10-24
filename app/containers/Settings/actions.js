@@ -17,6 +17,7 @@ import {
 } from './constants';
 import { restoreCurrentPage } from '../Feed/actions';
 import local from '../../../config/local';
+import settings from '../../services/settings';
 
 /*
  * Update the input fields
@@ -112,38 +113,24 @@ export function addFeedback() {
   return (dispatch, getState) => {
     const { feedBack } = getState().get('settings').toJS();
     dispatch(updateIsLoadingFeedback(true));
-
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.post(
-          '/api/v1/user-feedback',
-          {
-            content: feedBack
-          },
-          {
-            headers: {
-              Authorization: token
-            }
-          }
-        )
-          .then((response) => {
-            if (response && response.data && response.data.meta.success === true && response.data.meta.message === 'Feedback created') {
-              dispatch({
-                type: UPDATE_FEEDBACK_POSTED,
-                status: true
-              });
-              dispatch(updateFeedback(response.data.data.content));
-              dispatch(updateIsLoadingFeedback(false));
-              dispatch(updateModalVisibility(false));
-              Toast.show(response.data.meta.message);
-            } else {
-              Toast.show('Wrong payload');
-            }
-          })
-          .catch((error) => {
-            Toast.show('Sorry, something went wrong');
-            console.log("Error", error);
+    settings.post({ content: feedBack })
+      .then((response) => {
+        if (response && response.data && response.data.meta.success === true && response.data.meta.message === 'Feedback created') {
+          dispatch({
+            type: UPDATE_FEEDBACK_POSTED,
+            status: true
           });
+          dispatch(updateFeedback(response.data.data.content));
+          dispatch(updateIsLoadingFeedback(false));
+          dispatch(updateModalVisibility(false));
+          Toast.show(response.data.meta.message);
+        } else {
+          Toast.show('Wrong payload');
+        }
+      })
+      .catch((error) => {
+        Toast.show('Sorry, something went wrong');
+        console.log('Error', error);
       });
   };
 }
