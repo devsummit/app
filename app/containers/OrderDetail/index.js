@@ -340,10 +340,10 @@ class OrderDetail extends Component {
           <Card>
             <CardItem>
               <Body>
-                <Text>{strings.order.total}</Text>
+                <Text>{strings.order.total.toUpperCase()}</Text>
               </Body>
               <Right>
-                <Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
+                <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
               </Right>
             </CardItem>
           </Card>
