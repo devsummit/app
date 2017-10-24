@@ -14,8 +14,7 @@ import {
   Row,
   Col,
   List,
-  Spinner,
-  Badge
+  Spinner
 } from 'native-base';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
@@ -261,18 +260,11 @@ class OrderDetail extends Component {
                     <Text style={styles.textButton}>save</Text>
                   </Button>
                 ) : (
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Badge>
-                      <Text style={{ fontWeight: 'bold' }}>{order.data[0].count}</Text>
-                    </Badge>
-                    <View>
-                      <Text
-                        style={[ styles.statusText, { width: 100, marginLeft: 5, backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                      >
-                        {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                      </Text>
-                    </View>
-                  </View>
+                  <Text
+                    style={[ styles.statusText, { width: 70, backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                  >
+                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
+                  </Text>
                 )}
                 <Row>
                   <Col>
@@ -322,6 +314,30 @@ class OrderDetail extends Component {
               </Grid>
             </CardItem>
           </Card>
+          {
+            <Content>
+              <List
+                dataArray={order.data}
+                renderRow={item => (
+                  <View>
+                    {this.state.status === 'not paid' ? (
+                      <View>
+                        <TicketType
+                          key={item.id}
+                          count={item.count}
+                          ticket={item.ticket}
+                          onAdd={() => this.increase(item.id)}
+                          onReduce={() => this.decrease(item.id)}
+                        />
+                      </View>
+                    ) : (
+                      <TicketDetail key={item.id} count={item.count} ticket={item.ticket} />
+                    )}
+                  </View>
+                )}
+              />
+            </Content>
+          }
           <Card>
             <CardItem>
               <Body>
@@ -414,9 +430,6 @@ class OrderDetail extends Component {
               verification ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
                   <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
-                  </Button>
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
@@ -429,23 +442,28 @@ class OrderDetail extends Component {
                     resizeMode={'cover'}
                     source={{ uri: this.props.paymentProof }}
                   />
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
+                  </Button>
                 </View>
               ) : (
                 <View>
                   <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
                     style={{
                       flex: 1,
-                      marginTop: 0,
-                      margin: 5,
+                      marginTop: -10,
                       alignSelf: 'center'
                     }}
                     resizeMode={'cover'}
                     source={noImage}
                   />
                   <Text style={styles.noImageText}>{strings.order.noProof}</Text>
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                  </Button>
                 </View>
               )
             ) : <View />}
