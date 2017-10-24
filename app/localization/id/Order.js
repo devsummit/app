@@ -25,6 +25,7 @@ export default {
   updateProof: 'Unggah Bukti Pembayaran',
   reuploadProof: 'Unggah Ulang Bukti Pembayaran',
   noProof: 'Belum ada bukti pembayaran',
+  downloadAcc: 'Unduh Referensi Akun',
 
   // Ticket list
   ticketNumber: 'No. tiket',
