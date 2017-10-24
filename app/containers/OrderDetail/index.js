@@ -61,7 +61,7 @@ class OrderDetail extends Component {
       modalVisible: false,
       scalesPageToFit: true,
       userId: '',
-      url: 'http://api.devsummit.io:8081/static/Ref_Bank.PDF'
+      url: 'https://api.devsummit.io/static/Ref_Bank.PDF'
     };
   }
 
