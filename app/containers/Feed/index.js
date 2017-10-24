@@ -542,6 +542,9 @@ class Feed extends Component {
             }
           >
             <OrderList />
+            {/* <Button rounded dark onPress={() => Actions.newOrder()}>
+              <Text>New Order</Text>
+            </Button> */}
             {!this.props.isConfirmEmail ? (
               <View />
             ) : (
