@@ -124,7 +124,6 @@ class OrderList extends Component {
 
   render() {
     const count = this.props.redeemCount === 10;
-    console.log('landing here this.props.orders', this.props.orders);
     if (this.state.isLoading) {
       return (
         <Container>
