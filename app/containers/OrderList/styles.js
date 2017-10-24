@@ -95,16 +95,16 @@ const styles = StyleSheet.create({
   invite: {
     color: '#FFFFFF',
     marginTop: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    backgroundColor: 'skyblue',
+    paddingVertical: 6,
+    paddingHorizontal: 20,
+    backgroundColor: PRIMARYCOLOR,
     fontWeight: 'bold'
   },
   inviteDisable: {
     color: '#FFFFFF',
     marginTop: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 20,
     backgroundColor: 'grey',
     fontWeight: 'bold'
   }

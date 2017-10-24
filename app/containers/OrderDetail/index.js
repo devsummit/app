@@ -25,7 +25,8 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Linking
 } from 'react-native';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -46,6 +47,7 @@ const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
+const noImage = require('./../../../assets/images/noimage.png');
 
 let total = 0;
 class OrderDetail extends Component {
@@ -58,7 +60,8 @@ class OrderDetail extends Component {
       color: '',
       modalVisible: false,
       scalesPageToFit: true,
-      userId: ''
+      userId: '',
+      url: 'https://api.devsummit.io/static/Ref_Bank.PDF'
     };
   }
 
@@ -208,10 +211,14 @@ class OrderDetail extends Component {
     this.props.getOrderDetail(this.props.id || this.props.navigation.state.params.id);
   }
 
+  getAccountReferal = () => {
+    Linking.openURL(this.state.url);
+  };
+
   render() {
     const { order, orderId } = this.props;
     const { included } = order || {};
-    const { payment } = included || {};
+    const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
@@ -225,6 +232,7 @@ class OrderDetail extends Component {
     }
     return (
       <Container style={styles.container}>
+        {/* Header View */}
         <View
           style={{
             flexDirection: 'row',
@@ -252,6 +260,18 @@ class OrderDetail extends Component {
           <Card>
             <CardItem>
               <Grid style={{ flex: 3 }}>
+                {status === 'not paid' ? (
+                  <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
+                    <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
+                    <Text style={styles.textButton}>save</Text>
+                  </Button>
+                ) : (
+                  <Text
+                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                  >
+                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
+                  </Text>
+                )}
                 <Row>
                   <Col>
                     <Text>{strings.order.orderNumber}</Text>
@@ -298,18 +318,6 @@ class OrderDetail extends Component {
                   <View />
                 ) */}
               </Grid>
-              {status === 'not paid' ? (
-                <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
-                  <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
-                  <Text style={styles.textButton}>save</Text>
-                </Button>
-              ) : (
-                <Text
-                  style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                >
-                  {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                </Text>
-              )}
             </CardItem>
           </Card>
           {
@@ -339,10 +347,10 @@ class OrderDetail extends Component {
           <Card>
             <CardItem>
               <Body>
-                <Text>{strings.order.total}</Text>
+                <Text>{strings.order.total.toUpperCase()}</Text>
               </Body>
               <Right>
-                <Text>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
+                <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
               </Right>
             </CardItem>
           </Card>
@@ -388,10 +396,6 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' && (
               <Card>
                 <View style={styles.card} resizeMode={'cover'}>
-                  <Image
-                    source={logo}
-                    style={{ width: width * 0.9, height: height * 0.2, marginRight: 'auto' }}
-                  />
                   <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
                   <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
                   <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
@@ -429,27 +433,46 @@ class OrderDetail extends Component {
               </Card>
             )}
             {payment.payment_type === 'offline' ? (
-              this.props.paymentProof !== '' ? (
+              verification ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>Reupload Payment Proof</Text>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
                     style={{
                       flex: 1,
                       height: 200,
+                      marginTop: 0,
                       margin: 10
                     }}
                     resizeMode={'cover'}
                     source={{ uri: this.props.paymentProof }}
                   />
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
+                  </Button>
                 </View>
               ) : (
-                <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                  <Text style={{ flex: 1, textAlign: 'center' }}>Update Payment Proof</Text>
-                </Button>
+                <View>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                  </Button>
+                  <Image
+                    style={{
+                      flex: 1,
+                      marginTop: -10,
+                      alignSelf: 'center'
+                    }}
+                    resizeMode={'cover'}
+                    source={noImage}
+                  />
+                  <Text style={styles.noImageText}>{strings.order.noProof}</Text>
+                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                  </Button>
+                </View>
               )
-            ) : null}
+            ) : <View />}
           </View>
         </Content>
       </Container>

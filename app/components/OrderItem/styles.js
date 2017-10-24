@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   viewText: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
-    marginTop: 12
+    marginTop: 0
   },
   buttonSection: {
     flex: 1,
@@ -61,10 +61,8 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   statusText: {
-    fontSize: 12,
-    borderRadius: 5,
-    color: 'white',
     fontWeight: 'bold',
+    borderRadius: 5,
     textAlign: 'center',
     padding: 8
   }

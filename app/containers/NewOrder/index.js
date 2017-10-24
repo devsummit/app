@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Content, Text, Card, CardItem, Body, Spinner, Input } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { Alert, View, TouchableOpacity } from 'react-native';
+import { Alert, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 
@@ -107,7 +107,7 @@ class NewOrder extends Component {
                             <Body>
                               <Text style={styles.title}>
                                 {ticket.ticket_type === 'full'
-                                  ? '3 days'
+                                  ? '3 DAYS'
                                   : ticket.ticket_type.toUpperCase()}
                               </Text>
                             </Body>
@@ -120,25 +120,19 @@ class NewOrder extends Component {
                           </View>
                         </View>
                         <View style={styles.btnGroup}>
-                          <Text
-                            style={styles.plusMinus}
-                            onPress={() => {
-                              this.decrease(ticket.id);
-                            }}
-                          >
-                            <Icon name="minus" />
-                          </Text>
-                          <Text style={styles.ticketCount}>
-                            {order[ticket.id] ? order[ticket.id].count : 0}
-                          </Text>
-                          <Text
-                            style={styles.plusMinus}
-                            onPress={() => {
-                              this.increase(ticket.id);
-                            }}
-                          >
-                            <Icon name="plus" />
-                          </Text>
+                          <TouchableWithoutFeedback onPress={() => { this.decrease(ticket.id); }}>
+                            <View style={styles.plusMinus}>
+                              <Icon name="minus" style={{ fontSize: 20 }}/>
+                            </View>
+                          </TouchableWithoutFeedback>
+                          <View style={styles.ticketCount}>
+                            <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
+                          </View>
+                          <TouchableWithoutFeedback onPress={() => { this.increase(ticket.id); }}>
+                            <View style={[ styles.plusMinus, { backgroundColor: '#2ecc71', borderColor: 'green' } ]}>
+                              <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
+                            </View>
+                          </TouchableWithoutFeedback>
                         </View>
                       </View>
                     </CardItem>

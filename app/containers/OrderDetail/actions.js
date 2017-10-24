@@ -39,6 +39,7 @@ export function setOrderId(value) {
 
 export function orderVerification(order, image) {
   return (dispatch) => {
+    dispatch(updateIsUpdatingOrder(true));
     const form = new FormData();
 
     if (Platform.OS === 'ios' && image.sourceURL) {
@@ -61,6 +62,7 @@ export function orderVerification(order, image) {
       .postPaymentProof(form)
       .then((response) => {
         dispatch(setPaymentProof(response.data.data.payment_proof));
+        dispatch(updateIsUpdatingOrder(false));
         Toast.show(response.data.meta.message);
       })
       .catch((err) => {

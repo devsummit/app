@@ -41,7 +41,9 @@ class OrderList extends Component {
     referalCount: 0,
     firstName: '',
     lastName: '',
-    modalVisibleConfirmation: false
+    modalVisibleConfirmation: false,
+    modalMyOrders: false,
+    isPaid: false
   };
 
   componentWillMount() {
@@ -68,6 +70,10 @@ class OrderList extends Component {
         isLoading: false
       });
     }
+  }
+
+  setModalMyOrders(visible) {
+    this.setState({ modalMyOrders: visible });
   }
 
   submitRegistration = () => {
@@ -118,7 +124,6 @@ class OrderList extends Component {
 
   render() {
     const count = this.props.redeemCount === 10;
-
     if (this.state.isLoading) {
       return (
         <Container>
@@ -166,6 +171,7 @@ class OrderList extends Component {
                         borderRadius={0}
                         progress={this.props.redeemCount / 10}
                         width={width * 0.5}
+                        color={PRIMARYCOLOR}
                       />
                       <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
                         <View>
@@ -178,30 +184,106 @@ class OrderList extends Component {
               </Card>
             )}
           </View>
+          <Button
+            style={{ margin: 10 }}
+            block
+            warning
+            onPress={() => {
+              this.setModalMyOrders(!this.state.modalMyOrders);
+            }}
+          >
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>My Orders</Text>
+          </Button>
+          <View style={{ marginTop: 5 }}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={this.state.modalMyOrders}
+              onRequestClose={() => {
+                this.setModalMyOrders(!this.state.modalMyOrders);
+              }}
+            >
+              <View style={{ marginTop: 5 }}>
+                <View>
+                  {/* <Text>Hello World!</Text>
+
+                  <TouchableHighlight onPress={() => {
+                    this.setModalMyOrders(!this.state.modalMyOrders);
+                  }}
+                  >
+                    <Text>Hide Modal</Text>
+                  </TouchableHighlight> */}
+                  {this.props.orders.length > 0 ? (
+                    <List>
+                      {this.props.orders.map((order) => {
+                        if (order.status !== 'paid') {
+                          return (
+                            <OrderItem
+                              key={order.id}
+                              order={order}
+                              confirmPayment={this.confirmPayment}
+                              onPress={() => {
+                                Actions.orderDetail({
+                                  orderId: order.id,
+                                  id: order.id
+                                });
+                              }}
+                            />
+                          );
+                        }
+                      })}
+                    </List>
+                  ) : <View /> }
+
+                </View>
+              </View>
+            </Modal>
+          </View>
           {this.props.orders.length > 0 ? (
-            <List>
-              {this.props.orders.map((order) => {
-                return (
-                  <OrderItem
-                    key={order.id}
-                    order={order}
-                    confirmPayment={this.confirmPayment}
-                    onPress={() => {
-                      Actions.orderDetail({
-                        orderId: order.id,
-                        id: order.id
-                      });
-                    }}
-                  />
-                );
-              })}
-            </List>
+            <View>
+              <List>
+                {this.props.orders.map((order) => {
+                  if (order.status === 'paid') {
+                    this.state.isPaid = true;
+                    return (
+                      <OrderItem
+                        key={order.id}
+                        order={order}
+                        confirmPayment={this.confirmPayment}
+                        onPress={() => {
+                          Actions.orderDetail({
+                            orderId: order.id,
+                            id: order.id
+                          });
+                        }}
+                      />
+                    );
+                  }
+                  return (
+                    <View />
+                  );
+                })}
+              </List>
+              {!this.state.isPaid ? (
+                <View style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+                >
+                  <Image source={noTicket} style={{ opacity: 0.7 }} />
+                  <Text>You do not have any ticket</Text>
+                </View>
+              ) : (
+                <View />
+              )}
+            </View>
           ) : (
             <View style={styles.artwork}>
               <Image source={noTicket} style={{ opacity: 0.7 }} />
               {!isConfirmEmail ? (
                 <View>
-                  <Text style={styles.artworkText}>Please Confirm Your Email First</Text>
+                  <Text style={styles.artworkText}>Please confirm your email first</Text>
                   <Button
                     block
                     style={{ margin: 10 }}
@@ -209,7 +291,7 @@ class OrderList extends Component {
                       this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
                   >
                     <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                      Resend Confirmation
+                      Resend confirmation
                     </Text>
                   </Button>
                   <Modal
