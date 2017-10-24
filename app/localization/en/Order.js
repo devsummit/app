@@ -26,6 +26,7 @@ export default {
   updateProof: 'Update Payment Proof',
   reuploadProof: 'Re-upload Payment Proof',
   noProof: 'No payment proof yet',
+  downloadAcc: 'Download Account Reference',
 
   // Ticket list
   ticketNumber: 'Ticket No.',
