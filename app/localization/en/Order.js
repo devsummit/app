@@ -25,6 +25,7 @@ export default {
   attention: 'Important: the payment deadline is 1 (one) hour. If the deadline exceeded then your order will be automatically canceled.',
   updateProof: 'Update Payment Proof',
   reuploadProof: 'Re-upload Payment Proof',
+  noProof: 'No payment proof yet',
 
   // Ticket list
   ticketNumber: 'Ticket No.',
