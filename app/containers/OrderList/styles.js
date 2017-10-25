@@ -107,6 +107,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'grey',
     fontWeight: 'bold'
+  },
+  modalConfirm: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)'
   }
 });
 
