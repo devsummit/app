@@ -92,7 +92,7 @@ export default class OrderItem extends Component {
             <View style={styles.viewText}>
               {status ? (
                 <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-                  {order.payment && order.payment.payment_type.toUpperCase()}
+                  {this.state.status.toUpperCase()}
                 </Text>
               ) : (
                 <View />
