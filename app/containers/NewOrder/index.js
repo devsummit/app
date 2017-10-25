@@ -115,8 +115,10 @@ class NewOrder extends Component {
                               <Text style={{ color: 'grey', fontWeight: 'bold', textDecorationLine: 'line-through', marginTop: 5, marginRight: 5 }}>
                                 Rp {Intl.NumberFormat('id').format(ticket.price) * 2}.000
                               </Text>
-                              <Icon.Button name="tags" backgroundColor="green">
-                                50%
+                              <Icon.Button name="tags" backgroundColor="green" size={10}>
+                                <Text style={{ fontSize: 10, color: '#FFFFFF' }}>
+                                  50%
+                                </Text>
                               </Icon.Button>
                             </View>
                             <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
@@ -137,7 +139,7 @@ class NewOrder extends Component {
                             <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
                           </View>
                           <TouchableWithoutFeedback onPress={() => { this.increase(ticket.id); }}>
-                            <View style={[ styles.plusMinus, { backgroundColor: '#2ecc71', borderColor: 'green' } ]}>
+                            <View style={[ styles.plusMinus, { backgroundColor: 'green', borderColor: 'green' } ]}>
                               <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
                             </View>
                           </TouchableWithoutFeedback>
