@@ -186,7 +186,7 @@ class OrderList extends Component {
             )}
           </View>
           <Button
-            style={{ margin: 10 }}
+            style={{ margin: 10, backgroundColor: '#FF6F00' }}
             block
             warning
             onPress={() => Actions.myOrders()}
@@ -204,14 +204,6 @@ class OrderList extends Component {
             >
               <View style={{ marginTop: 5 }}>
                 <View>
-                  {/* <Text>Hello World!</Text>
-
-                  <TouchableHighlight onPress={() => {
-                    this.setModalMyOrders(!this.state.modalMyOrders);
-                  }}
-                  >
-                    <Text>Hide Modal</Text>
-                  </TouchableHighlight> */}
                   {this.props.orders.length > 0 ? (
                     <List>
                       {this.props.orders.map((order) => {
@@ -271,7 +263,7 @@ class OrderList extends Component {
                 }}
                 >
                   <Image source={noTicket} style={{ opacity: 0.7 }} />
-                  <Text>You do not have any ticket</Text>
+                  <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
                 </View>
               ) : (
                 <View />
@@ -279,7 +271,6 @@ class OrderList extends Component {
             </View>
           ) : (
             <View style={styles.artwork}>
-              <Image source={noTicket} style={{ opacity: 0.7 }} />
               {!isConfirmEmail ? (
                 <View>
                   <Text style={styles.artworkText}>Please confirm your email first</Text>
@@ -334,7 +325,7 @@ class OrderList extends Component {
                   </Modal>
                 </View>
               ) : (
-                <Text style={styles.artworkText}>{strings.order.noTicket}</Text>
+                <View />
               )}
             </View>
           )}
