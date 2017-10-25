@@ -112,15 +112,15 @@ class NewOrder extends Component {
                               </Text>
                             </Body>
                             <View style={{ flexDirection: 'row' }}>
-                              <Text style={{ color: 'brown', fontWeight: 'bold', textDecorationLine: 'line-through', margin: 1 }}>
+                              <Text style={{ color: 'grey', fontWeight: 'bold', textDecorationLine: 'line-through', marginTop: 5, marginRight: 5 }}>
                                 Rp {Intl.NumberFormat('id').format(ticket.price) * 2}.000
                               </Text>
-                              <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
-                                Rp {Intl.NumberFormat('id').format(ticket.price)}
-                              </Text>
+                              <Icon.Button name="tags" backgroundColor="green">
+                                50%
+                              </Icon.Button>
                             </View>
                             <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
-                                50% discount
+                                Rp {Intl.NumberFormat('id').format(ticket.price)}
                             </Text>
                             <View style={{ flex: 1, flexDirection: 'column', flexWrap: 'wrap' }}>
                               <Text note>{ticket.information}</Text>
