@@ -86,8 +86,8 @@ class OrderList extends Component {
     return false;
   };
 
-  handleInputChange = (field, value) => {
-    this.props.updateInputFields(field, value);
+  handleInputChange = (fields, value) => {
+    this.props.updateInputFields(fields, value);
   };
 
   confirmPayment = (props) => {
@@ -120,6 +120,10 @@ class OrderList extends Component {
 
   setModalVisibleConfirmation(visible) {
     this.setState({ modalVisibleConfirmation: visible });
+  }
+
+  setConfirmEmail = () => {
+    this.props.setConfirmEmail(this.props.inputFields.email, () => this.setModalVisibleConfirmation(false));
   }
 
   render() {
@@ -284,51 +288,47 @@ class OrderList extends Component {
                       Resend confirmation
                     </Text>
                   </Button>
-                  <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisibleConfirmation}
-                    onRequestClose={() => {
-                      this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
-                    }}
-                  >
-                    <View style={{ marginTop: 22 }}>
-                      <View>
-                        <Form>
-                          <Item>
-                            <Input placeholder="E-Mail" />
-                          </Item>
-                        </Form>
-
-                        <Button
-                          block
-                          style={{ margin: 10 }}
-                          onPress={() => this.props.setConfirmEmail()}
-                        >
-                          <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                            Resend Confirmation
-                          </Text>
-                        </Button>
-                        <Button
-                          block
-                          style={{ margin: 10 }}
-                          onPress={() => {
-                            this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
-                          }}
-                        >
-                          <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                            Close
-                          </Text>
-                        </Button>
-                      </View>
-                    </View>
-                  </Modal>
                 </View>
               ) : (
                 <View />
               )}
             </View>
           )}
+          <Modal
+            animationType="slide"
+            transparent
+            visible={this.state.modalVisibleConfirmation}
+            onRequestClose={() => {
+              this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
+            }}
+          >
+            <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+              <View style={styles.modalConfirm}>
+                <TouchableWithoutFeedback
+                  onPress={() => this.setModalVisibleConfirmation(false)}
+                >
+                  <Icon style={styles.iconClose} name="times" />
+                </TouchableWithoutFeedback>
+                <View style={styles.viewModalConfirm}>
+                  <Icon name="envelope" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                    Resend Confirmation
+                  </Text>
+                </View>
+                <Item>
+                  <Input
+                    style={{borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)', marginHorizontal: 10 }}
+                    placeholder="email"
+                    placeholderTextColor="#BDBDBD"
+                    onChangeText={email => this.handleInputChange('email', email)}
+                  />
+                </Item>
+                <Button style={{ margin: 10, alignSelf: 'center', paddingHorizontal: 20, backgroundColor: PRIMARYCOLOR }} onPress={() => this.setConfirmEmail()} >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Send</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
         </Content>
       </Container>
     );
@@ -350,7 +350,8 @@ const mapStateToProps = createStructuredSelector({
   redeemCount: selectors.getRedeemCode(),
   redeemstatus: selectors.getReedemStatus(),
   inputFields: selectors.getInputFields(),
-  isConfirmEmail: selectors.getIsConfirmEmail()
+  isConfirmEmail: selectors.getIsConfirmEmail(),
+  isConfirmingEmail: selectors.getIsConfirmingEmail()
 });
 
 export default connect(mapStateToProps, actions)(OrderList);

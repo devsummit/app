@@ -109,6 +109,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderRadius: 3,
     fontWeight: 'bold'
+  },
+  modalConfirm: {
+    borderWidth: 5,
+    margin: 20,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    color: '#FFFFFF',
+    fontSize: 20
+  },
+  viewModalConfirm: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
   }
 });
 
