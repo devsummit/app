@@ -288,7 +288,6 @@ class OrderList extends Component {
                       Resend confirmation
                     </Text>
                   </Button>
-                  
                 </View>
               ) : (
                 <View />
@@ -303,35 +302,27 @@ class OrderList extends Component {
               this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
             }}
           >
-            <View style={styles.modalConfirm}>
-              <View style={{ backgroundColor: 'white', margin: 10 }}>
-                <View style={{ marginHorizontal: 10 }}>
-                  <Item>
-                    <Input
-                      placeholder="E-Mail"
-                      onChangeText={email => this.handleInputChange('email', email)}
-                    />
-                  </Item>
+            <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+              <View style={styles.modalConfirm}>
+                <TouchableWithoutFeedback
+                  onPress={() => this.setModalVisibleConfirmation(false)}
+                >
+                  <Icon style={styles.iconClose} name="times" />
+                </TouchableWithoutFeedback>
+                <View style={styles.viewModalConfirm}>
+                  <Icon name="envelope" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                    Resent Email Confirmation
+                  </Text>
                 </View>
-                <Button
-                  block
-                  style={{ margin: 10 }}
-                  onPress={() => this.setConfirmEmail()}
-                >
-                  <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                    Resend Confirmation
-                  </Text>
-                </Button>
-                <Button
-                  block
-                  style={{ margin: 10, backgroundColor: '#E0E0E0' }}
-                  onPress={() => {
-                    this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
-                  }}
-                >
-                  <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                    Close
-                  </Text>
+                <Item>
+                  <Input
+                    placeholder="E-Mail"
+                    onChangeText={email => this.handleInputChange('email', email)}
+                  />
+                </Item>
+                <Button style={{ margin: 10, alignSelf: 'center', paddingHorizontal: 10, backgroundColor: PRIMARYCOLOR }} onPress={() => this.setConfirmEmail()} >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Sent Confirmation</Text>
                 </Button>
               </View>
             </View>
