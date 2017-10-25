@@ -46,12 +46,12 @@ const styles = StyleSheet.create({
   btnCheckOut: {
     borderRadius: 30,
     borderColor: 'transparent',
-    elevation: 0,
+    elevation: 0
   },
   viewText: {
     flex: 0,
     flexDirection: 'row',
-    marginTop: 0
+    marginTop: 8
   },
   buttonSection: {
     flex: 1,

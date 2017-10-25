@@ -19,31 +19,11 @@ import OrderList from '../../containers/OrderList';
 const icon = require('./../../../assets/images/icon.png');
 
 const MyOrders = (props) => {
-  // console.log('landing here this.props myOrders', props);
   return (
     <ScrollView>
       <View style={styles.container}>
-        {/* <View style={{ flex: 1, alignItems: 'center' }}>
-          <Image
-            source={icon}
-            resizeMode="center"
-          />
-          <Text style={styles.app}>Devsummit</Text>
-        </View> */}
-
-
-        {/*  */}
-
         <View style={{ marginTop: 5 }}>
           <View>
-            {/* <Text>Hello World!</Text>
-
-                  <TouchableHighlight onPress={() => {
-                    this.setModalMyOrders(!this.state.modalMyOrders);
-                  }}
-                  >
-                    <Text>Hide Modal</Text>
-                  </TouchableHighlight> */}
             {props.orders.length > 0 ? (
               <List>
                 {props.orders.map((order) => {
@@ -68,8 +48,6 @@ const MyOrders = (props) => {
 
           </View>
         </View>
-        {/*  */}
-
       </View>
     </ScrollView>
   );
@@ -78,7 +56,7 @@ const MyOrders = (props) => {
 // export default MyOrders;
 
 MyOrders.propTypes = {
-  orders: PropTypes.array.isRequired,
+  orders: PropTypes.array.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -86,4 +64,3 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default connect(mapStateToProps, actions)(MyOrders);
-
