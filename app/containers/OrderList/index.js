@@ -317,8 +317,9 @@ class OrderList extends Component {
                 </View>
                 <Item>
                   <Input
-                    style={{borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)'}}
+                    style={{borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)', marginHorizontal: 10 }}
                     placeholder="email"
+                    placeholderTextColor="#BDBDBD"
                     onChangeText={email => this.handleInputChange('email', email)}
                   />
                 </Item>
