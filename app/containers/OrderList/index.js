@@ -312,17 +312,18 @@ class OrderList extends Component {
                 <View style={styles.viewModalConfirm}>
                   <Icon name="envelope" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
                   <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
-                    Resent Email Confirmation
+                    Resend Confirmation
                   </Text>
                 </View>
                 <Item>
                   <Input
-                    placeholder="E-Mail"
+                    style={{borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)'}}
+                    placeholder="email"
                     onChangeText={email => this.handleInputChange('email', email)}
                   />
                 </Item>
-                <Button style={{ margin: 10, alignSelf: 'center', paddingHorizontal: 10, backgroundColor: PRIMARYCOLOR }} onPress={() => this.setConfirmEmail()} >
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Sent Confirmation</Text>
+                <Button style={{ margin: 10, alignSelf: 'center', paddingHorizontal: 20, backgroundColor: PRIMARYCOLOR }} onPress={() => this.setConfirmEmail()} >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Send</Text>
                 </Button>
               </View>
             </View>
