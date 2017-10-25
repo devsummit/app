@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: PRIMARYCOLOR,
     fontWeight: 'bold',
-    marginTop: 20
+    margin: 20
   },
   redeem: {
     borderWidth: 5,
