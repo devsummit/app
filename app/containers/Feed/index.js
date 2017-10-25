@@ -759,12 +759,17 @@ class Feed extends Component {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
           <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808' }}>
-            <View style={{ flex: 1, flexDirection: 'column', margin: 10 }}>
+            <View style={{ flex: 1, flexDirection: 'column', margin: 10, position: 'relative' }}>
               <Image
                 source={{ uri: this.state.imagePreview }}
                 resizeMode={'contain'}
                 style={{ flex: 1 }}
               />
+              <TouchableOpacity
+                  style={{ height: '100%', width: '100%', position: 'absolute'}}
+                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
+              >
+              </TouchableOpacity>
               {Platform === 'ios' ? (
                 <CloseO
                   size={30}
