@@ -20,7 +20,6 @@ const icon = require('./../../../assets/images/icon.png');
 const noTicket = require('./../../../assets/images/noticket.png');
 
 const MyOrders = (props) => {
-  // console.log('landing here this.props myOrders', props);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -71,8 +70,6 @@ const MyOrders = (props) => {
             </View>
           }
         </View>
-        {/*  */}
-
       </View>
     </ScrollView>
   );
@@ -89,4 +86,3 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default connect(mapStateToProps, actions)(MyOrders);
-
