@@ -127,14 +127,14 @@ class BoothList extends Component {
               </Text>
             </Button>) : <View />
           }
-          <View style={{backgroundColor: '#FF6F00', padding: 10, paddingRight: 12 }}>
+          <View style={{ borderRadius: 5, padding: 10, paddingRight: 12 }}>
             <IconFA
-              name="question"
+              name="question-circle-o"
               onPress={() => this.setModalVisible(true)}
               style={{
                 elevation: 2,
                 alignSelf: 'center',
-                color: 'white',
+                color: '#FFFFFF',
                 fontSize: 25
               }}
             />
