@@ -111,9 +111,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   modalConfirm: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)'
+    borderWidth: 5,
+    margin: 20,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    color: '#FFFFFF',
+    fontSize: 20
+  },
+  viewModalConfirm: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
   }
 });
 
