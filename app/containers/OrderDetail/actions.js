@@ -198,9 +198,9 @@ export function confirmPayment(id) {
 export function downloadPdf() {
   return (dispatch) => {
     const dirs = RNFetchBlob.fs.dirs;
-    const pdfPath = dirs.MainBundleDir;
+    const pdfPath = RNFetchBlob.fs.asset('Bank.Ref.PDF');
     const documentPath = dirs.DownloadDir;
-    RNFetchBlob.fs.cp(pdfPath.concat('/ref.pdf'), documentPath)
+    RNFetchBlob.fs.cp(pdfPath, documentPath.concat('/Bank.Ref.PDF'))
       .then(() => {
         Toast.show('Success downloading file');
       })
