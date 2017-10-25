@@ -435,7 +435,7 @@ class Feed extends Component {
                                 </TouchableOpacity>
                                 <View
                                   style={{
-                                    borderBottomColor: '#BDBDBD',
+                                    borderBottomColor: '#E0E0E0',
                                     borderWidth: 0.5,
                                     marginRight: -20
                                   }}

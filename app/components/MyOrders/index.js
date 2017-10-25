@@ -17,36 +17,58 @@ import OrderList from '../../containers/OrderList';
 
 
 const icon = require('./../../../assets/images/icon.png');
+const noTicket = require('./../../../assets/images/noticket.png');
 
 const MyOrders = (props) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={{ marginTop: 5 }}>
-          <View>
-            {props.orders.length > 0 ? (
-              <List>
-                {props.orders.map((order) => {
-                  if (order.status !== 'paid') {
-                    return (
-                      <OrderItem
-                        key={order.id}
-                        order={order}
-                        confirmPayment={this.confirmPayment}
-                        onPress={() => {
-                          Actions.orderDetail({
-                            orderId: order.id,
-                            id: order.id
-                          });
-                        }}
-                      />
-                    );
-                  }
-                })}
-              </List>
-            ) : <View /> }
+        {/* <View style={{ flex: 1, alignItems: 'center' }}>
+          <Image
+            source={icon}
+            resizeMode="center"
+          />
+          <Text style={styles.app}>Devsummit</Text>
+        </View> */}
 
-          </View>
+
+        {/*  */}
+
+        <View style={{ marginTop: 5, backgroundColor: 'transparent' }}>
+          {/* <Text>Hello World!</Text>
+
+                  <TouchableHighlight onPress={() => {
+                    this.setModalMyOrders(!this.state.modalMyOrders);
+                  }}
+                  >
+                    <Text>Hide Modal</Text>
+                  </TouchableHighlight> */}
+          {props.orders.length > 0 ? (
+            <List>
+              {props.orders.map((order) => {
+                if (order.status !== 'paid') {
+                  return (
+                    <OrderItem
+                      key={order.id}
+                      order={order}
+                      confirmPayment={this.confirmPayment}
+                      onPress={() => {
+                        Actions.orderDetail({
+                          orderId: order.id,
+                          id: order.id
+                        });
+                      }}
+                    />
+                  );
+                }
+              })}
+            </List>
+          ) :
+            <View style={styles.artwork} >
+              <Image source={noTicket} style={{ opacity: 0.5, marginTop: 150 }} />
+              <Text style={styles.artworkText}>You do not have any ticket</Text>
+            </View>
+          }
         </View>
       </View>
     </ScrollView>
