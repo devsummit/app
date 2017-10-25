@@ -420,7 +420,7 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' ? (
               verification ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
@@ -439,7 +439,7 @@ class OrderDetail extends Component {
                 </View>
               ) : (
                 <View>
-                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
