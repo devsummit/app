@@ -44,7 +44,7 @@ const MyOrders = (props) => {
                   >
                     <Text>Hide Modal</Text>
                   </TouchableHighlight> */}
-          {props.orders.length === 0 ? (
+          {props.orders.length > 0 ? (
             <List>
               {props.orders.map((order) => {
                 if (order.status !== 'paid') {
