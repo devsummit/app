@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 20,
     backgroundColor: PRIMARYCOLOR,
+    borderRadius: 3,
     fontWeight: 'bold'
   },
   inviteDisable: {
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 20,
     backgroundColor: 'grey',
+    borderRadius: 3,
     fontWeight: 'bold'
   }
 });
