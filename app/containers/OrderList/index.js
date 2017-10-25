@@ -174,11 +174,11 @@ class OrderList extends Component {
                         width={width * 0.5}
                         color={PRIMARYCOLOR}
                       />
-                      <TouchableWithoutFeedback onPress={() => this.invite()} disabled={count}>
+                      <TouchableOpacity onPress={() => this.invite()} disabled={count}>
                         <View>
                           <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
                         </View>
-                      </TouchableWithoutFeedback>
+                      </TouchableOpacity>
                     </View>
                   )}
                 </View>
