@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: '#FF6F00',
     justifyContent: 'center',
+    borderRadius: 5
   },
   btnDownload: {
     backgroundColor: '#F44336',
