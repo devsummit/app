@@ -191,7 +191,7 @@ class OrderList extends Component {
             warning
             onPress={() => Actions.myOrders()}
           >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>My Orders</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>My Orders ({this.props.orders.length})</Text>
           </Button>
           <View style={{ marginTop: 5 }}>
             <Modal
