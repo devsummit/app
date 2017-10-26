@@ -41,7 +41,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
+import { transactionStatus, getProfileData, localeDateWithoutHour } from '../../helpers';
 
 const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
@@ -270,7 +270,7 @@ class OrderDetail extends Component {
                     <Text>{strings.order.orderDate}</Text>
                   </Col>
                   <Col>
-                    <Text>{localeDate(order.data[0].created_at)}</Text>
+                    <Text>{localeDateWithoutHour(order.data[0].created_at)}</Text>
                   </Col>
                 </Row>
                 {/* order.included.payment ? (
