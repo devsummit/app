@@ -79,7 +79,8 @@ const styles = StyleSheet.create({
   },
   artworkImage: {
     opacity: 0.7
-  }
+  },
+  noMaterialText: { alignSelf: 'center', fontSize: 15, color: 'grey', marginVertical: 15 }
 });
 
 export default styles;
