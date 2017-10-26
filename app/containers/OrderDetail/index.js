@@ -262,7 +262,7 @@ class OrderDetail extends Component {
                     <Text>{strings.order.orderNumber}</Text>
                   </Col>
                   <Col>
-                    <Text>{this.props.id}</Text>
+                    <Text>{this.props.order.data[0].order_id}</Text>
                   </Col>
                 </Row>
                 <Row>
