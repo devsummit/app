@@ -418,7 +418,7 @@ class OrderDetail extends Component {
               </Card>
             )}
             {payment.payment_type === 'offline' ? (
-              verification ? (
+              this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
                   <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
