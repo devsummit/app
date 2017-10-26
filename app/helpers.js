@@ -88,8 +88,8 @@ export const localeDate = (date) => {
 
 export const localeDateWithoutHour = (date) => {
   return Moment.utc(date)
-    .local()
-    .format('DD-MM-YYYY');
+    .locale([ 'en', 'id' ])
+    .format('DD-MMM-YYYY');
 };
 
 export const expiryDate = (date) => {
