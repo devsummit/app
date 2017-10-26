@@ -38,6 +38,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent'
   },
+  tabs: {
+  },
+  tabHeading: {
+    flex: 1,
+    backgroundColor: '#FF6F00'
+  },
+  tabTitle: {
+    fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '500',
+    color: '#FFF'
+  },
+  tabBarSelectedItemStyle: {
+    borderBottomWidth: 2,
+    borderBottomColor: 'red'
+  }
 });
 
 export default styles;
