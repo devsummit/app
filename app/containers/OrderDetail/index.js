@@ -62,7 +62,6 @@ class OrderDetail extends Component {
       modalVisible: false,
       scalesPageToFit: true,
       userId: '',
-      
     };
   }
 
@@ -213,7 +212,7 @@ class OrderDetail extends Component {
   }
 
   getAccountReferal = () => {
-    Linking.openURL(this.state.url);
+    Linking.openURL(url);
   };
 
   render() {
