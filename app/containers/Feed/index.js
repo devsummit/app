@@ -250,12 +250,12 @@ class Feed extends Component<Props, State> {
     this.setState({ modalReport: visible });
   };
 
-  setModalWebView = (visible, link) => {
+  setModalWebView = (visible: boolean, link: string) => {
     this.setState({ modalWebView: visible });
     this.state.link = link;
   };
 
-  setModalHackaton = (visible) => {
+  setModalHackaton = (visible: boolean) => {
     this.setState({ modalHackaton: visible });
   };
 
@@ -304,7 +304,7 @@ class Feed extends Component<Props, State> {
 
   _keyExtractor = (item, index) => item.id;
 
-  onOpen = (message, attachment) => {
+  onOpen = (message: string, attachment: string) => {
     Share.open({
       title: 'Devsummit Indonesia',
       message: message,
@@ -313,7 +313,7 @@ class Feed extends Component<Props, State> {
     });
   };
 
-  alertRemoveFeed = (postId) => {
+  alertRemoveFeed = (postId: number) => {
     Alert.alert(
       '',
       'Are you sure you want to delete this post?',
@@ -347,7 +347,7 @@ class Feed extends Component<Props, State> {
     this.setState({ optionVisible: false });
   };
 
-  handleInputChange = (value) => {
+  handleInputChange = (value: string) => {
     this.setState({ report: value });
   };
 
