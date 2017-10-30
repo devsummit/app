@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Picker, Item, Button, Text, Card, CardItem } from 'native-base';
+import { Container, Content, Picker, Item, Button, Text, Card, CardItem, Left, Body, Right } from 'native-base';
 import { View, ActivityIndicator, Alert, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
@@ -192,32 +192,45 @@ class Payment extends Component {
 
     return (
       <Container style={styles.container}>
-        <Content>
-          <Text style={styles.littleText}>{strings.payment.method}</Text>
-          <Button
-            style={styles.button}
-            onPress={() => {
-              this.payWithPaypalAlert();
-            }}
+        <View style={{ flex: 0, marginHorizontal: 10, marginVertical: 10, elevation: 4, borderWidth: 0 }}>
+          <TouchableOpacity
+            style={styles.buttonPayment}
+            onPress={() => { this.payWithPaypalAlert(); }}
           >
-            {paypalChecking && <ActivityIndicator color={'white'} />}
-            <Text>
-              {paypalChecking ? strings.payment.checkingPayment : strings.payment.payWithPaypal}
-            </Text>
-          </Button>
-
-          <Button
-            style={styles.button}
-            onPress={() => {
-              this.payWithBankTransfer();
-            }}
+            <CardItem header>
+              {paypalChecking && <ActivityIndicator color={'white'} />}
+              <Text>{paypalChecking ? strings.payment.checkingPayment : strings.payment.payWithPaypal}</Text>
+              <Right>
+                <Icon name="chevron-right" size={18} />
+              </Right>
+            </CardItem>
+          </TouchableOpacity>
+          <CardItem>
+            <Left>
+              <Icon name="paypal" size={23} color={'skyblue'} />
+            </Left>
+          </CardItem>
+        </View>
+        <View style={{ flex: 0, marginHorizontal: 10, elevation: 4, borderWidth: 0 }}>
+          <TouchableOpacity
+            style={styles.buttonPayment}
+            onPress={() => { this.payWithBankTransfer(); }}
             disabled={false}
           >
-            <Text>{'Bank Transfers'}</Text>
-          </Button>
-
-          {/* Bank Transfer Card */}
-        </Content>
+            <CardItem header>
+              {paypalChecking && <ActivityIndicator color={'white'} />}
+              <Text>{'Bank Transfers'}</Text>
+              <Right>
+                <Icon name="chevron-right" size={18} />
+              </Right>
+            </CardItem>
+          </TouchableOpacity >
+          <CardItem>
+            <Left>
+              <Icon name="credit-card" size={23} color={'skyblue'} />
+            </Left>
+          </CardItem>
+        </View>
       </Container>
     );
   }

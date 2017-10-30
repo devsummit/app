@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     height: 50,
     backgroundColor: '#FF8B00',
     paddingTop: (Platform.OS === 'ios') ? 10 : 0
@@ -16,6 +18,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white'
+  },
+  notificationIcon: {
+    elevation: 2,
+    color: '#FFF',
+    fontSize: 20
   }
 });
 

@@ -1,0 +1,9 @@
+export const SET_ORDER_LIST = 'app/components/MyOrders/SET_ORDER_LIST';
+export const IS_FETCHING_ORDERS = 'app/components/MyOrders/IS_FETCHING_ORDERS';
+export const SET_CONFIRM_PAYMENT = 'app/components/MyOrders/SET_CONFIRM_PAYMENT';
+export const IS_CONFIRMING_PAYMENT = 'app/components/MyOrders/IS_CONFIRMING_PAYMENT';
+export const PENDING_ORDERS = 'app/components/MyOrders/PENDING_ORDERS';
+export const REDEEM_COUNTER = 'app/components/MyOrders/REDEEM_COUNTER';
+export const UPDATE_SINGLE_INPUT_FIELD = 'app/components/MyOrders/UPDATE_SINGLE_INPUT_FIELD';
+export const IS_CONFIRM_EMAIL = 'app/components/MyOrders/IS_CONFIRM_EMAIL';
+export const SET_CONFIRM_EMAIL = 'app/components/MyOrders/SET_CONFIRM_EMAIL';

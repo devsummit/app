@@ -39,6 +39,7 @@ import Profile from './containers/Profile';
 import Notification from './containers/Notification';
 import CodeConduct from './components/CodeConduct';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import MyOrders from './components/MyOrders';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -114,7 +115,7 @@ export default class App extends Component {
               <Scene key="ticketList" component={TicketList} title="List Ticket" />
               <Scene key="orderList" component={OrderList} title="Order List" />
               <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
-              <Scene key="orderDetail" component={OrderDetail} title="Order Detail" hideNavBar/>
+              <Scene key="orderDetail" component={OrderDetail} title="Order Detail" />
               <Scene key="schedule" component={Schedule} hideNavBar title="Schedule" />
               <Scene key="scheduleDetail" component={ScheduleDetail} title={this.props.title} />
               <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
@@ -130,6 +131,7 @@ export default class App extends Component {
               <Scene key="notification" component={Notification} title="Notification" />
               <Scene key="codeConduct" component={CodeConduct} title="Code of Conduct" />
               <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
+              <Scene key="myOrders" component={MyOrders} title="My Orders" />
             </Scene>
           </RouterWithRedux>
         </Provider>

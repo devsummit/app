@@ -1,6 +1,6 @@
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken, getProfileData } from '../../helpers';
-import { updateDataStorage } from '../Profile/actions';
+import { updateDataStorage } from '../../containers/Profile/actions';
 import orderlist from '../../services/orderlist';
 
 /*
@@ -15,34 +15,16 @@ import {
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
   IS_CONFIRM_EMAIL,
-  IS_CONFIRMING_EMAIL
+  SET_CONFIRM_EMAIL
 } from './constants';
 
-export function isConfirmingEmail(status) {
-  return {
-    type: IS_CONFIRMING_EMAIL,
-    status
+export function setConfirmEmail() {
+  return (dispatch) => {
+    orderlist.postConfirmEmail().then((response) => {
+      Toast.show('please check your email', Toast.SHORT);
+    });
   };
 }
-
-export function setConfirmEmail(email, callBack = () => {}) {
-  return () => {
-    orderlist.postConfirmEmail(email).then((response) => {
-      const data = response.data.meta;
-
-      if (data.success) {
-        callBack();
-        Toast.show(data.message);
-      } else {
-        Toast.show(data.message);
-      }
-    })
-      .catch((err) => {
-        console.log(err, 'Error Cauhgt')
-      })
-  };
-}
-
 export function updateInputFields(field, value) {
   return {
     type: UPDATE_SINGLE_INPUT_FIELD,

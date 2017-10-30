@@ -5,7 +5,10 @@ import {
   Text,
   Card,
   CardItem,
-  Body
+  Body,
+  Badge,
+  View,
+  Left
 } from 'native-base';
 import styles from './styles';
 
@@ -14,14 +17,16 @@ export default (props) => {
   return (
     <Card key={ticket.id}>
       <CardItem>
-        <Body style={styles.summary}>
-          <Text>{ticket.ticket_type}</Text>
-          <Text note style={{ color: 'green' }}>
-            Rp {Intl.NumberFormat('id').format(ticket.price)}
-          </Text>
-          <Text note>{ticket.information}</Text>
-        </Body>
-        <Text style={styles.ticketCount}> Amount : {props.count}</Text>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <View flex={1}>
+            <Text note>{ticket.information}</Text>
+          </View>
+          <View>
+            <Badge success>
+              <Text>Badge : {props.count}</Text>
+            </Badge>
+          </View>
+        </View>
       </CardItem>
     </Card>
   );

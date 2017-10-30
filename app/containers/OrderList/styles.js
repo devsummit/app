@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: PRIMARYCOLOR,
     fontWeight: 'bold',
-    marginTop: 20,
+    margin: 20,
     textAlign: 'center'
   },
   artworkTextConfirm: {
@@ -95,18 +95,42 @@ const styles = StyleSheet.create({
   invite: {
     color: '#FFFFFF',
     marginTop: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    backgroundColor: 'skyblue',
+    paddingVertical: 6,
+    paddingHorizontal: 20,
+    backgroundColor: PRIMARYCOLOR,
+    borderRadius: 3,
     fontWeight: 'bold'
   },
   inviteDisable: {
     color: '#FFFFFF',
     marginTop: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 20,
     backgroundColor: 'grey',
+    borderRadius: 3,
     fontWeight: 'bold'
+  },
+  modalConfirm: {
+    borderWidth: 5,
+    margin: 20,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  iconClose: {
+    backgroundColor: PRIMARYCOLOR,
+    textAlign: 'right',
+    padding: 10,
+    color: '#FFFFFF',
+    fontSize: 20
+  },
+  viewModalConfirm: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
   }
 });
 

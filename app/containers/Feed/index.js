@@ -42,8 +42,8 @@ import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Entypo';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import IconSimpleLine from 'react-native-vector-icons/SimpleLineIcons';
+import Share from 'react-native-share';
 import CloseO from 'react-native-vector-icons/EvilIcons';
-import Share, { ShareSheet, Button } from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 import 'moment/locale/pt-br';
 import styles from './styles';
@@ -57,6 +57,8 @@ import { PRIMARYCOLOR, API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 import { isConfirm } from '../../helpers';
 import { getIsConfirmEmail } from '../OrderList/selectors';
+import { SECTIONS2 } from '../../constants';
+import AccordionView2 from '../BoothList/Accordion2';
 
 const socket = openSocket(API_BASE_URL);
 const noFeeds = require('./../../../assets/images/nofeed.png');
@@ -201,16 +203,9 @@ class Feed extends Component<Props, State> {
       modalReport: false,
       optionVisible: false,
       report: '',
-      shareOptions: {
-        message: '',
-        url: null
-      },
-      shareTwitter: {
-        message: '',
-        url: null
-      },
       modalWebView: false,
-      link: ''
+      link: '',
+      modalHackaton: false
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -255,29 +250,13 @@ class Feed extends Component<Props, State> {
     this.setState({ modalReport: visible });
   };
 
-  onOpen = (_message, _url) => {
-    this.setState({ visible: true });
-
-    let urlTwitter = '';
-    const share = Object.assign({}, this.state.shareOptions);
-    const shareTwitter = Object.assign({}, this.state.shareTwitter);
-
-    if (_url === null) {
-      urlTwitter = '';
-    } else {
-      urlTwitter = _url;
-    }
-
-    shareTwitter.message = _message;
-    shareTwitter.url = urlTwitter;
-    share.message = _message;
-    share.url = _url;
-    this.setState({ shareOptions: share, shareTwitter });
-  };
-
   setModalWebView = (visible, link) => {
     this.setState({ modalWebView: visible });
     this.state.link = link;
+  };
+
+  setModalHackaton = (visible) => {
+    this.setState({ modalHackaton: visible });
   };
 
   postFeed = (callback) => {
@@ -304,6 +283,7 @@ class Feed extends Component<Props, State> {
     ImagePicker.openCamera({
       width: 400,
       height: 300,
+      cropping: true,
       includeBase64: true
     })
       .then((image) => {
@@ -323,6 +303,15 @@ class Feed extends Component<Props, State> {
   };
 
   _keyExtractor = (item, index) => item.id;
+
+  onOpen = (message, attachment) => {
+    Share.open({
+      title: 'Devsummit Indonesia',
+      message: message,
+      url: attachment,
+      subject: 'Devsummit Indonesia'
+    });
+  };
 
   alertRemoveFeed = (postId) => {
     Alert.alert(
@@ -362,34 +351,14 @@ class Feed extends Component<Props, State> {
     this.setState({ report: value });
   };
 
+  setPaymentMethod = (ticketPrice) => {
+    Actions.payment({ ticketPrice });
+  };
+
   render() {
     return (
       <Container style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#FF8B00',
-            justifyContent: 'space-between'
-          }}
-        >
-          <HeaderPoint title={strings.feed.title} />
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end'
-            }}
-          >
-            <TouchableWithoutFeedback onPress={() => Actions.notification()}>
-              <View style={styles.viewNotification}>
-                <CameraIcon
-                  name="bell"
-                  style={styles.notificationIcon}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
+        <HeaderPoint title={strings.feed.title} />
         <Tabs style={styles.tabs} initialPage={this.props.activePage || 0}>
           <Tab
             heading={
@@ -507,7 +476,7 @@ class Feed extends Component<Props, State> {
                                 </TouchableOpacity>
                                 <View
                                   style={{
-                                    borderBottomColor: '#BDBDBD',
+                                    borderBottomColor: '#E0E0E0',
                                     borderWidth: 0.5,
                                     marginRight: -20
                                   }}
@@ -614,29 +583,32 @@ class Feed extends Component<Props, State> {
             }
           >
             <OrderList />
+            {/* <Button rounded dark onPress={() => Actions.newOrder()}>
+              <Text>New Order</Text>
+            </Button> */}
             {!this.props.isConfirmEmail ? (
               <View />
             ) : (
-              <ActionButton buttonColor={'#FF8B00'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
-                <ActionButton.Item title="New Order" style={{ backgroundColor: '#FF8B00', height: 40, width: 40 }} onPress={() => Actions.newOrder()}>
+              <ActionButton buttonColor={'#FF8B00'} bgColor={'rgba(0,0,0,0.5)'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
+                <ActionButton.Item title="New Order" buttonColor={PRIMARYCOLOR} onPress={() => Actions.newOrder()}>
                   <CameraIcon
                     name="ticket"
                     color="#FFFFFF"
-                    style={{ textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Ticket List" style={{ backgroundColor: '#FF8B00' }} onPress={() => Actions.ticketList()}>
+                <ActionButton.Item title="Register Hackaton" buttonColor={PRIMARYCOLOR} onPress={() => this.setModalHackaton(true)}>
                   <CameraIcon
-                    name="list"
+                    name="code"
                     color="#FFFFFF"
-                    style={{ textAlign: 'center', fontSize: 23 }}
+                    style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Redeem Code" style={{ backgroundColor: '#FF8B00' }} onPress={() => this.setModalRedeem(true)}>
+                <ActionButton.Item title="Redeem Code" buttonColor={'#00C853'} onPress={() => this.setModalRedeem(true)}>
                   <CameraIcon
                     name="gift"
                     color="#FFFFFF"
-                    style={{ textAlign: 'center', fontSize: 30 }}
+                    style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
               </ActionButton>
@@ -664,6 +636,31 @@ class Feed extends Component<Props, State> {
                 </Text>
               </View>
               <Redeem />
+            </View>
+          </View>
+        </Modal>
+        {/* modal hackaton */}
+        <Modal
+          animationType="fade"
+          visible={this.state.modalHackaton}
+          onRequestClose={() => this.setModalHackaton(!this.state.modalHackaton)}
+          transparent
+        >
+          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View style={styles.redeem}>
+              <TouchableWithoutFeedback
+                onPress={() => this.setModalHackaton(!this.state.modalHackaton)}
+              >
+                <CameraIcon style={styles.iconClose} name="times" />
+              </TouchableWithoutFeedback>
+              {/* <View style={styles.viewredeem}>
+                <CameraIcon name="gift" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                  {strings.redeem.redeem}
+                </Text>
+              </View>
+              <Redeem /> */}
+              <AccordionView2 onPress={() => this.setModalHackaton(!this.state.modalHackaton)} setPaymentMethod={this.setPaymentMethod} />
             </View>
           </View>
         </Modal>
@@ -742,7 +739,8 @@ class Feed extends Component<Props, State> {
                       </View>
                     </TouchableOpacity>
                     {this.props.textData !== '' ||
-                    (this.props.imagesData.path || this.props.imagesData.sourceURL) ? (
+                    (this.props.imagesData.path || this.props.imagesData.sourceURL) ?
+                      (
                       <TouchableOpacity onPress={() => this.postFeed()}>
                         <View
                           style={{
@@ -755,9 +753,7 @@ class Feed extends Component<Props, State> {
                             justifyContent: 'center'
                           }}
                         >
-                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>
-                          Post
-                          </Text>
+                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
                         </View>
                       </TouchableOpacity>
                       ) : (
@@ -804,12 +800,17 @@ class Feed extends Component<Props, State> {
           onRequestClose={() => this.setModalVisible(!this.state.modalVisible)}
         >
           <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#080808' }}>
-            <View style={{ flex: 1, flexDirection: 'column', margin: 10 }}>
+            <View style={{ flex: 1, flexDirection: 'column', margin: 10, position: 'relative' }}>
               <Image
                 source={{ uri: this.state.imagePreview }}
                 resizeMode={'contain'}
                 style={{ flex: 1 }}
               />
+              <TouchableOpacity
+                  style={{ height: '100%', width: '100%', position: 'absolute'}}
+                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
+              >
+              </TouchableOpacity>
               {Platform === 'ios' ? (
                 <CloseO
                   size={30}
@@ -851,42 +852,6 @@ class Feed extends Component<Props, State> {
             </Picker>
           </View>
         </Modal>
-        {/* Sheet For Share */}
-        <ShareSheet visible={this.state.visible} onCancel={this.onCancel}>
-          <Button
-            iconSrc={{ uri: TWITTER_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareTwitter, { social: 'twitter' }));
-              }, 300);
-            }}
-          >
-            {strings.global.twitter}
-          </Button>
-          <Button
-            iconSrc={{ uri: FACEBOOK_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'facebook' }));
-              }, 300);
-            }}
-          >
-            {strings.global.facebook}
-          </Button>
-          <Button
-            iconSrc={{ uri: WHATSAPP_ICON }}
-            onPress={() => {
-              this.onCancel();
-              setTimeout(() => {
-                Share.shareSingle(Object.assign(this.state.shareOptions, { social: 'whatsapp' }));
-              }, 300);
-            }}
-          >
-            {strings.global.whatsapp}
-          </Button>
-        </ShareSheet>
       </Container>
     );
   }

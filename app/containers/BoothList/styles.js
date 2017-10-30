@@ -9,10 +9,11 @@ const styles = StyleSheet.create({
   },
   btnBooth: {
     alignSelf: 'center',
-    width: '40%',
+    width: '70%',
     margin: 20,
     backgroundColor: '#FF6F00',
     justifyContent: 'center',
+    borderRadius: 5
   },
   btnDownload: {
     backgroundColor: '#F44336',
@@ -94,6 +95,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 25
+  },
+  profilePic2: {
+    height: 150,
+    width: 150,
+    borderRadius: 25,
   },
   name: {
     color: '#333',
