@@ -21,6 +21,20 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as ticketSelectors from '../TicketList/selectors';
 
+// @flow
+type Props = {
+  listAttendees?: Array<mixed>,
+  isTransferring: boolean,
+  isGettingTicket: boolean,
+  ticketId: number,
+  isGettingAttendees: boolean,
+  fetchingAttendeeStat: boolean
+};
+
+type State = {
+  isLoading: boolean
+};
+
 class AttendeesList extends Component {
   state = {
     isLoading: true
@@ -45,7 +59,7 @@ class AttendeesList extends Component {
     }
   }
 
-  handleTransferPressed = (ticketId, receiverId, targetName) => {
+  handleTransferPressed = (ticketId: number, receiverId: number, targetName: string) => {
     Alert.alert(
       strings.attendeesList.confirm,
       targetName,
