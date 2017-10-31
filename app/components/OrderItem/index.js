@@ -22,7 +22,7 @@ export default class OrderItem extends Component {
     const { payment } = this.props.order;
     stat = transactionStatus(payment);
     this.setState({
-      status: stat.message,
+      status: this.props.order.status,
       color: stat.color
     });
     const { order } = this.props;
@@ -81,6 +81,8 @@ export default class OrderItem extends Component {
   render() {
     const { status, color } = this.state;
     const { order } = this.props;
+    console.log('landing here orderItem this.state', this.state);
+    console.log('landing here this.props orderItem', this.props.order);
     return (
       <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
@@ -90,9 +92,9 @@ export default class OrderItem extends Component {
               {localeDate(order.created_at)}
             </Text>
             <View style={styles.viewText}>
-              {status ? (
+              {this.props.order.status ? (
                 <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-                  {this.state.status.toUpperCase()}
+                  {this.props.order.status.toUpperCase()}
                 </Text>
               ) : (
                 <View />
