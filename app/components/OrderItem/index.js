@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import { TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CountDownTimer from 'react_native_countdowntimer';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { formatDate, transactionStatus, localeDate } from '../../helpers';
+import { formatDate, transactionStatus, localeDate, localeDateAddOneHour } from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
 let amount = 0;
 export default class OrderItem extends Component {
@@ -91,10 +92,31 @@ export default class OrderItem extends Component {
             <Text note style={styles.orderId}>
               {localeDate(order.created_at)}
             </Text>
+            { (this.props.order.status === 'in progress') ? (
+              <View style={{ marginVertical: 5 }}>
+                <CountDownTimer
+                  // date={new Date(parseInt(endTime))}
+                  date={localeDateAddOneHour(order.created_at)}
+                  days={{ plural: 'Days ', singular: 'day ' }}
+                  hours=":"
+                  mins=":"
+                  segs=""
+
+                  daysStyle={styles.time}
+                  hoursStyle={styles.time}
+                  minsStyle={styles.time}
+                  secsStyle={styles.time}
+                  firstColonStyle={styles.colon}
+                  secondColonStyle={styles.colon}
+                />
+              </View>
+            ) : (<View />)
+            }
+
             <View style={{ flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center'}}
+              alignItems: 'center' }}
             >
               <View style={styles.viewText}>
                 {status ? (

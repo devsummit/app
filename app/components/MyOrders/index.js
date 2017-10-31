@@ -6,6 +6,8 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import CountDownTimer from 'react_native_countdowntimer';
+
 
 import OrderItem from '../OrderItem';
 import * as actions from './actions';
