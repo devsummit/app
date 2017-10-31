@@ -41,7 +41,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
+import { localeDateWithoutHour, transactionStatus, getProfileData } from '../../helpers';
 
 const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
@@ -244,7 +244,7 @@ class OrderDetail extends Component {
         >
           <Card>
             <CardItem>
-              <Grid style={{ flex: 3 }}>
+              <Grid>
                 {status === 'not paid' ? (
                   <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
                     <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
@@ -258,19 +258,19 @@ class OrderDetail extends Component {
                   </Text>
                 )}
                 <Row>
-                  <Col>
+                  <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderNumber}</Text>
                   </Col>
-                  <Col>
+                  <Col style={{ flex: 3 }}>
                     <Text>{this.props.id}</Text>
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderDate}</Text>
                   </Col>
-                  <Col>
-                    <Text>{localeDate(order.data[0].created_at)}</Text>
+                  <Col style={{ flex: 3 }}>
+                    <Text>{localeDateWithoutHour(order.data[0].created_at)}</Text>
                   </Col>
                 </Row>
                 {/* order.included.payment ? (
