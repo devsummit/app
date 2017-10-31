@@ -3,7 +3,6 @@ package io.devsummit.app.android;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import br.com.vizir.rn.paypal.PayPalPackage;
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
@@ -56,7 +55,6 @@ public class MainApplication extends Application implements ReactApplication {
       MainApplication.paypalPackage = new PayPalPackage(PAY_PAL_REQUEST_ID);
       return Arrays.asList(
           new MainReactPackage(),
-            new RNFetchBlobPackage(),
             new RNVersionNumberPackage(),
           new ReactNativeLocalizationPackage(),
               MainApplication.getPaypalPackage(),
