@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView, Text, Image } from 'react-native';
 
-import { Container, Header, Tab, Tabs, TabHeading, Icon, List } from 'native-base';
+import { List } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -14,13 +14,12 @@ import Button from '../../components/Button';
 import styles from './style';
 import strings from '../../localization';
 import OrderList from '../../containers/OrderList';
-
+import { getUpdateOrderStatus, getPaymentProof } from '../../containers/OrderDetail/selectors';
 
 const icon = require('./../../../assets/images/icon.png');
 const noTicket = require('./../../../assets/images/noticket.png');
 
 const MyOrders = (props) => {
-  // console.log('landing here props', props);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -53,6 +52,8 @@ const MyOrders = (props) => {
                       key={order.id}
                       order={order}
                       confirmPayment={this.confirmPayment}
+                      statusProgress={props.orderStatus}
+                      paymentProof={props.paymentProof}
                       onPress={() => {
                         Actions.orderDetail({
                           orderId: order.id,
@@ -83,7 +84,9 @@ MyOrders.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  orders: selectors.getOrders()
+  orders: selectors.getOrders(),
+  orderStatus: getUpdateOrderStatus(),
+  paymentProof: getPaymentProof()
 });
 
 export default connect(mapStateToProps, actions)(MyOrders);
