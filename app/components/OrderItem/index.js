@@ -83,10 +83,10 @@ export default class OrderItem extends Component {
   render() {
     const { status, color } = this.state;
     const { order } = this.props;
-    console.log('landing here orderItem this.state', this.state);
-    console.log('landing here this.props orderItem', this.props.order);
-    console.log('landing here localeDateAddOneHour', localeDateAddOneHour(order.created_at));
-    console.log('landing here moment()', Moment());
+    // console.log('landing here orderItem this.state', this.state);
+    // console.log('landing here this.props orderItem', this.props.order);
+    // console.log('landing here localeDateAddOneHour', localeDateAddOneHour(order.created_at));
+    // console.log('landing here moment()', Moment());
     return (
       <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
