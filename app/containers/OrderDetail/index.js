@@ -261,8 +261,8 @@ class OrderDetail extends Component {
                   <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderNumber}</Text>
                   </Col>
-                  <Col style={{ flex: 3 }}>
-                    <Text>{this.props.id}</Text>
+                  <Col>
+                    <Text>{this.props.order.data[0].order_id}</Text>
                   </Col>
                 </Row>
                 <Row>
