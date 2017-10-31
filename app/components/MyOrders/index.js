@@ -20,11 +20,7 @@ const icon = require('./../../../assets/images/icon.png');
 const noTicket = require('./../../../assets/images/noticket.png');
 
 const MyOrders = (props) => {
-<<<<<<< HEAD
   console.log('landing here myOrders props.order', props.orders);
-=======
-  // console.log('landing here props', props);
->>>>>>> origin
   return (
     <ScrollView>
       <View style={styles.container}>
