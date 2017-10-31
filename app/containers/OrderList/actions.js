@@ -15,7 +15,8 @@ import {
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
   IS_CONFIRM_EMAIL,
-  IS_CONFIRMING_EMAIL
+  IS_CONFIRMING_EMAIL,
+  FETCH_COMMUNITY
 } from './constants';
 
 export function isConfirmingEmail(status) {
@@ -220,5 +221,21 @@ export function register(callBack) {
           console.log(error, 'error caught');
         });
     }
+  };
+}
+
+export function fetchCommunity() {
+  return (dispatch) => {
+    orderlist
+      .fetchCommunity()
+      .then((res) => {
+        console.log('response fetch community', res);
+        const payloads = res.data;
+
+        dispatch({ type: FETCH_COMMUNITY, payloads });
+      })
+      .catch((err) => {
+        console.log(err, 'error caught');
+      });
   };
 }
