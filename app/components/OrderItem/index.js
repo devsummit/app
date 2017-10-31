@@ -75,6 +75,29 @@ export default class OrderItem extends Component {
     return color;
   };
 
+  ticketTypes = () => {
+    const type = this.props.order.type;
+    if (type === 'user') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#EF5350', color: 'white' } ]}>
+          EVENT
+        </Text>
+      );
+    } else if (type === 'hackaton') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#1DE9B6', color: 'white' } ]}>
+          HACKATON
+        </Text>
+      );
+    }
+
+    return (
+      <Text note style={[ styles.statusText, { backgroundColor: '#42A5F5', color: 'white' } ]}>
+        EXHIBITORS
+      </Text>
+    );
+  }
+
   formatDate = (source) => {
     const dt = source.split(' ');
     return `${dt[1]}-${dt[2]}-${dt[3]}`;
@@ -148,15 +171,6 @@ export default class OrderItem extends Component {
                 )} */}
               </View>
               <Text />
-              <View style={styles.viewText}>
-                {status ? (
-                  <Text note style={[ styles.statusText, { backgroundColor: 'green', color: 'white' } ]}>
-                    {order.type.toUpperCase()}
-                  </Text>
-                ) : (
-                  <View />
-                )}
-              </View>
             </View>
           </View>
         </View>
