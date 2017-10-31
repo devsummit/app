@@ -1,3 +1,4 @@
+
 import 'intl';
 import 'intl/locale-data/jsonp/id';
 import React, { Component } from 'react';
@@ -64,7 +65,7 @@ export default class OrderItem extends Component {
       color = 'red';
     } else if (stat === 'paid') {
       color = 'green';
-    } else if (stat === 'need authorization') {
+    } else if (stat === 'in progress') {
       color = 'blue';
     } else {
       color = '#777';
@@ -101,9 +102,34 @@ export default class OrderItem extends Component {
     return `${dt[1]}-${dt[2]}-${dt[3]}`;
   };
 
-  render() {
+  statusLabel = () => {
     const { status, color } = this.state;
-    const { order } = this.props;
+    const { paymentProof } = this.props;
+    if (status) {
+      return (
+        <View style={{ flexDirection: 'row', marginTop: 8 }}>
+          <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
+            {this.state.status.toUpperCase()}
+          </Text>
+          {this.ticketTypes()}
+        </View>
+      );
+    } else if (paymentProof) {
+      return (
+        <View style={{ flexDirection: 'row', marginTop: 8 }}>
+          <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
+            IN PROGRESS
+          </Text>
+          {this.ticketTypes()}
+        </View>
+      );
+    }
+    <View/>
+  }
+
+  render() {
+    const { order, paymentProof } = this.props;
+    console.log("PAYMEBRPROOF", paymentProof);
     return (
       <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
@@ -118,16 +144,7 @@ export default class OrderItem extends Component {
               alignItems: 'center' }}
             >
               <View style={styles.viewText}>
-                {status ? (
-                  <View style={{ flexDirection: 'row', marginTop: 8 }}>
-                    <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-                      {this.state.status.toUpperCase()}
-                    </Text>
-                    {this.ticketTypes()}
-                  </View>
-                ) : (
-                  <View />
-                )}
+                {this.statusLabel()}
               </View>
               <Text />
             </View>
