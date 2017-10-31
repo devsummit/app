@@ -48,6 +48,7 @@ const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
 const noImage = require('./../../../assets/images/noimage.png');
+const url = 'https://api.devsummit.io/static/Ref_Bank.PDF';
 
 let total = 0;
 class OrderDetail extends Component {
@@ -61,7 +62,6 @@ class OrderDetail extends Component {
       modalVisible: false,
       scalesPageToFit: true,
       userId: '',
-      url: 'https://api.devsummit.io/static/Ref_Bank.PDF'
     };
   }
 
@@ -212,7 +212,7 @@ class OrderDetail extends Component {
   }
 
   getAccountReferal = () => {
-    Linking.openURL(this.state.url);
+    Linking.openURL(url);
   };
 
   render() {
@@ -420,7 +420,7 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' ? (
               this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
@@ -439,7 +439,7 @@ class OrderDetail extends Component {
                 </View>
               ) : (
                 <View>
-                  <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
