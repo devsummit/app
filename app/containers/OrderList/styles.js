@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   counterText: {
-    fontSize: 12,
+    fontSize: 14,
     marginBottom: 4
   },
   invite: {
