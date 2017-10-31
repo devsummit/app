@@ -250,13 +250,21 @@ class OrderDetail extends Component {
                     <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
                     <Text style={styles.textButton}>save</Text>
                   </Button>
-                ) : (
-                  <Text
-                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                  >
-                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                  </Text>
-                )}
+                ) : (status === 'in process' ?
+                  (
+                    <Text
+                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                    >
+                      {this.state.status.toUpperCase()}
+                    </Text>
+                  )
+                  : (
+                    <Text
+                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                    >
+                      {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
+                    </Text>
+                  ))}
                 <Row>
                   <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderNumber}</Text>
