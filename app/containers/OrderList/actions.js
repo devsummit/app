@@ -193,7 +193,6 @@ export function register(callBack) {
           const profileData = JSON.stringify(response.data.included);
           try {
             if (response && response.data.data && response.data.meta.success) {
-              console.log('landing here register orderlist: ', response);
               AsyncStorage.multiSet([
                 [ 'access_token', resData.access_token ],
                 [ 'refresh_token', resData.refresh_token ],
@@ -224,7 +223,7 @@ export function register(callBack) {
   };
 }
 
-export function fetchCommunity() {
+export function getCommunity() {
   return (dispatch) => {
     orderlist
       .fetchCommunity()
