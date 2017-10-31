@@ -49,6 +49,7 @@ class OrderList extends Component {
 
   componentWillMount() {
     this.props.getOrderList();
+    this.props.getCommunity();
 
     getProfileData()
       .then((data) => {
@@ -168,7 +169,7 @@ class OrderList extends Component {
                           style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
                         />
                         <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
-                        CLAIM
+                          CLAIM
                         </Text>
                       </TouchableOpacity>
                       {!isConfirmEmail ? (
@@ -205,7 +206,7 @@ class OrderList extends Component {
                           style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
                         />
                         <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
-                        CLAIM
+                          CLAIM
                         </Text>
                       </TouchableOpacity>
                       {!isConfirmEmail ? (
@@ -384,7 +385,8 @@ OrderList.propTypes = {
   confirmPayment: PropTypes.func.isRequired,
   getOrderList: PropTypes.func.isRequired,
   isConfirming: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  getCommunity: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
