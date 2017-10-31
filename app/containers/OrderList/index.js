@@ -149,46 +149,48 @@ class OrderList extends Component {
             />
           }
         >
-          <View style={{ marginTop: 10, marginHorizontal: 10 }}>
-            {this.props.redeemCount > 10 ? null : (
-              <Card>
-                <View style={styles.card}>
-                  <TouchableOpacity
-                    style={styles.buttonClaim}
-                    disabled={!count}
-                    onPress={() => this.props.submitReferal()}
-                  >
-                    <Icon
-                      name="gift"
-                      style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
-                    />
-                    <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
-                      CLAIM
-                    </Text>
-                  </TouchableOpacity>
-                  {!isConfirmEmail ? (
-                    <View />
-                  ) : (
-                    <View style={styles.inviteField}>
-                      <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                      <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
-                      <ProgressBar
-                        borderRadius={0}
-                        progress={this.props.redeemCount / 10}
-                        width={width * 0.5}
-                        color={PRIMARYCOLOR}
+          {!this.state.isPaid ?
+            <View style={{ marginTop: 10, marginHorizontal: 10 }}>
+              {this.props.redeemCount > 10 ? null : (
+                <Card>
+                  <View style={styles.card}>
+                    <TouchableOpacity
+                      style={styles.buttonClaim}
+                      disabled={!count}
+                      onPress={() => this.props.submitReferal()}
+                    >
+                      <Icon
+                        name="gift"
+                        style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
                       />
-                      <TouchableOpacity onPress={() => this.invite()} disabled={count}>
-                        <View>
-                          <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-              </Card>
-            )}
-          </View>
+                      <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
+                      CLAIM
+                      </Text>
+                    </TouchableOpacity>
+                    {!isConfirmEmail ? (
+                      <View />
+                    ) : (
+                      <View style={styles.inviteField}>
+                        <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
+                        <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
+                        <ProgressBar
+                          borderRadius={0}
+                          progress={this.props.redeemCount / 10}
+                          width={width * 0.5}
+                          color={PRIMARYCOLOR}
+                        />
+                        <TouchableOpacity onPress={() => this.invite()} disabled={count}>
+                          <View>
+                            <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                </Card>
+              )}
+            </View> :
+            <View />}
           <Button
             style={{ margin: 10, backgroundColor: '#FF6F00' }}
             block
@@ -317,7 +319,7 @@ class OrderList extends Component {
                 </View>
                 <Item>
                   <Input
-                    style={{borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)', marginHorizontal: 10 }}
+                    style={{ borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)', marginHorizontal: 10 }}
                     placeholder="email"
                     placeholderTextColor="#BDBDBD"
                     onChangeText={email => this.handleInputChange('email', email)}

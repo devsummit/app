@@ -96,7 +96,7 @@ class ScheduleDetail extends Component {
                   inactiveSlideScale={0.3}
                   autoplayDelay={3000}
                   autoplayInterval={3000}
-                  onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
+                  onSnapToItem={index => this.setState({ slider1ActiveSlide: index })}
                 />
               </View>
             </Image> : <View />
@@ -147,9 +147,7 @@ class ScheduleDetail extends Component {
           }
           {type === 'speaker' ?
             <Card>
-              <CardItem>
-                <MaterialList speakerId={speakerId} />
-              </CardItem>
+              <MaterialList speakerId={speakerId} />
             </Card> : <View />
           }
         </View>

@@ -143,7 +143,6 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
     payment
       .post(data)
       .then((response) => {
-        // console.log('landing here paywithpaypal response', response);
         if (response.data.included[0].ticket.type === 'user') {
           return Promise.all([
             Promise.resolve(response.data.data),

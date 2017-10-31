@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView, Text, Image } from 'react-native';
 
-import { List } from 'native-base';
+import { Container, Header, Tab, Tabs, TabHeading, Icon, List } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -20,17 +20,21 @@ const icon = require('./../../../assets/images/icon.png');
 const noTicket = require('./../../../assets/images/noticket.png');
 
 const MyOrders = (props) => {
+<<<<<<< HEAD
   console.log('landing here myOrders props.order', props.orders);
+=======
+  // console.log('landing here props', props);
+>>>>>>> origin
   return (
     <ScrollView>
       <View style={styles.container}>
         {/* <View style={{ flex: 1, alignItems: 'center' }}>
-          <Image
-            source={icon}
-            resizeMode="center"
-          />
-          <Text style={styles.app}>Devsummit</Text>
-        </View> */}
+     <Image
+       source={icon}
+       resizeMode="center"
+     />
+     <Text style={styles.app}>Devsummit</Text>
+   </View> */}
 
 
         {/*  */}
@@ -38,12 +42,12 @@ const MyOrders = (props) => {
         <View style={{ marginTop: 5, backgroundColor: 'transparent' }}>
           {/* <Text>Hello World!</Text>
 
-                  <TouchableHighlight onPress={() => {
-                    this.setModalMyOrders(!this.state.modalMyOrders);
-                  }}
-                  >
-                    <Text>Hide Modal</Text>
-                  </TouchableHighlight> */}
+             <TouchableHighlight onPress={() => {
+               this.setModalMyOrders(!this.state.modalMyOrders);
+             }}
+             >
+               <Text>Hide Modal</Text>
+             </TouchableHighlight> */}
           {props.orders.length > 0 ? (
             <List>
               {props.orders.map((order) => {

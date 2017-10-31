@@ -13,7 +13,7 @@ import {
   Body,
   Fab
 } from 'native-base';
-import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal, WebView, Linking } from 'react-native';
+import { ScrollView, Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal, WebView, Linking } from 'react-native';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/Ionicons';
@@ -127,7 +127,7 @@ class MaterialList extends Component {
         </Button>);
     }
     return (
-      <Text style={{ alignSelf: 'center' }}>There are no materials</Text>
+      <Text style={styles.noMaterialText}>{strings.material.noMaterial}</Text>
     );
   }
 
@@ -135,7 +135,7 @@ class MaterialList extends Component {
     const { material, inputFields, speakerId } = this.props;
     const WEBVIEW_REF = 'webview';
     return (
-      <Container>
+      <ScrollView>
         <Content>
           <HeaderPoint title={strings.material.title} />
           {
@@ -213,7 +213,7 @@ class MaterialList extends Component {
             <Icon name="plus" />
           </Fab>
           : <View />}
-      </Container>
+      </ScrollView>
     );
   }
 }

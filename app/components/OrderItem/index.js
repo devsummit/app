@@ -91,6 +91,7 @@ export default class OrderItem extends Component {
             <Text note style={styles.orderId}>
               {localeDate(order.created_at)}
             </Text>
+<<<<<<< HEAD
             <View style={styles.viewText}>
               {this.props.order.status ? (
                 <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
@@ -99,6 +100,32 @@ export default class OrderItem extends Component {
               ) : (
                 <View />
               )}
+=======
+            <View style={{ flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center'  }}
+            >
+              <View style={styles.viewText}>
+                {status ? (
+                  <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
+                    {this.state.status.toUpperCase()}
+                  </Text>
+                ) : (
+                  <View />
+                )}
+              </View>
+              <Text />
+              <View style={styles.viewText}>
+                {status ? (
+                  <Text note style={[ styles.statusText, { backgroundColor: 'green', color: 'white' } ]}>
+                    {order.type.toUpperCase()}
+                  </Text>
+                ) : (
+                  <View />
+                )}
+              </View>
+>>>>>>> origin
             </View>
           </View>
         </View>

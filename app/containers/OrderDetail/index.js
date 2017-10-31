@@ -41,13 +41,14 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDate, expiryDate, transactionStatus, getProfileData } from '../../helpers';
+import { localeDateWithoutHour, transactionStatus, getProfileData } from '../../helpers';
 
 const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
 const noImage = require('./../../../assets/images/noimage.png');
+const url = 'https://api.devsummit.io/static/Ref_Bank.PDF';
 
 let total = 0;
 class OrderDetail extends Component {
@@ -61,7 +62,6 @@ class OrderDetail extends Component {
       modalVisible: false,
       scalesPageToFit: true,
       userId: '',
-      url: 'https://api.devsummit.io/static/Ref_Bank.PDF'
     };
   }
 
@@ -212,7 +212,7 @@ class OrderDetail extends Component {
   }
 
   getAccountReferal = () => {
-    Linking.openURL(this.state.url);
+    Linking.openURL(url);
   };
 
   render() {
@@ -244,7 +244,7 @@ class OrderDetail extends Component {
         >
           <Card>
             <CardItem>
-              <Grid style={{ flex: 3 }}>
+              <Grid>
                 {status === 'not paid' ? (
                   <Button style={styles.roundButton} onPress={() => this.saveOrder()}>
                     <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
@@ -258,19 +258,19 @@ class OrderDetail extends Component {
                   </Text>
                 )}
                 <Row>
-                  <Col>
+                  <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderNumber}</Text>
                   </Col>
-                  <Col>
-                    <Text>{this.props.id}</Text>
+                  <Col style={{ flex: 3 }}>
+                    <Text>{this.props.id || this.props.order.data[0].order_id}</Text>
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
+                  <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderDate}</Text>
                   </Col>
-                  <Col>
-                    <Text>{localeDate(order.data[0].created_at)}</Text>
+                  <Col style={{ flex: 3 }}>
+                    <Text>{localeDateWithoutHour(order.data[0].created_at)}</Text>
                   </Col>
                 </Row>
                 {/* order.included.payment ? (
@@ -420,7 +420,7 @@ class OrderDetail extends Component {
             {payment.payment_type === 'offline' ? (
               this.props.paymentProof !== '' ? (
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
@@ -439,7 +439,7 @@ class OrderDetail extends Component {
                 </View>
               ) : (
                 <View>
-                  <Button style={styles.buttonSubmit} onPress={() => this.props.downloadPdf()}>
+                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
                     <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
                   </Button>
                   <Image
