@@ -7,9 +7,10 @@ import { TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CountDownTimer from 'react_native_countdowntimer';
+import Moment from 'moment';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { formatDate, transactionStatus, localeDate, localeDateAddOneHour } from '../../helpers';
+import { formatDate, transactionStatus, localeDate, localeDateAddOneHour, checkLocaleDateAddOneHour} from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
 let amount = 0;
 export default class OrderItem extends Component {
@@ -84,6 +85,8 @@ export default class OrderItem extends Component {
     const { order } = this.props;
     console.log('landing here orderItem this.state', this.state);
     console.log('landing here this.props orderItem', this.props.order);
+    console.log('landing here localeDateAddOneHour', localeDateAddOneHour(order.created_at));
+    console.log('landing here moment()', Moment());
     return (
       <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
@@ -92,7 +95,7 @@ export default class OrderItem extends Component {
             <Text note style={styles.orderId}>
               {localeDate(order.created_at)}
             </Text>
-            { (this.props.order.status === 'in progress') ? (
+            { (this.props.order.status === 'pending' && !checkLocaleDateAddOneHour(order.created_at)) ? (
               <View style={{ marginVertical: 5 }}>
                 <CountDownTimer
                   // date={new Date(parseInt(endTime))}
@@ -119,13 +122,30 @@ export default class OrderItem extends Component {
               alignItems: 'center' }}
             >
               <View style={styles.viewText}>
-                {status ? (
+
+                {
+                  (checkLocaleDateAddOneHour(order.created_at)) && (this.props.order.status === 'pending')
+                    ?
+                    (
+                      <Text note style={[ styles.statusText, { backgroundColor: 'green', color: 'white' } ]}>
+                      VERIFIED
+                      </Text>
+                    )
+                    :
+                    (
+                      <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
+                        {this.props.order.status.toUpperCase()}
+                      </Text>
+                    )
+                }
+
+                {/* {status ? (
                   <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
                     {this.state.status.toUpperCase()}
                   </Text>
                 ) : (
                   <View />
-                )}
+                )} */}
               </View>
               <Text />
               <View style={styles.viewText}>
