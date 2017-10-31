@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderRadius: 5,
     textAlign: 'center',
-    padding: 8
+    padding: 8,
+    marginRight: 4
   }
 });
 
