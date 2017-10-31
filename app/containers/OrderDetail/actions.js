@@ -67,6 +67,7 @@ export function orderVerification(order, image) {
       })
       .catch((err) => {
         Toast.show('Sorry, something went wrong');
+        dispatch(updateIsUpdatingOrder(false));
         console.log('ERROR', err);
       });
   };
