@@ -9,5 +9,6 @@ export default {
   remove: 'Anda yakin ingin menghapus materi?',
   deleted: 'Materi telah di hapus',
   set: 'Setel',
-  used: 'Digunakan'
+  used: 'Digunakan',
+  noMaterial: 'Tidak ada materi'
 };
