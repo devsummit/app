@@ -652,14 +652,9 @@ class Feed extends Component {
           visible={this.state.postToFeeds}
           onRequestClose={() => this.setModalPost(!this.state.postToFeeds)}
         >
-          <Card>
-            <KeyboardAvoidingView>
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                ref={ref => (this.scrollView = ref)}
-                onContentSizeChange={(height, width) =>
-                  this.scrollView.scrollToEnd({ animated: true })}
-              >
+          <Container style={{ marginVertical: '15%' }}>
+            <Card>
+              <KeyboardAvoidingView>
                 <CardItem>
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
@@ -747,9 +742,9 @@ class Feed extends Component {
                       />
                     </CardItem>
                   )}
-              </ScrollView>
-            </KeyboardAvoidingView>
-          </Card>
+              </KeyboardAvoidingView>
+            </Card>
+          </Container>
         </Modal>
         {/* Modal for picture preview */}
         <Modal
