@@ -86,6 +86,16 @@ export const localeDate = (date) => {
     .format('YYYY-MM-DD HH:mm:ss');
 };
 
+export const localeDateAddOneHour = (date) => {
+  return Moment.utc(date).add(1, 'hours')
+    .local()
+    .format('YYYY-MM-DD HH:mm:ss');
+};
+
+export const checkLocaleDateAddOneHour = (date) => {
+  return Moment.utc(date).add(1, 'hours').isBefore(Moment())
+};
+
 export const localeDateWithoutHour = (date) => {
   return Moment.utc(date)
     .locale([ 'en', 'id' ])
