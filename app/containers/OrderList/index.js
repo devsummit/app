@@ -53,7 +53,6 @@ class OrderList extends Component {
 
     getProfileData()
       .then((data) => {
-        console.log('profile', data);
         this.setState({
           firstName: data.first_name,
           lastName: data.last_name,
