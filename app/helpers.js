@@ -117,6 +117,11 @@ export const transactionStatus = (payment) => {
         color: 'red'
       };
     }
+    else if (payment.transaction_status === 'in progress') {
+      return {
+        message: 'in progress',
+        color: 'red'
+      };
     return {
       message: payment.transaction_status,
       color: 'grey'
