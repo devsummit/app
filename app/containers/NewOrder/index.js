@@ -115,15 +115,15 @@ class NewOrder extends Component {
                               <Text style={{ color: 'grey', fontWeight: 'bold', textDecorationLine: 'line-through', marginTop: 5, marginRight: 5 }}>
                                 Rp {Intl.NumberFormat('id').format(ticket.price) * 2}.000
                               </Text>
-                              <Icon.Button name="tags" backgroundColor="green" size={10}>
-                                <Text style={{ fontSize: 10, color: '#FFFFFF' }}>
-                                  50%
-                                </Text>
-                              </Icon.Button>
+                              <Text style={{ fontSize: 14, color: 'grey', lineHeight: 27, fontWeight: 'bold' }}>
+                                <Icon name="tags"/> 50%
+                              </Text>
                             </View>
-                            <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
-                                Rp {Intl.NumberFormat('id').format(ticket.price)}
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                              <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
+                                  Rp {Intl.NumberFormat('id').format(ticket.price)}
+                              </Text>
+                            </View>
                             <View style={{ flex: 1, flexDirection: 'column', flexWrap: 'wrap' }}>
                               <Text note>{ticket.information}</Text>
                             </View>
@@ -139,7 +139,7 @@ class NewOrder extends Component {
                             <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
                           </View>
                           <TouchableWithoutFeedback onPress={() => { this.increase(ticket.id); }}>
-                            <View style={[ styles.plusMinus, { backgroundColor: 'green', borderColor: 'green' } ]}>
+                            <View style={[ styles.plusMinus, { backgroundColor: '#FF6F00', borderColor: 'green' } ]}>
                               <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
                             </View>
                           </TouchableWithoutFeedback>
