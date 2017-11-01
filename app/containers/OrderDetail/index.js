@@ -8,6 +8,7 @@ import {
   Card,
   CardItem,
   Body,
+  Left,
   Right,
   Button,
   Grid,
@@ -331,12 +332,16 @@ class OrderDetail extends Component {
           }
           <Card>
             <CardItem>
-              <Body>
-                <Text>{strings.order.total.toUpperCase()}</Text>
-              </Body>
-              <Right>
-                <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
-              </Right>
+              <Content>
+                <Grid>
+                  <Col style={{flex: 2}}>
+                    <Text>{strings.order.total.toUpperCase()}</Text>
+                  </Col>
+                  <Col style={{flex: 3}}>
+                    <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
+                  </Col>
+                </Grid>
+              </Content>
             </CardItem>
           </Card>
 
@@ -380,41 +385,43 @@ class OrderDetail extends Component {
           <View>
             {payment.payment_type === 'offline' && (
               <Card>
-                <View style={styles.card} resizeMode={'cover'}>
-                  <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
-                  <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-                  <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
-                  <Text style={styles.textTitleBold}>Taufan Aditya</Text>
-                  <Text style={styles.textTitle}>OR</Text>
-                  <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
-                  <View
-                    style={{
-                      flex: 8,
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Text
+                <CardItem>
+                  <View style={styles.card} resizeMode={'cover'}>
+                    <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                    <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                    <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                    <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                    <Text style={styles.textTitle}>OR</Text>
+                    <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                    <View
                       style={{
-                        fontSize: 18,
-                        color: '#000000',
-                        marginBottom: 8,
-                        marginTop: 16
+                        flex: 8,
+                        alignItems: 'center'
                       }}
                     >
-                      Nomer Rekening:
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: '#000000',
-                        marginBottom: 8,
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      130-0016066782
-                    </Text>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: '#000000',
+                          marginBottom: 8,
+                          marginTop: 16
+                        }}
+                      >
+                        Nomer Rekening:
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          color: '#000000',
+                          marginBottom: 8,
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        130-0016066782
+                      </Text>
+                    </View>
                   </View>
-                </View>
+                </CardItem>
               </Card>
             )}
             {payment.payment_type === 'offline' ? (
