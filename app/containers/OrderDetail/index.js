@@ -253,7 +253,13 @@ class OrderDetail extends Component {
                     <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
                     <Text style={styles.textButton}>save</Text>
                   </Button>
-                ) : (
+                ) : (((localeDateConvertToSecond(order.included.payment.expired_at) - localeDateConvertToSecond(Moment())) < 0) ?
+                  <Text
+                    style={[ styles.statusText, { backgroundColor: 'grey' || PRIMARYCOLOR } ]}
+                  >
+                    EXPIRED
+                  </Text>
+                  :
                   <Text
                     style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
                   >
