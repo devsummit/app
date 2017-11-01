@@ -260,7 +260,7 @@ class OrderDetail extends Component {
                 )}
                 <Row>
                   <Col style={{ flex: 2 }}>
-                    <Text>{strings.order.orderNumber}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.order.orderNumber}</Text>
                   </Col>
                   <Col style={{ flex: 3 }}>
                     <Text>{this.props.id || this.props.order.data[0].order_id}</Text>
@@ -268,7 +268,7 @@ class OrderDetail extends Component {
                 </Row>
                 <Row>
                   <Col style={{ flex: 2 }}>
-                    <Text>{strings.order.orderDate}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.order.orderDate}</Text>
                   </Col>
                   <Col style={{ flex: 3 }}>
                     <Text>{localeDateWithoutHour(order.data[0].created_at)}</Text>
@@ -335,7 +335,7 @@ class OrderDetail extends Component {
               <Content>
                 <Grid>
                   <Col style={{flex: 2}}>
-                    <Text>{strings.order.total.toUpperCase()}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.order.total.toUpperCase()}</Text>
                   </Col>
                   <Col style={{flex: 3}}>
                     <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
