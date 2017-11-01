@@ -41,13 +41,14 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDateWithoutHour, transactionStatus, getProfileData } from '../../helpers';
+import { localeDateWithoutHour, transactionStatus, getProfileData, checkLocaleDateAddOneHour } from '../../helpers';
 
 const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
 const noImage = require('./../../../assets/images/noimage.png');
+
 const url = 'https://api.devsummit.io/static/Ref_Bank.PDF';
 
 let total = 0;
@@ -61,7 +62,7 @@ class OrderDetail extends Component {
       color: '',
       modalVisible: false,
       scalesPageToFit: true,
-      userId: '',
+      userId: ''
     };
   }
 
@@ -221,6 +222,7 @@ class OrderDetail extends Component {
     const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+    console.log('landing here orderDetail', order);
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
@@ -250,21 +252,38 @@ class OrderDetail extends Component {
                     <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
                     <Text style={styles.textButton}>save</Text>
                   </Button>
-                ) : (status === 'in process' ?
-                  (
-                    <Text
-                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                    >
-                      {this.state.status.toUpperCase()}
-                    </Text>
-                  )
-                  : (
-                    <Text
-                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                    >
-                      {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                    </Text>
-                  ))}
+                ) : (
+                  // <Text
+                  //   style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                  // >
+
+                  (checkLocaleDateAddOneHour(order.data[0].created_at)) && (status === 'pending')
+                    ?
+                    (
+                      <Text note style={[ styles.statusText, { backgroundColor: 'green', color: 'white' } ]}>
+                            VERIFIED
+                      </Text>
+                    )
+                    :
+                    (status === 'in process' ?
+                      (
+                        <Text
+                          style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                        >
+                          {this.state.status.toUpperCase()}
+                        </Text>
+                      )
+                      : (
+                        <Text
+                          style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                        >
+                          {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
+                        </Text>
+                      )
+                    )
+
+                // </Text>
+                )}
                 <Row>
                   <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderNumber}</Text>
