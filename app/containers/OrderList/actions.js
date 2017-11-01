@@ -228,8 +228,7 @@ export function getCommunity() {
     orderlist
       .fetchCommunity()
       .then((res) => {
-        console.log('response fetch community', res);
-        const payloads = res.data;
+        const payloads = res.data.data;
 
         dispatch({ type: FETCH_COMMUNITY, payloads });
       })
