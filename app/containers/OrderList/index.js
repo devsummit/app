@@ -156,7 +156,7 @@ class OrderList extends Component {
           {!this.state.isPaid ?
             <View style={{ marginTop: 10, marginHorizontal: 10 }}>
               {this.props.redeemCount > 10 ? null : (
-                this.state.roleId === 3 ? (
+                this.state.roleId === 8 ? (
                   <Card>
                     <View style={styles.card}>
                       <TouchableOpacity
