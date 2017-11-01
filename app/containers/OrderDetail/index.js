@@ -31,6 +31,7 @@ import {
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Actions } from 'react-native-router-flux';
+import CountdownCircle from 'react-native-countdown-circle';
 import HeaderPoint from '../../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -41,13 +42,14 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import TicketType from '../../components/TicketType';
 import TicketDetail from '../../components/TicketDetail';
-import { localeDateWithoutHour, transactionStatus, getProfileData } from '../../helpers';
+import { localeDateWithoutHour, transactionStatus, getProfileData, localeDateConvertToSecond } from '../../helpers';
 
 const Back = require('../../../assets/images/back.png');
 const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
 const noImage = require('./../../../assets/images/noimage.png');
+
 const url = 'https://api.devsummit.io/static/Ref_Bank.PDF';
 
 let total = 0;
@@ -61,7 +63,7 @@ class OrderDetail extends Component {
       color: '',
       modalVisible: false,
       scalesPageToFit: true,
-      userId: '',
+      userId: ''
     };
   }
 
@@ -221,6 +223,7 @@ class OrderDetail extends Component {
     const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+    console.log('landing here orderdetail', this.props.order);
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
@@ -257,6 +260,19 @@ class OrderDetail extends Component {
                     {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
                   </Text>
                 )}
+                { ((localeDateConvertToSecond(order.included.payment.expired_at) - localeDateConvertToSecond(Moment())) > 0) ?
+                  <CountdownCircle
+                    seconds={localeDateConvertToSecond(order.included.payment.expired_at) - localeDateConvertToSecond(Moment())}
+                    radius={30}
+                    borderWidth={8}
+                    color="#ff003f"
+                    bgColor="#fff"
+                    textStyle={{ fontSize: 20 }}
+                    onTimeElapsed={() => console.log('Elapsed!')}
+                  />
+                  :
+                  null
+                }
                 <Row>
                   <Col style={{ flex: 2 }}>
                     <Text>{strings.order.orderNumber}</Text>

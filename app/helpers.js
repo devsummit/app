@@ -86,6 +86,12 @@ export const localeDate = (date) => {
     .format('YYYY-MM-DD HH:mm:ss');
 };
 
+export const localeDateConvertToSecond = (date) => {
+  return Moment.utc(date)
+    .local()
+    .diff(Moment().startOf('day'), 'seconds');
+};
+
 export const localeDateWithoutHour = (date) => {
   return Moment.utc(date)
     .locale([ 'en', 'id' ])
