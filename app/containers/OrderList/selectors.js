@@ -36,5 +36,8 @@ export const getInputFields = () =>
 export const getIsConfirmEmail = () =>
   createSelector(selectMainReducer(), state => state.get('isConfirmEmail'));
 
-export const getIsConfirmingEmail = ()  =>
+export const getIsConfirmingEmail = () =>
   createSelector(selectMainReducer(), state => state.get('isConfirmingEmail'));
+
+export const getCommunity = () =>
+  createSelector(selectMainReducer(), state => state.get('community'));
