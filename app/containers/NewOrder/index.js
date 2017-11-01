@@ -241,7 +241,7 @@ class NewOrder extends Component {
             style={styles.orderBtn}
             disabled={!(total > 0)}
             onPress={() => {
-              Actions.payment({ order });
+              Actions.payment({ order, referalInfo });
             }}
           >
             <Text>{strings.order.placeOrder}</Text>

@@ -338,50 +338,12 @@ class OrderDetail extends Component {
                     <Text style={{ fontWeight: 'bold' }}>{strings.order.total.toUpperCase()}</Text>
                   </Col>
                   <Col style={{flex: 3}}>
-                    <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
+                    <Text style={{ color: PRIMARYCOLOR }}>Rp{' '} {order.included.payment.gross_amount}</Text>
                   </Col>
                 </Grid>
               </Content>
             </CardItem>
           </Card>
-
-          {order.included.referal && order.included.referal.owner ? (
-            <View>
-              <Card>
-                <CardItem>
-                  <View>
-                    <Text style={{ fontWeight: 'bold' }}>{strings.referalInfo}</Text>
-                    <Text>{strings.order.referalCode}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>
-                      {order.included.referal.referal_code}
-                    </Text>
-                    <Text>{strings.order.owner}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>{order.included.referal.owner}</Text>
-                    <Text>{strings.order.totalDiscount}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>
-                      Rp{' '}
-                      {Intl.NumberFormat('id').format(
-                        order.included.referal.discount_amount * this.getTotal()
-                      )}
-                    </Text>
-                  </View>
-                </CardItem>
-              </Card>
-              <Card>
-                <CardItem style={{ flex: 1 }}>
-                  <Text style={{ flex: 1 }}>{strings.order.totalAfterDiscount}</Text>
-                  <Text style={{ textAlign: 'right', flex: 1 }}>
-                    Rp{' '}
-                    {Intl.NumberFormat('id').format(
-                      this.getTotal() - order.included.referal.discount_amount * this.getTotal()
-                    )}
-                  </Text>
-                </CardItem>
-              </Card>
-            </View>
-          ) : (
-            <View />
-          )}
           <View>
             {payment.payment_type === 'offline' && (
               <Card>
