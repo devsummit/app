@@ -139,7 +139,7 @@ class NewOrder extends Component {
                             <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
                           </View>
                           <TouchableWithoutFeedback onPress={() => { this.increase(ticket.id); }}>
-                            <View style={[ styles.plusMinus, { backgroundColor: 'green', borderColor: 'green' } ]}>
+                            <View style={[ styles.plusMinus, { backgroundColor: '#FF6F00', borderColor: 'green' } ]}>
                               <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
                             </View>
                           </TouchableWithoutFeedback>
