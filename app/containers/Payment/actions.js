@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import PayPal from 'react-native-paypal';
+import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 import Toast from 'react-native-simple-toast';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 import payment from '../../services/payment';
@@ -121,7 +122,10 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
             ...response.data.data,
             ...response.data.included[0]
           });
-        }
+      } else {
+          Toast.show('Quota have exceeded the limit');
+          LoaderHandler.hideLoader();
+      }
       })
       .catch((error) => {
         Toast.show('Sorry, something went wrong');
