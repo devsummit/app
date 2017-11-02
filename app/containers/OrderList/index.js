@@ -121,14 +121,6 @@ class OrderList extends Component {
     });
   };
 
-  inviteCommunity = (code) => {
-    Share.open({
-      title: 'Devsummit invitation',
-      message: `Check out the biggest event for programmer in 21-23 November 2017. Download the apps https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${code} as referal code to get discount on purchasing a ticket. Cheers!`,
-      subject: 'Devsummit invitation'
-    });
-  };
-
   setModalVisibleConfirmation(visible) {
     this.setState({ modalVisibleConfirmation: visible });
   }
@@ -163,75 +155,42 @@ class OrderList extends Component {
           {!this.state.isPaid ?
             <View style={{ marginTop: 10, marginHorizontal: 10 }}>
               {this.props.redeemCount > 10 ? null : (
-                this.state.roleId === 8 ? (
-                  <Card>
-                    <View style={styles.card}>
-                      <TouchableOpacity
-                        style={styles.buttonClaim}
-                        disabled={!count}
-                        onPress={() => this.props.submitReferal()}
-                      >
-                        <Icon
-                          name="money"
-                          style={{ fontSize: 30, color: PRIMARYCOLOR }}
+                <Card>
+                  <View style={styles.card}>
+                    <TouchableOpacity
+                      style={styles.buttonClaim}
+                      disabled={!count}
+                      onPress={() => this.props.submitReferal()}
+                    >
+                      <Icon
+                        name="gift"
+                        style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
+                      />
+                      <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
+                        CLAIM
+                      </Text>
+                    </TouchableOpacity>
+                    {!isConfirmEmail ? (
+                      <View />
+                    ) : (
+                      <View style={styles.inviteField}>
+                        <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
+                        <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
+                        <ProgressBar
+                          borderRadius={0}
+                          progress={this.props.redeemCount / 10}
+                          width={width * 0.5}
+                          color={PRIMARYCOLOR}
                         />
-                        <Text style={{ fontSize: 14, color: PRIMARYCOLOR }}>
-                          Rp {10000 * this.props.community.included.count}
-                        </Text>
-                      </TouchableOpacity>
-                      {!isConfirmEmail ? (
-                        <View />
-                      ) : (
-                        <View style={styles.inviteField}>
-                          <Text style={styles.inviteDesc}>Community invitation</Text>
-                          <Text style={styles.counterText}>Invited people : {this.props.community.included.count}</Text>
-                          <TouchableOpacity onPress={() => this.inviteCommunity(this.props.community.data.referal.referal_code)} disabled={count}>
-                            <View>
-                              <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                      )}
-                    </View>
-                  </Card>
-                ) : (
-                  <Card>
-                    <View style={styles.card}>
-                      <TouchableOpacity
-                        style={styles.buttonClaim}
-                        disabled={!count}
-                        onPress={() => this.props.submitReferal()}
-                      >
-                        <Icon
-                          name="gift"
-                          style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
-                        />
-                        <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
-                          CLAIM
-                        </Text>
-                      </TouchableOpacity>
-                      {!isConfirmEmail ? (
-                        <View />
-                      ) : (
-                        <View style={styles.inviteField}>
-                          <Text style={styles.inviteDesc}>Invite friends to get free pass!</Text>
-                          <Text style={styles.counterText}>{this.props.redeemCount} of 10</Text>
-                          <ProgressBar
-                            borderRadius={0}
-                            progress={this.props.redeemCount / 10}
-                            width={width * 0.5}
-                            color={PRIMARYCOLOR}
-                          />
-                          <TouchableOpacity onPress={() => this.invite()} disabled={count}>
-                            <View>
-                              <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
-                      )}
-                    </View>
-                  </Card>
-                )
+                        <TouchableOpacity onPress={() => this.invite()} disabled={count}>
+                          <View>
+                            <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+                </Card>
               )}
             </View> :
             <View />}
