@@ -7,6 +7,7 @@ export default {
   quotaExceeded: 'Kode referal telah mencapai limit',
   codeInvalid: 'Kode referal tidak valid',
   codeSuccess: 'Kode referal digunakan',
+  referalLimit: '* Kode referal hanya berlaku untuk 1 tiket',
   referalInfo: 'REFERAL INFO',
   referalCode: 'Kode referal',
   owner: 'Pemilik',

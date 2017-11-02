@@ -7,6 +7,7 @@ export default {
   quotaExceeded: 'The quota of referal code has reach the limit',
   codeInvalid: 'Referal code is not valid',
   codeSuccess: 'Referal code used',
+  referalLimit: '* Referal code is available for 1 ticket only',
   referalInfo: 'REFERAL INFO',
   referalCode: 'Referal code',
   owner: 'Owner',
