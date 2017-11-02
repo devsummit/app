@@ -103,6 +103,7 @@ class NewOrder extends Component {
     }
 
     const { inputFields, referalInfo } = this.props || {};
+    const { isUsingReferal } = this.props.inputFields;
     const order = this.props.order;
     const arraySub = Object.keys(order).map((key) => {
       return order[key].count * order[key].price;
@@ -154,15 +155,18 @@ class NewOrder extends Component {
                           </View>
                         </View>
                         <View style={styles.btnGroup}>
-                          <TouchableWithoutFeedback onPress={() => { this.decrease(ticket.id); }}>
+                          <TouchableWithoutFeedback disabled={isUsingReferal} onPress={() => { this.decrease(ticket.id); }}>
                             <View style={styles.plusMinus}>
                               <Icon name="minus" style={{ fontSize: 20 }} />
                             </View>
                           </TouchableWithoutFeedback>
                           <View style={styles.ticketCount}>
-                            <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
+                            { isUsingReferal ?
+                              <Text style={styles.textCount}>1</Text> :
+                              <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
+                            }
                           </View>
-                          <TouchableWithoutFeedback onPress={() => { this.increase(ticket.id); }}>
+                          <TouchableWithoutFeedback disabled={isUsingReferal} onPress={() => { this.increase(ticket.id); }}>
                             <View style={[ styles.plusMinus, { backgroundColor: '#FF6F00', borderColor: 'green' } ]}>
                               <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
                             </View>
@@ -181,9 +185,12 @@ class NewOrder extends Component {
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flexDirection: 'column', flex: 1 }}>
                   <Text style={{ flex: 1 }}>{strings.order.total}</Text>
-                  <Text style={{ textAlign: 'left', flex: 1 }}>
-                    Rp {Intl.NumberFormat('id').format(total)}
-                  </Text>
+                  { isUsingReferal ?
+                    <Text style={{ textAlign: 'left', flex: 1 }}>Rp 400.000</Text> :
+                    <Text style={{ textAlign: 'left', flex: 1 }}>
+                      Rp {Intl.NumberFormat('id').format(total)}
+                    </Text>
+                  }
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={{ fontWeight: 'bold', marginRight: 5 }}>
@@ -208,8 +215,8 @@ class NewOrder extends Component {
                   <View
                     style={{
                       flexDirection: 'column',
-                      flex: 1,
                       alignSelf: 'stretch',
+                      flex: 1,
                       marginTop: 10
                     }}
                   >
@@ -221,6 +228,7 @@ class NewOrder extends Component {
                       placeholder="Referal code"
                       disabled={!inputFields.isUsingReferal}
                     />
+                    <Text style={{ color: '#BDBDBD', fontSize: 10 }}>{strings.order.referalLimit}</Text>
                     <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
                       {this.checkCode(referalInfo)}
                     </Button>
