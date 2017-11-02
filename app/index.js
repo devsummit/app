@@ -36,7 +36,7 @@ import PaymentDetail from './containers/PaymentDetail';
 import BoothList from './containers/BoothList';
 import BoothInfo from './containers/BoothInfo';
 import Profile from './containers/Profile';
-import Notification from './containers/Notification';
+import Notification from './components/Notification';
 import CodeConduct from './components/CodeConduct';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import MyOrders from './components/MyOrders';

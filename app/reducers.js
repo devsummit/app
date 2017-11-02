@@ -20,7 +20,7 @@ import MaterialListReducer from './containers/MaterialList/reducer';
 import BoothListReducer from './containers/BoothList/reducer';
 import BoothInfoReducer from './containers/BoothInfo/reducer';
 import codeRedeemReducer from './containers/Redeem/reducer';
-import Notification from './containers/Notification/reducer';
+import Notification from './components/Notification/reducer';
 import FeedReducer from './containers/Feed/reducer';
 import SettingsReducer from './containers/Settings/reducer';
 
