@@ -53,7 +53,6 @@ class OrderList extends Component {
 
     getProfileData()
       .then((data) => {
-        console.log('profile', data);
         this.setState({
           firstName: data.first_name,
           lastName: data.last_name,
@@ -122,6 +121,14 @@ class OrderList extends Component {
     });
   };
 
+  inviteCommunity = (code) => {
+    Share.open({
+      title: 'Devsummit invitation',
+      message: `Check out the biggest event for programmer in 21-23 November 2017. Download the apps https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${code} as referal code to get discount on purchasing a ticket. Cheers!`,
+      subject: 'Devsummit invitation'
+    });
+  };
+
   setModalVisibleConfirmation(visible) {
     this.setState({ modalVisibleConfirmation: visible });
   }
@@ -166,25 +173,19 @@ class OrderList extends Component {
                       >
                         <Icon
                           name="money"
-                          style={{ fontSize: 30, color: count ? PRIMARYCOLOR : '#BDBDBD' }}
+                          style={{ fontSize: 30, color: PRIMARYCOLOR }}
                         />
-                        <Text style={{ fontSize: 18, color: count ? PRIMARYCOLOR : '#BDBDBD' }}>
-                          CLAIM
+                        <Text style={{ fontSize: 14, color: PRIMARYCOLOR }}>
+                          Rp {10000 * this.props.community.included.count}
                         </Text>
                       </TouchableOpacity>
                       {!isConfirmEmail ? (
                         <View />
                       ) : (
                         <View style={styles.inviteField}>
-                          <Text style={styles.inviteDesc}>Invite community to get free pass!</Text>
-                          <Text style={styles.counterText}>Invited people {this.props.redeemCount} of 10</Text>
-                          {/* <ProgressBar
-                            borderRadius={0}
-                            progress={this.props.redeemCount / 10}
-                            width={width * 0.5}
-                            color={PRIMARYCOLOR}
-                          /> */}
-                          <TouchableOpacity onPress={() => this.invite()} disabled={count}>
+                          <Text style={styles.inviteDesc}>Community invitation</Text>
+                          <Text style={styles.counterText}>Invited people : {this.props.community.included.count}</Text>
+                          <TouchableOpacity onPress={() => this.inviteCommunity(this.props.community.data.referal.referal_code)} disabled={count}>
                             <View>
                               <Text style={count ? styles.inviteDisable : styles.invite}>Invite</Text>
                             </View>
