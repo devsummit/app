@@ -67,6 +67,30 @@ class NewOrder extends Component {
     this.props.GetReferal();
   };
 
+  checkCode = (info) => {
+    if (info.data.used === true) {
+      return (
+        <Text style={{ color: 'red' }}>{strings.order.used}</Text>
+      );
+    } else if (info.data.quota_exceeded === true) {
+      return (
+        <Text style={{ color: 'red' }}>{strings.order.quotaExceeded}</Text>
+      );
+    } else if (info.data.code_invalid === true) {
+      return (
+        <Text style={{ color: 'red' }}>{strings.order.codeInvalid}</Text>
+      );
+    } else if (info.meta.success === true) {
+      return (
+        <Text style={{ color: 'green' }}>{strings.order.codeSuccess}</Text>
+      );
+    }
+
+    return (
+      <Text>{strings.order.checkCode}</Text>
+    );
+  }
+
   render() {
     if (this.props.isFetchingReferal === true) {
       return (
@@ -116,7 +140,7 @@ class NewOrder extends Component {
                                 Rp {Intl.NumberFormat('id').format(ticket.price) * 2}.000
                               </Text>
                               <Text style={{ fontSize: 14, color: 'grey', lineHeight: 27, fontWeight: 'bold' }}>
-                                <Icon name="tags"/> 50%
+                                <Icon name="tags" /> 50%
                               </Text>
                             </View>
                             <View style={{ flexDirection: 'row' }}>
@@ -198,7 +222,7 @@ class NewOrder extends Component {
                       disabled={!inputFields.isUsingReferal}
                     />
                     <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
-                      <Text>{strings.order.checkCode}</Text>
+                      {this.checkCode(referalInfo)}
                     </Button>
                   </View>
                 ) : (
@@ -241,7 +265,7 @@ class NewOrder extends Component {
             style={styles.orderBtn}
             disabled={!(total > 0)}
             onPress={() => {
-              Actions.payment({ order });
+              Actions.payment({ order, referalInfo });
             }}
           >
             <Text>{strings.order.placeOrder}</Text>

@@ -146,7 +146,7 @@ export function GetReferal() {
         if (response.data && response.data.data) {
           dispatch({
             type: GET_REFERAL,
-            payload: response.data.data
+            payload: response.data
           });
         }
         dispatch(updateIsGettingReferal(false));

@@ -103,7 +103,7 @@ class Payment extends Component {
     const userId = this.props.userId;
     const order = this.props.order;
     // still static referal code
-    const referalCode = 'supercode';
+    const referalCode = this.props.referalInfo.referal_code;
     // this.props.updateOrder(order);
     Alert.alert(strings.order.proceedPaymentTitle, strings.order.proceedPaymentMessage, [
       {
