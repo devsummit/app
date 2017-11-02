@@ -51,6 +51,8 @@ const Drawer = () => (
         <Text>Menu</Text>
       </Separator>
       <List>
+        <Menu icon="handshake-o" text="Sponsor" onPress={() => Actions.sponsorInfo()} />
+        <Menu icon="home" text="Home" onPress={() => Actions.mainTabs()} />
         <Menu icon="code" text={strings.settings.codeConduct} onPress={() => Actions.codeConduct()} />
         <Menu icon="lock" text={strings.settings.privacyPolicy} onPress={() => Actions.privacyPolicy()} />
       </List>
