@@ -4,6 +4,7 @@ import { View, ScrollView, Text, Image } from 'react-native';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, List } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import CountdownCircle from 'react-native-countdown-circle';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 

@@ -2,13 +2,15 @@ import 'intl';
 import 'intl/locale-data/jsonp/id';
 import React, { Component } from 'react';
 import { Text, Grid, Col, Button, Card, CardItem } from 'native-base';
+import Moment from 'moment';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CountdownCircle from 'react-native-countdown-circle';
 import styles from './styles';
 import ListItem from '../ListItem';
-import { formatDate, transactionStatus, localeDate } from '../../helpers';
+import { formatDate, transactionStatus, localeDate, localeDateConvertToSecond } from '../../helpers';
 // import { PRIMARYCOLOR } from '../../constants';
 let amount = 0;
 export default class OrderItem extends Component {
@@ -112,23 +114,51 @@ export default class OrderItem extends Component {
             <Text note style={styles.orderId}>
               {localeDate(order.created_at)}
             </Text>
+            { ((localeDateConvertToSecond(order.payment.expired_at) - localeDateConvertToSecond(Moment())) > 0) ?
+              <CountdownCircle
+                seconds={localeDateConvertToSecond(order.payment.expired_at) - localeDateConvertToSecond(Moment())}
+                radius={30}
+                borderWidth={8}
+                color="#ff003f"
+                bgColor="#fff"
+                textStyle={{ fontSize: 20 }}
+                onTimeElapsed={() => console.log('Elapsed!')}
+              />
+              :
+              null
+            }
             <View style={{ flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center' }}
             >
-              <View style={styles.viewText}>
-                {status ? (
-                  <View style={{ flexDirection: 'row', marginTop: 8 }}>
-                    <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-                      {this.state.status.toUpperCase()}
-                    </Text>
-                    {this.ticketTypes()}
-                  </View>
-                ) : (
-                  <View />
-                )}
-              </View>
+              { ((localeDateConvertToSecond(order.payment.expired_at) - localeDateConvertToSecond(Moment())) <= 0) ?
+                (<View style={styles.viewText}>
+                  {status ? (
+                    <View style={{ flexDirection: 'row', marginTop: 8 }}>
+                      <Text note style={[ styles.statusText, { backgroundColor: 'grey', color: 'white' } ]}>
+                        EXPIRED
+                      </Text>
+                      {this.ticketTypes()}
+                    </View>
+                  ) : (
+                    <View />
+                  )}
+                </View>)
+                :
+                (<View style={styles.viewText}>
+                  {status ? (
+                    <View style={{ flexDirection: 'row', marginTop: 8 }}>
+                      <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
+                        {this.state.status.toUpperCase()}
+                      </Text>
+                      {this.ticketTypes()}
+                    </View>
+                  ) : (
+                    <View />
+                  )}
+                </View>)
+              }
               <Text />
             </View>
           </View>
