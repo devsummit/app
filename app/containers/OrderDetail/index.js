@@ -222,6 +222,7 @@ class OrderDetail extends Component {
     const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+    console.log('landing here to check status', order);
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
@@ -252,11 +253,17 @@ class OrderDetail extends Component {
                     <Text style={styles.textButton}>save</Text>
                   </Button>
                 ) : (
-                  <Text
-                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                  >
-                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                  </Text>
+                  this.state.status === 'captured' ?
+                    <Text
+                      style={[ styles.statusText, { backgroundColor: '#0D47A1' } ]}
+                    >
+                    VERIFIED
+                    </Text> :
+                    <Text
+                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                    >
+                      {this.state.status.toUpperCase()}
+                    </Text>
                 )}
                 <Row>
                   <Col style={{ flex: 2 }}>
@@ -344,90 +351,93 @@ class OrderDetail extends Component {
               </Content>
             </CardItem>
           </Card>
-          <View>
-            {payment.payment_type === 'offline' && (
-              <Card>
-                <CardItem>
-                  <View style={styles.card} resizeMode={'cover'}>
-                    <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
-                    <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-                    <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
-                    <Text style={styles.textTitleBold}>Taufan Aditya</Text>
-                    <Text style={styles.textTitle}>OR</Text>
-                    <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
-                    <View
-                      style={{
-                        flex: 8,
-                        alignItems: 'center'
-                      }}
-                    >
-                      <Text
+          {this.state.status === 'captured' ?
+            <View /> :
+            <View>
+              {payment.payment_type === 'offline' && (
+                <Card>
+                  <CardItem>
+                    <View style={styles.card} resizeMode={'cover'}>
+                      <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                      <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                      <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                      <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                      <Text style={styles.textTitle}>OR</Text>
+                      <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                      <View
                         style={{
-                          fontSize: 18,
-                          color: '#000000',
-                          marginBottom: 8,
-                          marginTop: 16
+                          flex: 8,
+                          alignItems: 'center'
                         }}
                       >
-                        Nomer Rekening:
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          color: '#000000',
-                          marginBottom: 8,
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        130-0016066782
-                      </Text>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: '#000000',
+                            marginBottom: 8,
+                            marginTop: 16
+                          }}
+                        >
+                          Nomer Rekening:
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: '#000000',
+                            marginBottom: 8,
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          130-0016066782
+                        </Text>
+                      </View>
                     </View>
+                  </CardItem>
+                </Card>
+              )}
+              {payment.payment_type === 'offline' ? (
+                this.props.paymentProof !== '' ? (
+                  <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+                    <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                    </Button>
+                    <Image
+                      style={{
+                        flex: 1,
+                        height: 200,
+                        marginTop: 0,
+                        margin: 10
+                      }}
+                      resizeMode={'cover'}
+                      source={{ uri: this.props.paymentProof }}
+                    />
+                    <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
+                    </Button>
                   </View>
-                </CardItem>
-              </Card>
-            )}
-            {payment.payment_type === 'offline' ? (
-              this.props.paymentProof !== '' ? (
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
-                  </Button>
-                  <Image
-                    style={{
-                      flex: 1,
-                      height: 200,
-                      marginTop: 0,
-                      margin: 10
-                    }}
-                    resizeMode={'cover'}
-                    source={{ uri: this.props.paymentProof }}
-                  />
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
-                  </Button>
-                </View>
-              ) : (
-                <View>
-                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
-                  </Button>
-                  <Image
-                    style={{
-                      flex: 1,
-                      marginTop: -10,
-                      alignSelf: 'center'
-                    }}
-                    resizeMode={'cover'}
-                    source={noImage}
-                  />
-                  <Text style={styles.noImageText}>{strings.order.noProof}</Text>
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
-                  </Button>
-                </View>
-              )
-            ) : <View />}
-          </View>
+                ) : (
+                  <View>
+                    <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                    </Button>
+                    <Image
+                      style={{
+                        flex: 1,
+                        marginTop: -10,
+                        alignSelf: 'center'
+                      }}
+                      resizeMode={'cover'}
+                      source={noImage}
+                    />
+                    <Text style={styles.noImageText}>{strings.order.noProof}</Text>
+                    <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                    </Button>
+                  </View>
+                )
+              ) : <View />}
+            </View>
+          }
         </Content>
       </Container>
     );

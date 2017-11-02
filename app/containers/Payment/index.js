@@ -100,10 +100,9 @@ class Payment extends Component {
   }
 
   payWithBankTransfer = () => {
+    console.log('landing here to check payment', this.props);
     const userId = this.props.userId;
     const order = this.props.order;
-    // still static referal code
-    const referalCode = this.props.referalInfo.referal_code;
     // this.props.updateOrder(order);
     Alert.alert(strings.order.proceedPaymentTitle, strings.order.proceedPaymentMessage, [
       {
@@ -122,7 +121,9 @@ class Payment extends Component {
               Actions.orderDetail();
             });
           } else {
-            this.props.payWithBankTransfer(userId, order, referalCode, (data) => {
+            const referalCode = this.props.referalInfo.referal_code;
+
+            this.props.payWithBankTransfer(userId, order, (data) => {
               const orderId = data.order_id;
               LoaderHandler.hideLoader();
               Actions.orderDetail({ orderId, id: orderId, order: data });
