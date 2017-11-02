@@ -29,6 +29,13 @@ export default class Header extends Component {
     return (
       <View style={styles.header}>
         <PushNotification onReceiveNotif={this.handleNotif} />
+        <View style={{ justifyContent: 'center', marginLeft: 20 }}>
+          <TouchableWithoutFeedback
+            onPress={() => Actions.drawerOpen()}
+          >
+            <CameraIcon name="bars" style={styles.notificationIcon} />
+          </TouchableWithoutFeedback>
+        </View>
         <View>
           <Text style={styles.pageTitle}>{this.props.title}</Text>
         </View>
