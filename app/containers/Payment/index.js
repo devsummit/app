@@ -122,7 +122,8 @@ class Payment extends Component {
           } else {
             const referalCode = this.props.referalInfo.referal_code;
 
-            this.props.payWithBankTransfer(userId, order, (data) => {
+            this.props.payWithBankTransfer(userId, order, referalCode, (data) => {
+
               const orderId = data.order_id;
               LoaderHandler.hideLoader();
               Actions.orderDetail({ orderId, id: orderId, order: data });
