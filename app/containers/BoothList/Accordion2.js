@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { Button, Card } from 'native-base';
+import { Button, Card, Form, Item, Input } from 'native-base';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
+import strings from '../../localization';
+import styles from './styles';
 import { SECTIONS2 } from '../../constants';
 
 class AccordionView2 extends Component {
   state = {
-    accordion: false
+    accordion: false,
+    groupName: ''
   };
 
   renderHeader = (section, index, isActive) => {
@@ -39,7 +42,7 @@ class AccordionView2 extends Component {
   };
 
   renderContent = (section, i, isActive) => {
-    const price = section.price;
+    const name = this.state.groupName;
     return (
       <Animatable.View
         duration={300}
@@ -57,13 +60,16 @@ class AccordionView2 extends Component {
           animation={isActive ? 'zoomIn' : 'zoomInUp'}
           style={{ marginHorizontal: 16, padding: 8 }}
         >
-          <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Price: {section.price}</Text>
-          {section.gifts &&
-            section.gifts.map((item, idx) => (
-              <View key={idx}>
-                <Text>{item}</Text>
-              </View>
-            ))}
+          <View style={styles.inputItem}>
+            <Form>
+              <Item>
+                <Input
+                  placeholder={'Enter group name'}
+                  onChangeText={text => this.setState({ groupName: text })}
+                />
+              </Item>
+            </Form>
+          </View>
           <Button
             style={{
               width: '70%',
@@ -75,7 +81,7 @@ class AccordionView2 extends Component {
               marginBottom: 10
             }}
             onPress={() => {
-              this.props.setPaymentMethod(price);
+              this.props.setPaymentMethod(name);
               this.props.onPress();
             }
             }

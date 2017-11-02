@@ -311,8 +311,8 @@ class Feed extends Component {
     this.setState({ report: value });
   };
 
-  setPaymentMethod = (ticketPrice) => {
-    Actions.payment({ ticketPrice });
+  setPaymentMethod = (name) => {
+    this.props.registerHackaton(name);
   };
 
   render() {
