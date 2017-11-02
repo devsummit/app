@@ -31,7 +31,7 @@ export default class Header extends Component {
         <PushNotification onReceiveNotif={this.handleNotif} />
         <View style={{ justifyContent: 'center', marginLeft: 20 }}>
           <TouchableWithoutFeedback
-            onPress={ ()=> Actions.drawerOpen() }
+            onPress={() => Actions.drawerOpen()}
           >
             <CameraIcon name="bars" style={styles.notificationIcon} />
           </TouchableWithoutFeedback>
