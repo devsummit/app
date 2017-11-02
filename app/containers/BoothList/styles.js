@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
     height: 45,
     color: 'black'
   },
+  inputItem: {
+    marginRight: 15,
+    marginTop: 12,
+    borderBottomWidth: 1,
+    borderColor: '#000000'
+  },
   item: {
     marginBottom: 8,
     borderColor: '#FFD740',

@@ -100,7 +100,6 @@ class Payment extends Component {
   }
 
   payWithBankTransfer = () => {
-    console.log('landing here to check payment', this.props);
     const userId = this.props.userId;
     const order = this.props.order;
     // this.props.updateOrder(order);
