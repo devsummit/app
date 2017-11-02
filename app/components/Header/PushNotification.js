@@ -20,7 +20,6 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     // this is a local notification
   }
   if (notif.opened_from_tray) {
-    console.log('landing here broooooooooooo');
     Actions.notification();
     // app is open/resumed because user clicked banner
   }
