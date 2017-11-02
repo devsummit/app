@@ -8,8 +8,6 @@ import MaterialList from '../MaterialList';
 import BoothList from '../BoothList';
 import Feed from '../Feed';
 import Settings from '../Settings';
-import PushNotification from './PushNotification';
-import Notification from '../Notification';
 
 export default class MainTabs extends Component {
   constructor(props) {
@@ -51,7 +49,7 @@ export default class MainTabs extends Component {
     return (
       <IconSimpleLine
         name="flag"
-        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fontSize: 18 } ]}
+        style={[ this.state.currentTab === 2 ? { color: '#f39e21' } : null, { fandleontSize: 18 } ]}
       />
     );
   }
@@ -67,7 +65,6 @@ export default class MainTabs extends Component {
   render() {
     return (
       <Container>
-        <PushNotification />
         <View style={{ flex: 1 }}>
           <Tabs
             onChangeTab={(i, ref) => this.handleCurrentTab(i.i)}
