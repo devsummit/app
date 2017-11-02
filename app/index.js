@@ -41,6 +41,7 @@ import CodeConduct from './components/CodeConduct';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import MyOrders from './components/MyOrders';
 import Drawer from './containers/Drawer';
+import SponsorInfo from './containers/SponsorInfo';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -92,7 +93,7 @@ export default class App extends Component {
             leftButtonIconStyle={styles.leftButtonIconStyle}
             backAndroidHandler={this.onBackPress}
           >
-            <Scene key="drawer" drawer drawerLockMode="locked-closed" contentComponent={Drawer} hideNavBar>
+            <Scene key="drawer" drawer drawerLockMode="locked-closed" back contentComponent={Drawer} hideNavBar>
               <Scene key="root" backButtonImage={BackButtonImg}>
                 <Scene key="splash" component={Splash} hideNavBar initial />
                 <Scene key="main" component={Main} hideNavBar type="replace" />
@@ -134,6 +135,7 @@ export default class App extends Component {
                 <Scene key="codeConduct" component={CodeConduct} title="Code of Conduct" />
                 <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
                 <Scene key="myOrders" component={MyOrders} title="My Orders" />
+                <Scene key="sponsorInfo" component={SponsorInfo} title="Sponsor" />
               </Scene>
             </Scene>
           </RouterWithRedux>
