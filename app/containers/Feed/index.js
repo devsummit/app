@@ -153,6 +153,7 @@ class Feed extends Component {
       postId: '',
       firstName: '',
       lastName: '',
+      confirmed: 0,
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       fabActive: false,
       modalRedeem: false,
@@ -180,7 +181,8 @@ class Feed extends Component {
       const lastName = data.last_name;
       const url = data.photos[0].url;
       const id = data.id;
-      this.setState({ firstName, lastName, profileUrl: url, userId: id });
+      const confirmed = data.confirmed;
+      this.setState({ firstName, lastName, profileUrl: url, userId: id, confirmed });
     });
   }
 
@@ -546,7 +548,7 @@ class Feed extends Component {
             {/* <Button rounded dark onPress={() => Actions.newOrder()}>
               <Text>New Order</Text>
             </Button> */}
-            {!this.props.isConfirmEmail ? (
+            {!this.state.confirmed ? (
               <View />
             ) : (
               <ActionButton buttonColor={'#FF8B00'} bgColor={'rgba(0,0,0,0.5)'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>

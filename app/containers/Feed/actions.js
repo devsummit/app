@@ -218,7 +218,7 @@ export function registerHackaton(name, callback = () => ({})) {
       order_details: [
         {
           count: 1,
-          ticket_id: 9
+          ticket_id: 10
         }
       ],
       payment_type: 'offline',

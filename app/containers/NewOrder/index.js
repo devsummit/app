@@ -18,6 +18,10 @@ import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
 
 class NewOrder extends Component {
+  state ={
+    count: 0
+  };
+
   componentWillMount() {
     this.props.getTicketType();
   }
@@ -53,8 +57,10 @@ class NewOrder extends Component {
     const { updateInputFields } = this.props;
     if (isUsingReferal && isUsingReferal === true) {
       updateInputFields('isUsingReferal', false);
+      this.setState({ count: 0 })
     } else {
       updateInputFields('isUsingReferal', true);
+      this.setState({ count: 1 })
     }
   };
 
@@ -82,7 +88,7 @@ class NewOrder extends Component {
       );
     } else if (info.meta.success === true) {
       return (
-        <Text style={{ color: 'green' }}>{strings.order.codeSuccess}</Text>
+        <Text style={{ color: '#64FFDA' }}>{strings.order.codeSuccess}</Text>
       );
     }
 
@@ -162,7 +168,7 @@ class NewOrder extends Component {
                           </TouchableWithoutFeedback>
                           <View style={styles.ticketCount}>
                             { isUsingReferal ?
-                              <Text style={styles.textCount}>1</Text> :
+                              <Text style={styles.textCount}>{this.state.count}</Text> :
                               <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
                             }
                           </View>
@@ -184,11 +190,10 @@ class NewOrder extends Component {
             <CardItem style={{ flex: 1, flexDirection: 'column' }}>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flexDirection: 'column', flex: 1 }}>
-                  <Text style={{ flex: 1 }}>{strings.order.total}</Text>
-                  { isUsingReferal ?
-                    <Text style={{ textAlign: 'left', flex: 1 }}>Rp 400.000</Text> :
+                  { referalInfo.data.discount_amount ?
+                    <Text style={{ textAlign: 'left', flex: 1, fontWeight: '700', color: '#4CAF50' }}>You will get {referalInfo.data.discount_amount * 100}% discount</Text> :
                     <Text style={{ textAlign: 'left', flex: 1 }}>
-                      Rp {Intl.NumberFormat('id').format(total)}
+                      Enter your code
                     </Text>
                   }
                 </View>
@@ -271,7 +276,7 @@ class NewOrder extends Component {
           <Button
             block
             style={styles.orderBtn}
-            disabled={!(total > 0)}
+            disabled={total === 0 && this.state.count === 0}
             onPress={() => {
               Actions.payment({ order, referalInfo });
             }}
