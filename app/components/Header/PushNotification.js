@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
 import { Platform, AppState, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import Toast from 'react-native-simple-toast';
 
@@ -19,6 +20,8 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     // this is a local notification
   }
   if (notif.opened_from_tray) {
+    console.log('landing here broooooooooooo');
+    Actions.notification();
     // app is open/resumed because user clicked banner
   }
   // await someAsyncCall();
