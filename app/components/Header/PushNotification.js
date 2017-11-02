@@ -86,6 +86,7 @@ export default class PushNotification extends Component {
     FCM.subscribeToTopic('devsummit_indonesia_2017');
     FCM.requestPermissions();
     FCM.getFCMToken().then((token) => {
+      console.log('token here', token);
       this.setState({ fcm_token: token });
       // update your fcm token on server.
       getAccessToken().then((usertoken) => {
@@ -106,7 +107,7 @@ export default class PushNotification extends Component {
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
       // do some component related stuff
       if (this.state.appState === 'active') {
-        Toast.show(notif.fcm.body);
+        this.props.onReceiveNotif();
       }
     });
   }
