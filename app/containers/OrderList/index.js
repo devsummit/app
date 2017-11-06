@@ -32,7 +32,36 @@ const { width } = Dimensions.get('window');
 
 const noTicket = require('./../../../assets/images/noticket.png');
 
-class OrderList extends Component {
+// @flow
+type Props = {
+  community?: Object<mixed>,
+  inputFields: {
+    email: string
+  },
+  isConfirmEmail: boolean,
+  isConfirming: boolean,
+  isFetching: boolean,
+  orders: Array<mixed>,
+  redeemCount: number,
+  redeemstatus?: string
+};
+
+type State = {
+  confirmed: number,
+  firstName: string,
+  haveRefered: number,
+  isLoading: boolean,
+  isPaid: boolean,
+  lastName: boolean,
+  modalMyOrders: boolean,
+  modalVisibleConfirmation: boolean,
+  referal: string,
+  referalCount: number,
+  roleId: number,
+  selectedOrder: string
+};
+
+class OrderList extends Component<Props, State> {
   state = {
     selectedOrder: '',
     isLoading: true,
@@ -77,7 +106,7 @@ class OrderList extends Component {
     }
   }
 
-  setModalMyOrders(visible) {
+  setModalMyOrders(visible: boolean) {
     this.setState({ modalMyOrders: visible });
   }
 
@@ -85,13 +114,13 @@ class OrderList extends Component {
     this.props.register(() => Actions.mainTabs());
   };
 
-  checkEmail = (inputvalue) => {
+  checkEmail = (inputvalue: string) => {
     const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
     if (pattern.test(inputvalue)) return true;
     return false;
   };
 
-  handleInputChange = (fields, value) => {
+  handleInputChange = (fields: string, value: string) => {
     this.props.updateInputFields(fields, value);
   };
 
@@ -123,7 +152,7 @@ class OrderList extends Component {
     });
   };
 
-  setModalVisibleConfirmation(visible) {
+  setModalVisibleConfirmation(visible: boolean) {
     this.setState({ modalVisibleConfirmation: visible });
   }
 
@@ -345,15 +374,6 @@ class OrderList extends Component {
     );
   }
 }
-
-OrderList.propTypes = {
-  orders: PropTypes.array.isRequired,
-  confirmPayment: PropTypes.func.isRequired,
-  getOrderList: PropTypes.func.isRequired,
-  isConfirming: PropTypes.bool.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  getCommunity: PropTypes.func.isRequired
-};
 
 const mapStateToProps = createStructuredSelector({
   orders: selectors.getOrders(),
