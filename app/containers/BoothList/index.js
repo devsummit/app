@@ -39,10 +39,26 @@ import AccordionView from './Accordion';
 import AccordionView2 from './Accordion2';
 import { PRIMARYCOLOR } from '../../constants';
 
-const bgBooth1 = require('./../../../assets/images/bgbooth_1.png');
-const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
+// @flow
+const bgBooth1: string = require('./../../../assets/images/bgbooth_1.png');
+const bgBooth2: string = require('./../../../assets/images/bgbooth_2.png');
 
-class BoothList extends Component {
+type Props = {
+  booth?: Array<mixed>,
+  hackaton?: Object<mixed>,
+  isFetching: boolean,
+  isFetching2: boolean
+};
+
+type State = {
+  accordion: boolean,
+  accordion2: boolean,
+  boothFilter?: Array<mixed>,
+  modalVisible: boolean,
+  url: string
+};
+
+class BoothList extends Component<Props, State> {
   state = {
     modalVisible: false,
     boothFilter: this.props.booth,
@@ -64,15 +80,15 @@ class BoothList extends Component {
     }
   }
 
-  setAccordion = (visible) => {
+  setAccordion = (visible: boolean) => {
     this.setState({ accordion: visible });
   };
 
-  setAccordion2 = (visible) => {
+  setAccordion2 = (visible: boolean) => {
     this.setState({ accordion2: visible });
   }
 
-  setModalVisible(visible) {
+  setModalVisible(visible: boolean) {
     this.setState({ modalVisible: visible });
   }
 
