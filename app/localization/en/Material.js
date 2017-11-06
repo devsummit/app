@@ -9,5 +9,6 @@ export default {
   remove: 'Are you sure to remove material item?',
   deleted: 'Material item has been deleted',
   set: 'Set',
-  used: 'Used'
+  used: 'Used',
+  noMaterial: 'There are no materials'
 };

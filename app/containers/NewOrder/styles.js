@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   btnGroup: {
     flex: 1,
-    marginTop: 10,
+    marginTop: 100,
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center'

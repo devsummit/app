@@ -86,6 +86,12 @@ export const localeDate = (date) => {
     .format('YYYY-MM-DD HH:mm:ss');
 };
 
+export const localeDateWithoutHour = (date) => {
+  return Moment.utc(date)
+    .locale([ 'en', 'id' ])
+    .format('DD MMM YYYY');
+};
+
 export const expiryDate = (date) => {
   return Moment.utc(date)
     .add(1, 'hours')

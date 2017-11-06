@@ -48,23 +48,23 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     elevation: 0
   },
-  viewText: {
+  viewText1: {
     flex: 0,
     flexDirection: 'row',
-    marginTop: 8
+    margin: 20,
   },
   buttonSection: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 10
   },
   statusText: {
     fontWeight: 'bold',
     borderRadius: 5,
     textAlign: 'center',
-    padding: 8
+    padding: 8,
+    marginRight: 4
   }
 });
 

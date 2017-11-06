@@ -21,7 +21,10 @@ import {
 const initialState = fromJS({
   ticketTypes: [],
   order: {},
-  referal: {},
+  referal: {
+    data: '',
+    meta: ''
+  },
   isGettingReferal: false,
   isUpdatingOrder: false,
   isGetTicketType: false,

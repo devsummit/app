@@ -13,6 +13,7 @@ import {
   Right,
   Item,
   Thumbnail,
+  Button,
   Input,
   Spinner,
   Picker
@@ -193,6 +194,7 @@ class Feed extends Component<Props, State> {
       postId: '',
       firstName: '',
       lastName: '',
+      confirmed: 0,
       profileUrl: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
       fabActive: false,
       modalRedeem: false,
@@ -220,7 +222,8 @@ class Feed extends Component<Props, State> {
       const lastName = data.last_name;
       const url = data.photos[0].url;
       const id = data.id;
-      this.setState({ firstName, lastName, profileUrl: url, userId: id });
+      const confirmed = data.confirmed;
+      this.setState({ firstName, lastName, profileUrl: url, userId: id, confirmed });
     });
   }
 
@@ -351,8 +354,8 @@ class Feed extends Component<Props, State> {
     this.setState({ report: value });
   };
 
-  setPaymentMethod = (ticketPrice) => {
-    Actions.payment({ ticketPrice });
+  setPaymentMethod = (name) => {
+    this.props.registerHackaton(name);
   };
 
   render() {
@@ -586,7 +589,7 @@ class Feed extends Component<Props, State> {
             {/* <Button rounded dark onPress={() => Actions.newOrder()}>
               <Text>New Order</Text>
             </Button> */}
-            {!this.props.isConfirmEmail ? (
+            {!this.state.confirmed ? (
               <View />
             ) : (
               <ActionButton buttonColor={'#FF8B00'} bgColor={'rgba(0,0,0,0.5)'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
@@ -693,14 +696,9 @@ class Feed extends Component<Props, State> {
           visible={this.state.postToFeeds}
           onRequestClose={() => this.setModalPost(!this.state.postToFeeds)}
         >
-          <Card>
-            <KeyboardAvoidingView>
-              <ScrollView
-                keyboardShouldPersistTaps="always"
-                ref={ref => (this.scrollView = ref)}
-                onContentSizeChange={(height, width) =>
-                  this.scrollView.scrollToEnd({ animated: true })}
-              >
+          <Container style={{ marginVertical: '15%' }}>
+            <Card>
+              <KeyboardAvoidingView>
                 <CardItem>
                   <Left>
                     <Thumbnail source={{ uri: this.state.profileUrl }} />
@@ -788,9 +786,9 @@ class Feed extends Component<Props, State> {
                       />
                     </CardItem>
                   )}
-              </ScrollView>
-            </KeyboardAvoidingView>
-          </Card>
+              </KeyboardAvoidingView>
+            </Card>
+          </Container>
         </Modal>
         {/* Modal for picture preview */}
         <Modal

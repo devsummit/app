@@ -110,7 +110,8 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
     });
     const data = {
       order_details: orderItems,
-      payment_type: 'offline'
+      payment_type: 'offline',
+      referal_code: referalCode
     };
     payment
       .post(data)
@@ -120,6 +121,8 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
             ...response.data.data,
             ...response.data.included[0]
           });
+        } else {
+          Toast.show('Quota have exceeded the limit');
         }
       })
       .catch((error) => {
@@ -143,7 +146,6 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
     payment
       .post(data)
       .then((response) => {
-        // console.log('landing here paywithpaypal response', response);
         if (response.data.included[0].ticket.type === 'user') {
           return Promise.all([
             Promise.resolve(response.data.data),

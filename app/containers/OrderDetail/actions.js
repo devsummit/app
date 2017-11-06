@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
-import RNFetchBlob from 'react-native-fetch-blob';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 import orderdetail from '../../services/orderdetail';
 /*
@@ -68,6 +67,7 @@ export function orderVerification(order, image) {
       })
       .catch((err) => {
         Toast.show('Sorry, something went wrong');
+        dispatch(updateIsUpdatingOrder(false));
         console.log('ERROR', err);
       });
   };
@@ -192,21 +192,5 @@ export function confirmPayment(id) {
           console.log('error here', err);
         });
     });
-  };
-}
-
-export function downloadPdf() {
-  return (dispatch) => {
-    const dirs = RNFetchBlob.fs.dirs;
-    const pdfPath = RNFetchBlob.fs.asset('Bank.Ref.PDF');
-    const documentPath = dirs.DownloadDir;
-    RNFetchBlob.fs.cp(pdfPath, documentPath.concat('/Bank.Ref.PDF'))
-      .then(() => {
-        Toast.show('Success downloading file');
-      })
-      .catch((error) => {
-        console.log('ERROR', error);
-        Toast.show('Error downloading file');
-      });
   };
 }

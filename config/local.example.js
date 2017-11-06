@@ -1,5 +1,5 @@
-import PayPal from 'react-native-paypal';
 import { Platform } from 'react-native';
+
 export default {
   API_BASE_URL: '',
   CLIENT_SECRET: 'supersecret',

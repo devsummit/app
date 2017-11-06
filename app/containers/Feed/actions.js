@@ -2,6 +2,7 @@ import FormData from 'FormData';
 import { Platform } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import Api from '../../services/api';
+import payment from '../../services/payment';
 import feeds from '../../services/feeds';
 import {
   FETCH_FEEDS,
@@ -207,6 +208,36 @@ export function removeFeed(idFeed) {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+}
+
+export function registerHackaton(name, callback = () => ({})) {
+  return (dispatch) => {
+    const data = {
+      order_details: [
+        {
+          count: 1,
+          ticket_id: 10
+        }
+      ],
+      payment_type: 'offline',
+      hacker_team_name: name
+    };
+    payment
+      .post(data)
+      .then((response) => {
+        if (response.data && response.data.meta.success) {
+          callback({
+            ...response.data.data,
+            ...response.data.included[0]
+          });
+        }
+        Toast.show('Your team has been registered');
+      })
+      .catch((error) => {
+        Toast.show('Sorry, something went wrong');
+        console.log('ERROR', error);
       });
   };
 }

@@ -13,11 +13,12 @@ import {
   Tab,
   TabHeading
 } from 'native-base';
-import { View, Alert, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Image, AsyncStorage, Modal } from 'react-native';
+import { View, Alert, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Image, AsyncStorage, Modal, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CloseO from 'react-native-vector-icons/EvilIcons';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import PhotoGrid from 'react-native-photo-grid';
@@ -181,6 +182,19 @@ class BoothInfo extends Component {
             <View style={{ flex: 1, margin: 10 }}>
               <Image source={{ uri: this.state.imagePreview }} resizeMode={'contain'} style={{ flex: 1 }} />
             </View>
+            {Platform === 'ios' ? (
+              <CloseO
+                size={30}
+                onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                name="close-o"
+                style={{
+                  flex: 0,
+                  flexDirection: 'column',
+                  backgroundColor: '#b8d8d8',
+                  alignItems: 'center'
+                }}
+              />
+            ) : null}
           </View>
         </Modal>
       </View>

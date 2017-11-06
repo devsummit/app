@@ -12,7 +12,8 @@ import {
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
   IS_CONFIRM_EMAIL,
-  IS_CONFIRMING_EMAIL
+  IS_CONFIRMING_EMAIL,
+  FETCH_COMMUNITY
 } from './constants';
 
 /*
@@ -20,6 +21,7 @@ import {
  */
 const initialState = fromJS({
   orders: [],
+  community: {},
   isFetchingOrders: false,
   isConfirmingPayment: false,
   pendingOrder: 0,
@@ -54,6 +56,8 @@ function orderListReducer(state = initialState, action) {
       return state.set('isConfirmEmail', action.value);
     case IS_CONFIRMING_EMAIL:
       return state.set('isConfirmingEmail', action.status);
+    case FETCH_COMMUNITY:
+      return state.set('community', action.payloads);
     default:
       return state;
   }

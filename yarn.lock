@@ -4203,6 +4203,12 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-action-button@^2.8.0:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-action-button/-/react-native-action-button-2.8.1.tgz#703b2a7f23b86647cb9dba4bbbddcf23c18a0fda"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-animatable@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"

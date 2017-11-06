@@ -7,3 +7,4 @@ export const REDEEM_COUNTER = 'app/containers/OrderList/REDEEM_COUNTER';
 export const UPDATE_SINGLE_INPUT_FIELD = 'app/containers/OrderList/UPDATE_SINGLE_INPUT_FIELD';
 export const IS_CONFIRM_EMAIL = 'app/containers/OrderList/IS_CONFIRM_EMAIL';
 export const IS_CONFIRMING_EMAIL = 'app/containers/OrderList/IS_CONFIRMING_EMAIL';
+export const FETCH_COMMUNITY = 'app/containers/OrderList/FETCH_COMMUNITY';

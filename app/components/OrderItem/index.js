@@ -13,8 +13,7 @@ import { formatDate, transactionStatus, localeDate } from '../../helpers';
 let amount = 0;
 export default class OrderItem extends Component {
   state = {
-    status: '',
-    color: ''
+    status: ''
   };
 
   componentWillMount() {
@@ -22,8 +21,7 @@ export default class OrderItem extends Component {
     const { payment } = this.props.order;
     stat = transactionStatus(payment);
     this.setState({
-      status: stat.message,
-      color: stat.color
+      status: stat.message
     });
     const { order } = this.props;
     amount =
@@ -55,23 +53,45 @@ export default class OrderItem extends Component {
     this.props.confirmPayment(this.props.order);
   };
 
-  // confirm green
-  // auth blue
-  statusColor = (status) => {
-    const stat = status.toLowerCase();
-    let color;
-    if (stat === 'pending') {
-      color = 'red';
-    } else if (stat === 'paid') {
-      color = 'green';
-    } else if (stat === 'need authorization') {
-      color = 'blue';
-    } else {
-      color = '#777';
+  ticketStatus = () => {
+    const status = this.props.order.status;
+    if (status === 'pending') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#F44336', color: 'white' } ]}>
+          PENDING
+        </Text>
+      );
+    } else if (status === 'paid') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#0D47A1', color: 'white' } ]}>
+          VERIFIED
+        </Text>
+      );
+    }
+  }
+
+  ticketTypes = () => {
+    const type = this.props.order.type;
+    if (type === 'user') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#EF5350', color: 'white' } ]}>
+          EVENT
+        </Text>
+      );
+    } else if (type === 'hackaton') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#1DE9B6', color: 'white' } ]}>
+          HACKATON
+        </Text>
+      );
     }
 
-    return color;
-  };
+    return (
+      <Text note style={[ styles.statusText, { backgroundColor: '#42A5F5', color: 'white' } ]}>
+        EXHIBITORS
+      </Text>
+    );
+  }
 
   formatDate = (source) => {
     const dt = source.split(' ');
@@ -79,7 +99,7 @@ export default class OrderItem extends Component {
   };
 
   render() {
-    const { status, color } = this.state;
+    const { status } = this.state;
     const { order } = this.props;
     return (
       <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
@@ -89,14 +109,22 @@ export default class OrderItem extends Component {
             <Text note style={styles.orderId}>
               {localeDate(order.created_at)}
             </Text>
-            <View style={styles.viewText}>
-              {status ? (
-                <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-                  {this.state.status.toUpperCase()}
-                </Text>
-              ) : (
-                <View />
-              )}
+            <View style={{ flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center' }}
+            >
+              <View style={styles.viewText}>
+                {status ? (
+                  <View style={{ flexDirection: 'row', marginTop: 8 }}>
+                    {this.ticketStatus()}
+                    {this.ticketTypes()}
+                  </View>
+                ) : (
+                  <View />
+                )}
+              </View>
+              <Text />
             </View>
           </View>
         </View>
