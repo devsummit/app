@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import PayPal from 'react-native-paypal';
 import Toast from 'react-native-simple-toast';
+import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
 import { DevSummitAxios, getAccessToken } from '../../helpers';
 import payment from '../../services/payment';
 import { getOrderDetail } from '../OrderDetail/actions';
@@ -122,12 +123,13 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
             ...response.data.included[0]
           });
         } else {
-          Toast.show('Quota have exceeded the limit');
+          Toast.show('You already registered as hackaton');
+          LoaderHandler.hideLoader();
         }
       })
       .catch((error) => {
         Toast.show('Sorry, something went wrong');
-        console.log('ERROR', error);
+        LoaderHandler.hideLoader();
       });
   };
 }
