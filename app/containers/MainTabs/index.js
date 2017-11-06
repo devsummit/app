@@ -9,7 +9,14 @@ import BoothList from '../BoothList';
 import Feed from '../Feed';
 import Settings from '../Settings';
 
-export default class MainTabs extends Component {
+// @flow
+type State = {
+  currentTab: number,
+  roleId: number,
+  token: string
+};
+
+export default class MainTabs extends Component<State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +34,7 @@ export default class MainTabs extends Component {
       .catch(e => Toast.show('Error getting role id', e));
   }
 
-  handleCurrentTab = (number) => {
+  handleCurrentTab = (number: number) => {
     this.setState({ currentTab: number });
   };
 
