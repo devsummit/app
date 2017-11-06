@@ -17,7 +17,30 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
 
-class NewOrder extends Component {
+// @flow
+type Props = {
+  errorFields: {
+    referalCode: boolean,
+  },
+  inputFields: {
+    isUsingReferal: boolean,
+    referalCode: string
+  },
+  isFetchingReferal: boolean,
+  isFetchingTicket: boolean,
+  order?: Object<mixed>,
+  referalInfo: {
+    data: string,
+    meta: string
+  },
+  ticketTypes?: Array<mixed>
+};
+
+type State = {
+  count: number
+}
+
+class NewOrder extends Component<Props, State> {
   state ={
     count: 0
   };
@@ -26,11 +49,11 @@ class NewOrder extends Component {
     this.props.getTicketType();
   }
 
-  increase = (typeId) => {
+  increase = (typeId: number) => {
     this.props.updateOrder('increase', typeId);
   };
 
-  decrease = (typeId) => {
+  decrease = (typeId: number) => {
     this.props.updateOrder('decrease', typeId);
   };
 
@@ -64,7 +87,7 @@ class NewOrder extends Component {
     }
   };
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
   };
@@ -288,20 +311,6 @@ class NewOrder extends Component {
     );
   }
 }
-
-NewOrder.propTypes = {
-  updateOrder: PropTypes.func.isRequired,
-  inputFields: PropTypes.object.isRequired,
-  updateInputFields: PropTypes.func.isRequired,
-  updateErrorFields: PropTypes.func.isRequired,
-  GetReferal: PropTypes.func.isRequired,
-  order: PropTypes.object.isRequired,
-  ticketTypes: PropTypes.oneOfType([ PropTypes.array, PropTypes.object ]).isRequired,
-  placeOrder: PropTypes.func.isRequired,
-  getTicketType: PropTypes.func.isRequired,
-  isFetchingReferal: PropTypes.bool.isRequired,
-  isFetchingTicket: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = createStructuredSelector({
   ticketTypes: selectors.getTicketTypes(),
