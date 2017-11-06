@@ -40,11 +40,9 @@ const Menu = ({ onPress, icon, text }) => (
 const Drawer = () => (
   <Container>
     <Header style={{ height: 200, backgroundColor: '#333' }}>
-      <Left/>
-      <Body style={{ height: 200, paddingTop: 25}}>
+      <Body style={{ height: 200, alignItems: 'center', justifyContent: 'center' }}>
         <Image source={Logo} />
       </Body>
-      <Right/>
     </Header>
     <Content>
       <Separator bordered>
@@ -56,8 +54,8 @@ const Drawer = () => (
         <Menu icon="lock" text={strings.settings.privacyPolicy} onPress={() => Actions.privacyPolicy()} />
       </List>
     </Content>
-    <Footer>
-      <Text style={{ marginTop: 10, color: '#333', fontSize: 14 }}>v{ VersionNumber.appVersion } ({VersionNumber.buildVersion})</Text>
+    <Footer style={{ height: 50, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ color: '#333', fontSize: 14 }}>v{ VersionNumber.appVersion } ({VersionNumber.buildVersion})</Text>
     </Footer>
   </Container>
 );
