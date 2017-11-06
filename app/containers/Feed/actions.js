@@ -63,6 +63,7 @@ export function fetchFeeds(currentpage) {
     feeds
       .get(currentpage)
       .then((response) => {
+        console.log('huahauhauhda', response);
         const payloads = response.data.data;
         const links = response.data.links;
 

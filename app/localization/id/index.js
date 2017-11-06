@@ -16,6 +16,7 @@ import speaker from './Speaker';
 import codeConduct from './CodeConduct';
 import privacyPolicy from './PrivacyPolicy';
 import main from './Main';
+import comment from './Comment';
 
 const id = {
   global,
@@ -35,7 +36,8 @@ const id = {
   speaker,
   codeConduct,
   privacyPolicy,
-  main
+  main,
+  comment
 };
 
 export default id;
