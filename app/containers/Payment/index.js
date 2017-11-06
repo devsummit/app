@@ -18,7 +18,35 @@ import { PAYMENT_METHODS, BANK_TRANSFERS, CREDIT_CARD_LIST } from './constants';
 let bankList = [];
 const logo = require('../../../assets/images/bankmandiri.png');
 
-class Payment extends Component {
+// @flow
+type Props = {
+  errorFields: {
+    referalCode: boolean
+  },
+  inputFields: {
+    referalCode: string
+  },
+  order: Object,
+  paypalChecking: boolean,
+  referalInfo: {
+    data: string,
+    meta: string
+  },
+  ticketTypes: Array<mixed>,
+  userId: string
+};
+
+type order = {
+  count: number,
+  price: number,
+  ticket_id: number
+};
+
+type State = {
+  cardStatus: boolean
+};
+
+class Payment extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +61,7 @@ class Payment extends Component {
     });
   }
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
     if (field === 'paymentType' && value !== 'credit_card' && value !== 'bank_transfer') {
       const selectedMethod = PAYMENT_METHODS.filter((data) => {
@@ -236,15 +264,6 @@ class Payment extends Component {
     );
   }
 }
-
-// props validation
-Payment.propTypes = {
-  updateErrorFields: PropTypes.func.isRequired,
-  updateInputFields: PropTypes.func.isRequired,
-  navigation: PropTypes.object.isRequired,
-  inputFields: PropTypes.object.isRequired,
-  paypalChecking: PropTypes.bool.isRequired
-};
 
 /**
  *  Map redux state to component props
