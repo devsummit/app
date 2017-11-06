@@ -44,7 +44,8 @@ class OrderList extends Component {
     modalVisibleConfirmation: false,
     modalMyOrders: false,
     isPaid: false,
-    roleId: null
+    roleId: null,
+    confirmed: 0
   };
 
   componentWillMount() {
@@ -59,7 +60,8 @@ class OrderList extends Component {
           referal: data.referal,
           haveRefered: data.have_refered,
           referalCount: data.referal_count,
-          roleId: data.role_id
+          roleId: data.role_id,
+          confirmed: data.confirmed
         });
       })
       .catch(err => console.log('Error getting data'));
@@ -170,7 +172,7 @@ class OrderList extends Component {
                         CLAIM
                       </Text>
                     </TouchableOpacity>
-                    {!isConfirmEmail ? (
+                    {!this.state.confirmed ? (
                       <View />
                     ) : (
                       <View style={styles.inviteField}>
@@ -279,25 +281,29 @@ class OrderList extends Component {
               )}
             </View>
           ) : (
-            <View style={styles.artwork}>
-              {!isConfirmEmail ? (
-                <View>
-                  <Text style={styles.artworkText}>Please confirm your email first</Text>
-                  <Button
-                    block
-                    style={{ margin: 10 }}
-                    onPress={() =>
-                      this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
-                  >
-                    <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                      Resend confirmation
-                    </Text>
-                  </Button>
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
+            !this.state.confirmed ?
+              <View>
+                <Text style={styles.artworkText}>Please confirm your email first</Text>
+                <Button
+                  block
+                  style={{ margin: 10 }}
+                  onPress={() =>
+                    this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
+                >
+                  <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
+                    Resend confirmation
+                  </Text>
+                </Button>
+              </View> :
+              <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+              >
+                <Image source={noTicket} style={{ opacity: 0.7 }} />
+                <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
+              </View>
           )}
           <Modal
             animationType="slide"

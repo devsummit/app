@@ -176,6 +176,7 @@ class Feed extends Component {
     this.props.setTokenHeader(this.props.currentPage);
 
     AsyncStorage.getItem('profile_data').then((profile) => {
+      console.log('fuckme here', profile);
       const data = JSON.parse(profile);
       const firstName = data.first_name;
       const lastName = data.last_name;
@@ -318,6 +319,7 @@ class Feed extends Component {
   };
 
   render() {
+      console.log('fuckme here bro', this.state.confirmed);
     return (
       <Container style={styles.container}>
         <HeaderPoint title={strings.feed.title} />
