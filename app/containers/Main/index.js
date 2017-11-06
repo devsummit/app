@@ -54,7 +54,26 @@ const Aiken = require('../../../assets/images/icon.png');
 
 const timing = 4000;
 
-class Main extends Component {
+// @flow
+type Props = {
+  fields: {
+    email: string,
+    password: string,
+    username: string
+  },
+  isLoading: boolean,
+  isLoggedIn: boolean,
+  isReseted: boolean,
+  isSubscribed: boolean
+};
+
+type State = {
+  invisible: boolean,
+  modalVisible: boolean,
+  modalVisibleAnimation: boolean
+};
+
+class Main extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
@@ -95,7 +114,7 @@ class Main extends Component {
     this.props.resetState();
   }
 
-  onLoginMobile(token) {
+  onLoginMobile(token: string) {
     if (!token) {
       this.setState({});
     } else {
@@ -345,24 +364,6 @@ class Main extends Component {
     );
   }
 }
-
-Main.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  updateIsLogIn: PropTypes.func.isRequired,
-  isSubscribed: PropTypes.bool.isRequired,
-  updateIsSubscribed: PropTypes.func.isRequired,
-  loginMobile: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  loginFacebook: PropTypes.func.isRequired,
-  updateFields: PropTypes.func.isRequired,
-  fields: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  subscribeNewsletter: PropTypes.func.isRequired,
-  loginGoogle: PropTypes.func.isRequired,
-  loginTwitter: PropTypes.func.isRequired,
-  resetPassword: PropTypes.func.isRequired,
-  isReseted: PropTypes.bool.isRequired
-};
 
 /**
  *  Map redux state to component props
