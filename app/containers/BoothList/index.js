@@ -38,6 +38,7 @@ import Redeem from '../Redeem';
 import AccordionView from './Accordion';
 import AccordionView2 from './Accordion2';
 import { PRIMARYCOLOR } from '../../constants';
+import { getProfileData } from './../../helpers';
 
 const bgBooth1 = require('./../../../assets/images/bgbooth_1.png');
 const bgBooth2 = require('./../../../assets/images/bgbooth_2.png');
@@ -47,6 +48,7 @@ class BoothList extends Component {
     modalVisible: false,
     boothFilter: this.props.booth,
     url: 'https://api.devsummit.io/static/prospectous.pdf',
+    confirmed: 0,
     accordion: false,
     accordion2: false
   };
@@ -54,6 +56,14 @@ class BoothList extends Component {
   componentWillMount() {
     this.props.fetchBoothList();
     this.props.fetchHackatonList();
+
+    getProfileData()
+      .then((data) => {
+        this.setState({
+          confirmed: data.confirmed
+        });
+      })
+      .catch(err => console.log('Error getting data'));
   }
 
   componentWillReceiveProps(prevProps) {
@@ -117,7 +127,8 @@ class BoothList extends Component {
         >
           {!this.state.accordion2 ? (
             <Button
-              style={styles.btnBooth}
+              disabled={!this.state.confirmed}
+              style={!this.state.confirmed ? [ styles.btnBooth, { backgroundColor: '#BDBDBD' } ] : styles.btnBooth}
               onPress={() => {
                 this.setAccordion(!this.state.accordion);
               }}
