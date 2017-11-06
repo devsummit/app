@@ -127,8 +127,9 @@ export function updateIsGettingReferal(status) {
 }
 
 export function reset() {
-  return {
-    type: RESET_STATE
+  return (dispatch) => {
+    dispatch({ type: RESET_STATE });
+    dispatch(getTicketType());
   };
 }
 
