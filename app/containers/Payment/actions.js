@@ -122,7 +122,7 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
             ...response.data.included[0]
           });
         } else {
-          Toast.show('Quota have exceeded the limit');
+          Toast.show('You already registered as hackaton');
         }
       })
       .catch((error) => {
