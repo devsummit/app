@@ -23,7 +23,17 @@ import { PRIMARYCOLOR } from '../../constants';
 
 import { getProfileData } from '../../helpers';
 
-class PaymentDetail extends Component {
+// @flow
+type Props = {
+  getTransactionResponse?: Object,
+  inputFields: Object<mixed>,
+  errorFields: Object,
+  getIsFetchingTransaction: boolean,
+  order: Object<mixed>,
+  initialPayment?: Object<mixed>
+};
+
+class PaymentDetail extends Component<Props> {
   componentWillMount() {
     const { order, updateInputFields } = this.props;
     getProfileData().then((profileData) => {
@@ -55,7 +65,7 @@ class PaymentDetail extends Component {
     }
   }
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
   };
@@ -319,20 +329,6 @@ class PaymentDetail extends Component {
     );
   }
 }
-
-//  props validation
-PaymentDetail.propTypes = {
-  getTransactionResponse: PropTypes.object.isRequired,
-  updateErrorFields: PropTypes.func.isRequired,
-  resetResponse: PropTypes.func.isRequired,
-  updateInputFields: PropTypes.func.isRequired,
-  inputFields: PropTypes.object.isRequired,
-  errorFields: PropTypes.object.isRequired,
-  submitPayment: PropTypes.func.isRequired,
-  getIsFetchingTransaction: PropTypes.bool.isRequired,
-  order: PropTypes.object.isRequired,
-  initialPayment: PropTypes.object.isRequired
-};
 
 /**
  *  Map redux state to component props
