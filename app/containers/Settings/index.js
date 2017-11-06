@@ -100,12 +100,14 @@ class Settings extends Component {
                   </View>
                 </TouchableWithoutFeedback>
                 <View style={{ borderColor: '#BDBDBD', borderWidth: 0.5, marginBottom: 20 }} />
+                {/**
                 <Button block style={styles.button} onPress={() => Actions.codeConduct()}>
                   <Text>{strings.settings.codeConduct}</Text>
                 </Button>
                 <Button block style={styles.button} onPress={() => Actions.privacyPolicy()}>
                   <Text>{strings.settings.privacyPolicy}</Text>
                 </Button>
+                */}
                 <Button block style={styles.button} onPress={() => this.setModalVisible(true)}>
                   <Text>{strings.settings.feedback}</Text>
                 </Button>

@@ -21,7 +21,7 @@ import {
  */
 const initialState = fromJS({
   orders: [],
-  community: [],
+  community: {},
   isFetchingOrders: false,
   isConfirmingPayment: false,
   pendingOrder: 0,
@@ -57,7 +57,7 @@ function orderListReducer(state = initialState, action) {
     case IS_CONFIRMING_EMAIL:
       return state.set('isConfirmingEmail', action.status);
     case FETCH_COMMUNITY:
-      return state.set('community', fromJS(action.payloads));
+      return state.set('community', action.payloads);
     default:
       return state;
   }

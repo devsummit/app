@@ -14,8 +14,7 @@ import { formatDate, transactionStatus, localeDate } from '../../helpers';
 let amount = 0;
 export default class OrderItem extends Component {
   state = {
-    status: '',
-    color: ''
+    status: ''
   };
 
   componentWillMount() {
@@ -23,8 +22,7 @@ export default class OrderItem extends Component {
     const { payment } = this.props.order;
     stat = transactionStatus(payment);
     this.setState({
-      status: stat.message,
-      color: stat.color
+      status: stat.message
     });
     const { order } = this.props;
     amount =
@@ -56,23 +54,27 @@ export default class OrderItem extends Component {
     this.props.confirmPayment(this.props.order);
   };
 
-  // confirm green
-  // auth blue
-  statusColor = (status) => {
-    const stat = status.toLowerCase();
-    let color;
-    if (stat === 'pending') {
-      color = 'red';
-    } else if (stat === 'paid') {
-      color = 'green';
-    } else if (stat === 'in progress') {
-      color = 'blue';
-    } else {
-      color = '#777';
+  ticketStatus = () => {
+    const status = this.props.order.status;
+    if (status === 'pending') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#F44336', color: 'white' } ]}>
+          PENDING
+        </Text>
+      );
+    } else if (status === 'paid') {
+      return (
+        <Text note style={[ styles.statusText, { backgroundColor: '#0D47A1', color: 'white' } ]}>
+          VERIFIED
+        </Text>
+      );
     }
-
-    return color;
-  };
+    return (
+      <Text note style={[ styles.statusText, { backgroundColor: 'blue', color: 'white' } ]}>
+        {this.state.status.toUpperCase()}
+      </Text>
+    );
+  }
 
   ticketTypes = () => {
     const type = this.props.order.type;
@@ -102,35 +104,9 @@ export default class OrderItem extends Component {
     return `${dt[1]}-${dt[2]}-${dt[3]}`;
   };
 
-  statusLabel = () => {
-    const { status, color } = this.state;
-    const { paymentProof } = this.props;
-    if (status) {
-      return (
-        <View style={{ flexDirection: 'row', marginTop: 8 }}>
-          <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-            {this.state.status.toUpperCase()}
-          </Text>
-          {this.ticketTypes()}
-        </View>
-      );
-    } else if (paymentProof) {
-      return (
-        <View style={{ flexDirection: 'row', marginTop: 8 }}>
-          <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-            IN PROGRESS
-          </Text>
-          {this.ticketTypes()}
-        </View>
-      );
-    }
-    <View/>
-  }
-
   render() {
-    const { order, paymentProof } = this.props;
+    const { order } = this.props;
     const { color, status } = this.state;
-    console.log("PAYMEBRPROOF", paymentProof);
     // console.log('landing here orderItem this.state', this.state);
     // console.log('landing here this.props orderItem', this.props.order);
     // console.log('landing here localeDateAddOneHour', localeDateAddOneHour(order.created_at));
@@ -151,9 +127,7 @@ export default class OrderItem extends Component {
               <View style={styles.viewText}>
                 {status ? (
                   <View style={{ flexDirection: 'row', marginTop: 8 }}>
-                    <Text note style={[ styles.statusText, { backgroundColor: color, color: 'white' } ]}>
-                      {this.state.status.toUpperCase()}
-                    </Text>
+                    {this.ticketStatus()}
                     {this.ticketTypes()}
                   </View>
                 ) : (

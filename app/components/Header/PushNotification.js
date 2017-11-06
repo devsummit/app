@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
 import { Platform, AppState, AsyncStorage } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import Toast from 'react-native-simple-toast';
 
@@ -19,6 +20,7 @@ FCM.on(FCMEvent.Notification, async (notif) => {
     // this is a local notification
   }
   if (notif.opened_from_tray) {
+    Actions.notification();
     // app is open/resumed because user clicked banner
   }
   // await someAsyncCall();
@@ -86,6 +88,7 @@ export default class PushNotification extends Component {
     FCM.subscribeToTopic('devsummit_indonesia_2017');
     FCM.requestPermissions();
     FCM.getFCMToken().then((token) => {
+      console.log('token here', token);
       this.setState({ fcm_token: token });
       // update your fcm token on server.
       getAccessToken().then((usertoken) => {
@@ -106,7 +109,7 @@ export default class PushNotification extends Component {
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
       // do some component related stuff
       if (this.state.appState === 'active') {
-        Toast.show(notif.fcm.body);
+        this.props.onReceiveNotif();
       }
     });
   }

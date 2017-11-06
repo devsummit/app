@@ -8,6 +8,7 @@ import {
   Card,
   CardItem,
   Body,
+  Left,
   Right,
   Button,
   Grid,
@@ -221,6 +222,7 @@ class OrderDetail extends Component {
     const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating } = this.props;
+    console.log('landing here to check status', order);
     if (isUpdating || isConfirming || Object.keys(order).length === 0) {
       return (
         <Container>
@@ -251,15 +253,21 @@ class OrderDetail extends Component {
                     <Text style={styles.textButton}>save</Text>
                   </Button>
                 ) : (
-                  <Text
-                    style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                  >
-                    {this.state.status === 'capture' ? 'PAID' : this.state.status.toUpperCase()}
-                  </Text>
+                  this.state.status === 'captured' ?
+                    <Text
+                      style={[ styles.statusText, { backgroundColor: '#0D47A1' } ]}
+                    >
+                    VERIFIED
+                    </Text> :
+                    <Text
+                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
+                    >
+                      {this.state.status.toUpperCase()}
+                    </Text>
                 )}
                 <Row>
                   <Col style={{ flex: 2 }}>
-                    <Text>{strings.order.orderNumber}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.order.orderNumber}</Text>
                   </Col>
                   <Col style={{ flex: 3 }}>
                     <Text>{this.props.id || this.props.order.data[0].order_id}</Text>
@@ -267,7 +275,7 @@ class OrderDetail extends Component {
                 </Row>
                 <Row>
                   <Col style={{ flex: 2 }}>
-                    <Text>{strings.order.orderDate}</Text>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.order.orderDate}</Text>
                   </Col>
                   <Col style={{ flex: 3 }}>
                     <Text>{localeDateWithoutHour(order.data[0].created_at)}</Text>
@@ -331,134 +339,105 @@ class OrderDetail extends Component {
           }
           <Card>
             <CardItem>
-              <Body>
-                <Text>{strings.order.total.toUpperCase()}</Text>
-              </Body>
-              <Right>
-                <Text style={{ color: PRIMARYCOLOR }}>Rp {Intl.NumberFormat('id').format(this.getTotal())}</Text>
-              </Right>
+              <Content>
+                <Grid>
+                  <Col style={{flex: 2}}>
+                    <Text style={{ fontWeight: 'bold' }}>{strings.order.total.toUpperCase()}</Text>
+                  </Col>
+                  <Col style={{flex: 3}}>
+                    <Text style={{ color: PRIMARYCOLOR }}>Rp{' '} {order.included.payment.gross_amount}</Text>
+                  </Col>
+                </Grid>
+              </Content>
             </CardItem>
           </Card>
-
-          {order.included.referal && order.included.referal.owner ? (
+          {this.state.status === 'captured' ?
+            <View /> :
             <View>
-              <Card>
-                <CardItem>
+              {payment.payment_type === 'offline' && (
+                <Card>
+                  <CardItem>
+                    <View style={styles.card} resizeMode={'cover'}>
+                      <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
+                      <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
+                      <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                      <Text style={styles.textTitleBold}>Taufan Aditya</Text>
+                      <Text style={styles.textTitle}>OR</Text>
+                      <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
+                      <View
+                        style={{
+                          flex: 8,
+                          alignItems: 'center'
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: '#000000',
+                            marginBottom: 8,
+                            marginTop: 16
+                          }}
+                        >
+                          Nomer Rekening:
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            color: '#000000',
+                            marginBottom: 8,
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          130-0016066782
+                        </Text>
+                      </View>
+                    </View>
+                  </CardItem>
+                </Card>
+              )}
+              {payment.payment_type === 'offline' ? (
+                this.props.paymentProof !== '' ? (
+                  <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+                    <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                    </Button>
+                    <Image
+                      style={{
+                        flex: 1,
+                        height: 200,
+                        marginTop: 0,
+                        margin: 10
+                      }}
+                      resizeMode={'cover'}
+                      source={{ uri: this.props.paymentProof }}
+                    />
+                    <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
+                    </Button>
+                  </View>
+                ) : (
                   <View>
-                    <Text style={{ fontWeight: 'bold' }}>{strings.referalInfo}</Text>
-                    <Text>{strings.order.referalCode}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>
-                      {order.included.referal.referal_code}
-                    </Text>
-                    <Text>{strings.order.owner}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>{order.included.referal.owner}</Text>
-                    <Text>{strings.order.totalDiscount}</Text>
-                    <Text style={{ fontWeight: 'bold' }}>
-                      Rp{' '}
-                      {Intl.NumberFormat('id').format(
-                        order.included.referal.discount_amount * this.getTotal()
-                      )}
-                    </Text>
+                    <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                    </Button>
+                    <Image
+                      style={{
+                        flex: 1,
+                        marginTop: -10,
+                        alignSelf: 'center'
+                      }}
+                      resizeMode={'cover'}
+                      source={noImage}
+                    />
+                    <Text style={styles.noImageText}>{strings.order.noProof}</Text>
+                    <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                    </Button>
                   </View>
-                </CardItem>
-              </Card>
-              <Card>
-                <CardItem style={{ flex: 1 }}>
-                  <Text style={{ flex: 1 }}>{strings.order.totalAfterDiscount}</Text>
-                  <Text style={{ textAlign: 'right', flex: 1 }}>
-                    Rp{' '}
-                    {Intl.NumberFormat('id').format(
-                      this.getTotal() - order.included.referal.discount_amount * this.getTotal()
-                    )}
-                  </Text>
-                </CardItem>
-              </Card>
+                )
+              ) : <View />}
             </View>
-          ) : (
-            <View />
-          )}
-          <View>
-            {payment.payment_type === 'offline' && (
-              <Card>
-                <View style={styles.card} resizeMode={'cover'}>
-                  <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
-                  <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-                  <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
-                  <Text style={styles.textTitleBold}>Taufan Aditya</Text>
-                  <Text style={styles.textTitle}>OR</Text>
-                  <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
-                  <View
-                    style={{
-                      flex: 8,
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: '#000000',
-                        marginBottom: 8,
-                        marginTop: 16
-                      }}
-                    >
-                      Nomer Rekening:
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: '#000000',
-                        marginBottom: 8,
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      130-0016066782
-                    </Text>
-                  </View>
-                </View>
-              </Card>
-            )}
-            {payment.payment_type === 'offline' ? (
-              this.props.paymentProof !== '' ? (
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
-                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
-                  </Button>
-                  <Image
-                    style={{
-                      flex: 1,
-                      height: 200,
-                      marginTop: 0,
-                      margin: 10
-                    }}
-                    resizeMode={'cover'}
-                    source={{ uri: this.props.paymentProof }}
-                  />
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
-                  </Button>
-                </View>
-              ) : (
-                <View>
-                  <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
-                  </Button>
-                  <Image
-                    style={{
-                      flex: 1,
-                      marginTop: -10,
-                      alignSelf: 'center'
-                    }}
-                    resizeMode={'cover'}
-                    source={noImage}
-                  />
-                  <Text style={styles.noImageText}>{strings.order.noProof}</Text>
-                  <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                    <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
-                  </Button>
-                </View>
-              )
-            ) : <View />}
-          </View>
+          }
         </Content>
       </Container>
     );

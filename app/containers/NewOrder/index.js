@@ -18,6 +18,10 @@ import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
 
 class NewOrder extends Component {
+  state ={
+    count: 0
+  };
+
   componentWillMount() {
     this.props.getTicketType();
   }
@@ -53,8 +57,10 @@ class NewOrder extends Component {
     const { updateInputFields } = this.props;
     if (isUsingReferal && isUsingReferal === true) {
       updateInputFields('isUsingReferal', false);
+      this.setState({ count: 0 })
     } else {
       updateInputFields('isUsingReferal', true);
+      this.setState({ count: 1 })
     }
   };
 
@@ -66,6 +72,30 @@ class NewOrder extends Component {
   OnCheckReferal = () => {
     this.props.GetReferal();
   };
+
+  checkCode = (info) => {
+    if (info.data.used === true) {
+      return (
+        <Text style={{ color: 'red' }}>{strings.order.used}</Text>
+      );
+    } else if (info.data.quota_exceeded === true) {
+      return (
+        <Text style={{ color: 'red' }}>{strings.order.quotaExceeded}</Text>
+      );
+    } else if (info.data.code_invalid === true) {
+      return (
+        <Text style={{ color: 'red' }}>{strings.order.codeInvalid}</Text>
+      );
+    } else if (info.meta.success === true) {
+      return (
+        <Text style={{ color: '#64FFDA' }}>{strings.order.codeSuccess}</Text>
+      );
+    }
+
+    return (
+      <Text>{strings.order.checkCode}</Text>
+    );
+  }
 
   render() {
     if (this.props.isFetchingReferal === true) {
@@ -79,6 +109,7 @@ class NewOrder extends Component {
     }
 
     const { inputFields, referalInfo } = this.props || {};
+    const { isUsingReferal } = this.props.inputFields;
     const order = this.props.order;
     const arraySub = Object.keys(order).map((key) => {
       return order[key].count * order[key].price;
@@ -115,31 +146,34 @@ class NewOrder extends Component {
                               <Text style={{ color: 'grey', fontWeight: 'bold', textDecorationLine: 'line-through', marginTop: 5, marginRight: 5 }}>
                                 Rp {Intl.NumberFormat('id').format(ticket.price) * 2}.000
                               </Text>
-                              <Icon.Button name="tags" backgroundColor="green" size={10}>
-                                <Text style={{ fontSize: 10, color: '#FFFFFF' }}>
-                                  50%
-                                </Text>
-                              </Icon.Button>
+                              <Text style={{ fontSize: 14, color: 'grey', lineHeight: 27, fontWeight: 'bold' }}>
+                                <Icon name="tags" /> 50%
+                              </Text>
                             </View>
-                            <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
-                                Rp {Intl.NumberFormat('id').format(ticket.price)}
-                            </Text>
+                            <View style={{ flexDirection: 'row' }}>
+                              <Text style={{ color: 'orange', fontWeight: 'bold', margin: 1 }}>
+                                  Rp {Intl.NumberFormat('id').format(ticket.price)}
+                              </Text>
+                            </View>
                             <View style={{ flex: 1, flexDirection: 'column', flexWrap: 'wrap' }}>
                               <Text note>{ticket.information}</Text>
                             </View>
                           </View>
                         </View>
                         <View style={styles.btnGroup}>
-                          <TouchableWithoutFeedback onPress={() => { this.decrease(ticket.id); }}>
+                          <TouchableWithoutFeedback disabled={isUsingReferal} onPress={() => { this.decrease(ticket.id); }}>
                             <View style={styles.plusMinus}>
                               <Icon name="minus" style={{ fontSize: 20 }} />
                             </View>
                           </TouchableWithoutFeedback>
                           <View style={styles.ticketCount}>
-                            <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
+                            { isUsingReferal ?
+                              <Text style={styles.textCount}>{this.state.count}</Text> :
+                              <Text style={styles.textCount}>{order[ticket.id] ? order[ticket.id].count : 0}</Text>
+                            }
                           </View>
-                          <TouchableWithoutFeedback onPress={() => { this.increase(ticket.id); }}>
-                            <View style={[ styles.plusMinus, { backgroundColor: 'green', borderColor: 'green' } ]}>
+                          <TouchableWithoutFeedback disabled={isUsingReferal} onPress={() => { this.increase(ticket.id); }}>
+                            <View style={[ styles.plusMinus, { backgroundColor: '#FF6F00', borderColor: 'green' } ]}>
                               <Icon name="plus" style={{ fontSize: 20, color: 'white' }} />
                             </View>
                           </TouchableWithoutFeedback>
@@ -156,10 +190,12 @@ class NewOrder extends Component {
             <CardItem style={{ flex: 1, flexDirection: 'column' }}>
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flexDirection: 'column', flex: 1 }}>
-                  <Text style={{ flex: 1 }}>{strings.order.total}</Text>
-                  <Text style={{ textAlign: 'left', flex: 1 }}>
-                    Rp {Intl.NumberFormat('id').format(total)}
-                  </Text>
+                  { referalInfo.data.discount_amount ?
+                    <Text style={{ textAlign: 'left', flex: 1, fontWeight: '700', color: '#4CAF50' }}>You will get {referalInfo.data.discount_amount * 100}% discount</Text> :
+                    <Text style={{ textAlign: 'left', flex: 1 }}>
+                      Enter your code
+                    </Text>
+                  }
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={{ fontWeight: 'bold', marginRight: 5 }}>
@@ -184,8 +220,8 @@ class NewOrder extends Component {
                   <View
                     style={{
                       flexDirection: 'column',
-                      flex: 1,
                       alignSelf: 'stretch',
+                      flex: 1,
                       marginTop: 10
                     }}
                   >
@@ -197,8 +233,9 @@ class NewOrder extends Component {
                       placeholder="Referal code"
                       disabled={!inputFields.isUsingReferal}
                     />
+                    <Text style={{ color: '#BDBDBD', fontSize: 10 }}>{strings.order.referalLimit}</Text>
                     <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
-                      <Text>{strings.order.checkCode}</Text>
+                      {this.checkCode(referalInfo)}
                     </Button>
                   </View>
                 ) : (
@@ -239,9 +276,9 @@ class NewOrder extends Component {
           <Button
             block
             style={styles.orderBtn}
-            disabled={!(total > 0)}
+            disabled={total === 0 && this.state.count === 0}
             onPress={() => {
-              Actions.payment({ order });
+              Actions.payment({ order, referalInfo });
             }}
           >
             <Text>{strings.order.placeOrder}</Text>
