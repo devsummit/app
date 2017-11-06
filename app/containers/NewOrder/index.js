@@ -97,6 +97,12 @@ class NewOrder extends Component {
     );
   }
 
+  onPressPlaceOrder = ({ order, referalInfo }) => {
+    Actions.payment({ order, referalInfo });
+    this.setState({ count: 0 });
+    this.props.reset();
+  }
+
   render() {
     if (this.props.isFetchingReferal === true) {
       return (
@@ -278,7 +284,7 @@ class NewOrder extends Component {
             style={styles.orderBtn}
             disabled={total === 0 && this.state.count === 0}
             onPress={() => {
-              Actions.payment({ order, referalInfo });
+              this.onPressPlaceOrder({ order, referalInfo });
             }}
           >
             <Text>{strings.order.placeOrder}</Text>
@@ -300,7 +306,8 @@ NewOrder.propTypes = {
   placeOrder: PropTypes.func.isRequired,
   getTicketType: PropTypes.func.isRequired,
   isFetchingReferal: PropTypes.bool.isRequired,
-  isFetchingTicket: PropTypes.bool.isRequired
+  isFetchingTicket: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
