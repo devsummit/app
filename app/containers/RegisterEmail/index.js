@@ -32,7 +32,48 @@ const Logo = require('../../../assets/images/logo.png');
 
 import styles, { IMAGE_HEIGHT, IMAGE_HEIGHT_SMALL } from './styles';
 
-class RegisterEmail extends Component {
+// @flow
+type Props = {
+  errorFields: Object,
+  inputFields: Object<mixed>,
+  isLoggedIn: boolean,
+  isRegistered: {
+    message: string,
+    status: boolean,
+    title: string
+  },
+  isRegistering: boolean
+};
+
+type errorFields = {
+  errorEmail: boolean,
+  errorFirstName: boolean,
+  errorFirstName: boolean,
+  errorLastName: boolean,
+  errorPassword: boolean,
+  errorPhone: boolean,
+  errorUsername: boolean,
+  errorVerifyPassword: boolean
+};
+
+type inputFields = {
+  email: string,
+  firstName: string,
+  lastName: string,
+  password: string,
+  phone: string,
+  referer: string,
+  role: number,
+  socialId: number,
+  username: string,
+  verifyPassword: string
+};
+
+type State = {
+  isChecked: boolean
+};
+
+class RegisterEmail extends Component<Props, State> {
   /*
      * initialize some state
      */
@@ -110,26 +151,26 @@ class RegisterEmail extends Component {
     this.props.updateRegisterMethod(value);
   };
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
   };
 
   // email validation
-  checkEmail = (inputvalue) => {
+  checkEmail = (inputvalue: string) => {
     const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
     if (pattern.test(inputvalue)) return true;
     return false;
   };
 
   // name validation
-  checkName = (value) => {
+  checkName = (value: string) => {
     const pattern = /([^a-zA-Z0-9_\ -])/g;
     if (pattern.test(value)) return false;
     return true;
   };
 
-  handlePressCheckedBox = (checked) => {
+  handlePressCheckedBox = (checked: boolean) => {
     this.setState({
       isChecked: checked
     });
@@ -333,20 +374,6 @@ class RegisterEmail extends Component {
     );
   }
 }
-
-RegisterEmail.propTypes = {
-  updateInputFields: PropTypes.func.isRequired,
-  prefilledData: PropTypes.object, // eslint-disable-line react/require-default-props
-  isRegistered: PropTypes.object.isRequired,
-  updateRegisterStatus: PropTypes.func.isRequired,
-  resetState: PropTypes.func.isRequired,
-  errorFields: PropTypes.object.isRequired,
-  register: PropTypes.func.isRequired,
-  updateRegisterMethod: PropTypes.func.isRequired,
-  updateErrorFields: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  isRegistering: PropTypes.bool.isRequired
-};
 
 /**
  *  Map redux state to component props
