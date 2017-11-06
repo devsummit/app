@@ -48,7 +48,6 @@ type Props = {
 type errorFields = {
   errorEmail: boolean,
   errorFirstName: boolean,
-  errorFirstName: boolean,
   errorLastName: boolean,
   errorPassword: boolean,
   errorPhone: boolean,
