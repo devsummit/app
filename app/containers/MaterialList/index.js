@@ -157,7 +157,10 @@ class MaterialList extends Component<Props, State> {
     return (
       <ScrollView>
         <Content>
-          <HeaderPoint title={strings.material.title} />
+          {this.props.hidden ?
+            <View /> :
+            <HeaderPoint title={strings.material.title} />
+          }
           {
             this.props.isFetching
               ? <ActivityIndicator size="large" color="#f39e21" style={styles.loader} />
@@ -232,7 +235,8 @@ class MaterialList extends Component<Props, State> {
           >
             <Icon name="plus" />
           </Fab>
-          : <View />}
+          : <View />
+        }
       </ScrollView>
     );
   }

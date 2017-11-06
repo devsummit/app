@@ -147,7 +147,8 @@ class ScheduleDetail extends Component {
           }
           {type === 'speaker' ?
             <Card>
-              <MaterialList speakerId={speakerId} />
+              <Text style={styles.material}>MATERIAL ITEM</Text>
+              <MaterialList hidden speakerId={speakerId} />
             </Card> : <View />
           }
         </View>

@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-
+import { PRIMARYCOLOR } from '../../constants';
 const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
@@ -16,6 +16,15 @@ const styles = StyleSheet.create({
   },
   detail: {
     flex: 1
+  },
+  material: {
+    color: '#FFF',
+    fontWeight: '700',
+    fontSize: 20,
+    backgroundColor: PRIMARYCOLOR,
+    marginHorizontal: 8,
+    padding: 16,
+    textAlign: 'center'
   },
   background: {
     width,
