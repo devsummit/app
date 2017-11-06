@@ -227,13 +227,16 @@ export function registerHackaton(name, callback = () => ({})) {
     payment
       .post(data)
       .then((response) => {
+        console.log('checking here', response);
         if (response.data && response.data.meta.success) {
           callback({
             ...response.data.data,
             ...response.data.included[0]
           });
+          Toast.show('Your team has been registered');
+        } else {
+          Toast.show('You already registered as hackaton');
         }
-        Toast.show('Your team has been registered');
       })
       .catch((error) => {
         Toast.show('Sorry, something went wrong');
