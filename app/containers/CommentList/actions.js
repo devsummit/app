@@ -74,7 +74,6 @@ export function fetchCommentList(id) {
           .then(async (response) => {
             const payloads = response.data.data;
             const links = response.data.links;
-            console.log('landing here check response', response);
             await dispatch({ type: FETCH_COMMENT_LIST, payloads });
             await dispatch({ type: SET_LINKS, links })
 
@@ -91,7 +90,6 @@ export function fetchCommentList(id) {
 export function fetchMoreComments() {
   return (dispatch, getState) => {
     const { links } = getState().get('comments').toJS();
-            console.log('landing here links', links);
     dispatch(isFetchingMoreComments(true));
 
     getAccessToken()
@@ -99,7 +97,6 @@ export function fetchMoreComments() {
         const headers = { Authorization: token };
         comment.moreComments(links.next)
           .then(async (response) => {
-            console.log('landing here response', response);
             const payloads = response.data.data;
             const links = response.data.links;
             await dispatch({ type: FETCH_MORE_COMMENT_LIST, payloads });
