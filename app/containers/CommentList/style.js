@@ -44,6 +44,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700'
   },
+  date: {
+    color: '#BDBDBD',
+    fontSize: 14,
+    marginLeft: 8
+  },
   text: {
     color: '#333',
     fontSize: 14

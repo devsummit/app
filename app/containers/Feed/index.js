@@ -475,7 +475,8 @@ class Feed extends Component {
                                   <TouchableWithoutFeedback
                                     onPress={() => {
                                       Actions.comment({
-                                        data: item
+                                        data: item,
+                                        date: timeDifference(today, item.created_at.toDateFromDatetime())
                                       });
                                     }}
                                   >

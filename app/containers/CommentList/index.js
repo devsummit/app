@@ -11,6 +11,8 @@ import styles from './style';
 import * as selectors from './selectors';
 import * as actions from './actions';
 
+const moment = require('moment');
+
 class CommentList extends Component {
   state = {
     text: ''
@@ -25,8 +27,7 @@ class CommentList extends Component {
   };
 
   render() {
-    const { comments, data, text, isFetching, isSubmitting, isFetchingMore, links } = this.props;
-    console.log('landing here', data);
+    const { comments, data, date, text, isFetching, isSubmitting, isFetchingMore, links } = this.props;
     return (
       <View style={styles.container}>
         <CardItem style={styles.card}>
@@ -35,9 +36,12 @@ class CommentList extends Component {
               <Image style={styles.profilePic} source={{ uri: data.user.photos[0].url }} />
             </View>
             <View style={styles.nameSection}>
-              <Text style={styles.name}>
-                {data.user.first_name} {data.user.last_name}
-              </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.name}>
+                  {data.user.first_name} {data.user.last_name}
+                </Text>
+                <Text style={styles.date}>{date}</Text>
+              </View>
               <Text style={styles.text}>
                 {data.message}
               </Text>
