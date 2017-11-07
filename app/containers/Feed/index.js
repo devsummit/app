@@ -52,6 +52,7 @@ import 'moment/locale/pt-br';
 import styles from './styles';
 import strings from '../../localization';
 import HeaderPoint from '../../components/Header';
+import Comment from '../../components/Comment';
 import * as actions from './actions';
 import * as selectors from './selectors';
 import OrderList from '../OrderList';
@@ -446,20 +447,15 @@ class Feed extends Component {
                                 <View
                                   style={{
                                     flex: 1,
-                                    flexDirection: 'row'
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-around'
                                   }}
                                 >
                                   {this.state.userId === item.user_id ? (
                                     <TouchableWithoutFeedback
                                       onPress={() => this.alertRemoveFeed(item.id)}
                                     >
-                                      <View
-                                        style={{
-                                          flex: 1,
-                                          backgroundColor: 'transparent',
-                                          borderRadius: 8
-                                        }}
-                                      >
+                                      <View>
                                         <Text style={styles.buttonReport}>
                                           {strings.feed.delete}
                                         </Text>
@@ -469,13 +465,7 @@ class Feed extends Component {
                                     <TouchableWithoutFeedback
                                       onPress={() => this.alertReportFeed(item.id)}
                                     >
-                                      <View
-                                        style={{
-                                          flex: 1,
-                                          backgroundColor: 'transparent',
-                                          borderRadius: 8
-                                        }}
-                                      >
+                                      <View>
                                         <Text style={styles.buttonReport}>
                                           {strings.feed.report}
                                         </Text>
@@ -483,16 +473,30 @@ class Feed extends Component {
                                     </TouchableWithoutFeedback>
                                   )}
                                   <TouchableWithoutFeedback
-                                    onPress={() => this.onOpen(item.message, item.attachment)}
+                                    onPress={() => {
+                                      Actions.comment({
+                                        data: item
+                                      });
+                                    }}
                                   >
                                     <View
                                       style={{
-                                        flex: 1,
-                                        marginLeft: 10,
-                                        backgroundColor: 'transparent',
-                                        borderRadius: 8
+                                        flexDirection: 'row',
+                                        alignItems: 'center'
                                       }}
                                     >
+                                      {item.comment_count ?
+                                        <Comment count={item.comment_count} /> : <Text />
+                                      }
+                                      <Text style={styles.buttonReport}>
+                                        {item.comment_count > 1 ? strings.comment.comments : strings.comment.comment}
+                                      </Text>
+                                    </View>
+                                  </TouchableWithoutFeedback>
+                                  <TouchableWithoutFeedback
+                                    onPress={() => this.onOpen(item.message, item.attachment)}
+                                  >
+                                    <View>
                                       <Text style={styles.buttonReport}>{strings.feed.share}</Text>
                                     </View>
                                   </TouchableWithoutFeedback>

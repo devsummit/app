@@ -227,7 +227,6 @@ export function registerHackaton(name, callback = () => ({})) {
     payment
       .post(data)
       .then((response) => {
-        console.log('checking here', response);
         if (response.data && response.data.meta.success) {
           callback({
             ...response.data.data,

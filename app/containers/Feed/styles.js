@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     color: '#0000ff'
   },
   buttonReport: {
-    fontSize: 15,
     padding: 8,
     textAlign: 'center',
     color: '#000',
