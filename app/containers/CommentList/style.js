@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { PRIMARYCOLOR } from '../../constants';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   card: {
-    borderRadius: 10,
+    borderRadius: 5,
     margin: 8
   },
   commentWrapper: {
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   nameSection: {
-    marginLeft: 16,
+    marginLeft: 20,
     flex: 7,
     justifyContent: 'center'
   },
@@ -61,6 +63,13 @@ const styles = StyleSheet.create({
   },
   moreComments: {
     fontWeight: '700'
+  },
+  images: {
+    marginVertical: 20,
+    marginLeft: 16,
+    alignSelf: 'center',
+    height: 200,
+    width: width * 0.8
   }
 });
 

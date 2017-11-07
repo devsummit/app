@@ -29,18 +29,26 @@ class CommentList extends Component {
     return (
       <View style={styles.container}>
         <CardItem style={styles.card}>
-          <View style={styles.post}>
-            <View style={styles.profileSection}>
-              <Image style={styles.profilePic} source={{ uri: data.user.photos[0].url }} />
+          <View>
+            <View style={styles.post}>
+              <View style={styles.profileSection}>
+                <Image style={styles.profilePic} source={{ uri: data.user.photos[0].url }} />
+              </View>
+              <View style={styles.nameSection}>
+                <Text style={styles.name}>
+                  {data.user.first_name} {data.user.last_name}
+                </Text>
+                <Text style={styles.text}>
+                  {data.message}
+                </Text>
+              </View>
             </View>
-            <View style={styles.nameSection}>
-              <Text style={styles.name}>
-                {data.user.first_name} {data.user.last_name}
-              </Text>
-              <Text style={styles.text}>
-                {data.message}
-              </Text>
-            </View>
+            {data.attachment ?
+              <Image
+                source={{ uri: data.attachment }}
+                style={styles.images}
+              /> : <View />
+            }
           </View>
         </CardItem>
         {isFetching ?
