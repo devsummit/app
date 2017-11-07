@@ -71,9 +71,10 @@ class AccordionView2 extends Component {
             </Form>
           </View>
           <Button
+            disabled={this.state.groupName === ''}
             style={{
               width: '70%',
-              backgroundColor: '#FF6F00',
+              backgroundColor: this.state.groupName === '' ? 'grey' : '#FF6F00',
               marginLeft: 'auto',
               marginRight: 'auto',
               justifyContent: 'center',
