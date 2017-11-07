@@ -19,7 +19,41 @@ import InputItem from '../../components/InputItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-class Settings extends Component {
+// @flow
+type Props = {
+  avatar: string,
+  feedback: string,
+  fields: Object,
+  isAvatarUpdated: boolean,
+  isDisabled: boolean,
+  isFeedbackPosted: boolean,
+  isLoading: boolean,
+  isLoadingFeedback: boolean,
+  isLogOut: boolean,
+  isProfileUpdated: boolean,
+  modalVisible: boolean
+};
+
+type fields = {
+  boothInfo: string,
+  firstName: string,
+  job: string,
+  lastName: string,
+  profilePic: string,
+  summary: string,
+  username: string
+};
+
+type State = {
+  firstName: string,
+  id: number,
+  lastName: string,
+  photo: string,
+  version: string,
+  versionCode: number
+};
+
+class Settings extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.setModalVisible = this.setModalVisible.bind(this);
@@ -57,19 +91,19 @@ class Settings extends Component {
     }
   }
 
-  setModalVisible(visible) {
+  setModalVisible(visible: boolean) {
     this.props.updateModalVisibility(visible);
   }
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateFields(field, value);
   };
 
-  handleChangeFeedback = (value) => {
+  handleChangeFeedback = (value: string) => {
     this.props.updateFeedback(value);
   };
 
-  handleUpdateAvatar = (value) => {
+  handleUpdateAvatar = (value: string) => {
     this.props.updateAvatar(value);
   };
 
@@ -77,7 +111,6 @@ class Settings extends Component {
     const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible } =
       this.props || {};
     const { firstName, lastName, username } = fields || '';
-    console.log('VISIBILITYMODAL', isLoadingFeedback);
     return (
       <Container>
         <Content>
