@@ -66,10 +66,9 @@ const styles = StyleSheet.create({
   },
   images: {
     marginVertical: 20,
-    marginLeft: 16,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     height: 200,
-    width: width * 0.8
+    width: width * 0.7
   }
 });
 

@@ -26,29 +26,28 @@ class CommentList extends Component {
 
   render() {
     const { comments, data, text, isFetching, isSubmitting, isFetchingMore, links } = this.props;
+    console.log('landing here', data);
     return (
       <View style={styles.container}>
         <CardItem style={styles.card}>
-          <View>
-            <View style={styles.post}>
-              <View style={styles.profileSection}>
-                <Image style={styles.profilePic} source={{ uri: data.user.photos[0].url }} />
-              </View>
-              <View style={styles.nameSection}>
-                <Text style={styles.name}>
-                  {data.user.first_name} {data.user.last_name}
-                </Text>
-                <Text style={styles.text}>
-                  {data.message}
-                </Text>
-              </View>
+          <View style={styles.post}>
+            <View style={styles.profileSection}>
+              <Image style={styles.profilePic} source={{ uri: data.user.photos[0].url }} />
             </View>
-            {data.attachment ?
-              <Image
-                source={{ uri: data.attachment }}
-                style={styles.images}
-              /> : <View />
-            }
+            <View style={styles.nameSection}>
+              <Text style={styles.name}>
+                {data.user.first_name} {data.user.last_name}
+              </Text>
+              <Text style={styles.text}>
+                {data.message}
+              </Text>
+              {data.attachment ?
+                <Image
+                  source={{ uri: data.attachment }}
+                  style={styles.images}
+                /> : <View />
+              }
+            </View>
           </View>
         </CardItem>
         {isFetching ?
