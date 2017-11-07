@@ -26,7 +26,20 @@ import { PRIMARYCOLOR } from '../../constants';
 import Redeem from '../Redeem';
 import OrderList from '../OrderList';
 
-class TicketList extends Component {
+// @flow
+type Props = {
+  listTicket?: Array<mixed>,
+  isGettingUserTicket: boolean,
+  fetchTicketStatus: boolean
+};
+
+type State = {
+  counter: number,
+  isLoading: boolean,
+  modalVisible: boolean
+};
+
+class TicketList extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +62,7 @@ class TicketList extends Component {
     }
   }
 
-  setModalVisible = (visible) => {
+  setModalVisible = (visible: boolean) => {
     this.setState({ modalVisible: visible });
   };
 
@@ -247,13 +260,6 @@ class TicketList extends Component {
     ); */
   }
 }
-
-TicketList.propTypes = {
-  listTicket: PropTypes.oneOfType([ PropTypes.object, PropTypes.array ]).isRequired,
-  isGettingUserTicket: PropTypes.bool.isRequired,
-  fetchUserTicket: PropTypes.func.isRequired,
-  fetchTicketStatus: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = createStructuredSelector({
   listTicket: selectors.getListTicket(),
