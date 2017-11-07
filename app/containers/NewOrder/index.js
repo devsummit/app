@@ -120,6 +120,12 @@ class NewOrder extends Component<Props, State> {
     );
   }
 
+  onPressPlaceOrder = ({ order, referalInfo }) => {
+    Actions.payment({ order, referalInfo });
+    this.setState({ count: 0 });
+    this.props.reset();
+  }
+
   render() {
     if (this.props.isFetchingReferal === true) {
       return (
@@ -301,7 +307,7 @@ class NewOrder extends Component<Props, State> {
             style={styles.orderBtn}
             disabled={total === 0 && this.state.count === 0}
             onPress={() => {
-              Actions.payment({ order, referalInfo });
+              this.onPressPlaceOrder({ order, referalInfo });
             }}
           >
             <Text>{strings.order.placeOrder}</Text>
