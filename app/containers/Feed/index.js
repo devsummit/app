@@ -473,7 +473,11 @@ class Feed extends Component {
                                     </TouchableWithoutFeedback>
                                   )}
                                   <TouchableWithoutFeedback
-                                    onPress={() => Actions.comment()}
+                                    onPress={() => {
+                                      Actions.comment({
+                                        data: item
+                                      });
+                                    }}
                                   >
                                     <View
                                       style={{
