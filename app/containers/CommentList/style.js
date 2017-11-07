@@ -55,13 +55,11 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingHorizontal: 12,
-    backgroundColor: '#0091EA',
+    backgroundColor: '#FF8B00',
     justifyContent: 'center',
     alignItems: 'center'
   },
   moreComments: {
-    padding: 8,
-    marginLeft: 12,
     fontWeight: '700'
   }
 });

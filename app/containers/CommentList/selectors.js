@@ -14,12 +14,27 @@ export const getIsFetchingComments = () => createSelector(
   state => state.get('isFetching')
 );
 
+export const getIsFetchingMoreComments = () => createSelector(
+  selectListCommentReducer(),
+  state => state.get('isFetchingMore')
+);
+
+export const getNextLinks = () => createSelector(
+  selectListCommentReducer(),
+  state => state.get('links').toJS()
+);
+
+export const getCurrentPage = () => createSelector(
+  selectListCommentReducer(),
+  state => state.get('currentPage')
+);
+
+export const getIsSubmittingComment = () => createSelector(
+  selectListCommentReducer(),
+  state => state.get('isSubmitting')
+);
+
 export const getIsComments = () => createSelector(
   selectListCommentReducer(),
   state => state.get('text')
-);
-
-export const getIsSubmittingComments = () => createSelector(
-  selectListCommentReducer(),
-  state => state.get('isSubmitting')
 );

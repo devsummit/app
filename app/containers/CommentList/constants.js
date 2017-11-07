@@ -1,5 +1,10 @@
 export const FETCH_COMMENT_LIST = 'app/containers/CommentList/FETCH_COMMENT_LIST';
+export const FETCH_MORE_COMMENT_LIST = 'app/containers/CommentList/FETCH_MORE_COMMENT_LIST';
 export const IS_FETCHING_COMMENTS = 'app/containers/CommentList/IS_FETCHING_COMMENTS';
-export const IS_SUBMITTING_COMMENTS = 'app/containers/CommentList/IS_SUBMITTING_COMMENTS';
+export const IS_FETCHING_MORE_COMMENTS = 'app/containers/CommentList/IS_FETCHING_MORE_COMMENTS';
+export const SET_LINKS = 'app/containers/CommentList/SET_LINKS';
+export const UPDATE_CURRENT_PAGE = 'app/containers/CommentList/UPDATE_CURRENT_PAGE';
+export const RESTORE_CURRENT_PAGE = 'app/containers/CommentList/RESTORE_CURRENT_PAGE';
+export const IS_SUBMITTING_COMMENT = 'app/containers/CommentList/IS_SUBMITTING_COMMENT';
 export const UPDATE_COMMENT = 'app/containers/CommentList/UPDATE_COMMENT';
 export const SUBMIT_COMMENT = 'app/containers/CommentList/SUBMIT_COMMENT';

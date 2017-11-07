@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Footer, CardItem } from 'native-base';
+import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Footer, CardItem, Spinner } from 'native-base';
 
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -10,8 +10,6 @@ import Input from '../../components/InputItem';
 import styles from './style';
 import * as selectors from './selectors';
 import * as actions from './actions';
-import { PRIMARYCOLOR } from '../../constants';
-import { getProfileData } from './../../helpers';
 
 class CommentList extends Component {
   state = {
@@ -27,7 +25,7 @@ class CommentList extends Component {
   };
 
   render() {
-    const { comments, data, text } = this.props;
+    const { comments, data, text, isFetching, isSubmitting, isFetchingMore, links } = this.props;
     return (
       <View style={styles.container}>
         <CardItem style={styles.card}>
@@ -45,28 +43,41 @@ class CommentList extends Component {
             </View>
           </View>
         </CardItem>
-        <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
-          <Text onPress={() => this.props.loadMoreComments()} style={styles.moreComments}>View more comments...</Text>
-          <View style={styles.content}>
-            {this.props.comments.map(item => (
-              <View style={{ flex: 1 }}>
-                <View style={styles.commentWrapper} key={data.id}>
-                  <View style={styles.profileSection}>
-                    <Image style={styles.profilePic} source={{ uri: item.user.photos[0].url }} />
-                  </View>
-                  <View style={styles.nameSection}>
-                    <Text style={styles.name}>
-                      {item.user.first_name} {item.user.last_name}
-                    </Text>
-                    <Text style={styles.text}>
-                      {item.content}
-                    </Text>
+        {isFetching ?
+          <Spinner style={{ flex: 1 }} color="#FF8B00" /> :
+          <ScrollView style={{ backgroundColor: '#F5F5F5' }}>
+            <View style={styles.content}>
+              {this.props.comments.map(item => (
+                <View style={{ flex: 1 }}>
+                  <View style={styles.commentWrapper} key={data.id}>
+                    <View style={styles.profileSection}>
+                      <Image style={styles.profilePic} source={{ uri: item.user.photos[0].url }} />
+                    </View>
+                    <View style={styles.nameSection}>
+                      <Text style={styles.name}>
+                        {item.user.first_name} {item.user.last_name}
+                      </Text>
+                      <Text style={styles.text}>
+                        {item.content}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+              ))}
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20 }}>
+              {links.next !== null ?
+                <Text
+                  onPress={() => this.props.fetchMoreComments()}
+                  style={styles.moreComments}
+                >
+                    View older comments
+                </Text> : <View />
+              }
+              {isFetchingMore ? <ActivityIndicator color="#FF8B00" size="small" /> : <View />}
+            </View>
+          </ScrollView>
+        }
         <Footer style={{ height: 50, backgroundColor: '#FFFFFF' }}>
           <Input
             itemStyle={styles.item}
@@ -86,7 +97,10 @@ class CommentList extends Component {
               this.handleInputChange('');
             }}
           >
-            <Icon name="paper-plane" style={{ fontSize: 20, color: '#FFFFFF' }} />
+            {isSubmitting ?
+              <ActivityIndicator color="#FFFFFF" size="small" /> :
+              <Icon name="paper-plane" style={{ fontSize: 20, color: '#FFFFFF' }} />
+            }
           </TouchableOpacity>
         </Footer>
       </View>
@@ -97,6 +111,9 @@ class CommentList extends Component {
 const mapStateToProps = createStructuredSelector({
   comments: selectors.getListComments(),
   isFetching: selectors.getIsFetchingComments(),
-  text: selectors.getIsComments()
+  isSubmitting: selectors.getIsSubmittingComment(),
+  text: selectors.getIsComments(),
+  isFetchingMore: selectors.getIsFetchingMoreComments(),
+  links: selectors.getNextLinks()
 });
 export default connect(mapStateToProps, actions)(CommentList);
