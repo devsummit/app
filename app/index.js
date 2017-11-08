@@ -43,6 +43,7 @@ import MyOrders from './components/MyOrders';
 import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
+import CreatePost from './containers/CreatePost';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -138,6 +139,7 @@ export default class App extends Component {
                 <Scene key="myOrders" component={MyOrders} title="My Orders" />
                 <Scene key="sponsorInfo" component={SponsorInfo} title="Sponsor" />
                 <Scene key="comment" component={Comment} title="Comments" />
+                <Scene key="createPost" component={CreatePost} title="New post" />
               </Scene>
             </Scene>
           </RouterWithRedux>
