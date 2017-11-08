@@ -54,7 +54,6 @@ export function updateText(value) {
 }
 
 export function postFeeds(text, image) {
-  console.log('checking...', text, ' === ', image);
   return (dispatch) => {
     dispatch(isPostFeeds(true));
 
@@ -77,8 +76,6 @@ export function postFeeds(text, image) {
     }
 
     form.append('message', text);
-
-    console.log('form', form);
 
     feeds
       .post(form)
