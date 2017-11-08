@@ -115,8 +115,6 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
       referal_code: referalCode
     };
     let done = false;
-    const request = payment
-      .post(data);
     setTimeout(() => {
       if (!done) {
         Toast.show('Timed out. Please try again');
@@ -124,19 +122,21 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
       }
       done = true;
     }, 30 * 1000);
-    request.then((response) => {
-      if (!done) {
-        if (response.data && response.data.meta.success) {
-          callback({
-            ...response.data.data,
-            ...response.data.included[0]
-          });
-        } else {
-          Toast.show('You already registered as hackaton');
-          LoaderHandler.hideLoader();
+    payment
+      .post(data)
+      .then((response) => {
+        if (!done) {
+          if (response.data && response.data.meta.success) {
+            callback({
+              ...response.data.data,
+              ...response.data.included[0]
+            });
+          } else {
+            Toast.show('You already registered as hackaton');
+            LoaderHandler.hideLoader();
+          }
         }
-      }
-    })
+      })
       .catch((error) => {
         if (!done) {
           Toast.show('Sorry, something went wrong');
