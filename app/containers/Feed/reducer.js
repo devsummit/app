@@ -5,11 +5,6 @@ import {
   IS_FETCHING_FEEDS,
   IS_FETCHING_MORE_FEEDS,
   UPDATE_FEEDS,
-  IS_POST_FEEDS,
-  UPDATE_IMAGE,
-  UPDATE_TEXT,
-  CLEAR_TEXT_FIELD,
-  CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
   LOAD_MORE_FEEDS,
   REMOVE_FEED,
@@ -20,11 +15,8 @@ import {
 const initialState = fromJS({
   feeds: [],
   links: {},
-  image: {},
-  message: '',
   isFetching: false,
   isFetchingMore: false,
-  isPosting: false,
   isRemoving: false,
   currentPage: 1
 });
@@ -43,9 +35,6 @@ function feedReducer(state = initialState, action) {
     case SET_LINKS:
       return state.set('links', fromJS(action.links));
 
-    case IS_POST_FEEDS:
-      return state.set('isPosting', action.status);
-
     case UPDATE_FEEDS:
       return state.set('feeds', fromJS([ action.payloads, ...state.get('feeds').toJS() ]));
 
@@ -59,18 +48,6 @@ function feedReducer(state = initialState, action) {
             .concat(action.payloads)
         )
       );
-
-    case UPDATE_IMAGE:
-      return state.set('image', fromJS(action.image));
-
-    case UPDATE_TEXT:
-      return state.set('message', action.value);
-
-    case CLEAR_TEXT_FIELD:
-      return state.set('message', '');
-
-    case CLEAR_IMAGE:
-      return state.set('image', fromJS({}));
 
     case UPDATE_CURRENT_PAGE:
       return state.set('currentPage', action.value);
