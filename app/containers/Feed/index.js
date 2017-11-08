@@ -137,9 +137,6 @@ const mapStateToProps = () =>
     isFetchingMore: selectors.getIsFetchingMore(),
     feeds: selectors.getFetchFeeds(),
     links: selectors.getFeedsLinks(),
-    isPosting: selectors.getIsPostingFeed(),
-    imagesData: selectors.getUpdateImage(),
-    textData: selectors.getUpdateText(),
     currentPage: selectors.getCurrentPage(),
     isRemoving: selectors.getIsRemoveFeed(),
     isConfirmEmail: getIsConfirmEmail()
@@ -203,12 +200,6 @@ class Feed extends Component {
     this.setState({ modalRedeem: visible });
   };
 
-  setModalPost = (visible) => {
-    this.setState({ postToFeeds: visible });
-    this.props.clearImage();
-    this.props.clearTextField();
-  };
-
   setModalReport = (visible) => {
     this.setState({ modalReport: visible });
   };
@@ -220,41 +211,6 @@ class Feed extends Component {
 
   setModalHackaton = (visible) => {
     this.setState({ modalHackaton: visible });
-  };
-
-  postFeed = (callback) => {
-    this.props.postFeeds(this.props.imagesData, this.props.textData);
-    this.setModalPost(false);
-  };
-
-  uploadImage = () => {
-    ImagePicker.openPicker({
-      width: 400,
-      height: 300,
-      cropping: true,
-      includeBase64: true
-    })
-      .then((image) => {
-        this.props.updateImage(image);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  takeImage = () => {
-    ImagePicker.openCamera({
-      width: 400,
-      height: 300,
-      cropping: true,
-      includeBase64: true
-    })
-      .then((image) => {
-        this.props.updateImage(image);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   handleChange = (value) => {
@@ -537,7 +493,11 @@ class Feed extends Component {
             <Fab
               style={{ backgroundColor: '#FF8B00' }}
               position="bottomRight"
-              onPress={() => this.setModalPost(true)}
+              onPress={() => Actions.createPost({
+                profile: this.state.profileUrl,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName
+              })}
             >
               <CameraIcon name="pencil-square-o" />
             </Fab>
@@ -653,107 +613,7 @@ class Feed extends Component {
             />
           </View>
         </Modal>
-        {/* Modal for create new feeds post */}
-        <Modal
-          animationType={'fade'}
-          transparent
-          visible={this.state.postToFeeds}
-          onRequestClose={() => this.setModalPost(!this.state.postToFeeds)}
-        >
-          <Container style={{ marginVertical: '15%' }}>
-            <Card>
-              <KeyboardAvoidingView>
-                <CardItem>
-                  <Left>
-                    <Thumbnail source={{ uri: this.state.profileUrl }} />
-                    <Body>
-                      <Text>
-                        {this.state.firstName} {this.state.lastName}
-                      </Text>
-                    </Body>
-                  </Left>
-                  <TouchableOpacity onPress={() => this.setModalPost(false)}>
-                    <Right>
-                      <CameraIcon name="times-circle-o" size={30} />
-                    </Right>
-                  </TouchableOpacity>
-                </CardItem>
 
-                <CardItem>
-                  <Item regular>
-                    <CustomInput
-                      textData={this.props.textData}
-                      onChangeText={text => this.handleChange(text)}
-                    />
-                  </Item>
-                </CardItem>
-
-                <CardItem>
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <TouchableHighlight onPress={() => this.uploadImage(this)}>
-                      <View style={{ margin: 10 }}>
-                        <CameraIcon name="image" size={24} color="grey" />
-                      </View>
-                    </TouchableHighlight>
-                    <TouchableOpacity onPress={() => this.takeImage(this)}>
-                      <View style={{ margin: 10 }}>
-                        <CameraIcon name="camera" size={24} color="grey" />
-                      </View>
-                    </TouchableOpacity>
-                    {this.props.textData !== '' ||
-                    (this.props.imagesData.path || this.props.imagesData.sourceURL) ?
-                      (
-                      <TouchableOpacity onPress={() => this.postFeed()}>
-                          <View
-                          style={{
-                              borderWidth: 1,
-                              borderColor: 'blue',
-                              borderRadius: 20,
-                              width: 75,
-                              height: 45,
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                            }}
-                        >
-                          <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
-                        </View>
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity activeOpacity={1}>
-                          <View
-                            style={{
-                              borderWidth: 1,
-                              borderColor: 'grey',
-                              borderRadius: 20,
-                              width: 75,
-                              height: 45,
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                            }}
-                          >
-                            <Text style={{ textAlign: 'center', margin: 10, color: 'grey' }}>
-                            Post
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      )}
-                  </View>
-                </CardItem>
-                {this.props.imagesData &&
-                  (this.props.imagesData.path || this.props.imagesData.sourceURL) && (
-                    <CardItem cardBody>
-                      <Image
-                        source={{
-                          uri: this.props.imagesData.path || this.props.imagesData.sourceURL
-                        }}
-                        style={{ height: 200, width: null, flex: 1 }}
-                      />
-                    </CardItem>
-                  )}
-              </KeyboardAvoidingView>
-            </Card>
-          </Container>
-        </Modal>
         {/* Modal for picture preview */}
         <Modal
           animationType={'fade'}
@@ -844,13 +704,10 @@ class CustomInput extends Component {
 Feed.PropTypes = {
   updateFeeds: func,
   fetchFeeds: func,
-  updateText: func,
   postFeeds: func,
   isFetching: bool,
   isFetchingMore: bool,
-  imagesData: object,
   feeds: array,
-  textData: string,
   isRemoving: bool,
   removeFeed: func,
   reportFeed: func,
