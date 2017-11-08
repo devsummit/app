@@ -78,12 +78,7 @@ class NewOrder extends Component {
   checkCode = (info) => {
     if (info.data.used === true) {
       return (
-        <View>
-          <Text style={{ textAlign: 'center', color: 'red' }}>{strings.order.used}</Text>
-          <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
-            <Text>{strings.order.checkCode}</Text>
-          </Button>
-        </View>
+        <Text style={{ textAlign: 'center', color: 'red' }}>{strings.order.used}</Text>
       );
     } else if (info.data.quota_exceeded === true) {
       return (
