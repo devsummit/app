@@ -1,6 +1,7 @@
 package io.devsummit.app.android;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
 import com.apsl.versionnumber.RNVersionNumberPackage;
@@ -27,7 +28,7 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   public static final int PAY_PAL_REQUEST_ID = 212223;
   public static PayPalPackage paypalPackage;

@@ -1,7 +1,5 @@
 apply plugin: "com.android.application"
 
-import com.android.build.OutputFile
-
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -100,12 +98,14 @@ buildscript {
   }
 }
 
-apply plugin: "com.android.application"
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.gms.google-services'
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
 }
 
 import com.android.build.OutputFile
@@ -113,13 +113,13 @@ import com.android.build.OutputFile
 // apply from: "../../node_modules/react-native/react.gradle"
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "io.devsummit.app.android"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 26
         versionCode 23
         versionName "1.2.5"
         multiDexEnabled true
@@ -171,6 +171,7 @@ android {
     }
     lintOptions {
         abortOnError false
+        checkReleaseBuilds false
     }
 }
 
@@ -180,31 +181,30 @@ dependencies {
     compile project(':react-native-localization')
     compile project(':react-native-vector-icons')
     compile project(':react-native-share')
-    compile project(':react-native-oauth')
     compile project(':react-native-linear-gradient')
-    compile project(':react-native-image-crop-picker')
-    compile project(':react-native-fcm')
-    compile project(':react-native-facebook-account-kit')
-    compile project(':react-native-document-picker')
-    compile project(':react-native-code-push')
   compile project(':react-native-share')
-  compile project(':react-native-fcm')
+    compile(project(':react-native-fcm')){
+        exclude group: 'com.google.firebase', module: 'firebase-core'
+        exclude group: 'com.google.firebase', module: 'firebase-auth'
+        exclude group: 'com.google.firebase', module: 'firebase-messaging'
+    }
   compile project(':react-native-code-push')
   compile project(':react-native-document-picker')
   compile project(':react-native-image-crop-picker')
   compile project(':react-native-facebook-account-kit')
-  compile(project(':react-native-oauth')){
-      android {
-          lintOptions {
-              abortOnError false
-          }
-      }
-  }
-  compile project(':react-native-linear-gradient')
-  compile project(':react-native-vector-icons')
+  compile project(':react-native-oauth')
   compile fileTree(dir: "libs", include: ["*.jar"])
-  compile 'com.android.support:multidex:1.0.0'
-  compile "com.android.support:appcompat-v7:23.0.1"
+  compile 'com.android.support:multidex:1.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.2.1'
+    compile 'com.google.android.gms:play-services-base:10.2.1'
+    compile 'com.google.android.gms:play-services-places:10.2.1'
+    compile 'com.google.android.gms:play-services-maps:10.2.1'
+    compile 'com.google.android.gms:play-services-location:10.2.1'
+    compile 'com.google.firebase:firebase-crash:10.2.1'
+    compile 'com.google.firebase:firebase-core:10.2.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.1'
+
+    compile "com.android.support:appcompat-v7:23.0.1"
   compile "com.facebook.react:react-native:+"  // From node_modules
   compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
       transitive = true;
@@ -217,3 +217,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
