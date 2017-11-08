@@ -94,7 +94,7 @@ class CommentList extends Component {
             itemStyle={styles.item}
             style={styles.input}
             title={strings.comment.comment}
-            placeholder={strings.comment.comment}
+            placeholder={strings.comment.writeComment}
             placeholderTextColor={'#BDBDBD'}
             onChangeText={(text) => {
               this.handleInputChange(text);
@@ -103,6 +103,7 @@ class CommentList extends Component {
           />
           <TouchableOpacity
             style={styles.button}
+            disabled={!text}
             onPress={() => {
               this.props.submitComment(data.id);
               this.handleInputChange('');
