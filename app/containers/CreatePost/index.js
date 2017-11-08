@@ -5,7 +5,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
 } from 'react-native';
 import {
   Container,
@@ -74,96 +75,99 @@ class CreatePost extends Component {
     const { message, image } = this.props;
     return (
       <Container style={{ backgroundColor: '#FFFFFF' }}>
-      <KeyboardAvoidingView>
-        <CardItem>
-          <Left>
-            <Thumbnail source={{ uri: this.props.profile }} />
-            <Body>
-              <Text style={{ fontSize: 16, fontWeight: '700' }}>
-                {this.props.firstName} {this.props.lastName}
-              </Text>
-            </Body>
-          </Left>
-        </CardItem>
+        <KeyboardAvoidingView>
+          <CardItem>
+            <Left>
+              <Thumbnail source={{ uri: this.props.profile }} />
+              <Body>
+                <Text style={{ fontSize: 16, fontWeight: '700' }}>
+                  {this.props.firstName} {this.props.lastName}
+                </Text>
+              </Body>
+            </Left>
+          </CardItem>
 
-        <CardItem>
-          <Item regular>
-            <Input
-              rounded
-              placeholder={strings.feed.shareActivity}
-              style={{ textAlignVertical: 'top' }}
-              multiline
-              numberOfLines={8}
-              value={message}
-              onChangeText={text => this.onChangeText(text)}
-            />
-          </Item>
-        </CardItem>
-
-        <CardItem>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-            <TouchableHighlight onPress={() => this.uploadImage(this)}>
-              <View style={{ margin: 10 }}>
-                <Icon name="image" size={24} color="grey" />
-              </View>
-            </TouchableHighlight>
-            <TouchableOpacity onPress={() => this.takeImage(this)}>
-              <View style={{ margin: 10 }}>
-                <Icon name="camera" size={24} color="grey" />
-              </View>
-            </TouchableOpacity>
-            {message !== '' ||
-            (image && (image.path || image.sourceURL)) ?
-              (
-                <TouchableOpacity onPress={() => this.postFeed()}>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderColor: 'blue',
-                      borderRadius: 20,
-                      width: 75,
-                      height: 45,
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
-                  </View>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity activeOpacity={1}>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      borderColor: 'grey',
-                      borderRadius: 20,
-                      width: 75,
-                      height: 45,
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Text style={{ textAlign: 'center', margin: 10, color: 'grey' }}>
-                    Post
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
-          </View>
-        </CardItem>
-        {image &&
-          (image.path || image.sourceURL) && (
-            <CardItem cardBody>
-              <Image
-                source={{
-                  uri: image.path || image.sourceURL
-                }}
-                style={{ height: 200, width: null, flex: 1 }}
+          <CardItem>
+            <Item regular>
+              <Input
+                rounded
+                placeholder={strings.feed.shareActivity}
+                style={{ textAlignVertical: 'top' }}
+                multiline
+                numberOfLines={8}
+                value={message}
+                onChangeText={text => this.onChangeText(text)}
               />
-            </CardItem>
-          )}
-      </KeyboardAvoidingView>
-    </Container>
+            </Item>
+          </CardItem>
+
+          <CardItem>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <TouchableHighlight onPress={() => this.uploadImage(this)}>
+                <View style={{ margin: 10 }}>
+                  <Icon name="image" size={24} color="grey" />
+                </View>
+              </TouchableHighlight>
+              <TouchableOpacity onPress={() => this.takeImage(this)}>
+                <View style={{ margin: 10 }}>
+                  <Icon name="camera" size={24} color="grey" />
+                </View>
+              </TouchableOpacity>
+              {message !== '' ||
+              (image && (image.path || image.sourceURL)) ?
+                (
+                  <TouchableOpacity onPress={() => this.postFeed()}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderColor: 'blue',
+                        borderRadius: 20,
+                        width: 75,
+                        height: 45,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      {this.props.isPosting ?
+                        <ActivityIndicator color="blue" size="small" /> :
+                        <Text style={{ textAlign: 'center', margin: 10, color: 'blue' }}>Post</Text>
+                      }
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity activeOpacity={1}>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderColor: 'grey',
+                        borderRadius: 20,
+                        width: 75,
+                        height: 45,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Text style={{ textAlign: 'center', margin: 10, color: 'grey' }}>
+                      Post
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+            </View>
+          </CardItem>
+          {image &&
+            (image.path || image.sourceURL) && (
+              <CardItem cardBody>
+                <Image
+                  source={{
+                    uri: image.path || image.sourceURL
+                  }}
+                  style={{ height: 200, width: null, flex: 1 }}
+                />
+              </CardItem>
+            )}
+        </KeyboardAvoidingView>
+      </Container>
     );
   }
 }
