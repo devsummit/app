@@ -57,9 +57,11 @@ class NewOrder extends Component {
     const { updateInputFields } = this.props;
     if (isUsingReferal && isUsingReferal === true) {
       updateInputFields('isUsingReferal', false);
+      this.props.updateOrder('decrease', 1);
       this.setState({ count: 0 })
     } else {
       updateInputFields('isUsingReferal', true);
+      this.props.updateOrder('increase', 1);
       this.setState({ count: 1 })
     }
   };
@@ -76,24 +78,46 @@ class NewOrder extends Component {
   checkCode = (info) => {
     if (info.data.used === true) {
       return (
-        <Text style={{ color: 'red' }}>{strings.order.used}</Text>
+        <View>
+          <Text style={{ textAlign: 'center', color: 'red' }}>{strings.order.used}</Text>
+          <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
+            <Text>{strings.order.checkCode}</Text>
+          </Button>
+        </View>
       );
     } else if (info.data.quota_exceeded === true) {
       return (
-        <Text style={{ color: 'red' }}>{strings.order.quotaExceeded}</Text>
+        <View>
+          <Text style={{ textAlign: 'center', color: 'red' }}>{strings.order.quotaExceeded}</Text>
+          <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
+            <Text>{strings.order.checkCode}</Text>
+          </Button>
+        </View>
       );
     } else if (info.data.code_invalid === true) {
       return (
-        <Text style={{ color: 'red' }}>{strings.order.codeInvalid}</Text>
+        <View>
+          <Text style={{ textAlign: 'center', color: 'red' }}>{strings.order.codeInvalid}</Text>
+          <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
+            <Text>{strings.order.checkCode}</Text>
+          </Button>
+        </View>
       );
     } else if (info.meta.success === true) {
       return (
-        <Text style={{ color: '#64FFDA' }}>{strings.order.codeSuccess}</Text>
+        <View>
+          <Text style={{ textAlign: 'center', color: 'green' }}>{strings.order.codeSuccess}</Text>
+          <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
+            <Text>{strings.order.checkCode}</Text>
+          </Button>
+        </View>
       );
     }
 
     return (
-      <Text>{strings.order.checkCode}</Text>
+      <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
+        <Text>{strings.order.checkCode}</Text>
+      </Button>
     );
   }
 
@@ -240,9 +264,7 @@ class NewOrder extends Component {
                       disabled={!inputFields.isUsingReferal}
                     />
                     <Text style={{ color: '#BDBDBD', fontSize: 10 }}>{strings.order.referalLimit}</Text>
-                    <Button style={styles.orderBtn} onPress={() => this.OnCheckReferal()}>
-                      {this.checkCode(referalInfo)}
-                    </Button>
+                    {this.checkCode(referalInfo)}
                   </View>
                 ) : (
                   <View />

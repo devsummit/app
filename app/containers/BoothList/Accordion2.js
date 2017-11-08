@@ -64,7 +64,7 @@ class AccordionView2 extends Component {
             <Form>
               <Item>
                 <Input
-                  placeholder={'Enter group name'}
+                  placeholder={'Enter your github link'}
                   onChangeText={text => this.setState({ groupName: text })}
                 />
               </Item>

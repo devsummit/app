@@ -105,6 +105,7 @@ export function login(calback) {
       password
     })
       .then(async (response) => {
+        console.log('check here', response);
         if (response && response.data && response.data.meta.success) {
           const resData = response.data.data;
           const roleId = JSON.stringify(response.data.included.role_id);
@@ -120,7 +121,7 @@ export function login(calback) {
               ]);
             }
           } catch (error) {
-            console.log(error, 'error caught');
+            console.log('error caught', error);
           }
           dispatch(updateIsLogIn(true));
         } else if (
@@ -142,7 +143,7 @@ export function login(calback) {
         dispatch(updateisLoading(false));
       })
       .catch((err) => {
-        console.log(err);
+        console.log('check here error', err);
       });
   };
 }
