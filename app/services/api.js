@@ -64,7 +64,8 @@ class Api {
                 : { 'Content-Type': 'multipart/form' }
           ),
           timeout: 60 * 1000,
-          paramsSerializer: params => querystring.stringify(params)
+          paramsSerializer: params => querystring.stringify(params),
+          onUploadProgress: data.config.onUploadProgress || null,
         },
         data.config
       )

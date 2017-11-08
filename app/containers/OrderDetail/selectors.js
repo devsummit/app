@@ -28,4 +28,6 @@ export const getPaymentProof = () =>
 
 export const getOrderId = () =>
   createSelector(selectMainReducer(), state => state.get('orderId'));
-  
+
+export const getUploadProgress = () =>
+  createSelector(selectMainReducer(), state => state.get('uploadProgress'));
