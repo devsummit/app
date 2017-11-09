@@ -204,8 +204,7 @@ class Feed extends Component<Props, State> {
       optionVisible: false,
       report: '',
       modalWebView: false,
-      link: '',
-      modalHackaton: false
+      link: ''
     };
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
@@ -248,10 +247,6 @@ class Feed extends Component<Props, State> {
   setModalWebView = (visible: boolean, link: string) => {
     this.setState({ modalWebView: visible });
     this.state.link = link;
-  };
-
-  setModalHackaton = (visible: boolean) => {
-    this.setState({ modalHackaton: visible });
   };
 
   handleChange = (value) => {
@@ -309,10 +304,6 @@ class Feed extends Component<Props, State> {
 
   handleInputChange = (value: string) => {
     this.setState({ report: value });
-  };
-
-  setPaymentMethod = (name) => {
-    this.props.registerHackaton(name);
   };
 
   render() {
@@ -565,7 +556,7 @@ class Feed extends Component<Props, State> {
                     style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Register Hackaton" buttonColor={PRIMARYCOLOR} onPress={() => this.setModalHackaton(true)}>
+                <ActionButton.Item title="Register Hackaton" buttonColor={PRIMARYCOLOR} onPress={() => Actions.registerHackaton()}>
                   <CameraIcon
                     name="code"
                     color="#FFFFFF"
@@ -604,31 +595,6 @@ class Feed extends Component<Props, State> {
                 </Text>
               </View>
               <Redeem />
-            </View>
-          </View>
-        </Modal>
-        {/* modal hackaton */}
-        <Modal
-          animationType="fade"
-          visible={this.state.modalHackaton}
-          onRequestClose={() => this.setModalHackaton(!this.state.modalHackaton)}
-          transparent
-        >
-          <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
-            <View style={styles.redeem}>
-              <TouchableWithoutFeedback
-                onPress={() => this.setModalHackaton(!this.state.modalHackaton)}
-              >
-                <CameraIcon style={styles.iconClose} name="times" />
-              </TouchableWithoutFeedback>
-              {/* <View style={styles.viewredeem}>
-                <CameraIcon name="gift" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
-                <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
-                  {strings.redeem.redeem}
-                </Text>
-              </View>
-              <Redeem /> */}
-              <AccordionView2 onPress={() => this.setModalHackaton(!this.state.modalHackaton)} setPaymentMethod={this.setPaymentMethod} />
             </View>
           </View>
         </Modal>
