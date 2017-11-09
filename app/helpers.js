@@ -116,6 +116,11 @@ export const transactionStatus = (payment) => {
         message: 'pending',
         color: 'red'
       };
+    } else if (payment.transaction_status === 'in progress') {
+      return {
+        message: 'in progress',
+        color: 'blue' 
+      };
     }
     return {
       message: payment.transaction_status,
@@ -126,4 +131,4 @@ export const transactionStatus = (payment) => {
     message: 'not paid',
     color: PRIMARYCOLOR
   };
-};
+}

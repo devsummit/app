@@ -48,16 +48,17 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     elevation: 0
   },
-  viewText1: {
+  viewText: {
     flex: 0,
     flexDirection: 'row',
-    margin: 20,
+    marginTop: 8
   },
   buttonSection: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 10
   },
   statusText: {
     fontWeight: 'bold',

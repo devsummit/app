@@ -1,3 +1,4 @@
+
 import 'intl';
 import 'intl/locale-data/jsonp/id';
 import React, { Component } from 'react';
@@ -68,6 +69,11 @@ export default class OrderItem extends Component {
         </Text>
       );
     }
+    return (
+      <Text note style={[ styles.statusText, { backgroundColor: 'blue', color: 'white' } ]}>
+        {this.state.status.toUpperCase()}
+      </Text>
+    );
   }
 
   ticketTypes = () => {
@@ -99,8 +105,12 @@ export default class OrderItem extends Component {
   };
 
   render() {
-    const { status } = this.state;
     const { order } = this.props;
+    const { color, status } = this.state;
+    // console.log('landing here orderItem this.state', this.state);
+    // console.log('landing here this.props orderItem', this.props.order);
+    // console.log('landing here localeDateAddOneHour', localeDateAddOneHour(order.created_at));
+    // console.log('landing here moment()', Moment());
     return (
       <CardItem style={styles.container} button onPress={() => this.props.onPress()}>
         <View style={styles.item}>
