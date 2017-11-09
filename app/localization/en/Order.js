@@ -30,6 +30,7 @@ export default {
   attention: 'Important: the payment deadline is 1 (one) hour. If the deadline exceeded then your order will be automatically canceled.',
   updateProof: 'Upload Payment Proof',
   reuploadProof: 'Re-upload Payment Proof',
+  uploading: 'Uploading',
   noProof: 'No payment proof yet',
   downloadAcc: 'Download Account Reference',
 

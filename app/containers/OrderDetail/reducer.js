@@ -6,6 +6,7 @@ import { fromJS } from 'immutable';
 import {
   SET_TICKET_TYPE,
   UPDATE_ORDER,
+  UPDATE_UPLOAD_PROGRESS,
   SET_ORDER,
   IS_UPDATING_ORDER,
   UPDATE_ORDER_STATUS,
@@ -22,6 +23,7 @@ import {
 const initialState = fromJS({
   ticketTypes: [],
   order: {},
+  uploadProgress: 0,
   isUpdatingOrder: false,
   updateOrderStatus: '',
   isConfirmingPayment: false,
@@ -32,7 +34,9 @@ const initialState = fromJS({
 function orderDetailReducer(state = initialState, action) {
   switch (action.type) {
     case SET_ORDER_ID:
-      return state.set('orderId', action.value)
+      return state.set('orderId', action.value);
+    case UPDATE_UPLOAD_PROGRESS:
+      return state.set('uploadProgress', action.progress);
     case SET_TICKET_TYPE:
       return state.set('ticketTypes', fromJS(action.data));
     case SET_ORDER:

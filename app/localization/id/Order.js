@@ -29,6 +29,7 @@ export default {
   attention: 'Penting: batas waktu pembayaran adalah 1 (satu) jam. Melebihi itu, maka pemesanan tiket akan otomatis dibatalkan.',
   updateProof: 'Unggah Bukti Pembayaran',
   reuploadProof: 'Unggah Ulang Bukti Pembayaran',
+  uploading: 'Mengunggah',
   noProof: 'Belum ada bukti pembayaran',
   downloadAcc: 'Unduh Referensi Akun',
 
