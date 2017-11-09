@@ -9,6 +9,7 @@ import orderdetail from '../../services/orderdetail';
 import {
   // SET_TICKET_TYPE,
   UPDATE_ORDER,
+  UPDATE_UPLOAD_PROGRESS,
   SET_ORDER,
   IS_UPDATING_ORDER,
   UPDATE_ORDER_STATUS,
@@ -26,6 +27,13 @@ export function updateIsUpdatingOrder(status) {
   return {
     type: IS_UPDATING_ORDER,
     status
+  };
+}
+
+export function updateUploadProgress(progress) {
+  return {
+    type: UPDATE_UPLOAD_PROGRESS,
+    progress,
   };
 }
 
@@ -58,16 +66,21 @@ export function orderVerification(order, image) {
       });
     }
     form.append('order_id', order);
+    const onUploadProgress = (progress) => {
+      dispatch(updateUploadProgress(Math.floor((progress.loaded / progress.total) * 100)));
+    };
     orderdetail
-      .postPaymentProof(form)
+      .postPaymentProof(form, { onUploadProgress })
       .then((response) => {
         dispatch(setPaymentProof(response.data.data.payment_proof));
         dispatch(updateIsUpdatingOrder(false));
+        dispatch(updateUploadProgress(0));
         Toast.show(response.data.meta.message);
       })
       .catch((err) => {
         Toast.show('Sorry, something went wrong');
         dispatch(updateIsUpdatingOrder(false));
+        dispatch(updateUploadProgress(0));
         console.log('ERROR', err);
       });
   };
