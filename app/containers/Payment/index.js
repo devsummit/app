@@ -148,7 +148,7 @@ class Payment extends Component<Props, State> {
               Actions.orderDetail();
             });
           } else {
-            const referalCode = this.props.referalInfo.referal_code;
+            const referalCode = this.props.referalInfo.data.referal_code;
 
             this.props.payWithBankTransfer(userId, order, referalCode, (data) => {
 

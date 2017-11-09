@@ -288,7 +288,7 @@ class BoothList extends Component<Props, State> {
                       <Image style={styles.profilePic} source={{ uri: data.logo_url }} />
                       <View style={styles.nameSection}>
                         <Text style={styles.name}>
-                          {data.user.first_name} {data.user.last_name}
+                          {data.name}
                         </Text>
                       </View>
                     </View>

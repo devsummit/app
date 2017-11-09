@@ -86,6 +86,8 @@
 		D0F9086A74D44F0D9D750F3A /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F63DDD837B1042B1826C152F /* Entypo.ttf */; };
 		D19B7C61AB204D4C9B1D0C7E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC68CDBCC424FECBACF47F1 /* libz.tbd */; };
 		D9CBC0D3B503499D8C87D873 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1446A6F3413F47DF951FFF91 /* Zocial.ttf */; };
+		E074CAB91FB3DFBA004B21FD /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E074CA8B1FB3DFBA004B21FD /* AccountKitStrings.bundle */; };
+		E074CABA1FB3DFBA004B21FD /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E074CAB81FB3DFBA004B21FD /* AccountKit.framework */; };
 		E7B98CB1D3D2EB1F41E21698 /* libPods-appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E22D7CC99A97DCDD8638412D /* libPods-appTests.a */; };
 		FA7880A1FE1E430E88CA2246 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B75C39FCFE264690B58A1E19 /* EvilIcons.ttf */; };
 		FCB4ADC44407464C96661C1D /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FE471EA53B245B08626FB55 /* MaterialIcons.ttf */; };
@@ -512,6 +514,8 @@
 		D012E5F64E1A4D2CB608719C /* libRNVersionNumber.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVersionNumber.a; sourceTree = "<group>"; };
 		DE8D3178DDE04773B6F95F3A /* OFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OFL.txt; path = "../node_modules/native-base/Fonts/OFL.txt"; sourceTree = "<group>"; };
 		E018BC4CD4814AF487610BC6 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		E074CA8B1FB3DFBA004B21FD /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AccountKitStrings.bundle; path = "../node_modules/react-native-facebook-account-kit/ios/AccountKitStrings.bundle"; sourceTree = "<group>"; };
+		E074CAB81FB3DFBA004B21FD /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AccountKit.framework; path = "../node_modules/react-native-facebook-account-kit/ios/AccountKit.framework"; sourceTree = "<group>"; };
 		E22D7CC99A97DCDD8638412D /* libPods-appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E642583668C47112B9AFC6DC /* libPods-app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDC5EDE7757A40A6AB78B20A /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
@@ -560,6 +564,7 @@
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
+				E074CABA1FB3DFBA004B21FD /* AccountKit.framework in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -965,6 +970,8 @@
 		D6BDC836B1B9E556BD146D78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E074CAB81FB3DFBA004B21FD /* AccountKit.framework */,
+				E074CA8B1FB3DFBA004B21FD /* AccountKitStrings.bundle */,
 				9CBF94431F7E2CA3001A8393 /* QBImagePicker.framework */,
 				9CBF94441F7E2CA3001A8393 /* RSKImageCropper.framework */,
 				9CBF943E1F7E2973001A8393 /* libDCTAuth.a */,
@@ -1570,6 +1577,7 @@
 				9C32F2841F91AFDC00C01B4F /* LaunchImage.storyboard in Resources */,
 				8BEDE56CF94A4E0F8D8CDBA4 /* SimpleLineIcons.ttf in Resources */,
 				D9CBC0D3B503499D8C87D873 /* Zocial.ttf in Resources */,
+				E074CAB91FB3DFBA004B21FD /* AccountKitStrings.bundle in Resources */,
 				BBE92D83419C4C17BF4B63F9 /* Montserrat-Bold.ttf in Resources */,
 				6776F4E05F464D0596EB3A65 /* Montserrat-Regular.ttf in Resources */,
 			);

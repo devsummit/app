@@ -22,7 +22,9 @@ import BoothInfoReducer from './containers/BoothInfo/reducer';
 import codeRedeemReducer from './containers/Redeem/reducer';
 import Notification from './components/Notification/reducer';
 import FeedReducer from './containers/Feed/reducer';
+import CreatePostReducer from './containers/CreatePost/reducer';
 import SettingsReducer from './containers/Settings/reducer';
+import CommentListReducer from './containers/CommentList/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -46,7 +48,9 @@ const rootReducers = combineReducers({
   boothInfo: BoothInfoReducer,
   code: codeRedeemReducer,
   notificationList: Notification,
-  feed: FeedReducer
+  feed: FeedReducer,
+  createPost: CreatePostReducer,
+  comments: CommentListReducer
 });
 
 export default rootReducers;

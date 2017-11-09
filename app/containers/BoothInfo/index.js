@@ -147,9 +147,6 @@ class BoothInfo extends Component<Props, State> {
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>
-                <View>
-                  <Text style={styles.name}>{user.first_name} {user.last_name}</Text>
-                </View>
               </View>
             </Image>
             <Tabs initialPage={0} style={{ marginTop: 20, backgroundColor: '#E0E0E0' }}>
