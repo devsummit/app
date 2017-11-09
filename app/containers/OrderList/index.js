@@ -67,16 +67,6 @@ class OrderList extends Component {
       .catch(err => console.log('Error getting data'));
   }
 
-  // componentWillReceiveProps(prevState) {
-  //   const { isConfirming, isFetching } = this.props;
-  //   this.setState({ isLoading: isConfirming || isFetching });
-  //   if (prevState.orders !== this.props.orders) {
-  //     this.setState({
-  //       isLoading: false
-  //     });
-  //   }
-  // }
-
   setModalMyOrders(visible) {
     this.setState({ modalMyOrders: visible });
   }
