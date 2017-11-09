@@ -269,6 +269,7 @@ class OrderList extends Component {
                 <View />
               )}
             </View>
+<<<<<<< HEAD
           ) : !this.state.confirmed ? (
             <View>
               <Text style={styles.artworkText}>Please confirm your email first</Text>
@@ -294,6 +295,28 @@ class OrderList extends Component {
           ) : (
             <View
               style={{
+=======
+          ) : (
+            !this.state.confirmed ?
+              <View>
+                <Text style={styles.artworkText}>Please confirm your email first</Text>
+                <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>Click the button after your email has been confirmed</Text>
+                <Button
+                  block
+                  style={{ margin: 10 }}
+                  onPress={() => this.props.getOrderList()}
+                >
+                  <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
+                    Confirm
+                  </Text>
+                </Button>
+                <TouchableOpacity onPress={() =>
+                  this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}>
+                  <Text style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}>Resend confirmation</Text>
+              </TouchableOpacity>
+              </View> :
+              <View style={{
+>>>>>>> change refresh control to button
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center'
