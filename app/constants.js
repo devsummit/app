@@ -45,7 +45,7 @@ export const SECTIONS = [
   {
     ticket_type: 'Package Small',
     title: 'STARTUP',
-    price: '5.000.000',
+    price: '2.600.000',
     gifts: [ '1 x-banner', 'free 3 tickets', 'stiker' ]
   },
   {
@@ -72,6 +72,3 @@ export const SECTIONS2 = [
 ];
 
 // export const isConfirm = false;
-
-
-
