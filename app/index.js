@@ -3,12 +3,12 @@ import { Router, Scene, Actions } from 'react-native-router-flux';
 import { View, AsyncStorage, BackHandler } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import BusyIndicator from 'react-native-busy-indicator';
+import codePush from 'react-native-code-push';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import logger from 'redux-logger';
 import reducers from './reducers';
 
 // Style imports
@@ -70,7 +70,7 @@ strings.setLanguage(setlang);
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -83,6 +83,28 @@ export default class App extends Component {
     Actions.pop();
     return true;
   };
+
+  codePushStatusDidChange(status) {
+    switch (status) {
+      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+        console.log('Checking for updates.');
+        break;
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        console.log('Downloading package.');
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        console.log('Installing update.');
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+        console.log('Up-to-date.');
+        break;
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        console.log('Update installed.');
+        break;
+      default:
+        break;
+    }
+  }
 
   render() {
     return (
@@ -135,3 +157,9 @@ export default class App extends Component {
     );
   }
 }
+
+export default codePush({
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.IMMEDIATE,
+  updateDialog: true
+})(App);
