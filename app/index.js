@@ -124,6 +124,7 @@ export default class App extends Component {
               <Scene key="privacyPolicy" component={PrivacyPolicy} title="Privacy Policy" />
               <Scene key="myOrders" component={MyOrders} title="My Orders" />
               <Scene key="sponsorInfo" component={SponsorInfo} title="Sponsor" />
+              <Scene key="createPost" component={CreatePost} title="New post" />
             </Scene>
           </RouterWithRedux>
         </Provider>
