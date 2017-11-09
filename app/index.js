@@ -19,6 +19,7 @@ import strings from './localization';
 import RegisterMenu from './containers/RegisterMenu';
 import RegisterEmail from './containers/RegisterEmail';
 import RegisterPhone from './containers/RegisterPhone';
+import RegisterHackaton from './containers/RegisterHackaton';
 import Schedule from './containers/Schedule';
 import ScheduleDetail from './containers/ScheduleDetail';
 import Main from './containers/Main';
@@ -125,6 +126,7 @@ export default class App extends Component {
               <Scene key="myOrders" component={MyOrders} title="My Orders" />
               <Scene key="sponsorInfo" component={SponsorInfo} title="Sponsor" />
               <Scene key="createPost" component={CreatePost} title="New post" />
+              <Scene key="registerHackaton" component={RegisterHackaton} title="Register Hackaton" />
             </Scene>
           </RouterWithRedux>
         </Provider>
