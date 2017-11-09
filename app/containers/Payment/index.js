@@ -27,14 +27,14 @@ class Payment extends Component {
   }
 
   componentWillMount() {
-    if (this.props.referalInfo && this.props.referalInfo.discount_amount) {
+    if (this.props.referalInfo && Number(this.props.referalInfo.data.discount_amount) === 1) {
       const userId = this.props.userId;
       const order = this.props.order;
       const referalCode = this.props.referalInfo.data.referal_code;
       this.props.payWithBankTransfer(userId, order, referalCode, () => {
         LoaderHandler.hideLoader();
-        Actions.mainTabs();
       });
+      Actions.mainTabs();
     } else {
       this.props.getTickets();
       this.props.navigation.setParams({
