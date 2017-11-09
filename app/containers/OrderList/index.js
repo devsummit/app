@@ -67,15 +67,15 @@ class OrderList extends Component {
       .catch(err => console.log('Error getting data'));
   }
 
-  componentWillReceiveProps(prevState) {
-    const { isConfirming, isFetching } = this.props;
-    this.setState({ isLoading: isConfirming || isFetching });
-    if (prevState.orders !== this.props.orders) {
-      this.setState({
-        isLoading: false
-      });
-    }
-  }
+  // componentWillReceiveProps(prevState) {
+  //   const { isConfirming, isFetching } = this.props;
+  //   this.setState({ isLoading: isConfirming || isFetching });
+  //   if (prevState.orders !== this.props.orders) {
+  //     this.setState({
+  //       isLoading: false
+  //     });
+  //   }
+  // }
 
   setModalMyOrders(visible) {
     this.setState({ modalMyOrders: visible });
@@ -134,7 +134,7 @@ class OrderList extends Component {
   render() {
     const { orders } = this.props.orders;
     const count = this.props.redeemCount === 10;
-    if (this.state.isLoading) {
+    if (this.props.isFetching) {
       return (
         <Container>
           <Content>
@@ -146,15 +146,8 @@ class OrderList extends Component {
     const { isConfirmEmail } = this.props;
     return (
       <Container style={styles.container}>
-        <Content
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.isFetching}
-              onRefresh={() => this.props.getOrderList()}
-            />
-          }
-        >
-          {!this.state.isPaid ?
+        <Content>
+          {this.state.isPaid ?
             <View style={{ marginTop: 10, marginHorizontal: 10 }}>
               {this.props.redeemCount > 10 ? null : (
                 <Card>
@@ -172,7 +165,7 @@ class OrderList extends Component {
                         CLAIM
                       </Text>
                     </TouchableOpacity>
-                    {!this.state.confirmed ? (
+                    {!this.props.isConfirmEmail ? (
                       <View />
                     ) : (
                       <View style={styles.inviteField}>
@@ -284,16 +277,20 @@ class OrderList extends Component {
             !this.state.confirmed ?
               <View>
                 <Text style={styles.artworkText}>Please confirm your email first</Text>
+                <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>Click the button after your email has been confirmed</Text>
                 <Button
                   block
                   style={{ margin: 10 }}
-                  onPress={() =>
-                    this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
+                  onPress={() => this.props.getOrderList()}
                 >
                   <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                    Resend confirmation
+                    Confirm
                   </Text>
                 </Button>
+                <TouchableOpacity onPress={() =>
+                  this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}>
+                  <Text style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}>Resend confirmation</Text>
+              </TouchableOpacity>
               </View> :
               <View style={{
                 flex: 1,
