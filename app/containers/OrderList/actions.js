@@ -101,7 +101,7 @@ export function pendingOrder(value) {
 export function emailConfirm() {
   return (dispatch) => {
     orderlist.countRedeem().then((response) => {
-      if (response.data.data.confirmed === 1) {
+      if (Number(response.data.data.confirmed) === 1) {
         dispatch({
           type: IS_CONFIRM_EMAIL,
           value: true
