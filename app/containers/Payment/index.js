@@ -27,10 +27,20 @@ class Payment extends Component {
   }
 
   componentWillMount() {
-    this.props.getTickets();
-    this.props.navigation.setParams({
-      handleIconTouch: this.handleIconTouch
-    });
+    if (this.props.referalInfo && this.props.referalInfo.discount_amount) {
+      const userId = this.props.userId;
+      const order = this.props.order;
+      const referalCode = this.props.referalInfo.data.referal_code;
+      this.props.payWithBankTransfer(userId, order, referalCode, () => {
+        LoaderHandler.hideLoader();
+        Actions.mainTabs();
+      });
+    } else {
+      this.props.getTickets();
+      this.props.navigation.setParams({
+        handleIconTouch: this.handleIconTouch
+      });
+    }
   }
 
   handleInputChange = (field, value) => {
