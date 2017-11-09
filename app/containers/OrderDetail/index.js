@@ -224,7 +224,6 @@ class OrderDetail extends Component {
     const { payment, verification } = included || {};
     const { status } = this.state;
     const { isConfirming, isUpdating, uploadProgress } = this.props;
-    console.log('progress', uploadProgress);
     if (Object.keys(order).length === 0) {
       return (
         <Container>
