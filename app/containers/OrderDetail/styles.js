@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
   },
   buttonSubmit: {
     width: '97%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
     alignSelf: 'center',
     marginBottom: 10
   },

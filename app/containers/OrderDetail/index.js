@@ -21,6 +21,7 @@ import Moment from 'moment';
 import PropTypes from 'prop-types';
 import {
   RefreshControl,
+  ActivityIndicator,
   Alert,
   View,
   TouchableOpacity,
@@ -49,6 +50,7 @@ const logo = require('../../../assets/images/bankmandiri.png');
 
 const { width, height } = Dimensions.get('window');
 const noImage = require('./../../../assets/images/noimage.png');
+
 const url = 'https://api.devsummit.io/static/Ref_Bank.PDF';
 
 let total = 0;
@@ -62,7 +64,7 @@ class OrderDetail extends Component {
       color: '',
       modalVisible: false,
       scalesPageToFit: true,
-      userId: '',
+      userId: ''
     };
   }
 
@@ -221,9 +223,8 @@ class OrderDetail extends Component {
     const { included } = order || {};
     const { payment, verification } = included || {};
     const { status } = this.state;
-    const { isConfirming, isUpdating } = this.props;
-    console.log('landing here to check status', order);
-    if (isUpdating || isConfirming || Object.keys(order).length === 0) {
+    const { isConfirming, isUpdating, uploadProgress } = this.props;
+    if (Object.keys(order).length === 0) {
       return (
         <Container>
           <Content>
@@ -341,10 +342,10 @@ class OrderDetail extends Component {
             <CardItem>
               <Content>
                 <Grid>
-                  <Col style={{flex: 2}}>
+                  <Col style={{ flex: 2 }}>
                     <Text style={{ fontWeight: 'bold' }}>{strings.order.total.toUpperCase()}</Text>
                   </Col>
-                  <Col style={{flex: 3}}>
+                  <Col style={{ flex: 3 }}>
                     <Text style={{ color: PRIMARYCOLOR }}>Rp{' '} {order.included.payment.gross_amount}</Text>
                   </Col>
                 </Grid>
@@ -411,8 +412,20 @@ class OrderDetail extends Component {
                       resizeMode={'cover'}
                       source={{ uri: this.props.paymentProof }}
                     />
-                    <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.reuploadProof}</Text>
+                    {(isUpdating || isConfirming) && <View
+                      style={{
+                        width: `${uploadProgress}%`,
+                        backgroundColor: '#157EFC',
+                        height: 10,
+                      }}
+                    />
+                    }
+                    <Button
+                      disabled={isUpdating || isConfirming}
+                      style={styles.buttonSubmit}
+                      onPress={() => this.uploadImage()}>
+                      {(isUpdating || isConfirming) && <ActivityIndicator color="black" />}
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{(isUpdating || isConfirming) ? strings.order.uploading : strings.order.reuploadProof}</Text>
                     </Button>
                   </View>
                 ) : (
@@ -430,8 +443,21 @@ class OrderDetail extends Component {
                       source={noImage}
                     />
                     <Text style={styles.noImageText}>{strings.order.noProof}</Text>
-                    <Button style={styles.buttonSubmit} onPress={() => this.uploadImage()}>
-                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.updateProof}</Text>
+                    {(isUpdating || isConfirming) && <View
+                      style={{
+                        width: `${uploadProgress}%`,
+                        backgroundColor: '#157EFC',
+                        height: 10,
+                      }}
+                    />
+                    }
+                    <Button
+                      disabled={isConfirming || isUpdating}
+                      style={styles.buttonSubmit}
+                      onPress={() => this.uploadImage()}
+                    >
+                      {(isUpdating || isConfirming) && <ActivityIndicator color="black" />}
+                      <Text style={{ flex: 1, textAlign: 'center' }}>{(isUpdating || isConfirming) ? (`${strings.order.uploading} (${uploadProgress}%)`) : strings.order.reuploadProof}</Text>
                     </Button>
                   </View>
                 )
@@ -447,6 +473,7 @@ class OrderDetail extends Component {
 OrderDetail.propTypes = {
   getOrderDetail: PropTypes.func.isRequired,
   order: PropTypes.object.isRequired,
+  uploadProgress: PropTypes.number,
   updateOrder: PropTypes.func.isRequired,
   submitUpdateOrder: PropTypes.func.isRequired,
   confirmPayment: PropTypes.func.isRequired,
@@ -458,10 +485,16 @@ const mapStateToProps = createStructuredSelector({
   orderId: selectors.getOrderId(),
   ticketTypes: selectors.getTicketTypes(),
   order: selectors.getOrder(),
+  uploadProgress: selectors.getUploadProgress(),
   isUpdating: selectors.getIsUpdatingOrder(),
   updateStatus: selectors.getUpdateOrderStatus(),
   isConfirming: selectors.getIsConfirmingPayment(),
   paymentProof: selectors.getPaymentProof()
 });
+
+
+OrderDetail.defaultProps = {
+  uploadProgress: 0
+};
 
 export default connect(mapStateToProps, actions)(OrderDetail);

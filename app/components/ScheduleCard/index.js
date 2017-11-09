@@ -32,7 +32,7 @@ class ScheduleCard extends Component {
       return <Text style={styles.type}>{hack.toUpperCase()}</Text>;
     }
 
-    return <Text style={styles.type}>Other</Text>;
+    return <View />;
   };
 
   render() {

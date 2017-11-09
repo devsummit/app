@@ -9,12 +9,7 @@ import {
   SET_LINKS,
   IS_FETCHING_FEEDS,
   IS_FETCHING_MORE_FEEDS,
-  IS_POST_FEEDS,
-  UPDATE_IMAGE,
-  UPDATE_TEXT,
   UPDATE_FEEDS,
-  CLEAR_TEXT_FIELD,
-  CLEAR_IMAGE,
   UPDATE_CURRENT_PAGE,
   LOAD_MORE_FEEDS,
   REMOVE_FEED,
@@ -109,81 +104,6 @@ export function fetchPageWithPaginate(page) {
         console.log(err);
         dispatch(isFetchingMoreFeeds(false));
       });
-  };
-}
-
-export function isPostFeeds(status) {
-  return {
-    type: IS_POST_FEEDS,
-    status
-  };
-}
-
-export function clearImage() {
-  return {
-    type: CLEAR_IMAGE
-  };
-}
-
-export function clearTextField() {
-  return {
-    type: CLEAR_TEXT_FIELD
-  };
-}
-
-export function postFeeds(image, text) {
-  return (dispatch) => {
-    dispatch(isPostFeeds(true));
-
-    const form = new FormData();
-
-    if (Platform.OS === 'ios' && image.sourceURL) {
-      form.append('attachment', {
-        uri: image.sourceURL,
-        type: image.mime,
-        name: image.filename
-      });
-    }
-
-    if (image.path) {
-      form.append('attachment', {
-        uri: image.path,
-        type: image.mime,
-        name: 'image.jpg'
-      });
-    }
-
-    form.append('message', text);
-
-    feeds
-      .post(form)
-      .then((res) => {
-        dispatch(clearTextField());
-        dispatch(clearImage());
-        Toast.show('Posted succesfully!');
-        dispatch(isPostFeeds(false));
-      })
-      .catch((err) => {
-        dispatch(clearTextField());
-        dispatch(clearImage());
-        dispatch(isPostFeeds(false));
-        Toast.show('Upss, Something when wrong!', Toast.LONG);
-        console.log(err);
-      });
-  };
-}
-
-export function updateImage(image) {
-  return {
-    type: UPDATE_IMAGE,
-    image
-  };
-}
-
-export function updateText(value) {
-  return {
-    type: UPDATE_TEXT,
-    value
   };
 }
 

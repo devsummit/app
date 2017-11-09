@@ -24,21 +24,6 @@ export const getFeedsLinks = () => createSelector(
   state => state.get('links').toJS()
 );
 
-export const getIsPostingFeed = () => createSelector(
-  selectFeedReducer(),
-  state => state.get('isPosting')
-);
-
-export const getUpdateImage = () => createSelector(
-  selectFeedReducer(),
-  state => state.get('image').toJS()
-);
-
-export const getUpdateText = () => createSelector(
-  selectFeedReducer(),
-  state => state.get('message')
-);
-
 export const getCurrentPage = () => createSelector(
   selectFeedReducer(),
   state => state.get('currentPage')

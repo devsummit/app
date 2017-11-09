@@ -114,22 +114,34 @@ export function payWithBankTransfer(userId, order, referalCode, callback = () =>
       payment_type: 'offline',
       referal_code: referalCode
     };
+    let done = false;
+    setTimeout(() => {
+      if (!done) {
+        Toast.show('Timed out. Please try again');
+        LoaderHandler.hideLoader();
+      }
+      done = true;
+    }, 30 * 1000);
     payment
       .post(data)
       .then((response) => {
-        if (response.data && response.data.meta.success) {
-          callback({
-            ...response.data.data,
-            ...response.data.included[0]
-          });
-        } else {
-          Toast.show('You already registered as hackaton');
-          LoaderHandler.hideLoader();
+        if (!done) {
+          if (response.data && response.data.meta.success) {
+            callback({
+              ...response.data.data,
+              ...response.data.included[0]
+            });
+          } else {
+            Toast.show('You already registered as hackaton');
+            LoaderHandler.hideLoader();
+          }
         }
       })
       .catch((error) => {
-        Toast.show('Sorry, something went wrong');
-        LoaderHandler.hideLoader();
+        if (!done) {
+          Toast.show('Sorry, something went wrong');
+          LoaderHandler.hideLoader();
+        }
       });
   };
 }
@@ -161,20 +173,19 @@ export function payWithPaypal(order, callback = () => {}, ticketId) {
               description: 'Devsummit event ticket'
             })
           ]);
-        } else {
-          return Promise.all([
-            Promise.resolve(response.data.data),
-            PayPal.paymentRequest({
-              clientId: PAYPAL_CLIENT_ID,
-              environment: PAYPAL_ENV,
-              price: response.data.included
-                .reduce((sum, item) => sum + item.price * item.count, 0)
-                .toString(),
-              currency: PAYPAL_CURRENCY,
-              description: `Devsummit ${response.data.included[0].ticket.type}`
-            })
-          ]);
         }
+        return Promise.all([
+          Promise.resolve(response.data.data),
+          PayPal.paymentRequest({
+            clientId: PAYPAL_CLIENT_ID,
+            environment: PAYPAL_ENV,
+            price: response.data.included
+              .reduce((sum, item) => sum + item.price * item.count, 0)
+              .toString(),
+            currency: PAYPAL_CURRENCY,
+            description: `Devsummit ${response.data.included[0].ticket.type}`
+          })
+        ]);
       })
       .then(([ order, result ]) => {
         let response;

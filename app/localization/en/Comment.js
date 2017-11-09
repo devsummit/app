@@ -1,4 +1,5 @@
 export default {
   comment: 'Comment',
-  comments: 'Comments'
+  comments: 'Comments',
+  writeComment: 'Write a comment...'
 };

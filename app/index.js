@@ -43,6 +43,7 @@ import MyOrders from './components/MyOrders';
 import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
+import CreatePost from './containers/CreatePost';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
