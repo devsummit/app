@@ -67,15 +67,15 @@ class OrderList extends Component {
       .catch(err => console.log('Error getting data'));
   }
 
-  componentWillReceiveProps(prevState) {
-    const { isConfirming, isFetching } = this.props;
-    this.setState({ isLoading: isConfirming || isFetching });
-    if (prevState.orders !== this.props.orders) {
-      this.setState({
-        isLoading: false
-      });
-    }
-  }
+  // componentWillReceiveProps(prevState) {
+  //   const { isConfirming, isFetching } = this.props;
+  //   this.setState({ isLoading: isConfirming || isFetching });
+  //   if (prevState.orders !== this.props.orders) {
+  //     this.setState({
+  //       isLoading: false
+  //     });
+  //   }
+  // }
 
   setModalMyOrders(visible) {
     this.setState({ modalMyOrders: visible });
@@ -128,8 +128,10 @@ class OrderList extends Component {
   }
 
   setConfirmEmail = () => {
-    this.props.setConfirmEmail(this.props.inputFields.email, () => this.setModalVisibleConfirmation(false));
-  }
+    this.props.setConfirmEmail(this.props.inputFields.email, () =>
+      this.setModalVisibleConfirmation(false)
+    );
+  };
 
   render() {
     const { orders, isConfirmEmail, isFetching } = this.props;
@@ -146,15 +148,8 @@ class OrderList extends Component {
 
     return (
       <Container style={styles.container}>
-        <Content
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.isFetching}
-              onRefresh={() => this.props.getOrderList()}
-            />
-          }
-        >
-          {!this.state.isPaid ?
+        <Content>
+          {this.state.isPaid ? (
             <View style={{ marginTop: 10, marginHorizontal: 10 }}>
               {this.props.redeemCount > 10 ? null : (
                 <Card>
@@ -172,7 +167,7 @@ class OrderList extends Component {
                         CLAIM
                       </Text>
                     </TouchableOpacity>
-                    {!this.state.confirmed ? (
+                    {!this.props.isConfirmEmail ? (
                       <View />
                     ) : (
                       <View style={styles.inviteField}>
@@ -194,15 +189,19 @@ class OrderList extends Component {
                   </View>
                 </Card>
               )}
-            </View> :
-            <View />}
+            </View>
+          ) : (
+            <View />
+          )}
           <Button
             style={{ margin: 10, backgroundColor: '#FF6F00' }}
             block
             warning
             onPress={() => Actions.myOrders()}
           >
-            <Text style={{ color: 'white', fontWeight: 'bold' }}>My Orders ({this.props.orders.length})</Text>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>
+              My Orders ({this.props.orders.length})
+            </Text>
           </Button>
           <View style={{ marginTop: 5 }}>
             <Modal
@@ -235,8 +234,9 @@ class OrderList extends Component {
                         }
                       })}
                     </List>
-                  ) : <View /> }
-
+                  ) : (
+                    <View />
+                  )}
                 </View>
               </View>
             </Modal>
@@ -261,17 +261,16 @@ class OrderList extends Component {
                       />
                     );
                   }
-                  return (
-                    <View />
-                  );
+                  return <View />;
                 })}
               </List>
               {!this.state.isPaid ? (
-                <View style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
                 >
                   <Image source={noTicket} style={{ opacity: 0.7 }} />
                   <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
@@ -280,30 +279,39 @@ class OrderList extends Component {
                 <View />
               )}
             </View>
-          ) : (
-            !this.state.confirmed ?
-              <View>
-                <Text style={styles.artworkText}>Please confirm your email first</Text>
-                <Button
-                  block
-                  style={{ margin: 10 }}
-                  onPress={() =>
-                    this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
+          ) : !this.state.confirmed ? (
+            <View>
+              <Text style={styles.artworkText}>Please confirm your email first</Text>
+              <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>
+                Click the button after your email has been confirmed
+              </Text>
+              <Button block style={{ margin: 10 }} onPress={() => this.props.getOrderList()}>
+                <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
+                  Confirm
+                </Text>
+              </Button>
+              <TouchableOpacity
+                onPress={() =>
+                  this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
+              >
+                <Text
+                  style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}
                 >
-                  <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                    Resend confirmation
-                  </Text>
-                </Button>
-              </View> :
-              <View style={{
+                  Resend confirmation
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View
+              style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center'
               }}
-              >
-                <Image source={noTicket} style={{ opacity: 0.7 }} />
-                <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
-              </View>
+            >
+              <Image source={noTicket} style={{ opacity: 0.7 }} />
+              <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
+            </View>
           )}
           <Modal
             animationType="slide"
@@ -313,11 +321,12 @@ class OrderList extends Component {
               this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
             }}
           >
-            <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View
+              style={{ flex: 1, justifyContent: 'center' }}
+              backgroundColor="rgba(0, 0, 0, 0.5)"
+            >
               <View style={styles.modalConfirm}>
-                <TouchableWithoutFeedback
-                  onPress={() => this.setModalVisibleConfirmation(false)}
-                >
+                <TouchableWithoutFeedback onPress={() => this.setModalVisibleConfirmation(false)}>
                   <Icon style={styles.iconClose} name="times" />
                 </TouchableWithoutFeedback>
                 <View style={styles.viewModalConfirm}>
@@ -328,13 +337,25 @@ class OrderList extends Component {
                 </View>
                 <Item>
                   <Input
-                    style={{ borderBottomWidth: 1, borderColor: 'rgba(0, 0, 0, 0.1)', marginHorizontal: 10 }}
+                    style={{
+                      borderBottomWidth: 1,
+                      borderColor: 'rgba(0, 0, 0, 0.1)',
+                      marginHorizontal: 10
+                    }}
                     placeholder="email"
                     placeholderTextColor="#BDBDBD"
                     onChangeText={email => this.handleInputChange('email', email)}
                   />
                 </Item>
-                <Button style={{ margin: 10, alignSelf: 'center', paddingHorizontal: 20, backgroundColor: PRIMARYCOLOR }} onPress={() => this.setConfirmEmail()} >
+                <Button
+                  style={{
+                    margin: 10,
+                    alignSelf: 'center',
+                    paddingHorizontal: 20,
+                    backgroundColor: PRIMARYCOLOR
+                  }}
+                  onPress={() => this.setConfirmEmail()}
+                >
                   <Text style={{ color: 'white', fontWeight: 'bold' }}>Send</Text>
                 </Button>
               </View>
