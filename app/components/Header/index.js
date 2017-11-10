@@ -33,31 +33,39 @@ export default class Header extends Component {
           <TouchableWithoutFeedback
             onPress={() => Actions.drawerOpen()}
           >
-            <CameraIcon name="bars" style={styles.notificationIcon} />
+            <CameraIcon name="bars" style={styles.drawerIcon} />
           </TouchableWithoutFeedback>
         </View>
         <View>
           <Text style={styles.pageTitle}>{this.props.title}</Text>
         </View>
         <View style={{ justifyContent: 'center', marginRight: 20 }}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              Actions.notification();
-              this.setState({ notif: !this.state.notif })
-            }
-            }
-          >
-            { !this.state.notif ?
-              <CameraIcon
+          {!this.state.notif ?
+            <TouchableWithoutFeedback onPress={() => Actions.notification()}>
+              <CameraIcon.Button
                 name="bell"
                 style={styles.notificationIcon}
-              /> :
-              <CameraIcon
-                name="bell"
-                style={[ styles.notificationIcon, { color: 'red' } ]}
+                iconStyle={{ marginRight: -8 }}
+                borderRadius={0}
               />
-            }
-          </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback> :
+            <TouchableWithoutFeedback
+              onPress={() => {
+                Actions.notification();
+                this.setState({ notif: !this.state.notif });
+              }
+              }
+            >
+              <CameraIcon.Button
+                name="bell"
+                style={styles.notificationIcon}
+                iconStyle={{ marginRight: -8 }}
+                borderRadius={0}
+              >
+                <View style={{ marginLeft: 12, backgroundColor: 'red', borderRadius: 6, padding: 6 }} />
+              </CameraIcon.Button>
+            </TouchableWithoutFeedback>
+          }
         </View>
       </View>
     );

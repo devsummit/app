@@ -121,16 +121,16 @@ class App extends Component {
             <Scene key="root" backButtonImage={BackButtonImg}>
               <Scene key="drawer" drawer drawerLockMode="locked-closed" back contentComponent={Drawer} hideNavBar>
                 <Scene key="splash" component={Splash} hideNavBar initial />
-                <Scene key="main" component={Main} hideNavBar type="replace" />
                 <Scene key="mainTabs" component={MainTabs} hideNavBar type="replace" />
-                <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
-                <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" type="reset" />
-                <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" type="reset" />
                 <Scene key="ticketList" component={TicketList} title="List Ticket" />
                 <Scene key="schedule" component={Schedule} hideNavBar title="Schedule" />
                 <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
                 <Scene key="boothList" component={BoothList} title="Booth List" />
+                <Scene key="main" component={Main} hideNavBar type="replace" />
               </Scene>
+              <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
+              <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" type="reset" />
+              <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" type="reset" />
               <Scene key="newOrder" component={NewOrder} title="Order Tickets" />
               <Scene key="speakerDetail" component={SpeakerDetail} title="Speaker Detail" />
               <Scene key="changePassword" component={ChangePassword} title="Change Password" />
@@ -157,6 +157,8 @@ class App extends Component {
     );
   }
 }
+
+console.log('codePush', codePush);
 
 export default codePush({
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
