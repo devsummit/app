@@ -126,8 +126,8 @@ class App extends Component {
                 <Scene key="schedule" component={Schedule} hideNavBar title="Schedule" />
                 <Scene key="attendeesList" component={AttendeesList} title="Select Attendee" />
                 <Scene key="boothList" component={BoothList} title="Booth List" />
+                <Scene key="main" component={Main} hideNavBar type="replace" />
               </Scene>
-              <Scene key="main" component={Main} hideNavBar type="replace" />
               <Scene key="registerMenu" component={RegisterMenu} hideNavBar title="Register" />
               <Scene key="registerEmail" component={RegisterEmail} hideNavBar title="Register" type="reset" />
               <Scene key="registerPhone" component={RegisterPhone} hideNavBar title="Register Phone" type="reset" />
