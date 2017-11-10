@@ -14,6 +14,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "RNFIRMessaging.h"
+#import <CodePush/CodePush.h>
 @import FirebaseMessaging;
 
 @implementation AppDelegate
