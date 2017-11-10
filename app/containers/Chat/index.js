@@ -18,7 +18,7 @@ import {
 } from 'native-base';
 import Header from '../../components/Header';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { InitApp } from '../../../libraries/react-native-qiscus-sdk-js/QiscusSDK/lib';
+import { InitApp } from '../../../libraries/react-native-qiscus-sdk/QiscusSDK/lib';
 
 import strings from '../../localization';
 import * as actions from './actions';

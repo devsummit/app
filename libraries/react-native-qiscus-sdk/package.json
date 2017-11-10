@@ -1,0 +1,60 @@
+{
+  "name": "react-native-qiscus-sdk",
+  "version": "0.0.17",
+  "description": "react-native qiscus sdk",
+  "main": "QiscusSDK/lib/index.js",
+  "scripts": {
+    "build": "rimraf lib && babel QiscusSDK --ignore '_*' --out-dir lib",
+    "prepublish": "npm run build",
+    "lint": "eslint --max-warnings 0 .",
+    "typecheck": "flow",
+    "test-src": "mocha src/__tests__/*.js src/**/__tests__/*.js",
+    "test": "npm run lint && npm run typecheck && npm run test-src"
+  },
+  "dependencies": {
+    "class-autobind": "^0.1.4",
+    "color": "^0.11.3",
+    "lodash": "^4.13.1",
+    "moment": "^2.13.0",
+    "native-base": "2.1.4",
+    "react-native-easy-grid": "0.1.8",
+    "react-native-file-uploader": "0.0.2",
+    "react-native-image-picker": "^0.26.7",
+    "react-native-modalbox": "^1.3.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.9.1",
+    "babel-eslint": "^6.0.4",
+    "babel-plugin-transform-class-properties": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "enzyme": "^2.5.1",
+    "eslint": "^2.12.0",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-flow-vars": "^0.4.0",
+    "eslint-plugin-react": "^5.1.1",
+    "expect": "^1.20.1",
+    "flow-bin": "^0.27.0",
+    "mocha": "^2.5.3",
+    "rimraf": "^2.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/qiscus/react-native-qiscus-sdk-js.git"
+  },
+  "keywords": [
+    "react-native",
+    "qiscus",
+    "chat"
+  ],
+  "author": "QiscusSDK Developer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qiscus/react-native-qiscus-sdk-js"
+  },
+  "homepage": "https://github.com/qiscus/react-native-qiscus-sdk-js",
+  "readme": "https://github.com/qiscus/react-native-qiscus-sdk-js/blob/master/README.md"
+}
