@@ -33,7 +33,7 @@ export default class Header extends Component {
           <TouchableWithoutFeedback
             onPress={() => Actions.drawerOpen()}
           >
-            <CameraIcon name="bars" style={styles.notificationIcon} />
+            <CameraIcon name="bars" style={styles.drawerIcon} />
           </TouchableWithoutFeedback>
         </View>
         <View>
@@ -45,7 +45,8 @@ export default class Header extends Component {
               <CameraIcon.Button
                 name="bell"
                 style={styles.notificationIcon}
-                iconStyle={{ marginRight: -10 }}
+                iconStyle={{ marginRight: -8 }}
+                borderRadius={0}
               />
             </TouchableWithoutFeedback> :
             <TouchableWithoutFeedback
@@ -58,7 +59,8 @@ export default class Header extends Component {
               <CameraIcon.Button
                 name="bell"
                 style={styles.notificationIcon}
-                iconStyle={{ marginRight: -10 }}
+                iconStyle={{ marginRight: -8 }}
+                borderRadius={0}
               >
                 <View style={{ marginLeft: 12, backgroundColor: 'red', borderRadius: 6, padding: 6 }} />
               </CameraIcon.Button>

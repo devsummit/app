@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 20,
     backgroundColor: '#FF8B00'
+  },
+  drawerIcon: {
+    elevation: 2,
+    color: '#FFF',
+    fontSize: 20
   }
 });
 
