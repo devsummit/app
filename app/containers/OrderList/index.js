@@ -132,9 +132,9 @@ class OrderList extends Component {
   }
 
   render() {
-    const { orders } = this.props.orders;
+    const { orders, isConfirmEmail, isFetching } = this.props;
     const count = this.props.redeemCount === 10;
-    if (this.state.isLoading) {
+    if (isFetching) {
       return (
         <Container>
           <Content>
@@ -143,7 +143,7 @@ class OrderList extends Component {
         </Container>
       );
     }
-    const { isConfirmEmail } = this.props;
+
     return (
       <Container style={styles.container}>
         <Content
