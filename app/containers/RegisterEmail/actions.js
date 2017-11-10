@@ -138,13 +138,17 @@ export function register(callBack) {
               );
             }
           } catch (err) {
-            Toast.show('Failed to register, please try again later.');
+            updateRegisterStatus(
+              true,
+              'Failed',
+              response.data.meta.message.concat(' Failed to register, please try again later. Thanks!')
+            )
             console.log(err, 'error cought');
           }
           dispatch(toggleIsRegistering(false));
         })
         .catch((error) => {
-          Toast.show('Failed to register, please try again later.');
+          Toast.show('Failed to register, please try again later. Thanks!', Toast.LONG);
           console.log(error, 'error caught');
         });
     }
