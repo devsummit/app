@@ -1,0 +1,11 @@
+export const UPDATE_QISCUS = 'app/containers/Chat/QISCUS';
+export const UPDATE_NEW_MESSAGE = 'app/containers/Chat/NEW_MESSAGE';
+export const UPDATE_ROOMS = 'app/containers/Chat/ROOMS';
+export const UPDATE_SELECTED_ROOM = 'app/containers/Chat/SELECTED_ROOM';
+export const IS_DELIVERED = 'app/containers/Chat/QISCUS';
+export const IS_CHAT_ROOM_CREATED = 'app/containers/Chat/CHAT_ROOM_CREATED';
+export const IS_GROUP_ROOM_CREATED = 'app/containers/Chat/GROUP_ROOM_CREATED';
+export const IS_COMMENT_READ = 'app/containers/Chat/COMMENT_READ';
+export const IS_LOGIN_ERROR = 'app/containers/Chat/LOGIN_ERROR';
+export const IS_PRESENCE = 'app/containers/Chat/PRESENCE';
+export const IS_TYPING = 'app/containers/Chat/TYPING';
