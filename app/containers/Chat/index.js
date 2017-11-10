@@ -18,7 +18,7 @@ import {
 } from 'native-base';
 import Header from '../../components/Header';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {InitApp, ChatRenderer} from 'react-native-qiscus-sdk';
+import { InitApp } from '../../../libraries/react-native-qiscus-sdk-js/QiscusSDK/lib';
 
 import strings from '../../localization';
 import * as actions from './actions';
@@ -28,19 +28,19 @@ import styles from './style';
 
 class Chat extends Component {
   componentWillMount() {
+    console.log('props -->', this.props);
     const userAuth = {
       email: 'fikri@qiscus.com',
       password: 'password',
       displayName: 'fikri',
       avatar: null,
-      appID: 'sdksample',
-    }
+      appID: 'sdksample'
+    };
 
     const {
     updateQiscus,
     updateNewMessage,
     updateRooms,
-    updateSelectedRoom,
     isDelivered,
     isChatRoomCreated,
     isGroupRoomCreated,
@@ -86,9 +86,8 @@ class Chat extends Component {
     });
   }
   render() {
-    console.log('props -->', this.props);
     const { rooms, selectedRoom, qiscus, newMessage, updateQiscus } = this.props;
-    const initApp = (data) => updateQiscus(data);
+    // const initApp = (data) => updateQiscus(data);
     if (!rooms) {
       return (
         <Container>
@@ -107,11 +106,11 @@ class Chat extends Component {
               { rooms.map((room, idk) => {
                 const id = room.id;
                 const name = room.room_name;
-                const avatar_url = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
+                const avatarUrl = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
                 return (
                   <ListItem avatar key={idk} onPress={() => this._openChat({ name, id })}>
                     <Left>
-                      <Thumbnail source={{ uri: avatar_url }} />
+                      <Thumbnail source={{ uri: avatarUrl }} />
                     </Left>
                     <Body>
                       <Text>{ name }</Text>
@@ -121,7 +120,7 @@ class Chat extends Component {
                       <Icon name="angle-right" style={styles.icon} />
                     </Right>
                   </ListItem>
-                )
+                );
               })}
             </List>
           </Content>

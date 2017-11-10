@@ -4,45 +4,45 @@ const selectChat = () => state => state.get('chat');
 
 export const getQiscus = () => createSelector(
   selectChat(),
-  state => state.get('qiscus').toJS()
+  state => state.get('qiscus')
 );
 export const getNewMessage = () => createSelector(
   selectChat(),
-  state => state.get('newMessage').toJS()
+  state => state.get('newMessage')
 );
 export const getRooms = () => createSelector(
   selectChat(),
-  state => state.get('rooms').toJS()
+  state => state.get('rooms')
 );
 export const getSelectedRoom = () => createSelector(
   selectChat(),
-  state => state.get('selectedRoom').toJS()
+  state => state.get('selectedRoom')
 );
 export const getDelivered = () => createSelector(
   selectChat(),
-  state => state.get('delivered').toJS()
+  state => state.get('delivered')
 );
 export const getChatRoomCreated = () => createSelector(
   selectChat(),
-  state => state.get('chatRoomCreated').toJS()
+  state => state.get('chatRoomCreated')
 );
 export const getGroupRoomCreated = () => createSelector(
   selectChat(),
-  state => state.get('groupRoomCreated').toJS()
+  state => state.get('groupRoomCreated')
 );
 export const getCommentRead = () => createSelector(
   selectChat(),
-  state => state.get('commentRead').toJS()
+  state => state.get('commentRead')
 );
 export const getLoginError = () => createSelector(
   selectChat(),
-  state => state.get('loginError').toJS()
+  state => state.get('loginError')
 );
 export const getPresence = () => createSelector(
   selectChat(),
-  state => state.get('presence').toJS()
+  state => state.get('presence')
 );
 export const getTyping = () => createSelector(
   selectChat(),
-  state => state.get('typing').toJS()
+  state => state.get('typing')
 );
