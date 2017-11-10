@@ -124,6 +124,7 @@ class BoothInfo extends Component {
                 >
                   <Image
                     source={{ uri: boothPhoto }}
+                    resizeMode="center"
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>
