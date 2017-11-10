@@ -4,6 +4,8 @@ import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.react.ReactApplication;
+import com.farmisen.react_native_file_uploader.RCTFileUploaderPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import br.com.vizir.rn.paypal.PayPalPackage;
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
@@ -56,6 +58,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
       MainApplication.paypalPackage = new PayPalPackage(PAY_PAL_REQUEST_ID);
       return Arrays.asList(
           new MainReactPackage(),
+            new RCTFileUploaderPackage(),
+            new ImagePickerPackage(),
             new RNVersionNumberPackage(),
           new ReactNativeLocalizationPackage(),
               MainApplication.getPaypalPackage(),
