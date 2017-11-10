@@ -47,16 +47,16 @@ export default class Header extends Component {
             }
             }
           >
-            { !this.state.notif ?
-              <CameraIcon
-                name="bell"
-                style={styles.notificationIcon}
-              /> :
-              <CameraIcon
-                name="bell"
-                style={[ styles.notificationIcon, { color: 'red' } ]}
-              />
-            }
+            <CameraIcon.Button
+              name="bell"
+              style={styles.notificationIcon}
+              iconStyle={{ marginRight: -10 }}
+            >
+              {this.state.notif ?
+                <View style={{ marginLeft: 12, backgroundColor: 'red', borderRadius: 6, padding: 6 }} /> :
+                <View />
+              }
+            </CameraIcon.Button>
           </TouchableWithoutFeedback>
         </View>
       </View>
