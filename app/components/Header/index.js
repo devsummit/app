@@ -40,24 +40,30 @@ export default class Header extends Component {
           <Text style={styles.pageTitle}>{this.props.title}</Text>
         </View>
         <View style={{ justifyContent: 'center', marginRight: 20 }}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              Actions.notification();
-              this.setState({ notif: !this.state.notif })
-            }
-            }
-          >
-            <CameraIcon.Button
-              name="bell"
-              style={styles.notificationIcon}
-              iconStyle={{ marginRight: -10 }}
-            >
-              {this.state.notif ?
-                <View style={{ marginLeft: 12, backgroundColor: 'red', borderRadius: 6, padding: 6 }} /> :
-                <View />
+          {!this.state.notif ?
+            <TouchableWithoutFeedback onPress={() => Actions.notification()}>
+              <CameraIcon.Button
+                name="bell"
+                style={styles.notificationIcon}
+                iconStyle={{ marginRight: -10 }}
+              />
+            </TouchableWithoutFeedback> :
+            <TouchableWithoutFeedback
+              onPress={() => {
+                Actions.notification();
+                this.setState({ notif: !this.state.notif });
               }
-            </CameraIcon.Button>
-          </TouchableWithoutFeedback>
+              }
+            >
+              <CameraIcon.Button
+                name="bell"
+                style={styles.notificationIcon}
+                iconStyle={{ marginRight: -10 }}
+              >
+                <View style={{ marginLeft: 12, backgroundColor: 'red', borderRadius: 6, padding: 6 }} />
+              </CameraIcon.Button>
+            </TouchableWithoutFeedback>
+          }
         </View>
       </View>
     );
