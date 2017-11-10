@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import Toast from 'react-native-simple-toast';
 
 import { DevSummitAxios } from '../../helpers';
 /*
@@ -137,15 +138,15 @@ export function register(callBack) {
               );
             }
           } catch (err) {
+            Toast.show('Failed to register, please try again later.');
             console.log(err, 'error cought');
           }
           dispatch(toggleIsRegistering(false));
         })
         .catch((error) => {
+          Toast.show('Failed to register, please try again later.');
           console.log(error, 'error caught');
         });
     }
   };
 }
-
-
