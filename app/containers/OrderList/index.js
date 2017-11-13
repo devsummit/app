@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { Container, Content, List, Spinner, Button, Card, Form, Item, Input } from 'native-base';
+import {
+  Container,
+  Content,
+  List,
+  ListItem,
+  Spinner,
+  Button,
+  Card,
+  Form,
+  Item,
+  Input
+} from 'native-base';
 import PropTypes from 'prop-types';
 import {
   RefreshControl,
@@ -13,6 +24,8 @@ import {
   TouchableHighlight,
   Modal
 } from 'react-native';
+import QRCode from 'react-native-qrcode';
+import TicketList from '../TicketList';
 import { Actions } from 'react-native-router-flux';
 import ProgressBar from 'react-native-progress/Bar';
 import { connect } from 'react-redux';
@@ -135,6 +148,26 @@ class OrderList extends Component {
         </Container>
       );
     }
+    if (!this.state.confirmed) {
+      return (
+        <View>
+          <Text style={styles.artworkText}>Please confirm your email first</Text>
+          <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>
+            Click the button after your email has been confirmed
+          </Text>
+          <Button block style={{ margin: 10 }} onPress={() => this.props.getOrderList()}>
+            <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>Confirm</Text>
+          </Button>
+          <TouchableOpacity
+            onPress={() => this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
+          >
+            <Text style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}>
+              Resend confirmation
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
 
     return (
       <Container style={styles.container}>
@@ -231,92 +264,60 @@ class OrderList extends Component {
               </View>
             </Modal>
           </View>
-          {this.props.orders.length > 0 ? (
+          {this.props.tickets.length > 0 ? (
+            /* Start ticket length condition */
             <View>
-              <List>
-                {this.props.orders.map((order) => {
-                  if (order.status === 'paid') {
-                    this.state.isPaid = true;
-                    return (
-                      <OrderItem
-                        key={order.id}
-                        order={order}
-                        confirmPayment={this.confirmPayment}
-                        onPress={() => {
-                          Actions.orderDetail({
-                            orderId: order.id,
-                            id: order.id
-                          });
-                        }}
-                      />
-                    );
-                  }
-                  return <View />;
-                })}
-              </List>
-              {!this.state.isPaid ? (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                >
-                  <Image source={noTicket} style={{ opacity: 0.7 }} />
-                  <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
-                </View>
-              ) : (
-                <View />
-              )}
-            </View>
-<<<<<<< HEAD
-          ) : !this.state.confirmed ? (
-            <View>
-              <Text style={styles.artworkText}>Please confirm your email first</Text>
-              <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>
-                Click the button after your email has been confirmed
+              <Text style={{ textAlign: 'center' }}>
+                You have{' '}
+                {this.props.tickets.length === 1
+                  ? 'a ticket'
+                  : `${this.props.tickets.length} tickets`}
               </Text>
-              <Button block style={{ margin: 10 }} onPress={() => this.props.getOrderList()}>
-                <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                  Confirm
-                </Text>
-              </Button>
-              <TouchableOpacity
-                onPress={() =>
-                  this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
-              >
-                <Text
-                  style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}
-                >
-                  Resend confirmation
-                </Text>
-              </TouchableOpacity>
-            </View>
+              {this.props.isTicketFetching ? (
+                <Container>
+                  <Content>
+                    <Spinner color={PRIMARYCOLOR} />
+                  </Content>
+                </Container>
+              ) : (
+                <List
+                  dataArray={this.props.tickets}
+                  renderRow={(item) => {
+                    return (
+                      <ListItem
+                        style={[
+                          styles.cardTicket,
+                          {
+                            alignSelf: 'center',
+                            height: 110,
+                            width: '95%',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            borderRadius: 3
+                          }
+                        ]}
+                      >
+                        <Text style={{ flex: 5 }}>
+                          <Text style={{ fontWeight: 'bold' }}>
+                            {strings.order.ticketNumber} {`${item.id}\n`}
+                          </Text>
+                          {strings.order.QRInstruction}
+                        </Text>
+                        <QRCode
+                          value={item.ticket_code}
+                          size={100}
+                          bgColor="black"
+                          fgColor="white"
+                        />
+                      </ListItem>
+                    );
+                  }}
+                />
+              )}
+            </View> /* End of ticket length condition */
           ) : (
             <View
               style={{
-=======
-          ) : (
-            !this.state.confirmed ?
-              <View>
-                <Text style={styles.artworkText}>Please confirm your email first</Text>
-                <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>Click the button after your email has been confirmed</Text>
-                <Button
-                  block
-                  style={{ margin: 10 }}
-                  onPress={() => this.props.getOrderList()}
-                >
-                  <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>
-                    Confirm
-                  </Text>
-                </Button>
-                <TouchableOpacity onPress={() =>
-                  this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}>
-                  <Text style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}>Resend confirmation</Text>
-              </TouchableOpacity>
-              </View> :
-              <View style={{
->>>>>>> change refresh control to button
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center'
@@ -391,6 +392,7 @@ OrderList.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   orders: selectors.getOrders(),
+  tickets: selectors.getTickets(),
   isFetching: selectors.getIsFetchingOrders(),
   isConfirming: selectors.getIsConfirmingPayment(),
   redeemCount: selectors.getRedeemCode(),
@@ -398,6 +400,7 @@ const mapStateToProps = createStructuredSelector({
   inputFields: selectors.getInputFields(),
   isConfirmEmail: selectors.getIsConfirmEmail(),
   isConfirmingEmail: selectors.getIsConfirmingEmail(),
+  isTicketFetching: selectors.getIsTicketFetching(),
   community: selectors.getCommunity()
 });
 
