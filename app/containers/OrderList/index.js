@@ -148,8 +148,7 @@ class OrderList extends Component {
         </Container>
       );
     }
-
-    if (isConfirmEmail) {
+    if (!this.state.confirmed) {
       return (
         <View>
           <Text style={styles.artworkText}>Please confirm your email first</Text>
@@ -173,7 +172,7 @@ class OrderList extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          {this.state.isPaid ?
+          {this.state.isPaid ? (
             <View style={{ marginTop: 10, marginHorizontal: 10 }}>
               {this.props.redeemCount > 10 ? null : (
                 <Card>
@@ -268,6 +267,12 @@ class OrderList extends Component {
           {this.props.tickets.length > 0 ? (
             /* Start ticket length condition */
             <View>
+              <Text style={{ textAlign: 'center' }}>
+                You have{' '}
+                {this.props.tickets.length === 1
+                  ? 'a ticket'
+                  : `${this.props.tickets.length} tickets`}
+              </Text>
               {this.props.isTicketFetching ? (
                 <Container>
                   <Content>
@@ -292,7 +297,7 @@ class OrderList extends Component {
                           }
                         ]}
                       >
-                        <Text style={styles.text}>
+                        <Text style={{ flex: 5 }}>
                           <Text style={{ fontWeight: 'bold' }}>
                             {strings.order.ticketNumber} {`${item.id}\n`}
                           </Text>
