@@ -75,15 +75,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.subscription = null;
   }
 
   componentWillMount() {
     beacon.connect().then((result) => {
       console.log('result');
-      beacon.subscribe((beacons) => {
+      this.subscription = beacon.subscribe((beacons) => {
         console.log(beacons);
       });
     }).catch(e => console.log(e));
+  }
+
+  componentWillUnmount() {
+    this.subscription.remove();
   }
 
   onBackPress = () => {

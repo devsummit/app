@@ -17,6 +17,7 @@ import org.altbeacon.beacon.BeaconConsumer;
 
 import io.fabric.sdk.android.Fabric;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.BLUETOOTH;
@@ -67,6 +68,7 @@ public class MainActivity extends ReactActivity implements BeaconConsumer {
         String[] permissions = new String[]{
                 ACCESS_FINE_LOCATION,
                 RECEIVE_BOOT_COMPLETED,
+                ACCESS_COARSE_LOCATION,
                 ACCESS_NETWORK_STATE,
                 BLUETOOTH,
         };
