@@ -19,4 +19,8 @@ export default {
   PAYPAL_CURRENCY: 'USD',
   PAYPAL_RATE: Math.pow(10, 4),
   PAYPAL_ENV: Platform.OS === 'android' ? 'sandbox' : 0,
+
+  QISCUS_SDK_APP_ID: 'summitdev-qmorajj8iz3',
+  QISCUS_SDK_SECRET: '4c70dc9c7a086b8a1be364c0cfc4274d',
+  QISCUS_DEFAULT_ROOMS_ID: [ '52069' ]
 };
