@@ -46,6 +46,7 @@ import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
 import Chat from './containers/Chat';
+import ChatRoom from './containers/Chat/ChatRoom';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -151,6 +152,7 @@ class App extends Component {
               <Scene key="createPost" component={CreatePost} title="New post" />
               <Scene key="registerHackaton" component={RegisterHackaton} title="Register Hackaton" />
               <Scene key="chat" component={Chat} title="Discussion" />
+              <Scene key="chatRoom" component={ChatRoom} title="Chat Room" />
             </Scene>
           </RouterWithRedux>
         </Provider>
