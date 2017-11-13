@@ -45,6 +45,7 @@ import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
+import beacon from './services/beacon';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -74,6 +75,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  componentWillMount() {
+    beacon.connect().then((result) => {
+      console.log('result');
+      beacon.subscribe((beacons) => {
+        console.log(beacons);
+      });
+    }).catch(e => console.log(e));
   }
 
   onBackPress = () => {
@@ -157,8 +167,6 @@ class App extends Component {
     );
   }
 }
-
-console.log('codePush', codePush);
 
 export default codePush({
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,

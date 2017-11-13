@@ -106,6 +106,7 @@ repositories {
         url 'https://maven.google.com/'
         name 'Google'
     }
+    jcenter()
 }
 
 import com.android.build.OutputFile
@@ -118,7 +119,7 @@ android {
 
     defaultConfig {
         applicationId "io.devsummit.app.android"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 26
         versionCode 24
         versionName "1.2.6"
@@ -207,7 +208,8 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.2.1'
 
     compile "com.android.support:appcompat-v7:23.0.1"
-  compile "com.facebook.react:react-native:+"  // From node_modules
+    compile 'org.altbeacon:android-beacon-library:2+'
+    compile "com.facebook.react:react-native:+"  // From node_modules
   compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
       transitive = true;
   }

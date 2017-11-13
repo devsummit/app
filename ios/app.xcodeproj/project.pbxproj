@@ -68,6 +68,9 @@
 		9CBF93F41F7D1CA2001A8393 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBF93F31F7D1C9C001A8393 /* AccountKit.framework */; };
 		9CBF94451F7E2CA7001A8393 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBF94431F7E2CA3001A8393 /* QBImagePicker.framework */; };
 		9CBF94461F7E2CA9001A8393 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBF94441F7E2CA3001A8393 /* RSKImageCropper.framework */; };
+		9CD3EDE91FB951DD00D89D88 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD3EDBA1FB951DD00D89D88 /* CoreBluetooth.framework */; };
+		9CD3EDEB1FB951E200D89D88 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CD3EDEA1FB951E200D89D88 /* CoreLocation.framework */; };
+		9CD3EE5A1FB953AA00D89D88 /* BeaconModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3EE591FB953AA00D89D88 /* BeaconModule.m */; };
 		9CE393AC1F7A1F200021C0F3 /* libOAuthManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CF18CC21F711578009E4D56 /* libOAuthManager.a */; };
 		9CE394D21F7A25450021C0F3 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CE394CF1F7A240F0021C0F3 /* libRNFIRMessaging.a */; };
 		9CE395181F7A283B0021C0F3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9CE394EE1F7A283A0021C0F3 /* GoogleService-Info.plist */; };
@@ -513,6 +516,10 @@
 		9CBF943E1F7E2973001A8393 /* libDCTAuth.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libDCTAuth.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CBF94431F7E2CA3001A8393 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = "<group>"; };
 		9CBF94441F7E2CA3001A8393 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
+		9CD3EDBA1FB951DD00D89D88 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		9CD3EDEA1FB951E200D89D88 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		9CD3EDED1FB9522B00D89D88 /* BeaconModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconModule.h; sourceTree = "<group>"; };
+		9CD3EE591FB953AA00D89D88 /* BeaconModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconModule.m; sourceTree = "<group>"; };
 		9CE394A41F7A240F0021C0F3 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
 		9CE394EE1F7A283A0021C0F3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "app/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9CFFFF151F7BF2FE00AAF527 /* libDCTAuth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDCTAuth.a; path = "Build/Products/Debug-iphonesimulator/DCTAuth/libDCTAuth.a"; sourceTree = "<group>"; };
@@ -561,6 +568,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CD3EDEB1FB951E200D89D88 /* CoreLocation.framework in Frameworks */,
+				9CD3EDE91FB951DD00D89D88 /* CoreBluetooth.framework in Frameworks */,
 				9CB6B9521FB64C65008A05B6 /* libCodePush.a in Frameworks */,
 				9CFFFF171F7BF48A00AAF527 /* libimageCropPicker.a in Frameworks */,
 				9CBF94461F7E2CA9001A8393 /* RSKImageCropper.framework in Frameworks */,
@@ -715,6 +724,7 @@
 		13B07FAE1A68108700A75B9A /* app */ = {
 			isa = PBXGroup;
 			children = (
+				9CD3EDEC1FB9521800D89D88 /* Modules */,
 				9C32F2591F91AFDC00C01B4F /* LaunchImage.storyboard */,
 				0E7850051F8C8D2B00B58A47 /* AccountKit.framework */,
 				0E78502F1F8C8D2B00B58A47 /* AccountKitStrings.bundle */,
@@ -884,6 +894,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9CD3EDEC1FB9521800D89D88 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				9CD3EDED1FB9522B00D89D88 /* BeaconModule.h */,
+				9CD3EE591FB953AA00D89D88 /* BeaconModule.m */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		9CE392CD1F7A16E70021C0F3 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -1014,6 +1033,8 @@
 		D6BDC836B1B9E556BD146D78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CD3EDEA1FB951E200D89D88 /* CoreLocation.framework */,
+				9CD3EDBA1FB951DD00D89D88 /* CoreBluetooth.framework */,
 				E074CAB81FB3DFBA004B21FD /* AccountKit.framework */,
 				E074CA8B1FB3DFBA004B21FD /* AccountKitStrings.bundle */,
 				9CBF94431F7E2CA3001A8393 /* QBImagePicker.framework */,
@@ -1915,6 +1936,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CD3EE5A1FB953AA00D89D88 /* BeaconModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
