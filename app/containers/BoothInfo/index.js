@@ -118,17 +118,21 @@ class BoothInfo extends Component {
       <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
         <ScrollView>
           <View style={{ flex: 1 }}>
+            <Image style={styles.imgback} source={{ uri: boothPhoto }}>
+              <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.7)' }}>
                 <TouchableOpacity
                   disabled={!booth}
                   onPress={() => this.changeLogo(this)}
+                  style={{ flex: 1, justifyContent: 'center' }}
                 >
                   <Image
                     source={{ uri: boothPhoto }}
-                    resizeMode="center"
                     style={styles.boothImage}
                   />
                 </TouchableOpacity>
-            <Tabs initialPage={0} style={{ marginTop: 20, backgroundColor: '#E0E0E0' }}>
+              </View>
+            </Image>
+            <Tabs initialPage={0} style={{ backgroundColor: '#E0E0E0' }}>
               <Tab style={{ backgroundColor: '#E0E0E0' }} heading={<TabHeading style={styles.tabHeading}><Text style={styles.tabTitle}>Profile</Text></TabHeading>}>
                 <View style={{ marginTop: 10, marginBottom: 10, backgroundColor: '#FFFFFF' }}>
                   <Text style={styles.summary}>{summary}</Text>
