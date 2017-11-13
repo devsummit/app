@@ -16,7 +16,9 @@ import {
   UPDATE_SINGLE_INPUT_FIELD,
   IS_CONFIRM_EMAIL,
   IS_CONFIRMING_EMAIL,
-  FETCH_COMMUNITY
+  FETCH_COMMUNITY,
+  FETCH_TICKET,
+  IS_FETCHING_TICKETS
 } from './constants';
 
 export function isConfirmingEmail(status) {
@@ -28,19 +30,21 @@ export function isConfirmingEmail(status) {
 
 export function setConfirmEmail(email, callBack = () => {}) {
   return () => {
-    orderlist.postConfirmEmail(email).then((response) => {
-      const data = response.data.meta;
+    orderlist
+      .postConfirmEmail(email)
+      .then((response) => {
+        const data = response.data.meta;
 
-      if (data.success) {
-        callBack();
-        Toast.show(data.message);
-      } else {
-        Toast.show(data.message);
-      }
-    })
-      .catch((err) => {
-        console.log(err, 'Error Cauhgt')
+        if (data.success) {
+          callBack();
+          Toast.show(data.message);
+        } else {
+          Toast.show(data.message);
+        }
       })
+      .catch((err) => {
+        console.log(err, 'Error Cauhgt');
+      });
   };
 }
 
@@ -111,11 +115,38 @@ export function emailConfirm() {
   };
 }
 
+export function isFetchingTicket(status) {
+  return {
+    type: IS_FETCHING_TICKETS,
+    status
+  };
+}
+
+export function fetchTickets() {
+  return (dispatch) => {
+    dispatch(isFetchingTicket(true));
+    orderlist
+      .getTickets()
+      .then((response) => {
+        dispatch({
+          type: FETCH_TICKET,
+          data: response.data.data
+        });
+        dispatch(isFetchingTicket(false));
+      })
+      .catch((err) => {
+        dispatch(isFetchingTicket(false));
+        console.log(err);
+      });
+  };
+}
+
 export function getOrderList() {
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
     dispatch(redeemCounter());
     dispatch(emailConfirm());
+    dispatch(fetchTickets());
     orderlist
       .get()
       .then((response) => {
