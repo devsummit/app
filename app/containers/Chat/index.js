@@ -94,6 +94,16 @@ class Chat extends Component {
   }
   _chatTarget(room) {
     this.props.updateSelectedRoom(room);
+    const { qiscus, newMessage, selectedRoom, updateQiscus } = this.props;
+    if (selectedRoom) {
+      const initApp = (data) => updateQiscus(data);
+      Actions.chatRoom({
+        qiscus,
+        initApp,
+        message: newMessage,
+        room: selectedRoom
+      });
+    }
   }
   _openChat(room) {
     this._chatTarget(room);
@@ -168,7 +178,6 @@ class Chat extends Component {
   }
   render() {
     const { rooms, selectedRoom, qiscus, newMessage, updateQiscus } = this.props;
-    const initApp = (data) => updateQiscus(data);
     if (!rooms) {
       return (
         <Container>
@@ -177,14 +186,6 @@ class Chat extends Component {
           </Content>
         </Container>
       );
-    }
-    if (selectedRoom) {
-      Actions.chatRoom({
-        qiscus,
-        initApp,
-        message: newMessage,
-        room: selectedRoom
-      });
     }
     return this._renderThreadList(rooms);
   }
