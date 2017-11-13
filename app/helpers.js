@@ -3,7 +3,14 @@ import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
 import Moment from 'moment';
 import base from 'base-64';
-import { API_BASE_URL, CLIENT_SECRET, PRIMARYCOLOR } from './constants';
+import {
+  API_BASE_URL,
+  CLIENT_SECRET,
+  PRIMARYCOLOR,
+  QISCUS_SDK_APP_ID,
+  QISCUS_SDK_SECRET,
+  QISCUS_DEFAULT_ROOM_ID
+} from './constants';
 
 // import { updateIsLogOut } from './containers/Profile/actions';
 
@@ -126,4 +133,22 @@ export const transactionStatus = (payment) => {
     message: 'not paid',
     color: PRIMARYCOLOR
   };
+};
+
+// Qiscus Helpers
+export const QiscusAxios = axios.create({
+  baseURL: `https://${QISCUS_SDK_APP_ID}.qiscus.com/api/v2/rest`,
+  headers: {
+    'Content-Type': 'application/json',
+    QISCUS_SDK_SECRET
+  }
+});
+
+export const addRoomParticipant = async (emails = [], room_id ) => {
+  try {
+    const response = await QiscusAxios.post('/add_room_participants', { room_id, emails });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
