@@ -17,7 +17,7 @@ export default StyleSheet.create({
     flex: 1
   },
   commentList: {
-    height: height * 0.75
+    height: height * 0.8
   },
   inputContainer: {
     height: 45,
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     backgroundColor: '#f4f5f9'
   },
   cardRightContent: {
-    backgroundColor: '#d8d8dd'
+    backgroundColor: '#B3E5FC'
   },
   arrowLeft: {
     marginTop: -1,
@@ -93,7 +93,7 @@ export default StyleSheet.create({
     borderTopWidth: 20,
     borderRightWidth: 20,
     borderBottomWidth: 10,
-    borderTopColor: '#d8d9db',
+    borderTopColor: '#B3E5FC',
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent'
   },

@@ -132,7 +132,7 @@ export class ChatRenderer extends Component {
         </View>
         <View style={this.state.formStyle}>
           <Item style={styles.textInput}>
-            <Input value={this.state.newMessage} placeholder="Say something" multiline={true} onChangeText={(text) => this._setNewMessage(text)} />
+            <Input value={this.state.newMessage} placeholderTextColor={'#BDBDBD'} placeholder="Say something" multiline={true} onChangeText={(text) => this._setNewMessage(text)} />
           </Item>
           <Button transparent style={styles.btnSend} onPress={() => this._sendMessage(this.state.newMessage)}>
             <Icon name='md-send' style={styles.sendIcon} />
