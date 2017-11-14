@@ -79,7 +79,7 @@ export function fetchFeeds(currentpage) {
                 onPress: () => {
                   const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
                   AsyncStorage.multiRemove(keys);
-                  Actions.main()
+                  Actions.main();
                 }
               }
             ]
