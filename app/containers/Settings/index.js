@@ -12,7 +12,6 @@ import { createStructuredSelector } from 'reselect';
 import { getProfileData } from '../../helpers';
 import strings from '../../localization';
 import Button from '../../components/Button';
-import Header from '../../components/Header';
 import styles from './styles';
 import InputItem from '../../components/InputItem';
 
@@ -82,7 +81,6 @@ class Settings extends Component {
       <Container>
         <Content>
           <ScrollView>
-            <Header title={strings.settings.title} />
             <Content>
               <View style={styles.section2}>
                 <TouchableWithoutFeedback onPress={() => Actions.profile()}>
