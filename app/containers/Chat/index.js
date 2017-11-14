@@ -20,7 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 
 import Header from '../../components/Header';
-import { InitApp } from '../../../libraries/react-native-qiscus-sdk/QiscusSDK/lib';
+import { InitApp } from './qiscus';
 import { QISCUS_SDK_APP_ID, QISCUS_DEFAULT_ROOMS_ID } from '../../constants';
 import { getProfileData, addRoomParticipant } from '../../helpers';
 
@@ -101,7 +101,8 @@ class Chat extends Component {
         qiscus,
         initApp,
         message: newMessage,
-        room: selectedRoom
+        room: selectedRoom,
+        title: room.name
       });
     }
   }
@@ -129,6 +130,8 @@ class Chat extends Component {
                 const id = room.id;
                 const name = room.room_name;
                 const avatarUrl = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
+                const lastComment = room.last_comment;
+                const subtitle = `Last convertation by ${lastComment.username}`;
                 if (QISCUS_DEFAULT_ROOMS_ID.includes(id.toString())) {
                   return (
                     <ListItem avatar key={idk} onPress={() => this._openChat({ name, id })}>
@@ -137,7 +140,7 @@ class Chat extends Component {
                       </Left>
                       <Body>
                         <Text>{ name }</Text>
-                        <Text note>Doing what you like will always keep you happy . .</Text>
+                        <Text note>{subtitle ? subtitle : ''}</Text>
                       </Body>
                       <Right>
                         <Icon name="angle-right" style={styles.icon} />
@@ -150,9 +153,12 @@ class Chat extends Component {
                 <Text>Other Thread</Text>
               </ListItem>
               { rooms.map((room, idk) => {
+                console.log('rooom', room);
                 const id = room.id;
                 const name = room.room_name;
                 const avatarUrl = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
+                const lastComment = room.last_comment;
+                const subtitle = `Last convertation by ${lastComment.username}`;
                 if (!QISCUS_DEFAULT_ROOMS_ID.includes(id.toString())) {
                   return (
                     <ListItem avatar key={idk} onPress={() => this._openChat({ name, id })}>
@@ -161,7 +167,7 @@ class Chat extends Component {
                       </Left>
                       <Body>
                         <Text>{ name }</Text>
-                        <Text note>Doing what you like will always keep you happy . .</Text>
+                        <Text note>{subtitle ? subtitle : ''}</Text>
                       </Body>
                       <Right>
                         <Icon name="angle-right" style={styles.icon} />
