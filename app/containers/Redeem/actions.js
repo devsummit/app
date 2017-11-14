@@ -1,6 +1,12 @@
-import { DevSummitAxios, getAccessToken, getProfileData, getBoothData, getRoleId } from '../../helpers';
-import { Alert, AsyncStorage } from 'react-native';
 import Toast from 'react-native-simple-toast';
+import { Alert, AsyncStorage } from 'react-native';
+import {
+  DevSummitAxios,
+  getAccessToken,
+  getProfileData,
+  getBoothData,
+  getRoleId
+} from '../../helpers';
 
 import local from '../../../config/local';
 import { UPDATE_SINGLE_INPUT_FIELD } from './constants';
@@ -51,7 +57,9 @@ export function placeRedeem() {
     getAccessToken().then((token) => {
       DevSummitAxios.patch('api/v1/redeemcodes', { code }, { headers: { Authorization: token } })
         .then((res) => {
-          updateDataStorage(res);
+          if (res.data.included.role_id === 3 || res.data.included.role_id === 8) {
+            updateDataStorage(res);
+          }
           Alert.alert('Information', res.data.meta.message);
         })
         .catch((error) => {
