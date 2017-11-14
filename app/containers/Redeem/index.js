@@ -36,7 +36,7 @@ class Redeem extends Component {
   };
 
   placeRedeem = () => {
-    this.props.placeRedeem();
+    this.props.placeRedeem(this.props.closeModalRedeem);
   };
 
   render() {

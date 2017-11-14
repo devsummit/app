@@ -121,7 +121,9 @@ class OrderList extends Component {
 
     Share.open({
       title: 'Devsummit invitation',
-      message: `Check out the biggest event for programmer in 21-23 November 2017. Download the apps https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${referal} as referal code to collect points for free ticket. Cheers!`,
+      message: `Check out the biggest event for programmer in 21-23 November 2017. Download the apps https://play.google.com/store/apps/details?id=io.devsummit.app.android and use ${
+        referal
+      } as referal code to collect points for free ticket. Cheers!`,
       subject: 'Devsummit invitation'
     });
   };
@@ -148,14 +150,14 @@ class OrderList extends Component {
         </Container>
       );
     }
-    if (!this.state.confirmed) {
+    if (!isConfirmEmail) {
       return (
         <View>
           <Text style={styles.artworkText}>Please confirm your email first</Text>
           <Text style={{ color: 'grey', fontSize: 10, textAlign: 'center' }}>
             Click the button after your email has been confirmed
           </Text>
-          <Button block style={{ margin: 10 }} onPress={() => this.props.getOrderList()}>
+          <Button block style={{ margin: 10 }} onPress={() => this.props.emailConfirm()}>
             <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>Confirm</Text>
           </Button>
           <TouchableOpacity
@@ -399,7 +401,6 @@ const mapStateToProps = createStructuredSelector({
   redeemstatus: selectors.getReedemStatus(),
   inputFields: selectors.getInputFields(),
   isConfirmEmail: selectors.getIsConfirmEmail(),
-  isConfirmingEmail: selectors.getIsConfirmingEmail(),
   isTicketFetching: selectors.getIsTicketFetching(),
   community: selectors.getCommunity()
 });

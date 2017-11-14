@@ -12,7 +12,6 @@ import {
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
   IS_CONFIRM_EMAIL,
-  IS_CONFIRMING_EMAIL,
   FETCH_COMMUNITY,
   FETCH_TICKET,
   IS_FETCHING_TICKETS
@@ -33,8 +32,7 @@ const initialState = fromJS({
   inputFields: {
     email: ''
   },
-  isConfirmEmail: false,
-  isConfirmingEmail: false
+  isConfirmEmail: false
 });
 
 function orderListReducer(state = initialState, action) {
@@ -57,9 +55,7 @@ function orderListReducer(state = initialState, action) {
     case REDEEM_COUNTER:
       return state.set('redeemCounter', action.value);
     case IS_CONFIRM_EMAIL:
-      return state.set('isConfirmEmail', action.value);
-    case IS_CONFIRMING_EMAIL:
-      return state.set('isConfirmingEmail', action.status);
+      return state.set('isConfirmEmail', action.status);
     case FETCH_COMMUNITY:
       return state.set('community', action.payloads);
     case FETCH_TICKET:

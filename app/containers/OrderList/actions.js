@@ -15,18 +15,10 @@ import {
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
   IS_CONFIRM_EMAIL,
-  IS_CONFIRMING_EMAIL,
   FETCH_COMMUNITY,
   FETCH_TICKET,
   IS_FETCHING_TICKETS
 } from './constants';
-
-export function isConfirmingEmail(status) {
-  return {
-    type: IS_CONFIRMING_EMAIL,
-    status
-  };
-}
 
 export function setConfirmEmail(email, callBack = () => {}) {
   return () => {
@@ -58,14 +50,20 @@ export function updateInputFields(field, value) {
 
 export function redeemCounter() {
   return (dispatch) => {
-    orderlist.countRedeem().then((profile) => {
-      const value = profile.data.data.referal_count;
-      dispatch({
-        type: REDEEM_COUNTER,
-        value
+    orderlist
+      .countRedeem()
+      .then((profile) => {
+        console.log('redeemCounter', profile);
+        const value = profile.data.data.referal_count;
+        dispatch({
+          type: REDEEM_COUNTER,
+          value
+        });
+        dispatch(updateDataStorage(profile.data));
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      dispatch(updateDataStorage(profile.data));
-    });
   };
 }
 
@@ -108,7 +106,7 @@ export function emailConfirm() {
       if (Number(response.data.data.confirmed) === 1) {
         dispatch({
           type: IS_CONFIRM_EMAIL,
-          value: true
+          status: true
         });
       }
     });

@@ -47,7 +47,7 @@ export function updateDataStorage(res) {
   });
 }
 
-export function placeRedeem() {
+export function placeRedeem(closeRedeemModal) {
   return (dispatch, getState) => {
     const { inputFields } = getState()
       .get('code')
@@ -60,10 +60,12 @@ export function placeRedeem() {
           if (res.data.included.role_id === 3 || res.data.included.role_id === 8) {
             updateDataStorage(res);
           }
-          Alert.alert('Information', res.data.meta.message);
+          Toast.show('Information', res.data.meta.message);
+          closeRedeemModal();
         })
         .catch((error) => {
-          console.log('ERROR', error);
+          Toast.show('Information', error.message);
+          closeRedeemModal();
         });
     });
   };
