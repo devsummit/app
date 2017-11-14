@@ -174,7 +174,7 @@ class OrderList extends Component {
     return (
       <Container style={styles.container}>
         <Content>
-          {this.state.isPaid ? (
+          {this.props.isConfirmEmail ? (
             <View style={{ marginTop: 10, marginHorizontal: 10 }}>
               {this.props.redeemCount > 10 ? null : (
                 <Card>
