@@ -44,13 +44,20 @@ const styles = StyleSheet.create({
     padding: 10
   },
   boothImage: {
-    width,
-    height: 200
+    alignSelf: 'center',
+    width: 150,
+    height: 150,
+    borderRadius: 75
   },
   boothImageList: {
     width: width * 0.49,
     height: 150,
     margin: 2
+  },
+  imgback: {
+    flex: 1,
+    width,
+    height: 200
   },
   imageWrapper: {
     flex: 1,
