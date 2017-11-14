@@ -8,6 +8,7 @@ import {
   getRoleId
 } from '../../helpers';
 
+import { getOrderList } from '../OrderList/actions';
 import local from '../../../config/local';
 import { UPDATE_SINGLE_INPUT_FIELD } from './constants';
 
@@ -60,11 +61,12 @@ export function placeRedeem(closeRedeemModal) {
           if (res.data.included.role_id === 3 || res.data.included.role_id === 8) {
             updateDataStorage(res);
           }
-          Toast.show('Information', res.data.meta.message);
+          Alert.alert('Information', res.data.meta.message);
           closeRedeemModal();
+          dispatch(getOrderList());
         })
         .catch((error) => {
-          Toast.show('Information', error.message);
+          Alert.alert('Information', error.message);
           closeRedeemModal();
         });
     });
