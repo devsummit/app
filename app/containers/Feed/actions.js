@@ -1,5 +1,6 @@
 import FormData from 'FormData';
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import Api from '../../services/api';
 import payment from '../../services/payment';
@@ -69,7 +70,18 @@ export function fetchFeeds(currentpage) {
         dispatch(isFetchingFeeds(false));
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          Alert.alert(
+            'Logged out',
+            'You are logged out from this device.',
+            [
+              { text: 'OK', onPress: () => Actions.main() }
+            ]
+          );
+        } else {
+          Toast('No internet connection, please try again.', Toast.LONG);
+        }
+
         dispatch(isFetchingFeeds(false));
       });
   };
