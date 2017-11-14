@@ -150,7 +150,7 @@ class Chat extends Component {
                 }
               })}
               <ListItem itemDivider>
-                <Text>Other Thread</Text>
+                <Text />
               </ListItem>
               { rooms.map((room, idk) => {
                 console.log('rooom', room);
