@@ -1,5 +1,5 @@
 import FormData from 'FormData';
-import { Platform, Alert } from 'react-native';
+import { Platform, Alert, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Toast from 'react-native-simple-toast';
 import Api from '../../services/api';
@@ -75,7 +75,13 @@ export function fetchFeeds(currentpage) {
             'Logged out',
             'You are logged out from this device.',
             [
-              { text: 'OK', onPress: () => Actions.main() }
+              { text: 'OK',
+                onPress: () => {
+                  const keys = [ 'access_token', 'refresh_token', 'role_id', 'profile_data' ];
+                  AsyncStorage.multiRemove(keys);
+                  Actions.main()
+                }
+              }
             ]
           );
         } else {
