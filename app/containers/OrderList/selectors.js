@@ -15,6 +15,12 @@ const selectMainReducer = () => state => state.get('orderList');
 export const getOrders = () =>
   createSelector(selectMainReducer(), state => state.get('orders').toJS());
 
+export const getTickets = () =>
+  createSelector(selectMainReducer(), state => state.get('tickets').toJS());
+
+export const getIsTicketFetching = () =>
+  createSelector(selectMainReducer(), state => state.get('isFetchingTicket'));
+
 export const getIsFetchingOrders = () =>
   createSelector(selectMainReducer(), state => state.get('isFetchingOrders'));
 

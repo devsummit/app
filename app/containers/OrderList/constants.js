@@ -8,3 +8,5 @@ export const UPDATE_SINGLE_INPUT_FIELD = 'app/containers/OrderList/UPDATE_SINGLE
 export const IS_CONFIRM_EMAIL = 'app/containers/OrderList/IS_CONFIRM_EMAIL';
 export const IS_CONFIRMING_EMAIL = 'app/containers/OrderList/IS_CONFIRMING_EMAIL';
 export const FETCH_COMMUNITY = 'app/containers/OrderList/FETCH_COMMUNITY';
+export const FETCH_TICKET = 'app/containers/OrderList/FETCH_TICKET';
+export const IS_FETCHING_TICKETS = 'app/containers/OrderList/IS_FETCHING_TICKETS';

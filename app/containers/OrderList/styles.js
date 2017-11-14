@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { PRIMARYCOLOR } from '../../constants';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -131,6 +131,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 2
+  },
+  cardTicket: {
+    position: 'relative',
+    height: 100,
+    margin: 5,
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: '#f8f8f8',
+    backgroundColor: '#f8f8f8',
+    elevation: 3,
+    width: width * 0.45,
+    alignSelf: 'center'
   }
 });
 
