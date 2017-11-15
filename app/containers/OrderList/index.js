@@ -128,9 +128,9 @@ class OrderList extends Component {
     });
   };
 
-  setModalVisibleConfirmation(visible) {
+  setModalVisibleConfirmation = (visible) => {
     this.setState({ modalVisibleConfirmation: visible });
-  }
+  };
 
   setConfirmEmail = () => {
     this.props.setConfirmEmail(this.props.inputFields.email, () =>
@@ -150,6 +150,7 @@ class OrderList extends Component {
         </Container>
       );
     }
+
     if (!isConfirmEmail) {
       return (
         <View>
@@ -160,13 +161,59 @@ class OrderList extends Component {
           <Button block style={{ margin: 10 }} onPress={() => this.props.emailConfirm()}>
             <Text style={{ fontWeight: 'bold', color: 'white', textAlign: 'center' }}>Confirm</Text>
           </Button>
-          <TouchableOpacity
-            onPress={() => this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation)}
-          >
+          <TouchableOpacity onPress={() => this.setModalVisibleConfirmation(true)}>
             <Text style={{ color: 'grey', textAlign: 'center', textDecorationLine: 'underline' }}>
               Resend confirmation
             </Text>
           </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent
+            visible={this.state.modalVisibleConfirmation}
+            onRequestClose={() => {
+              this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
+            }}
+          >
+            <View
+              style={{ flex: 1, justifyContent: 'center' }}
+              backgroundColor="rgba(0, 0, 0, 0.5)"
+            >
+              <View style={styles.modalConfirm}>
+                <TouchableWithoutFeedback onPress={() => this.setModalVisibleConfirmation(false)}>
+                  <Icon style={styles.iconClose} name="times" />
+                </TouchableWithoutFeedback>
+                <View style={styles.viewModalConfirm}>
+                  <Icon name="envelope" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                    Resend Confirmation
+                  </Text>
+                </View>
+                <Item>
+                  <Input
+                    style={{
+                      borderBottomWidth: 1,
+                      borderColor: 'rgba(0, 0, 0, 0.1)',
+                      marginHorizontal: 10
+                    }}
+                    placeholder="email"
+                    placeholderTextColor="#BDBDBD"
+                    onChangeText={email => this.handleInputChange('email', email)}
+                  />
+                </Item>
+                <Button
+                  style={{
+                    margin: 10,
+                    alignSelf: 'center',
+                    paddingHorizontal: 20,
+                    backgroundColor: PRIMARYCOLOR
+                  }}
+                  onPress={() => this.setConfirmEmail()}
+                >
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Send</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
         </View>
       );
     }
@@ -286,32 +333,34 @@ class OrderList extends Component {
                   dataArray={this.props.tickets}
                   renderRow={(item) => {
                     return (
-                      <ListItem
-                        style={[
-                          styles.cardTicket,
-                          {
-                            alignSelf: 'center',
-                            height: 110,
-                            width: '95%',
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                            borderRadius: 3
-                          }
-                        ]}
-                      >
-                        <Text style={{ flex: 5 }}>
-                          <Text style={{ fontWeight: 'bold' }}>
-                            {strings.order.ticketNumber} {`${item.id}\n`}
+                      <TouchableOpacity>
+                        <ListItem
+                          style={[
+                            styles.cardTicket,
+                            {
+                              alignSelf: 'center',
+                              height: 110,
+                              width: '95%',
+                              marginLeft: 'auto',
+                              marginRight: 'auto',
+                              borderRadius: 3
+                            }
+                          ]}
+                        >
+                          <Text style={{ flex: 5 }}>
+                            <Text style={{ fontWeight: 'bold' }}>
+                              {strings.order.ticketNumber} {`${item.id}\n`}
+                            </Text>
+                            {strings.order.QRInstruction}
                           </Text>
-                          {strings.order.QRInstruction}
-                        </Text>
-                        <QRCode
-                          value={item.ticket_code}
-                          size={100}
-                          bgColor="black"
-                          fgColor="white"
-                        />
-                      </ListItem>
+                          <QRCode
+                            value={item.ticket_code}
+                            size={100}
+                            bgColor="black"
+                            fgColor="white"
+                          />
+                        </ListItem>
+                      </TouchableOpacity>
                     );
                   }}
                 />
@@ -329,54 +378,6 @@ class OrderList extends Component {
               <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
             </View>
           )}
-          <Modal
-            animationType="slide"
-            transparent
-            visible={this.state.modalVisibleConfirmation}
-            onRequestClose={() => {
-              this.setModalVisibleConfirmation(!this.state.modalVisibleConfirmation);
-            }}
-          >
-            <View
-              style={{ flex: 1, justifyContent: 'center' }}
-              backgroundColor="rgba(0, 0, 0, 0.5)"
-            >
-              <View style={styles.modalConfirm}>
-                <TouchableWithoutFeedback onPress={() => this.setModalVisibleConfirmation(false)}>
-                  <Icon style={styles.iconClose} name="times" />
-                </TouchableWithoutFeedback>
-                <View style={styles.viewModalConfirm}>
-                  <Icon name="envelope" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
-                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
-                    Resend Confirmation
-                  </Text>
-                </View>
-                <Item>
-                  <Input
-                    style={{
-                      borderBottomWidth: 1,
-                      borderColor: 'rgba(0, 0, 0, 0.1)',
-                      marginHorizontal: 10
-                    }}
-                    placeholder="email"
-                    placeholderTextColor="#BDBDBD"
-                    onChangeText={email => this.handleInputChange('email', email)}
-                  />
-                </Item>
-                <Button
-                  style={{
-                    margin: 10,
-                    alignSelf: 'center',
-                    paddingHorizontal: 20,
-                    backgroundColor: PRIMARYCOLOR
-                  }}
-                  onPress={() => this.setConfirmEmail()}
-                >
-                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Send</Text>
-                </Button>
-              </View>
-            </View>
-          </Modal>
         </Content>
       </Container>
     );
