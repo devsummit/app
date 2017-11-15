@@ -13,7 +13,8 @@ target 'app' do
     pod 'Firebase/Core'
     pod 'FirebaseMessaging'
     pod 'Crashlytics'
-    
+    pod 'Harpy'
+
   target 'appTests' do
     inherit! :search_paths
     # Pods for testing

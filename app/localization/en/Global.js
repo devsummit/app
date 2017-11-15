@@ -1,4 +1,5 @@
 export default {
+  lang: 'en',
   save: 'Save',
   ok: 'OK',
   cancel: 'Cancel',

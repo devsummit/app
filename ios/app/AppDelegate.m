@@ -15,6 +15,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "RNFIRMessaging.h"
 #import <CodePush/CodePush.h>
+#import "Harpy.h"
 @import FirebaseMessaging;
 
 @implementation AppDelegate
@@ -39,9 +40,11 @@
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+  [[Harpy sharedInstance] setPresentingViewController:rootViewController];
   [self.window makeKeyAndVisible];
   [Fabric with:@[[Crashlytics class]]];
   [FIRApp configure];
+  [[Harpy sharedInstance] checkVersion];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   return YES;
 }

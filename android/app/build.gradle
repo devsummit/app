@@ -107,6 +107,9 @@ repositories {
         name 'Google'
     }
     jcenter()
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 import com.android.build.OutputFile
@@ -121,8 +124,8 @@ android {
         applicationId "io.devsummit.app.android"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 24
-        versionName "1.2.6"
+        versionCode 25
+        versionName "1.2.7"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -206,6 +209,8 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:10.2.1'
     compile 'com.google.firebase:firebase-core:10.2.1'
     compile 'com.google.firebase:firebase-messaging:10.2.1'
+    compile 'com.github.javiersantos:AppUpdater:2.6.3'
+
 
     compile "com.android.support:appcompat-v7:23.0.1"
     compile 'org.altbeacon:android-beacon-library:2+'
