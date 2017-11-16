@@ -46,6 +46,8 @@ import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
 import beacon from './services/beacon';
+import api from './services/api';
+import { getAccessToken } from './helpers';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -79,11 +81,10 @@ class App extends Component {
   }
 
   componentWillMount() {
-    beacon.connect().then((result) => {
-      console.log('result');
-      this.subscription = beacon.subscribe((beacons) => {
-        console.log(beacons);
-      });
+    getAccessToken().then((token) => {
+      if (token) {
+        api.setAuthorizationToken(token);
+      }
     }).catch(e => console.log(e));
   }
 

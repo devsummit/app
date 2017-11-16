@@ -76,8 +76,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>DevSummit would like to receive broadcast from beacon bluetooth device to give you a better experience</string>
 	<key>NSCameraUsageDescription</key>
 	<string>DevSummit requires access to the camera.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>DevSummit would like to ask your consent to consequently request your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>DevSummit would like to ask your consent to consequently always use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>DevSummit requires access to the location library when in use</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -101,6 +107,12 @@
 		<string>MaterialCommunityIcons.ttf</string>
 		<string>Feather.ttf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchImage</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -113,11 +125,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>DevSummit would like to ask your consent to consequently always use your location</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>DevSummit would like to ask your consent to consequently request your location</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>DevSummit would like to receive broadcast from beacon bluetooth device to give you a better experience</string>
 </dict>
 </plist>
