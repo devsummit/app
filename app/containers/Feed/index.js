@@ -221,7 +221,7 @@ class Feed extends Component {
   onOpen = (message, attachment) => {
     Share.open({
       title: 'Devsummit Indonesia',
-      message: message,
+      message,
       url: attachment,
       subject: 'Devsummit Indonesia'
     });
@@ -423,7 +423,10 @@ class Feed extends Component {
                                     onPress={() => {
                                       Actions.comment({
                                         data: item,
-                                        date: timeDifference(today, item.created_at.toDateFromDatetime())
+                                        date: timeDifference(
+                                          today,
+                                          item.created_at.toDateFromDatetime()
+                                        )
                                       });
                                     }}
                                   >
@@ -433,11 +436,15 @@ class Feed extends Component {
                                         alignItems: 'center'
                                       }}
                                     >
-                                      {item.comment_count ?
-                                        <Comment count={item.comment_count} /> : <Text />
-                                      }
+                                      {item.comment_count ? (
+                                        <Comment count={item.comment_count} />
+                                      ) : (
+                                        <Text />
+                                      )}
                                       <Text style={styles.buttonReport}>
-                                        {item.comment_count > 1 ? strings.comment.comments : strings.comment.comment}
+                                        {item.comment_count > 1
+                                          ? strings.comment.comments
+                                          : strings.comment.comment}
                                       </Text>
                                     </View>
                                   </TouchableWithoutFeedback>
@@ -451,7 +458,8 @@ class Feed extends Component {
                                 </View>
                               </View>
                             </Card>
-                          ))}
+                          ))
+                        }
                       />
                     )}
                     {this.props.links.next && this.props.feeds.length > 0 ? (
@@ -484,11 +492,13 @@ class Feed extends Component {
             <Fab
               style={{ backgroundColor: '#FF8B00' }}
               position="bottomRight"
-              onPress={() => Actions.createPost({
-                profile: this.state.profileUrl,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName
-              })}
+              onPress={() =>
+                Actions.createPost({
+                  profile: this.state.profileUrl,
+                  firstName: this.state.firstName,
+                  lastName: this.state.lastName
+                })
+              }
             >
               <CameraIcon name="pencil-square-o" />
             </Fab>
@@ -507,22 +517,42 @@ class Feed extends Component {
             {!this.state.confirmed ? (
               <View />
             ) : (
-              <ActionButton buttonColor={'#FF8B00'} bgColor={'rgba(0,0,0,0.5)'} spacing={7} offsetY={20} offsetX={20} fixNativeFeedbackRadius size={55}>
-                <ActionButton.Item title="New Order" buttonColor={PRIMARYCOLOR} onPress={() => Actions.newOrder()}>
+              <ActionButton
+                buttonColor={'#FF8B00'}
+                bgColor={'rgba(0,0,0,0.5)'}
+                spacing={7}
+                offsetY={20}
+                offsetX={20}
+                fixNativeFeedbackRadius
+                size={55}
+              >
+                <ActionButton.Item
+                  title="New Order"
+                  buttonColor={PRIMARYCOLOR}
+                  onPress={() => Actions.newOrder()}
+                >
                   <CameraIcon
                     name="ticket"
                     color="#FFFFFF"
                     style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Register Hackaton" buttonColor={PRIMARYCOLOR} onPress={() => Actions.registerHackaton()}>
+                <ActionButton.Item
+                  title="Register Hackaton"
+                  buttonColor={PRIMARYCOLOR}
+                  onPress={() => Actions.registerHackaton()}
+                >
                   <CameraIcon
                     name="code"
                     color="#FFFFFF"
                     style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item title="Redeem Code" buttonColor={'#00C853'} onPress={() => this.setModalRedeem(true)}>
+                <ActionButton.Item
+                  title="Redeem Code"
+                  buttonColor={'#00C853'}
+                  onPress={() => this.setModalRedeem(true)}
+                >
                   <CameraIcon
                     name="gift"
                     color="#FFFFFF"
@@ -553,7 +583,7 @@ class Feed extends Component {
                   {strings.redeem.redeem}
                 </Text>
               </View>
-              <Redeem />
+              <Redeem closeModalRedeem={() => this.setModalRedeem(false)} />
             </View>
           </View>
         </Modal>
@@ -595,10 +625,9 @@ class Feed extends Component {
                 style={{ flex: 1 }}
               />
               <TouchableOpacity
-                  style={{ height: '100%', width: '100%', position: 'absolute'}}
-                  onPress={() => this.setModalVisible(!this.state.modalVisible)}
-              >
-              </TouchableOpacity>
+                style={{ height: '100%', width: '100%', position: 'absolute' }}
+                onPress={() => this.setModalVisible(!this.state.modalVisible)}
+              />
               {Platform === 'ios' ? (
                 <CloseO
                   size={30}

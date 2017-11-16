@@ -94,16 +94,18 @@ export function updateHaveRefered(value) {
 }
 
 export function updateDataStorage(resp) {
-  getProfileData().then(() => {
-    const newData = JSON.stringify(resp.data);
-    AsyncStorage.removeItem('profile_data', () => {
-      try {
-        AsyncStorage.setItem('profile_data', newData);
-      } catch (e) {
-        console.log('error save profile data');
-      }
+  return (dispatch) => {
+    getProfileData().then(() => {
+      const newData = JSON.stringify(resp.data);
+      AsyncStorage.removeItem('profile_data', () => {
+        try {
+          AsyncStorage.setItem('profile_data', newData);
+        } catch (e) {
+          console.log('error save profile data');
+        }
+      });
     });
-  });
+  };
 }
 
 export function updateDataStorage2(resp) {

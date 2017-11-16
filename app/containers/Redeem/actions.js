@@ -1,7 +1,14 @@
-import { DevSummitAxios, getAccessToken, getProfileData, getBoothData, getRoleId } from '../../helpers';
-import { Alert, AsyncStorage } from 'react-native';
 import Toast from 'react-native-simple-toast';
+import { Alert, AsyncStorage } from 'react-native';
+import {
+  DevSummitAxios,
+  getAccessToken,
+  getProfileData,
+  getBoothData,
+  getRoleId
+} from '../../helpers';
 
+import { getOrderList } from '../OrderList/actions';
 import local from '../../../config/local';
 import { UPDATE_SINGLE_INPUT_FIELD } from './constants';
 
@@ -41,7 +48,7 @@ export function updateDataStorage(res) {
   });
 }
 
-export function placeRedeem() {
+export function placeRedeem(closeRedeemModal) {
   return (dispatch, getState) => {
     const { inputFields } = getState()
       .get('code')
@@ -51,11 +58,16 @@ export function placeRedeem() {
     getAccessToken().then((token) => {
       DevSummitAxios.patch('api/v1/redeemcodes', { code }, { headers: { Authorization: token } })
         .then((res) => {
-          updateDataStorage(res);
+          if (res.data.included.role_id === 3 || res.data.included.role_id === 8) {
+            updateDataStorage(res);
+          }
           Alert.alert('Information', res.data.meta.message);
+          closeRedeemModal();
+          dispatch(getOrderList());
         })
         .catch((error) => {
-          console.log('ERROR', error);
+          Alert.alert('Information', error.message);
+          closeRedeemModal();
         });
     });
   };

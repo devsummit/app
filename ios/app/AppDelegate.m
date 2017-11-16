@@ -14,6 +14,8 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "RNFIRMessaging.h"
+#import <CodePush/CodePush.h>
+#import "Harpy.h"
 @import FirebaseMessaging;
 
 @implementation AppDelegate
@@ -22,7 +24,11 @@
 {
   NSURL *jsCodeLocation;
 
+#ifdef DEBUG
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+#else
+    jsCodeLocation = [CodePush bundleURL];
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"app"
@@ -34,9 +40,11 @@
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+  [[Harpy sharedInstance] setPresentingViewController:rootViewController];
   [self.window makeKeyAndVisible];
   [Fabric with:@[[Crashlytics class]]];
   [FIRApp configure];
+  [[Harpy sharedInstance] checkVersion];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   return YES;
 }

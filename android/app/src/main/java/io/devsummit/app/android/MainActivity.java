@@ -10,6 +10,9 @@ import android.util.Log;
 
 import com.facebook.react.ReactActivity;
 import com.crashlytics.android.Crashlytics;
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.Display;
+
 import io.fabric.sdk.android.Fabric;
 
 
@@ -50,6 +53,9 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
         checkPerms();
+        AppUpdater appUpdater = new AppUpdater(this);
+        appUpdater.setDisplay(Display.DIALOG);
+        appUpdater.start();
 
         Fabric.with(this, new Crashlytics());
     }
