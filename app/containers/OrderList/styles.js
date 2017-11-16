@@ -28,17 +28,19 @@ const styles = StyleSheet.create({
   buttonTransfer: {
     borderRadius: 5,
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: '#2196F3',
-    paddingVertical: 4
+    paddingVertical: 4,
+    marginTop: 8
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 12,
     color: '#FFFFFF',
     fontWeight: '500'
   },
   transferIcon: {
-    fontSize: 20,
+    fontSize: 12,
     marginRight: 8,
     textAlign: 'center'
   },

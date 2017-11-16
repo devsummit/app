@@ -342,8 +342,9 @@ class OrderList extends Component {
                           style={[
                             styles.cardTicket,
                             {
+                              flex: 1,
                               alignSelf: 'center',
-                              height: 110,
+                              height: 120,
                               width: '95%',
                               marginLeft: 'auto',
                               marginRight: 'auto',
@@ -351,34 +352,32 @@ class OrderList extends Component {
                             }
                           ]}
                         >
-                          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ justifyContent: 'space-around' }}>
-                              <View>
-                                <Text style={{ fontWeight: 'bold' }}>
-                                  {strings.order.ticketNumber} {`${item.id}`}
-                                </Text>
-                                <Text>
-                                  {strings.order.QRInstruction}
-                                </Text>
-                              </View>
-                              <TouchableOpacity
-                                style={styles.buttonTransfer}
-                                onPress={() => {
-                                  this.handleInputChange('ticketId', item.id);
-                                  this.setModalTransfer(true);
-                                }
-                                }
-                              >
-                                <Icon
-                                  name="exchange"
-                                  color="#FFFFFF"
-                                  style={styles.transferIcon}
-                                />
-                                <Text style={styles.buttonText}>
-                                  {'Transfer ticket'}
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
+                          <View style={{ flex: 2, flexDirection: 'column', marginRight: 8 }}>
+                            <Text style={{ fontWeight: 'bold' }}>
+                              {strings.order.ticketNumber} {`${item.id}`}
+                            </Text>
+                            <Text style={{ fontSize: 10 }}>
+                              {strings.order.QRInstruction}
+                            </Text>
+                            {/* <TouchableOpacity
+                              style={styles.buttonTransfer}
+                              onPress={() => {
+                                this.handleInputChange('ticketId', item.id);
+                                this.setModalTransfer(true);
+                              }
+                              }
+                            >
+                              <Icon
+                                name="exchange"
+                                color="#FFFFFF"
+                                style={styles.transferIcon}
+                              />
+                              <Text style={styles.buttonText}>
+                                {'Transfer ticket'}
+                              </Text>
+                            </TouchableOpacity> */}
+                          </View>
+                          <View style={{ flex: 1 }}>
                             <QRCode
                               value={item.ticket_code}
                               size={100}
