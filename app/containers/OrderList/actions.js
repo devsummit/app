@@ -14,6 +14,7 @@ import {
   PENDING_ORDERS,
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
+  UPDATE_SINGLE_TRANSFER_FIELD,
   IS_CONFIRM_EMAIL,
   FETCH_COMMUNITY,
   FETCH_TICKET,
@@ -43,6 +44,14 @@ export function setConfirmEmail(email, callBack = () => {}) {
 export function updateInputFields(field, value) {
   return {
     type: UPDATE_SINGLE_INPUT_FIELD,
+    field,
+    value
+  };
+}
+
+export function updateTransferFields(field, value) {
+  return {
+    type: UPDATE_SINGLE_TRANSFER_FIELD,
     field,
     value
   };
@@ -263,6 +272,31 @@ export function getCommunity() {
       })
       .catch((err) => {
         console.log(err, 'error caught');
+      });
+  };
+}
+
+export function transferTicket() {
+  return (dispatch, getState) => {
+    const { transferFields } = getState()
+      .get('orderList')
+      .toJS();
+
+    const { ticketId, email, password } = transferFields || null;
+
+    const data = {
+      user_ticket_id: ticketId,
+      receiver: email,
+      password
+    };
+
+    orderlist.transfer(data)
+      .then((response) => {
+        dispatch(getOrderList());
+        Toast.show(`Your ticket has been transferred to ${response.data.data.receiver.username}`, Toast.LONG);
+      })
+      .catch((error) => {
+        Toast.show(`Error transfering ticket to ${email}`, Toast.LONG);
       });
   };
 }
