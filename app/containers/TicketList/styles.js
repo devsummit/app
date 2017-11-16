@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
     flex: 5
   },
   button: {
-    flex: 3,
-    borderRadius: 2,
-    backgroundColor: PRIMARYCOLOR
+    borderRadius: 3,
+    backgroundColor: 'blue',
+    flexDirection: 'row'
   },
   refreshButton: {
     flex: 1,
@@ -27,9 +27,7 @@ const styles = StyleSheet.create({
     borderRadius: 90
   },
   buttonText: {
-    flex: 3.5,
     fontSize: 12,
-    marginTop: -4,
     fontWeight: 'bold'
   },
   btnOrder: {
