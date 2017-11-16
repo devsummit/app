@@ -483,7 +483,6 @@ OrderList.propTypes = {
   orders: PropTypes.array.isRequired,
   confirmPayment: PropTypes.func.isRequired,
   getOrderList: PropTypes.func.isRequired,
-  isConfirming: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   getCommunity: PropTypes.func.isRequired
 };
