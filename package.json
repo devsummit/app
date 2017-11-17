@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "codepush": "code-push release-react devsummit.android android -d Production && code-push release-react devsummit ios -d Production --privateKeyPath public.pem",
+    "codepush": "code-push release-react devsummit.android android -d Production && code-push release-react devsummit ios -d Production --privateKeyPath private.pem",
     "paypal-deps": "mkdir -p $(pwd)/node_modules/react-native-paypal/ios/lib/Paypal && curl -L --progress https://github.com/paypal/PayPal-iOS-SDK/archive/2.18.0.tar.gz | tar -xz - -C $(pwd)/node_modules/react-native-paypal/ios/lib/Paypal --strip-components=1"
   },
   "dependencies": {
