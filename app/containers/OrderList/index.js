@@ -406,6 +406,9 @@ class OrderList extends Component {
             >
               <Image source={noTicket} style={{ opacity: 0.7 }} />
               <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
+              <TouchableOpacity style={styles.buttonRefresh} onPress={() => this.props.getOrderList()}>
+                <Text style={{ color: '#FFFFFF' }}>Refresh</Text>
+              </TouchableOpacity>
             </View>
           )}
           <Modal
