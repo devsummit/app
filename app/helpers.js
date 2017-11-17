@@ -9,7 +9,8 @@ import {
   PRIMARYCOLOR,
   QISCUS_SDK_APP_ID,
   QISCUS_SDK_SECRET,
-  QISCUS_DEFAULT_ROOM_ID
+  QISCUS_DEFAULT_ROOM_ID,
+  QISCUS_MODERATOR_EMAIL
 } from './constants';
 
 // import { updateIsLogOut } from './containers/Profile/actions';
@@ -148,6 +149,29 @@ export const addRoomParticipant = async (emails = [], room_id ) => {
   try {
     const response = await QiscusAxios.post('/add_room_participants', { room_id, emails });
     return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const getModeratorRoomList = async (page = 1) => {
+  try {
+    const response = await QiscusAxios.get(`get_user_rooms?user_email=${QISCUS_MODERATOR_EMAIL}&page=${page}&show_participants=true`)
+    const roomsInfo = await response.data.results.rooms_info;
+    const roomsId = [];
+    roomsInfo.forEach((room) => {
+      if (room.room_type === 'group') {
+        return roomsId.push(room.room_id_str);
+      }
+    });
+    return roomsId;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const getRoomWithTarget = async (email1, email2) => {
+  try {
+    const response = await QiscusAxios.get(`get_or_create_room_with_target?emails[]=${email1}&emails[]=${email2}`);
+    return response.data.results.room;
   } catch (error) {
     console.error(error);
   }
