@@ -196,6 +196,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 2
+  },
+  buttonRefresh: {
+    borderRadius: 5,
+    backgroundColor: '#2196F3',
+    padding: 8,
+    marginTop: 12
   }
 });
 
