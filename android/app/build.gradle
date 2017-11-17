@@ -124,7 +124,7 @@ android {
         applicationId "io.devsummit.app.android"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 25
+        versionCode 26
         versionName "1.2.7"
         multiDexEnabled true
         ndk {

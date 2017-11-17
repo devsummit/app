@@ -62,12 +62,12 @@ export function placeRedeem(closeRedeemModal) {
             updateDataStorage(res);
           }
           Alert.alert('Information', res.data.meta.message);
-          closeRedeemModal();
+          // closeRedeemModal();
           dispatch(getOrderList());
         })
         .catch((error) => {
           Alert.alert('Information', error.message);
-          closeRedeemModal();
+          // closeRedeemModal();
         });
     });
   };

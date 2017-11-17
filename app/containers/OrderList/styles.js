@@ -25,6 +25,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-end'
   },
+  buttonTransfer: {
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#2196F3',
+    paddingVertical: 4,
+    marginTop: 8
+  },
+  buttonText: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '500'
+  },
+  transferIcon: {
+    fontSize: 12,
+    marginRight: 8,
+    textAlign: 'center'
+  },
   buttonConfirm: {
     width: '100%',
     alignSelf: 'center',
@@ -145,6 +164,44 @@ const styles = StyleSheet.create({
     elevation: 3,
     width: width * 0.45,
     alignSelf: 'center'
+  },
+  inputItem: {
+    marginRight: 15,
+    marginTop: 12
+  },
+  buttonsSection: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  buttonModal: {
+    margin: 6
+  },
+  buttonTextModal: {
+    fontSize: 15,
+    backgroundColor: PRIMARYCOLOR,
+    padding: 20,
+    color: '#FFFFFF'
+  },
+  redeem: {
+    borderWidth: 5,
+    margin: 20,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  viewredeem: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
+  },
+  buttonRefresh: {
+    borderRadius: 5,
+    backgroundColor: '#2196F3',
+    padding: 8,
+    marginTop: 12
   }
 });
 

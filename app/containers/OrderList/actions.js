@@ -20,7 +20,7 @@ import {
   IS_FETCHING_TICKETS
 } from './constants';
 
-export function setConfirmEmail(email, callBack = () => {}) {
+export function setConfirmEmail(email, callBack) {
   return () => {
     orderlist
       .postConfirmEmail(email)
@@ -28,7 +28,7 @@ export function setConfirmEmail(email, callBack = () => {}) {
         const data = response.data.meta;
 
         if (data.success) {
-          callBack();
+          // callBack();
           Toast.show(data.message);
         } else {
           Toast.show(data.message);
@@ -53,7 +53,6 @@ export function redeemCounter() {
     orderlist
       .countRedeem()
       .then((profile) => {
-        console.log('redeemCounter', profile);
         const value = profile.data.data.referal_count;
         dispatch({
           type: REDEEM_COUNTER,
