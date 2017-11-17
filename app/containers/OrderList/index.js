@@ -102,6 +102,10 @@ class OrderList extends Component {
     this.props.updateTransferFields(fields, value);
   };
 
+  handleInputEmail = (fields, value) => {
+    this.props.updateInputFields(fields, value);
+  }
+
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
     Alert.alert(
@@ -201,7 +205,7 @@ class OrderList extends Component {
                     }}
                     placeholder="email"
                     placeholderTextColor="#BDBDBD"
-                    onChangeText={email => this.handleInputChange('email', email)}
+                    onChangeText={email => this.handleInputEmail('email', email)}
                   />
                 </Item>
                 <Button
