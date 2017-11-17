@@ -104,7 +104,7 @@ class OrderList extends Component {
 
   handleInputEmail = (fields, value) => {
     this.props.updateInputFields(fields, value);
-  }
+  };
 
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
@@ -366,25 +366,16 @@ class OrderList extends Component {
                             <Text style={{ fontWeight: 'bold' }}>
                               {strings.order.ticketNumber} {`${item.id}`}
                             </Text>
-                            <Text style={{ fontSize: 10 }}>
-                              {strings.order.QRInstruction}
-                            </Text>
+                            <Text style={{ fontSize: 10 }}>{strings.order.QRInstruction}</Text>
                             <TouchableOpacity
                               style={styles.buttonTransfer}
                               onPress={() => {
                                 this.handleInputChange('ticketId', item.id);
                                 this.setModalTransfer(true);
-                              }
-                              }
+                              }}
                             >
-                              <Icon
-                                name="exchange"
-                                color="#FFFFFF"
-                                style={styles.transferIcon}
-                              />
-                              <Text style={styles.buttonText}>
-                                {'Transfer ticket'}
-                              </Text>
+                              <Icon name="exchange" color="#FFFFFF" style={styles.transferIcon} />
+                              <Text style={styles.buttonText}>{'Transfer ticket'}</Text>
                             </TouchableOpacity>
                           </View>
                           <View style={{ flex: 1 }}>
@@ -412,7 +403,10 @@ class OrderList extends Component {
             >
               <Image source={noTicket} style={{ opacity: 0.7 }} />
               <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
-              <TouchableOpacity style={styles.buttonRefresh} onPress={() => this.props.getOrderList()}>
+              <TouchableOpacity
+                style={styles.buttonRefresh}
+                onPress={() => this.props.getOrderList()}
+              >
                 <Text style={{ color: '#FFFFFF' }}>Refresh</Text>
               </TouchableOpacity>
             </View>
@@ -423,7 +417,10 @@ class OrderList extends Component {
             onRequestClose={() => this.setModalTransfer(!this.state.modalTransfer)}
             transparent
           >
-            <View style={{ flex: 1, justifyContent: 'center' }} backgroundColor="rgba(0, 0, 0, 0.5)">
+            <View
+              style={{ flex: 1, justifyContent: 'center' }}
+              backgroundColor="rgba(0, 0, 0, 0.5)"
+            >
               <View style={styles.redeem}>
                 <TouchableWithoutFeedback
                   onPress={() => this.setModalTransfer(!this.state.modalTransfer)}
@@ -463,8 +460,7 @@ class OrderList extends Component {
                       onPress={() => {
                         this.props.transferTicket();
                         this.setModalTransfer(!this.state.modalTransfer);
-                      }
-                      }
+                      }}
                     >
                       <Text style={styles.buttonTextModal}>Transfer</Text>
                     </Button>
