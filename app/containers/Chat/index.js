@@ -180,6 +180,7 @@ class Chat extends Component {
           icon="users"
           visible={this.state.modalActive}
           confirmTitle={'Create'}
+          disabled={this.state.newThreadTitle}
           handleClose={() => this.setState({ modalActive: false })}
           handleConfirm={() => this.onCreateNewThread()}
         >
@@ -198,6 +199,7 @@ class Chat extends Component {
           icon="user"
           visible={this.state.modalPrivateActive}
           confirmTitle={'Create'}
+          disabled={this.state.newEmailPrivate}
           handleClose={() => this.setState({ modalPrivateActive: false })}
           handleConfirm={() => this.onCreateNewPrivateChat()}
         >

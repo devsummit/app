@@ -21,7 +21,7 @@ class ModalDialog extends Component {
     };
   }
   render() {
-    const { visible, handleClose, children, handleConfirm, title, icon, confirmTitle } = this.props;
+    const { visible, handleClose, children, handleConfirm, title, icon, confirmTitle, disabled } = this.props;
     return (
       <Modal
         animationType="fade"
@@ -49,6 +49,7 @@ class ModalDialog extends Component {
               <View style={styles.buttonsSection}>
                 <Button
                   transparent
+                  disabled={!disabled}
                   style={styles.buttonModal}
                   onPress={() => {
                     handleConfirm();
