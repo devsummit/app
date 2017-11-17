@@ -341,20 +341,26 @@ class OrderList extends Component {
                   dataArray={this.props.tickets}
                   renderRow={(item) => {
                     return (
-                      <TouchableOpacity>
-                        <ListItem
-                          style={[
-                            styles.cardTicket,
-                            {
-                              flex: 1,
-                              alignSelf: 'center',
-                              height: 120,
-                              width: '95%',
-                              marginLeft: 'auto',
-                              marginRight: 'auto',
-                              borderRadius: 3
-                            }
-                          ]}
+                      <ListItem
+                        style={[
+                          styles.cardTicket,
+                          {
+                            flex: 1,
+                            alignSelf: 'center',
+                            height: 120,
+                            width: '95%',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            borderRadius: 3
+                          }
+                        ]}
+                      >
+                        <TouchableOpacity
+                          style={{ flex: 1, flexDirection: 'row' }}
+                          onPress={() => Actions.ticketDetail({
+                            ticketId: item.id,
+                            ticketCode: item.ticket_code
+                          })}
                         >
                           <View style={{ flex: 2, flexDirection: 'column', marginRight: 8 }}>
                             <Text style={{ fontWeight: 'bold' }}>
@@ -389,8 +395,8 @@ class OrderList extends Component {
                               fgColor="white"
                             />
                           </View>
-                        </ListItem>
-                      </TouchableOpacity>
+                        </TouchableOpacity>
+                      </ListItem>
                     );
                   }}
                 />
