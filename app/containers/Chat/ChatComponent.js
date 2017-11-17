@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import {View, Image} from 'react-native';
+import React from 'react';
+import { View, Image } from 'react-native';
 import autobind from 'class-autobind';
 import moment from 'moment';
-import styles from "./style";
 import {
   Body,
   Card,
   Text,
   CardItem
-} from "native-base";
-// import default from '../../../../../../Library/Caches/typescript/2.6/node_modules/@types/lodash-es/snakeCase';
+} from 'native-base';
+import styles from './style';
 
 function renderMessage(isFile, message, username, timestamp) {
   const renderTime = Number(moment().diff(timestamp, 'hours')) >= 12 ? timestamp.calendar() : timestamp.fromNow();

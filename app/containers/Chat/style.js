@@ -50,7 +50,7 @@ export default StyleSheet.create({
     backgroundColor: '#f4f5f9'
   },
   cardRightContent: {
-    backgroundColor: '#B3E5FC'
+    backgroundColor: '#FFE082'
   },
   arrowLeft: {
     marginTop: -1,

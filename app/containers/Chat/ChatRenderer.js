@@ -4,23 +4,12 @@ import { ScrollView, View, Keyboard, Animated, NativeModules, Image, Platform, D
 import autobind from 'class-autobind';
 import styles from './style';
 import {
-  Container,
-  Header,
-  Title,
-  Content,
   Text,
   Button,
   Icon,
-  Left,
-  Right,
   Input,
-  Body,
   Item,
-  Card,
-  CardItem,
-  ActionSheet,
-  Footer,
-  FooterTab
+  Spinner
 } from "native-base";
 import { ChatComponent } from './ChatComponent';
 import FilePicker from './FileUploader';
@@ -116,7 +105,12 @@ export class ChatRenderer extends Component {
   render() {
     let { props: { message, room, qiscus }, state: { comments } } = this;
     if (!comments) {
-      return <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}><Text>Loading chats...</Text></View>
+      return (
+        <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
+          <Spinner color="#f39e21" />
+          <Text>Loading chats...</Text>
+        </View>
+      );
     }
     return (
       <View style={styles.chatContainer}>
