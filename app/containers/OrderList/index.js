@@ -359,7 +359,7 @@ class OrderList extends Component {
                             <Text style={{ fontSize: 10 }}>
                               {strings.order.QRInstruction}
                             </Text>
-                            {/* <TouchableOpacity
+                            <TouchableOpacity
                               style={styles.buttonTransfer}
                               onPress={() => {
                                 this.handleInputChange('ticketId', item.id);
@@ -375,7 +375,7 @@ class OrderList extends Component {
                               <Text style={styles.buttonText}>
                                 {'Transfer ticket'}
                               </Text>
-                            </TouchableOpacity> */}
+                            </TouchableOpacity>
                           </View>
                           <View style={{ flex: 1 }}>
                             <QRCode
