@@ -225,7 +225,7 @@ class Chat extends Component {
                 const name = room.room_name;
                 const avatarUrl = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
                 const lastComment = room.last_comment;
-                const subtitle = `Last convertation by ${lastComment.username}`;
+                const subtitle = `Last conversation by ${lastComment.username}`;
                 if (QISCUS_DEFAULT_ROOMS_ID.includes(id.toString())) {
                   return (
                     <ListItem avatar key={idk} onPress={() => this._openChat({ name, id })}>
@@ -258,7 +258,7 @@ class Chat extends Component {
                 const name = room.room_name;
                 const avatarUrl = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
                 const lastComment = room.last_comment;
-                const subtitle = `Last convertation by ${lastComment.username}`;
+                const subtitle = `Last conversation by ${lastComment.username}`;
                 if (room.chat_type === 'single') {
                   return (
                     <ListItem avatar key={idk} onPress={() => this._openChat({ name, id })}>
@@ -291,7 +291,7 @@ class Chat extends Component {
                 const name = room.room_name;
                 const avatarUrl = room.avatar_url ? room.avatar_url : 'http://opyke.gr/wp-content/uploads/2016/01/forum-icon.png';
                 const lastComment = room.last_comment;
-                const subtitle = `Last convertation by ${lastComment.username}`;
+                const subtitle = `Last conversation by ${lastComment.username}`;
                 if (!QISCUS_DEFAULT_ROOMS_ID.includes(id.toString()) && room.chat_type !== 'single') {
                   return (
                     <ListItem avatar key={idk} onPress={() => this._openChat({ name, id })}>
