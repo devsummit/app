@@ -69,7 +69,6 @@ class Chat extends Component {
     this.initQiscus().then(() => {
       if (this.props.goto) {
         const room = this.props.goto;
-        console.log('landing here', room);
         this._openChat({
           name: room.room_name,
           id: room.room_id_str
