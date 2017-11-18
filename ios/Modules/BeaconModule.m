@@ -26,13 +26,14 @@
   return @[@"beaconsUpdate"];
 }
 - (void) connect {
-  NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"CB10023F-A318-3394-4199-A8730C7C1AEC"];
+  NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
   beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"devsummit"];
   locationManager = [[CLLocationManager alloc] init];
   locationManager.desiredAccuracy = kCLLocationAccuracyBest;
   locationManager.delegate = self;
   locationManager.distanceFilter = 20;
   [locationManager requestAlwaysAuthorization];
+  
 }
 
 - (void) locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error{

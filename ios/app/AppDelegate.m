@@ -15,7 +15,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "RNFIRMessaging.h"
 #import <CodePush/CodePush.h>
-#import "Harpy.h"
+@import Harpy;
 @import FirebaseMessaging;
 
 @implementation AppDelegate

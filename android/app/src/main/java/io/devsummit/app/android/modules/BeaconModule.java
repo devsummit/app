@@ -45,7 +45,7 @@ import io.devsummit.app.android.Manifest;
 
 public class BeaconModule extends BaseJavaModule implements NativeModule, BeaconConsumer, PermissionListener {
     private final String TAG = BeaconModule.class.getSimpleName();
-    private final String CUBEACON_ID = "CB10023F-A318-3394-4199-A8730C7C1AEC";
+    private final String CUBEACON_ID = "EBEFD083-70A2-47C8-9837-E7B5634DF524";
     private ReactApplicationContext context;
     private BeaconManager beaconManager;
     private Region beaconRegion;
@@ -121,7 +121,7 @@ public class BeaconModule extends BaseJavaModule implements NativeModule, Beacon
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
                 WritableArray beacons = new WritableNativeArray();
-                Log.d(TAG, "didRangeBeaconsInRegion: " + beacons.size());
+                if (collection.size() == 0) return;
                 for (Beacon beacon :
                         collection) {
                     WritableMap beaconMap = new WritableNativeMap();
@@ -129,7 +129,7 @@ public class BeaconModule extends BaseJavaModule implements NativeModule, Beacon
                     beaconMap.putDouble("accuracy", beacon.getDistance());
                     beaconMap.putInt("proximity", beacon.getTxPower());
                     beaconMap.putInt("major", beacon.getId2().toInt());
-                    beaconMap.putInt("minor", beacon.getId2().toInt());
+                    beaconMap.putInt("minor", beacon.getId3().toInt());
                     beaconMap.putInt("rssi", beacon.getRssi());
                     beacons.pushMap(beaconMap);
                 }

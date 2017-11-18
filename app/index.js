@@ -45,9 +45,6 @@ import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
-import beacon from './services/beacon';
-import api from './services/api';
-import { getAccessToken } from './helpers';
 import TicketDetail from './components/TicketDetail';
 
 const RouterWithRedux = connect()(Router);
@@ -78,19 +75,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.subscription = null;
-  }
-
-  componentWillMount() {
-    getAccessToken().then((token) => {
-      if (token) {
-        api.setAuthorizationToken(token);
-      }
-    }).catch(e => console.log(e));
-  }
-
-  componentWillUnmount() {
-    this.subscription.remove();
   }
 
   onBackPress = () => {
