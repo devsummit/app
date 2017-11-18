@@ -7,9 +7,6 @@ import codePush from 'react-native-code-push';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import reducers from './reducers';
 
 // Style imports
 import styles from './styles';
@@ -46,6 +43,7 @@ import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
 import TicketDetail from './components/TicketDetail';
+import { store } from './store';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -68,8 +66,7 @@ strings.setLanguage(setlang);
 /**
 *  Apply middlewares
 */
-export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers);
+
 
 class App extends Component {
   constructor(props) {

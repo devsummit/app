@@ -139,7 +139,7 @@ export function fetchTickets(callback = () => {}) {
   };
 }
 
-export function getOrderList() {
+export function getOrderList(callback = () => {}) {
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
     dispatch(redeemCounter());
