@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Container,
   Content,
   Text,
   Grid,
@@ -24,7 +25,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import PhotoGrid from 'react-native-photo-grid';
 import { createStructuredSelector } from 'reselect';
 import strings from '../../localization';
-import { getBoothRoomId, getBoothData } from '../../helpers';
+import { getBoothRoomId, getBoothData, addRoomParticipant, getUserRoomList, getProfileData } from '../../helpers';
 import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
@@ -42,7 +43,8 @@ class BoothInfo extends Component {
       logged_user: null,
       imagePreview: '',
       modalVisible: false,
-      room_id: null
+      room_id: null,
+      mainRoom: null
     };
   }
 
@@ -55,8 +57,7 @@ class BoothInfo extends Component {
         this.setState({ logged_user });
       }).catch(() => console.log('Error'));
     this.props.fetchBoothInfo(this.props.booth_id);
-
-    this.state({room_id: getBoothRoomId()})
+    this.getBoothRoom();
   }
 
   componentWillReceiveProps(prevProps) {
@@ -65,6 +66,13 @@ class BoothInfo extends Component {
       this.props.updateIsBoothPhotoUpdated(false);
     }
   }
+
+  getBoothRoom = async () => {
+    const { props: { user: { email: boothEmail }, title: boothName  }} = this;
+    const rooms = await getUserRoomList(boothEmail);
+    const mainRoom = await rooms.filter(room => room.room_name === boothName)[0];
+    this.setState({ mainRoom });
+  };
 
   changeLogo = () => {
     ImagePicker.openPicker({
@@ -81,6 +89,17 @@ class BoothInfo extends Component {
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   }
+  
+  addUserToBoothRoom = async () => {
+    const data = await getProfileData();
+    const { email: userEmail } = data;
+    const { state: { mainRoom } } = this;
+    const addUserToRoom = await addRoomParticipant([ userEmail ], mainRoom.room_id_str);
+    const room = addUserToRoom.results;
+    Actions.chat({
+      goto: room
+    });
+  };
 
   uploadImage = () => {
     ImagePicker.openPicker({
@@ -96,9 +115,9 @@ class BoothInfo extends Component {
 
    // load chat room
   loadChatRoom = () => {
-      this.setState({fabActive: false});
+    this.setState({fabActive: false});
 
-      // go to chatroom
+    // go to chatroom
   }
 
   renderItem = (images) => {
@@ -124,7 +143,6 @@ class BoothInfo extends Component {
       photoPic
     } = fields || '';
     const images = boothGalleries.data;
-
     return (
       <View style={{ flex: 1, backgroundColor: '#E0E0E0' }}>
         <ScrollView>
@@ -206,18 +224,17 @@ class BoothInfo extends Component {
             ) : null}
           </View>
         </Modal>
-
-        <Fab
-          direction="up"
-          style={{ backgroundColor: '#f39e21' }}
-          active={this.state.fabActive}
-          onPress={() => this.setState({ fabActive: !this.state.fabActive })}
-        >
-          <Icon name="plus" />
-          <Button style={{ backgroundColor: '#689F38' }} onPress={() => this.loadChatRoom()} >
-            <Icon name="messages" color="white" size={16} />
-          </Button>
-        </Fab>
+        <Container>
+          <View style={{ flex: 1 }}>
+            <Fab
+              direction="up"
+              style={{ backgroundColor: '#f39e21' }}
+              onPress={() => this.addUserToBoothRoom()}
+            >
+              <Icon name="commenting" />
+            </Fab>
+          </View>
+        </Container>
       </View>
     );
   }

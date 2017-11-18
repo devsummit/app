@@ -145,7 +145,7 @@ export const QiscusAxios = axios.create({
   }
 });
 
-export const addRoomParticipant = async (emails = [], room_id ) => {
+export const addRoomParticipant = async (emails = [], room_id) => {
   try {
     const response = await QiscusAxios.post('/add_room_participants', { room_id, emails });
     return response.data;
@@ -153,6 +153,17 @@ export const addRoomParticipant = async (emails = [], room_id ) => {
     console.error(error);
   }
 };
+
+export const getUserRoomList = async (email = '', page = 1) => {
+  try {
+    const response = await QiscusAxios.get(`get_user_rooms?user_email=${email}&page=${page}&show_participants=true`);
+    const rooms = await response.data.results.rooms_info;
+    return rooms;
+  } catch (error) {
+    console.error(error);
+  }
+} 
+
 export const getModeratorRoomList = async (page = 1) => {
   try {
     const response = await QiscusAxios.get(`get_user_rooms?user_email=${QISCUS_MODERATOR_EMAIL}&page=${page}&show_participants=true`)
@@ -178,11 +189,11 @@ export const getRoomWithTarget = async (email1, email2) => {
 };
 
 export const getBoothRoomId = () => {
-    AsyncStorage.getItem('room_id')
-      .then((results) => {
-        const rooms = JSON.parse(results);
-        const room = rooms.''+ this.props.booth_id;
+  AsyncStorage.getItem('room_id')
+    .then((results) => {
+      const rooms = JSON.parse(results);
+      const room = rooms+''+ this.props.booth_id;
 
-        return roomId;
-      }).catch(() => console.log('Error'));
-}
+      return roomId;
+    }).catch(() => console.log('Error'));
+};

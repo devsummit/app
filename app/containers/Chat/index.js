@@ -66,7 +66,16 @@ class Chat extends Component {
   }
 
   componentWillMount() {
-    this.initQiscus();
+    this.initQiscus().then(() => {
+      if (this.props.goto) {
+        const room = this.props.goto;
+        console.log('landing here', room);
+        this._openChat({
+          name: room.room_name,
+          id: room.room_id_str
+        });
+      }
+    });
   }
 
   onChangeThreadTitle = (newThreadTitle) => {
@@ -85,6 +94,10 @@ class Chat extends Component {
     const newGroup = await this.props.groupRoomCreated;
     this._openChat({ name: newGroup.name, id: newGroup.id });
     this.setState({ newThreadTitle: '' });
+  }
+
+  alertSomething = (room) => {
+    alert(`hello ${room.name} ${room.id}`);
   }
 
   onCreateNewPrivateChat = async () => {
@@ -214,7 +227,7 @@ class Chat extends Component {
           </Form>
         </ModalDialog>
         <Content>
-          <Header title={strings.chat.title} />
+          { !this.props.goto && <Header title={strings.chat.title} /> }
           <Content>
             <List>
               <ListItem itemDivider>
