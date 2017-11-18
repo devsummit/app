@@ -176,3 +176,13 @@ export const getRoomWithTarget = async (email1, email2) => {
     console.error(error);
   }
 };
+
+export const getBoothRoomId = () => {
+    AsyncStorage.getItem('room_id')
+      .then((results) => {
+        const rooms = JSON.parse(results);
+        const room = rooms.''+ this.props.booth_id;
+
+        return roomId;
+      }).catch(() => console.log('Error'));
+}

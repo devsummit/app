@@ -24,7 +24,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import PhotoGrid from 'react-native-photo-grid';
 import { createStructuredSelector } from 'reselect';
 import strings from '../../localization';
-import { getBoothData } from '../../helpers';
+import { getBoothRoomId, getBoothData } from '../../helpers';
 import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
@@ -38,9 +38,11 @@ class BoothInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      fabActive: false,
       logged_user: null,
       imagePreview: '',
-      modalVisible: false
+      modalVisible: false,
+      room_id: null
     };
   }
 
@@ -53,6 +55,8 @@ class BoothInfo extends Component {
         this.setState({ logged_user });
       }).catch(() => console.log('Error'));
     this.props.fetchBoothInfo(this.props.booth_id);
+
+    this.state({room_id: getBoothRoomId()})
   }
 
   componentWillReceiveProps(prevProps) {
@@ -88,6 +92,13 @@ class BoothInfo extends Component {
       .then((image) => {
         this.props.uploadBoothImage(image);
       }).catch(err => console.log(strings.booth.errorImage, err));
+  }
+
+   // load chat room
+  loadChatRoom = () => {
+      this.setState({fabActive: false});
+
+      // go to chatroom
   }
 
   renderItem = (images) => {
@@ -195,6 +206,18 @@ class BoothInfo extends Component {
             ) : null}
           </View>
         </Modal>
+
+        <Fab
+          direction="up"
+          style={{ backgroundColor: '#f39e21' }}
+          active={this.state.fabActive}
+          onPress={() => this.setState({ fabActive: !this.state.fabActive })}
+        >
+          <Icon name="plus" />
+          <Button style={{ backgroundColor: '#689F38' }} onPress={() => this.loadChatRoom()} >
+            <Icon name="messages" color="white" size={16} />
+          </Button>
+        </Fab>
       </View>
     );
   }
