@@ -11,6 +11,7 @@ import {
   IS_FETCHING_ORDERS,
   IS_CONFIRMING_PAYMENT,
   SET_CONFIRM_PAYMENT,
+  UPDATE_SINGLE_TRANSFER_FIELD,
   PENDING_ORDERS,
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
@@ -47,6 +48,14 @@ export function updateInputFields(field, value) {
     value
   };
 }
+
+export function updateTransferFields(field, value) {
+   return {
+     type: UPDATE_SINGLE_TRANSFER_FIELD,
+     field,
+     value
+   };
+ }
 
 export function redeemCounter() {
   return (dispatch) => {
@@ -249,6 +258,32 @@ export function register(callBack) {
           console.log(error, 'error caught');
         });
     }
+  };
+}
+
+export function transferTicket() {
+  return (dispatch, getState) => {
+    const { transferFields } = getState()
+      .get('orderList')
+      .toJS();
+
+    const { ticketId, email } = transferFields || null;
+
+    const data = {
+      user_ticket_id: ticketId,
+      receiver: email
+    };
+
+    orderlist.transfer(data)
+      .then((response) => {
+        console.log('landing here success', response);
+        dispatch(getOrderList());
+        Toast.show(`Your ticket has been transferred to ${response.data.data.receiver.username}`, Toast.LONG);
+      })
+      .catch((error) => {
+        console.log('landing here success', error);
+        Toast.show(`Error transfering ticket to ${email}`, Toast.LONG);
+      });
   };
 }
 

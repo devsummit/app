@@ -106,6 +106,16 @@ class OrderList extends Component {
     this.props.updateInputFields(fields, value);
   };
 
+  confirmTransfer = (data) => {
+    Alert.alert(
+      'Confirmation',
+      `Are you sure transfer ticket to ${data}`,
+      [
+        { text: 'Yes', onPress: () => this.props.transferTicket() },
+        { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' }
+      ]);
+  }
+
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
     Alert.alert(
@@ -443,14 +453,6 @@ class OrderList extends Component {
                           onChangeText={email => this.handleInputChange('email', email)}
                         />
                       </Item>
-                      <Item>
-                        <Input
-                          secureTextEntry
-                          placeholder={'Enter your password'}
-                          placeholderTextColor={'#BDBDBD'}
-                          onChangeText={password => this.handleInputChange('password', password)}
-                        />
-                      </Item>
                     </Form>
                   </View>
                   <View style={styles.buttonsSection}>
@@ -458,7 +460,7 @@ class OrderList extends Component {
                       transparent
                       style={styles.buttonModal}
                       onPress={() => {
-                        this.props.transferTicket();
+                        this.confirmTransfer(transferFields.email);
                         this.setModalTransfer(!this.state.modalTransfer);
                       }}
                     >

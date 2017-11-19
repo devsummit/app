@@ -42,6 +42,9 @@ import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
+import Chat from './containers/Chat';
+import ChatRoom from './containers/Chat/ChatRoom';
+import Settings from './containers/Settings';
 import TicketDetail from './components/TicketDetail';
 import { store } from './store';
 
@@ -147,6 +150,9 @@ class App extends Component {
               <Scene key="sponsorInfo" component={SponsorInfo} title="Sponsor" />
               <Scene key="createPost" component={CreatePost} title="New post" />
               <Scene key="registerHackaton" component={RegisterHackaton} title="Register Hackaton" />
+              <Scene key="chat" component={Chat} title="Discussion" />
+              <Scene key="chatRoom" component={ChatRoom} title="Chat Room" />
+              <Scene key="settings" component={Settings} title="Settings" />
               <Scene key="ticketDetail" component={TicketDetail} title="Ticket Detail" />
             </Scene>
           </RouterWithRedux>

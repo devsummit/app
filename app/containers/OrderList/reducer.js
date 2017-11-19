@@ -35,8 +35,7 @@ const initialState = fromJS({
   },
   transferFields: {
     ticketId: '',
-    email: '',
-    password: ''
+    email: ''
   },
   isConfirmEmail: false
 });

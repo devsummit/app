@@ -7,7 +7,9 @@ import {
   UPDATE_IS_BOOTH_GALLERY_UPDATED,
   FETCH_BOOTH_INFO,
   UPDATE_BOOTH_GALLERY,
-  CLEAR_BOOTH_GALLERY
+  CLEAR_BOOTH_GALLERY,
+  UPDATE_MAIN_ROOM,
+  UPDATE_FAB_VISIBLE
 } from './constants';
 
 const initialState = fromJS({
@@ -17,7 +19,9 @@ const initialState = fromJS({
   boothGalleries: [],
   boothPhoto: 'https://museum.wales/media/40374/thumb_480/empty-profile-grey.jpg',
   isBoothPhotoUpdated: false,
-  isBoothGalleryUpdated: false
+  isBoothGalleryUpdated: false,
+  mainRoom: {},
+  fabVisible: false
 });
 
 function boothInfoReducer(state = initialState, action) {
@@ -36,6 +40,10 @@ function boothInfoReducer(state = initialState, action) {
       return state.setIn(['boothGalleries', 'data'], fromJS([...state.getIn(['boothGalleries', 'data']).toJS(), action.value]));
     case CLEAR_BOOTH_GALLERY:
       return state.set('boothGalleries', fromJS({}));
+    case UPDATE_MAIN_ROOM:
+      return state.set('mainRoom', action.payload);
+    case UPDATE_FAB_VISIBLE:
+      return state.set('fabVisible', action.payloads);
     default:
       return state;
   }

@@ -17,6 +17,7 @@ import codeConduct from './CodeConduct';
 import privacyPolicy from './PrivacyPolicy';
 import main from './Main';
 import comment from './Comment';
+import chat from './Chat';
 
 const id = {
   global,
@@ -37,7 +38,8 @@ const id = {
   codeConduct,
   privacyPolicy,
   main,
-  comment
+  comment,
+  chat
 };
 
 export default id;
