@@ -13,7 +13,14 @@ const events = {
 
 // let isConnected =
 const beacon = {
-  connect: () => BeaconModule.startConnect(),
+  isConnected: false,
+  connect: () => {
+    if (beacon.isConnected) {
+      return Promise.reject(false);
+    }
+    beacon.isConnected = true;
+    return BeaconModule.startConnect();
+  },
   fetchBeacons: version => api.post('/api/v1/beacons/mapping/update', { version }),
   subscribe: callback => BeaconEventEmitter.addListener(events.beaconUpdate, callback),
   startRanging: () => {
@@ -25,7 +32,6 @@ const beacon = {
     beacon.connect().then((result) => {
       this.subscription = beacon.subscribe((beacons) => {
         if (remoteBeacons && remoteBeacons.length > 0) {
-          console.log('detected beacons', beacons);
           const nearBeacon = beacons.find((item) => {
             return Math.abs(item.accuracy) < 1;
           });
@@ -63,7 +69,15 @@ const beacon = {
   },
   onExhibitor: (matchBeacon) => {
     // do something when user is nearby a beacon with exhibitor type
-    console.log('beacon', matchBeacon);
+    console.log('onExhibitor beacon', matchBeacon);
+  },
+  onSpeaker: (matchBeacon) => {
+    // do something when user is nearby a beacon with speaker type
+    console.log('onSpeaker beacon', matchBeacon);
+  },
+  onEntrance: (matchBeacon) => {
+    // we should check in the user if not
+    console.log('onEntrance beacon', matchBeacon);
     store.dispatch(fetchTickets((tickets) => {
       if (tickets.count === 0) {
         // no tickets appear to be found or the user never buy any ticket.
@@ -84,21 +98,13 @@ const beacon = {
       // console.log('tickets', tickets);
     }));
   },
-  onSpeaker: (matchBeacon) => {
-    // do something when user is nearby a beacon with speaker type
-    console.log('beacon', matchBeacon);
-  },
-  onEntrance: (matchBeacon) => {
-    // we should check in the user if not
-    console.log('beacon', matchBeacon);
-  },
   onOther: (matchBeacon) => {
     // do something if other type of beacon is occured nearby
-    console.log('beacon', matchBeacon);
+    console.log('onOther beacon', matchBeacon);
   },
   onSponsor: (matchBeacon) => {
     // do something if other type of beacon is occured nearby
-    console.log('beacon', matchBeacon);
+    console.log('onSponsor beacon', matchBeacon);
   }
 };
 

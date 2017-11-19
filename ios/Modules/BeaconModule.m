@@ -28,6 +28,7 @@
 - (void) connect {
   NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"EBEFD083-70A2-47C8-9837-E7B5634DF524"];
   beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"devsummit"];
+  hasListeners = YES;
   locationManager = [[CLLocationManager alloc] init];
   locationManager.desiredAccuracy = kCLLocationAccuracyBest;
   locationManager.delegate = self;
@@ -51,6 +52,9 @@
   }
 }
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region{
+  if (hasListeners == NO) {
+    return;
+  }
     self.beacons = beacons;
 //    NSLog(@"%@", beacons);
   NSMutableArray<NSObject *> *beaconsData = [[NSMutableArray alloc] init];
@@ -66,7 +70,6 @@
     [beaconsData addObject:beaconObject];
   }
     [self sendEventWithName:@"beaconsUpdate" body:beaconsData];
-    hasListeners = YES;
 }
 
 RCT_EXPORT_MODULE()
