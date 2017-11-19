@@ -7,9 +7,6 @@ import codePush from 'react-native-code-push';
 
 // Redux imports
 import { Provider, connect } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import reducers from './reducers';
 
 // Style imports
 import styles from './styles';
@@ -45,13 +42,11 @@ import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
-<<<<<<< HEAD
 import Chat from './containers/Chat';
 import ChatRoom from './containers/Chat/ChatRoom';
 import Settings from './containers/Settings';
-=======
 import TicketDetail from './components/TicketDetail';
->>>>>>> origin/develop
+import { store } from './store';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -74,8 +69,7 @@ strings.setLanguage(setlang);
 /**
 *  Apply middlewares
 */
-export const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
-const store = createStoreWithMiddleware(reducers);
+
 
 class App extends Component {
   constructor(props) {
@@ -168,8 +162,6 @@ class App extends Component {
     );
   }
 }
-
-console.log('codePush', codePush);
 
 export default codePush({
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,

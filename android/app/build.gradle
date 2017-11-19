@@ -106,6 +106,7 @@ repositories {
         url 'https://maven.google.com/'
         name 'Google'
     }
+    jcenter()
     maven {
         url 'https://jitpack.io'
     }
@@ -121,7 +122,7 @@ android {
 
     defaultConfig {
         applicationId "io.devsummit.app.android"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 26
         versionCode 26
         versionName "1.2.7"
@@ -212,7 +213,8 @@ dependencies {
 
 
     compile "com.android.support:appcompat-v7:23.0.1"
-  compile "com.facebook.react:react-native:+"  // From node_modules
+    compile 'org.altbeacon:android-beacon-library:2+'
+    compile "com.facebook.react:react-native:+"  // From node_modules
   compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
       transitive = true;
   }
