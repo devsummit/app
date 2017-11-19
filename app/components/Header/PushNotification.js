@@ -5,10 +5,14 @@ import { Actions } from 'react-native-router-flux';
 
 import Toast from 'react-native-simple-toast';
 
-import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
+import FCM, {
+  FCMEvent,
+  RemoteNotificationResult,
+  WillPresentNotificationResult,
+  NotificationType
+} from 'react-native-fcm';
 
 import { getAccessToken, DevSummitAxios } from '../../helpers';
-
 
 // this shall be called regardless of app state: running, background or not running.
 // Won't be called when app is killed by user in iOS
@@ -55,20 +59,22 @@ FCM.on(FCMEvent.Notification, async (notif) => {
 });
 
 FCM.on(FCMEvent.RefreshToken, (token) => {
-  getAccessToken().then((usertoken) => {
-    const headers = { Authorization: usertoken };
-    DevSummitAxios.patch('auth/me/updatefcmtoken', { token }, { headers })
-      .then(async (response) => {
-        if (response.meta && response.meta.success) {
-          await AsyncStorage.setItem('fcmtoken', token);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }).catch((err) => {
-    console.log(err);
-  });
+  getAccessToken()
+    .then((usertoken) => {
+      const headers = { Authorization: usertoken };
+      DevSummitAxios.patch('auth/me/updatefcmtoken', { token }, { headers })
+        .then(async (response) => {
+          if (response.meta && response.meta.success) {
+            await AsyncStorage.setItem('fcmtoken', token);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   // fcm token may not be available on first load, catch it here
 });
 
@@ -88,23 +94,24 @@ export default class PushNotification extends Component {
     FCM.subscribeToTopic('devsummit_indonesia_2017');
     FCM.requestPermissions();
     FCM.getFCMToken().then((token) => {
-      console.log('token here', token);
       this.setState({ fcm_token: token });
       // update your fcm token on server.
-      getAccessToken().then((usertoken) => {
-        const headers = { Authorization: usertoken };
-        DevSummitAxios.patch('auth/me/updatefcmtoken', { token }, { headers })
-          .then(async (response) => {
-            if (response.meta && response.meta.success) {
-              await AsyncStorage.setItem('fcmtoken', token);
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }).catch((err) => {
-        console.log(err);
-      });
+      getAccessToken()
+        .then((usertoken) => {
+          const headers = { Authorization: usertoken };
+          DevSummitAxios.patch('auth/me/updatefcmtoken', { token }, { headers })
+            .then(async (response) => {
+              if (response.meta && response.meta.success) {
+                await AsyncStorage.setItem('fcmtoken', token);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
     this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
       // do some component related stuff
@@ -121,7 +128,7 @@ export default class PushNotification extends Component {
 
   handleAppStateChange = (nextAppState) => {
     this.setState({ appState: nextAppState });
-  }
+  };
 
   render() {
     return null;

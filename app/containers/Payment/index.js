@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Container, Content, Picker, Item, Button, Text, Card, CardItem, Left, Body, Right } from 'native-base';
+import {
+  Container,
+  Content,
+  Picker,
+  Item,
+  Button,
+  Text,
+  Card,
+  CardItem,
+  Left,
+  Body,
+  Right
+} from 'native-base';
 import { View, ActivityIndicator, Alert, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import LoaderHandler from 'react-native-busy-indicator/LoaderHandler';
@@ -55,10 +67,20 @@ class Payment extends Component<Props, State> {
   }
 
   componentWillMount() {
-    this.props.getTickets();
-    this.props.navigation.setParams({
-      handleIconTouch: this.handleIconTouch
-    });
+    if (this.props.referalInfo && Number(this.props.referalInfo.data.discount_amount) === 1) {
+      const userId = this.props.userId;
+      const order = this.props.order;
+      const referalCode = this.props.referalInfo.data.referal_code;
+      this.props.payWithBankTransfer(userId, order, referalCode, () => {
+        LoaderHandler.hideLoader();
+      });
+      Actions.mainTabs();
+    } else {
+      this.props.getTickets();
+      this.props.navigation.setParams({
+        handleIconTouch: this.handleIconTouch
+      });
+    }
   }
 
   handleInputChange = (field: string, value: string) => {
@@ -151,7 +173,6 @@ class Payment extends Component<Props, State> {
             const referalCode = this.props.referalInfo.data.referal_code;
 
             this.props.payWithBankTransfer(userId, order, referalCode, (data) => {
-
               const orderId = data.order_id;
               LoaderHandler.hideLoader();
               Actions.orderDetail({ orderId, id: orderId, order: data });
@@ -221,14 +242,26 @@ class Payment extends Component<Props, State> {
 
     return (
       <Container style={styles.container}>
-        <View style={{ flex: 0, marginHorizontal: 10, marginVertical: 10, elevation: 4, borderWidth: 0 }}>
+        <View
+          style={{
+            flex: 0,
+            marginHorizontal: 10,
+            marginVertical: 10,
+            elevation: 4,
+            borderWidth: 0
+          }}
+        >
           <TouchableOpacity
             style={styles.buttonPayment}
-            onPress={() => { this.payWithPaypalAlert(); }}
+            onPress={() => {
+              this.payWithPaypalAlert();
+            }}
           >
             <CardItem header>
               {paypalChecking && <ActivityIndicator color={'white'} />}
-              <Text>{paypalChecking ? strings.payment.checkingPayment : strings.payment.payWithPaypal}</Text>
+              <Text>
+                {paypalChecking ? strings.payment.checkingPayment : strings.payment.payWithPaypal}
+              </Text>
               <Right>
                 <Icon name="chevron-right" size={18} />
               </Right>
@@ -243,7 +276,9 @@ class Payment extends Component<Props, State> {
         <View style={{ flex: 0, marginHorizontal: 10, elevation: 4, borderWidth: 0 }}>
           <TouchableOpacity
             style={styles.buttonPayment}
-            onPress={() => { this.payWithBankTransfer(); }}
+            onPress={() => {
+              this.payWithBankTransfer();
+            }}
             disabled={false}
           >
             <CardItem header>
@@ -253,7 +288,7 @@ class Payment extends Component<Props, State> {
                 <Icon name="chevron-right" size={18} />
               </Right>
             </CardItem>
-          </TouchableOpacity >
+          </TouchableOpacity>
           <CardItem>
             <Left>
               <Icon name="credit-card" size={23} color={'skyblue'} />

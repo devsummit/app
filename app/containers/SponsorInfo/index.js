@@ -53,17 +53,17 @@ class SponsorInfo extends Component<State> {
   renderView = (sponsors) => {
     return (
       <Container>
-        <Content>
+        <Content style={{ paddingHorizontal: 16 }}>
           { sponsors.map((sponsor, index) => (
             <Card key={index}>
+              <CardItem cardBody>
+                <Image source={{ uri: sponsor.attachment }} style={{ width: '100%', height: 200, resizeMode: Image.resizeMode.contain }} />
+              </CardItem>
               <CardItem>
-                <Body>
+                <Body style={{ alignItems: 'center' }}>
                   <Text>{sponsor.name}</Text>
                   <Text note>{sponsor.note}</Text>
                 </Body>
-              </CardItem>
-              <CardItem cardBody>
-                <Image source={{ uri: sponsor.attachment }} style={{ width: '100%', height: 200, resizeMode: Image.resizeMode.contain }} />
               </CardItem>
             </Card>
           ))}

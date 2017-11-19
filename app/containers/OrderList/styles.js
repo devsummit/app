@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { PRIMARYCOLOR } from '../../constants';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -24,6 +24,25 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'flex-end'
+  },
+  buttonTransfer: {
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#2196F3',
+    paddingVertical: 4,
+    marginTop: 8
+  },
+  buttonText: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '500'
+  },
+  transferIcon: {
+    fontSize: 12,
+    marginRight: 8,
+    textAlign: 'center'
   },
   buttonConfirm: {
     width: '100%',
@@ -131,6 +150,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 2
+  },
+  cardTicket: {
+    position: 'relative',
+    height: 100,
+    margin: 5,
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: '#f8f8f8',
+    backgroundColor: '#f8f8f8',
+    elevation: 3,
+    width: width * 0.45,
+    alignSelf: 'center'
+  },
+  inputItem: {
+    marginRight: 15,
+    marginTop: 12
+  },
+  buttonsSection: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  buttonModal: {
+    margin: 6
+  },
+  buttonTextModal: {
+    fontSize: 15,
+    backgroundColor: PRIMARYCOLOR,
+    padding: 20,
+    color: '#FFFFFF'
+  },
+  redeem: {
+    borderWidth: 5,
+    margin: 20,
+    borderRadius: 2,
+    backgroundColor: 'white',
+    borderColor: PRIMARYCOLOR
+  },
+  viewredeem: {
+    backgroundColor: '#FFF',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 2
+  },
+  buttonRefresh: {
+    borderRadius: 5,
+    backgroundColor: '#2196F3',
+    padding: 8,
+    marginTop: 12
   }
 });
 

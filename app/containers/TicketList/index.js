@@ -107,7 +107,10 @@ class TicketList extends Component<Props, State> {
                 }
               ]}
             >
-              <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>{strings.order.ticketNumber} {`${item.id  }\n`}</Text>
+              <Text style={styles.text}>
+                <Text style={{ fontWeight: 'bold' }}>
+                  {strings.order.ticketNumber} {`${item.id  }\n`}
+                </Text>
                 {strings.order.QRInstruction}
               </Text>
               <QRCode

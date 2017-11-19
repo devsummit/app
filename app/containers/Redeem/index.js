@@ -20,7 +20,7 @@ import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 import strings from '../../localization';
-import {PRIMARYCOLOR} from '../../constants';
+import { PRIMARYCOLOR } from '../../constants';
 import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
@@ -38,17 +38,16 @@ type State = {
 class Redeem extends Component<Props, State> {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
-  }
+  };
 
   placeRedeem = () => {
-    this.props.placeRedeem();
-  }
+    this.props.placeRedeem(this.props.closeModalRedeem);
+  };
 
   render() {
     return (
@@ -64,11 +63,7 @@ class Redeem extends Component<Props, State> {
           </Form>
         </View>
         <View style={styles.buttonsSection}>
-          <Button
-            transparent
-            style={styles.button}
-            onPress={() => this.placeRedeem()}
-          >
+          <Button transparent style={styles.button} onPress={() => this.placeRedeem()}>
             <Text style={styles.buttonText}>{strings.redeem.redeem}</Text>
           </Button>
         </View>

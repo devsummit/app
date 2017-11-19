@@ -1,4 +1,5 @@
 export default {
+  lang: 'id',
   save: 'Simpan',
   ok: 'OK',
   cancel: 'Batalkan',

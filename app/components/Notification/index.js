@@ -13,7 +13,10 @@ import {
   Separator,
   CardItem,
   Body,
-  Fab
+  Fab,
+  List,
+  ListItem,
+  Left
 } from 'native-base';
 import { Alert, ActivityIndicator, View, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Modal, ScrollView, Dimensions } from 'react-native';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
@@ -22,14 +25,16 @@ import { Actions } from 'react-native-router-flux';
 import { createStructuredSelector } from 'reselect';
 import Toast from 'react-native-simple-toast';
 import { connect } from 'react-redux';
+import Moment from 'moment';
+
 import HeaderPoint from '../../components/Header';
 import strings from '../../localization';
 import ModalComponent from '../../components/ModalComponent';
 import styles from './styles';
 import * as selectors from './selectors';
 import * as actions from './actions';
-import { PRIMARYCOLOR } from '../../constants'
-import { formatDate } from '../../helpers'
+import { PRIMARYCOLOR } from '../../constants';
+import { formatDate } from '../../helpers';
 
 const noNotif = require('./../../../assets/images/nonotif.png');
 const { height } = Dimensions.get('window');
@@ -61,62 +66,58 @@ class Notification extends Component {
       return layoutMeasurement.height + contentOffset.y >=
         contentSize.height - paddingToBottom;
     };
+    Moment.locale(strings.global.lang);
     return (
       <Container style={styles.container}>
-          <View style={styles.view}>
-            {
-              notifications && notifications.length > 0 ?
-                <ScrollView
-                  showsVerticalScrollIndicator={false}
-                  ref="sv"
-                  style={{ flex: 1 }}
-                  onContentSizeChange={this.handleSize}
-                  onScroll={({ nativeEvent }) => {
-                    this.scroll = nativeEvent.contentOffset.y
-                    if (isCloseToBottom(nativeEvent)) {
-                      if (!this.props.isFetching) {
-                        fetchNextNotification()
-                      }
+        <View style={styles.view}>
+          {
+            notifications && notifications.length > 0 ?
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                ref="sv"
+                style={{ flex: 1 }}
+                onContentSizeChange={this.handleSize}
+                onScroll={({ nativeEvent }) => {
+                  this.scroll = nativeEvent.contentOffset.y
+                  if (isCloseToBottom(nativeEvent)) {
+                    if (!this.props.isFetching) {
+                      fetchNextNotification()
                     }
-                  }}
-                  scrollEventThrottle={400}>
-                  <Content>
-                    {notifications.map(data => (
-                      <Card key={data.id}>
-                        <CardItem style={{ margin: 5 }}>
-                          <Body>
-                            <View style={styles.bodySection}>
-                              <View style={styles.mainMessage}>
-                                <Text style={styles.title}>{data.type.toUpperCase()}</Text>
-                                <View style={styles.separator} />
-                                <Text style={styles.content}>{data.message}</Text>
-                                <Text style={{ color: PRIMARYCOLOR }}>{formatDate(data.created_at)}</Text>
-                              </View>
-                              <Right style={{ flex: 1 }}>
-                                <Text style={styles.sender}>{data.sender.first_name}</Text>
-                              </Right>
-                            </View>
-                          </Body>
-                        </CardItem>
-                      </Card>
-                    ))}
-                    {
-                      this.props.isFetching
-                        ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
-                        : <View />
-                    }
-                  </Content>
-                </ScrollView> :
-                this.props.isFetching
-                  ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
-                  :
-                  <View style={styles.artwork} >
-                    <Image source={noNotif} style={{ opacity: 0.5 }} />
-                    <Text style={styles.artworkText}>{strings.notification.noNotification}</Text>
-                  </View>
-            }
+                  }
+                }}
+                scrollEventThrottle={400}>
+                <Content>
+                  {notifications.map(data => (
+                    <List key={data.id}>
+                      <ListItem avatar>
+                        <Left/>
+                        <Body>
+                          <Text>{data.type.toUpperCase()}</Text>
+                          <Text note>{data.message}</Text>
+                        </Body>
+                        <Right>
+                          <Text note>{Moment(data.created_at).fromNow()}</Text>
+                        </Right>
+                      </ListItem>
+                    </List>
+                  ))}
+                  {
+                    this.props.isFetching
+                      ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
+                      : <View />
+                  }
+                </Content>
+              </ScrollView> :
+              this.props.isFetching
+                ? <ActivityIndicator size="large" color={PRIMARYCOLOR} style={{ marginTop: 20 }} />
+                :
+                <View style={styles.artwork} >
+                  <Image source={noNotif} style={{ opacity: 0.5 }} />
+                  <Text style={styles.artworkText}>{strings.notification.noNotification}</Text>
+                </View>
+          }
 
-          </View>
+        </View>
       </Container>
     );
   }

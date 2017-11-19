@@ -273,18 +273,17 @@ class OrderDetail extends Component<Props, State> {
                     <Icon name="ios-checkmark-circle" color={PRIMARYCOLOR} />
                     <Text style={styles.textButton}>save</Text>
                   </Button>
+                ) : this.state.status === 'captured' ? (
+                  <Text style={[ styles.statusText, { backgroundColor: '#0D47A1' } ]}>VERIFIED</Text>
                 ) : (
-                  this.state.status === 'captured' ?
-                    <Text
-                      style={[ styles.statusText, { backgroundColor: '#0D47A1' } ]}
-                    >
-                    VERIFIED
-                    </Text> :
-                    <Text
-                      style={[ styles.statusText, { backgroundColor: this.state.color || PRIMARYCOLOR } ]}
-                    >
-                      {this.state.status.toUpperCase()}
-                    </Text>
+                  <Text
+                    style={[
+                      styles.statusText,
+                      { backgroundColor: this.state.color || PRIMARYCOLOR }
+                    ]}
+                  >
+                    {this.state.status.toUpperCase()}
+                  </Text>
                 )}
                 <Row>
                   <Col style={{ flex: 2 }}>
@@ -302,35 +301,6 @@ class OrderDetail extends Component<Props, State> {
                     <Text>{localeDateWithoutHour(order.data[0].created_at)}</Text>
                   </Col>
                 </Row>
-                {/* order.included.payment ? (
-                  <Row>
-                    <Col>
-                      <Text>{strings.order.expiredDate}</Text>
-                    </Col>
-                    <Col>
-                      {this.state.orderStatus !== 'expired' ? (
-                        <Text>{expiryDate(order.data[0].created_at)}</Text>
-                      ) : (
-                        <Text style={{ fontWeight: 'bold' }}>
-                          {this.state.status === 'paid' || this.state.status === 'capture'
-                            ? null
-                            : Moment()
-                              .utc()
-                              .local()
-                              .isBefore(
-                                Moment.utc(order.data[0].created_at)
-                                  .add(1, 'hours')
-                                  .local()
-                              )
-                              ? expiryDate(order.data[0].created_at)
-                              : 'Expired'}
-                        </Text>
-                      )}
-                    </Col>
-                  </Row>
-                ) : (
-                  <View />
-                ) */}
               </Grid>
             </CardItem>
           </Card>
@@ -366,14 +336,17 @@ class OrderDetail extends Component<Props, State> {
                     <Text style={{ fontWeight: 'bold' }}>{strings.order.total.toUpperCase()}</Text>
                   </Col>
                   <Col style={{ flex: 3 }}>
-                    <Text style={{ color: PRIMARYCOLOR }}>Rp{' '} {order.included.payment.gross_amount}</Text>
+                    <Text style={{ color: PRIMARYCOLOR }}>
+                      Rp {order.included.payment.gross_amount}
+                    </Text>
                   </Col>
                 </Grid>
               </Content>
             </CardItem>
           </Card>
-          {this.state.status === 'captured' ?
-            <View /> :
+          {this.state.status === 'captured' ? (
+            <View />
+          ) : (
             <View>
               {payment.payment_type === 'offline' && (
                 <Card>
@@ -381,7 +354,9 @@ class OrderDetail extends Component<Props, State> {
                     <View style={styles.card} resizeMode={'cover'}>
                       <Text style={styles.textTitle}>PT. Bank Mandiri</Text>
                       <Text style={styles.textTitle}>Cabang Bandung Siliwangi</Text>
-                      <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>Atas Nama :</Text>
+                      <Text style={{ fontSize: 18, color: '#000000', marginTop: 16 }}>
+                        Atas Nama :
+                      </Text>
                       <Text style={styles.textTitleBold}>Taufan Aditya</Text>
                       <Text style={styles.textTitle}>OR</Text>
                       <Text style={styles.textTitleBold}>Krisna Galuh Herlangga</Text>
@@ -418,9 +393,13 @@ class OrderDetail extends Component<Props, State> {
               )}
               {payment.payment_type === 'offline' ? (
                 this.props.paymentProof !== '' ? (
-                  <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}>
+                  <View
+                    style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-around' }}
+                  >
                     <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
-                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>
+                        {strings.order.downloadAcc}
+                      </Text>
                     </Button>
                     <Image
                       style={{
@@ -432,26 +411,34 @@ class OrderDetail extends Component<Props, State> {
                       resizeMode={'cover'}
                       source={{ uri: this.props.paymentProof }}
                     />
-                    {(isUpdating || isConfirming) && <View
-                      style={{
-                        width: `${uploadProgress}%`,
-                        backgroundColor: '#157EFC',
-                        height: 10,
-                      }}
-                    />
-                    }
+                    {(isUpdating || isConfirming) && (
+                      <View
+                        style={{
+                          width: `${uploadProgress}%`,
+                          backgroundColor: '#157EFC',
+                          height: 10
+                        }}
+                      />
+                    )}
                     <Button
                       disabled={isUpdating || isConfirming}
                       style={styles.buttonSubmit}
-                      onPress={() => this.uploadImage()}>
+                      onPress={() => this.uploadImage()}
+                    >
                       {(isUpdating || isConfirming) && <ActivityIndicator color="black" />}
-                      <Text style={{ flex: 1, textAlign: 'center' }}>{(isUpdating || isConfirming) ? strings.order.uploading : strings.order.reuploadProof}</Text>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>
+                        {isUpdating || isConfirming
+                          ? strings.order.uploading
+                          : strings.order.reuploadProof}
+                      </Text>
                     </Button>
                   </View>
                 ) : (
                   <View>
                     <Button style={styles.buttonSubmit} onPress={() => this.getAccountReferal()}>
-                      <Text style={{ flex: 1, textAlign: 'center' }}>{strings.order.downloadAcc}</Text>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>
+                        {strings.order.downloadAcc}
+                      </Text>
                     </Button>
                     <Image
                       style={{
@@ -463,27 +450,34 @@ class OrderDetail extends Component<Props, State> {
                       source={noImage}
                     />
                     <Text style={styles.noImageText}>{strings.order.noProof}</Text>
-                    {(isUpdating || isConfirming) && <View
-                      style={{
-                        width: `${uploadProgress}%`,
-                        backgroundColor: '#157EFC',
-                        height: 10,
-                      }}
-                    />
-                    }
+                    {(isUpdating || isConfirming) && (
+                      <View
+                        style={{
+                          width: `${uploadProgress}%`,
+                          backgroundColor: '#157EFC',
+                          height: 10
+                        }}
+                      />
+                    )}
                     <Button
                       disabled={isConfirming || isUpdating}
                       style={styles.buttonSubmit}
                       onPress={() => this.uploadImage()}
                     >
                       {(isUpdating || isConfirming) && <ActivityIndicator color="black" />}
-                      <Text style={{ flex: 1, textAlign: 'center' }}>{(isUpdating || isConfirming) ? (`${strings.order.uploading} (${uploadProgress}%)`) : strings.order.reuploadProof}</Text>
+                      <Text style={{ flex: 1, textAlign: 'center' }}>
+                        {isUpdating || isConfirming
+                          ? `${strings.order.uploading} (${uploadProgress}%)`
+                          : strings.order.reuploadProof}
+                      </Text>
                     </Button>
                   </View>
                 )
-              ) : <View />}
+              ) : (
+                <View />
+              )}
             </View>
-          }
+          )}
         </Content>
       </Container>
     );
@@ -500,7 +494,6 @@ const mapStateToProps = createStructuredSelector({
   isConfirming: selectors.getIsConfirmingPayment(),
   paymentProof: selectors.getPaymentProof()
 });
-
 
 OrderDetail.defaultProps = {
   uploadProgress: 0

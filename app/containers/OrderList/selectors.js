@@ -15,6 +15,12 @@ const selectMainReducer = () => state => state.get('orderList');
 export const getOrders = () =>
   createSelector(selectMainReducer(), state => state.get('orders').toJS());
 
+export const getTickets = () =>
+  createSelector(selectMainReducer(), state => state.get('tickets').toJS());
+
+export const getIsTicketFetching = () =>
+  createSelector(selectMainReducer(), state => state.get('isFetchingTicket'));
+
 export const getIsFetchingOrders = () =>
   createSelector(selectMainReducer(), state => state.get('isFetchingOrders'));
 
@@ -33,11 +39,11 @@ export const getReedemStatus = () =>
 export const getInputFields = () =>
   createSelector(selectMainReducer(), state => state.get('inputFields').toJS());
 
+export const getTransferFields = () =>
+  createSelector(selectMainReducer(), state => state.get('transferFields').toJS());
+
 export const getIsConfirmEmail = () =>
   createSelector(selectMainReducer(), state => state.get('isConfirmEmail'));
-
-export const getIsConfirmingEmail = () =>
-  createSelector(selectMainReducer(), state => state.get('isConfirmingEmail'));
 
 export const getCommunity = () =>
   createSelector(selectMainReducer(), state => state.get('community'));

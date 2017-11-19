@@ -6,5 +6,7 @@ export default {
   countRedeem: () => Api.get('/api/v1/me'),
   claimReward: () => Api.post('/api/v1/referals/reward', {}),
   postConfirmEmail: email => Api.post('/api/v1/confirm-email/resend', { email }),
-  fetchCommunity: () => Api.get('/api/v1/partner/info')
+  fetchCommunity: () => Api.get('/api/v1/partner/info'),
+  getTickets: () => Api.get('/api/v1/user/tickets'),
+  transfer: data => Api.post('/api/v1/tickets/transfer', data)
 };
