@@ -156,6 +156,5 @@ export function updateFabVisible(payload) {
 }
 
 export const userVisitedThisBooth = async (roomId, fabVisible) => {
-  setVisitedRoomId(roomId);
-  this.updateFabVisible(fabVisible);
+  return setVisitedRoomId(roomId);
 };

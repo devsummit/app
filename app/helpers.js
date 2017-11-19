@@ -160,9 +160,9 @@ export const getUserRoomList = async (email = '', page = 1) => {
     const rooms = await response.data.results.rooms_info;
     return rooms;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
-} 
+}
 
 export const getModeratorRoomList = async (page = 1) => {
   try {
@@ -176,7 +176,7 @@ export const getModeratorRoomList = async (page = 1) => {
     });
     return roomsId;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 export const getRoomWithTarget = async (email1, email2) => {
@@ -184,7 +184,7 @@ export const getRoomWithTarget = async (email1, email2) => {
     const response = await QiscusAxios.get(`get_or_create_room_with_target?emails[]=${email1}&emails[]=${email2}`);
     return response.data.results.room;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 

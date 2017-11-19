@@ -5,7 +5,7 @@ import ticket from './ticket';
 import { store } from '../store';
 import { getProfileData } from "../helpers";
 import { fetchTickets } from '../containers/OrderList/actions';
-import { userVisitedThisBooth } from '../containers/BoothInfo/actions';
+import { userVisitedThisBooth, updateFabVisible } from '../containers/BoothInfo/actions';
 
 const { BeaconModule } = NativeModules;
 
@@ -78,11 +78,12 @@ const beacon = {
     console.log('onExhibitor beacon', matchBeacon);
     const { exhibitor } = matchBeacon.details;
     if (exhibitor && exhibitor.channel_id) {
-      store.dispatch(userVisitedThisBooth(exhibitor.channel_id))
+      userVisitedThisBooth(exhibitor.channel_id).catch(e => console.log(e));
+      store.dispatch(updateFabVisible(true));
       Actions.boothInfo({
         title: exhibitor.name,
         summary: exhibitor.summary,
-        user,
+        user: exhibitor.owner,
         booth_photo: exhibitor.logo_url,
         booth_id: exhibitor.id
       });

@@ -78,8 +78,10 @@ class BoothInfo extends Component {
   getBoothRoom = async () => {
     const { props: { user: { email: boothEmail }, title: boothName } } = this;
     const rooms = await getUserRoomList(boothEmail);
-    const mainRoom = await rooms.filter(room => room.room_name === boothName)[0];
-    this.props.updateMainRoom(mainRoom);
+    if (rooms && rooms.length > 0) {
+      const mainRoom = rooms.filter(room => room.room_name === boothName)[0];
+      this.props.updateMainRoom(mainRoom);
+    }
   };
 
   changeLogo = () => {
