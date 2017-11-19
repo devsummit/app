@@ -261,31 +261,30 @@ export function register(callBack) {
 }
 
 export function transferTicket() {
-   return (dispatch, getState) => {
-     const { transferFields } = getState()
-       .get('orderList')
-       .toJS();
+  return (dispatch, getState) => {
+    const { transferFields } = getState()
+      .get('orderList')
+      .toJS();
 
-     const { ticketId, email, password } = transferFields || null;
+    const { ticketId, email } = transferFields || null;
 
-     const data = {
-       user_ticket_id: ticketId,
-       receiver: email,
-       password
-     };
+    const data = {
+      user_ticket_id: ticketId,
+      receiver: email
+    };
 
-     orderlist.transfer(data)
-       .then((response) => {
-           console.log('landing here success', response);
-         dispatch(getOrderList());
-         Toast.show(`Your ticket has been transferred to ${response.data.data.receiver.username}`, Toast.LONG);
-       })
-       .catch((error) => {
-           console.log('landing here success', error);
-         Toast.show(`Error transfering ticket to ${email}`, Toast.LONG);
-       });
-   };
- }
+    orderlist.transfer(data)
+      .then((response) => {
+        console.log('landing here success', response);
+        dispatch(getOrderList());
+        Toast.show(`Your ticket has been transferred to ${response.data.data.receiver.username}`, Toast.LONG);
+      })
+      .catch((error) => {
+        console.log('landing here success', error);
+        Toast.show(`Error transfering ticket to ${email}`, Toast.LONG);
+      });
+  };
+}
 
 export function getCommunity() {
   return (dispatch) => {
