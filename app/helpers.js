@@ -188,12 +188,17 @@ export const getRoomWithTarget = async (email1, email2) => {
   }
 };
 
-export const getBoothRoomId = () => {
-  AsyncStorage.getItem('room_id')
-    .then((results) => {
-      const rooms = JSON.parse(results);
-      const room = rooms+''+ this.props.booth_id;
+export const getVisitedRoomId = async () => {
+  const visitedBooth = await AsyncStorage.getItem('visitedBooth');
+  return JSON.parse(visitedBooth);
+};
 
-      return roomId;
-    }).catch(() => console.log('Error'));
+export const setVisitedRoomId = async (boothId) => {
+  const visitedBooth = await AsyncStorage.getItem('visitedBooth');
+  const boothIdCollection = visitedBooth ? JSON.parse(visitedBooth) : [];
+  if (!boothIdCollection.includes(boothId)) {
+    boothIdCollection.push(boothId);
+    await AsyncStorage.setItem('visitedBooth', JSON.stringify(boothIdCollection));
+  }
+  return boothIdCollection;
 };
