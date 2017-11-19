@@ -22,7 +22,33 @@ const itemHeight = 200;
 
 const SLIDER_1_FIRST_ITEM = 0;
 
-class ScheduleDetail extends Component {
+// @flow
+type Props = {
+  event: Object<mixed>,
+  speaker?: Object<mixed>,
+  stage: string,
+  time_end: string,
+  time_start: string,
+  title: string,
+  user?: Array<mixed>
+};
+
+type event = {
+  created_at: string,
+  id: number,
+  information: string,
+  title: string,
+  type: string,
+  updated_at: string,
+  user_id: number
+};
+
+type State = {
+  slider1ActiveSlide: number,
+  user?: Array<mixed>
+};
+
+class ScheduleDetail extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {

@@ -22,7 +22,25 @@ import * as selectors from './selectors';
 // import constants
 import { role_option } from '../../constants';
 
-class ChangePassword extends Component {
+// @flow
+type Props = {
+  errorFields: {
+    error_confirm_password: boolean,
+    error_current_password: boolean,
+    error_new_password: boolean,
+    error_password_not_the_same: boolean
+  },
+  inputFields: {
+    confirm_password: string,
+    current_password: string,
+    new_password: string
+  },
+  isLoading: boolean,
+  isPasswordUpdated: boolean,
+  isPasswordWrong: boolean
+};
+
+class ChangePassword extends Component<Props> {
     /*
      * initialize some state
      */
@@ -34,7 +52,7 @@ class ChangePassword extends Component {
     this.props.resetState()
   }
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     const { errorFields } = this.props || {};
     const { error_password_not_the_same } = errorFields || false;
 

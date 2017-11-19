@@ -54,7 +54,27 @@ const noImage = require('./../../../assets/images/noimage.png');
 const url = 'https://api.devsummit.io/static/Ref_Bank.PDF';
 
 let total = 0;
-class OrderDetail extends Component {
+
+// @flow
+type Props = {
+  isConfirming: boolean,
+  isUpdating: boolean,
+  order?: Object<mixed>,
+  orderId: string,
+  paymentProof: string,
+  ticketTypes: Array<mixed>
+};
+
+type State = {
+  color: string,
+  modalVisible: boolean,
+  orderStatus: string,
+  scalesPageToFit: boolean,
+  status: string,
+  userId: number
+};
+
+class OrderDetail extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.setModalVisible = this.setModalVisible.bind(this);
@@ -96,7 +116,7 @@ class OrderDetail extends Component {
     }
   }
 
-  setModalVisible(visible) {
+  setModalVisible(visible: boolean) {
     this.setState({ modalVisible: visible });
   }
 
@@ -111,11 +131,11 @@ class OrderDetail extends Component {
     return total;
   };
 
-  increase = (typeId) => {
+  increase = (typeId: number) => {
     this.props.updateOrder('increase', typeId);
   };
 
-  decrease = (typeId) => {
+  decrease = (typeId: number) => {
     this.props.updateOrder('decrease', typeId);
   };
 
@@ -188,7 +208,7 @@ class OrderDetail extends Component {
     return <View />;
   };
 
-  capitalizeEachWord = (str) => {
+  capitalizeEachWord = (str: string) => {
     const lower = str.toLowerCase();
     return lower.replace(/(^| )(\w)/g, (words) => {
       return words.toUpperCase();
@@ -463,17 +483,6 @@ class OrderDetail extends Component {
     );
   }
 }
-
-OrderDetail.propTypes = {
-  getOrderDetail: PropTypes.func.isRequired,
-  order: PropTypes.object.isRequired,
-  uploadProgress: PropTypes.number,
-  updateOrder: PropTypes.func.isRequired,
-  submitUpdateOrder: PropTypes.func.isRequired,
-  confirmPayment: PropTypes.func.isRequired,
-  isConfirming: PropTypes.bool.isRequired,
-  isUpdating: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = createStructuredSelector({
   orderId: selectors.getOrderId(),

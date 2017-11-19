@@ -25,13 +25,23 @@ import HeaderPoint from '../../components/Header';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-class Redeem extends Component {
+// @flow
+type Props = {
+  inputFields: {
+    code: string
+  }
+};
+
+type State = {
+};
+
+class Redeem extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
   };
 

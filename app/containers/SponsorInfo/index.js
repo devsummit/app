@@ -12,7 +12,13 @@ import {
 import { connect } from 'react-redux';
 import { DevSummitAxios } from '../../helpers';
 
-class SponsorInfo extends Component {
+// @flow
+type State = {
+  isFetching: boolean,
+  sponsors: Array<mixed>
+};
+
+class SponsorInfo extends Component<State> {
   constructor() {
     super();
     this.state = {

@@ -30,7 +30,38 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import { PRIMARYCOLOR } from '../../constants';
 
-class Profile extends Component {
+// @flow
+type Props = {
+  avatar: string,
+  codeReferal: string,
+  fields: Object<mixed>,
+  haveRefered: number,
+  isAvatarUpdated: boolean,
+  isDisabled: boolean,
+  isLogOut: boolean,
+  isProfileUpdated: boolean
+};
+
+type fields = {
+  boothInfo: string,
+  firstName: string,
+  job: string,
+  lastName: string,
+  points: number,
+  profilePic: string,
+  summary: string,
+  username: string
+};
+
+type State = {
+  disabled: boolean,
+  id: number,
+  isLoading: boolean,
+  points: number,
+  referal: string
+};
+
+class Profile extends Component<Props, State> {
   state = {
     id: null,
     isLoading: true,
@@ -93,15 +124,15 @@ class Profile extends Component {
     }
   }
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateFields(field, value);
   };
 
-  handleUpdateAvatar = (value) => {
+  handleUpdateAvatar = (value: string) => {
     this.props.updateAvatar(value);
   };
 
-  handleInputReferal = (value) => {
+  handleInputReferal = (value: string) => {
     if (value === this.state.referal) {
       Toast.show("You can't refer your own code");
       this.setState({ disabled: true });

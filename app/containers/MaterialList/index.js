@@ -32,7 +32,28 @@ import * as actions from './actions';
 
 const noMaterial = require('./../../../assets/images/nomaterial.png');
 
-class MaterialList extends Component {
+// @flow
+type Props = {
+  inputFields: {
+    file: string,
+    is_used: number,
+    summary: string,
+    title: string
+  },
+  isFetching: boolean,
+  material: Array,
+  visible: boolean
+};
+
+type State = {
+  fileName: string,
+  invisible: boolean,
+  isLoading: boolean,
+  modalVisible: boolean,
+  roleId: number
+};
+
+class MaterialList extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +69,6 @@ class MaterialList extends Component {
     if (typeof this.props.speakerId === 'undefined'){
       getProfileData()
         .then((profileData) => {
-          console.log("profiulenjdfsnakjno", profileData)
           this.props.fetchMaterialList(profileData.speaker.id);
         });
     }
@@ -67,17 +87,17 @@ class MaterialList extends Component {
     }
   }
 
-  setModalVisible(visible) {
+  setModalVisible(visible: boolean) {
     this.setState({ modalVisible: visible });
   }
 
-  getSingleLink(url) {
+  getSingleLink(url: string) {
     this.setModalVisible(true);
     Linking.openURL(url);
   }
 
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
   }
 
@@ -97,7 +117,7 @@ class MaterialList extends Component {
     this.setState({ fileName: '' });
   }
 
-  showAlert = (id) => {
+  showAlert = (id: number) => {
     Alert.alert(strings.material.confirm, strings.material.remove,
       [
         { text: strings.global.cancel },
@@ -107,7 +127,7 @@ class MaterialList extends Component {
     );
   }
 
-  removeItem = (id) => {
+  removeItem = (id: number) => {
     this.props.deleteMaterialList(id);
     Toast.show(strings.material.deleted);
   }

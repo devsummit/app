@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
+    "flow": "node_modules/.bin/flow",
     "codepush": "code-push release-react devsummit.android android -d Production && code-push release-react devsummit ios -d Production --privateKeyPath private.pem",
     "paypal-deps": "mkdir -p $(pwd)/node_modules/react-native-paypal/ios/lib/Paypal && curl -L --progress https://github.com/paypal/PayPal-iOS-SDK/archive/2.18.0.tar.gz | tar -xz - -C $(pwd)/node_modules/react-native-paypal/ios/lib/Paypal --strip-components=1"
   },
@@ -61,14 +62,17 @@
     "socket.io-client": "^1.4.8"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "20.0.3",
+    "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "^2.1.0",
     "eslint": "^4.4.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "flow-bin": "^0.47.0",
     "jest": "20.0.4",
     "react-test-renderer": "16.0.0-alpha.12"
   },

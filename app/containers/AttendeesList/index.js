@@ -21,7 +21,21 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import * as ticketSelectors from '../TicketList/selectors';
 
-class AttendeesList extends Component {
+// @flow
+type Props = {
+  listAttendees?: Array<mixed>,
+  isTransferring: boolean,
+  isGettingTicket: boolean,
+  ticketId: number,
+  isGettingAttendees: boolean,
+  fetchingAttendeeStat: boolean
+};
+
+type State = {
+  isLoading: boolean
+};
+
+class AttendeesList extends Component<Props, State> {
   state = {
     isLoading: true
   }
@@ -45,7 +59,7 @@ class AttendeesList extends Component {
     }
   }
 
-  handleTransferPressed = (ticketId, receiverId, targetName) => {
+  handleTransferPressed = (ticketId: number, receiverId: number, targetName: string) => {
     Alert.alert(
       strings.attendeesList.confirm,
       targetName,
@@ -133,21 +147,6 @@ class AttendeesList extends Component {
     );
   }
 }
-
-AttendeesList.propTypes = {
-  listAttendees: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]
-  ).isRequired,
-  isTransferring: PropTypes.bool.isRequired,
-  isGettingTicket: PropTypes.bool.isRequired,
-  fetchAttendees: PropTypes.func.isRequired,
-  transferTicket: PropTypes.func.isRequired,
-  ticketId: PropTypes.number.isRequired,
-  isGettingAttendees: PropTypes.bool.isRequired,
-  fetchingAttendeeStat: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = createStructuredSelector({
   listAttendees: selectors.getAttendees(),

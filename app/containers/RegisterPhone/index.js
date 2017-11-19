@@ -23,7 +23,47 @@ import { role_option, PRIMARYCOLOR } from '../../constants';
 
 const background = require('../../../assets/images/background.png');
 
-class RegisterPhone extends Component {
+// @flow
+type Props = {
+  errorFields: Object,
+  inputFields: Object<mixed>,
+  isRegistered: Object<mixed>,
+  isRegistering: boolean
+};
+
+type errorFields = {
+  errorEmail: boolean,
+  errorFirstName: boolean,
+  errorLastName: boolean,
+  errorPassword: boolean,
+  errorPhone: boolean,
+  errorUserName: boolean
+};
+
+type inputFields = {
+  email: string,
+  firstName: string,
+  lastName: string,
+  password: string,
+  referer: string,
+  role: string,
+  socialId: number,
+  userName: string
+};
+
+type isRegistered = {
+  message: string,
+  status: boolean,
+  title: string
+};
+
+type State = {
+  fromLogin: boolean,
+  isChecked: boolean,
+  isEmailValid: boolean
+};
+
+class RegisterPhone extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,7 +148,7 @@ class RegisterPhone extends Component {
     });
   };
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.validateEmail();
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, (value = !(value.length > 0)));
@@ -146,7 +186,7 @@ class RegisterPhone extends Component {
     if (!this.state.isEmailValid) Toast.show('Email is invalid');
   };
 
-  validEmail = (email) => {
+  validEmail = (email: string) => {
     this.setState({
       isEmailValid: true
     });
@@ -159,21 +199,21 @@ class RegisterPhone extends Component {
     });
   };
 
-  handlePressCheckedBox = (checked) => {
+  handlePressCheckedBox = (checked: boolean) => {
     this.setState({
       isChecked: checked
     });
   };
 
   // email validation
-  checkEmail = (inputvalue) => {
+  checkEmail = (inputvalue: string) => {
     const pattern = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
     if (pattern.test(inputvalue)) return true;
     return false;
   };
 
   // name validation
-  checkName = (value) => {
+  checkName = (value: string) => {
     const pattern = /([^a-zA-Z0-9_-])/g;
     if (pattern.test(value)) return false;
     return true;
@@ -319,20 +359,6 @@ class RegisterPhone extends Component {
     );
   }
 }
-
-RegisterPhone.propTypes = {
-  updateErrorFields: PropTypes.func.isRequired,
-  isRegistered: PropTypes.object.isRequired,
-  isRegistering: PropTypes.bool.isRequired,
-  updateInputFields: PropTypes.func.isRequired,
-  resetState: PropTypes.func.isRequired,
-  updateRegisterStatus: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired,
-  inputFields: PropTypes.object.isRequired,
-  errorFields: PropTypes.object.isRequired,
-  toggleIsRegistering: PropTypes.func.isRequired,
-  fromLogin: PropTypes.bool // eslint-disable-line react/require-default-props
-};
 
 /**
  *  Map redux state to component props

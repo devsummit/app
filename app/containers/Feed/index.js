@@ -28,14 +28,12 @@ import {
   AsyncStorage,
   Modal,
   Alert,
-  BackHandler,
   KeyboardAvoidingView,
   ScrollView,
   TouchableHighlight,
   WebView,
   Platform
 } from 'react-native';
-import { func, bool, object, array, string } from 'prop-types';
 import ImagePicker from 'react-native-image-crop-picker';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -57,8 +55,7 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import OrderList from '../OrderList';
 import Redeem from '../Redeem';
-import { PRIMARYCOLOR } from '../../constants';
-import { API_BASE_URL } from '../../constants';
+import { PRIMARYCOLOR, API_BASE_URL } from '../../constants';
 import { CONTENT_REPORT, TWITTER_ICON, FACEBOOK_ICON, WHATSAPP_ICON } from './constants';
 import { isConfirm } from '../../helpers';
 import { getIsConfirmEmail } from '../OrderList/selectors';
@@ -71,7 +68,7 @@ const noFeeds = require('./../../../assets/images/nofeed.png');
 function subscribeToFeeds(cb) {
   socket.on('feeds', data => cb(null, data));
 }
-
+// @flow
 const today = new Date();
 const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
@@ -142,7 +139,51 @@ const mapStateToProps = () =>
     isConfirmEmail: getIsConfirmEmail()
   });
 
-class Feed extends Component {
+type Links = {
+  attachment: string
+};
+
+type ImageObject = {
+  path?: string,
+  sourceURL?: string,
+  mime: string
+};
+
+type Props = {
+  isFetching: boolean,
+  feeds?: Array<mixed>,
+  links?: Links,
+  isPosting: boolean,
+  imagesData?: ImageObject,
+  textData: string,
+  isRemoving: boolean
+};
+
+type ShareObject = {
+  message: string,
+  url: string
+};
+
+type State = {
+  userId: Array<number>,
+  userPostID: string,
+  postId: string,
+  firstName: string,
+  lastName: string,
+  profileUrl: string,
+  imagePreview: string,
+  report: string,
+  fabActive: boolean,
+  modalRedeem: boolean,
+  modalVisible: boolean,
+  postToFeeds: boolean,
+  modalReport: boolean,
+  optionVisible: boolean,
+  shareOptions: ShareObject,
+  shareTwitter: ShareObject
+};
+
+class Feed extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -168,7 +209,7 @@ class Feed extends Component {
     console.ignoredYellowBox = [ 'Setting a timer' ];
     subscribeToFeeds((err, data) => this.props.updateFeeds(data));
   }
-
+  
   componentWillMount() {
     this.props.setTokenHeader(this.props.currentPage);
 
@@ -191,11 +232,11 @@ class Feed extends Component {
     this.setState({ visible: false });
   };
 
-  setModalVisible = (visible, image) => {
+  setModalVisible = (visible: boolean, image: string) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   };
 
-  setModalRedeem = (visible) => {
+  setModalRedeem = (visible: boolean) => {
     this.setState({ modalRedeem: visible });
   };
 
@@ -203,7 +244,7 @@ class Feed extends Component {
     this.setState({ modalReport: visible });
   };
 
-  setModalWebView = (visible, link) => {
+  setModalWebView = (visible: boolean, link: string) => {
     this.setState({ modalWebView: visible });
     this.state.link = link;
   };
@@ -218,7 +259,7 @@ class Feed extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
-  onOpen = (message, attachment) => {
+  onOpen = (message: string, attachment: string) => {
     Share.open({
       title: 'Devsummit Indonesia',
       message,
@@ -227,7 +268,7 @@ class Feed extends Component {
     });
   };
 
-  alertRemoveFeed = (postId) => {
+  alertRemoveFeed = (postId: number) => {
     Alert.alert(
       '',
       'Are you sure you want to delete this post?',
@@ -239,12 +280,12 @@ class Feed extends Component {
     );
   };
 
-  removeFeed = (postId) => {
+  removeFeed = (postId: number) => {
     this.props.removeFeed(postId);
     this.setState({ optionVisible: false });
   };
 
-  alertReportFeed = (postId) => {
+  alertReportFeed = (postId: number) => {
     Alert.alert(
       '',
       'Are you sure you want to report this post?',
@@ -256,12 +297,12 @@ class Feed extends Component {
     );
   };
 
-  reportFeed = (postId) => {
+  reportFeed = (postId: number) => {
     this.props.reportFeed(postId);
     this.setState({ optionVisible: false });
   };
 
-  handleInputChange = (value) => {
+  handleInputChange = (value: string) => {
     this.setState({ report: value });
   };
 
@@ -609,7 +650,6 @@ class Feed extends Component {
             />
           </View>
         </Modal>
-
         {/* Modal for picture preview */}
         <Modal
           animationType={'fade'}
@@ -695,18 +735,5 @@ class CustomInput extends Component {
     );
   }
 }
-
-Feed.PropTypes = {
-  updateFeeds: func,
-  fetchFeeds: func,
-  postFeeds: func,
-  isFetching: bool,
-  isFetchingMore: bool,
-  feeds: array,
-  isRemoving: bool,
-  removeFeed: func,
-  reportFeed: func,
-  link: string
-};
 
 export default connect(mapStateToProps, actions)(Feed);

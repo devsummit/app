@@ -33,8 +33,27 @@ import * as selectors from './selectors';
 const background = require('./../../../assets/images/background.png');
 const noImage = require('./../../../assets/images/noimage.png');
 
+// @flow
+type Props = {
+  boothGalleries?: Array<mixed>,
+  boothPhoto: string,
+  fields: {
+    photoPic: string
+  },
+  isBoothGalleryUpdated: boolean,
+  isBoothPhotoUpdated: boolean,
+  summary: string,
+  title: string,
+  user: Object
+};
 
-class BoothInfo extends Component {
+type State = {
+  imagePreview: string,
+  modalVisible: boolean,
+  logged_user?: Object<mixed>
+};
+
+class BoothInfo extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,7 +93,7 @@ class BoothInfo extends Component {
       }).catch(err => console.log(strings.booth.errorImage, err));
   }
 
-  setModalVisible = (visible, image) => {
+  setModalVisible = (visible: boolean, image: string) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   }
 
@@ -91,7 +110,6 @@ class BoothInfo extends Component {
   }
 
   renderItem = (images) => {
-    console.log('checking image', images);
     return (
       <TouchableWithoutFeedback onPress={() => this.setModalVisible(true, images.url)}>
         <Image

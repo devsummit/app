@@ -19,7 +19,12 @@ import * as selectors from './selectors';
 
 const background = require('../../../assets/images/background.png');
 
-class RegisterMenu extends Component {
+// @flow
+type Props = {
+  isRegistered: boolean
+};
+
+class RegisterMenu extends Component<Props> {
   registerFacebook = () => {
     this.props.registerFacebook();
   };
@@ -72,10 +77,6 @@ class RegisterMenu extends Component {
     );
   }
 }
-
-RegisterMenu.propTypes = {
-  registerFacebook: func
-};
 
 const mapStateToProps = createStructuredSelector({
   isRegistered: selectors.isRegistered()

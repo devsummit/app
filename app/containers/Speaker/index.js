@@ -22,8 +22,18 @@ import styles from './styles';
 import * as selectors from './selectors';
 import * as actions from './actions';
 
+// @flow
+type Props = {
+  speaker?: Array<mixed>
+};
 
-class Speaker extends Component {
+type State = {
+  firstName: string,
+  lastName: string,
+  speakerFilter?: Array<mixed>
+};
+
+class Speaker extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +56,7 @@ class Speaker extends Component {
   }
 
 
-  handleInputChange = (field, value) => {
+  handleInputChange = (field: string, value: string) => {
     this.props.updateInputFields(field, value);
     this.props.updateErrorFields(`error_${field}`, value = !(value.length > 0));
   }

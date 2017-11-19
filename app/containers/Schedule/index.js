@@ -35,7 +35,16 @@ const noSchedule = require('./../../../assets/images/noschedule.png');
 
 export const orderByDay = '';
 
-class Schedule extends Component {
+// @flow
+type Props = {
+  userSchedule?: Array<mixed>
+};
+
+type State = {
+  isLoading: boolean
+};
+
+class Schedule extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
