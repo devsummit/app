@@ -25,4 +25,14 @@ export const getBoothPhoto = () => createSelector(
 export const getBoothGalleries = () => createSelector(
   selectMainReducer(),
   state => state.get('boothGalleries').toJS()
-)
+);
+
+export const getMainRoom = () => createSelector(
+  selectMainReducer(),
+  state => state.get('mainRoom')
+);
+
+export const getFabVisible = () => createSelector(
+  selectMainReducer(),
+  state => state.get('fabVisible')
+);

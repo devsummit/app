@@ -25,7 +25,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import PhotoGrid from 'react-native-photo-grid';
 import { createStructuredSelector } from 'reselect';
 import strings from '../../localization';
-import { getBoothRoomId, getBoothData, addRoomParticipant, getUserRoomList, getProfileData } from '../../helpers';
+import { getVisitedRoomId, setVisitedRoomId, getBoothData, addRoomParticipant, getUserRoomList, getProfileData } from '../../helpers';
 import Header from '../../components/Header';
 import styles from './styles';
 import * as actions from './actions';
@@ -57,7 +57,14 @@ class BoothInfo extends Component {
         this.setState({ logged_user });
       }).catch(() => console.log('Error'));
     this.props.fetchBoothInfo(this.props.booth_id);
-    this.getBoothRoom();
+    this.getBoothRoom().then(() => {
+      getVisitedRoomId().then((rooms) => {
+        const { props: { mainRoom, fabVisible } } = this;
+        if (rooms.includes(mainRoom.room_id)) {
+          this.props.updateFabVisible(!fabVisible);
+        }
+      });
+    });
   }
 
   componentWillReceiveProps(prevProps) {
@@ -67,11 +74,12 @@ class BoothInfo extends Component {
     }
   }
 
+
   getBoothRoom = async () => {
-    const { props: { user: { email: boothEmail }, title: boothName  }} = this;
+    const { props: { user: { email: boothEmail }, title: boothName } } = this;
     const rooms = await getUserRoomList(boothEmail);
     const mainRoom = await rooms.filter(room => room.room_name === boothName)[0];
-    this.setState({ mainRoom });
+    this.props.updateMainRoom(mainRoom);
   };
 
   changeLogo = () => {
@@ -89,7 +97,13 @@ class BoothInfo extends Component {
   setModalVisible = (visible, image) => {
     this.setState({ modalVisible: visible, imagePreview: image });
   }
-  
+
+  userVisitedThisBooth = async () => {
+    const { props: { mainRoom, fabActive } } = this;
+    const qiscusRoomId = mainRoom.room_id;
+    this.props.userVisitedThisBooth(qiscusRoomId, !fabActive);
+  };
+
   addUserToBoothRoom = async () => {
     const data = await getProfileData();
     const { email: userEmail } = data;
@@ -115,13 +129,12 @@ class BoothInfo extends Component {
 
    // load chat room
   loadChatRoom = () => {
-    this.setState({fabActive: false});
+    this.setState({ fabActive: false });
 
     // go to chatroom
   }
 
   renderItem = (images) => {
-    console.log('checking image', images);
     return (
       <TouchableWithoutFeedback onPress={() => this.setModalVisible(true, images.url)}>
         <Image
@@ -224,17 +237,19 @@ class BoothInfo extends Component {
             ) : null}
           </View>
         </Modal>
-        <Container>
-          <View style={{ flex: 1 }}>
-            <Fab
-              direction="up"
-              style={{ backgroundColor: '#f39e21' }}
-              onPress={() => this.addUserToBoothRoom()}
-            >
-              <Icon name="commenting" />
-            </Fab>
-          </View>
-        </Container>
+        { this.props.fabVisible && (
+          <Container>
+            <View style={{ flex: 1 }}>
+              <Fab
+                direction="up"
+                style={{ backgroundColor: '#f39e21' }}
+                onPress={() => this.addUserToBoothRoom()}
+              >
+                <Icon name="commenting" />
+              </Fab>
+            </View>
+          </Container>
+        )}
       </View>
     );
   }
@@ -245,7 +260,9 @@ const mapStateToProps = createStructuredSelector({
   isBoothPhotoUpdated: selectors.getIsBoothPhotoUpdated(),
   isBoothGalleryUpdated: selectors.getIsBoothGalleryUpdated(),
   boothPhoto: selectors.getBoothPhoto(),
-  boothGalleries: selectors.getBoothGalleries()
+  boothGalleries: selectors.getBoothGalleries(),
+  mainRoom: selectors.getMainRoom(),
+  fabVisible: selectors.getFabVisible()
 });
 
 export default connect(mapStateToProps, actions)(BoothInfo);
