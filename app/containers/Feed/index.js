@@ -537,7 +537,7 @@ class Feed extends Component {
                     style={{ textAlign: 'center', fontSize: 20 }}
                   />
                 </ActionButton.Item>
-                <ActionButton.Item
+                {/* <ActionButton.Item
                   title="Register Hackaton"
                   buttonColor={PRIMARYCOLOR}
                   onPress={() => Actions.registerHackaton()}
@@ -547,7 +547,7 @@ class Feed extends Component {
                     color="#FFFFFF"
                     style={{ textAlign: 'center', fontSize: 20 }}
                   />
-                </ActionButton.Item>
+                </ActionButton.Item> */}
                 <ActionButton.Item
                   title="Redeem Code"
                   buttonColor={'#00C853'}
