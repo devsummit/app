@@ -15,7 +15,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "RNFIRMessaging.h"
 #import <CodePush/CodePush.h>
-#import "Harpy.h"
+@import Harpy;
 @import FirebaseMessaging;
 
 @implementation AppDelegate
@@ -24,7 +24,7 @@
 {
   NSURL *jsCodeLocation;
 
-#ifdef DEBUG
+#ifdef DEBUGx
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 #else
     jsCodeLocation = [CodePush bundleURL];

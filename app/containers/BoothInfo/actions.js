@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 import FormData from 'FormData';
-import { DevSummitAxios, getAccessToken, getBoothData } from '../../helpers';
+import { DevSummitAxios, getAccessToken, getBoothData, setVisitedRoomId } from '../../helpers';
 import {
   UPDATE_FIELD,
   UPDATE_BOOTH_PHOTO,
@@ -9,7 +9,9 @@ import {
   UPDATE_IS_BOOTH_GALLERY_UPDATED,
   FETCH_BOOTH_INFO,
   UPDATE_BOOTH_GALLERY,
-  CLEAR_BOOTH_GALLERY
+  CLEAR_BOOTH_GALLERY,
+  UPDATE_MAIN_ROOM,
+  UPDATE_FAB_VISIBLE
 } from './constants';
 import local from '../../../config/local';
 
@@ -137,3 +139,22 @@ export function updateImage(image) {
       });
   };
 }
+
+export function updateMainRoom(payload) {
+  console.log('updateMainRoom action', payload);
+  return {
+    type: UPDATE_MAIN_ROOM,
+    payload
+  };
+}
+
+export function updateFabVisible(payload) {
+  return {
+    type: UPDATE_FAB_VISIBLE,
+    payload
+  };
+}
+
+export const userVisitedThisBooth = async (roomId, fabVisible) => {
+  return setVisitedRoomId(roomId);
+};

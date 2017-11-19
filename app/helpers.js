@@ -3,7 +3,15 @@ import { Actions } from 'react-native-router-flux';
 import { AsyncStorage } from 'react-native';
 import Moment from 'moment';
 import base from 'base-64';
-import { API_BASE_URL, CLIENT_SECRET, PRIMARYCOLOR } from './constants';
+import {
+  API_BASE_URL,
+  CLIENT_SECRET,
+  PRIMARYCOLOR,
+  QISCUS_SDK_APP_ID,
+  QISCUS_SDK_SECRET,
+  QISCUS_DEFAULT_ROOM_ID,
+  QISCUS_MODERATOR_EMAIL
+} from './constants';
 
 // import { updateIsLogOut } from './containers/Profile/actions';
 
@@ -126,4 +134,71 @@ export const transactionStatus = (payment) => {
     message: 'not paid',
     color: PRIMARYCOLOR
   };
+};
+
+// Qiscus Helpers
+export const QiscusAxios = axios.create({
+  baseURL: `https://${QISCUS_SDK_APP_ID}.qiscus.com/api/v2/rest`,
+  headers: {
+    'Content-Type': 'application/json',
+    QISCUS_SDK_SECRET
+  }
+});
+
+export const addRoomParticipant = async (emails = [], room_id) => {
+  try {
+    const response = await QiscusAxios.post('/add_room_participants', { room_id, emails });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUserRoomList = async (email = '', page = 1) => {
+  try {
+    const response = await QiscusAxios.get(`get_user_rooms?user_email=${email}&page=${page}&show_participants=true`);
+    const rooms = await response.data.results.rooms_info;
+    return rooms;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getModeratorRoomList = async (page = 1) => {
+  try {
+    const response = await QiscusAxios.get(`get_user_rooms?user_email=${QISCUS_MODERATOR_EMAIL}&page=${page}&show_participants=true`)
+    const roomsInfo = await response.data.results.rooms_info;
+    const roomsId = [];
+    roomsInfo.forEach((room) => {
+      if (room.room_type === 'group') {
+        return roomsId.push(room.room_id_str);
+      }
+    });
+    return roomsId;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getRoomWithTarget = async (email1, email2) => {
+  try {
+    const response = await QiscusAxios.get(`get_or_create_room_with_target?emails[]=${email1}&emails[]=${email2}`);
+    return response.data.results.room;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getVisitedRoomId = async () => {
+  const visitedBooth = await AsyncStorage.getItem('visitedBooth');
+  return JSON.parse(visitedBooth);
+};
+
+export const setVisitedRoomId = async (boothId) => {
+  const visitedBooth = await AsyncStorage.getItem('visitedBooth');
+  const boothIdCollection = visitedBooth ? JSON.parse(visitedBooth) : [];
+  if (!boothIdCollection.includes(boothId)) {
+    boothIdCollection.push(boothId);
+    await AsyncStorage.setItem('visitedBooth', JSON.stringify(boothIdCollection));
+  }
+  return boothIdCollection;
 };

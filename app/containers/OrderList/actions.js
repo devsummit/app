@@ -128,7 +128,7 @@ export function isFetchingTicket(status) {
   };
 }
 
-export function fetchTickets() {
+export function fetchTickets(callback = () => {}) {
   return (dispatch) => {
     dispatch(isFetchingTicket(true));
     orderlist
@@ -139,6 +139,7 @@ export function fetchTickets() {
           data: response.data.data
         });
         dispatch(isFetchingTicket(false));
+        callback(response.data.data);
       })
       .catch((err) => {
         dispatch(isFetchingTicket(false));
@@ -147,7 +148,7 @@ export function fetchTickets() {
   };
 }
 
-export function getOrderList() {
+export function getOrderList(callback = () => {}) {
   return (dispatch) => {
     dispatch(updateIsFetchingOrders(true));
     dispatch(redeemCounter());

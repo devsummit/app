@@ -52,6 +52,7 @@ const Drawer = () => (
         <Menu icon="handshake-o" text="Sponsor" onPress={() => Actions.sponsorInfo()} />
         <Menu icon="code" text={strings.settings.codeConduct} onPress={() => Actions.codeConduct()} />
         <Menu icon="lock" text={strings.settings.privacyPolicy} onPress={() => Actions.privacyPolicy()} />
+        <Menu icon="cog" text={strings.settings.title} onPress={() => Actions.settings()} />
       </List>
     </Content>
     <Footer style={{ height: 50, alignItems: 'center', justifyContent: 'center' }}>

@@ -5,6 +5,7 @@ import Toast from 'react-native-simple-toast';
 import Api from '../../services/api';
 import payment from '../../services/payment';
 import feeds from '../../services/feeds';
+import beacon from '../../services/beacon';
 import {
   FETCH_FEEDS,
   SET_LINKS,
@@ -98,6 +99,7 @@ export function setTokenHeader(currentpage) {
     getAccessToken().then((accessToken) => {
       Api.setAuthorizationToken(accessToken);
       dispatch(fetchFeeds(currentpage));
+      beacon.startRanging();
     });
   };
 }

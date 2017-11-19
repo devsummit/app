@@ -8,6 +8,7 @@ import MaterialList from '../MaterialList';
 import BoothList from '../BoothList';
 import Feed from '../Feed';
 import Settings from '../Settings';
+import Chat from '../Chat';
 
 export default class MainTabs extends Component {
   constructor(props) {
@@ -112,7 +113,7 @@ export default class MainTabs extends Component {
               heading={
                 <TabHeading style={{ backgroundColor: 'white' }}>
                   <IconSimpleLine
-                    name="settings"
+                    name="speech"
                     style={[
                       this.state.currentTab === 3 ? { color: '#f39e21' } : null,
                       { fontSize: 18 }
@@ -121,7 +122,7 @@ export default class MainTabs extends Component {
                 </TabHeading>
               }
             >
-              <Settings />
+              <Chat />
             </Tab>
           </Tabs>
         </View>

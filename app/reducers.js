@@ -26,6 +26,7 @@ import CreatePostReducer from './containers/CreatePost/reducer';
 import SettingsReducer from './containers/Settings/reducer';
 import CommentListReducer from './containers/CommentList/reducer';
 import RegisterHackatonReducer from './containers/RegisterHackaton/reducer';
+import ChatReducer from './containers/Chat/reducer';
 
 const rootReducers = combineReducers({
   main: MainReducer,
@@ -52,7 +53,8 @@ const rootReducers = combineReducers({
   feed: FeedReducer,
   createPost: CreatePostReducer,
   comments: CommentListReducer,
-  registerHackaton: RegisterHackatonReducer
+  registerHackaton: RegisterHackatonReducer,
+  chat: ChatReducer
 });
 
 export default rootReducers;

@@ -11,6 +11,7 @@ import br.com.vizir.rn.paypal.PayPalPackage;
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import cl.json.RNSharePackage;
+import io.devsummit.app.android.modules.BeaconPackage;
 import io.fullstack.oauth.OAuthManagerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -70,6 +71,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
           new PickerPackage(),
           new FIRMessagingPackage(),
           new RNAccountKitPackage(),
+          new BeaconPackage(),
           new ReactNativeDocumentPicker(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG)
       );

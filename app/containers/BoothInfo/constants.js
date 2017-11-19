@@ -11,3 +11,5 @@ export const UPDATE_FIELD = 'app/containers/BoothInfo/UPDATE_FIELD';
 export const FETCH_BOOTH_INFO = 'app/containers/BoothInfo/FETCH_BOOTH_INFO';
 export const UPDATE_BOOTH_GALLERY = 'app/containers/BoothInfo/UPDATE_BOOTH_GALLERY';
 export const CLEAR_BOOTH_GALLERY = 'app/containers/BoothInfo/CLEAR_BOOTH_GALLERY';
+export const UPDATE_MAIN_ROOM = 'app/containers/BoothInfo/UPDATE_MAIN_ROOM';
+export const UPDATE_FAB_VISIBLE = 'app/containers/BoothInfo/UPDATE_FAB_VISIBLE';
