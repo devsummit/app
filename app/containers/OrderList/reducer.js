@@ -11,6 +11,7 @@ import {
   PENDING_ORDERS,
   REDEEM_COUNTER,
   UPDATE_SINGLE_INPUT_FIELD,
+  UPDATE_SINGLE_TRANSFER_FIELD,
   IS_CONFIRM_EMAIL,
   FETCH_COMMUNITY,
   FETCH_TICKET,
@@ -30,6 +31,10 @@ const initialState = fromJS({
   pendingOrder: 0,
   redeemCounter: 0,
   inputFields: {
+    email: '',
+  },
+  transferFields: {
+    ticketId: '',
     email: ''
   },
   isConfirmEmail: false
@@ -39,6 +44,8 @@ function orderListReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SINGLE_INPUT_FIELD:
       return state.setIn([ 'inputFields', action.field ], action.value);
+    case UPDATE_SINGLE_TRANSFER_FIELD:
+      return state.setIn([ 'transferFields', action.field ], action.value);
     case SET_ORDER_LIST:
       return state.set('orders', fromJS(action.data));
     case IS_FETCHING_ORDERS:

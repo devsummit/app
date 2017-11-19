@@ -25,7 +25,6 @@ import {
   Modal
 } from 'react-native';
 import QRCode from 'react-native-qrcode';
-import TicketList from '../TicketList';
 import { Actions } from 'react-native-router-flux';
 import ProgressBar from 'react-native-progress/Bar';
 import { connect } from 'react-redux';
@@ -56,6 +55,7 @@ class OrderList extends Component {
     lastName: '',
     modalVisibleConfirmation: false,
     modalMyOrders: false,
+    modalTransfer: false,
     isPaid: false,
     roleId: null,
     confirmed: 0
@@ -94,9 +94,27 @@ class OrderList extends Component {
     return false;
   };
 
+  setModalTransfer = (visible) => {
+    this.setState({ modalTransfer: visible });
+  };
+
   handleInputChange = (fields, value) => {
+    this.props.updateTransferFields(fields, value);
+  };
+
+  handleInputEmail = (fields, value) => {
     this.props.updateInputFields(fields, value);
   };
+
+  confirmTransfer = (data) => {
+    Alert.alert(
+      'Confirmation',
+      `Are you sure transfer ticket to ${data}`,
+      [
+        { text: 'Yes', onPress: () => this.props.transferTicket() },
+        { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' }
+      ]);
+  }
 
   confirmPayment = (props) => {
     const idx = this.props.orders.indexOf(props);
@@ -139,7 +157,7 @@ class OrderList extends Component {
   };
 
   render() {
-    const { orders, isConfirmEmail, isFetching } = this.props;
+    const { orders, isConfirmEmail, isFetching, transferFields } = this.props;
     const count = this.props.redeemCount === 10;
     if (isFetching) {
       return (
@@ -197,7 +215,7 @@ class OrderList extends Component {
                     }}
                     placeholder="email"
                     placeholderTextColor="#BDBDBD"
-                    onChangeText={email => this.handleInputChange('email', email)}
+                    onChangeText={email => this.handleInputEmail('email', email)}
                   />
                 </Item>
                 <Button
@@ -333,34 +351,53 @@ class OrderList extends Component {
                   dataArray={this.props.tickets}
                   renderRow={(item) => {
                     return (
-                      <TouchableOpacity>
-                        <ListItem
-                          style={[
-                            styles.cardTicket,
-                            {
-                              alignSelf: 'center',
-                              height: 110,
-                              width: '95%',
-                              marginLeft: 'auto',
-                              marginRight: 'auto',
-                              borderRadius: 3
-                            }
-                          ]}
+                      <ListItem
+                        style={[
+                          styles.cardTicket,
+                          {
+                            flex: 1,
+                            alignSelf: 'center',
+                            height: 120,
+                            width: '95%',
+                            marginLeft: 'auto',
+                            marginRight: 'auto',
+                            borderRadius: 3
+                          }
+                        ]}
+                      >
+                        <TouchableOpacity
+                          style={{ flex: 1, flexDirection: 'row' }}
+                          onPress={() => Actions.ticketDetail({
+                            ticketId: item.id,
+                            ticketCode: item.ticket_code
+                          })}
                         >
-                          <Text style={{ flex: 5 }}>
+                          <View style={{ flex: 2, flexDirection: 'column', marginRight: 8 }}>
                             <Text style={{ fontWeight: 'bold' }}>
-                              {strings.order.ticketNumber} {`${item.id}\n`}
+                              {strings.order.ticketNumber} {`${item.id}`}
                             </Text>
-                            {strings.order.QRInstruction}
-                          </Text>
-                          <QRCode
-                            value={item.ticket_code}
-                            size={100}
-                            bgColor="black"
-                            fgColor="white"
-                          />
-                        </ListItem>
-                      </TouchableOpacity>
+                            <Text style={{ fontSize: 10 }}>{strings.order.QRInstruction}</Text>
+                            <TouchableOpacity
+                              style={styles.buttonTransfer}
+                              onPress={() => {
+                                this.handleInputChange('ticketId', item.id);
+                                this.setModalTransfer(true);
+                              }}
+                            >
+                              <Icon name="exchange" color="#FFFFFF" style={styles.transferIcon} />
+                              <Text style={styles.buttonText}>{'Transfer ticket'}</Text>
+                            </TouchableOpacity>
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <QRCode
+                              value={item.ticket_code}
+                              size={100}
+                              bgColor="black"
+                              fgColor="white"
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      </ListItem>
                     );
                   }}
                 />
@@ -376,8 +413,64 @@ class OrderList extends Component {
             >
               <Image source={noTicket} style={{ opacity: 0.7 }} />
               <Text style={{ color: '#FF6F00' }}>You do not have any ticket</Text>
+              <TouchableOpacity
+                style={styles.buttonRefresh}
+                onPress={() => this.props.getOrderList()}
+              >
+                <Text style={{ color: '#FFFFFF' }}>Refresh</Text>
+              </TouchableOpacity>
             </View>
           )}
+          <Modal
+            animationType="fade"
+            visible={this.state.modalTransfer}
+            onRequestClose={() => this.setModalTransfer(!this.state.modalTransfer)}
+            transparent
+          >
+            <View
+              style={{ flex: 1, justifyContent: 'center' }}
+              backgroundColor="rgba(0, 0, 0, 0.5)"
+            >
+              <View style={styles.redeem}>
+                <TouchableWithoutFeedback
+                  onPress={() => this.setModalTransfer(!this.state.modalTransfer)}
+                >
+                  <Icon style={styles.iconClose} name="times" />
+                </TouchableWithoutFeedback>
+                <View style={styles.viewredeem}>
+                  <Icon name="exchange" style={{ fontSize: 40, color: PRIMARYCOLOR, margin: 10 }} />
+                  <Text style={{ fontSize: 16, fontWeight: 'bold', color: PRIMARYCOLOR }}>
+                    Transfer ticket
+                  </Text>
+                </View>
+                <View>
+                  <View style={styles.inputItem}>
+                    <Form>
+                      <Item>
+                        <Input
+                          placeholder={'Enter username receiver'}
+                          placeholderTextColor={'#BDBDBD'}
+                          onChangeText={email => this.handleInputChange('email', email)}
+                        />
+                      </Item>
+                    </Form>
+                  </View>
+                  <View style={styles.buttonsSection}>
+                    <Button
+                      transparent
+                      style={styles.buttonModal}
+                      onPress={() => {
+                        this.confirmTransfer(transferFields.email);
+                        this.setModalTransfer(!this.state.modalTransfer);
+                      }}
+                    >
+                      <Text style={styles.buttonTextModal}>Transfer</Text>
+                    </Button>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </Content>
       </Container>
     );
@@ -388,7 +481,6 @@ OrderList.propTypes = {
   orders: PropTypes.array.isRequired,
   confirmPayment: PropTypes.func.isRequired,
   getOrderList: PropTypes.func.isRequired,
-  isConfirming: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   getCommunity: PropTypes.func.isRequired
 };
@@ -401,6 +493,7 @@ const mapStateToProps = createStructuredSelector({
   redeemCount: selectors.getRedeemCode(),
   redeemstatus: selectors.getReedemStatus(),
   inputFields: selectors.getInputFields(),
+  transferFields: selectors.getTransferFields(),
   isConfirmEmail: selectors.getIsConfirmEmail(),
   isTicketFetching: selectors.getIsTicketFetching(),
   community: selectors.getCommunity()

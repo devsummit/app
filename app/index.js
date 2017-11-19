@@ -45,9 +45,13 @@ import Drawer from './containers/Drawer';
 import SponsorInfo from './containers/SponsorInfo';
 import Comment from './containers/CommentList';
 import CreatePost from './containers/CreatePost';
+<<<<<<< HEAD
 import Chat from './containers/Chat';
 import ChatRoom from './containers/Chat/ChatRoom';
 import Settings from './containers/Settings';
+=======
+import TicketDetail from './components/TicketDetail';
+>>>>>>> origin/develop
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -155,6 +159,7 @@ class App extends Component {
               <Scene key="chat" component={Chat} title="Discussion" />
               <Scene key="chatRoom" component={ChatRoom} title="Chat Room" />
               <Scene key="settings" component={Settings} title="Settings" />
+              <Scene key="ticketDetail" component={TicketDetail} title="Ticket Detail" />
             </Scene>
           </RouterWithRedux>
         </Provider>
