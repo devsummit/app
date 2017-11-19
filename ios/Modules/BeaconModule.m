@@ -74,7 +74,7 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(startConnect: (RCTPromiseResolveBlock)resolve rejecter: (RCTPromiseRejectBlock) reject){
+RCT_REMAP_METHOD(startConnect, findEventsWithResolver:(RCTPromiseResolveBlock)resolve rejecter: (RCTPromiseRejectBlock) reject){
   connectResolveBlock = resolve;
   connectRejectBlock = reject;
   [self connect];

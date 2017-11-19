@@ -1,8 +1,11 @@
 import { NativeEventEmitter, NativeModules, Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import api from './api';
 import ticket from './ticket';
 import { store } from '../store';
+import { getProfileData } from "../helpers";
 import { fetchTickets } from '../containers/OrderList/actions';
+import { userVisitedThisBooth } from '../containers/BoothInfo/actions';
 
 const { BeaconModule } = NativeModules;
 
@@ -23,38 +26,41 @@ const beacon = {
   },
   fetchBeacons: version => api.post('/api/v1/beacons/mapping/update', { version }),
   subscribe: callback => BeaconEventEmitter.addListener(events.beaconUpdate, callback),
-  startRanging: () => {
-    let remoteBeacons;
-    let visited;
-    beacon.fetchBeacons(1).then(({ data: { data } }) => {
-      remoteBeacons = data;
-    }).catch(e => console.log(e));
-    beacon.connect().then((result) => {
-      this.subscription = beacon.subscribe((beacons) => {
-        if (remoteBeacons && remoteBeacons.length > 0) {
-          const nearBeacon = beacons.find((item) => {
-            return Math.abs(item.accuracy) < 1;
-          });
-          if (!nearBeacon || !remoteBeacons) {
-            return;
-          }
-          const matchBeacon = remoteBeacons
-            .find(item => parseInt(item.major, 0) === parseInt(nearBeacon.major, 0)
-              && parseInt(item.minor, 0) === parseInt(nearBeacon.minor, 0));
-          if (matchBeacon && (!visited ||
-            !(parseInt(visited.major, 0) === parseInt(matchBeacon.major, 0)
-              && parseInt(visited.minor, 0) === parseInt(matchBeacon.minor, 0)))) {
-            visited = matchBeacon;
-            beacon.onNearBeacon(matchBeacon);
-          }
-        }
-      });
-    }).catch(e => console.log(e));
+  getBeacons: async () => {
+    const { data: { data } } = await beacon.fetchBeacons(1);
+    console.log('remote beacons', data);
+    return data;
   },
-  onNearBeacon: (matchBeacon) => {
+  startRanging: () => {
+    let visited;
+    Promise.all([beacon.getBeacons(), beacon.connect(), getProfileData()])
+      .then(([remoteBeacons, connectionResult, user]) => {
+        this.subscription = beacon.subscribe((beacons) => {
+          if (remoteBeacons && remoteBeacons.length > 0) {
+            const nearBeacon = beacons.find((item) => {
+              return Math.abs(item.accuracy) < 1;
+            });
+            console.log('nearBeacon', nearBeacon);
+            if (!nearBeacon || !remoteBeacons) {
+              return;
+            }
+            const matchBeacon = remoteBeacons
+              .find(item => parseInt(item.major, 0) === parseInt(nearBeacon.major, 0)
+                && parseInt(item.minor, 0) === parseInt(nearBeacon.minor, 0));
+            if (matchBeacon && (!visited ||
+                !(parseInt(visited.major, 0) === parseInt(matchBeacon.major, 0)
+                  && parseInt(visited.minor, 0) === parseInt(matchBeacon.minor, 0)))) {
+              visited = matchBeacon;
+              beacon.onNearBeacon(matchBeacon, user);
+            }
+          }
+        });
+      }).catch(e => console.log('error', e))
+  },
+  onNearBeacon: (matchBeacon, user) => {
     switch (matchBeacon.type) {
       case 'exhibitor':
-        return beacon.onExhibitor(matchBeacon);
+        return beacon.onExhibitor(matchBeacon, user);
       case 'entrance':
         return beacon.onEntrance(matchBeacon);
       case 'speaker':
@@ -67,9 +73,20 @@ const beacon = {
         break;
     }
   },
-  onExhibitor: (matchBeacon) => {
+  onExhibitor: (matchBeacon, user) => {
     // do something when user is nearby a beacon with exhibitor type
     console.log('onExhibitor beacon', matchBeacon);
+    const { exhibitor } = matchBeacon.details;
+    if (exhibitor && exhibitor.channel_id) {
+      store.dispatch(userVisitedThisBooth(exhibitor.channel_id))
+      Actions.boothInfo({
+        title: exhibitor.name,
+        summary: exhibitor.summary,
+        user,
+        booth_photo: exhibitor.logo_url,
+        booth_id: exhibitor.id
+      });
+    }
   },
   onSpeaker: (matchBeacon) => {
     // do something when user is nearby a beacon with speaker type
