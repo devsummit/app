@@ -71,6 +71,7 @@ export default class MainTabs extends Component {
             onChangeTab={(i, ref) => this.handleCurrentTab(i.i)}
             tabBarPosition="bottom"
             initialPage={0}
+            locked
           >
             <Tab
               heading={
