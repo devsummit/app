@@ -43,7 +43,7 @@ function boothInfoReducer(state = initialState, action) {
     case UPDATE_MAIN_ROOM:
       return state.set('mainRoom', action.payload);
     case UPDATE_FAB_VISIBLE:
-      return state.set('fabVisible', action.payloads);
+      return state.set('fabVisible', action.payload);
     default:
       return state;
   }
