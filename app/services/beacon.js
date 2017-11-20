@@ -27,7 +27,8 @@ const beacon = {
   },
   fetchBeacons: version => api.post('/api/v1/beacons/mapping/update', { version }),
   subscribe: callback => BeaconEventEmitter.addListener(events.beaconUpdate, callback),
-  checkinExhibitor: ({ major, minor }) => api.post('/api/v1/points/reward', { major, minor }),
+  reward: ({ major, minor }) => api.post('/api/v1/points/reward', { major, minor }),
+  checkinExhibitor: (exhibitor) => api.post('/api/v1/boothcheckin', { booth_id: exhibitor.id, booth_type: exhibitor.type, speed_dating: false }),
   getBeacons: async () => {
     try {
       const beaconsData = await AsyncStorage.getItem('beacons');
@@ -103,7 +104,12 @@ const beacon = {
     if (exhibitor && exhibitor.channel_id) {
       userVisitedThisBooth(exhibitor.channel_id).catch(e => console.log(e));
       store.dispatch(updateFabVisible(true));
-      beacon.checkinExhibitor(exhibitor);
+      beacon.reward(matchBeacon)
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
+      beacon.checkinExhibitor(matchBeacon)
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
       Actions.boothInfo({
         title: exhibitor.name,
         summary: exhibitor.summary,
@@ -126,12 +132,18 @@ const beacon = {
         Alert.alert('Oops', 'Looks like you have no ticket. You will get more insight if you have one or more tickets');
       } else if (tickets.count === 1) {
         Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
-        ticket.checkin(tickets[0].ticket_code).catch(e => console.log(e));
+        ticket
+          .checkin(tickets[0].ticket_code)
+          .then(response => console.log('checkin response', response))
+          .catch(e => console.log(e));
       } else {
         // must pick one ticket.
         // TODO: change this code so it should pick one of the ticket.
         Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
-        ticket.checkin(tickets[0].ticket_code).catch(e => console.log(e));
+        ticket
+          .checkin(tickets[0].ticket_code)
+          .then(response => console.log('checkin response', response))
+          .catch(e => console.log(e));
       }
     }));
   },
@@ -142,6 +154,17 @@ const beacon = {
   onSponsor: (matchBeacon) => {
     // do something if other type of beacon is occured nearby
     console.log('onSponsor beacon', matchBeacon);
+    const { sponsor } = matchBeacon.details;
+    if (sponsor) {
+      store.dispatch(updateFabVisible(true));
+      beacon.reward(matchBeacon)
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
+      beacon.checkinExhibitor(matchBeacon)
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
+    }
+
   }
 };
 
