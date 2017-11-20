@@ -33,7 +33,6 @@ const beacon = {
       const beaconsData = await AsyncStorage.getItem('beacons');
       // first initialization
       if (!beaconsData) {
-        console.log('loading beacons from network');
         const { data: { data } } = await beacon.fetchBeacons(1);
         AsyncStorage.setItem('beacons', JSON.stringify({
           beacons: data,
@@ -43,7 +42,6 @@ const beacon = {
       }
       const { beacons, lastUpdatedAt } = JSON.parse(beaconsData);
       if (moment(lastUpdatedAt).diff(moment()) >= 30 * 60) {
-        console.log('refreshing beacons from network');
         const { data: { data } } = await beacon.fetchBeacons(1);
         AsyncStorage.setItem('beacons', JSON.stringify({
           beacons: data,
@@ -51,10 +49,8 @@ const beacon = {
         }));
         return data;
       }
-      console.log('loading beacons from local storage', beacons);
       return beacons;
     } catch (e) {
-      console.log('error', e);
       return [];
     }
   },
@@ -65,9 +61,8 @@ const beacon = {
         this.subscription = beacon.subscribe((beacons) => {
           if (remoteBeacons && remoteBeacons.length > 0) {
             const nearBeacon = beacons.find((item) => {
-              return Math.abs(item.accuracy) < 1.5;
+              return Math.abs(item.accuracy) < 2;
             });
-            console.log('nearBeacon', nearBeacon, remoteBeacons);
             if (!nearBeacon || !remoteBeacons) {
               return;
             }

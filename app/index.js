@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
-import { View, AsyncStorage, BackHandler } from 'react-native';
+import { View, AsyncStorage, BackHandler, Alert, Platform } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import BusyIndicator from 'react-native-busy-indicator';
 import codePush from 'react-native-code-push';
@@ -47,6 +47,8 @@ import ChatRoom from './containers/Chat/ChatRoom';
 import Settings from './containers/Settings';
 import TicketDetail from './components/TicketDetail';
 import { store } from './store';
+import { getAccessToken } from './helpers';
+import beacon from './services/beacon';
 
 const RouterWithRedux = connect()(Router);
 const BackButtonImg = require('../assets/images/back.png');
@@ -100,7 +102,14 @@ class App extends Component {
         console.log('Up-to-date.');
         break;
       case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log('Update installed.');
+        if (Platform.OS === 'android') {
+          Alert.alert("Update installed.", "We have downloaded the update successfully. Please restart the app.", [
+            {
+              text: "OK",
+              onPress: () => BackHandler.exitApp(),
+            }
+          ]);
+        }
         break;
       default:
         break;
@@ -165,6 +174,6 @@ class App extends Component {
 
 export default codePush({
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-  installMode: codePush.InstallMode.IMMEDIATE,
+  installMode: codePush.InstallMode.ON_NEXT_SUSPEND,
   updateDialog: true
 })(App);
