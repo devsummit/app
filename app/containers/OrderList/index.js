@@ -377,16 +377,24 @@ class OrderList extends Component {
                               {strings.order.ticketNumber} {`${item.id}`}
                             </Text>
                             <Text style={{ fontSize: 10 }}>{strings.order.QRInstruction}</Text>
-                            <TouchableOpacity
-                              style={styles.buttonTransfer}
-                              onPress={() => {
-                                this.handleInputChange('ticketId', item.id);
-                                this.setModalTransfer(true);
-                              }}
-                            >
-                              <Icon name="exchange" color="#FFFFFF" style={styles.transferIcon} />
-                              <Text style={styles.buttonText}>{'Transfer ticket'}</Text>
-                            </TouchableOpacity>
+                            {item.checked_in === false ?
+                              <TouchableOpacity
+                                style={styles.buttonTransfer}
+                                onPress={() => {
+                                  this.handleInputChange('ticketId', item.id);
+                                  this.setModalTransfer(true);
+                                }}
+                              >
+                                <Icon name="exchange" color="#FFFFFF" style={styles.transferIcon} />
+                                <Text style={styles.buttonText}>{'Transfer ticket'}</Text>
+                              </TouchableOpacity> :
+                              <TouchableOpacity
+                                style={styles.buttonCheckIn}
+                                disabled
+                              >
+                                <Text style={styles.buttonText}>{'Checked in'}</Text>
+                              </TouchableOpacity>
+                            }
                           </View>
                           <View style={{ flex: 1 }}>
                             <QRCode
