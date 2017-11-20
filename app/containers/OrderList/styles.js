@@ -34,6 +34,15 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     marginTop: 8
   },
+  buttonCheckIn: {
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#00C853',
+    paddingVertical: 4,
+    marginTop: 8
+  },
   buttonText: {
     fontSize: 12,
     color: '#FFFFFF',
