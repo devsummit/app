@@ -11,9 +11,11 @@ import {
   Form,
   Item,
   Label,
-  Input
+  Input,
+  Spinner
 } from 'native-base';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import { getAccessToken, DevSummitAxios } from '../../helpers';
 
@@ -22,49 +24,66 @@ class Quiz extends Component {
     super();
     this.state = {
       questions: [],
-      answers: {}
+      answers: {},
+      questionId: 0
     };
   }
 
   componentWillMount() {
     const { props: { boothId } } = this;
-    this.fetchQuestions(boothId);
+    this.fetchQuestions(16);
   }
 
   fetchQuestions = async (id) => {
     try {
       const token = await getAccessToken();
       const getQuestions = await DevSummitAxios.get(`api/v1/questioners?booth_id=${id}`, {
-        headers: { 'Authorization' : token, 'Content-Type': 'application/json' }
+        headers: { 'Authorization': token, 'Content-Type': 'application/json' }
       });
+      const questionId = getQuestions.data.data[0].id;
       const questions = JSON.parse(getQuestions.data.data[0].questions);
-      this.setState({ questions });
+      this.setState({ questions, questionId });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  postAnswers = async (questionId, payload) => {
+    try {
+      const token = await getAccessToken();
+      const postAnswers = await DevSummitAxios.post(`api/v1/questioners/${questionId}/answers`, { answers: payload}, {
+        headers: { 'Authorization': token, 'Content-Type': 'application/json' },
+      });
+      return postAnswers;
     } catch (error) {
       console.log(error);
     }
   }
 
   handleTextInput = (index, text) => {
-    console.log(text);
     const { state: { answers } } = this;
     answers[index] = text;
-    console.log(answers);
     this.setState({ answers });
   }
 
   handleSubmit = () => {
-    const { state: { answers } } = this;
-    console.log(answers);
+    const { state: { answers, questionId } } = this;
+    const payload = [];
+    Object.keys(answers).forEach((id) => {
+      payload.push({ id, text: answers[id] });
+    });
+    this.postAnswers(questionId, payload).then( (response) => {
+      if (response.status === 200) {
+        Alert.alert('Submited!', 'Thanks for your answer!');
+        Actions.pop();
+      } else {
+        Alert.alert('Connection error!', 'Check your connection and submit again.');
+      }
+    });
   }
 
   render() {
     const { state: { questions } } = this;
-    const defaultQuestions = [
-      { id: 1, text: 'Profile Github anda :' },
-      { id: 2, text: 'Latar belakang pendidikan anda:' },
-      { id: 3, text: 'Social media anda: (linkedid, facebook, twitter, dll):' }
-    ];
-    // profile github, latarberlakang pendidikan, social media
     return (
       <Container>
         <Header style={{ backgroundColor: '#FFC107' }}>
@@ -84,17 +103,9 @@ class Quiz extends Component {
                   onChangeText={text => this.handleTextInput(question.id, text)}
                 />
               </View>
-            )) : defaultQuestions.map((question, index) => (
-              <View style={{ marginBottom: 24 }}>
-                <Text style={{ fontWeight: 'bold' }}>{question.text}</Text>
-                <TextInput
-                  multiline
-                  numberOfLines={4}
-                  style={{ backgroundColor: 'white', marginTop: 10, borderRadius: 10 }}
-                  onChangeText={text => this.handleTextInput(question.id, text)}
-                />
-              </View>
-            ))}
+            )) : (
+              <Spinner color="orange" />
+            )}
           </Form>
         </Content>
         <Footer>
