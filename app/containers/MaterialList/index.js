@@ -153,18 +153,24 @@ class MaterialList extends Component {
                           <Body>
                             <View style={styles.bodySection}>
                               <View style={styles.profileSection}>
-                                <Image
-                                  source={{ uri: data.user.photos[0].url || '' }}
-                                  style={styles.photo}
-                                />
+                                {this.props.hidden ?
+                                  <Icon name="file-pdf-o" style={styles.icons} /> :
+                                  <Image
+                                    source={{ uri: data.user.photos[0].url || '' }}
+                                    style={styles.photo}
+                                  />
+                                }
                               </View>
                               <View style={styles.nameSection}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                  <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
-                                  <TouchableOpacity onPress={() => this.showAlert(data.id)}>
-                                    <Icon name="remove" color="red" style={styles.icon} />
-                                  </TouchableOpacity>
-                                </View>
+                                {this.props.hidden ?
+                                  <View /> :
+                                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Text style={styles.name}>{data.user.first_name} {data.user.last_name}</Text>
+                                      <TouchableOpacity onPress={() => this.showAlert(data.id)}>
+                                        <Icon name="remove" color="red" style={styles.icon} />
+                                    </TouchableOpacity>
+                                  </View>
+                                }
                                 <View style={{ flex: 1, flexDirection: 'row' }}>
                                   <View style={{ flex: 1 }}>
                                     <Text style={styles.title}>{data.title}</Text>
@@ -172,17 +178,17 @@ class MaterialList extends Component {
                                       {data.summary}
                                     </Text>
                                   </View>
-                                  <FlagMaterial
-                                    onPress={() => this.props.updateStatus(data, key)}
-                                    isUsed={data.is_used}
-                                    id={data.id}
-                                  />
+                                  {this.props.hidden ?
+                                    <View /> :
+                                    <FlagMaterial
+                                      onPress={() => this.props.updateStatus(data, key)}
+                                      isUsed={data.is_used}
+                                      id={data.id}
+                                    />
+                                  }
                                 </View>
-                                <View style={styles.materialUrl}>
-                                  <Text style={styles.material} numberOfLines={1}>{data.material}</Text>
-                                </View>
-                                <TouchableOpacity onPress={() => this.getSingleLink(data.material)}>
-                                  <Text>Download</Text>
+                                <TouchableOpacity style={styles.buttonDownload} onPress={() => this.getSingleLink(data.material)}>
+                                  <Text style={styles.textDownload}>Download</Text>
                                 </TouchableOpacity>
                               </View>
                             </View>

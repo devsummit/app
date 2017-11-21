@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#333',
     fontSize: 16,
-    marginVertical: 4
+    fontWeight: '500'
   },
   summary: {
     fontSize: 16,
@@ -79,6 +79,21 @@ const styles = StyleSheet.create({
   },
   artworkImage: {
     opacity: 0.7
+  },
+  buttonDownload: {
+    backgroundColor: '#03A9F4',
+    marginTop: 8,
+    padding: 8,
+    borderRadius: 4
+  },
+  textDownload: {
+    color: '#FFFFFF',
+    textAlign: 'center'
+  },
+  icons: {
+    fontSize: 50,
+    color: 'red',
+    alignSelf: 'center'
   },
   noMaterialText: { alignSelf: 'center', fontSize: 15, color: 'grey', marginVertical: 15 }
 });
