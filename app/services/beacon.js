@@ -5,7 +5,7 @@ import api from './api';
 import ticket from './ticket';
 import { store } from '../store';
 import { getProfileData } from '../helpers';
-import { fetchTickets } from '../containers/OrderList/actions';
+import { fetchTickets, getOrderList } from '../containers/OrderList/actions';
 import { userVisitedThisBooth, updateFabVisible } from '../containers/BoothInfo/actions';
 
 const { BeaconModule } = NativeModules;
@@ -136,6 +136,8 @@ const beacon = {
           .checkin(tickets[0].ticket_code)
           .then(response => console.log('checkin response', response))
           .catch(e => console.log(e));
+
+        store.dispatch(getOrderList());
       } else {
         // must pick one ticket.
         // TODO: change this code so it should pick one of the ticket.
@@ -144,6 +146,8 @@ const beacon = {
           .checkin(tickets[0].ticket_code)
           .then(response => console.log('checkin response', response))
           .catch(e => console.log(e));
+
+          store.dispatch(getOrderList());
       }
     }));
   },
