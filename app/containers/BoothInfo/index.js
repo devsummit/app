@@ -109,7 +109,7 @@ class BoothInfo extends Component {
   addUserToBoothRoom = async () => {
     const data = await getProfileData();
     const { email: userEmail } = data;
-    const { state: { mainRoom } } = this;
+    const { props: { mainRoom } } = this;
     const addUserToRoom = await addRoomParticipant([ userEmail ], mainRoom.room_id_str);
     const room = addUserToRoom.results;
     Actions.chat({
