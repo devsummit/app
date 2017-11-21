@@ -273,12 +273,17 @@ export function transferTicket() {
       user_ticket_id: ticketId,
       receiver: email
     };
+    console.log("data", data);
 
     orderlist.transfer(data)
       .then((response) => {
         console.log('landing here success', response);
         dispatch(getOrderList());
-        Toast.show(`Your ticket has been transferred to ${response.data.data.receiver.username}`, Toast.LONG);
+        if (response.data.data && response.data.data.receiver && response.data.data.username) {
+          Toast.show(`Your ticket has been transferred to ${response.data.data.receiver.username}`, Toast.LONG);
+        } else {
+          Toast.show(`${response.data.meta.message}`, Toast.LONG);
+        }
       })
       .catch((error) => {
         console.log('landing here success', error);
