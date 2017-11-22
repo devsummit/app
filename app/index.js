@@ -175,5 +175,5 @@ class App extends Component {
 export default codePush({
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
   installMode: codePush.InstallMode.ON_NEXT_SUSPEND,
-  updateDialog: true
+  updateDialog: false,
 })(App);

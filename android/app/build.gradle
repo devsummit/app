@@ -210,7 +210,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.2.1'
     compile 'com.google.firebase:firebase-messaging:10.2.1'
     compile 'com.github.javiersantos:AppUpdater:2.6.3'
-
+    compile 'com.google.code.gson:gson:2.8.2'
 
     compile "com.android.support:appcompat-v7:23.0.1"
     compile 'org.altbeacon:android-beacon-library:2+'

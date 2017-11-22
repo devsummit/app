@@ -1,5 +1,6 @@
 package io.devsummit.app.android.modules;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -22,6 +24,7 @@ import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.modules.core.PermissionListener;
+import com.google.gson.Gson;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -32,12 +35,15 @@ import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 import io.devsummit.app.android.MainActivity;
 import io.devsummit.app.android.Manifest;
+import io.devsummit.app.android.services.BeaconService;
 
 /**
  * Created by gufy on 13/11/17.
@@ -73,7 +79,7 @@ public class BeaconModule extends BaseJavaModule implements NativeModule, Beacon
         this.connectPromise = connectPromise;
         MainActivity activity = (MainActivity) context.getCurrentActivity();
         if (activity != null) {
-            beaconManager.bind(activity);
+            beaconManager.bind(this);
             activity.authorizeForBeacon(this, this);
         }
     }
@@ -122,6 +128,8 @@ public class BeaconModule extends BaseJavaModule implements NativeModule, Beacon
             public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
                 WritableArray beacons = new WritableNativeArray();
                 if (collection.size() == 0) return;
+                Intent serviceIntent = new Intent(context, BeaconService.class);
+                List<io.devsummit.app.android.models.Beacon> beaconList = new ArrayList();
                 for (Beacon beacon :
                         collection) {
                     WritableMap beaconMap = new WritableNativeMap();
@@ -132,26 +140,33 @@ public class BeaconModule extends BaseJavaModule implements NativeModule, Beacon
                     beaconMap.putInt("minor", beacon.getId3().toInt());
                     beaconMap.putInt("rssi", beacon.getRssi());
                     beacons.pushMap(beaconMap);
+                    beaconList.add(new io.devsummit.app.android.models.Beacon(beacon));
                 }
-                context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                        .emit("beaconsUpdate", beacons);
+                String json = new Gson().toJson(beaconList);
+                if(isAppOnForeground(context)) {
+                    context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                            .emit("beaconsUpdate", beacons);
+                } else {
+                    serviceIntent.putExtra("beacon", json);
+                    context.startService(serviceIntent);
+                }
             }
         });
     }
 
     @Override
     public Context getApplicationContext() {
-        return context;
+        return context.getApplicationContext();
     }
 
     @Override
     public void unbindService(ServiceConnection serviceConnection) {
-
+        context.getApplicationContext().unbindService(serviceConnection);
     }
 
     @Override
     public boolean bindService(Intent intent, ServiceConnection serviceConnection, int i) {
-        return false;
+        return context.getApplicationContext().bindService(intent, serviceConnection, i);
     }
 
     @Override
@@ -177,5 +192,27 @@ public class BeaconModule extends BaseJavaModule implements NativeModule, Beacon
             connectPromise.reject(e);
         }
         return true;
+    }
+
+    private boolean isAppOnForeground(Context context) {
+        /**
+         We need to check if app is in foreground otherwise the app will crash.
+         http://stackoverflow.com/questions/8489993/check-android-application-is-in-foreground-or-not
+         **/
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses =
+                activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+        final String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.importance ==
+                    ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
+                    appProcess.processName.equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

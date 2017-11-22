@@ -1,4 +1,5 @@
 import { NativeEventEmitter, AsyncStorage, NativeModules, Alert } from 'react-native';
+import FCM from 'react-native-fcm';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import api from './api';
@@ -18,6 +19,7 @@ const events = {
 // let isConnected =
 const beacon = {
   isConnected: false,
+  visited: null,
   connect: () => {
     if (beacon.isConnected) {
       return Promise.reject(false);
@@ -56,48 +58,49 @@ const beacon = {
     }
   },
   startRanging: () => {
-    let visited;
     Promise.all([ beacon.getBeacons(), beacon.connect(), getProfileData() ])
       .then(([ remoteBeacons, connectionResult, user ]) => {
-        this.subscription = beacon.subscribe((beacons) => {
-          if (remoteBeacons && remoteBeacons.length > 0) {
-            const nearBeacon = beacons.find((item) => {
-              return Math.abs(item.accuracy) < 2;
-            });
-            if (!nearBeacon || !remoteBeacons) {
-              return;
-            }
-            const matchBeacon = remoteBeacons
-              .find(item => parseInt(item.major, 0) === parseInt(nearBeacon.major, 0)
-                && parseInt(item.minor, 0) === parseInt(nearBeacon.minor, 0));
-            if (matchBeacon && (!visited ||
-                !(parseInt(visited.major, 0) === parseInt(matchBeacon.major, 0)
-                  && parseInt(visited.minor, 0) === parseInt(matchBeacon.minor, 0)
-                ))) {
-              visited = matchBeacon;
-              beacon.onNearBeacon(matchBeacon, user);
-            }
-          }
-        });
+        this.subscription = beacon.subscribe(beacons => beacon.receiveBeacons(beacons, remoteBeacons, user, true));
       }).catch(e => console.log('error', e));
   },
-  onNearBeacon: (matchBeacon, user) => {
+  receiveBeacons: (beacons, remoteBeacons, user, isForeground) => {
+    let visited = beacon.visited;
+    if (remoteBeacons && remoteBeacons.length > 0) {
+      const nearBeacon = beacons.find((item) => {
+        return Math.abs(item.accuracy) < 1;
+      });
+      if (!nearBeacon || !remoteBeacons) {
+        return;
+      }
+      const matchBeacon = remoteBeacons
+        .find(item => parseInt(item.major, 0) === parseInt(nearBeacon.major, 0)
+          && parseInt(item.minor, 0) === parseInt(nearBeacon.minor, 0));
+      if (matchBeacon && (!visited ||
+          !(parseInt(visited.major, 0) === parseInt(matchBeacon.major, 0)
+            && parseInt(visited.minor, 0) === parseInt(matchBeacon.minor, 0)
+          ))) {
+        beacon.visited = matchBeacon;
+        beacon.onNearBeacon(matchBeacon, user, isForeground);
+      }
+    }
+  },
+  onNearBeacon: (matchBeacon, user, isForeground) => {
     switch (matchBeacon.type) {
       case 'exhibitor':
-        return beacon.onExhibitor(matchBeacon, user);
+        return beacon.onExhibitor(matchBeacon, user, isForeground);
       case 'entrance':
-        return beacon.onEntrance(matchBeacon);
+        return beacon.onEntrance(matchBeacon, isForeground);
       case 'speaker':
-        return beacon.onSpeaker(matchBeacon);
+        return beacon.onSpeaker(matchBeacon, isForeground);
       case 'other':
-        return beacon.onOther(matchBeacon);
+        return beacon.onOther(matchBeacon, isForeground);
       case 'sponsor':
-        return beacon.onSponsor(matchBeacon);
+        return beacon.onSponsor(matchBeacon, isForeground);
       default:
         break;
     }
   },
-  onExhibitor: (matchBeacon, user) => {
+  onExhibitor: (matchBeacon, user, isForeground) => {
     // do something when user is nearby a beacon with exhibitor type
     console.log('onExhibitor beacon', matchBeacon);
     const { exhibitor } = matchBeacon.details;
@@ -110,20 +113,24 @@ const beacon = {
       beacon.checkinExhibitor(matchBeacon)
         .then(response => console.log(response))
         .catch(e => console.log(e));
-      Actions.boothInfo({
-        title: exhibitor.name,
-        summary: exhibitor.summary,
-        user: exhibitor.owner,
-        booth_photo: exhibitor.logo_url,
-        booth_id: exhibitor.id
-      });
+      if (isForeground) {
+        Actions.boothInfo({
+          title: exhibitor.name,
+          summary: exhibitor.summary,
+          user: exhibitor.owner,
+          booth_photo: exhibitor.logo_url,
+          booth_id: exhibitor.id
+        });
+      } else {
+        beacon.notify(`You're visiting ${sponsor.name}`, `Get some more information and insight on ${sponsor.name}`, exhibitor)
+      }
     }
   },
   onSpeaker: (matchBeacon) => {
     // do something when user is nearby a beacon with speaker type
     console.log('onSpeaker beacon', matchBeacon);
   },
-  onEntrance: (matchBeacon) => {
+  onEntrance: (matchBeacon, isForeground) => {
     // we should check in the user if not
     console.log('onEntrance beacon', matchBeacon);
     store.dispatch(fetchTickets((tickets) => {
@@ -131,7 +138,11 @@ const beacon = {
         // no tickets appear to be found or the user never buy any ticket.
         Alert.alert('Oops', 'Looks like you have no ticket. You will get more insight if you have one or more tickets');
       } else if (tickets.count === 1) {
-        Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+        if (isForeground) {
+          Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+        } else {
+          beacon.notify('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+        }
         ticket
           .checkin(tickets[0].ticket_code)
           .then(response => console.log('checkin response', response))
@@ -141,7 +152,11 @@ const beacon = {
       } else {
         // must pick one ticket.
         // TODO: change this code so it should pick one of the ticket.
-        Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+        if (isForeground) {
+          Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+        } else {
+          beacon.notify('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+        }
         ticket
           .checkin(tickets[0].ticket_code)
           .then(response => console.log('checkin response', response))
@@ -155,7 +170,7 @@ const beacon = {
     // do something if other type of beacon is occured nearby
     console.log('onOther beacon', matchBeacon);
   },
-  onSponsor: (matchBeacon) => {
+  onSponsor: (matchBeacon, isForeground) => {
     // do something if other type of beacon is occured nearby
     console.log('onSponsor beacon', matchBeacon);
     const { sponsor } = matchBeacon.details;
@@ -167,8 +182,35 @@ const beacon = {
       beacon.checkinExhibitor(matchBeacon)
         .then(response => console.log(response))
         .catch(e => console.log(e));
-    }
+      if(isForeground) {
 
+      } else {
+        beacon.notify(`You're visiting ${sponsor.name}`, `Get some more information and insight on ${sponsor.name}`, sponsor);
+      }
+    }
+  },
+  notify: (title, body, data) => {
+    FCM.presentLocalNotification({
+      id: data.id || new Date().getTime(),
+      title,
+      body,
+      sound: "default",                                   // as FCM payload
+      priority: "high",                                   // as FCM payload
+      click_action: "ACTION",                             // as FCM payload
+      badge: 10,                                          // as FCM payload IOS only, set 0 to clear badges
+      number: 10,                                         // Android only
+      auto_cancel: true,                                  // Android only (default true)
+      large_icon: "ic_launcher",                           // Android only
+      icon: "ic_launcher",                                // as FCM payload, you can relace this with custom icon you put in mipmap
+      color: "black",                                       // Android only
+      vibrate: 300,                                       // Android only default: 300, no vibration if you pass 0
+      data,
+      group: "group",                                     // Android only
+      ongoing: true,                                      // Android only
+      my_custom_data:'my_custom_field_value',             // extra data you want to throw
+      lights: true,                                       // Android only, LED blinking (default false)
+      show_in_foreground: true,
+    });
   }
 };
 
