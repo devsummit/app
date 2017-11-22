@@ -44,7 +44,8 @@ const beacon = {
         return data;
       }
       const { beacons, lastUpdatedAt } = JSON.parse(beaconsData);
-      if (moment(lastUpdatedAt).diff(moment()) >= 30 * 60) {
+      console.log('diff', moment(lastUpdatedAt).diff(moment()));
+      if (Math.abs(moment(lastUpdatedAt).diff(moment())) >= 1 * 60) {
         const { data: { data } } = await beacon.fetchBeacons(1);
         AsyncStorage.setItem('beacons', JSON.stringify({
           beacons: data,
@@ -102,16 +103,15 @@ const beacon = {
   },
   onExhibitor: (matchBeacon, user, isForeground) => {
     // do something when user is nearby a beacon with exhibitor type
-    console.log('onExhibitor beacon', matchBeacon);
     const { exhibitor } = matchBeacon.details;
     if (exhibitor && exhibitor.channel_id) {
       userVisitedThisBooth(exhibitor.channel_id).catch(e => console.log(e));
       store.dispatch(updateFabVisible(true));
       beacon.reward(matchBeacon)
-        .then(response => console.log(response))
+        .then(response => response)
         .catch(e => console.log(e));
       beacon.checkinExhibitor(matchBeacon)
-        .then(response => console.log(response))
+        .then(response => response)
         .catch(e => console.log(e));
       if (isForeground) {
         Actions.boothInfo({
@@ -122,7 +122,7 @@ const beacon = {
           booth_id: exhibitor.id
         });
       } else {
-        beacon.notify(`You're visiting ${sponsor.name}`, `Get some more information and insight on ${sponsor.name}`, exhibitor)
+        beacon.notify(`You're visiting ${exhibitor.name}`, exhibitor.summary, exhibitor, matchBeacon)
       }
     }
   },
@@ -141,7 +141,7 @@ const beacon = {
         if (isForeground) {
           Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
         } else {
-          beacon.notify('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+          beacon.notify('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.', null, matchBeacon);
         }
         ticket
           .checkin(tickets[0].ticket_code)
@@ -155,11 +155,11 @@ const beacon = {
         if (isForeground) {
           Alert.alert('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
         } else {
-          beacon.notify('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.');
+          beacon.notify('Glad to see you on this event!', 'We will check you in to let the people know you\'re here. Have fun on devsummit event.', null, matchBeacon);
         }
         ticket
           .checkin(tickets[0].ticket_code)
-          .then(response => console.log('checkin response', response))
+          .then(response => response)
           .catch(e => console.log(e));
 
           store.dispatch(getOrderList());
@@ -185,31 +185,29 @@ const beacon = {
       if(isForeground) {
 
       } else {
-        beacon.notify(`You're visiting ${sponsor.name}`, `Get some more information and insight on ${sponsor.name}`, sponsor);
+        beacon.notify(`You're visiting ${sponsor.name}`, `Get some more information and insight on ${sponsor.name}`, sponsor, matchBeacon);
       }
     }
   },
-  notify: (title, body, data) => {
+  notify: (title, body, data, beacon) => {
+    console.log('notify ', title, beacon, data);
     FCM.presentLocalNotification({
-      id: data.id || new Date().getTime(),
+      id: beacon.major + beacon.minor,
       title,
       body,
       sound: "default",                                   // as FCM payload
       priority: "high",                                   // as FCM payload
       click_action: "ACTION",                             // as FCM payload
       badge: 10,                                          // as FCM payload IOS only, set 0 to clear badges
-      number: 10,                                         // Android only
+      number: beacon.major + beacon.minor,                                         // Android only
       auto_cancel: true,                                  // Android only (default true)
       large_icon: "ic_launcher",                           // Android only
       icon: "ic_launcher",                                // as FCM payload, you can relace this with custom icon you put in mipmap
       color: "black",                                       // Android only
       vibrate: 300,                                       // Android only default: 300, no vibration if you pass 0
-      data,
-      group: "group",                                     // Android only
-      ongoing: true,                                      // Android only
       my_custom_data:'my_custom_field_value',             // extra data you want to throw
       lights: true,                                       // Android only, LED blinking (default false)
-      show_in_foreground: true,
+      show_in_foreground: false,
     });
   }
 };
