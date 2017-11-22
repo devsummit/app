@@ -17,6 +17,7 @@ import {
 } from './constants';
 import { restoreCurrentPage } from '../Feed/actions';
 import local from '../../../config/local';
+import { fetchTickets } from '../OrderList/actions';
 
 /*
  * Update the input fields
@@ -28,6 +29,12 @@ export function updateFields(field, value) {
     type: UPDATE_SINGLE_FIELD,
     field,
     value
+  };
+}
+
+export function fetchTicketData() {
+  return (dispatch) => {
+    dispatch(fetchTickets());
   };
 }
 
@@ -95,124 +102,139 @@ export function updateIsDisabled(status) {
 }
 
 export function updateDataStorage(resp) {
-  getProfileData()
-    .then(() => {
-      const newData = JSON.stringify(resp.data);
-      AsyncStorage.removeItem('profile_data', () => {
-        try {
-          AsyncStorage.setItem('profile_data', newData);
-        } catch (e) {
-          console.log('error save profile data');
-        }
-      });
+  getProfileData().then(() => {
+    const newData = JSON.stringify(resp.data);
+    AsyncStorage.removeItem('profile_data', () => {
+      try {
+        AsyncStorage.setItem('profile_data', newData);
+      } catch (e) {
+        console.log('error save profile data');
+      }
     });
+  });
 }
 
 export function addFeedback() {
   return (dispatch, getState) => {
-    const { feedBack } = getState().get('settings').toJS();
+    const { feedBack } = getState()
+      .get('settings')
+      .toJS();
     dispatch(updateIsLoadingFeedback(true));
 
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.post(
-          '/api/v1/user-feedback',
-          {
-            content: feedBack
-          },
-          {
-            headers: {
-              Authorization: token
-            }
+    getAccessToken().then((token) => {
+      DevSummitAxios.post(
+        '/api/v1/user-feedback',
+        {
+          content: feedBack
+        },
+        {
+          headers: {
+            Authorization: token
           }
-        )
-          .then((response) => {
-            if (response && response.data && response.data.meta.success === true && response.data.meta.message === 'Feedback created') {
-              dispatch({
-                type: UPDATE_FEEDBACK_POSTED,
-                status: true
-              });
-              dispatch(updateFeedback(response.data.data.content));
-              dispatch(updateIsLoadingFeedback(false));
-              dispatch(updateModalVisibility(false));
-              Toast.show(response.data.meta.message);
-            } else {
-              Toast.show('Wrong payload');
-            }
-          })
-          .catch((error) => {
-            Toast.show('Sorry, something went wrong');
-            console.log("Error", error);
-          });
-      });
+        }
+      )
+        .then((response) => {
+          if (
+            response &&
+            response.data &&
+            response.data.meta.success === true &&
+            response.data.meta.message === 'Feedback created'
+          ) {
+            dispatch({
+              type: UPDATE_FEEDBACK_POSTED,
+              status: true
+            });
+            dispatch(updateFeedback(response.data.data.content));
+            dispatch(updateIsLoadingFeedback(false));
+            dispatch(updateModalVisibility(false));
+            Toast.show(response.data.meta.message);
+          } else {
+            Toast.show('Wrong payload');
+          }
+        })
+        .catch((error) => {
+          Toast.show('Sorry, something went wrong');
+          console.log('Error', error);
+        });
+    });
   };
 }
 
 export function changeProfile() {
   return (dispatch, getState) => {
-    const { fields } = getState().get('profile').toJS();
+    const { fields } = getState()
+      .get('profile')
+      .toJS();
     const { username, firstName, lastName, profilePic, boothInfo, job, summary } = fields;
 
-    getAccessToken()
-      .then((token) => {
-        DevSummitAxios.patch('/auth/me/changesetting', {
+    getAccessToken().then((token) => {
+      DevSummitAxios.patch(
+        '/auth/me/changesetting',
+        {
           first_name: firstName,
           last_name: lastName,
           booth_info: boothInfo,
           speaker_job: job,
           speaker_summary: summary
-        }, {
+        },
+        {
           headers: {
             Authorization: token
           }
-        }).then((response) => {
+        }
+      )
+        .then((response) => {
           if (response && response.data && response.data.meta.success) {
             updateDataStorage(response);
             dispatch(updateIsProfileUpdated(true));
           }
-        }).catch((error) => { console.log(error); });
-      });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   };
 }
 
 export function updateImage(image) {
   return (dispatch, getState) => {
-    const { avatar } = getState().get('profile').toJS();
+    const { avatar } = getState()
+      .get('profile')
+      .toJS();
 
-    getAccessToken()
-      .then((token) => {
-        // @TODO We need to change into dev-summit url
-        const url = local.API_BASE_URL.concat('api/v1/user/photo');
-        const form = new FormData();
+    getAccessToken().then((token) => {
+      // @TODO We need to change into dev-summit url
+      const url = local.API_BASE_URL.concat('api/v1/user/photo');
+      const form = new FormData();
 
-        form.append('image_data', {
-          uri: image.path,
-          type: image.mime,
-          name: 'image.jpg'
-        });
-
-        fetch(url, {
-          method: 'POST',
-          headers: {
-            Authorization: token
-          },
-          body: form
-        })
-          .then(resp => resp.json())
-          .then((resp) => {
-            updateDataStorage(resp);
-            dispatch(
-              updateAvatar(resp.data.photos[0].url),
-              updateIsAvatarUpdated(true)
-            );
-          }).catch(err => console.log('error upload image', err));
+      form.append('image_data', {
+        uri: image.path,
+        type: image.mime,
+        name: 'image.jpg'
       });
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: token
+        },
+        body: form
+      })
+        .then(resp => resp.json())
+        .then((resp) => {
+          updateDataStorage(resp);
+          dispatch(updateAvatar(resp.data.photos[0].url), updateIsAvatarUpdated(true));
+        })
+        .catch(err => console.log('error upload image', err));
+    });
   };
 }
 
 export function disabled() {
   return (dispatch, getState) => {
-    const status = getState().get('profile').toJS().isDisabled;
+    const status = getState()
+      .get('profile')
+      .toJS().isDisabled;
     if (status === true) {
       dispatch(updateIsDisabled(false));
     } else {

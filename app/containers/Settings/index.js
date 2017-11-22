@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Content, Text, Spinner } from 'native-base';
-import { View, ScrollView, Image, TouchableWithoutFeedback, Modal } from 'react-native';
+import { View, ScrollView, Image, TouchableWithoutFeedback, Modal, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import CameraIcon from 'react-native-vector-icons/FontAwesome';
 import VersionNumber from 'react-native-version-number';
@@ -18,22 +18,28 @@ import InputItem from '../../components/InputItem';
 import * as actions from './actions';
 import * as selectors from './selectors';
 
+import { getTickets } from '../OrderList/selectors';
+
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.setModalVisible = this.setModalVisible.bind(this);
     this.state = {
       id: null,
+      userId: null,
       firstName: '',
       lastName: '',
       photo: null,
       version: VersionNumber.appVersion,
-      versionCode: VersionNumber.buildVersion
+      versionCode: VersionNumber.buildVersion,
+      roleName: null
     };
   }
   componentWillMount() {
+    this.props.fetchTicketData();
     getProfileData().then((profileData) => {
       if (profileData) {
+        this.setState({ userId: profileData.id });
         this.handleInputChange('username', profileData.username);
         this.handleInputChange('firstName', profileData.first_name);
         this.handleInputChange('lastName', profileData.last_name);
@@ -44,6 +50,9 @@ class Settings extends Component {
         if (profileData.role_id === 4) {
           this.handleInputChange('job', profileData.speaker.job);
           this.handleInputChange('summary', profileData.speaker.summary);
+        }
+        if (Number(profileData.role_id) === 5) {
+          this.setState({ roleName: 'hackaton' });
         }
       }
     });
@@ -72,11 +81,14 @@ class Settings extends Component {
     this.props.updateAvatar(value);
   };
 
+  getCertificate = () => {
+    Linking.openURL(`https://api.devsummit.io/certificate-${this.state.userId}.pdf`);
+  };
+
   render() {
-    const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible } =
+    const { fields, avatar, isLoading, feedBack, isLoadingFeedback, modalVisible, tickets } =
       this.props || {};
     const { firstName, lastName, username } = fields || '';
-    console.log('VISIBILITYMODAL', isLoadingFeedback);
     return (
       <Container>
         <Content>
@@ -109,6 +121,18 @@ class Settings extends Component {
                 <Button block style={styles.button} onPress={() => this.setModalVisible(true)}>
                   <Text>{strings.settings.feedback}</Text>
                 </Button>
+                {this.state.roleName &&
+                  this.state.roleName === 'hackaton' &&
+                  tickets &&
+                  tickets.map((ticket) => {
+                    if (ticket.checked_in) {
+                      return (
+                        <Button block style={styles.button} onPress={() => this.getCertificate()}>
+                          <Text>Get Hackaton Certificate</Text>
+                        </Button>
+                      );
+                    }
+                  })}
                 <Button
                   block
                   style={[ styles.button, { backgroundColor: 'red' } ]}
@@ -185,7 +209,8 @@ const mapStateToProps = createStructuredSelector({
   feedBack: selectors.getFeedback(),
   isFeedbackPosted: selectors.getIsFeedbackPosted(),
   isLoadingFeedback: selectors.getIsLoadingFeedback(),
-  modalVisible: selectors.getModalVisible()
+  modalVisible: selectors.getModalVisible(),
+  tickets: getTickets()
 });
 
 export default connect(mapStateToProps, actions)(Settings);
